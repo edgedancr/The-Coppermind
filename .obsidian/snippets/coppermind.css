@@ -1,0 +1,175 @@
+/* The Coppermind — copper and patina theme
+   A CSS snippet: purely visual, nothing in the wiki depends on it.
+   Turn on in Settings → Appearance → CSS snippets. */
+
+/* ---------- Dark (default) ---------- */
+.theme-dark {
+  --background-primary: #1c1815;
+  --background-primary-alt: #241f1b;
+  --background-secondary: #16120f;
+  --background-secondary-alt: #12100d;
+  --background-modifier-border: #3a2f26;
+  --background-modifier-hover: rgba(184, 115, 51, 0.12);
+  --background-modifier-active-hover: rgba(184, 115, 51, 0.2);
+
+  --text-normal: #e8dfd3;
+  --text-muted: #ab9e8f;
+  --text-faint: #8a7d6f;
+  --text-accent: #d9894a;
+  --text-accent-hover: #eca066;
+  --text-selection: rgba(184, 115, 51, 0.3);
+  --text-highlight-bg: rgba(217, 137, 74, 0.28);
+
+  --interactive-accent: #b87333;
+  --interactive-accent-hover: #cf8442;
+  --link-color: #d9894a;
+  --link-unresolved-color: #9c7a5f;
+
+  --h1-color: #e8b27d;
+  --h2-color: #dca06a;
+  --h3-color: #cf905c;
+  --h4-color: #c4a07c;
+  --h5-color: #b8a58d;
+  --h6-color: #ab9e8f;
+
+  --callout-color-patina: 95, 174, 158;
+}
+
+/* ---------- Light fallback (parchment) ---------- */
+.theme-light {
+  --background-primary: #f8f2e9;
+  --background-primary-alt: #f0e7d9;
+  --background-secondary: #eadfce;
+  --background-secondary-alt: #e3d7c3;
+  --background-modifier-border: #d3c3aa;
+  --background-modifier-hover: rgba(154, 90, 36, 0.1);
+
+  --text-normal: #2b231c;
+  --text-muted: #5f5245;
+  --text-faint: #7c6e60;
+  --text-accent: #9a5a24;
+  --text-accent-hover: #7f4818;
+  --text-selection: rgba(154, 90, 36, 0.25);
+  --text-highlight-bg: rgba(184, 115, 51, 0.28);
+
+  --interactive-accent: #9a5a24;
+  --interactive-accent-hover: #b87333;
+  --link-color: #9a5a24;
+
+  --h1-color: #7f4818;
+  --h2-color: #8a4f1c;
+  --h3-color: #955a26;
+  --h4-color: #6b5238;
+  --h5-color: #5f5245;
+  --h6-color: #5f5245;
+}
+
+/* ---------- Typography ---------- */
+body {
+  --file-line-width: 44rem;
+  --h1-font: Georgia, "Palatino Linotype", "Book Antiqua", serif;
+  --h2-font: Georgia, "Palatino Linotype", "Book Antiqua", serif;
+  --h3-font: Georgia, "Palatino Linotype", "Book Antiqua", serif;
+  --h1-weight: 700;
+  --h2-weight: 600;
+  --h3-weight: 600;
+  --h1-size: 1.9em;
+  --h2-size: 1.5em;
+  --h3-size: 1.25em;
+  --line-height-normal: 1.65;
+}
+
+/* Page title (the large title above each note) */
+.inline-title {
+  font-family: Georgia, "Palatino Linotype", "Book Antiqua", serif;
+  font-weight: 700;
+  color: var(--h1-color);
+  padding-bottom: 0.35em;
+  border-bottom: 2px solid var(--interactive-accent);
+  margin-bottom: 0.6em;
+}
+
+/* Key claims marked with ==highlight== */
+.markdown-rendered mark,
+.cm-highlight {
+  color: var(--text-normal);
+  border-radius: 3px;
+  padding: 0 0.15em;
+}
+
+/* ---------- Properties (page frontmatter) ---------- */
+.metadata-container {
+  background: var(--background-primary-alt);
+  border: 1px solid var(--background-modifier-border);
+  border-left: 3px solid var(--interactive-accent);
+  border-radius: 6px;
+  padding: 0.5em 0.9em;
+  margin-bottom: 1.2em;
+}
+.metadata-property-key {
+  color: var(--text-muted);
+  font-size: 0.85em;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+}
+
+/* ---------- Tables ---------- */
+.markdown-rendered table {
+  --table-header-background: var(--background-primary-alt);
+  --table-header-color: var(--h2-color);
+  --table-border-color: var(--background-modifier-border);
+  --table-header-border-color: var(--interactive-accent);
+}
+.markdown-rendered th {
+  font-family: Georgia, "Palatino Linotype", serif;
+}
+
+/* ---------- Blockquotes and code ---------- */
+.markdown-rendered blockquote {
+  --blockquote-border-color: var(--interactive-accent);
+  --blockquote-color: var(--text-muted);
+}
+.theme-dark {
+  --code-background: #120f0c;
+}
+
+/* ---------- Callouts ---------- */
+/* "Unsourced background — verify or remove" (warning): amber, so open flags stand out */
+.callout[data-callout="warning"] {
+  --callout-color: 224, 168, 70;
+}
+/* "Whose view is this?" (question): patina */
+.callout[data-callout="question"] {
+  --callout-color: 95, 174, 158;
+}
+/* "Original scans" (info): quiet bronze */
+.callout[data-callout="info"] {
+  --callout-color: 184, 115, 51;
+}
+.callout {
+  border-radius: 6px;
+  border-width: 1px;
+}
+.callout-title {
+  font-family: Georgia, "Palatino Linotype", serif;
+}
+
+/* ---------- Sidebar and navigation ---------- */
+.nav-file-title.is-active,
+.nav-folder-title.is-active {
+  background: var(--background-modifier-active-hover);
+  color: var(--text-accent);
+}
+.tree-item-self.is-clickable:hover {
+  color: var(--text-accent);
+}
+
+/* ---------- Tags and small details ---------- */
+.tag {
+  --tag-color: var(--text-accent);
+  --tag-background: rgba(184, 115, 51, 0.14);
+  --tag-border-color: rgba(184, 115, 51, 0.35);
+}
+hr {
+  border-color: var(--background-modifier-border);
+}

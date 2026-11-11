@@ -3,15 +3,100 @@
   "search": "",
   "showTags": false,
   "showAttachments": false,
-  "hideUnresolved": false,
+  "hideUnresolved": true,
   "showOrphans": true,
-  "collapse-color-groups": true,
-  "colorGroups": [],
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "path:\"Perspectives\"",
+      "color": {
+        "a": 1,
+        "rgb": 15916216
+      }
+    },
+    {
+      "query": "path:\"Wiki/Frameworks\"",
+      "color": {
+        "a": 1,
+        "rgb": 14715466
+      }
+    },
+    {
+      "query": "path:\"Wiki/Concepts\"",
+      "color": {
+        "a": 1,
+        "rgb": 14923610
+      }
+    },
+    {
+      "query": "path:\"Wiki/Case Studies\"",
+      "color": {
+        "a": 1,
+        "rgb": 13131850
+      }
+    },
+    {
+      "query": "path:\"Wiki/Glossary\"",
+      "color": {
+        "a": 1,
+        "rgb": 12562058
+      }
+    },
+    {
+      "query": "path:\"Wiki/People\"",
+      "color": {
+        "a": 1,
+        "rgb": 12156819
+      }
+    },
+    {
+      "query": "path:\"Wiki/Summaries\"",
+      "color": {
+        "a": 1,
+        "rgb": 8363443
+      }
+    },
+    {
+      "query": "path:\"Wiki/Prompts\"",
+      "color": {
+        "a": 1,
+        "rgb": 9681016
+      }
+    },
+    {
+      "query": "path:\"Wiki/Workflows\"",
+      "color": {
+        "a": 1,
+        "rgb": 6270622
+      }
+    },
+    {
+      "query": "path:\"Wiki/Guides\"",
+      "color": {
+        "a": 1,
+        "rgb": 10133416
+      }
+    },
+    {
+      "query": "path:\"Wiki/Analyses\"",
+      "color": {
+        "a": 1,
+        "rgb": 12619728
+      }
+    },
+    {
+      "query": "path:\"Sources\"",
+      "color": {
+        "a": 1,
+        "rgb": 7234650
+      }
+    }
+  ],
   "collapse-display": true,
   "showArrow": false,
-  "textFadeMultiplier": 0,
-  "nodeSizeMultiplier": 1,
-  "lineSizeMultiplier": 1,
+  "textFadeMultiplier": -0.6,
+  "nodeSizeMultiplier": 1.2,
+  "lineSizeMultiplier": 0.8,
   "collapse-forces": true,
   "centerStrength": 0.518713248970312,
   "repelStrength": 10,
