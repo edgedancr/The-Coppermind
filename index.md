@@ -6,7 +6,7 @@ updated: 2026-11-11
 
 A map of every page in the Coppermind, grouped by type. The AI agent updates this after every operation; I check it during health checks. Each entry shows a one-line summary and the page's status.
 
-**Totals:** 1 verified · 53 drafts
+**Totals:** 3 verified · 51 drafts
 
 ## Concepts (26)
 - [[AI Alignment]] — Systems doing what we intend, even under pressure (draft)
@@ -52,7 +52,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 ## Frameworks (9)
 - [[Analysis of Competing Hypotheses]] — Disprove hypotheses instead of confirming one; rules for doing it with AI (draft)
-- [[Architecture of Worldview]] — Eight layers of worldview, from theology to culture (draft)
+- [[Architecture of Worldview]] — Eight layers of worldview, from theology to culture (verified)
 - [[Cascade of Unintended Consequences]] — Four paths from AI side effects to catastrophe (draft)
 - [[Essay Types]] — Six essay types by purpose; analytical is most common in SI (draft)
 - [[Four Levels of Prompt Engineering]] — NPC, Mid, Boss, Legendary (draft)
@@ -75,8 +75,8 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 ## Workflows (0)
 
 ## Guides (2)
-- [[Setting Up Git for the Coppermind]] — How to put the vault under version control, sync two computers, and commit after each review (draft)
-- [[Verifying Pages with the Review Buttons]] — How the Verify and Reject buttons work, and how to turn them on (draft)
+- [[Setting Up Git for the Coppermind]] — How to put the vault under version control, sync two computers, and commit after each review (verified)
+- [[Verifying Pages with the Review Buttons]] — How to run a review session: the queue, the buttons, resolving flags, hotkeys, and the Dashboard (draft)
 
 ## Analyses (0)
 

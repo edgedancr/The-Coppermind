@@ -10,13 +10,16 @@ The convictions that shape how I read and judge everything else in the Coppermin
 
 ## Theology
 *Who is God? What is His nature and character, His relationship to creation, His authority?*
-- I believe that the Godhead eternally exists in three Persons: Father, Son and Holy Spirit, and that these three are one God equal in attributes and nature, according to the Bible. Mark 12:29; John 1:1-4; 10:30; 14:9-12; Luke 3:21, 22.
+- I believe that the Godhead eternally exists in three Persons: Father, Son and Holy Spirit, and that these three are one God equal in attributes and nature, according to the Bible. 
+- The Bible is the final authority over everything.
+- God created the whole world from nothing over a literal 7 days.
+- God has given man free will. He knows everything that will happen, but allows man to make his own choices. God i
 ## Ontology (Reality)
 *What is real? What is the nature and structure of existence?*
 
 ## Epistemology (Knowledge)
 *How do we know what is true? What are the legitimate sources of knowledge and authority?*
-
+- For knowledge from AI, I always follow the rule "I design, the AI drafts, I verify"
 ## Teleology (Purpose)
 *What is the intended end of creation, history, and human life?*
 

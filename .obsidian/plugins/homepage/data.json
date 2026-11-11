@@ -2,12 +2,12 @@
   "version": 5,
   "homepages": {
     "Main Homepage": {
-      "value": "Home.md",
+      "value": "Dashboard.md",
       "kind": "File",
       "openOnStartup": true,
       "openMode": "Replace all open notes",
       "manualOpenMode": "Keep open notes",
-      "view": "Default view",
+      "view": "Reading view",
       "revertView": true,
       "openWhenEmpty": false,
       "openOnNewTab": false,

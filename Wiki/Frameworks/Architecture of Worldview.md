@@ -1,14 +1,20 @@
 ---
 type: framework
-status: draft
-aliases: ["Worldview Architecture"]
-courses: ["SAIL"]
-sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
-applies_to: ["[[Prompt Engineering]]"]
-related: ["[[Imago Dei]]", "[[My Worldview]]"]
+status: verified
+aliases:
+  - Worldview Architecture
+courses:
+  - SAIL
+sources:
+  - "[[SRC - SAIL Class Notes (Fall 2026)]]"
+applies_to:
+  - "[[Prompt Engineering]]"
+related:
+  - "[[Imago Dei]]"
+  - "[[My Worldview]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-11
 ---
 The Architecture of Worldview is a layered model of the questions every worldview answers, from theology at the core out to culture ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]). SAIL called theology "the invisible core around which all existence is ordered and animated" ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]), and later applied the model to AI: ==when creating a worldview for an AI, start with the theology, then the pillars of philosophy, then society and culture== ([[SAIL Class Notes (Fall 2026)#10/29/26|SAIL notes, 10/29/26]]).
 

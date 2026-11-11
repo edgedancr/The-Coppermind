@@ -46,7 +46,7 @@ The Coppermind has three jobs, in priority order:
 
 ```
 The Coppermind/
-├── Home.md                 Front door for human readers
+├── Dashboard.md            Front door and review dashboard
 ├── SCHEMA.md               This file
 ├── index.md                Map of every page
 ├── log.md                  Dated record of every operation

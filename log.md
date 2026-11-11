@@ -10,7 +10,7 @@ A dated, append-only record of every ingest, query, health check, verification, 
 ## [2026-11-10] setup | Vault skeleton and schema v0.1
 
 - **Think:** I set the design decisions: Obsidian vault in a local folder with git; Claude desktop app as the agent; scope limited to SAIL, Intro to Intelligence, and Freedom's Foundations 1 (Fall 2026); pages written as a short prose opening plus bullets; Coppermind colors and theme for the look, but plain names for everything else so any reader can follow it.
-- **Calculate:** Claude (claude-opus-5-5) created the folder structure, [[SCHEMA]] v0.1, [[Home]], [[index]], this log, [[Review Queue.base|Review Queue]], one template per page type in `_templates/`, the agent pointer files (`CLAUDE.md`, `AGENTS.md`), `.gitignore`, a [[My Worldview]] skeleton (headings only), and a draft guide, [[Setting Up Git for the Coppermind]].
+- **Calculate:** Claude (claude-opus-5-5) created the folder structure, [[SCHEMA]] v0.1, [[Dashboard]], [[index]], this log, [[Review Queue.base|Review Queue]], one template per page type in `_templates/`, the agent pointer files (`CLAUDE.md`, `AGENTS.md`), `.gitignore`, a [[My Worldview]] skeleton (headings only), and a draft guide, [[Setting Up Git for the Coppermind]].
 - **Verify:** pending
   - [[SCHEMA]]: to review section by section; it is my rulebook, so I edit it into my own words
   - [[Setting Up Git for the Coppermind]]: to verify after I follow it
@@ -43,3 +43,65 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Agentic AI]]
 - **Commit:** `verify: Agentic AI`
+
+## [2026-11-11] setup | Review queue, flag resolving, hotkeys, and Home dashboard
+
+- **Think:** The Verify button worked, but reviewing still meant going back to a long list after every page. I asked for: verify-and-next with a skip option, a review sidebar that stays open, a Resolve button on flags, hotkeys and a status-bar counter, and a dashboard on Home. I asked to be told which design choices need my input.
+- **Calculate:** Claude (claude-opus-5-5) updated the Coppermind Review plugin to v0.2:
+  - **Verify and next:** after Verify or Reject, the next draft in the queue opens (setting, on by default). **Skip** moves a draft to the end of the queue until Obsidian restarts.
+  - **Review queue sidebar:** progress bar, a card for the current page with its flags and Verify / Skip / Reject buttons, every draft with flag badges, a queue-order menu (default: clean pages first), and a collapsed list of verified pages.
+  - **Resolve flags:** a Resolve button on accuracy-check, gap, question, and warning callouts (Reading view), in the sidebar card, and on `Alt+F`. It asks what I decided, removes the callout, and saves the decision; the decision is written into this log when I verify or reject the page.
+  - **Hotkeys and status bar:** `Alt+V` verify, `Alt+R` reject, `Alt+S` skip, `Alt+N` next, `Alt+F` resolve, `Alt+Q` queue, `Ctrl+Enter` to confirm; "X/Y verified" in the status bar opens the queue.
+  - **Home dashboard:** a live `coppermind-dashboard` block added to [[Dashboard]] under "Review progress": progress, a table by page type, open flags by kind with links, and drafts older than 14 days ([[SCHEMA#7. Draft vs. verified|Schema §7]], item 7).
+  - Rewrote [[Verifying Pages with the Review Buttons]] to cover all of it.
+  - Tested outside Obsidian against copies of the SAIL drafts, [[index]], and this log (flag parsing and removal on every draft, queue order, skip, verify, reject, and log entries). Not yet tried inside Obsidian.
+- **Verify:** pending
+  - Plugin v0.2: to try a short review session and check the page, [[index]], and this log after each action
+  - [[Verifying Pages with the Review Buttons]]: to verify after I follow it
+  - [[Dashboard]]: whether I want the dashboard there
+- **Commit:** `setup: review queue, flag resolving, hotkeys, Home dashboard (Coppermind Review v0.2)`
+
+## [2026-11-11] verify | Architecture of Worldview
+
+- **Verify:**
+  - Approved: [[Architecture of Worldview]]
+- **Commit:** `verify: Architecture of Worldview`
+
+## [2026-11-11] verify | Setting Up Git for the Coppermind
+
+- **Verify:**
+  - Approved: [[Setting Up Git for the Coppermind]]
+  - Flags I resolved before approving (2):
+    - Warning (Unsourced background — verify or remove) — This is correct
+    - Warning (Unsourced background — verify or remove) — This is correct
+- **Commit:** `verify: Setting Up Git for the Coppermind`
+
+## [2026-11-11] setup | Sidebar-only review controls
+
+- **Think:** The Verify and Reject icons at the top of each page are redundant now that the review sidebar does the same job. I want to review from the sidebar only.
+- **Calculate:** Claude (claude-sonnet-5-5) removed the page-header Verify and Reject icons from the Coppermind Review plugin, and their styles. Verify, Skip, and Reject are now in the sidebar card and on the hotkeys (`Alt+V`, `Alt+S`, `Alt+R`). Updated [[Verifying Pages with the Review Buttons]] to match. Nothing else changed. Re-ran the outside-Obsidian tests; they still pass.
+- **Verify:** pending. To check that no icons show on a page after reloading the plugin.
+- **Commit:** `setup: remove page-header review buttons, sidebar only`
+
+## [2026-11-11] setup | Dashboard page and home button
+
+- **Think:** I open the front page every time I open the wiki, so it should look good and help me work. I asked for the changes below, to rename Home to Dashboard, and for a logo button that always takes me back to it, using the feruchemical copper symbol.
+- **Calculate:** Claude (claude-sonnet-5-5) rebuilt the front page and extended the Coppermind Review plugin to v0.3:
+  - **Page:** a header with the logo, stat tiles (verified, drafts, open flags), the progress bar and Start reviewing, six navigation cards, a Recent activity list read from this log, and the old explanatory text folded under Reference. The title and properties are hidden on this page, and the Homepage plugin is set to open it in Reading view.
+  - **Home button:** the copper logo in the left ribbon, and `Alt+H`. It switches to the Dashboard if it's already open.
+  - **Rename:** when the plugin loads, it renames `Home.md` to `Dashboard.md` through Obsidian (which updates links) and points the Homepage plugin at the new name; it adds its own log entry when it does.
+  - Saved the logo as `_attachments/coppermind-logo.svg` and updated [[SCHEMA]]'s folder tree and [[Verifying Pages with the Review Buttons]].
+  - Left out of the Dashboard: the link to [[Review Queue.base|Review Queue]] (the sidebar replaces it; the file is still there).
+  - **Restored this log:** two of my earlier writes to this file were reverted on disk, so the entries for [[Architecture of Worldview]], [[Setting Up Git for the Coppermind]], and the "Sidebar-only review controls" change were missing. I put them back from my copy.
+  - Tested outside Obsidian (rename, ribbon, hotkey, all four page blocks, the activity list, link clicks) and previewed the layout in a browser at desktop and phone widths. Not yet seen in Obsidian itself, where the icons will be Obsidian's own.
+- **Verify:** pending
+  - Plugin v0.3 and the Dashboard: to reload the plugin, restart Obsidian once, and check the page, the ribbon button, and `Alt+H`
+  - [[Verifying Pages with the Review Buttons]]: to verify after I follow it
+- **Commit:** `setup: Dashboard page, logo home button, Home renamed (Coppermind Review v0.3)`
+
+## [2026-11-11] setup | Renamed Home to Dashboard
+
+- **Think:** The front page works as a dashboard, so it should be named like one.
+- **Calculate:** The Coppermind Review plugin renamed `Home.md` to `Dashboard.md` through Obsidian, which updated the links that pointed to it, and pointed the startup-page plugin at the new name.
+- **Verify:** pending. To check that the links to the Dashboard still work.
+- **Commit:** `setup: rename Home to Dashboard`

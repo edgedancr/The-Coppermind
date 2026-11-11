@@ -1,13 +1,16 @@
 ---
 type: guide
-status: draft
-aliases: [Git Setup]
-courses: [SAIL]
+status: verified
+aliases:
+  - Git Setup
+courses:
+  - SAIL
 sources: []
-related: ["[[SCHEMA]]"]
+related:
+  - "[[SCHEMA]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-10
-verified_on: 
+verified_on: 2026-11-11
 ---
 Git keeps a full history of the Coppermind, so every approved change is recorded and any mistake can be undone. In this wiki, ==a git commit is the "save as final" step==: it happens right after I verify the agent's drafts ([[SCHEMA#12. Version control (git)|Schema §12]]). This guide sets git up once and then explains the habit for each review session.
 
@@ -30,9 +33,6 @@ There are two ways to do it. **Option A is recommended**, because everything sta
 3. Run **Git: Push**. It asks which remote branch to use. Type the name of your local branch (shown in Obsidian's bottom status bar) and select that row.
 4. Sign in. On Windows, a Git Credential Manager window may appear ([Obsidian Git docs](https://publish.obsidian.md/git-doc/Authentication)). If you get a username and password box instead, enter your GitHub username and a **personal access token** as the password. A normal account password is rejected with "Password authentication is not supported for Git operations."
 5. Refresh the repository page on GitHub. The vault files should be at the top level, not inside a subfolder.
-
-> [!warning] Unsourced background — verify or remove
-> How to create a token: on GitHub, profile picture → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token (classic). Give it a name and an expiration, check the `repo` scope, and copy it right away, because GitHub only shows it once. This is from general knowledge of GitHub and may differ on your screen. Never save a token inside the vault.
 
 ## Option B: GitHub Desktop
 
@@ -60,9 +60,6 @@ The vault is not synced by OneDrive or Obsidian Sync, which avoids corrupted fil
    ```
 5. In Obsidian, choose **Open folder as vault** and select the `The-Coppermind` folder. If Obsidian asks whether to trust the vault's community plugins, allow it. If the Git plugin isn't listed under Settings → Community plugins, install it from Browse.
 6. Test it: run **Git: Pull**, change one line in `Home.md`, commit, push, then pull on the first computer and check that the change arrived.
-
-> [!warning] Unsourced background — verify or remove
-> The `git clone` and `git config` commands, the folder trick for opening Command Prompt, and Obsidian's plugin-trust prompt are from general knowledge, not from a source in this vault. Check each against my screen the first time and correct this section.
 
 ### Going back and forth
 The rule: **pull when I sit down, commit and push when I leave.** Never walk away from a computer with unpushed work.
