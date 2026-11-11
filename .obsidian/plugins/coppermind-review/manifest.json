@@ -1,7 +1,7 @@
 {
   "id": "coppermind-review",
   "name": "Coppermind Review",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "minAppVersion": "1.5.0",
   "description": "Review drafts: verify or reject with one click, a review queue sidebar, flag resolving, hotkeys, and a Dashboard page, and a home button. Updates the page, index.md, and log.md.",
   "author": "Harrison Nickles",

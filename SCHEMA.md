@@ -292,7 +292,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 ### Index (`index.md`)
 
 - Lists **every page** in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`, grouped by type, with a count per group.
-- Each entry is one line: `- [[Page Name]] — one-line summary (draft)` or `(verified)`.
+- Under each type, pages are split under a `### Verified` heading and a `### Drafts` heading (a heading appears only when it has pages). Each entry is one line: `- [[Page Name]] — one-line summary`, listed under the heading for its status.
 - The agent updates the index **at the end of every operation** that adds, removes, renames, or changes the status of a page.
 - I check the index during each health check.
 
@@ -302,7 +302,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 - **Every ingest, query, health check, verification, and schema change gets an entry**, in this format:
 
 ```
-## [YYYY-MM-DD] operation | Subject
+### [YYYY-MM-DD] operation | Subject
 
 - **Think:** what I asked for and what I said matters
 - **Calculate:** what the agent drafted, proposed, or flagged
@@ -314,6 +314,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 - **Commit:** suggested commit message
 ```
 
+- Entries use `###` headings, so a folded log reads as a short list. The Coppermind Review plugin folds them when the log opens in editing view.
 - Operations are: `setup`, `ingest`, `query`, `health-check`, `verify`, `schema`.
 - **If I revise or reject something without saying why, the agent asks me for a one-sentence reason** and records it. Corrections are the best evidence of my learning, so they should be recorded well.
 

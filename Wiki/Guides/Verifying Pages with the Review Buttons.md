@@ -46,9 +46,16 @@ The tools come from a small plugin I keep in the vault, **Coppermind Review** (`
 - **Recent activity:** the last six log entries. Click one to open the page it names, or the log.
 - **Reference:** folded sections on what the Coppermind is, how to read it, what it covers, and its six parts.
 
-Each section is a block in the page's text (`coppermind-hero`, `coppermind-dashboard`, `coppermind-nav`, `coppermind-activity`), so a section can be moved or deleted by editing the note. The page is meant to be read in Reading view; the Homepage plugin opens it that way at startup.
+Each section is a block in the page's text (`coppermind-hero`, `coppermind-dashboard`, `coppermind-nav`, `coppermind-activity`), so a section can be moved or deleted by editing the note. The Dashboard always opens in Reading view, whether I open it from the ribbon, a link, a tab, or at startup, and every other note keeps the mode it was in. The Dashboard's own properties are hidden, and so is the Properties side pane while the Dashboard is the active note.
+
+To edit the Dashboard, press `Ctrl+E` to switch to editing. It stays in editing until I click into the Dashboard again from another tab or note, which puts it back in Reading view.
 
 **Getting back to it from anywhere:** click the copper logo in the left ribbon, or press `Alt+H`. If the Dashboard is already open in a tab, this switches to that tab; otherwise it opens in the current tab. The ribbon icon can be dragged to the top of the ribbon (right-click the ribbon to rearrange or hide icons).
+
+## The index and the log
+- **Index:** [[index]] splits each type into **Verified** and **Drafts**. When I verify a page, the plugin moves its line to Verified and updates the counts and totals. When I reject one, its line is removed.
+- **Log:** [[log]] opens with every entry folded, newest at the bottom. Click an entry's heading (or its arrow) to open it. This happens when the log opens in editing view, once per opening, so switching tabs doesn't re-fold it. It needs Obsidian's **Fold heading** option (Settings → Editor) to be on.
+- **Properties:** both pages hide their properties, like the Dashboard.
 
 ## Hotkeys
 | Key | Action |

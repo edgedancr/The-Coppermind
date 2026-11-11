@@ -1,6 +1,6 @@
 "use strict";
 /*
- * Coppermind Review (v0.3)
+ * Coppermind Review (v0.4)
  *
  * Review tools for draft pages (all in the sidebar and on hotkeys; no buttons on the page header):
  *  - verify-and-next and skip, so a review session never goes back to a list
@@ -141,42 +141,80 @@ function daysBetween(fromIso, toIso) {
   return Math.floor((b - a) / 86400000);
 }
 
-function recomputeIndex(text, date) {
-  const lines = text.split("\n");
-  let heading = -1;
-  const counts = new Map();
-  lines.forEach((line, i) => {
-    if (/^## .+\(\d+\)\s*$/.test(line)) heading = i;
-    else if (/^- \[\[/.test(line) && heading >= 0) counts.set(heading, (counts.get(heading) || 0) + 1);
-  });
-  for (let i = 0; i < lines.length; i++) {
-    if (/^## .+\(\d+\)\s*$/.test(lines[i])) {
-      lines[i] = lines[i].replace(/\(\d+\)(\s*)$/, `(${counts.get(i) || 0})$1`);
-    }
-  }
-  let out = lines.join("\n");
-  const verified = (out.match(/\(verified\)[ \t]*\r?$/gm) || []).length;
-  const drafts = (out.match(/\(draft\)[ \t]*\r?$/gm) || []).length;
-  out = out.replace(/^\*\*Totals:\*\*.*?(\r?)$/m, `**Totals:** ${verified} verified · ${drafts} drafts$1`);
-  out = out.replace(/^updated:.*?(\r?)$/m, `updated: ${date}$1`);
-  return out;
+/**
+ * index.md model. Each "## Type (n)" section holds entries, split under "### Verified (n)" and
+ * "### Drafts (n)". The older format (status in brackets at the end of each line) is read too,
+ * and rewritten in the new format.
+ */
+function entryName(line) {
+  const m = line.match(/^- \[\[([^\]|#]+)/);
+  return m ? m[1].trim() : null;
 }
 
-/** Returns { text, found }. mode: "verify" flips (draft) to (verified); "remove" deletes the entry. */
-function editIndex(text, name, mode, date) {
-  const entry = new RegExp(`^- \\[\\[${escapeRegExp(name)}(\\||\\]\\])`);
-  let found = false;
-  const kept = [];
-  for (const line of text.split("\n")) {
-    if (entry.test(line)) {
-      found = true;
-      if (mode === "remove") continue;
-      kept.push(line.replace(/\((draft|verified)\)([ \t]*\r?)$/, "(verified)$2"));
-    } else {
-      kept.push(line);
+function parseIndex(text) {
+  const lines = text.replace(/\r\n/g, "\n").split("\n");
+  const head = [];
+  const sections = [];
+  let cur = null;
+  let sub = "draft";
+  for (const line of lines) {
+    let m;
+    if ((m = line.match(/^## (.+?)\s*\(\d+\)\s*$/))) {
+      cur = { title: m[1], entries: [], extra: [] };
+      sections.push(cur);
+      sub = "draft";
+    } else if (!cur) {
+      head.push(line);
+    } else if ((m = line.match(/^### (Verified|Drafts)\b/i))) {
+      sub = m[1].toLowerCase() === "verified" ? "verified" : "draft";
+    } else if (/^- \[\[/.test(line)) {
+      let status = sub;
+      const t = line.match(/\s\((draft|verified)\)\s*$/);
+      if (t) status = t[1];
+      cur.entries.push({ name: entryName(line), status, text: line.replace(/\s\((draft|verified)\)\s*$/, "").replace(/\s+$/, "") });
+    } else if (line.trim() !== "") {
+      cur.extra.push(line);
     }
   }
-  return { text: recomputeIndex(kept.join("\n"), date), found };
+  while (head.length && head[head.length - 1].trim() === "") head.pop();
+  return { head, sections };
+}
+
+function renderIndex(model, date) {
+  const byName = (a, b) => (a.name || "").localeCompare(b.name || "", "en", { sensitivity: "base" });
+  let verified = 0, drafts = 0;
+  const body = [];
+  for (const sec of model.sections) {
+    const v = sec.entries.filter((e) => e.status === "verified").sort(byName);
+    const d = sec.entries.filter((e) => e.status !== "verified").sort(byName);
+    verified += v.length;
+    drafts += d.length;
+    body.push(`## ${sec.title} (${v.length + d.length})`, "");
+    if (v.length) body.push(`### Verified (${v.length})`, ...v.map((e) => e.text), "");
+    if (d.length) body.push(`### Drafts (${d.length})`, ...d.map((e) => e.text), "");
+    if (sec.extra.length) body.push(...sec.extra, "");
+  }
+  let head = model.head.join("\n");
+  head = head.replace(/^\*\*Totals:\*\*.*$/m, `**Totals:** ${verified} verified · ${drafts} drafts`);
+  head = head.replace(/^updated:.*$/m, `updated: ${date}`);
+  return head + "\n\n" + body.join("\n").replace(/\n+$/, "") + "\n";
+}
+
+/** Returns { text, found }. mode: "verify" moves the entry to Verified; "remove" deletes it. */
+function editIndex(text, name, mode, date) {
+  const eol = text.includes("\r\n") ? "\r\n" : "\n";
+  const model = parseIndex(text);
+  let found = false;
+  for (const sec of model.sections) {
+    const k = sec.entries.findIndex((e) => e.name === name);
+    if (k < 0) continue;
+    found = true;
+    if (mode === "remove") sec.entries.splice(k, 1);
+    else sec.entries[k].status = "verified";
+    break;
+  }
+  if (!found) return { text, found: false };
+  return { text: renderIndex(model, date).replace(/\n/g, eol), found: true };
 }
 
 function oneLine(s) {
@@ -192,7 +230,7 @@ function resolvedLines(resolved) {
 }
 
 function verifyLogEntry({ name, date, note, openFlags, resolved = [] }) {
-  const lines = [`## [${date}] verify | ${name}`, "", "- **Verify:**", `  - Approved: [[${name}]]`];
+  const lines = [`### [${date}] verify | ${name}`, "", "- **Verify:**", `  - Approved: [[${name}]]`];
   if (note) lines.push(`  - Revised: [[${name}]] — ${oneLine(note)}`);
   if (resolved.length) {
     lines.push(`  - Flags I resolved before approving (${resolved.length}):`);
@@ -207,7 +245,7 @@ function verifyLogEntry({ name, date, note, openFlags, resolved = [] }) {
 }
 
 function rejectLogEntry({ name, date, reason, dangling, resolved = [] }) {
-  const lines = [`## [${date}] verify | ${name} (rejected)`, "", "- **Verify:**",
+  const lines = [`### [${date}] verify | ${name} (rejected)`, "", "- **Verify:**",
     `  - Rejected: "${name}" — ${oneLine(reason)} (not saved)`];
   if (resolved.length) {
     lines.push(`  - Flags I had resolved before rejecting (${resolved.length}):`);
@@ -221,7 +259,7 @@ function rejectLogEntry({ name, date, reason, dangling, resolved = [] }) {
 /** Log headings, oldest first: { date, op, subject, rejected }. */
 function parseLog(text) {
   const out = [];
-  const re = /^## \[(\d{4}-\d{2}-\d{2})\] ([A-Za-z-]+) \| (.+?)\s*$/gm;
+  const re = /^#{2,4} \[(\d{4}-\d{2}-\d{2})\] ([A-Za-z-]+) \| (.+?)\s*$/gm;
   let m;
   while ((m = re.exec(text))) {
     let subject = m[3];
@@ -240,7 +278,7 @@ function describeEntry(e) {
 
 function renameLogEntry(date) {
   return [
-    `## [${date}] setup | Renamed Home to Dashboard`, "",
+    `### [${date}] setup | Renamed Home to Dashboard`, "",
     "- **Think:** The front page works as a dashboard, so it should be named like one.",
     "- **Calculate:** The Coppermind Review plugin renamed `Home.md` to `Dashboard.md` through Obsidian, which updated the links that pointed to it, and pointed the startup-page plugin at the new name.",
     "- **Verify:** pending. To check that the links to the Dashboard still work.",
@@ -579,6 +617,7 @@ module.exports = class CoppermindReview extends Plugin {
     this.dashboards = new Set();
     this.currentPath = null;
     this.dashOpen = {};
+    this.foldedViews = new WeakMap();
 
     this.registerView(VIEW_TYPE, (leaf) => new QueueView(leaf, this));
     this.addSettingTab(new ReviewSettings(this.app, this));
@@ -602,14 +641,21 @@ module.exports = class CoppermindReview extends Plugin {
     this.scheduleRefresh = debounce(() => this.refresh(), 400, true);
     this.registerEvent(this.app.workspace.on("file-open", (file) => {
       if (file) this.currentPath = file.path;
+      this.syncDashboardLeaves(true);
       this.renderViews();
     }));
+    this.registerEvent(this.app.workspace.on("active-leaf-change", (leaf) => {
+      this.syncDashboardLeaves(false);
+      this.enforceReading(leaf);
+    }));
+    this.registerEvent(this.app.workspace.on("layout-change", () => this.syncDashboardLeaves(false)));
     this.registerEvent(this.app.metadataCache.on("changed", () => this.scheduleRefresh()));
     this.registerEvent(this.app.metadataCache.on("resolved", () => this.scheduleRefresh()));
     this.registerEvent(this.app.vault.on("delete", () => this.scheduleRefresh()));
     this.registerEvent(this.app.vault.on("rename", (file, oldPath) => this.onRename(file, oldPath)));
     this.app.workspace.onLayoutReady(async () => {
       await this.migrateHome();
+      this.syncDashboardLeaves(true);
       const f = this.app.workspace.getActiveFile();
       if (f) this.currentPath = f.path;
       this.refresh();
@@ -618,6 +664,8 @@ module.exports = class CoppermindReview extends Plugin {
 
   onunload() {
     document.querySelectorAll(".cm-resolve-btn, .cm-ribbon-logo").forEach((e) => e.remove());
+    document.body.classList.remove("cm-on-dashboard");
+    document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-noprops-leaf").forEach((e) => e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-noprops-leaf"));
   }
 
   async persist() {
@@ -872,12 +920,68 @@ module.exports = class CoppermindReview extends Plugin {
     return null;
   }
 
+  isDashboard(file) {
+    return file instanceof TFile && (file.path === DASHBOARD_PATH || file.path === OLD_HOME_PATH);
+  }
+
+  /**
+   * Tag panes showing the Dashboard, index, or log so CSS can hide their properties (and the Dashboard's title),
+   * tag the body when the Dashboard is the active note, and fold the log's entries the first time it opens.
+   */
+  syncDashboardLeaves(enforce) {
+    const ws = this.app.workspace;
+    ws.getLeavesOfType("markdown").forEach((leaf) => {
+      const view = leaf.view;
+      if (!(view instanceof MarkdownView)) return;
+      const path = view.file ? view.file.path : "";
+      const isDash = this.isDashboard(view.file);
+      const isLog = path === LOG_PATH;
+      view.containerEl.classList.toggle("cm-dashboard-leaf", isDash);
+      view.containerEl.classList.toggle("cm-log-leaf", isLog);
+      view.containerEl.classList.toggle("cm-noprops-leaf", isDash || isLog || path === INDEX_PATH);
+      if (isDash && enforce) this.enforceReading(leaf);
+      if (isLog && this.foldedViews.get(view) !== path) {
+        this.foldedViews.set(view, path);
+        setTimeout(() => this.foldLogEntries(view), 300);
+      }
+      if (!isLog) this.foldedViews.delete(view);
+    });
+    document.body.classList.toggle("cm-on-dashboard", this.isDashboard(ws.getActiveFile()));
+  }
+
+  /** Fold every log entry heading (and nothing else) so the log opens as a short list. Editing view only. */
+  foldLogEntries(view) {
+    const ed = view.editor;
+    if (!ed || !view.file || view.file.path !== LOG_PATH || view.getMode() !== "source") return;
+    try {
+      ed.exec("unfoldAll");
+      for (let i = 0, n = ed.lineCount(); i < n; i++) {
+        if (/^#{2,4}\s+\[\d{4}-\d{2}-\d{2}\]/.test(ed.getLine(i))) {
+          ed.setCursor({ line: i, ch: 0 });
+          ed.exec("toggleFold");
+        }
+      }
+      ed.setCursor({ line: 0, ch: 0 });
+      ed.scrollTo(0, 0);
+    } catch (e) {
+      console.error("Coppermind Review: couldn't fold the log", e);
+    }
+  }
+
+  /** The Dashboard always opens in Reading view. Every other note keeps whatever mode it was in. */
+  async enforceReading(leaf) {
+    const view = leaf && leaf.view;
+    if (!(view instanceof MarkdownView) || !this.isDashboard(view.file) || view.getMode() !== "source") return;
+    const state = leaf.getViewState();
+    await leaf.setViewState({ ...state, state: { ...state.state, mode: "preview" } });
+  }
+
   async openDashboard() {
     const f = this.dashboardFile();
     if (!f) { new Notice("Couldn't find Dashboard.md."); return; }
     const already = this.app.workspace.getLeavesOfType("markdown").find((l) => l.view.file && l.view.file.path === f.path);
     if (already) { this.app.workspace.setActiveLeaf(already, { focus: true }); return; }
-    await this.app.workspace.getLeaf(false).openFile(f);
+    await this.app.workspace.getLeaf(false).openFile(f, { state: { mode: "preview" } });
   }
 
   /** One-time: rename Home.md to Dashboard.md (Obsidian updates links) and repoint the startup-page plugin. */
@@ -1119,6 +1223,6 @@ module.exports = class CoppermindReview extends Plugin {
 };
 
 module.exports.__test = {
-  parseFlags, removeLines, sortQueue, nextAfter, groupOf, editIndex, recomputeIndex,
-  verifyLogEntry, rejectLogEntry, appendToLog, daysBetween, today, parseLog, describeEntry, renameLogEntry,
+  parseFlags, removeLines, sortQueue, nextAfter, groupOf, editIndex,
+  verifyLogEntry, rejectLogEntry, appendToLog, daysBetween, today, parseLog, describeEntry, renameLogEntry, parseIndex, renderIndex,
 };

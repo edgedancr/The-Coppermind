@@ -117,7 +117,12 @@ button.cm-danger { background: var(--cm-rust); color: #fff; }
 /* ---------- Dashboard page ---------- */
 .coppermind-dashboard .inline-title,
 .coppermind-dashboard .metadata-container,
-.coppermind-dashboard .frontmatter-container { display: none; }
+.coppermind-dashboard .frontmatter-container,
+.cm-dashboard-leaf .inline-title,
+.cm-dashboard-leaf .metadata-container,
+.cm-dashboard-leaf .frontmatter-container { display: none !important; }
+/* the Properties side pane stays empty while the Dashboard is the active note */
+body.cm-on-dashboard .workspace-leaf-content[data-type="file-properties"] .view-content { display: none !important; }
 .coppermind-dashboard h2 {
   font-family: Georgia, serif;
   font-size: 1.15em;
@@ -180,3 +185,16 @@ button.cm-danger { background: var(--cm-rust); color: #fff; }
   .cm-hero { grid-template-columns: 1fr; justify-items: start; row-gap: 10px; }
   .cm-hero-title { font-size: 2em; }
 }
+
+/* ---------- Index and log pages ---------- */
+.cm-noprops-leaf .metadata-container,
+.cm-noprops-leaf .frontmatter-container { display: none !important; }
+/* log entries: compact headings, so a folded log reads as a list */
+.cm-log-leaf h3, .cm-log-leaf h4,
+.cm-log-leaf .HyperMD-header-3, .cm-log-leaf .HyperMD-header-4 {
+  font-size: 1.02em;
+  line-height: 1.4;
+  margin-top: 0.5em;
+  margin-bottom: 0.15em;
+}
+.cm-log-leaf .HyperMD-header-3 .cm-header, .cm-log-leaf .HyperMD-header-4 .cm-header { font-size: 1.02em; }
