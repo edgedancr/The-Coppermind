@@ -9,7 +9,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-==Capability is not reliability.== SAIL drew this lesson from [[Mata v. Avianca (2023)]]: AI is *capable* of generating professional-quality legal language, but it is not *reliable* enough to verify facts or sources on its own, and confusing the two leads to misuse ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
+> [!summary]
+> ==Capability is not reliability.== SAIL drew this lesson from [[Mata v. Avianca (2023)]]: AI is *capable* of generating professional-quality legal language, but it is not *reliable* enough to verify facts or sources on its own, and confusing the two leads to misuse ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
 
 ## Key Points
 - Generative AI systems are powerful tools, not authoritative sources. They can produce fluent, confident output even when it is false ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).

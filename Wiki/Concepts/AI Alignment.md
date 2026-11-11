@@ -9,7 +9,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-AI alignment means ==systems doing what we intend, even under pressure== ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]). SAIL described good alignment as human values, system goals, technology, models, and outcomes all working together ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
+> [!summary]
+> AI alignment means ==systems doing what we intend, even under pressure== ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]). SAIL described good alignment as human values, system goals, technology, models, and outcomes all working together ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
 
 ## Key Points
 - **Three friction points:** values are contested; context changes; incentives reward speed over safety ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).

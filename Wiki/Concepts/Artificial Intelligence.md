@@ -9,7 +9,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-SAIL approached artificial intelligence (AI) by asking what each word means. *Artificial* means created by man, implying imitation or the absence of naturalness: a human skill or craft made real. *Intelligent* means having the capacity to solve problems ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]]).
+> [!summary]
+> SAIL approached artificial intelligence (AI) by asking what each word means. *Artificial* means created by man, implying imitation or the absence of naturalness: a human skill or craft made real. *Intelligent* means having the capacity to solve problems ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]]).
 
 ## Key Points
 - **A broad definition** from Marc Andreessen: "The application of mathematics and software code to teach computers how to understand, synthesize, and generate knowledge in ways similar to how people do it... A way to make everything we care about better." ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]])

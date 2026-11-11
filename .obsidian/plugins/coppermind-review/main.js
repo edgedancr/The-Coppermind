@@ -618,6 +618,8 @@ module.exports = class CoppermindReview extends Plugin {
     this.currentPath = null;
     this.dashOpen = {};
     this.foldedViews = new WeakMap();
+    this.stripPaths = new WeakMap();
+    this.stripObservers = new Set();
 
     this.registerView(VIEW_TYPE, (leaf) => new QueueView(leaf, this));
     this.addSettingTab(new ReviewSettings(this.app, this));
@@ -649,7 +651,7 @@ module.exports = class CoppermindReview extends Plugin {
       this.enforceReading(leaf);
     }));
     this.registerEvent(this.app.workspace.on("layout-change", () => this.syncDashboardLeaves(false)));
-    this.registerEvent(this.app.metadataCache.on("changed", () => this.scheduleRefresh()));
+    this.registerEvent(this.app.metadataCache.on("changed", () => { this.scheduleRefresh(); this.syncDashboardLeaves(false); }));
     this.registerEvent(this.app.metadataCache.on("resolved", () => this.scheduleRefresh()));
     this.registerEvent(this.app.vault.on("delete", () => this.scheduleRefresh()));
     this.registerEvent(this.app.vault.on("rename", (file, oldPath) => this.onRename(file, oldPath)));
@@ -665,7 +667,11 @@ module.exports = class CoppermindReview extends Plugin {
   onunload() {
     document.querySelectorAll(".cm-resolve-btn, .cm-ribbon-logo").forEach((e) => e.remove());
     document.body.classList.remove("cm-on-dashboard");
-    document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-noprops-leaf").forEach((e) => e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-noprops-leaf"));
+    document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open").forEach((e) => e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open"));
+    document.querySelectorAll(".cm-propstrip").forEach((e) => e.remove());
+    this.stripObservers.forEach((o) => o.disconnect());
+    this.stripObservers.clear();
+    this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view && l.view.containerEl) { l.view.containerEl.classList.remove("cm-strip-leaf", "cm-props-open"); l.view.containerEl.querySelectorAll(".cm-propstrip").forEach((e) => e.remove()); l.view.__cmStripObs = null; } });
   }
 
   async persist() {
@@ -939,6 +945,13 @@ module.exports = class CoppermindReview extends Plugin {
       view.containerEl.classList.toggle("cm-dashboard-leaf", isDash);
       view.containerEl.classList.toggle("cm-log-leaf", isLog);
       view.containerEl.classList.toggle("cm-noprops-leaf", isDash || isLog || path === INDEX_PATH);
+      const useStrip = !!view.file && !isDash && !isLog && path !== INDEX_PATH;
+      view.containerEl.classList.toggle("cm-strip-leaf", useStrip);
+      if (this.stripPaths.get(view) !== path) {
+        this.stripPaths.set(view, path);
+        view.containerEl.classList.remove("cm-props-open"); // each note starts collapsed
+      }
+      if (useStrip) this.watchStrip(view); else this.removeStrips(view);
       if (isDash && enforce) this.enforceReading(leaf);
       if (isLog && this.foldedViews.get(view) !== path) {
         this.foldedViews.set(view, path);
@@ -947,6 +960,83 @@ module.exports = class CoppermindReview extends Plugin {
       if (!isLog) this.foldedViews.delete(view);
     });
     document.body.classList.toggle("cm-on-dashboard", this.isDashboard(ws.getActiveFile()));
+  }
+
+  /**
+   * Properties strip: the native Properties block is hidden and a one-line summary
+   * (type, status, date) sits in its place. Clicking it expands the real block.
+   */
+  watchStrip(view) {
+    this.ensureStrips(view);
+    if (!view.__cmStripObs) {
+      let timer = null;
+      const obs = new MutationObserver(() => {
+        if (timer) return;
+        timer = setTimeout(() => { timer = null; this.ensureStrips(view); }, 60);
+      });
+      obs.observe(view.containerEl, { childList: true, subtree: true });
+      view.__cmStripObs = obs;
+      this.stripObservers.add(obs);
+    }
+  }
+
+  removeStrips(view) {
+    view.containerEl.querySelectorAll(".cm-propstrip").forEach((e) => e.remove());
+    if (view.__cmStripObs) { view.__cmStripObs.disconnect(); this.stripObservers.delete(view.__cmStripObs); view.__cmStripObs = null; }
+  }
+
+  stripInfo(file) {
+    const cache = this.app.metadataCache.getFileCache(file);
+    const fm = cache && cache.frontmatter;
+    if (!fm) return null;
+    const day = (v) => (v ? String(v).slice(0, 10) : "");
+    const status = fm.status ? String(fm.status) : "";
+    const when = status === "verified" && fm.verified_on ? "verified " + day(fm.verified_on) : fm.drafted_on ? "drafted " + day(fm.drafted_on) : "";
+    return { type: fm.type ? String(fm.type) : "", status, when };
+  }
+
+  ensureStrips(view) {
+    if (!view.file) return;
+    const info = this.stripInfo(view.file);
+    const root = view.containerEl;
+    const metas = root.querySelectorAll(".metadata-container");
+    metas.forEach((meta) => {
+      let strip = meta.previousElementSibling;
+      if (strip && !strip.classList.contains("cm-propstrip")) strip = null;
+      if (!info) { if (strip) strip.remove(); return; }
+      const sig = [info.type, info.status, info.when].join("|");
+      if (!strip) {
+        strip = document.createElement("div");
+        strip.className = "cm-propstrip";
+        strip.setAttribute("role", "button");
+        strip.tabIndex = 0;
+        const toggle = () => {
+          const open = root.classList.toggle("cm-props-open");
+          root.querySelectorAll(".cm-propstrip").forEach((s) => s.setAttribute("aria-expanded", String(open)));
+        };
+        strip.addEventListener("click", toggle);
+        strip.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+        meta.parentElement.insertBefore(strip, meta);
+      }
+      strip.setAttribute("aria-expanded", String(root.classList.contains("cm-props-open")));
+      strip.setAttribute("aria-label", "Show or hide this page's properties");
+      if (strip.dataset.sig === sig) return;
+      strip.dataset.sig = sig;
+      strip.empty ? strip.empty() : (strip.textContent = "");
+      const chev = document.createElement("span");
+      chev.className = "cm-strip-chev";
+      try { setIcon(chev, "chevron-right"); } catch (e) { chev.textContent = "›"; }
+      strip.appendChild(chev);
+      const parts = [];
+      if (info.type) parts.push(["cm-strip-type", info.type]);
+      if (info.status) parts.push(["cm-strip-status cm-strip-" + info.status.replace(/[^a-z]/gi, ""), info.status]);
+      if (info.when) parts.push(["cm-strip-when", info.when]);
+      if (!parts.length) parts.push(["cm-strip-type", "properties"]);
+      parts.forEach(([cls, text], i) => {
+        if (i) { const dot = document.createElement("span"); dot.className = "cm-strip-dot"; dot.textContent = "·"; strip.appendChild(dot); }
+        const s = document.createElement("span"); s.className = cls; s.textContent = text; strip.appendChild(s);
+      });
+    });
   }
 
   /** Fold every log entry heading (and nothing else) so the log opens as a short list. Editing view only. */

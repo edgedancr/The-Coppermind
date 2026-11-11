@@ -9,7 +9,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-A transformer is the architecture behind large language models (LLMs). GPT stands for *generative pre-trained transformer*, a general term that has nothing to do with OpenAI specifically ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]). A text-driven GPT uses its training data to work from a prompt and find ==the most likely next word== ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]).
+> [!summary]
+> A transformer is the architecture behind large language models (LLMs). GPT stands for *generative pre-trained transformer*, a general term that has nothing to do with OpenAI specifically ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]). A text-driven GPT uses its training data to work from a prompt and find ==the most likely next word== ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]).
 
 ## Key Points
 - Transformers break text into tokens ([[Tokenization]]), map them as vectors in a high-dimensional space ([[Embedding]]), and use vector math to find the answer ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]).

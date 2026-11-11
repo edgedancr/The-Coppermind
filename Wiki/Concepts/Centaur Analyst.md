@@ -9,7 +9,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-The centaur model describes professionals who work *with* AI rather than being replaced by it. SAIL framed it as the shift from automation (replacing humans) to augmentation (enhancing humans) ([[SAIL Class Notes (Fall 2026)#9/24/26|SAIL notes, 9/24/26]]).
+> [!summary]
+> The centaur model describes professionals who work *with* AI rather than being replaced by it. SAIL framed it as the shift from automation (replacing humans) to augmentation (enhancing humans) ([[SAIL Class Notes (Fall 2026)#9/24/26|SAIL notes, 9/24/26]]).
 
 ## Key Points
 **Five capabilities of a strong centaur professional** ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]])

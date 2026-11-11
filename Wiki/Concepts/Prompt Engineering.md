@@ -9,7 +9,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-Prompt engineering is the practice of instructing an AI so that it produces useful output. SAIL's fundamentals: explain exactly what you need and the context of the situation, because ==the AI responds from the viewpoint you give it==, and without one its answer will be broad and largely unhelpful ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]).
+> [!summary]
+> Prompt engineering is the practice of instructing an AI so that it produces useful output. SAIL's fundamentals: explain exactly what you need and the context of the situation, because ==the AI responds from the viewpoint you give it==, and without one its answer will be broad and largely unhelpful ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]).
 
 ## Key Points
 - **Give it a worldview explicitly:** telling an AI to "think with a Christian worldview" does not make it think like you; you must feed it the worldview you want it to have ([[SAIL Class Notes (Fall 2026)#9/3/26|SAIL notes, 9/3/26]]). See [[Architecture of Worldview]].

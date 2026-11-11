@@ -9,7 +9,8 @@ drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboar
 drafted_on: 2026-11-11
 verified_on: 
 ---
-The Coppermind's review tools turn checking drafts into one steady loop: open the next draft, check it, resolve its flags, verify or reject it, and land on the next one. ==The tools do the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
+> [!summary]
+> The Coppermind's review tools turn checking drafts into one steady loop: open the next draft, check it, resolve its flags, verify or reject it, and land on the next one. ==The tools do the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
 The tools come from a small plugin I keep in the vault, **Coppermind Review** (`.obsidian/plugins/coppermind-review/`). They work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/` that have `status: draft`.
 

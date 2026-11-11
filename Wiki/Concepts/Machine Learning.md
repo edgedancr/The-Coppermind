@@ -9,7 +9,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-Machine learning (ML) is the step in SAIL's progression of AI that comes after statistics and before deep learning ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]]). SAIL described early approaches, such as Markov chains and the McCulloch & Pitts artificial neuron, as trying every path until one happens to be correct, then replicating it ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]]).
+> [!summary]
+> Machine learning (ML) is the step in SAIL's progression of AI that comes after statistics and before deep learning ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]]). SAIL described early approaches, such as Markov chains and the McCulloch & Pitts artificial neuron, as trying every path until one happens to be correct, then replicating it ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]]).
 
 ## Key Points
 **Two types of problems** ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]])

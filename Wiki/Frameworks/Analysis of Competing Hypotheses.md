@@ -10,7 +10,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-Analysis of Competing Hypotheses (ACH) is a structured analytic technique that reverses the usual order of analysis: instead of starting from a conclusion and gathering support for it, the analyst lists every plausible hypothesis and uses the evidence to disprove them ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]). SAIL taught that it was developed by [[Richards Heuer]] at the CIA in 1999 to counteract [[Confirmation Bias]] ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).
+> [!summary]
+> Analysis of Competing Hypotheses (ACH) is a structured analytic technique that reverses the usual order of analysis: instead of starting from a conclusion and gathering support for it, the analyst lists every plausible hypothesis and uses the evidence to disprove them ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]). SAIL taught that it was developed by [[Richards Heuer]] at the CIA in 1999 to counteract [[Confirmation Bias]] ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).
 
 ## The Great Inversion
 - **Normal analysis (advocacy):** intuition → conclusion → gather evidence to support it ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).

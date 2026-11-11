@@ -16,7 +16,8 @@ drafted_by:
 drafted_on: "{{date:YYYY-MM-DD}}"
 verified_on: 
 ---
-%% 2–3 sentences: what happened, and the lesson the case is used to teach. %%
+> [!summary]
+> %% 2–3 sentences: what happened, and the lesson the case is used to teach. %%
 
 ## What Happened
 - 

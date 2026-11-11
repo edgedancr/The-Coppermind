@@ -15,7 +15,8 @@ drafted_by:
 drafted_on: "{{date:YYYY-MM-DD}}"
 verified_on: 
 ---
-%% 2–3 sentences of plain prose: what this idea is, for a smart reader who wasn't in class. Cite each claim. %%
+> [!summary]
+> %% 2–3 sentences of plain prose: what this idea is, for a smart reader who wasn't in class. Cite each claim. %%
 
 ## Key Points
 - 

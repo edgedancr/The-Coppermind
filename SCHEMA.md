@@ -220,7 +220,7 @@ Each source card rates the source with the Admiralty Code. The agent may propose
 
 ## 8. Page style
 
-- **Start with two or three sentences of plain prose** that explain the idea to a smart reader who wasn't in the class.
+- **Start with two or three sentences of plain prose** that explain the idea to a smart reader who wasn't in the class. **Put them in a `> [!summary]` callout** as the first thing on the page, so the summary stands out. A glossary term's definition goes in the callout too.
 - **Then use nested bullets**, the way I take notes, for the details.
 - **Use `==highlight==` for the key claim or two** on the page, as I do in my notes. Use **bold** for terms being defined. Don't overuse either.
 - **Write for an outsider:** spell out acronyms on first use, and never say "in class" without naming the course and date.

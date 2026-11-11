@@ -12,7 +12,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-10
 verified_on: 2026-11-11
 ---
-Git keeps a full history of the Coppermind, so every approved change is recorded and any mistake can be undone. In this wiki, ==a git commit is the "save as final" step==: it happens right after I verify the agent's drafts ([[SCHEMA#12. Version control (git)|Schema §12]]). This guide sets git up once and then explains the habit for each review session.
+> [!summary]
+> Git keeps a full history of the Coppermind, so every approved change is recorded and any mistake can be undone. In this wiki, ==a git commit is the "save as final" step==: it happens right after I verify the agent's drafts ([[SCHEMA#12. Version control (git)|Schema §12]]). This guide sets git up once and then explains the habit for each review session.
 
 There are two ways to do it. **Option A is recommended**, because everything stays inside Obsidian and it creates the repository in this folder exactly as it is.
 

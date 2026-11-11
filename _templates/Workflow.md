@@ -11,7 +11,8 @@ drafted_by:
 drafted_on: "{{date:YYYY-MM-DD}}"
 verified_on: 
 ---
-%% 2–3 sentences: what this process produces and when to run it. %%
+> [!summary]
+> %% 2–3 sentences: what this process produces and when to run it. %%
 
 ## Steps
 1. 

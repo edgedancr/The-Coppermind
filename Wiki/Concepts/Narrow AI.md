@@ -9,7 +9,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-Narrow AI is AI that does a specific task, or set of tasks, really well ([[SAIL Class Notes (Fall 2026)#10/15/26|SAIL notes, 10/15/26]]). SAIL noted it is already everywhere (spam filters, recommendations, navigation, medical image screening), with drug and protein design, self-driving logistics, and AI agents at work on the near horizon ([[SAIL Class Notes (Fall 2026)#10/15/26|SAIL notes, 10/15/26]]).
+> [!summary]
+> Narrow AI is AI that does a specific task, or set of tasks, really well ([[SAIL Class Notes (Fall 2026)#10/15/26|SAIL notes, 10/15/26]]). SAIL noted it is already everywhere (spam filters, recommendations, navigation, medical image screening), with drug and protein design, self-driving logistics, and AI agents at work on the near horizon ([[SAIL Class Notes (Fall 2026)#10/15/26|SAIL notes, 10/15/26]]).
 
 ## Key Points
 **Negative outlooks** ([[SAIL Class Notes (Fall 2026)#10/15/26|SAIL notes, 10/15/26]])

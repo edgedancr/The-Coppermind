@@ -13,7 +13,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11
 ---
-SAIL describes four ways the unintended consequences of AI can cascade into catastrophic outcomes: bias at scale, job displacement, rogue systems, and information quality collapse ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
+> [!summary]
+> SAIL describes four ways the unintended consequences of AI can cascade into catastrophic outcomes: bias at scale, job displacement, rogue systems, and information quality collapse ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
 
 ## Components
 - **Bias at scale:** small model biases become systemic outcomes.

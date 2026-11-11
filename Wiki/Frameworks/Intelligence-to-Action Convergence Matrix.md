@@ -9,7 +9,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-The Intelligence-to-Action Convergence Matrix lines up four models of how information becomes action (the ISR pipeline, the intelligence cycle, the OODA loop, and the kill chain) against one common set of stages, from tasking to assessment ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]). Read as a table, it shows where each model's steps correspond.
+> [!summary]
+> The Intelligence-to-Action Convergence Matrix lines up four models of how information becomes action (the ISR pipeline, the intelligence cycle, the OODA loop, and the kill chain) against one common set of stages, from tasking to assessment ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]). Read as a table, it shows where each model's steps correspond.
 
 ## Components
 

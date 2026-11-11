@@ -15,7 +15,8 @@ drafted_by:
 drafted_on: "{{date:YYYY-MM-DD}}"
 verified_on: 
 ---
-%% 2–3 sentences: what this framework is for, who developed or taught it, and when to reach for it. %%
+> [!summary]
+> %% 2–3 sentences: what this framework is for, who developed or taught it, and when to reach for it. %%
 
 ## Components
 - 

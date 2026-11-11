@@ -10,7 +10,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-The Three-Ps Risk Framework assesses the risks of an AI system at three levels: the **Program** (the technical system), the **Person** (the individual affected), and the **Population** (society as a whole) ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]). SAIL presented it as a multi-level assessment because AI technology scales very quickly ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]).
+> [!summary]
+> The Three-Ps Risk Framework assesses the risks of an AI system at three levels: the **Program** (the technical system), the **Person** (the individual affected), and the **Population** (society as a whole) ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]). SAIL presented it as a multi-level assessment because AI technology scales very quickly ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]).
 
 ## Components
 

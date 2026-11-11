@@ -11,7 +11,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11
 ---
-SAIL distinguishes six kinds of essay by purpose, and identifies the ==analytical essay as the most common type in Strategic Intelligence (SI)== ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]]).
+> [!summary]
+> SAIL distinguishes six kinds of essay by purpose, and identifies the ==analytical essay as the most common type in Strategic Intelligence (SI)== ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]]).
 
 ## Components
 

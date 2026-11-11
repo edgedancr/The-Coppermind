@@ -10,7 +10,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-Deep learning is the form of machine learning that learns implicitly, using depth to build progressively more abstract representations ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]). SAIL taught that ==deep learning shifted AI from discriminative to generative== ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]).
+> [!summary]
+> Deep learning is the form of machine learning that learns implicitly, using depth to build progressively more abstract representations ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]). SAIL taught that ==deep learning shifted AI from discriminative to generative== ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]).
 
 ## Key Points
 - **Why "deep" matters:** depth allows progressive abstraction ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]):

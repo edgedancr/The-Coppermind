@@ -9,7 +9,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-A **token** is the smallest chunk of text that carries meaning; an AI reads your sentences as tokens ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]). SAIL's "tokenization of everything" extends this: text, images, and audio are all converted into vectors, so to the model ==a pixel is just another word== ([[SAIL Class Notes (Fall 2026)#9/15/26|SAIL notes, 9/15/26]]).
+> [!summary]
+> A **token** is the smallest chunk of text that carries meaning; an AI reads your sentences as tokens ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]). SAIL's "tokenization of everything" extends this: text, images, and audio are all converted into vectors, so to the model ==a pixel is just another word== ([[SAIL Class Notes (Fall 2026)#9/15/26|SAIL notes, 9/15/26]]).
 
 ## Key Points
 - Tokenization requires understanding the meaning of the token, so it is a gross approximation of meaning, because humans do not understand everything ([[SAIL Class Notes (Fall 2026)#9/15/26|SAIL notes, 9/15/26]]).

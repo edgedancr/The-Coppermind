@@ -9,7 +9,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-A hallucination is fluent, confident AI output that is false. In SAIL's main example, [[Mata v. Avianca (2023)]], ChatGPT invented a legal case that looked real; the model was not retrieving records but filling in the gaps of what it needed with fiction ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
+> [!summary]
+> A hallucination is fluent, confident AI output that is false. In SAIL's main example, [[Mata v. Avianca (2023)]], ChatGPT invented a legal case that looked real; the model was not retrieving records but filling in the gaps of what it needed with fiction ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
 
 ## Key Points
 - SAIL calls hallucination ==a feature, not a bug== ([[SAIL Class Notes (Fall 2026)#9/15/26|SAIL notes, 9/15/26]]).

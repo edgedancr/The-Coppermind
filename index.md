@@ -6,18 +6,18 @@ updated: 2026-11-11
 
 A map of every page in the Coppermind, grouped by type. The AI agent updates this after every operation; I check it during health checks. Within each type, pages are listed under Verified or Drafts, each with a one-line summary.
 
-**Totals:** 5 verified · 49 drafts
+**Totals:** 8 verified · 46 drafts
 
 ## Concepts (26)
 
-### Verified (1)
+### Verified (3)
 - [[Agentic AI]] — AI with tools, and the added risk
-
-### Drafts (25)
-- [[AI Alignment]] — Systems doing what we intend, even under pressure
 - [[AI in Intelligence Production]] — How AI changes collection, threat prediction, and policymaking
-- [[AI in Warfighting]] — How AI compresses the lethal engagement cycle
 - [[AI-Enabled Surveillance]] — Surveillance capitalism, state surveillance, and privacy as autonomy
+
+### Drafts (23)
+- [[AI Alignment]] — Systems doing what we intend, even under pressure
+- [[AI in Warfighting]] — How AI compresses the lethal engagement cycle
 - [[Artificial Intelligence]] — What "artificial" and "intelligent" mean, and AI's progression
 - [[Automation Bias]] — Over-trusting confident AI output
 - [[Capability vs. Reliability]] — Fluent output is not verified output
@@ -58,14 +58,14 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 ## Frameworks (9)
 
-### Verified (3)
+### Verified (4)
 - [[Architecture of Worldview]] — Eight layers of worldview, from theology to culture
 - [[Cascade of Unintended Consequences]] — Four paths from AI side effects to catastrophe
 - [[Essay Types]] — Six essay types by purpose; analytical is most common in SI
-
-### Drafts (6)
-- [[Analysis of Competing Hypotheses]] — Disprove hypotheses instead of confirming one; rules for doing it with AI
 - [[Four Levels of Prompt Engineering]] — NPC, Mid, Boss, Legendary
+
+### Drafts (5)
+- [[Analysis of Competing Hypotheses]] — Disprove hypotheses instead of confirming one; rules for doing it with AI
 - [[Intelligence-to-Action Convergence Matrix]] — ISR pipeline, intelligence cycle, OODA loop, and kill chain lined up stage by stage
 - [[ODNI AI Ethics Framework]] — The IC's AI ethics framework and the misconceptions it corrects (principles not yet recorded)
 - [[Think-Calculate-Verify Loop]] — Human thinks, AI calculates, human verifies

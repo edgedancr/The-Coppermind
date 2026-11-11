@@ -14,9 +14,11 @@ The convictions that shape how I read and judge everything else in the Coppermin
 - The Bible is the final authority over everything.
 - God created the whole world from nothing over a literal 7 days.
 - God has given man free will. He knows everything that will happen, but allows man to make his own choices. God is the author of all good things. He is not the author of evil.
+- Man is saved by grace through faith. Man does nothing to earn justification, he only accepts the gift that God has bought with Christ's blood.
+- God does act today, though mostly through ordinary means. 
 ## Ontology (Reality)
 *What is real? What is the nature and structure of existence?*
-
+- The material world is real.
 ## Epistemology (Knowledge)
 *How do we know what is true? What are the legitimate sources of knowledge and authority?*
 - For knowledge from AI, I always follow the rule "I design, the AI drafts, I verify"

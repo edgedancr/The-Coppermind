@@ -9,7 +9,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-Human-centered AI (HCAI) is the approach of building AI to amplify human abilities rather than replace them. SAIL quoted IBM's 2022 definition ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]):
+> [!summary]
+> Human-centered AI (HCAI) is the approach of building AI to amplify human abilities rather than replace them. SAIL quoted IBM's 2022 definition ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]):
 
 > "Human-Centered AI (HCAI) is an emerging discipline intent on creating AI systems that amplify and augment rather than displace human abilities. HCAI seeks to preserve human control in a way that ensures artificial intelligence meets our needs while also operating transparently, delivering equitable outcomes, and respecting privacy." (IBM, 2022)
 

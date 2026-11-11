@@ -154,6 +154,28 @@ body {
   font-family: Georgia, "Palatino Linotype", serif;
 }
 
+/* Page summary: the first block of every wiki page (patina bar, small label, slightly larger text) */
+.callout[data-callout="summary"] {
+  --callout-color: var(--callout-color-patina);
+  border: none;
+  border-left: 4px solid rgb(var(--callout-color-patina));
+  border-radius: 6px;
+  background-color: rgba(var(--callout-color-patina), 0.10);
+  padding: 10px 16px 12px;
+  margin: 0.4em 0 1.3em;
+}
+.callout[data-callout="summary"] .callout-icon { display: none; }
+.callout[data-callout="summary"] .callout-title {
+  font-family: var(--font-interface);
+  font-size: 0.74em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(var(--callout-color-patina));
+  padding: 0 0 2px;
+}
+.callout[data-callout="summary"] .callout-content { font-size: 1.04em; padding: 0; }
+
 /* ---------- Sidebar and navigation ---------- */
 .nav-file-title.is-active,
 .nav-folder-title.is-active {

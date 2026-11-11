@@ -198,3 +198,19 @@ body.cm-on-dashboard .workspace-leaf-content[data-type="file-properties"] .view-
   margin-bottom: 0.15em;
 }
 .cm-log-leaf .HyperMD-header-3 .cm-header, .cm-log-leaf .HyperMD-header-4 .cm-header { font-size: 1.02em; }
+
+/* properties strip: one-line summary in place of the Properties block; click to expand */
+.cm-strip-leaf:not(.cm-props-open) .metadata-container,
+.cm-strip-leaf:not(.cm-props-open) .frontmatter-container { display: none !important; }
+.cm-propstrip { display: flex; align-items: center; gap: 6px; width: fit-content; max-width: 100%; margin: 2px 0 14px -4px; padding: 3px 8px 3px 2px; border-radius: 4px; font-size: var(--font-ui-smaller); color: var(--text-faint); cursor: pointer; user-select: none; }
+.cm-propstrip:hover, .cm-propstrip:focus-visible { background: var(--cm-copper-soft); color: var(--text-muted); outline: none; }
+.cm-strip-chev { display: inline-flex; }
+.cm-strip-chev svg { width: 14px; height: 14px; transition: transform 0.15s; }
+.cm-props-open .cm-propstrip .cm-strip-chev svg { transform: rotate(90deg); }
+.cm-strip-type { text-transform: capitalize; }
+.cm-strip-dot { opacity: 0.6; }
+.cm-strip-status { font-weight: 600; font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; }
+.cm-strip-draft { background: rgba(224, 168, 70, 0.16); color: var(--cm-amber); }
+.cm-strip-verified { background: rgba(95, 174, 158, 0.16); color: var(--cm-patina); }
+.cm-strip-rejected { background: rgba(200, 96, 74, 0.16); color: var(--cm-rust); }
+.cm-props-open .cm-propstrip { margin-bottom: 6px; }

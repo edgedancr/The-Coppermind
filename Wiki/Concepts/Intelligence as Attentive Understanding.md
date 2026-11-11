@@ -9,7 +9,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-In "How to Read Tolkien and Why," SAIL argued that Strategic Intelligence (SI) is a liberal-arts practice of understanding human beings, cultures, and motives, and that literature trains the habits by which intelligence is done well ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]). ==Frameworks and methods are the means; faithful understanding is the goal.== ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]])
+> [!summary]
+> In "How to Read Tolkien and Why," SAIL argued that Strategic Intelligence (SI) is a liberal-arts practice of understanding human beings, cultures, and motives, and that literature trains the habits by which intelligence is done well ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]). ==Frameworks and methods are the means; faithful understanding is the goal.== ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]])
 
 ## Key Points
 - **Come to the thing itself:** to understand an essay or a book, read it and take the time to think about it ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]).

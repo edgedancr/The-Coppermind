@@ -140,3 +140,46 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Essay Types]]
 - **Commit:** `verify: Essay Types`
+
+### [2026-11-11] verify | Four Levels of Prompt Engineering
+
+- **Verify:**
+  - Approved: [[Four Levels of Prompt Engineering]]
+- **Commit:** `verify: Four Levels of Prompt Engineering`
+
+### [2026-11-11] schema | Summary callout at the top of every wiki page
+
+- **Think:** The summary at the top of a wiki page needs to stand out. I picked option B from the mockups: a callout card labelled "Summary".
+- **Calculate:** Claude (claude-sonnet-5-5) made these changes:
+  - Wrapped the opening paragraph of all 52 pages in `Wiki/` in a `> [!summary]` callout. Nothing else on any page changed: I compared every page with its original, minus the wrapper, and checked that the flag callouts are unchanged. For glossary terms, the callout holds the definition and "Used in" stays below it.
+  - 6 of those pages were already verified ([[Setting Up Git for the Coppermind]], [[Agentic AI]], [[Architecture of Worldview]], [[Cascade of Unintended Consequences]], [[Essay Types]], [[Four Levels of Prompt Engineering]]). This is a formatting change only, so they stay verified ([[SCHEMA#7. Draft vs. verified|Schema §7]], item 5).
+  - Left alone: [[My Worldview]] (the agent never edits it), the source card, and the Analysis, Summary, Perspective and Source Card templates.
+  - Styled the callout in the Coppermind theme (`coppermind.css`): a patina bar, a small uppercase "Summary" label, and slightly larger text.
+  - Updated the Concept, Case Study, Framework, Guide, Person, Prompt, Workflow and Glossary Term templates, and [[SCHEMA#8. Page style|Schema §8]], so new pages start this way.
+  - Tested outside Obsidian (reversal check on every page, flag parsing before and after). Not yet seen in Obsidian itself.
+- **Verify:** pending. To open a few pages and check how the summary looks, and to decide whether the "Whose view is this?" callout (also patina) needs a different color.
+- **Commit:** `schema: summary callout at the top of every wiki page`
+
+
+### [2026-11-11] schema | Properties strip replaces the Properties block
+
+- **Think:** The Properties block at the top of every wiki page took up space I no longer need, since verifying happens from the review sidebar. I picked option 2: hide the block and show a one-line strip instead.
+- **Calculate:** Claude (claude-sonnet-5-5) updated the Coppermind Review plugin to v0.5.0:
+  - On every note except the Dashboard, index, and log (which hide properties entirely), the native Properties block is hidden and a one-line strip sits in its place: type, status (DRAFT or VERIFIED), and the drafted or verified date.
+  - Clicking the strip (or pressing Enter on it) expands the real Properties block in place. Each note opens collapsed.
+  - The strip reads the page's frontmatter, so it updates when a page is verified. No page content or property values changed.
+  - Tested outside Obsidian (jsdom and a screenshot of the styling). Not yet seen in Obsidian itself.
+- **Verify:** pending. To reload the plugin, open a wiki page in Reading view and in edit view, and check that the strip shows, expands, and survives switching modes.
+- **Commit:** `plugin: collapsible properties strip (v0.5.0)`
+
+### [2026-11-11] verify | AI in Intelligence Production
+
+- **Verify:**
+  - Approved: [[AI in Intelligence Production]]
+- **Commit:** `verify: AI in Intelligence Production`
+
+### [2026-11-11] verify | AI-Enabled Surveillance
+
+- **Verify:**
+  - Approved: [[AI-Enabled Surveillance]]
+- **Commit:** `verify: AI-Enabled Surveillance`

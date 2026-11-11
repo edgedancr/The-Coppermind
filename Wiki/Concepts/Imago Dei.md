@@ -9,7 +9,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-The *imago Dei* is the teaching that human beings are made in the image of God. SAIL taught it as a foundation for ethics in intelligence work and AI: ==it is what we are protecting, or potentially violating, in our line of work==, so we must understand it when weighing risks to humanity from AI ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]).
+> [!summary]
+> The *imago Dei* is the teaching that human beings are made in the image of God. SAIL taught it as a foundation for ethics in intelligence work and AI: ==it is what we are protecting, or potentially violating, in our line of work==, so we must understand it when weighing risks to humanity from AI ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]).
 
 ## Key Points
 SAIL described God, and humans made in His image, as ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]):

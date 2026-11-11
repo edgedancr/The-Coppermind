@@ -1,15 +1,23 @@
 ---
 type: concept
-status: draft
-aliases: ["AI in Government"]
-courses: ["SAIL"]
-sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
-related: ["[[Automation Bias]]", "[[Time Compression Trap]]", "[[Human Decision Point]]", "[[Intelligence-to-Action Convergence Matrix]]"]
+status: verified
+aliases:
+  - AI in Government
+courses:
+  - SAIL
+sources:
+  - "[[SRC - SAIL Class Notes (Fall 2026)]]"
+related:
+  - "[[Automation Bias]]"
+  - "[[Time Compression Trap]]"
+  - "[[Human Decision Point]]"
+  - "[[Intelligence-to-Action Convergence Matrix]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-11
 ---
-SAIL taught that AI fundamentally reshapes the intelligence production process in three ways: how intelligence is collected, how threats are predicted, and how policy is made ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).
+> [!summary]
+> SAIL taught that AI fundamentally reshapes the intelligence production process in three ways: how intelligence is collected, how threats are predicted, and how policy is made ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).
 
 ## Key Points
 1. **Collection enhancement:** AI dramatically expands what analysts can see and hear: volume, speed, and cross-language translation. ==The analyst's job shifts from finding information to judging it.== Examples given: the National Geospatial-Intelligence Agency's (NGA) AI-assisted GEOINT, and Babel Street and Palantir Gotham ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).

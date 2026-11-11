@@ -12,7 +12,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-In *Mata v. Avianca*, a lawyer used ChatGPT to help write a legal brief that cited prior cases, including *Varghese v. China Southern Airlines*, a case that did not exist ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]). SAIL used it to teach that ==capability is not reliability== ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
+> [!summary]
+> In *Mata v. Avianca*, a lawyer used ChatGPT to help write a legal brief that cited prior cases, including *Varghese v. China Southern Airlines*, a case that did not exist ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]). SAIL used it to teach that ==capability is not reliability== ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
 
 ## What Happened
 - ChatGPT generated a hallucinated citation, a fabricated case that *looked* real: a plausible plaintiff name (Varghese), a real airline (China Southern Airlines), and proper legal citation formatting ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).

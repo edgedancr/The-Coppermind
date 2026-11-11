@@ -9,7 +9,8 @@ drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
-SAIL distinguished **intelligence**, the capacity to solve problems, from **consciousness**, the capacity to have subjective feelings and experiences (qualia) ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]). In the quotation SAIL used, AI ==acts like a human being; it does not think or feel like a human being== ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
+> [!summary]
+> SAIL distinguished **intelligence**, the capacity to solve problems, from **consciousness**, the capacity to have subjective feelings and experiences (qualia) ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]). In the quotation SAIL used, AI ==acts like a human being; it does not think or feel like a human being== ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
 
 ## Key Points
 - The quotation, attributed in my notes to Alan Turing: "What really matters is competence in completing a prescribed task, not consciousness of what that task happens to be. The machine may not be conscious in the same way we are, but it is programmed to respond cognitively in the ways that we do." ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]])
