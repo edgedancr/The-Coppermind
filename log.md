@@ -190,3 +190,56 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - Approved: [[My Worldview]]
   - Revised: [[My Worldview]] — Added in my worldview. It could use some more detail, but it will suffice for the time being.
 - **Commit:** `verify: My Worldview`
+
+### [2026-11-11] setup | Ingest prompt
+
+- **Think:** I asked for a prompt to use whenever I want a source dissected and turned into new wiki pages or additions to existing ones, and asked how much of that framework already exists in the Coppermind and how much belongs in the prompt.
+- **Calculate:** Claude (claude-opus-5-5) drafted [[Dissect and Ingest a Source]] in `Wiki/Prompts/`. The prompt points to [[SCHEMA]] for everything the schema already covers and adds only: per-run inputs with defaults, a dissect-first step, a create / append / skip rule, how to handle sources that disagree and flags a new source may resolve, a default of proposing (not making) changes to verified pages, and the report format.
+  - Proposed typed link: [[Dissect and Ingest a Source]] → applies_to → [[LLM Wiki]] — the prompt is a tool used on this wiki.
+  - Suggested in chat, not made: schema additions for the create-or-append rule, the two flag callouts the review plugin reads but §6 doesn't list (`[!caution]` accuracy check, `[!todo]` gap), handling sources that disagree, and how to treat my own work as a source.
+- **Verify:** pending. To try the prompt on the next source and verify the page after.
+- **Commit:** `setup: ingest prompt (draft)`
+
+### [2026-11-11] setup | Summary prompt
+
+- **Think:** I gave Claude my summary prompt (the one the Summary template calls "SAIL IC Style Summaries") and asked whether it should change to work better with the Coppermind.
+- **Calculate:** Claude (claude-opus-5-5) drafted [[Intelligence Community Style Summaries]] in `Wiki/Prompts/`, with my old name as an alias. Changes from my version:
+  - Fixed "the text I paste between" (it now says the text below the prompt, or a file I attach or name) and dropped "that is provided in your context" for ICD 203, which isn't in the vault.
+  - Added a locator after every claim. The length rule already excluded locators, but the prompt never asked for them.
+  - The attribution line now asks for the exact model name or ID, and says "model not stated" instead of guessing.
+  - Added an "In the Coppermind" section: Summary template, `Summary - <source title>` page name, properties instead of the attribution line, the schema's wikilink citation format, a `[!todo]` callout for transcript gaps, links to existing pages, and typed links proposed in chat.
+  - Left the content rules, length budget, and the four sections as I wrote them, with small wording fixes.
+  - Pointed [[Dissect and Ingest a Source]] at the new page for summaries of readings.
+- **Verify:** pending. To compare with my original and verify after using it once.
+- **Commit:** `setup: summary prompt (draft)`
+
+### [2026-11-11] verify | Dissect and Ingest a Source
+
+- **Verify:**
+  - Approved: [[Dissect and Ingest a Source]]
+- **Commit:** `verify: Dissect and Ingest a Source`
+
+### [2026-11-11] verify | Intelligence Community Style Summaries
+
+- **Verify:**
+  - Approved: [[Intelligence Community Style Summaries]]
+- **Commit:** `verify: Intelligence Community Style Summaries`
+
+### [2026-11-11] schema | Guest lecturers named (v0.2)
+
+- **Think:** During the Intro to Intelligence ingest plan, I decided guest lecturers should be named in the wiki, and asked for that rule to go in the schema or the prompt.
+- **Calculate:** Claude (claude-opus-5-5) added it to [[SCHEMA#6. Citation and attribution|Schema §6]]: a fourth voice, "a guest lecturer," named by title and name with the course and date, and a rule that content under a guest-lecture heading belongs to the guest, with no contact details or other personal information and no People pages unless I ask. Version 0.1 → 0.2, with a changelog line.
+- **Verify:** pending. The wording is mine to approve or rewrite.
+- **Commit:** `schema: v0.2, guest lecturers named`
+
+### [2026-11-11] ingest | Intro to Intelligence Class Notes, 8/25/26–11/10/26
+
+- **Think:** I asked Claude to dissect and ingest my Intro to Intelligence notes using [[Dissect and Ingest a Source]] with its defaults (plan first, whole file, skip assignment logistics). I approved the plan with three changes: keep guest lecturers' names (now [[SCHEMA#6. Citation and attribution|Schema §6]]), skip the Four Tiers of AI Governance, and make the internship guide.
+- **Calculate:** Claude (claude-opus-5-5) copied the notes unchanged into `Sources/Class Notes` as [[Intro to Intelligence Class Notes (Fall 2026)]], drafted [[SRC - Intro to Intelligence Class Notes (Fall 2026)]] (proposed rating B-2), and drafted 46 pages: 8 frameworks, 14 concepts, 2 case studies, 21 glossary terms, and 1 guide. Every claim cites the notes by class date.
+  - **Added to existing drafts (6):** [[Capability vs. Reliability]] (11/10 video exercise takeaways), [[Human Decision Point]], [[Centaur Analyst]], and [[Hallucination]] (Detective Mennen on AI), [[Intelligence-to-Action Convergence Matrix]] (a "Sources disagree" flag on the intelligence cycle, and the TCPED link), and [[Analysis of Competing Hypotheses]] (example_of → [[Structured Analytic Technique]]).
+  - **Proposed for verified pages, not made:** [[Architecture of Worldview]] (the 9/1 worldview questions for biographical sketches) and [[AI in Intelligence Production]] (a "Sources disagree" flag on whether INT names mean the product or the collection).
+  - **Flags on the pages:** 13 accuracy checks, 13 gaps in my notes, 2 "Sources disagree," 1 "Whose view?" ([[Intelligence (National Security)]], 8/25), and 2 unsourced-background notes (Treverton on [[Puzzles and Mysteries]]; Kahneman on [[System 1 and System 2 Thinking]]).
+  - **Typed links proposed:** 40, listed with reasons in chat.
+  - **Left out on purpose:** listed on the source card under Ingest Progress.
+- **Verify:** pending. Item by item.
+- **Commit:** `ingest: Intro to Intelligence notes 8/25–11/10 — 46 drafts + source card, pending review`

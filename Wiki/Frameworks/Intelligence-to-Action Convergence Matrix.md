@@ -2,8 +2,8 @@
 type: framework
 status: draft
 aliases: ["Convergence Matrix"]
-courses: ["SAIL"]
-sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
+courses: ["SAIL", "Intro to Intelligence"]
+sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"]
 related: ["[[Kill Chain]]", "[[OODA Loop]]", "[[AI in Warfighting]]", "[[Human Decision Point]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
@@ -25,6 +25,11 @@ Source for the table: ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20
 
 > [!todo] Check the table
 > Some cells are blank in my notes. Confirm whether they were blank on the original slide or just not copied down.
+
+> [!caution] Sources disagree
+> SAIL's intelligence-cycle row runs collect, process, analyze, decide, act (SAIL notes, 10/20/26). Intro to Intelligence taught the intelligence cycle as collection, processing, analysis and production, and dissemination (Intro notes, 9/15/26). See [[Intelligence Cycle]].
+
+- The ISR pipeline row uses the same five stages Intro to Intelligence taught as TCPED ([[Intro to Intelligence Class Notes (Fall 2026)#9/1/26|Intro notes, 9/1/26]]); see [[Tasking, Collection, Processing, Exploitation, and Dissemination]].
 
 ## How to Use It
 - Read down a column to see how the same stage appears in each model. For example, "Decide" in the intelligence cycle and OODA loop lines up with "Target" in the kill chain.

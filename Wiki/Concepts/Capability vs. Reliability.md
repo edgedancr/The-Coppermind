@@ -2,8 +2,8 @@
 type: concept
 status: draft
 aliases: []
-courses: ["SAIL"]
-sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
+courses: ["SAIL", "Intro to Intelligence"]
+sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"]
 related: ["[[Hallucination]]", "[[Automation Bias]]", "[[Think-Calculate-Verify Loop]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
@@ -15,4 +15,9 @@ verified_on:
 ## Key Points
 - Generative AI systems are powerful tools, not authoritative sources. They can produce fluent, confident output even when it is false ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
 - Using AI in high-risk professional settings without verification exposes others to real harm: "Using AI without understanding its limits is not innovation; it is risk transfer." ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]])
+- Intro to Intelligence's AI video analysis exercise ended with two takeaways: "Detail doesn't carry the same weight as documentation," and "Precision does not excuse lack of accuracy." ([[Intro to Intelligence Class Notes (Fall 2026)#11/10/26|Intro notes, 11/10/26]])
+
+> [!todo] Gap in my notes
+> The 11/10 notes list the video's claims and the two takeaways, but not what the exercise concluded about the video itself.
+
 - The remedy is to always think, calculate, then verify; see [[Think-Calculate-Verify Loop]] ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).

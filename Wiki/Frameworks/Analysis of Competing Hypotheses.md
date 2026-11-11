@@ -4,6 +4,7 @@ status: draft
 aliases: ["ACH"]
 courses: ["SAIL"]
 sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
+example_of: ["[[Structured Analytic Technique]]"]
 counters: ["[[Confirmation Bias]]"]
 related: ["[[Richards Heuer]]", "[[Prompt Engineering]]", "[[Capability vs. Reliability]]"]
 drafted_by: Claude (claude-opus-5-5)

@@ -1,13 +1,13 @@
 ---
 type: schema
-version: 0.1
+version: 0.2
 status: draft
 owner: Harrison Nickles
-updated: 2026-11-10
+updated: 2026-11-11
 ---
 # The Coppermind — Schema
 
-This is the rulebook for the Coppermind, my personal LLM wiki (my SAIL portfolio). Any AI agent working in this vault reads this file first and follows it. Where this file and an instruction in chat disagree, ask me before acting.
+This is the rulebook for the Coppermind, my personal LLM wiki (SAIL portfolio). Any AI agent working in this vault reads this file first and follows it. Where this file and an instruction in chat disagree, ask me before acting.
 
 The Coppermind follows the SAIL version of the LLM-wiki pattern, not Karpathy's original: **I design, the AI drafts, I verify.** Nothing becomes part of the wiki as final until I have reviewed and approved it.
 
@@ -51,7 +51,7 @@ The Coppermind/
 ├── index.md                Map of every page
 ├── log.md                  Dated record of every operation
 ├── Review Queue.base       Live list of pages waiting for review
-├── CLAUDE.md, AGENTS.md    Pointers to this file for different agents
+├── AGENTS.md               Pointers to this file for agents
 ├── Sources/
 │   ├── Class Notes/        Copies of my course notes (one file per course)
 │   ├── My Work/            My assignments, papers, analyses
@@ -165,16 +165,18 @@ The first two and the last mirror the Supports / Contradicts / Neither marks in 
 
 ### Attribution: whose voice is this?
 
-My class notes mix three voices, and the wiki keeps them separate:
+My class notes mix four voices, and the wiki keeps them separate:
 
 | Voice | How to write it |
 |---|---|
 | **A source or author** (a book, article, quoted person) | Name them: "Heuer developed ACH to counter confirmation bias…" |
 | **The instructor / course** | Name the course and date: "SAIL presented the Three-Ps framework as… (9/1/26)" |
+| **A guest lecturer** | Name them, by the title and name my notes give, with the course and date: "In an Intro to Intelligence guest lecture, CDR Blocker argued… (8/27/26)" |
 | **Me** | Never in a wiki page as fact. My views go in `Perspectives/`, or in a `## My Take` section that only I write |
 
 Rules:
 - **By default, content in my class notes is treated as what was taught in class**, unless it is quoted (then it belongs to the person quoted).
+- **Content under a guest-lecture heading belongs to the guest lecturer**, not the course, and is attributed to them by name. Their name is the only personal detail that goes in the wiki: never their contact information, where they live, or other personal information. Guest lecturers don't get People pages unless I ask for one.
 - **If a line in my notes sounds like an opinion or a judgment** and it isn't clear whether it was the instructor's or mine, the agent does not guess. It flags it:
   ```
   > [!question] Whose view is this?
@@ -232,15 +234,16 @@ Each source card rates the source with the Admiralty Code. The agent may propose
 
 ## 9. Agent permissions
 
-| Location | The agent may | The agent may not |
-|---|---|---|
-| `Sources/` (original files) | Read | Edit, rename, move, or delete |
-| `Sources/Source Cards/` | Create and edit as drafts | Set the final reliability rating |
-| `Wiki/` | Create and edit drafts | Mark a page verified without my explicit instruction |
-| `Perspectives/` | Read, and quote as *my* view in answers | Write or edit anything |
-| `SCHEMA.md` | Read, and suggest changes in chat | Edit, unless I ask for a specific change |
-| `index.md`, `log.md` | Maintain | Delete or rewrite past log entries |
-| `_templates/`, `.obsidian/` | Use | Change, unless I ask |
+| Location                    | The agent may                                | The agent may not                                    |
+| --------------------------- | -------------------------------------------- | ---------------------------------------------------- |
+| `Sources/` (original files) | Read                                         | Edit, rename, move, or delete                        |
+| `Sources/Source Cards/`     | Create and edit as drafts                    | Set the final reliability rating                     |
+| `Wiki/`                     | Create and edit drafts                       | Mark a page verified without my explicit instruction |
+| `Perspectives/`             | Read, and quote as *my* view in answers      | Write or edit anything                               |
+| `SCHEMA.md`                 | Read, and suggest changes in chat            | Edit, unless I ask for a specific change             |
+| `index.md`, `log.md`        | Maintain                                     | Delete or rewrite past log entries                   |
+| `_templates/`, `.obsidian/` | Use                                          | Change, unless I ask                                 |
+
 
 The agent never deletes anything except a draft it created that I rejected.
 
@@ -251,10 +254,10 @@ The agent never deletes anything except a draft it created that I rejected.
 Every operation follows the think-calculate-verify loop, then a commit. Revisions go back to the calculate step. Rejections are logged, not saved.
 
 ### Ingest: adding a source
-
-1. **Think (me).** I name the source and the part of it to ingest, usually one class session (one date heading) or one topic, and say what matters in it.
-2. **Plan (agent).** Before drafting, the agent proposes a short plan: the pages it will create or update, and the source card if one is needed. I approve or adjust the plan. This keeps drafts focused and saves effort.
-3. **Calculate (agent).** The agent drafts the pages with `status: draft`, following the templates, citation rules, and attribution rules. In chat, it then lists:
+1. Follow the Dissect and Ingest a Source prompt.
+2. **Think (me).** I name the source and the part of it to ingest, usually one class session (one date heading) or one topic, and say what matters in it.
+3. **Plan (agent).** Before drafting, the agent proposes a short plan: the pages it will create or update, and the source card if one is needed. I approve or adjust the plan. This keeps drafts focused and saves effort.
+4. **Calculate (agent).** The agent drafts the pages with `status: draft`, following the templates, citation rules, and attribution rules. In chat, it then lists:
    - each page created or changed, with a one-line summary
    - each proposed typed link, with its reason
    - each flag: "Whose view?", unsourced background, conflicts with existing pages, gaps in my notes
@@ -334,7 +337,7 @@ The Coppermind must outlive any one tool or agent.
 
 1. **Everything that matters is plain text:** Markdown pages, YAML properties, and `[[wikilinks]]`. Images and PDFs sit in ordinary folders.
 2. **Obsidian-only extras are conveniences, never the only copy of anything:** `Review Queue.base`, CSS snippets, themes, and `.obsidian/` settings.
-3. **This schema is written in plain language**, so any agent can follow it. `CLAUDE.md` and `AGENTS.md` point agents here. For a new agent, point its instructions file at `SCHEMA.md`.
+3. **This schema is written in plain language**, so any agent can follow it. `AGENTS.md` point agents here. For a new agent, point its instructions file at `SCHEMA.md`.
 4. **To move to a new tool:**
    1. Commit everything, then copy the whole folder (or clone the git repository).
    2. If the new tool doesn't support `[[wikilinks]]`, convert them to standard Markdown links (`[Text](Page%20Name.md)`). Obsidian can do this through Settings → Files and links → turn off "Use `[[Wikilinks]]`", then use a link-conversion plugin or script on the whole vault.
@@ -354,3 +357,4 @@ The Coppermind must outlive any one tool or agent.
 ### Changelog
 
 - **0.1 (2026-11-10):** First draft. Structure, naming, ontology, citation and attribution rules, draft/verified workflow, three operations, export protocol.
+- **0.2 (2026-11-11):** Guest lecturers added as a fourth voice in §6: named by title and name, with no personal details and no People pages unless I ask.
