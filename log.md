@@ -27,3 +27,19 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:** pending. Item by item.
 - **Commit:** `ingest: SAIL notes 8/27–10/29 — 50 drafts + source card, pending review`
 
+## [2026-11-11] setup | Verify and Reject buttons
+
+- **Think:** I wanted a button on each wiki page that does the logistics of verifying a draft, so reviewing is easier. Verifying still means I checked the page; the button only does the bookkeeping.
+- **Calculate:** Claude (claude-sonnet-5-5) wrote a small local plugin, Coppermind Review (`.obsidian/plugins/coppermind-review/`), with a Verify button and a Reject button on every page in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`. Verify sets `status` and `verified_on`, updates [[index]], and appends to this log; it warns about open flag callouts and blocks source cards with no reliability rating. Reject requires a reason, logs it, removes the index entry, and deletes the page. Neither button commits to git. Drafted the guide [[Verifying Pages with the Review Buttons]]. Also added one sentence to [[SCHEMA#7. Draft vs. verified|Schema §7]] (items 3 and 6) saying the buttons count as me marking a page verified or rejecting it.
+  - Tested on copies of the real [[index]] and this log (text changes only). Not yet tried inside Obsidian.
+- **Verify:** pending
+  - [[Verifying Pages with the Review Buttons]]: to verify after I follow it
+  - Plugin: to try on one page and check that the page, [[index]], and this log all change correctly
+  - [[SCHEMA]]: the §7 wording is mine to approve or rewrite
+- **Commit:** `setup: Verify and Reject buttons (Coppermind Review plugin)`
+
+## [2026-11-11] verify | Agentic AI
+
+- **Verify:**
+  - Approved: [[Agentic AI]]
+- **Commit:** `verify: Agentic AI`

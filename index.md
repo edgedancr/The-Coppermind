@@ -6,14 +6,14 @@ updated: 2026-11-11
 
 A map of every page in the Coppermind, grouped by type. The AI agent updates this after every operation; I check it during health checks. Each entry shows a one-line summary and the page's status.
 
-**Totals:** 0 verified · 53 drafts
+**Totals:** 1 verified · 53 drafts
 
 ## Concepts (26)
 - [[AI Alignment]] — Systems doing what we intend, even under pressure (draft)
 - [[AI in Intelligence Production]] — How AI changes collection, threat prediction, and policymaking (draft)
 - [[AI in Warfighting]] — How AI compresses the lethal engagement cycle (draft)
 - [[AI-Enabled Surveillance]] — Surveillance capitalism, state surveillance, and privacy as autonomy (draft)
-- [[Agentic AI]] — AI with tools, and the added risk (draft)
+- [[Agentic AI]] — AI with tools, and the added risk (verified)
 - [[Artificial Intelligence]] — What "artificial" and "intelligent" mean, and AI's progression (draft)
 - [[Automation Bias]] — Over-trusting confident AI output (draft)
 - [[Capability vs. Reliability]] — Fluent output is not verified output (draft)
@@ -74,8 +74,9 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 ## Workflows (0)
 
-## Guides (1)
+## Guides (2)
 - [[Setting Up Git for the Coppermind]] — How to put the vault under version control, sync two computers, and commit after each review (draft)
+- [[Verifying Pages with the Review Buttons]] — How the Verify and Reject buttons work, and how to turn them on (draft)
 
 ## Analyses (0)
 

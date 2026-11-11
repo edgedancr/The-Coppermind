@@ -1,0 +1,27 @@
+/* Coppermind Review: header buttons and dialog */
+.view-action.coppermind-verify:hover { color: #7fc4a8; }
+.view-action.coppermind-reject:hover { color: #c8604a; }
+
+.coppermind-review-modal h2 { margin-top: 0; }
+.coppermind-review-modal .cm-sub { color: var(--text-muted); margin-bottom: 12px; }
+.coppermind-review-modal .cm-flags,
+.coppermind-review-modal .cm-links {
+  margin: 8px 0 12px;
+  padding: 8px 12px 8px 28px;
+  border-left: 3px solid #e0a846;
+  background: rgba(224, 168, 70, 0.08);
+  border-radius: 4px;
+}
+.coppermind-review-modal .cm-links { border-left-color: #c8604a; background: rgba(200, 96, 74, 0.08); }
+.coppermind-review-modal .cm-ok {
+  padding: 8px 12px;
+  border-left: 3px solid #5fae9e;
+  background: rgba(95, 174, 158, 0.08);
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+.coppermind-review-modal textarea { width: 100%; min-height: 70px; resize: vertical; }
+.coppermind-review-modal .cm-check { display: flex; gap: 8px; align-items: center; margin: 8px 0; }
+.coppermind-review-modal .cm-buttons { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+.coppermind-review-modal button.cm-danger { background: #c8604a; color: #fff; }
+.coppermind-review-modal button:disabled { opacity: 0.45; cursor: not-allowed; }

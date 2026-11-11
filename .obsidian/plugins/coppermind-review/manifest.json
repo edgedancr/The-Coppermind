@@ -1,0 +1,9 @@
+{
+  "id": "coppermind-review",
+  "name": "Coppermind Review",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Verify or reject a draft wiki page with one click. Updates the page's properties, index.md, and log.md.",
+  "author": "Harrison Nickles",
+  "isDesktopOnly": false
+}
