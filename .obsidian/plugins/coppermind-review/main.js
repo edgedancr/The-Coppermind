@@ -816,7 +816,7 @@ module.exports = class CoppermindReview extends Plugin {
       fill(d);
     };
 
-    details("flags", `Open flags (${flagCount})`, true, (d) => {
+    details("flags", `Open flags (${flagCount})`, false, (d) => {
       let any = false;
       Object.entries(FLAG_KINDS).forEach(([k, info]) => {
         const pages = drafts.filter((i) => i.flags.some((f) => f.kind === k));
@@ -874,6 +874,7 @@ module.exports = class CoppermindReview extends Plugin {
       { icon: "scroll-text", title: "Log", sub: "Every change and decision", go: open("log") },
       { icon: "book-open", title: "Schema", sub: "The rulebook", go: open("SCHEMA") },
       { icon: "life-buoy", title: "Guides", sub: "How the vault works", go: open(this.guidesLink()) },
+      { icon: "search", title: "Find", sub: "Search and browse, no AI needed", go: open("Find") },
     ];
     cards.forEach((c) => {
       const card = el.createDiv({ cls: "cm-navcard" });

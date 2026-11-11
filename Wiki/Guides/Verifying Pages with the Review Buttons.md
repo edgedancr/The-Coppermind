@@ -43,7 +43,7 @@ The tools come from a small plugin I keep in the vault, **Coppermind Review** (`
 [[Dashboard]] is the page the vault opens on. From top to bottom it has:
 - **The header:** the Coppermind logo and name.
 - **Review progress:** stat tiles, the progress bar, and **Start reviewing**.
-- **Where to start:** six cards (Index, Review queue, My Worldview, Log, Schema, Guides).
+- **Where to start:** seven cards (Index, Review queue, My Worldview, Log, Schema, Guides, Find). Find opens the offline search page, [[Find]].
 - **Recent activity:** the last six log entries. Click one to open the page it names, or the log.
 - **Reference:** folded sections on what the Coppermind is, how to read it, what it covers, and its six parts.
 

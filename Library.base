@@ -1,0 +1,87 @@
+filters:
+  and:
+    - file.hasProperty("status")
+    - '!file.inFolder("_templates")'
+views:
+  - type: table
+    name: All pages, by type
+    groupBy:
+      property: type
+      direction: ASC
+    order:
+      - file.name
+      - aliases
+      - courses
+      - status
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: Glossary A–Z
+    filters:
+      and:
+        - type == "glossary"
+    order:
+      - file.name
+      - aliases
+      - courses
+      - status
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: SAIL
+    filters:
+      and:
+        - courses.contains("SAIL")
+    groupBy:
+      property: type
+      direction: ASC
+    order:
+      - file.name
+      - aliases
+      - status
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: Intro to Intelligence
+    filters:
+      and:
+        - courses.contains("Intro to Intelligence")
+    groupBy:
+      property: type
+      direction: ASC
+    order:
+      - file.name
+      - aliases
+      - status
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: Verified
+    filters:
+      and:
+        - status == "verified"
+    order:
+      - file.name
+      - type
+      - courses
+      - verified_on
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: Drafts
+    filters:
+      and:
+        - status == "draft"
+    order:
+      - file.name
+      - type
+      - courses
+      - drafted_on
+    sort:
+      - property: file.name
+        direction: ASC

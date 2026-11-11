@@ -414,3 +414,40 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Calculate:** Claude (claude-sonnet-5-5) added a short rule to the end of `coppermind.css` that hides those two status bar items. Word count, the git branch, and the verified count are unchanged. Not yet seen in Obsidian itself.
 - **Verify:** pending. To check that both counts are gone; if one still shows, the class name needs adjusting.
 - **Commit:** `setup: hide backlinks and properties in status bar`
+
+### [2026-11-11] setup | Offline search page and Library
+
+- **Think:** I wanted a way to find things in the wiki without AI, including offline, either as its own page or on the Dashboard.
+- **Calculate:** Claude (claude-sonnet-5-5) added two files at the top level of the vault, using only Obsidian's built-in search and Bases (no plugin code):
+  - **[[Find]]:** how to open a page by title or alias, search all text, and filter; one-click searches by page type, course, review status, and open flag kind (accuracy checks, gaps, "Whose view?", sources disagree, unsourced background); a table of class dates that finds every page citing that day's notes; and a table of search operators.
+  - **[[Library.base|Library]]:** a table of every page with six views (all pages by type, Glossary A–Z, SAIL, Intro to Intelligence, Verified, Drafts).
+  - Neither file is in `Wiki/`, so they are not in [[index]]. The folder tree in [[SCHEMA#2. The six parts of the wiki|Schema §2]] doesn't list them yet; I haven't edited the schema.
+  - Not yet seen in Obsidian itself. The one-click links assume the vault is named "The Coppermind".
+- **Verify:** pending. To open Find, click a few links, and open each Library view.
+- **Commit:** `setup: Find page and Library base (offline search)`
+
+### [2026-11-11] schema | Find and Library added; agents maintain them (v1.0)
+
+- **Think:** I asked for Find to be part of the schema and the other instruction files, with agents checking and updating the search page regularly.
+- **Calculate:** Claude (claude-sonnet-5-5) edited `SCHEMA.md` (0.2 → 1.0, since this changes structure and workflow), `AGENTS.md`, and `Find.md`:
+  - [[SCHEMA#2. The six parts of the wiki|Schema §2]]: both files added to the folder layout, plus a "Find and Library" subsection with a table of what triggers an update (new class date, course, page type, flag kind, rename).
+  - §6: class-notes citations must keep the form `<Course> notes, M/D/YY`, since Find's date searches match it. §9: a permissions row. §10: ingest commit step and health check now cover Find and Library; ingest steps renumbered (there were two step 4s). §11: maintenance rule. §13: Find's `obsidian://` links and `Library.base` listed as Obsidian-only. §14: changelog line. My citation wording from 0.2 is unchanged.
+  - `AGENTS.md`: one paragraph telling agents to maintain both files.
+  - `Find.md`: checked its class dates against the pages. Four SAIL dates were cited but missing (9/10, 9/17, 10/1, 10/13), so I added them. A folded note at the bottom tells agents to keep it current.
+  - The earlier entry above says the schema doesn't list Find and Library; that is now fixed. Not yet checked in Obsidian itself.
+- **Verify:** pending. To read §2 and the changelog, and open Find to check the four new SAIL links.
+- **Commit:** `schema: v1.0 — Find and Library registered, agents maintain them`
+
+### [2026-11-11] setup | Find card on the Dashboard (plugin v0.5.2)
+
+- **Think:** I asked for a Find card on the Dashboard.
+- **Calculate:** Claude (claude-sonnet-5-5) added a seventh nav card, "Find", which opens [[Find]]. It sits last and spans the full row so the grid has no gap. Plugin version 0.5.1 → 0.5.2. The guide [[Verifying Pages with the Review Buttons]] now says seven cards and mentions Find; it was still a draft, so its status didn't change.
+- **Verify:** pending. To reload the plugin and open the Dashboard.
+- **Commit:** `plugin: Find card on Dashboard (v0.5.2)`
+
+### [2026-11-11] setup | Open flags folded by default on the Dashboard (plugin v0.5.3)
+
+- **Think:** I didn't want the Open flags list showing on the Dashboard unless I open it.
+- **Calculate:** Claude (claude-sonnet-5-5) changed the Dashboard's "Open flags" section to start folded, like "By page type". The counts in the tile above it still show. If I open it, it stays open until Obsidian restarts. Plugin version 0.5.2 → 0.5.3.
+- **Verify:** pending. To reload the plugin and open the Dashboard.
+- **Commit:** `plugin: fold Open flags by default (v0.5.3)`
