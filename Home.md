@@ -2,7 +2,7 @@
 type: home
 ---
 # The Coppermind
-
+TEST
 **The Coppermind** is my personal knowledge wiki, built for SAIL (INT323) at Patrick Henry College and meant to keep growing long after the course. It collects what I learn in my Strategic Intelligence courses, links it together, and records how my own thinking develops.
 
 It is built with an AI agent, under one rule: **I design, the AI drafts, I verify.** Nothing counts as part of the wiki until I have reviewed it and approved it.
