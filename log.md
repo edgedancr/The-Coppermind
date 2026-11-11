@@ -451,3 +451,187 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Calculate:** Claude (claude-sonnet-5-5) changed the Dashboard's "Open flags" section to start folded, like "By page type". The counts in the tile above it still show. If I open it, it stays open until Obsidian restarts. Plugin version 0.5.2 → 0.5.3.
 - **Verify:** pending. To reload the plugin and open the Dashboard.
 - **Commit:** `plugin: fold Open flags by default (v0.5.3)`
+
+### [2026-11-11] verify | Verifying Pages with the Review Buttons
+
+- **Verify:**
+  - Approved: [[Verifying Pages with the Review Buttons]]
+- **Commit:** `verify: Verifying Pages with the Review Buttons`
+
+### [2026-11-11] verify | Law Enforcement Intelligence Internships
+
+- **Verify:**
+  - Approved: [[Law Enforcement Intelligence Internships]]
+  - Flags I resolved before approving (1):
+    - Accuracy check — fixed the accuracy issues.
+- **Commit:** `verify: Law Enforcement Intelligence Internships`
+
+### [2026-11-11] verify | Richards Heuer
+
+- **Verify:**
+  - Approved: [[Richards Heuer]]
+- **Commit:** `verify: Richards Heuer`
+
+### [2026-11-11] verify | SRC - Intro to Intelligence Class Notes (Fall 2026)
+
+- **Verify:**
+  - Approved: [[SRC - Intro to Intelligence Class Notes (Fall 2026)]]
+- **Commit:** `verify: SRC - Intro to Intelligence Class Notes (Fall 2026)`
+
+### [2026-11-11] verify | SRC - SAIL Class Notes (Fall 2026)
+
+- **Verify:**
+  - Approved: [[SRC - SAIL Class Notes (Fall 2026)]]
+- **Commit:** `verify: SRC - SAIL Class Notes (Fall 2026)`
+
+### [2026-11-11] verify | Open Skies Treaty
+
+- **Verify:**
+  - Approved: [[Open Skies Treaty]]
+  - Flags I resolved before approving (2):
+    - Accuracy check — appended the claim with the correct dates
+    - Gap (Gap in my notes) — These points don't need to be included
+- **Commit:** `verify: Open Skies Treaty`
+
+### [2026-11-11] verify | Pearl Harbor (1941)
+
+- **Verify:**
+  - Approved: [[Pearl Harbor (1941)]]
+  - Flags I resolved before approving (2):
+    - Accuracy check — reworded to be more clear
+    - Gap (Gap in my notes) — removed this section
+- **Commit:** `verify: Pearl Harbor (1941)`
+
+### [2026-11-11] verify | Computer Network Exploitation
+
+- **Verify:**
+  - Approved: [[Computer Network Exploitation]]
+- **Commit:** `verify: Computer Network Exploitation`
+
+### [2026-11-11] verify | Confirmation Bias
+
+- **Verify:**
+  - Approved: [[Confirmation Bias]]
+- **Commit:** `verify: Confirmation Bias`
+
+### [2026-11-11] verify | Covert Action
+
+- **Verify:**
+  - Approved: [[Covert Action]]
+- **Commit:** `verify: Covert Action`
+
+### [2026-11-11] verify | Denial and Deception
+
+- **Verify:**
+  - Approved: [[Denial and Deception]]
+- **Commit:** `verify: Denial and Deception`
+
+### [2026-11-11] verify | Diplomatic, Information, Military, and Economic Options
+
+- **Verify:**
+  - Approved: [[Diplomatic, Information, Military, and Economic Options]]
+- **Commit:** `verify: Diplomatic, Information, Military, and Economic Options`
+
+### [2026-11-11] verify | Embedding
+
+- **Verify:**
+  - Approved: [[Embedding]]
+- **Commit:** `verify: Embedding`
+
+### [2026-11-11] verify | Existential Risk
+
+- **Verify:**
+  - Approved: [[Existential Risk]]
+- **Commit:** `verify: Existential Risk`
+
+### [2026-11-11] verify | Indicators of Compromise
+
+- **Verify:**
+  - Approved: [[Indicators of Compromise]]
+- **Commit:** `verify: Indicators of Compromise`
+
+### [2026-11-11] verify | Intelligence Cycle
+
+- **Verify:**
+  - Approved: [[Intelligence Cycle]]
+- **Commit:** `verify: Intelligence Cycle`
+
+### [2026-11-11] verify | Key Judgments
+
+- **Verify:**
+  - Approved: [[Key Judgments]]
+- **Commit:** `verify: Key Judgments`
+
+### [2026-11-11] verify | Kill Chain
+
+- **Verify:**
+  - Approved: [[Kill Chain]]
+- **Commit:** `verify: Kill Chain`
+
+### [2026-11-11] verify | Law of Armed Conflict
+
+- **Verify:**
+  - Approved: [[Law of Armed Conflict]]
+- **Commit:** `verify: Law of Armed Conflict`
+
+### [2026-11-11] verify | Mirror Imaging
+
+- **Verify:**
+  - Approved: [[Mirror Imaging]]
+- **Commit:** `verify: Mirror Imaging`
+
+### [2026-11-11] verify | OODA Loop
+
+- **Verify:**
+  - Approved: [[OODA Loop]]
+- **Commit:** `verify: OODA Loop`
+
+### [2026-11-11] verify | Priority Creep
+
+- **Verify:**
+  - Approved: [[Priority Creep]]
+- **Commit:** `verify: Priority Creep`
+
+### [2026-11-11] verify | Revolution in Military Affairs
+
+- **Verify:**
+  - Approved: [[Revolution in Military Affairs]]
+- **Commit:** `verify: Revolution in Military Affairs`
+
+### [2026-11-11] verify | SEE-It Framework
+
+- **Verify:**
+  - Approved: [[SEE-It Framework]]
+- **Commit:** `verify: SEE-It Framework`
+
+### [2026-11-11] verify | Technological Singularity
+
+- **Verify:**
+  - Approved: [[Technological Singularity]]
+- **Commit:** `verify: Technological Singularity`
+
+### [2026-11-11] verify | Traffic Analysis
+
+- **Verify:**
+  - Approved: [[Traffic Analysis]]
+- **Commit:** `verify: Traffic Analysis`
+
+### [2026-11-11] verify | Unconventional Warfare
+
+- **Verify:**
+  - Approved: [[Unconventional Warfare]]
+- **Commit:** `verify: Unconventional Warfare`
+
+### [2026-11-11] verify | Zero-Day Vulnerability
+
+- **Verify:**
+  - Approved: [[Zero-Day Vulnerability]]
+- **Commit:** `verify: Zero-Day Vulnerability`
+
+### [2026-11-11] verify | Ages of U.S. Intelligence
+
+- **Verify:**
+  - Approved: [[Ages of U.S. Intelligence]]
+  - Flags I resolved before approving (1):
+    - Gap (Gap in my notes) — elabborated where I could
+- **Commit:** `verify: Ages of U.S. Intelligence`

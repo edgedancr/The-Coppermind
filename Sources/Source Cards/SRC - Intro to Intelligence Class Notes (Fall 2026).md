@@ -1,17 +1,19 @@
 ---
 type: source
-status: draft
+status: verified
 source_type: class-notes
 author: Harrison Nickles
 date: 2026-08-25 to 2026-11-10
 file: "[[Intro to Intelligence Class Notes (Fall 2026)]]"
-courses: ["Intro to Intelligence"]
-reliability:
-credibility:
-ingested: ["8/25/26–11/10/26 (2026-11-11)"]
+courses:
+  - Intro to Intelligence
+reliability: B
+credibility: "2"
+ingested:
+  - 8/25/26–11/10/26 (2026-11-11)
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-11
 ---
 ## What It Is
 My typed notes from Intro to Intelligence, Fall 2026, with one heading per class date and an Assignment Notes section at the top. They include guest lectures by CDR Blocker, Detective Mennen, and James Diehl. The original is [[Intro to Intelligence Class Notes (Fall 2026)]].

@@ -1,13 +1,19 @@
 ---
 type: guide
-status: draft
-aliases: [Review Buttons, Review Queue Guide, Dashboard Guide]
-courses: [SAIL]
+status: verified
+aliases:
+  - Review Buttons
+  - Review Queue Guide
+  - Dashboard Guide
+courses:
+  - SAIL
 sources: []
-related: ["[[SCHEMA]]", "[[Setting Up Git for the Coppermind]]"]
+related:
+  - "[[SCHEMA]]"
+  - "[[Setting Up Git for the Coppermind]]"
 drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5)
 drafted_on: 2026-11-11
-verified_on: 
+verified_on: 2026-11-11
 ---
 > [!summary]
 > The Coppermind's review tools turn checking drafts into one steady loop: open the next draft, check it, resolve its flags, verify or reject it, and land on the next one. ==The tools do the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
@@ -59,16 +65,16 @@ To edit the Dashboard, press `Ctrl+E` to switch to editing. It stays in editing 
 - **Properties:** both pages hide their properties, like the Dashboard.
 
 ## Hotkeys
-| Key | Action |
-|---|---|
-| `Alt+V` | Verify this page |
-| `Alt+R` | Reject this draft |
-| `Alt+S` | Skip this draft for now |
-| `Alt+N` | Open the next draft |
-| `Alt+F` | Resolve a flag on this page |
-| `Alt+Q` | Open the review queue |
-| `Alt+H` | Go to the Dashboard |
-| `Ctrl+Enter` | Confirm a dialog |
+| Key          | Action                      |
+| ------------ | --------------------------- |
+| `Alt+V`      | Verify this page            |
+| `Alt+R`      | Reject this draft           |
+| `Alt+S`      | Skip this draft for now     |
+| `Alt+N`      | Open the next draft         |
+| `Alt+F`      | Resolve a flag on this page |
+| `Alt+Q`      | Open the review queue       |
+| `Alt+D`      | Go to the Dashboard         |
+| `Ctrl+Enter` | Confirm a dialog            |
 
 Change any of them in **Settings → Hotkeys** (search "Coppermind").
 

@@ -1,13 +1,18 @@
 ---
 type: guide
-status: draft
-aliases: ["Internship Guide"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"]
-related: ["[[Intelligence-Led Policing]]", "[[Polygraph Examination]]"]
+status: verified
+aliases:
+  - Internship Guide
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
+related:
+  - "[[Intelligence-Led Policing]]"
+  - "[[Polygraph Examination]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-11
 ---
 > [!summary]
 > Advice from Detective Mennen's Intro to Intelligence guest lecture on getting a law enforcement intelligence internship that leads to full-time work: start early, build a clean record and an intel-style writing sample, and pick internships that produce real work near operators ([[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]). It is written for Strategic Intelligence students looking in Northern Virginia.
@@ -23,16 +28,16 @@ All from Detective Mennen's guest lecture ([[Intro to Intelligence Class Notes (
 
 **Where to apply in Northern Virginia**
 
-| Agency | Notes |
-|---|---|
-| FBI | Paid; field office or HQ; "Pauline" to TS clearance |
-| Washington/Baltimore HIDTA investigative support center | Reston / Greenbelt; real case support and products |
-| Loudoun County Sheriff | Credit internship; check current windows |
-| Fairfax PD / Sheriff | Larger agency, more specialized units |
-| Arlington PD CID | Investigative assistant internship; works with detectives |
-| Prince William PD | Paid summer internship when offered |
-| HSI / NCIS / DEA / ATF | Smaller cases; high federal law enforcement relevance |
-| Virginia State Police Fusion Center | Analyst path; unpaid; VSP Student Internship Program |
+| Agency                                                  | Notes                                                     |
+| ------------------------------------------------------- | --------------------------------------------------------- |
+| FBI                                                     | Paid; field office or HQ; pipeline to TS clearance        |
+| Washington/Baltimore HIDTA investigative support center | Reston / Greenbelt; real case support and products        |
+| Loudoun County Sheriff                                  | Credit internship; check current windows                  |
+| Fairfax PD / Sheriff                                    | Larger agency, more specialized units                     |
+| Arlington PD CID                                        | Investigative assistant internship; works with detectives |
+| Prince William PD                                       | Paid summer internship when offered                       |
+| HSI / NCIS / DEA / ATF                                  | Smaller cases; high federal law enforcement relevance     |
+| Virginia State Police Fusion Center                     | Analyst path; unpaid; VSP Student Internship Program      |
 
 **What makes a good internship for full-time hiring**
 1. You produce real work products: bulletins, link charts, OSINT packages, deconfliction, something someone used.
@@ -46,6 +51,3 @@ All from Detective Mennen's guest lecture ([[Intro to Intelligence Class Notes (
 - **FBI or local first?** Get the clearance and the product; the hiring path follows the work ([[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]).
 - **No title yet?** A clearance plus a work sample beats a title ([[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]).
 - **Networking:** network through people, not public profiles, and make the first impression count ([[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]).
-
-> [!caution] Accuracy check
-> Two phrases look like typos in my notes: "Pauline to TS clearance" (perhaps "pipeline") and "Work towards vote before graduation" (perhaps "both," meaning the clearance and the work sample). Internship programs and windows also change, so check each agency's current listing.

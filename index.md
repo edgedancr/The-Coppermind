@@ -6,7 +6,7 @@ updated: 2026-11-11
 
 A map of every page in the Coppermind, grouped by type. The AI agent updates this after every operation; I check it during health checks. Within each type, pages are listed under Verified or Drafts, each with a one-line summary.
 
-**Totals:** 37 verified · 66 drafts
+**Totals:** 66 verified · 37 drafts
 
 ## Concepts (40)
 
@@ -56,15 +56,12 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 ## Glossary (33)
 
-### Verified (5)
+### Verified (26)
 - [[All-Source Intelligence]] — Drawing on every type of collection the topic needs
 - [[Analytic Confidence]] — How strongly a conclusion is supported
 - [[Artificial General Intelligence]] — AI that does every human task better than every human
 - [[Attention Head]] — What a token is compared against in a transformer
 - [[Bach Faucet]] — Derogatory term for on-demand generative art
-
-### Drafts (28)
-- [[Computer Network Attack]] — Attacking networks (definition needs checking)
 - [[Computer Network Exploitation]] — Exploiting networks to gather data
 - [[Confirmation Bias]] — Starting from a conclusion and gathering support
 - [[Covert Action]] — Requires a presidential finding; barred at home by EO 12333
@@ -74,28 +71,32 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Existential Risk]] — The x-risk scenario, and the real danger behind it
 - [[Indicators of Compromise]] — Signs an operation has been compromised
 - [[Intelligence Cycle]] — Collection, processing, analysis and production, dissemination
-- [[Intelligence Oversight Committees]] — HPSCI and SSCI
 - [[Key Judgments]] — The 30-second "so what" of a report
 - [[Kill Chain]] — Find, fix, track, target, engage, assess
 - [[Law of Armed Conflict]] — Distinction and proportionality; can't be delegated to an algorithm
-- [[Liar's Dividend]] — Information quality collapse (definition needs checking)
-- [[LMSYS Chatbot Arena]] — Crowdsourced chatbot comparison
 - [[Mirror Imaging]] — Assuming the enemy thinks like you
-- [[Moral Injury]] — Its two causes: an overwhelming event, and betrayal of trust
 - [[OODA Loop]] — Observe, orient, decide, act
 - [[Priority Creep]] — Analysts pushing up their own tasks' priority
 - [[Revolution in Military Affairs]] — The debate over technology and future warfare
 - [[SEE-It Framework]] — State, elaborate, exemplify, illustrate
-- [[Sheep Dipping]] — Definition needs checking
-- [[Structured Analytic Technique]] — Named but not yet defined in my notes; ACH is one
 - [[Technological Singularity]] — AGI outpacing human tracking or control
 - [[Traffic Analysis]] — Finding the sender from communication patterns, not content
 - [[Unconventional Warfare]] — Training locals to defend themselves
 - [[Zero-Day Vulnerability]] — An exploitable fault not yet known, fixed, or exploited
 
+### Drafts (7)
+- [[Computer Network Attack]] — Attacking networks (definition needs checking)
+- [[Intelligence Oversight Committees]] — HPSCI and SSCI
+- [[Liar's Dividend]] — Information quality collapse (definition needs checking)
+- [[LMSYS Chatbot Arena]] — Crowdsourced chatbot comparison
+- [[Moral Injury]] — Its two causes: an overwhelming event, and betrayal of trust
+- [[Sheep Dipping]] — Definition needs checking
+- [[Structured Analytic Technique]] — Named but not yet defined in my notes; ACH is one
+
 ## Frameworks (17)
 
-### Verified (6)
+### Verified (7)
+- [[Ages of U.S. Intelligence]] — Four ages since 1944, and a possible AI Age
 - [[Architecture of Worldview]] — Eight layers of worldview, from theology to culture
 - [[Cascade of Unintended Consequences]] — Four paths from AI side effects to catastrophe
 - [[Essay Types]] — Six essay types by purpose; analytical is most common in SI
@@ -103,8 +104,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Information Model]] — Signal, data, information, knowledge, intelligence; context moves it up
 - [[Tasking, Collection, Processing, Exploitation, and Dissemination]] — TCPED: from requirement to actionable intelligence
 
-### Drafts (11)
-- [[Ages of U.S. Intelligence]] — Four ages since 1944, and a possible AI Age
+### Drafts (10)
 - [[Analysis of Competing Hypotheses]] — Disprove hypotheses instead of confirming one; rules for doing it with AI
 - [[Executive Order 12333]] — Definitions, the DNI's role, functional managers, and five restraints
 - [[Intelligence-to-Action Convergence Matrix]] — ISR pipeline, intelligence cycle, OODA loop, and kill chain lined up stage by stage
@@ -118,17 +118,15 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 ## Case Studies (4)
 
-### Verified (2)
+### Verified (4)
 - [[Bing Sydney Incident (2023)]] — Microsoft's chatbot went off the rails in long conversations
 - [[Mata v. Avianca (2023)]] — A lawyer filed a brief citing a case ChatGPT invented
-
-### Drafts (2)
 - [[Open Skies Treaty]] — The collapse of a transparency norm, and Operation Spiderweb
 - [[Pearl Harbor (1941)]] — U.S. intelligence assumed Japan couldn't adapt its torpedoes
 
 ## People (1)
 
-### Drafts (1)
+### Verified (1)
 - [[Richards Heuer]] — Developed ACH at the CIA
 
 ## Summaries (0)
@@ -143,11 +141,9 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 ## Guides (3)
 
-### Verified (1)
-- [[Setting Up Git for the Coppermind]] — How to put the vault under version control, sync two computers, and commit after each review
-
-### Drafts (2)
+### Verified (3)
 - [[Law Enforcement Intelligence Internships]] — Detective Mennen's advice on getting an internship that leads to a job
+- [[Setting Up Git for the Coppermind]] — How to put the vault under version control, sync two computers, and commit after each review
 - [[Verifying Pages with the Review Buttons]] — How to run a review session: the queue, the buttons, resolving flags, hotkeys, and the Dashboard
 
 ## Analyses (0)
@@ -159,6 +155,6 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 ## Source Cards (2)
 
-### Drafts (2)
+### Verified (2)
 - [[SRC - Intro to Intelligence Class Notes (Fall 2026)]] — My Intro to Intelligence lecture notes, Fall 2026 (rating proposed B-2)
 - [[SRC - SAIL Class Notes (Fall 2026)]] — My SAIL lecture notes, Fall 2026 (rating proposed B-2)

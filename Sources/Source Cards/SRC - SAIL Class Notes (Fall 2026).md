@@ -1,17 +1,19 @@
 ---
 type: source
-status: draft
+status: verified
 source_type: class-notes
 author: Harrison Nickles
 date: 2026-08-27 to 2026-10-29
 file: "[[SAIL Class Notes (Fall 2026)]]"
-courses: ["SAIL"]
-reliability:
-credibility:
-ingested: ["8/27/26–10/29/26 (2026-11-11)"]
+courses:
+  - SAIL
+reliability: B
+credibility: "2"
+ingested:
+  - 8/27/26–10/29/26 (2026-11-11)
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-11
 ---
 ## What It Is
 My typed notes from SAIL (INT323) lectures in Fall 2026, with one heading per class date. The original is [[SAIL Class Notes (Fall 2026)]].
