@@ -1,7 +1,7 @@
 {
   "settings": {
-    "autoAdvance": true,
-    "sort": "clean"
+    "autoAdvance": false,
+    "sort": "az"
   },
   "resolved": {}
 }

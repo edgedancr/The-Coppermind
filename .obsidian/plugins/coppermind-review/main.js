@@ -29,9 +29,10 @@ const OLD_HOME_PATH = "Home.md";
 // Feruchemical copper symbol, drawn for Obsidian's 100x100 icon box.
 const LOGO_ICON = `<g transform="translate(9.79 0) scale(0.2)"><path fill="currentColor" transform="translate(283.29507 359.37144)" d="M -161.19707,-1.8874443 V -79.964444 c 22.166,18.637 46.922,37.621 46.922,37.621 l 22.132996,-22.167 c 0,0 -40.038996,-25.523 -69.054996,-46.888996 v -143.076 l 279.99996,395.104 -10.77,-47.203004 -307.69096,-452.796996 v 212.379 c -21.332,-25.804 -50.807,-66.68 -53.221,-69.965 1.504,3.705 25.49,61.466 53.221,98.776 v 82.970996 l -83.637,-72.412996 v 33.812996 l 83.637,73.28499966 V 140.62856 H 3.4179256 L -43.020074,100.41856 -161.19707,-1.8874443 z m 0,102.3070043 V 33.147556 l 76.743996,67.272004 h -76.743996 z"/></g>`;
 const VIEW_TYPE = "coppermind-review-queue";
-const REVIEWABLE = [/^Wiki\//, /^Perspectives\//, /^Sources\/Source Cards\//];
+// Root-level .md files (e.g. SCHEMA.md) are reviewable too, but only count once they carry a status property.
+const REVIEWABLE = [/^Wiki\//, /^Perspectives\//, /^Sources\/Source Cards\//, /^[^/]+\.md$/];
 const GROUP_ORDER = ["Frameworks", "Concepts", "Case Studies", "Glossary", "People", "Summaries",
-  "Prompts", "Workflows", "Guides", "Analyses", "Perspectives", "Source Cards"];
+  "Prompts", "Workflows", "Guides", "Analyses", "Perspectives", "Source Cards", "Vault files"];
 const FLAG_KINDS = {
   caution: { label: "Accuracy check", plural: "Accuracy checks", short: "A" },
   todo: { label: "Gap", plural: "Gaps", short: "G" },
@@ -101,6 +102,7 @@ function removeLines(text, start, end) {
 function groupOf(path) {
   if (path.startsWith("Perspectives/")) return "Perspectives";
   if (path.startsWith("Sources/Source Cards/")) return "Source Cards";
+  if (!path.includes("/")) return "Vault files";
   const m = path.match(/^Wiki\/([^/]+)\//);
   return m ? m[1] : "Other";
 }
@@ -1156,7 +1158,7 @@ module.exports = class CoppermindReview extends Plugin {
 
   precheck(file) {
     if (!this.isReviewable(file)) {
-      new Notice("Coppermind Review only works on pages in Wiki/, Perspectives/, or Sources/Source Cards/.");
+      new Notice("Coppermind Review only works on pages in Wiki/, Perspectives/, Sources/Source Cards/, or root-level files like SCHEMA.md.");
       return null;
     }
     const fm = this.fm(file);
@@ -1188,7 +1190,7 @@ module.exports = class CoppermindReview extends Plugin {
           await this.appendLog(verifyLogEntry({ name: file.basename, date, note, openFlags: flags, resolved }));
           delete this.resolved[file.path];
           await this.persist();
-          new Notice(`Verified “${file.basename}”.` + (indexed ? "" : " It wasn't in index.md; add it by hand."), 5000);
+          new Notice(`Verified “${file.basename}”.` + (indexed || !file.path.includes("/") ? "" : " It wasn't in index.md; add it by hand."), 5000);
           if (this.settings.autoAdvance) await this.openNext(file.path, order);
         } catch (e) {
           console.error("Coppermind Review: verify failed", e);
@@ -1202,6 +1204,10 @@ module.exports = class CoppermindReview extends Plugin {
   async reject(file) {
     const fm = this.precheck(file);
     if (!fm) return;
+    if (!file.path.includes("/")) {
+      new Notice(`Reject would delete “${file.basename}”, so it is disabled for root-level files. Revise it instead, or delete it by hand.`, 8000);
+      return;
+    }
     const backlinks = this.backlinksTo(file);
     const resolved = this.resolvedFor(file.path);
     new ReviewModal(this.app, {

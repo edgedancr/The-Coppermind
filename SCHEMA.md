@@ -1,9 +1,10 @@
 ---
 type: schema
-version: 1.0
-status: draft
+version: 1
+status: verified
 owner: Harrison Nickles
 updated: 2026-11-11
+verified_on: 2026-11-11
 ---
 # The Coppermind — Schema
 

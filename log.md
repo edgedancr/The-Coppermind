@@ -635,3 +635,16 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - Flags I resolved before approving (1):
     - Gap (Gap in my notes) — elabborated where I could
 - **Commit:** `verify: Ages of U.S. Intelligence`
+
+### [2026-11-11] query | Denial and deception
+
+- **Think:** I asked the wiki for everything related to denial and deception.
+- **Calculate:** Answered from the wiki first. Pages used: [[Denial and Deception]], [[Intelligence Collection Disciplines]] (draft), [[Polygraph Examination]], [[AI in Warfighting]] (draft), [[AI-Enabled Surveillance]], [[Cascade of Unintended Consequences]], [[Liar's Dividend]] (draft), [[AI Alignment]] (draft), plus [[Intro to Intelligence Class Notes (Fall 2026)#9/17/26|Intro notes, 9/17/26]]. Gap noted: the wiki has only the two-line class definition; no case study or framework on detecting or countering D&D.
+- **Verify:** Not filed back.
+- **Commit:** `query: denial and deception`
+
+### [2026-11-11] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`
