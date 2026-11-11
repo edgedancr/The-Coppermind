@@ -6,7 +6,7 @@ updated: 2026-11-11
 
 A map of every page in the Coppermind, grouped by type. The AI agent updates this after every operation; I check it during health checks. Within each type, pages are listed under Verified or Drafts, each with a one-line summary.
 
-**Totals:** 4 verified · 50 drafts
+**Totals:** 5 verified · 49 drafts
 
 ## Concepts (26)
 
@@ -58,13 +58,13 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 ## Frameworks (9)
 
-### Verified (2)
+### Verified (3)
 - [[Architecture of Worldview]] — Eight layers of worldview, from theology to culture
 - [[Cascade of Unintended Consequences]] — Four paths from AI side effects to catastrophe
-
-### Drafts (7)
-- [[Analysis of Competing Hypotheses]] — Disprove hypotheses instead of confirming one; rules for doing it with AI
 - [[Essay Types]] — Six essay types by purpose; analytical is most common in SI
+
+### Drafts (6)
+- [[Analysis of Competing Hypotheses]] — Disprove hypotheses instead of confirming one; rules for doing it with AI
 - [[Four Levels of Prompt Engineering]] — NPC, Mid, Boss, Legendary
 - [[Intelligence-to-Action Convergence Matrix]] — ISR pipeline, intelligence cycle, OODA loop, and kill chain lined up stage by stage
 - [[ODNI AI Ethics Framework]] — The IC's AI ethics framework and the misconceptions it corrects (principles not yet recorded)

@@ -135,3 +135,8 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:** pending. To reload the plugin, open the log and the index, then verify one page to check that it moves to the Verified list.
 - **Commit:** `setup: index split by status, folded log, properties hidden (Coppermind Review v0.4.0)`
 
+### [2026-11-11] verify | Essay Types
+
+- **Verify:**
+  - Approved: [[Essay Types]]
+- **Commit:** `verify: Essay Types`
