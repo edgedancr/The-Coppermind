@@ -399,3 +399,18 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Bach Faucet]]
 - **Commit:** `verify: Bach Faucet`
+
+### [2026-11-11] setup | Properties strip stacking fix (v0.5.1)
+
+- **Think:** Every time I switched between editing and reading view, another properties strip appeared, stacking up above or below the page title.
+- **Calculate:** Claude (claude-opus-5-5) found the cause in the Coppermind Review plugin. When Obsidian re-renders a note, it can re-create the Properties block or move the title. The plugin only checked for a strip directly in front of the Properties block, so the old strip was left stranded and a new one was added each time. The fix removes any strip that isn't directly in front of a Properties block before adding one, so each block keeps exactly one. Version 0.5.0 → 0.5.1. No page content changed.
+  - Tested outside Obsidian (jsdom) on both ways a re-render can strand a strip: 6 strips after five switches before the fix, 1 after.
+- **Verify:** pending. To reload the plugin and switch a page between editing and reading a few times.
+- **Commit:** `plugin: fix stacking properties strips (v0.5.1)`
+
+### [2026-11-11] setup | Hide backlinks and properties counts in the status bar
+
+- **Think:** I wanted the backlinks and properties counts gone from the status bar at the bottom right, and asked Claude to add the fix.
+- **Calculate:** Claude (claude-sonnet-5-5) added a short rule to the end of `coppermind.css` that hides those two status bar items. Word count, the git branch, and the verified count are unchanged. Not yet seen in Obsidian itself.
+- **Verify:** pending. To check that both counts are gone; if one still shows, the class name needs adjusting.
+- **Commit:** `setup: hide backlinks and properties in status bar`

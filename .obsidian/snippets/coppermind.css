@@ -195,3 +195,7 @@ body {
 hr {
   border-color: var(--background-modifier-border);
 }
+
+/* Status bar: hide the backlinks and properties counts */
+.status-bar-item.plugin-backlink,
+.status-bar-item.plugin-properties { display: none; }

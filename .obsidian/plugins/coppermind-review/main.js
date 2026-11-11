@@ -999,6 +999,14 @@ module.exports = class CoppermindReview extends Plugin {
     if (!view.file) return;
     const info = this.stripInfo(view.file);
     const root = view.containerEl;
+    // When Obsidian re-renders a note (for example on switching between editing and reading),
+    // it can re-create the Properties block or move the title, leaving an old strip stranded
+    // somewhere else. Remove every strip that isn't directly in front of a Properties block,
+    // so each block keeps exactly one strip.
+    root.querySelectorAll(".cm-propstrip").forEach((s) => {
+      const next = s.nextElementSibling;
+      if (!next || !next.classList.contains("metadata-container")) s.remove();
+    });
     const metas = root.querySelectorAll(".metadata-container");
     metas.forEach((meta) => {
       let strip = meta.previousElementSibling;
