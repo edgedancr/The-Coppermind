@@ -243,3 +243,159 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - **Left out on purpose:** listed on the source card under Ingest Progress.
 - **Verify:** pending. Item by item.
 - **Commit:** `ingest: Intro to Intelligence notes 8/25–11/10 — 46 drafts + source card, pending review`
+
+### [2026-11-11] verify | Information Model
+
+- **Verify:**
+  - Approved: [[Information Model]]
+- **Commit:** `verify: Information Model`
+
+### [2026-11-11] verify | Tasking, Collection, Processing, Exploitation, and Dissemination
+
+- **Verify:**
+  - Approved: [[Tasking, Collection, Processing, Exploitation, and Dissemination]]
+- **Commit:** `verify: Tasking, Collection, Processing, Exploitation, and Dissemination`
+
+### [2026-11-11] verify | Artificial Intelligence
+
+- **Verify:**
+  - Approved: [[Artificial Intelligence]]
+- **Commit:** `verify: Artificial Intelligence`
+
+### [2026-11-11] verify | Automation Bias
+
+- **Verify:**
+  - Approved: [[Automation Bias]]
+- **Commit:** `verify: Automation Bias`
+
+### [2026-11-11] verify | Curiosity, Character, and Competence
+
+- **Verify:**
+  - Approved: [[Curiosity, Character, and Competence]]
+- **Commit:** `verify: Curiosity, Character, and Competence`
+
+### [2026-11-11] verify | Emergent Behavior
+
+- **Verify:**
+  - Approved: [[Emergent Behavior]]
+- **Commit:** `verify: Emergent Behavior`
+
+### [2026-11-11] verify | Human Decision Point
+
+- **Verify:**
+  - Approved: [[Human Decision Point]]
+- **Commit:** `verify: Human Decision Point`
+
+### [2026-11-11] verify | Human-Centered AI
+
+- **Verify:**
+  - Approved: [[Human-Centered AI]]
+- **Commit:** `verify: Human-Centered AI`
+
+### [2026-11-11] verify | Intelligence as Attentive Understanding
+
+- **Verify:**
+  - Approved: [[Intelligence as Attentive Understanding]]
+- **Commit:** `verify: Intelligence as Attentive Understanding`
+
+### [2026-11-11] verify | Intelligence Writing Style
+
+- **Verify:**
+  - Approved: [[Intelligence Writing Style]]
+- **Commit:** `verify: Intelligence Writing Style`
+
+### [2026-11-11] verify | Intelligence-Led Policing
+
+- **Verify:**
+  - Approved: [[Intelligence-Led Policing]]
+- **Commit:** `verify: Intelligence-Led Policing`
+
+### [2026-11-11] verify | LLM Wiki
+
+- **Verify:**
+  - Approved: [[LLM Wiki]]
+- **Commit:** `verify: LLM Wiki`
+
+### [2026-11-11] verify | Narrow AI
+
+- **Verify:**
+  - Approved: [[Narrow AI]]
+- **Commit:** `verify: Narrow AI`
+
+### [2026-11-11] verify | Pi-Shaped Person
+
+- **Verify:**
+  - Approved: [[Pi-Shaped Person]]
+- **Commit:** `verify: Pi-Shaped Person`
+
+### [2026-11-11] verify | Politicized Intelligence
+
+- **Verify:**
+  - Approved: [[Politicized Intelligence]]
+- **Commit:** `verify: Politicized Intelligence`
+
+### [2026-11-11] verify | Polygraph Examination
+
+- **Verify:**
+  - Approved: [[Polygraph Examination]]
+- **Commit:** `verify: Polygraph Examination`
+
+### [2026-11-11] verify | Security Classification
+
+- **Verify:**
+  - Approved: [[Security Classification]]
+- **Commit:** `verify: Security Classification`
+
+### [2026-11-11] verify | Time Compression Trap
+
+- **Verify:**
+  - Approved: [[Time Compression Trap]]
+- **Commit:** `verify: Time Compression Trap`
+
+### [2026-11-11] verify | Tokenization
+
+- **Verify:**
+  - Approved: [[Tokenization]]
+- **Commit:** `verify: Tokenization`
+
+### [2026-11-11] verify | Bing Sydney Incident (2023)
+
+- **Verify:**
+  - Approved: [[Bing Sydney Incident (2023)]]
+- **Commit:** `verify: Bing Sydney Incident (2023)`
+
+### [2026-11-11] verify | Mata v. Avianca (2023)
+
+- **Verify:**
+  - Approved: [[Mata v. Avianca (2023)]]
+- **Commit:** `verify: Mata v. Avianca (2023)`
+
+### [2026-11-11] verify | All-Source Intelligence
+
+- **Verify:**
+  - Approved: [[All-Source Intelligence]]
+- **Commit:** `verify: All-Source Intelligence`
+
+### [2026-11-11] verify | Analytic Confidence
+
+- **Verify:**
+  - Approved: [[Analytic Confidence]]
+- **Commit:** `verify: Analytic Confidence`
+
+### [2026-11-11] verify | Artificial General Intelligence
+
+- **Verify:**
+  - Approved: [[Artificial General Intelligence]]
+- **Commit:** `verify: Artificial General Intelligence`
+
+### [2026-11-11] verify | Attention Head
+
+- **Verify:**
+  - Approved: [[Attention Head]]
+- **Commit:** `verify: Attention Head`
+
+### [2026-11-11] verify | Bach Faucet
+
+- **Verify:**
+  - Approved: [[Bach Faucet]]
+- **Commit:** `verify: Bach Faucet`

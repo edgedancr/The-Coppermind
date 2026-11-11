@@ -1,13 +1,19 @@
 ---
 type: concept
-status: draft
-aliases: ["Oval Office Vulnerability"]
-courses: ["SAIL"]
-sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
-related: ["[[Human Decision Point]]", "[[Capability vs. Reliability]]", "[[AI in Intelligence Production]]"]
+status: verified
+aliases:
+  - Oval Office Vulnerability
+courses:
+  - SAIL
+sources:
+  - "[[SRC - SAIL Class Notes (Fall 2026)]]"
+related:
+  - "[[Human Decision Point]]"
+  - "[[Capability vs. Reliability]]"
+  - "[[AI in Intelligence Production]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-11
 ---
 > [!summary]
 > Automation bias is the tendency to over-trust confident AI outputs ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]). SAIL called it the core risk of policymaking under AI: at the decision stage, ==confident AI outputs are often mistaken for verified intelligence==, a weakness SAIL called the "Oval Office vulnerability" ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).

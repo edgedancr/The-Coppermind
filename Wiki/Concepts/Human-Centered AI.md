@@ -1,13 +1,18 @@
 ---
 type: concept
-status: draft
-aliases: ["HCAI"]
-courses: ["SAIL"]
-sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
-related: ["[[Centaur Analyst]]", "[[Human Decision Point]]"]
+status: verified
+aliases:
+  - HCAI
+courses:
+  - SAIL
+sources:
+  - "[[SRC - SAIL Class Notes (Fall 2026)]]"
+related:
+  - "[[Centaur Analyst]]"
+  - "[[Human Decision Point]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-11
 ---
 > [!summary]
 > Human-centered AI (HCAI) is the approach of building AI to amplify human abilities rather than replace them. SAIL quoted IBM's 2022 definition ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]):

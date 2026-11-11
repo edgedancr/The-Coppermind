@@ -1,13 +1,17 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases: []
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"]
-related: ["[[Centaur Analyst]]", "[[Intelligence as Attentive Understanding]]"]
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
+related:
+  - "[[Centaur Analyst]]"
+  - "[[Intelligence as Attentive Understanding]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-11
 ---
 > [!summary]
 > In an Intro to Intelligence guest lecture, CDR Blocker named three things everyone in intelligence needs: curiosity, character, and competence. He argued that ==only at the intersection of all three do we find professionals worthy of carrying the weight of real responsibility== ([[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]]).

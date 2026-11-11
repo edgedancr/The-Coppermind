@@ -1,6 +1,6 @@
 {
   "settings": {
-    "autoAdvance": false,
+    "autoAdvance": true,
     "sort": "clean"
   },
   "resolved": {}

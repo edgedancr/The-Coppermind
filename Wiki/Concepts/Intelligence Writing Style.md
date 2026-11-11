@@ -1,12 +1,15 @@
 ---
 type: concept
-status: draft
-aliases: ["Intel Writing"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"]
+status: verified
+aliases:
+  - Intel Writing
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-11
 ---
 > [!summary]
 > Intro to Intelligence taught that intelligence writing should be **clear**, **concise**, **informative**, **timely**, and **tailored** ([[Intro to Intelligence Class Notes (Fall 2026)#9/15/26|Intro notes, 9/15/26]]). Its goal is not to please the reader's literary sensibilities, but to give the facts and then either recommend a course of action or explain the implications ([[Intro to Intelligence Class Notes (Fall 2026)#9/15/26|Intro notes, 9/15/26]]).

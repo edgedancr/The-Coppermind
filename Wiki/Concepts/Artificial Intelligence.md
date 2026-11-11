@@ -1,13 +1,21 @@
 ---
 type: concept
-status: draft
-aliases: ["AI"]
-courses: ["SAIL"]
-sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
-related: ["[[Machine Learning]]", "[[Narrow AI]]", "[[Artificial General Intelligence]]", "[[Intelligence vs. Consciousness]]", "[[Agentic AI]]"]
+status: verified
+aliases:
+  - AI
+courses:
+  - SAIL
+sources:
+  - "[[SRC - SAIL Class Notes (Fall 2026)]]"
+related:
+  - "[[Machine Learning]]"
+  - "[[Narrow AI]]"
+  - "[[Artificial General Intelligence]]"
+  - "[[Intelligence vs. Consciousness]]"
+  - "[[Agentic AI]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-11
 ---
 > [!summary]
 > SAIL approached artificial intelligence (AI) by asking what each word means. *Artificial* means created by man, implying imitation or the absence of naturalness: a human skill or craft made real. *Intelligent* means having the capacity to solve problems ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]]).

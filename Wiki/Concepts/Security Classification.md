@@ -1,12 +1,16 @@
 ---
 type: concept
-status: draft
-aliases: ["Classification Levels", "Need to Know"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"]
+status: verified
+aliases:
+  - Classification Levels
+  - Need to Know
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-11
 ---
 > [!summary]
 > Intro to Intelligence taught the U.S. classification levels by how much damage public release could cause, along with control systems and releasability markings that further limit who may see information ([[Intro to Intelligence Class Notes (Fall 2026)#9/10/26|Intro notes, 9/10/26]]). Access within those limits follows the principle of need to know ([[Intro to Intelligence Class Notes (Fall 2026)#10/13/26|Intro notes, 10/13/26]]).

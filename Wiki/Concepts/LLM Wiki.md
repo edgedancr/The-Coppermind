@@ -1,13 +1,20 @@
 ---
 type: concept
-status: draft
-aliases: ["SAIL Portfolio", "Second Brain", "Karpathy LLM Wiki"]
-courses: ["SAIL"]
-sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
-related: ["[[Think-Calculate-Verify Loop]]", "[[SCHEMA]]"]
+status: verified
+aliases:
+  - SAIL Portfolio
+  - Second Brain
+  - Karpathy LLM Wiki
+courses:
+  - SAIL
+sources:
+  - "[[SRC - SAIL Class Notes (Fall 2026)]]"
+related:
+  - "[[Think-Calculate-Verify Loop]]"
+  - "[[SCHEMA]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-11
 ---
 > [!summary]
 > An LLM wiki is a growing, interlinked knowledge base that a person develops and maintains with an AI agent. Instead of asking an AI the same questions over and over, the AI compiles what you learn into linked pages that compound over time ([[SAIL Class Notes (Fall 2026)#10/13/26|SAIL notes, 10/13/26]]). The Coppermind is one.

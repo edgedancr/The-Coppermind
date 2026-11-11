@@ -3,5 +3,6 @@
   "theme": "obsidian",
   "enabledCssSnippets": [
     "coppermind"
-  ]
+  ],
+  "showRibbon": true
 }

@@ -1,13 +1,16 @@
 ---
 type: framework
-status: draft
+status: verified
 aliases: []
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"]
-related: ["[[Puzzles and Mysteries]]"]
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
+related:
+  - "[[Puzzles and Mysteries]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-11
 ---
 > [!summary]
 > Intro to Intelligence's Information Model describes five levels that raw signals pass through on the way to becoming intelligence: signal, data, information, knowledge, and wisdom or intelligence ([[Intro to Intelligence Class Notes (Fall 2026)#8/25/26|Intro notes, 8/25/26]]). The course taught that context is what moves information up the levels ([[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]]).

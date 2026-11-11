@@ -1,13 +1,19 @@
 ---
 type: concept
-status: draft
-aliases: ["Emerging Behaviors", "Emergent Risk"]
-courses: ["SAIL"]
-sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
-related: ["[[ODNI AI Ethics Framework]]", "[[Agentic AI]]"]
+status: verified
+aliases:
+  - Emerging Behaviors
+  - Emergent Risk
+courses:
+  - SAIL
+sources:
+  - "[[SRC - SAIL Class Notes (Fall 2026)]]"
+related:
+  - "[[ODNI AI Ethics Framework]]"
+  - "[[Agentic AI]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-11
 ---
 > [!summary]
 > Emergent behavior is behavior an AI system shows that its developers did not design and cannot fully predict. SAIL used it to answer the misconception that "AI is just a tool": developers do not fully understand how models reach some outputs and cannot predict all failure modes, so ==AI is a system with emerging behaviors== ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).

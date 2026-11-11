@@ -36,7 +36,7 @@ The convictions that shape how I read and judge everything else in the Coppermin
 - History is heading towards the end times described in revelation, and will get progressively worse until Christ returns again.
 - God has a purpose for everything in man's life. There is nothing that is an accident to God.
 - Man can glorify God is every area of his life, including with work, hobbies, relationships, and more.
-- AI is a tool, and as such does not have a purpose beyond aiding mankind in his endeavor to take dominion over the earth.
+- AI is a tool, and as such does not have a purpose beyond aiding mankind in his endeavor to take dominion over the earth. However, it is a particularly dangerous tool due to the fact that is has emerging behaviors, and as such it should be treated with a lot more care and deference than a normal tool.
 ## Anthropology (Human Nature)
 *What is a human being? Where do identity, dignity, agency, and purpose come from?*
 - To God, all men are evil and desperately wicked, stained by sin and irredeemable without Christ's work on the cross.

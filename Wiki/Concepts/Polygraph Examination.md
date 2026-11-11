@@ -1,13 +1,17 @@
 ---
 type: concept
-status: draft
-aliases: ["Polygraph"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"]
-related: ["[[Security Classification]]"]
+status: verified
+aliases:
+  - Polygraph
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
+related:
+  - "[[Security Classification]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-11
 ---
 > [!summary]
 > Intro to Intelligence taught that ==the polygraph does not grant clearances==: it is a data-collection tool that helps adjudicators resolve each case fairly and consistently ([[Intro to Intelligence Class Notes (Fall 2026)#9/29/26|Intro notes, 9/29/26]]). The instrument does not detect lies; it detects arousal of the sympathetic nervous system ([[Intro to Intelligence Class Notes (Fall 2026)#9/29/26|Intro notes, 9/29/26]]).
