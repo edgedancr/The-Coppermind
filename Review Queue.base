@@ -1,0 +1,23 @@
+views:
+  - type: table
+    name: Waiting for review
+    filters:
+      and:
+        - status == "draft"
+        - '!file.inFolder("_templates")'
+    order:
+      - file.name
+      - type
+      - courses
+      - drafted_on
+  - type: table
+    name: Verified
+    filters:
+      and:
+        - status == "verified"
+        - '!file.inFolder("_templates")'
+    order:
+      - file.name
+      - type
+      - courses
+      - verified_on

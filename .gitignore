@@ -1,0 +1,10 @@
+# Obsidian files that change constantly and only record window layout
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+# Obsidian's trash folder
+.trash/
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
