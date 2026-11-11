@@ -6,7 +6,7 @@ updated: 2026-11-11
 
 A map of every page in the Coppermind, grouped by type. The AI agent updates this after every operation; I check it during health checks. Within each type, pages are listed under Verified or Drafts, each with a one-line summary.
 
-**Totals:** 8 verified · 46 drafts
+**Totals:** 9 verified · 45 drafts
 
 ## Concepts (26)
 
@@ -100,7 +100,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 ## Perspectives (1)
 
-### Drafts (1)
+### Verified (1)
 - [[My Worldview]] — The foundational convictions behind my perspectives, by layer of worldview
 
 ## Source Cards (1)
