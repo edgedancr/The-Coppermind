@@ -3,7 +3,7 @@ type: concept
 status: draft
 aliases: ["AI Hallucination", "Hallucinated Citation"]
 courses: ["SAIL", "Intro to Intelligence"]
-sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"]
+sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]", "[[SRC - ACH GenAI Workflow]]"]
 related: ["[[Capability vs. Reliability]]", "[[Transformer]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
@@ -18,6 +18,7 @@ verified_on:
 - In the [[Three-Ps Risk Framework]], hallucinations are a program-level risk ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]).
 - In [[Analysis of Competing Hypotheses]], a matrix with no contradictions means the AI is "hallucinating agreement" ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).
 - Detective Mennen told an Intro to Intelligence class that AI will "mess up or hallucinate," so verifying it is necessary ([[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]).
+- In the [[ACH GenAI Workflow]], AI-researched evidence must be tagged [Verified], [Unverified] or [Assumption], and the analyst must confirm each item is real before it enters the matrix, because the AI may hallucinate sources, fabricate data, or mischaracterize reports ([[SRC - ACH GenAI Workflow|ACH Workflow, Orchestrator and Step 2]]).
 
 > [!caution] Accuracy check
 > The "wrong meaning of a word" explanation in my notes may be a simplification of how hallucinations happen. Check it against the 3Blue1Brown videos or another reading before verifying.

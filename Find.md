@@ -12,7 +12,7 @@ Search the Coppermind without AI or an internet connection. Everything on this p
 
 **By type of page**
 
-[Glossary](obsidian://search?vault=The%20Coppermind&query=path%3A%22Wiki%2FGlossary%22) · [Concepts](obsidian://search?vault=The%20Coppermind&query=path%3A%22Wiki%2FConcepts%22) · [Frameworks](obsidian://search?vault=The%20Coppermind&query=path%3A%22Wiki%2FFrameworks%22) · [Case studies](obsidian://search?vault=The%20Coppermind&query=path%3A%22Wiki%2FCase%20Studies%22) · [Guides](obsidian://search?vault=The%20Coppermind&query=path%3A%22Wiki%2FGuides%22) · [People](obsidian://search?vault=The%20Coppermind&query=path%3A%22Wiki%2FPeople%22) · [Prompts](obsidian://search?vault=The%20Coppermind&query=path%3A%22Wiki%2FPrompts%22) · [Source cards](obsidian://search?vault=The%20Coppermind&query=path%3A%22Sources%2FSource%20Cards%22)
+[Glossary](obsidian://search?vault=The%20Coppermind&query=path%3A%22Wiki%2FGlossary%22) · [Concepts](obsidian://search?vault=The%20Coppermind&query=path%3A%22Wiki%2FConcepts%22) · [Frameworks](obsidian://search?vault=The%20Coppermind&query=path%3A%22Wiki%2FFrameworks%22) · [Case studies](obsidian://search?vault=The%20Coppermind&query=path%3A%22Wiki%2FCase%20Studies%22) · [Guides](obsidian://search?vault=The%20Coppermind&query=path%3A%22Wiki%2FGuides%22) · [People](obsidian://search?vault=The%20Coppermind&query=path%3A%22Wiki%2FPeople%22) · [Prompts](obsidian://search?vault=The%20Coppermind&query=path%3A%22Wiki%2FPrompts%22) · [Workflows](obsidian://search?vault=The%20Coppermind&query=path%3A%22Wiki%2FWorkflows%22) · [Summaries](obsidian://search?vault=The%20Coppermind&query=path%3A%22Wiki%2FSummaries%22) · [Source cards](obsidian://search?vault=The%20Coppermind&query=path%3A%22Sources%2FSource%20Cards%22)
 
 **By course**
 

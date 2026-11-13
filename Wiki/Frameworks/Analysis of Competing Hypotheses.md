@@ -1,15 +1,23 @@
 ---
 type: framework
-status: draft
-aliases: ["ACH"]
-courses: ["SAIL"]
-sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
-example_of: ["[[Structured Analytic Technique]]"]
-counters: ["[[Confirmation Bias]]"]
-related: ["[[Richards Heuer]]", "[[Prompt Engineering]]", "[[Capability vs. Reliability]]"]
+status: verified
+aliases:
+  - ACH
+courses:
+  - SAIL
+sources:
+  - "[[SRC - SAIL Class Notes (Fall 2026)]]"
+example_of:
+  - "[[Structured Analytic Technique]]"
+counters:
+  - "[[Confirmation Bias]]"
+related:
+  - "[[Richards Heuer]]"
+  - "[[Prompt Engineering]]"
+  - "[[Capability vs. Reliability]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-12
 ---
 > [!summary]
 > Analysis of Competing Hypotheses (ACH) is a structured analytic technique that reverses the usual order of analysis: instead of starting from a conclusion and gathering support for it, the analyst lists every plausible hypothesis and uses the evidence to disprove them ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]). SAIL taught that it was developed by [[Richards Heuer]] at the CIA in 1999 to counteract [[Confirmation Bias]] ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).
@@ -27,9 +35,6 @@ verified_on:
 6. **Sensitivity check:** identify the critical point of failure.
 
 Source for the stages: ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]])
-
-> [!todo] Gap in my notes
-> Stages 4 (Refine) and 5 (Conclude) have no description in my notes.
 
 ## How to Use It With AI
 LLMs pattern-match to the most plausible, fluent narrative, so by default they do normal analysis (confirmation bias), not ACH's elimination logic ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).

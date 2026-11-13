@@ -1,18 +1,20 @@
 ---
 type: index
-updated: 2026-11-11
+updated: 2026-11-12
 ---
 # Index
 
 A map of every page in the Coppermind, grouped by type. The AI agent updates this after every operation; I check it during health checks. Within each type, pages are listed under Verified or Drafts, each with a one-line summary.
 
-**Totals:** 66 verified · 37 drafts
+**Totals:** 74 verified · 35 drafts
 
 ## Concepts (40)
 
-### Verified (20)
+### Verified (22)
 - [[Agentic AI]] — AI with tools, and the added risk
+- [[AI Alignment]] — Systems doing what we intend, even under pressure
 - [[AI in Intelligence Production]] — How AI changes collection, threat prediction, and policymaking
+- [[AI in Warfighting]] — How AI compresses the lethal engagement cycle
 - [[AI-Enabled Surveillance]] — Surveillance capitalism, state surveillance, and privacy as autonomy
 - [[Artificial Intelligence]] — What "artificial" and "intelligent" mean, and AI's progression
 - [[Automation Bias]] — Over-trusting confident AI output
@@ -32,9 +34,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Time Compression Trap]] — Faster early stages create pressure to skip analysis
 - [[Tokenization]] — Tokens, and the "tokenization of everything"
 
-### Drafts (20)
-- [[AI Alignment]] — Systems doing what we intend, even under pressure
-- [[AI in Warfighting]] — How AI compresses the lethal engagement cycle
+### Drafts (18)
 - [[Capability vs. Reliability]] — Fluent output is not verified output
 - [[Centaur Analyst]] — Five capabilities and the changing role of the analyst
 - [[Cognitive Debt]] — The cost of letting AI think first
@@ -54,9 +54,9 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Transformer]] — The architecture behind LLMs
 - [[United States Intelligence Community]] — The 18 IC organizations and how they're grouped
 
-## Glossary (33)
+## Glossary (36)
 
-### Verified (26)
+### Verified (29)
 - [[All-Source Intelligence]] — Drawing on every type of collection the topic needs
 - [[Analytic Confidence]] — How strongly a conclusion is supported
 - [[Artificial General Intelligence]] — AI that does every human task better than every human
@@ -66,6 +66,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Confirmation Bias]] — Starting from a conclusion and gathering support
 - [[Covert Action]] — Requires a presidential finding; barred at home by EO 12333
 - [[Denial and Deception]] — Hiding what's there; conveying less than the whole truth
+- [[Diagnostic Evidence]] — Evidence whose ratings differ across hypotheses
 - [[Diplomatic, Information, Military, and Economic Options]] — DIME: the options for defeating an adversary
 - [[Embedding]] — Turning a token into a vector
 - [[Existential Risk]] — The x-risk scenario, and the real danger behind it
@@ -74,6 +75,8 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Key Judgments]] — The 30-second "so what" of a report
 - [[Kill Chain]] — Find, fix, track, target, engage, assess
 - [[Law of Armed Conflict]] — Distinction and proportionality; can't be delegated to an algorithm
+- [[Linchpin Evidence]] — An item whose re-rating would change the ranking of the top hypotheses
+- [[Meaningful Absence]] — Looked for and not found, as opposed to not yet looked for
 - [[Mirror Imaging]] — Assuming the enemy thinks like you
 - [[OODA Loop]] — Observe, orient, decide, act
 - [[Priority Creep]] — Analysts pushing up their own tasks' priority
@@ -95,8 +98,9 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 ## Frameworks (17)
 
-### Verified (7)
+### Verified (8)
 - [[Ages of U.S. Intelligence]] — Four ages since 1944, and a possible AI Age
+- [[Analysis of Competing Hypotheses]] — Disprove hypotheses instead of confirming one; rules for doing it with AI
 - [[Architecture of Worldview]] — Eight layers of worldview, from theology to culture
 - [[Cascade of Unintended Consequences]] — Four paths from AI side effects to catastrophe
 - [[Essay Types]] — Six essay types by purpose; analytical is most common in SI
@@ -104,8 +108,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Information Model]] — Signal, data, information, knowledge, intelligence; context moves it up
 - [[Tasking, Collection, Processing, Exploitation, and Dissemination]] — TCPED: from requirement to actionable intelligence
 
-### Drafts (10)
-- [[Analysis of Competing Hypotheses]] — Disprove hypotheses instead of confirming one; rules for doing it with AI
+### Drafts (9)
 - [[Executive Order 12333]] — Definitions, the DNI's role, functional managers, and five restraints
 - [[Intelligence-to-Action Convergence Matrix]] — ISR pipeline, intelligence cycle, OODA loop, and kill chain lined up stage by stage
 - [[Just War Theory]] — Jus ad bellum and jus in bello
@@ -129,7 +132,10 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 ### Verified (1)
 - [[Richards Heuer]] — Developed ACH at the CIA
 
-## Summaries (0)
+## Summaries (1)
+
+### Verified (1)
+- [[Summary - ACH GenAI Workflow]] — Neutral summary of the SAIL ACH-with-AI prompt sequence
 
 ## Prompts (2)
 
@@ -137,7 +143,10 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Dissect and Ingest a Source]] — The prompt for breaking a source into ideas and creating or appending wiki pages
 - [[Intelligence Community Style Summaries]] — Neutral, attributed 250-word summaries of a single source
 
-## Workflows (0)
+## Workflows (1)
+
+### Drafts (1)
+- [[ACH GenAI Workflow]] — Seven steps for running ACH with an AI assistant, with analyst checkpoints
 
 ## Guides (3)
 
@@ -153,8 +162,9 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 ### Verified (1)
 - [[My Worldview]] — The foundational convictions behind my perspectives, by layer of worldview
 
-## Source Cards (2)
+## Source Cards (3)
 
-### Verified (2)
+### Verified (3)
+- [[SRC - ACH GenAI Workflow]] — The SAIL ACH-with-AI course documents, eight files (rating proposed B-2)
 - [[SRC - Intro to Intelligence Class Notes (Fall 2026)]] — My Intro to Intelligence lecture notes, Fall 2026 (rating proposed B-2)
 - [[SRC - SAIL Class Notes (Fall 2026)]] — My SAIL lecture notes, Fall 2026 (rating proposed B-2)

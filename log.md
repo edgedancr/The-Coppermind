@@ -648,3 +648,68 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[SCHEMA]]
 - **Commit:** `verify: SCHEMA`
+
+### [2026-11-12] verify | AI Alignment
+
+- **Verify:**
+  - Approved: [[AI Alignment]]
+  - Flags I resolved before approving (1):
+    - Question (Whose view is this?) — clarified
+- **Commit:** `verify: AI Alignment`
+
+### [2026-11-12] verify | AI in Warfighting
+
+- **Verify:**
+  - Approved: [[AI in Warfighting]]
+  - Flags I resolved before approving (1):
+    - Gap (Gap in my notes) — don't need to include this if its not in the notes
+- **Commit:** `verify: AI in Warfighting`
+
+### [2026-11-12] verify | Analysis of Competing Hypotheses
+
+- **Verify:**
+  - Approved: [[Analysis of Competing Hypotheses]]
+  - Flags I resolved before approving (1):
+    - Gap (Gap in my notes) — thats okay
+- **Commit:** `verify: Analysis of Competing Hypotheses`
+
+### [2026-11-12] ingest | ACH GenAI Workflow (SAIL course documents)
+
+- **Think:** I gave Claude the eight files of the SAIL ACH GenAI Workflow (orchestrator plus Steps 0–6) and asked it to ingest them. Plan-first mode; I approved the plan as proposed: no separate Prompt pages for the step prompts, and changes to verified pages proposed only.
+- **Calculate:** Claude (claude-sonnet-5-5) copied the files unchanged into `Sources/Readings/ACH GenAI Workflow/`, drafted [[SRC - ACH GenAI Workflow]] (proposed rating B-2, left blank for me), and drafted 5 pages: [[ACH GenAI Workflow]] (workflow), [[Summary - ACH GenAI Workflow]] (summary), and the glossary terms [[Diagnostic Evidence]], [[Linchpin Evidence]] and [[Meaningful Absence]]. Appended one bullet to the draft [[Hallucination]]. Updated [[index]] and [[Find]] (added Workflows and Summaries to "By type of page"); [[Library.base|Library]] needed no change.
+  - **Proposed for verified pages, not made:** [[Analysis of Competing Hypotheses]] (pointer to the workflow and a "Sources disagree" flag), [[Automation Bias]], [[Mirror Imaging]], [[Denial and Deception]], [[Analytic Confidence]].
+  - **Typed links proposed:** [[ACH GenAI Workflow]] → applies_to → [[Analysis of Competing Hypotheses]]; → counters → [[Automation Bias]] and [[Hallucination]]; the three glossary terms → part_of → [[ACH GenAI Workflow]].
+  - **Flags:** Sources disagree (1: matrix notation, S/C/N in my notes vs. CC/C/N/I/II, where C means opposite things), accuracy check (1: "Heuer, 1999"), gap in the source (1: *ACH Student Primer* not provided; also High/Medium/Low vs. High/Moderate/Low confidence labels).
+  - **Left out on purpose:** nothing. Separate pages for the step prompts, and a "Devil's Advocate" glossary term, were considered and not created.
+- **Verify:** pending. Item by item.
+- **Commit:** `ingest: ACH GenAI Workflow — 5 drafts + source card, pending review`
+
+### [2026-11-12] verify | Diagnostic Evidence
+
+- **Verify:**
+  - Approved: [[Diagnostic Evidence]]
+- **Commit:** `verify: Diagnostic Evidence`
+
+### [2026-11-12] verify | Linchpin Evidence
+
+- **Verify:**
+  - Approved: [[Linchpin Evidence]]
+- **Commit:** `verify: Linchpin Evidence`
+
+### [2026-11-12] verify | Meaningful Absence
+
+- **Verify:**
+  - Approved: [[Meaningful Absence]]
+- **Commit:** `verify: Meaningful Absence`
+
+### [2026-11-12] verify | Summary - ACH GenAI Workflow
+
+- **Verify:**
+  - Approved: [[Summary - ACH GenAI Workflow]]
+- **Commit:** `verify: Summary - ACH GenAI Workflow`
+
+### [2026-11-12] verify | SRC - ACH GenAI Workflow
+
+- **Verify:**
+  - Approved: [[SRC - ACH GenAI Workflow]]
+- **Commit:** `verify: SRC - ACH GenAI Workflow`
