@@ -713,3 +713,20 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[SRC - ACH GenAI Workflow]]
 - **Commit:** `verify: SRC - ACH GenAI Workflow`
+
+### [2026-11-12] verify | Executive Order 12333
+
+- **Verify:**
+  - Approved: [[Executive Order 12333]]
+  - Flags I resolved before approving (1):
+    - Accuracy check — good
+- **Commit:** `verify: Executive Order 12333`
+
+### [2026-11-13] verify | Levels of Intelligence
+
+- **Verify:**
+  - Approved: [[Levels of Intelligence]]
+  - Flags I resolved before approving (2):
+    - Gap (Gap in my notes) — fixed
+    - Gap (Gap in my notes) — not needed
+- **Commit:** `verify: Levels of Intelligence`

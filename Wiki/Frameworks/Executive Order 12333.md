@@ -1,13 +1,17 @@
 ---
 type: framework
-status: draft
-aliases: ["EO 12333"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"]
-related: ["[[United States Intelligence Community]]"]
+status: verified
+aliases:
+  - EO 12333
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
+related:
+  - "[[United States Intelligence Community]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-12
 ---
 > [!summary]
 > Executive Order 12333, signed by President Reagan in 1981, defines the powers, restraints, and structure of the modern U.S. Intelligence Community ([[Intro to Intelligence Class Notes (Fall 2026)#9/10/26|Intro notes, 9/10/26]]). Intro to Intelligence taught it in two parts: definitions and roles, and the parameters that restrain intelligence activity ([[Intro to Intelligence Class Notes (Fall 2026)#9/10/26|Intro notes, 9/10/26]]).
@@ -38,6 +42,3 @@ verified_on:
 
 ## Limits and Cautions
 - Together, 2.12 and 2.13 stop the IC from outsourcing illegal acts to proxies and keep foreign covert influence from feeding back into domestic politics ([[Intro to Intelligence Class Notes (Fall 2026)#9/10/26|Intro notes, 9/10/26]]).
-
-> [!caution] Accuracy check
-> My notes put the definitions (Section 3.5) under "Part 1: Definitions." In the order itself, Section 3.5 is in Part 3. Check the slide or the text of the order.

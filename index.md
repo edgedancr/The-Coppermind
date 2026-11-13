@@ -1,12 +1,12 @@
 ---
 type: index
-updated: 2026-11-12
+updated: 2026-11-13
 ---
 # Index
 
 A map of every page in the Coppermind, grouped by type. The AI agent updates this after every operation; I check it during health checks. Within each type, pages are listed under Verified or Drafts, each with a one-line summary.
 
-**Totals:** 74 verified · 35 drafts
+**Totals:** 76 verified · 33 drafts
 
 ## Concepts (40)
 
@@ -98,21 +98,21 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 ## Frameworks (17)
 
-### Verified (8)
+### Verified (10)
 - [[Ages of U.S. Intelligence]] — Four ages since 1944, and a possible AI Age
 - [[Analysis of Competing Hypotheses]] — Disprove hypotheses instead of confirming one; rules for doing it with AI
 - [[Architecture of Worldview]] — Eight layers of worldview, from theology to culture
 - [[Cascade of Unintended Consequences]] — Four paths from AI side effects to catastrophe
 - [[Essay Types]] — Six essay types by purpose; analytical is most common in SI
+- [[Executive Order 12333]] — Definitions, the DNI's role, functional managers, and five restraints
 - [[Four Levels of Prompt Engineering]] — NPC, Mid, Boss, Legendary
 - [[Information Model]] — Signal, data, information, knowledge, intelligence; context moves it up
+- [[Levels of Intelligence]] — Strategic, operational, tactical, and technical, with their questions
 - [[Tasking, Collection, Processing, Exploitation, and Dissemination]] — TCPED: from requirement to actionable intelligence
 
-### Drafts (9)
-- [[Executive Order 12333]] — Definitions, the DNI's role, functional managers, and five restraints
+### Drafts (7)
 - [[Intelligence-to-Action Convergence Matrix]] — ISR pipeline, intelligence cycle, OODA loop, and kill chain lined up stage by stage
 - [[Just War Theory]] — Jus ad bellum and jus in bello
-- [[Levels of Intelligence]] — Strategic, operational, tactical, and technical, with their questions
 - [[ODNI AI Ethics Framework]] — The IC's AI ethics framework and the misconceptions it corrects (principles not yet recorded)
 - [[Puzzles and Mysteries]] — Answerable questions vs. ones that must be inferred
 - [[Seven Tribes of Intelligence]] — IC culture read from where each tribe locates power
