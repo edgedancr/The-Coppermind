@@ -34,14 +34,14 @@ The Coppermind has three jobs, in priority order:
 
 ## 2. The six parts of the wiki
 
-| Part | Folder / file | What it holds | Who writes it |
-|---|---|---|---|
-| Sources | `Sources/` | My notes, assignments, readings, and scans in their original form, plus a source card for each | I collect; the agent drafts source cards |
-| Wiki pages | `Wiki/` | Concept, glossary, framework, case study, person, summary, prompt, workflow, guide, and analysis pages | The agent drafts; I verify |
-| Schema | `SCHEMA.md` | This rulebook | I direct |
-| Index | `index.md` | A map of every page | The agent maintains; I check |
-| Log | `log.md` | A dated record of every operation and my decisions | The agent maintains; I check |
-| Perspectives | `Perspectives/` | My reflections, opinions, and conclusions | I write |
+| Part         | Folder / file   | What it holds                                                                                          | Who writes it                            |
+| ------------ | --------------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
+| Sources      | `Sources/`      | My notes, assignments, readings, and scans in their original form, plus a source card for each         | I collect; the agent drafts source cards |
+| Wiki pages   | `Wiki/`         | Concept, glossary, framework, case study, person, summary, prompt, workflow, guide, and analysis pages | The agent drafts; I verify               |
+| Schema       | `SCHEMA.md`     | This rulebook                                                                                          | I direct                                 |
+| Index        | `index.md`      | A map of every page                                                                                    | The agent maintains; I check             |
+| Log          | `log.md`        | A dated record of every operation and my decisions                                                     | The agent maintains; I check             |
+| Perspectives | `Perspectives/` | My reflections, opinions, and conclusions                                                              | I write                                  |
 
 ### Folder layout
 
@@ -258,16 +258,16 @@ Each source card rates the source with the Admiralty Code. The agent may propose
 
 ## 9. Agent permissions
 
-| Location                    | The agent may                                | The agent may not                                    |
-| --------------------------- | -------------------------------------------- | ---------------------------------------------------- |
-| `Sources/` (original files) | Read                                         | Edit, rename, move, or delete                        |
-| `Sources/Source Cards/`     | Create and edit as drafts                    | Set the final reliability rating                     |
-| `Wiki/`                     | Create and edit drafts                       | Mark a page verified without my explicit instruction |
-| `Perspectives/`             | Read, and quote as *my* view in answers      | Write or edit anything                               |
-| `SCHEMA.md`                 | Read, and suggest changes in chat            | Edit, unless I ask for a specific change             |
-| `index.md`, `log.md`        | Maintain                                     | Delete or rewrite past log entries                   |
-| `Find.md`, `Library.base`   | Maintain and keep current (see §2)           | Delete, rename, or change their purpose, unless I ask |
-| `_templates/`, `.obsidian/` | Use                                          | Change, unless I ask                                 |
+| Location                    | The agent may                           | The agent may not                                     |
+| --------------------------- | --------------------------------------- | ----------------------------------------------------- |
+| `Sources/` (original files) | Read                                    | Edit, rename, move, or delete                         |
+| `Sources/Source Cards/`     | Create and edit as drafts               | Set the final reliability rating                      |
+| `Wiki/`                     | Create and edit drafts                  | Mark a page verified without my explicit instruction  |
+| `Perspectives/`             | Read, and quote as *my* view in answers | Write or edit anything                                |
+| `SCHEMA.md`                 | Read, and suggest changes in chat       | Edit, unless I ask for a specific change              |
+| `index.md`, `log.md`        | Maintain                                | Delete or rewrite past log entries                    |
+| `Find.md`, `Library.base`   | Maintain and keep current (see §2)      | Delete, rename, or change their purpose, unless I ask |
+| `_templates/`, `.obsidian/` | Use                                     | Change, unless I ask                                  |
 
 
 The agent never deletes anything except a draft it created that I rejected.
