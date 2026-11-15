@@ -1,6 +1,6 @@
 ---
 type: case-study
-status: verified
+status: draft
 aliases:
   - Sydney
   - Microsoft Bing Sydney Incident
@@ -11,6 +11,7 @@ sources:
 year: 2023
 example_of:
   - "[[Emergent Behavior]]"
+  - "[[Prompt Injection]]"
 related:
   - "[[AI Alignment]]"
 drafted_by: Claude (claude-opus-5-5)
@@ -27,7 +28,7 @@ verified_on: 2026-11-11
 1. No real-time behavioral monitoring to detect concerning conversation patterns.
 2. Pre-deployment testing focused on short interactions, missing problems that emerged in extended conversations.
 3. No escalation protocols when users reported disturbing interactions.
-4. Vulnerability to prompt injection, which let users expose hidden system prompts and codenames.
+4. Vulnerability to [[Prompt Injection|prompt injection]], which let users expose hidden system prompts and codenames.
 5. Failure to learn from earlier incidents, despite testing in India months before that revealed similar issues.
 
 Source for the list: ([[SAIL Class Notes (Fall 2026)#10/1/26|SAIL notes, 10/1/26]])

@@ -3,7 +3,7 @@ type: concept
 status: draft
 aliases: ["AI Hallucination", "Hallucinated Citation"]
 courses: ["SAIL", "Intro to Intelligence"]
-sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]", "[[SRC - ACH GenAI Workflow]]"]
+sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]", "[[SRC - ACH GenAI Workflow]]", "[[SRC - OWASP Top 10 for LLM Applications 2026]]"]
 related: ["[[Capability vs. Reliability]]", "[[Transformer]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
@@ -19,6 +19,7 @@ verified_on:
 - In [[Analysis of Competing Hypotheses]], a matrix with no contradictions means the AI is "hallucinating agreement" ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).
 - Detective Mennen told an Intro to Intelligence class that AI will "mess up or hallucinate," so verifying it is necessary ([[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]).
 - In the [[ACH GenAI Workflow]], AI-researched evidence must be tagged [Verified], [Unverified] or [Assumption], and the analyst must confirm each item is real before it enters the matrix, because the AI may hallucinate sources, fabricate data, or mischaracterize reports ([[SRC - ACH GenAI Workflow|ACH Workflow, Orchestrator and Step 2]]).
+- OWASP lists hallucination as one cause of LLM misinformation, which becomes a system-level failure when false output drives decisions, tool calls, or code ([[OWASP Top 10 for LLM Applications 2026.pdf#page=43|OWASP, p. 43]]). It is also a common trigger of [[Excessive Agency]] ([[OWASP Top 10 for LLM Applications 2026.pdf#page=23|OWASP, p. 23]]). Coding assistants hallucinate plausible but nonexistent package names, which attackers register in advance ("slopsquatting"); see [[AI Supply Chain Compromise]] ([[OWASP Top 10 for LLM Applications 2026.pdf#page=28|OWASP, p. 28]]).
 
 > [!caution] Accuracy check
 > The "wrong meaning of a word" explanation in my notes may be a simplification of how hallucinations happen. Check it against the 3Blue1Brown videos or another reading before verifying.

@@ -730,3 +730,39 @@ A dated, append-only record of every ingest, query, health check, verification, 
     - Gap (Gap in my notes) — fixed
     - Gap (Gap in my notes) — not needed
 - **Commit:** `verify: Levels of Intelligence`
+
+### [2026-11-14] ingest | Six SAIL readings: Crash Course AI 18, OWASP LLM Top 10 2026, two RAND papers, MITRE ATLAS, IBM HCAI
+
+- **Think:** I gave Claude six sources to ingest: the Crash Course AI "Algorithmic Bias and Fairness" transcript (ignore its timestamps), the OWASP Top 10 for LLM Applications 2026, RAND's "Artificial General Intelligence's Five Hard National Security Problems" and "Full Stack: China's Evolving Industrial Policy for AI," the MITRE ATLAS matrix, and IBM Research's "What is human-centered AI?". Plan-first mode. I approved the plan as proposed: all six tagged SAIL; 39 pages, with the six remaining OWASP risks as glossary terms; "MITRE ATLAS" kept as a title; the OWASP pre-release status noted; the three China chip-gap figures recorded side by side without a flag; changes to verified pages proposed only.
+- **Calculate:** Claude (claude-opus-5-5) copied the six files unchanged into `Sources/Readings/` with descriptive names (the transcript saved as `.md`, text unchanged). It drafted 6 source cards (ratings proposed, left blank for me), 6 summaries, and 27 wiki pages:
+  - Concepts (6): [[Algorithmic Bias]], [[Prompt Injection]], [[Excessive Agency]], [[Data and Model Poisoning]], [[China's AI Industrial Policy]], [[Semiconductor Export Controls]]
+  - Frameworks (3): [[Five Hard National Security Problems of Artificial General Intelligence]], [[OWASP Top 10 for Large Language Model Applications]], [[MITRE ATLAS]]
+  - Case study (1): [[PredPol]]
+  - Glossary (17): [[Protected Class]], [[Correlated Feature]], [[Positive Feedback Loop]], [[Algorithmic Transparency]], [[Explainable AI]], [[Scaling Laws]], [[Recursive Self-Improvement]], [[AI Technology Stack]], [[Jailbreak]], [[Lethal Trifecta]], [[Retrieval-Augmented Generation]], [[Sensitive Information Disclosure]], [[AI Supply Chain Compromise]], [[Unbounded Consumption]], [[Hidden Context Exposure]], [[Vector and Embedding Weaknesses]], [[Improper Output Handling]]
+  - Appended to drafts: [[Capability vs. Reliability]] (OWASP LLM07 misinformation and overreliance), [[Hallucination]] (OWASP causes and slopsquatting), [[Semiconductors and National Security]] (pointer to the new export-controls page).
+  - **Proposed for verified pages, not made:** [[Human-Centered AI]], [[Artificial General Intelligence]], [[AI Alignment]], [[Agentic AI]], [[Automation Bias]], [[Bing Sydney Incident (2023)]], [[Cascade of Unintended Consequences]], [[Embedding]], [[Technological Singularity]].
+  - **Flags:** unsourced background (1: the ATLAS acronym on [[MITRE ATLAS]]); gap in the source (5: the transcript's missing date and offset chapter headings; three OWASP figures not ingested; RAND China's Figure 1 didn't print; the ATLAS page has no definitions; ATLAS acronym not spelled out on its source card).
+  - **Title changed from the plan:** the OWASP framework page is titled with "Large Language Model" spelled out (Schema §3), with "OWASP Top 10 for LLM Applications" as an alias.
+  - **Left out on purpose:** the transcript's closing promotions and its passing mention of a 2017 profile-photo paper; OWASP's license page, Appendix B figures, references, and the full incident lists in each entry; RAND notes and references; IBM's sidebars and newsletter boxes. Tay, HireMe!, SCORE, and DeepSeek stayed as bullets rather than pages.
+  - [[index]] updated. [[Find]] and [[Library.base|Library]] needed no change: no new class dates, courses, page types, or flag kinds.
+- **Verify:** pending. Item by item.
+- **Commit:** `ingest: six SAIL readings (Crash Course AI 18, OWASP LLM Top 10 2026, RAND AGI, RAND China, MITRE ATLAS, IBM HCAI) — 39 drafts + 3 draft appends, pending review`
+
+### [2026-11-14] ingest | Proposed changes to verified pages and typed links from the six-reading ingest
+
+- **Think:** I approved every proposal in sections C and D of the six-reading ingest report: the nine changes to verified pages and all proposed typed links.
+- **Calculate:** Claude (claude-opus-5-5) made the nine changes and set each page back to `status: draft` (Schema §7, item 5), leaving its old `verified_on` date as a record of the last verification:
+  - [[Human-Centered AI]]: added the IBM source card, the article's authors and date, IBM's three research themes, explainable recommendations in SCORE, and IBM's split of human and AI roles; `related` → [[Explainable AI]].
+  - [[Artificial General Intelligence]]: added RAND's definition and a **Sources disagree** flag (SAIL vs. Mitre and Predd); `related` → [[Five Hard National Security Problems of Artificial General Intelligence]].
+  - [[AI Alignment]]: added RAND's description of misalignment and loss of control.
+  - [[Agentic AI]]: added OWASP's excessive agency and the component-versus-actor boundary; `related` → [[Excessive Agency]].
+  - [[Automation Bias]]: added OWASP's "overreliance."
+  - [[Bing Sydney Incident (2023)]]: `example_of` → [[Prompt Injection]]; linked "prompt injection" in failure #4.
+  - [[Cascade of Unintended Consequences]]: linked "Bias at scale" to [[Algorithmic Bias]].
+  - [[Embedding]]: added [[Retrieval-Augmented Generation]] and [[Vector and Embedding Weaknesses]] to "Used in."
+  - [[Technological Singularity]]: added "compare [[Recursive Self-Improvement]]."
+  - The typed links on the new drafts (section D) were already in place; no change needed.
+  - [[index]] updated: the nine pages moved from Verified to Drafts. [[Find]] and [[Library.base|Library]] needed no change.
+  - **Flags added:** sources disagree (1, on [[Artificial General Intelligence]]).
+- **Verify:** pending. Item by item, since all nine were verified pages.
+- **Commit:** `ingest: apply approved changes to 9 verified pages (back to draft for review)`

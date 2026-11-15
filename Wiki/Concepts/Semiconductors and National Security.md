@@ -37,3 +37,4 @@ All from CDR Blocker's guest lecture ([[Intro to Intelligence Class Notes (Fall 
 
 ## Why It Matters
 - No country controls the whole supply chain, which creates both interdependence and vulnerability. The U.S.–China rivalry over chips will shape AI, cyber power, and IoT infrastructure ([[Intro to Intelligence Class Notes (Fall 2026)#10/29/26|Intro notes, 10/29/26]]).
+- For the export controls themselves, including RAND's assessment of their effect on China, see [[Semiconductor Export Controls]] and [[China's AI Industrial Policy]].

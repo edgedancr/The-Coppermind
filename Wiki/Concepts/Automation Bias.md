@@ -1,12 +1,13 @@
 ---
 type: concept
-status: verified
+status: draft
 aliases:
   - Oval Office Vulnerability
 courses:
   - SAIL
 sources:
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
+  - "[[SRC - OWASP Top 10 for LLM Applications 2026]]"
 related:
   - "[[Human Decision Point]]"
   - "[[Capability vs. Reliability]]"
@@ -21,3 +22,4 @@ verified_on: 2026-11-11
 ## Key Points
 - AI-generated assessments are now reaching the highest levels of decision-making ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).
 - An open question from class: if the President's Daily Brief contains AI-assisted analysis, should the President know? ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]])
+- The OWASP Top 10 for LLM applications calls the same tendency **overreliance**: humans and systems often treat fluent, confident, or well-structured outputs as authoritative, and in agentic systems this overreliance is often built into the design ([[OWASP Top 10 for LLM Applications 2026.pdf#page=43|OWASP, p. 43]]). See [[Capability vs. Reliability]].

@@ -3,8 +3,8 @@ type: concept
 status: draft
 aliases: []
 courses: ["SAIL", "Intro to Intelligence"]
-sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"]
-related: ["[[Hallucination]]", "[[Automation Bias]]", "[[Think-Calculate-Verify Loop]]"]
+sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]", "[[SRC - OWASP Top 10 for LLM Applications 2026]]"]
+related: ["[[Hallucination]]", "[[Automation Bias]]", "[[Think-Calculate-Verify Loop]]", "[[OWASP Top 10 for Large Language Model Applications]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
@@ -20,4 +20,5 @@ verified_on:
 > [!todo] Gap in my notes
 > The 11/10 notes list the video's claims and the two takeaways, but not what the exercise concluded about the video itself.
 
+- The OWASP Top 10 for LLM applications describes a related failure, **misinformation** (LLM07): incorrect or misleading output that appears credible enough to influence a decision, an automated workflow, or an agent's action. Its core risk is that ==the incorrect output is trusted and acted upon==, and OWASP names overreliance as a key factor, since people and systems treat fluent, confident, well-structured output as authoritative ([[OWASP Top 10 for LLM Applications 2026.pdf#page=43|OWASP, p. 43]]). Its remedies include a "claim-check-act" pattern that separates generating a claim from acting on it ([[OWASP Top 10 for LLM Applications 2026.pdf#page=44|OWASP, p. 44]]). See [[OWASP Top 10 for Large Language Model Applications]].
 - The remedy is to always think, calculate, then verify; see [[Think-Calculate-Verify Loop]] ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).

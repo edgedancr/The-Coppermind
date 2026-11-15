@@ -1,27 +1,23 @@
 ---
 type: index
-updated: 2026-11-13
+updated: 2026-11-14
 ---
 # Index
 
 A map of every page in the Coppermind, grouped by type. The AI agent updates this after every operation; I check it during health checks. Within each type, pages are listed under Verified or Drafts, each with a one-line summary.
 
-**Totals:** 76 verified · 33 drafts
+**Totals:** 67 verified · 81 drafts
 
-## Concepts (40)
+## Concepts (46)
 
-### Verified (22)
-- [[Agentic AI]] — AI with tools, and the added risk
-- [[AI Alignment]] — Systems doing what we intend, even under pressure
+### Verified (18)
 - [[AI in Intelligence Production]] — How AI changes collection, threat prediction, and policymaking
 - [[AI in Warfighting]] — How AI compresses the lethal engagement cycle
 - [[AI-Enabled Surveillance]] — Surveillance capitalism, state surveillance, and privacy as autonomy
 - [[Artificial Intelligence]] — What "artificial" and "intelligent" mean, and AI's progression
-- [[Automation Bias]] — Over-trusting confident AI output
 - [[Curiosity, Character, and Competence]] — CDR Blocker's three things every intelligence professional needs
 - [[Emergent Behavior]] — Behavior developers didn't design and can't fully predict
 - [[Human Decision Point]] — Where AI belongs and where humans must stay
-- [[Human-Centered AI]] — Augmentation, not abdication
 - [[Intelligence as Attentive Understanding]] — Why liberal arts matter in SI; the analyst as sub-creator
 - [[Intelligence Writing Style]] — Clear, concise, informative, timely, tailored; lead with the point
 - [[Intelligence-Led Policing]] — Intelligence inside the police operational cycle; prosecution vs. prevention
@@ -34,13 +30,21 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Time Compression Trap]] — Faster early stages create pressure to skip analysis
 - [[Tokenization]] — Tokens, and the "tokenization of everything"
 
-### Drafts (18)
+### Drafts (28)
+- [[Agentic AI]] — AI with tools, and the added risk
+- [[AI Alignment]] — Systems doing what we intend, even under pressure
+- [[Algorithmic Bias]] — Five types of bias in AI, the HireMe! example, and proposed fixes
+- [[Automation Bias]] — Over-trusting confident AI output
 - [[Capability vs. Reliability]] — Fluent output is not verified output
 - [[Centaur Analyst]] — Five capabilities and the changing role of the analyst
+- [[China's AI Industrial Policy]] — RAND: Beijing's state support across the AI stack, and whether it will work
 - [[Cognitive Debt]] — The cost of letting AI think first
+- [[Data and Model Poisoning]] — OWASP LLM05: corrupting what a model learns; backdoors and sleeper agents
 - [[Deep Learning]] — Progressive abstraction; ImageNet and AlphaGo
+- [[Excessive Agency]] — OWASP LLM03: too much functionality, permission, or autonomy
 - [[Future Strategic Threats]] — Three massive challenges, and cognitive information threats
 - [[Hallucination]] — Confident, false AI output
+- [[Human-Centered AI]] — Augmentation, not abdication
 - [[Imago Dei]] — Humans made in God's image, as the foundation for AI ethics
 - [[Intelligence (National Security)]] — What intelligence is, why agencies exist, and why it's "proximate reality," not truth
 - [[Intelligence Collection Disciplines]] — OSINT, HUMINT, SIGINT, MASINT, GEOINT, FININT, ABI/POL, and ADTECH
@@ -48,18 +52,19 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Intelligence vs. Consciousness]] — AI acts like a human but does not think or feel like one
 - [[Machine Learning]] — Classification vs. regression, learning methods, and scaling
 - [[Prompt Engineering]] — Fundamentals and advanced techniques for instructing AI
+- [[Prompt Injection]] — OWASP LLM01: inputs that hijack a model; why defense must be architectural
+- [[Semiconductor Export Controls]] — U.S. controls on AI chips for China: effects, workarounds, and limits
 - [[Semiconductors and National Security]] — Chip Wars: why chips are the oil of the 21st century
 - [[System 1 and System 2 Thinking]] — Fast and slow thinking, and the "lazy controller"
 - [[Topic Sentence]] — Types, faults, and the four patterns that make causation explicit
 - [[Transformer]] — The architecture behind LLMs
 - [[United States Intelligence Community]] — The 18 IC organizations and how they're grouped
 
-## Glossary (36)
+## Glossary (53)
 
-### Verified (29)
+### Verified (26)
 - [[All-Source Intelligence]] — Drawing on every type of collection the topic needs
 - [[Analytic Confidence]] — How strongly a conclusion is supported
-- [[Artificial General Intelligence]] — AI that does every human task better than every human
 - [[Attention Head]] — What a token is compared against in a transformer
 - [[Bach Faucet]] — Derogatory term for on-demand generative art
 - [[Computer Network Exploitation]] — Exploiting networks to gather data
@@ -68,7 +73,6 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Denial and Deception]] — Hiding what's there; conveying less than the whole truth
 - [[Diagnostic Evidence]] — Evidence whose ratings differ across hypotheses
 - [[Diplomatic, Information, Military, and Economic Options]] — DIME: the options for defeating an adversary
-- [[Embedding]] — Turning a token into a vector
 - [[Existential Risk]] — The x-risk scenario, and the real danger behind it
 - [[Indicators of Compromise]] — Signs an operation has been compromised
 - [[Intelligence Cycle]] — Collection, processing, analysis and production, dissemination
@@ -82,27 +86,45 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Priority Creep]] — Analysts pushing up their own tasks' priority
 - [[Revolution in Military Affairs]] — The debate over technology and future warfare
 - [[SEE-It Framework]] — State, elaborate, exemplify, illustrate
-- [[Technological Singularity]] — AGI outpacing human tracking or control
 - [[Traffic Analysis]] — Finding the sender from communication patterns, not content
 - [[Unconventional Warfare]] — Training locals to defend themselves
 - [[Zero-Day Vulnerability]] — An exploitable fault not yet known, fixed, or exploited
 
-### Drafts (7)
+### Drafts (27)
+- [[AI Supply Chain Compromise]] — OWASP LLM04 and an ATLAS technique; includes slopsquatting
+- [[AI Technology Stack]] — The layers AI depends on, from chips to applications
+- [[Algorithmic Transparency]] — Examining inputs and outputs to see why an algorithm recommends what it does
+- [[Artificial General Intelligence]] — SAIL's and RAND's definitions of AGI, which disagree
 - [[Computer Network Attack]] — Attacking networks (definition needs checking)
+- [[Correlated Feature]] — How a protected class re-enters data that never collected it
+- [[Embedding]] — Turning a token into a vector
+- [[Explainable AI]] — XAI: explaining AI outputs so people can understand and trust them
+- [[Hidden Context Exposure]] — OWASP LLM08: extracting a model's hidden instructions (formerly System Prompt Leakage)
+- [[Improper Output Handling]] — OWASP LLM10: model output passed downstream without validation
 - [[Intelligence Oversight Committees]] — HPSCI and SSCI
+- [[Jailbreak]] — Prompt injection aimed at breaking a model's safety protocols
+- [[Lethal Trifecta]] — Private data + untrusted content + external communication; and the Rule of Two
 - [[Liar's Dividend]] — Information quality collapse (definition needs checking)
 - [[LMSYS Chatbot Arena]] — Crowdsourced chatbot comparison
 - [[Moral Injury]] — Its two causes: an overwhelming event, and betrayal of trust
+- [[Positive Feedback Loop]] — An algorithm amplifying what happened in the past
+- [[Protected Class]] — Groups the law protects from discrimination, such as gender, race, and age
+- [[Recursive Self-Improvement]] — A model enhancing its own capabilities without human input
+- [[Retrieval-Augmented Generation]] — RAG: similarity search deciding what the model sees
+- [[Scaling Laws]] — Model performance scaling with compute
+- [[Sensitive Information Disclosure]] — OWASP LLM02: protected data leaking through any channel
 - [[Sheep Dipping]] — Definition needs checking
 - [[Structured Analytic Technique]] — Named but not yet defined in my notes; ACH is one
+- [[Technological Singularity]] — AGI outpacing human tracking or control
+- [[Unbounded Consumption]] — OWASP LLM06: uncontrolled inference; denial of wallet
+- [[Vector and Embedding Weaknesses]] — OWASP LLM09: attacks on embeddings and similarity search
 
-## Frameworks (17)
+## Frameworks (20)
 
-### Verified (10)
+### Verified (9)
 - [[Ages of U.S. Intelligence]] — Four ages since 1944, and a possible AI Age
 - [[Analysis of Competing Hypotheses]] — Disprove hypotheses instead of confirming one; rules for doing it with AI
 - [[Architecture of Worldview]] — Eight layers of worldview, from theology to culture
-- [[Cascade of Unintended Consequences]] — Four paths from AI side effects to catastrophe
 - [[Essay Types]] — Six essay types by purpose; analytical is most common in SI
 - [[Executive Order 12333]] — Definitions, the DNI's role, functional managers, and five restraints
 - [[Four Levels of Prompt Engineering]] — NPC, Mid, Boss, Legendary
@@ -110,32 +132,47 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Levels of Intelligence]] — Strategic, operational, tactical, and technical, with their questions
 - [[Tasking, Collection, Processing, Exploitation, and Dissemination]] — TCPED: from requirement to actionable intelligence
 
-### Drafts (7)
+### Drafts (11)
+- [[Cascade of Unintended Consequences]] — Four paths from AI side effects to catastrophe
+- [[Five Hard National Security Problems of Artificial General Intelligence]] — RAND's five AGI problems as a rubric for judging strategy
 - [[Intelligence-to-Action Convergence Matrix]] — ISR pipeline, intelligence cycle, OODA loop, and kill chain lined up stage by stage
 - [[Just War Theory]] — Jus ad bellum and jus in bello
+- [[MITRE ATLAS]] — 16 tactics and 111 techniques for attacking AI systems
 - [[ODNI AI Ethics Framework]] — The IC's AI ethics framework and the misconceptions it corrects (principles not yet recorded)
+- [[OWASP Top 10 for Large Language Model Applications]] — The ten top security risks for LLM applications, 2026 edition
 - [[Puzzles and Mysteries]] — Answerable questions vs. ones that must be inferred
 - [[Seven Tribes of Intelligence]] — IC culture read from where each tribe locates power
 - [[Think-Calculate-Verify Loop]] — Human thinks, AI calculates, human verifies
 - [[Three-Ps Risk Framework]] — Assess AI risk at the program, person, and population levels
 
-## Case Studies (4)
+## Case Studies (5)
 
-### Verified (4)
-- [[Bing Sydney Incident (2023)]] — Microsoft's chatbot went off the rails in long conversations
+### Verified (3)
 - [[Mata v. Avianca (2023)]] — A lawyer filed a brief citing a case ChatGPT invented
 - [[Open Skies Treaty]] — The collapse of a transparency norm, and Operation Spiderweb
 - [[Pearl Harbor (1941)]] — U.S. intelligence assumed Japan couldn't adapt its torpedoes
+
+### Drafts (2)
+- [[Bing Sydney Incident (2023)]] — Microsoft's chatbot went off the rails in long conversations
+- [[PredPol]] — A predictive-policing feedback loop that amplified past bias
 
 ## People (1)
 
 ### Verified (1)
 - [[Richards Heuer]] — Developed ACH at the CIA
 
-## Summaries (1)
+## Summaries (7)
 
 ### Verified (1)
 - [[Summary - ACH GenAI Workflow]] — Neutral summary of the SAIL ACH-with-AI prompt sequence
+
+### Drafts (6)
+- [[Summary - Algorithmic Bias and Fairness (Crash Course AI 18)]] — Neutral summary of the Crash Course AI episode on algorithmic bias
+- [[Summary - Artificial General Intelligence's Five Hard National Security Problems]] — Neutral summary of Mitre and Predd's RAND paper
+- [[Summary - Full Stack, China's Evolving Industrial Policy for AI]] — Neutral summary of Chan et al.'s RAND paper
+- [[Summary - MITRE ATLAS Matrix]] — Neutral summary of the ATLAS matrix page
+- [[Summary - OWASP Top 10 for LLM Applications 2026]] — Neutral summary of the 2026 OWASP LLM Top 10
+- [[Summary - What Is Human-Centered AI]] — Neutral summary of IBM Research's HCAI explainer
 
 ## Prompts (2)
 
@@ -162,9 +199,17 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 ### Verified (1)
 - [[My Worldview]] — The foundational convictions behind my perspectives, by layer of worldview
 
-## Source Cards (3)
+## Source Cards (9)
 
 ### Verified (3)
 - [[SRC - ACH GenAI Workflow]] — The SAIL ACH-with-AI course documents, eight files (rating proposed B-2)
 - [[SRC - Intro to Intelligence Class Notes (Fall 2026)]] — My Intro to Intelligence lecture notes, Fall 2026 (rating proposed B-2)
 - [[SRC - SAIL Class Notes (Fall 2026)]] — My SAIL lecture notes, Fall 2026 (rating proposed B-2)
+
+### Drafts (6)
+- [[SRC - Algorithmic Bias and Fairness (Crash Course AI 18)]] — Crash Course AI episode 18 transcript (rating proposed C-2)
+- [[SRC - Artificial General Intelligence's Five Hard National Security Problems]] — Mitre and Predd, RAND, 2025 (rating proposed B-3)
+- [[SRC - Full Stack, China's Evolving Industrial Policy for AI]] — Chan et al., RAND, 2025 (rating proposed B-2)
+- [[SRC - MITRE ATLAS Matrix]] — The MITRE ATLAS matrix page (rating proposed B-2)
+- [[SRC - OWASP Top 10 for LLM Applications 2026]] — OWASP GenAI Security Project, 2026 edition (rating proposed B-2)
+- [[SRC - What Is Human-Centered AI]] — Geyer et al., IBM Research, 2022 (rating proposed C-2)

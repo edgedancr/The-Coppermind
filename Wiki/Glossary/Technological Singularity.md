@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: verified
+status: draft
 aliases:
   - The Singularity
   - Singularity
@@ -17,4 +17,4 @@ verified_on: 2026-11-11
 > [!summary]
 > **The Singularity:** the point at which AGI is developing faster than humans can track it or stop it ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
 
-**Used in:** [[Artificial General Intelligence]]
+**Used in:** [[Artificial General Intelligence]]; compare [[Recursive Self-Improvement]]
