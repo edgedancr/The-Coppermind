@@ -948,3 +948,9 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - [[index]]: moved the guide from Verified to Drafts and updated the totals (55 verified, 181 drafts). Older log entries still say "Coppermind Review", since they record what was true then.
 - **Verify:** pending. [[SCHEMA]] and [[Verifying Pages with the Review Buttons]] need re-verifying.
 - **Commit:** `schema: rename the review plugin to Nicrosil (v4.3)`
+
+### [2026-11-17] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`

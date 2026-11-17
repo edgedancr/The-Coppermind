@@ -1,6 +1,6 @@
 "use strict";
 /*
- * Nicrosil for the Coppermind (v0.7)
+ * Nicrosil (v0.7)
  *
  * A nicrosil mind stores investiture and amplifies whoever draws on it. This plugin does the same for
  * the Coppermind: it holds the tools that make working in the vault faster. (Its folder and id are
@@ -1208,7 +1208,7 @@ class SchemaLogModal extends Modal {
   onClose() { this.contentEl.empty(); }
 }
 
-module.exports = class NicrosilForTheCoppermind extends Plugin {
+module.exports = class Nicrosil extends Plugin {
   async onload() {
     const data = (await this.loadData()) || {};
     this.settings = Object.assign({}, DEFAULT_SETTINGS, data.settings || {});
@@ -1234,6 +1234,7 @@ module.exports = class NicrosilForTheCoppermind extends Plugin {
     addIcon("coppermind-logo", LOGO_ICON);
     this.ribbonEl = this.addRibbonIcon("coppermind-logo", "Dashboard (Alt+H)", () => this.openDashboard());
     this.ribbonEl.addClass("cm-ribbon-logo");
+    this.addRibbonIcon("badge-check", "Review queue (Alt+Q)", () => this.activateView());
     this.addRibbonIcon("file-pen", "Log a schema change", () => this.openSchemaLog());
 
     this.registerMarkdownCodeBlockProcessor("coppermind-hero", (src, el) => this.renderHero(el, src));
