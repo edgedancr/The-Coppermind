@@ -1,9 +1,9 @@
 {
   "id": "coppermind-review",
-  "name": "Coppermind Review",
-  "version": "0.6.0",
+  "name": "Nicrosil for the Coppermind",
+  "version": "0.7.0",
   "minAppVersion": "1.5.0",
-  "description": "Review drafts: verify or reject with one click, a review queue sidebar, flag resolving, hotkeys, and a Dashboard page with a live search box, a home button, and a collapsible properties strip. Updates the page, index.md, and log.md.",
+  "description": "The Coppermind's toolkit: verify or reject drafts with one click, a review queue sidebar, flag resolving, hotkeys, a Dashboard with a live search box and a home button, a collapsible properties strip, and a button that logs schema changes. Updates the page, index.md, and log.md.",
   "author": "Harrison Nickles",
   "isDesktopOnly": false
 }

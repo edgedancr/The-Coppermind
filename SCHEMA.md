@@ -1,10 +1,10 @@
 ---
 type: schema
-version: 4.2
-status: verified
+version: 4.3
+status: draft
 owner: Harrison Nickles
 updated: 2026-11-17
-verified_on: 2026-11-17
+verified_on:
 ---
 # The Coppermind — Schema
 
@@ -94,7 +94,7 @@ The Coppermind/
 | A page cites a class date that Find doesn't list | Add the date to its course's row in Find's class-date table, in date order, using the same search pattern as its neighbors |
 | A new course comes into scope | Add a link under "By course" and a row in the class-date table in Find, and a view in `Library.base` filtered on that course. Suggest the matching change to §1 and §4 here |
 | A page type or `Wiki/` folder is added or renamed | Add or fix its link under "By type of page" in Find |
-| A flag callout is added, renamed, or removed (§6, the ingest prompt, or the review plugin) | Make "Pages that still need attention" in Find match |
+| A flag callout is added, renamed, or removed (§6, the ingest prompt, or the Nicrosil plugin) | Make "Pages that still need attention" in Find match |
 | The vault, `Find.md`, or `Library.base` is renamed or moved | Fix the vault name in every `obsidian://` link in Find, and every link to either file, including this file and the Dashboard |
 | A property name or value used in a search or view changes | Fix every Find link and `Library.base` filter that uses it |
 
@@ -260,7 +260,7 @@ Each source card rates the source with the Admiralty Code. The agent may propose
 
 1. **Every wiki page, source card, and perspective has a `status`**: `draft` (not yet reviewed by me) or `verified` (I reviewed and approved it).
 2. **The agent only ever creates drafts.** It writes new pages directly into the vault with `status: draft`, so I can review them in Obsidian, where the links and formatting render and I can click through to check each citation.
-3. **Only I make a page verified.** I either change the property myself, or tell the agent explicitly, for that specific page, "mark it verified." The agent then sets `status: verified` and `verified_on`, and logs it. Clicking the **Verify** button added by the Coppermind Review plugin counts as me making that change ([[Verifying Pages with the Review Buttons]]).
+3. **Only I make a page verified.** I either change the property myself, or tell the agent explicitly, for that specific page, "mark it verified." The agent then sets `status: verified` and `verified_on`, and logs it. Clicking the **Verify** button added by the Nicrosil plugin counts as me making that change ([[Verifying Pages with the Review Buttons]]).
 4. **"Saved as final" means verified and committed to git.** A draft in the vault is a proposal, not part of the wiki's baseline.
 5. **If the agent changes the content of a verified page, the page goes back to `draft`** and the change is logged. Purely mechanical fixes, like updating a link after a page is renamed, don't reset the status but are still logged.
 6. **A rejected draft is deleted, never kept,** and the rejection is recorded in the log with my reason. The **Reject** button does this, and also removes the page from the index.
@@ -396,7 +396,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 - **Commit:** suggested commit message
 ```
 
-- Entries use `###` headings, so a folded log reads as a short list. The Coppermind Review plugin folds them when the log opens in editing view.
+- Entries use `###` headings, so a folded log reads as a short list. The Nicrosil plugin folds them when the log opens in editing view.
 - Operations are: `setup`, `ingest`, `query`, `health-check`, `verify`, `schema`.
 - **A `health-check` entry links to its report** (`Health Check YYYY-MM-DD`) and gives the counts, instead of repeating each flag.
 - **If I revise or reject something without saying why, the agent asks me for a one-sentence reason** and records it. Corrections are the best evidence of my learning, so they should be recorded well.
@@ -444,3 +444,4 @@ The Coppermind must outlive any one tool or agent.
 - **4.0 (2026-11-17):** Health checks now produce a saved report. `Health Checks/` added to the structure (§2 folder layout and a new "Health Checks" subsection) with a `Health Check Report` template in `_templates/` and a `Health Check History.base` table. §10: the check writes a short report, with mechanical fixes listed for batch approval, and each decision is recorded in the report. §11: the log entry links to the report instead of repeating each flag, and a new Health Checks subsection. §3: report naming. §9: a permissions row. §13: the history table listed as Obsidian-only. Status returns to `draft` until I verify it again (§7).
 - **4.1 (2026-11-17):** Removed a rule about empty list properties.
 - **4.2 (2026-11-17):** Reworded a small part of the Find and Search description.
+- **4.3 (2026-11-17):** The review plugin is now called Nicrosil (§2, §7, §11). The name only changed; nothing about how reviewing works. Status returns to `draft` until I verify it again (§7).

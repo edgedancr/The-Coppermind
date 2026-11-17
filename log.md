@@ -937,3 +937,14 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[SCHEMA]]
 - **Commit:** `verify: SCHEMA`
+
+### [2026-11-17] schema | Rename the review plugin to Nicrosil (version 4.3)
+
+- **Think:** I asked to combine the two Coppermind plugins (the review tools and the schema changelog button) into one, named Nicrosil, and to update every written reference to the old name.
+- **Calculate:**
+  - Plugin: the schema changelog button now lives inside Nicrosil. Its folder and id stay `coppermind-review`, so my settings, saved flag decisions, queue layout, and the Alt+D hotkey carry over. The old `coppermind-schema-log` folder is now an empty stub, to be turned off and deleted.
+  - [[SCHEMA]]: changed the three places that named the old plugin (§2, §7, §11), added a 4.3 line to the changelog, and set `status` back to `draft` and cleared `verified_on` (§7).
+  - [[Verifying Pages with the Review Buttons]]: changed the three mentions of the plugin name, and set `status` back to `draft` and cleared `verified_on` (§7). The guide still says the Dashboard has seven cards including Find, which is no longer true; I did not change that.
+  - [[index]]: moved the guide from Verified to Drafts and updated the totals (55 verified, 181 drafts). Older log entries still say "Coppermind Review", since they record what was true then.
+- **Verify:** pending. [[SCHEMA]] and [[Verifying Pages with the Review Buttons]] need re-verifying.
+- **Commit:** `schema: rename the review plugin to Nicrosil (v4.3)`

@@ -1,6 +1,6 @@
 ---
 type: guide
-status: verified
+status: draft
 aliases:
   - Review Buttons
   - Review Queue Guide
@@ -13,15 +13,15 @@ related:
   - "[[Setting Up Git for the Coppermind]]"
 drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
+verified_on:
 ---
 > [!summary]
 > The Coppermind's review tools turn checking drafts into one steady loop: open the next draft, check it, resolve its flags, verify or reject it, and land on the next one. ==The tools do the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
-The tools come from a small plugin I keep in the vault, **Coppermind Review** (`.obsidian/plugins/coppermind-review/`). They work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/` that have `status: draft`.
+The tools come from a plugin I keep in the vault, **Nicrosil** (its folder is still `.obsidian/plugins/coppermind-review/`). They work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/` that have `status: draft`.
 
 ## Turn it on (once per computer)
-1. In Obsidian: **Settings → Community plugins**, click the refresh icon next to "Installed plugins," and switch on **Coppermind Review**. After an update, switch it off and on again (or restart Obsidian) to load the new version.
+1. In Obsidian: **Settings → Community plugins**, click the refresh icon next to "Installed plugins," and switch on **Nicrosil**. After an update, switch it off and on again (or restart Obsidian) to load the new version.
 2. The plugin files are tracked in git, so a second computer gets them with a pull. Switch it on there too, since the on/off setting is local.
 
 ## The parts
@@ -79,7 +79,7 @@ To edit the Dashboard, press `Ctrl+E` to switch to editing. It stays in editing 
 Change any of them in **Settings → Hotkeys** (search "Coppermind").
 
 ## Settings
-In **Settings → Coppermind Review**:
+In **Settings → Nicrosil**:
 - **Open the next draft after verifying or rejecting** (on by default)
 - **Queue order:** clean pages first (default), flagged pages first, by page type, or A to Z. The same menu is at the top of the sidebar.
 

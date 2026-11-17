@@ -6,7 +6,7 @@ updated: 2026-11-17
 
 A map of every page in the Coppermind, grouped by type. The AI agent updates this after every operation; I check it during health checks. Within each type, pages are listed under Verified or Drafts, each with a one-line summary.
 
-**Totals:** 56 verified · 180 drafts
+**Totals:** 55 verified · 181 drafts
 
 ## Concepts (65)
 
@@ -255,9 +255,11 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 ## Guides (3)
 
-### Verified (3)
+### Verified (2)
 - [[Law Enforcement Intelligence Internships]] — Detective Mennen's advice on getting an internship that leads to a job
 - [[Setting Up Git for the Coppermind]] — How to put the vault under version control, sync two computers, and commit after each review
+
+### Drafts (1)
 - [[Verifying Pages with the Review Buttons]] — How to run a review session: the queue, the buttons, resolving flags, hotkeys, and the Dashboard
 
 ## Analyses (0)
