@@ -912,3 +912,28 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - Because their content changed, all seven pages were set back to `status: draft` (Schema §7, item 5); `verified_on` was kept as the record of the earlier verification. [[index]] updated: the seven moved from Verified to Drafts. [[Find]] and [[Library.base|Library]] needed no change.
 - **Verify:** pending. Item by item.
 - **Commit:** `ingest: batch 1a edits to 7 verified pages — back to draft, pending review`
+
+### [2026-11-17] schema | Add Health Checks (version 4.0)
+
+- **Think:** I asked for health checks to produce a short, easy-to-read report that is stored so I can look back at past checks. I asked the agent to design the template and the storage place first and to wait on the schema until I'd settled how it works. After seeing the design, I said yes to the agent's proposal: a `Health Checks/` folder in the vault root, a log entry that links to the report instead of repeating each flag, and a fixed set of rows matching §10.
+- **Calculate:**
+  - Created `_templates/Health Check Report.md` (summary callout, a fixed table with one row per check, flags needing my decision, mechanical fixes for batch approval, changes since the last check, scope and limits), the `Health Checks/` folder, and `Health Checks/Health Check History.base` (all reports newest first, and the ones with open flags).
+  - [[SCHEMA]] updated: folder layout and a new "Health Checks" subsection (§2), report naming (§3), a permissions row (§9), the health check steps (§10), a new Health Checks subsection and a log-entry rule (§11), the history table listed as Obsidian-only (§13), frontmatter `version: 4`, and a 4.0 changelog line.
+  - `AGENTS.md` updated with a pointer to the reports.
+  - Because the schema's content changed, its `status` was set back to `draft` and `verified_on` cleared (§7).
+  - [[index]], [[Find]], [[Library.base|Library]], and the Dashboard needed no change: reports are not pages, and have no `status`, so Library and the Review Queue skip them. No health check has been run under the new format yet, so there are no reports.
+- **Verify:** pending. Schema needs re-verifying. The template and history table are untested until the first report is saved.
+- **Commit:** `schema: add Health Checks reports (v4.0)`
+
+### [2026-11-17] health-check | Whole vault (first report)
+
+- **Think:** I asked for a health check of the whole vault, the first one under the new report format.
+- **Calculate:** Saved [[Health Check 2026-11-17]]: 236 pages checked, 11 flags (9 for my decision, 2 mechanical). The two that matter most: [[Dissect and Ingest a Source]] was modified after it was verified, with no log entry; and 82% of typed links are `related`, with 70 pairs stored on both pages. The index, Find's class-date table, and the Ingest Queue are in sync; there are no broken links and no drafts older than 14 days. [[index]], [[Find]], and [[Library.base|Library]] needed no change.
+- **Verify:** pending. 0 of 11 flags decided.
+- **Commit:** `health-check: whole vault, first report — 11 flags, 0 decided`
+
+### [2026-11-17] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`

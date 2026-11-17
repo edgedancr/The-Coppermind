@@ -1,0 +1,30 @@
+filters:
+  and:
+    - type == "health-check"
+    - file.inFolder("Health Checks")
+views:
+  - type: table
+    name: All health checks
+    order:
+      - file.name
+      - date
+      - scope
+      - pages_checked
+      - flags_total
+      - flags_open
+    sort:
+      - property: date
+        direction: DESC
+  - type: table
+    name: Still has open flags
+    filters:
+      and:
+        - flags_open > 0
+    order:
+      - file.name
+      - date
+      - scope
+      - flags_open
+    sort:
+      - property: date
+        direction: DESC

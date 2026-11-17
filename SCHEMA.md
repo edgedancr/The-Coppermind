@@ -1,6 +1,6 @@
 ---
 type: schema
-version: 3
+version: 4.2
 status: verified
 owner: Harrison Nickles
 updated: 2026-11-17
@@ -74,6 +74,7 @@ The Coppermind/
 │   ├── Guides/             How-to pages for me or someone else
 │   └── Analyses/           Answers to questions, filed back from queries
 ├── Perspectives/           My views, organized by the Architecture of Worldview
+├── Health Checks/          One report per health check, plus a table of past reports
 ├── Tools/                  Tools I use and have built (browser extensions, scripts, templates)
 ├── _templates/             One template per page type
 └── _attachments/           Images and diagrams used on wiki pages
@@ -81,7 +82,7 @@ The Coppermind/
 
 ### Find and Library: the search tools
 
-`Find.md` and `Library.base` are how I look things up without AI or an internet connection. Both use only Obsidian's built-in search and Bases. They are not one of the six parts and not wiki pages: they have no `status`, are not in `index.md`, and I don't verify them. Like the index and the log, **the agent maintains them, and they must stay current.** A stale Find page is worse than none, because it looks complete.
+`Find.md` and `Library.base` are how I look things up without AI or an internet connection. Both use only Obsidian's built-in search and Bases. They have no `status`, are not in `index.md`, and I don't verify them. Like the index and the log, **the agent maintains them, and they must stay current.** A stale Find page is worse than none, because it looks complete.
 
 - **`Find.md`** holds one-click searches by page type, course, review status, and open flag kind, plus a table of class dates that finds every page citing that day's notes, and a table of search operators.
 - **`Library.base`** is a table of every page with views for all pages by type, the glossary A–Z, each course, verified pages, and drafts.
@@ -108,6 +109,16 @@ Class-date searches match the display text of the citation, such as `SAIL notes,
 - **At the end of every ingest that takes a batch from the queue,** the agent marks the batch done, links its source cards, and notes anything deferred to a later batch.
 - **I can reorder, split, or drop batches at any time;** the agent changes the order only when I ask.
 
+### Health Checks: the report archive
+
+`Health Checks/` holds one report for each health check (§10), so I can go back and see how the wiki's health has changed. Like the Ingest Queue, it is not one of the six parts and not a wiki page: reports have no `status`, are not in `index.md`, and I don't verify them. **The agent writes the reports; I decide each flag in them.**
+
+- **Reports are short.** About one screen, written from the `Health Check Report` template in `_templates/`: a summary callout, a table with one row per check (the same rows every time, so reports can be compared), the flags that need my decision, the mechanical fixes for batch approval, and what changed since the last check.
+- **Naming:** `Health Check YYYY-MM-DD`, with ` (2)` added for a second report on the same day. The date is in the name because a report is a record, not a wiki page (§3).
+- **Each report links to the one before it** in its `previous` property.
+- **A saved report is a record.** As I decide, the agent fills in its Decision lines and its `flags_open` count. It doesn't change the findings afterward; a new health check makes a new report.
+- **`Health Check History.base`** in the folder is a table of every report, newest first, with a view of the reports that still have undecided flags. It is an Obsidian-only convenience (§13).
+
 ### Tools: the toolbox
 
 `Tools/` is where I keep the tools I use: browser extensions, scripts, and similar things, each as a single file or zip. It is not one of the six parts and not a wiki page folder: files there have no `status`, are not in `index.md`, and I don't verify them. They are my own working equipment, not sources or knowledge.
@@ -132,6 +143,7 @@ Class-date searches match the display text of the citation, such as `SAIL notes,
 - **Source cards:** `SRC - ` plus the source title: `SRC - SAIL Class Notes (Fall 2026)`.
 - **Original source files** keep a descriptive name: `SAIL Class Notes (Fall 2026).md`. My own assignments keep the course's submission name (e.g., `Nickles_HW1_Unverified_GenAI_Information`).
 - **No dates in wiki page names.** Dates belong in sources, properties, and the log.
+- **Health check reports are the one exception**, because they are records and not wiki pages: `Health Check 2026-11-17`.
 
 ---
 
@@ -154,7 +166,6 @@ Every page in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/` starts with 
 
 Rules:
 - Dates are always `YYYY-MM-DD`.
-- Leave out typed-link properties that would be empty; don't leave empty lists on a finished page.
 - Links in properties are written in quotes: `supports: ["[[Automation Bias]]"]`.
 
 ---
@@ -288,6 +299,7 @@ Each source card rates the source with the Admiralty Code. The agent may propose
 | `index.md`, `log.md`        | Maintain                                | Delete or rewrite past log entries                    |
 | `Find.md`, `Library.base`   | Maintain and keep current (see §2)      | Delete, rename, or change their purpose, unless I ask |
 | `Ingest Queue.md`           | Maintain and keep current (see §2)      | Reorder, drop, or skip batches, unless I ask          |
+| `Health Checks/`            | Create a report for each health check; record my decisions in it (see §2) | Change a saved report's findings, or delete a report |
 | `Tools/`                    | Read; build or revise a tool when I ask | Edit, rename, or delete otherwise                     |
 | `_templates/`, `.obsidian/` | Use                                     | Change, unless I ask                                  |
 
@@ -322,7 +334,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 ### Health check: reviewing the whole wiki
 
 1. **Think (me).** I start a review of the whole wiki or one folder.
-2. **Calculate (agent).** The agent checks for, and reports as a numbered list of flags with a suggested fix for each:
+2. **Calculate (agent).** The agent checks for each of the following and saves the results as a report in `Health Checks/` (§2), written from the Health Check Report template: a short summary, one row per check in a table, and the flags as a numbered list with a suggested fix for each. Mechanical fixes are listed separately so I can approve them as a batch (§7). The checks:
    - claims without citations, or citations that don't support the claim
    - contradictions between pages
    - typed links that don't hold up, and missing links that should exist
@@ -334,8 +346,8 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
    - pages missing from `index.md`, or index entries for pages that no longer exist
    - `Find.md` or `Library.base` out of date: a cited class date missing from Find, a course or page type with no link or view, flag links that don't match §6, or a link or filter that no longer works
    - `Ingest Queue.md` out of date: a batch still marked waiting whose sources already have source cards, or a batch marked done whose sources don't
-3. **Verify (me).** I decide how to resolve each flag: fix, accept as is, or defer. The agent changes nothing until I decide.
-4. **Commit and log** each flag and how I resolved it. Fixes to `Find.md` and `Library.base` are mechanical and can be approved as a batch (§7).
+3. **Verify (me).** I decide how to resolve each flag: fix, accept as is, or defer. The agent changes nothing until I decide, then records each decision in the report.
+4. **Commit and log.** The report keeps each flag and how I resolved it. The log entry links to the report and gives the counts, without repeating each flag. Fixes to `Find.md` and `Library.base` are mechanical and can be approved as a batch (§7).
 
 ---
 
@@ -360,6 +372,12 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 - The agent updates it at the end of every ingest that takes a batch from it, and notes the change in that operation's log entry.
 - I check it during each health check.
 
+### Health Checks (`Health Checks/`)
+
+- Not listed in `index.md`, because the reports are records and not pages.
+- The agent saves a report at the end of the Calculate step of every health check, links it to the previous one, and keeps its `flags_open` count current as I decide.
+- If the list of checks in §10 changes, the agent updates the Health Check Report template to match, so the table's rows stay the same in every report.
+
 ### Log (`log.md`)
 
 - **Append-only and chronological** (newest at the bottom). Past entries are never rewritten. Corrections go in a new entry.
@@ -380,6 +398,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 
 - Entries use `###` headings, so a folded log reads as a short list. The Coppermind Review plugin folds them when the log opens in editing view.
 - Operations are: `setup`, `ingest`, `query`, `health-check`, `verify`, `schema`.
+- **A `health-check` entry links to its report** (`Health Check YYYY-MM-DD`) and gives the counts, instead of repeating each flag.
 - **If I revise or reject something without saying why, the agent asks me for a one-sentence reason** and records it. Corrections are the best evidence of my learning, so they should be recorded well.
 
 ---
@@ -397,7 +416,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 The Coppermind must outlive any one tool or agent.
 
 1. **Everything that matters is plain text:** Markdown pages, YAML properties, and `[[wikilinks]]`. Images, PDFs, and tools sit in ordinary folders.
-2. **Obsidian-only extras are conveniences, never the only copy of anything:** `Review Queue.base`, `Library.base`, the `obsidian://` links in `Find.md`, CSS snippets, themes, and `.obsidian/` settings. Outside Obsidian, Find's search tips and the page's plain-text structure still read fine, and the search operators map to any tool that searches text.
+2. **Obsidian-only extras are conveniences, never the only copy of anything:** `Review Queue.base`, `Library.base`, `Health Check History.base`, the `obsidian://` links in `Find.md`, CSS snippets, themes, and `.obsidian/` settings. Outside Obsidian, Find's search tips and the page's plain-text structure still read fine, and the search operators map to any tool that searches text.
 3. **This schema is written in plain language**, so any agent can follow it. `AGENTS.md` points agents here. For a new agent, point its instructions file at `SCHEMA.md`.
 4. **To move to a new tool:**
    1. Commit everything, then copy the whole folder (or clone the git repository).
@@ -422,3 +441,6 @@ The Coppermind must outlive any one tool or agent.
 - **1.0 (2026-11-11):** `Find.md` and `Library.base` added to the structure (§2 folder layout and a new "Find and Library" subsection). The agent now maintains them (§9, §10 ingest and health check, §11), and class-notes citations must keep the form `<Course> notes, M/D/YY` (§6). Ingest steps renumbered.
 - **2.0 (2026-11-17):** `Tools/` folder added to the structure (§2 folder layout and a new "Tools: the toolbox" subsection), with a permissions row (§9) and a note in the export protocol (§13). Tools are not one of the six parts: no status, not in the index, not verified. Because the schema changed, its status returns to `draft` until I verify it again (§7).
 - **3.0 (2026-11-17):** `Ingest Queue.md` added to the structure (§2 folder layout and a new "Ingest Queue" subsection): a plan of the sources waiting to be ingested, in batches, maintained by the agent and not one of the six parts. Added to permissions (§9), the ingest commit step and the health check (§10), and §11. Status returns to `draft` until I verify it again (§7).
+- **4.0 (2026-11-17):** Health checks now produce a saved report. `Health Checks/` added to the structure (§2 folder layout and a new "Health Checks" subsection) with a `Health Check Report` template in `_templates/` and a `Health Check History.base` table. §10: the check writes a short report, with mechanical fixes listed for batch approval, and each decision is recorded in the report. §11: the log entry links to the report instead of repeating each flag, and a new Health Checks subsection. §3: report naming. §9: a permissions row. §13: the history table listed as Obsidian-only. Status returns to `draft` until I verify it again (§7).
+- **4.1 (2026-11-17):** Removed a rule about empty list properties.
+- **4.2 (2026-11-17):** Reworded a small part of the Find and Search description.

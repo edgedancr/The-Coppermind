@@ -8,6 +8,8 @@
  *  - "Resolve" on flag callouts: removes the callout and records my decision,
  *    which is written to the log when the page is verified or rejected
  *  - hotkeys and a status-bar counter
+ *  - a search box for the Dashboard (```coppermind-search```): suggestion cards under it as I type,
+ *    over wiki pages, source cards, and perspectives (not raw class notes); it only reads
  *  - Dashboard page blocks (```coppermind-hero```, -dashboard, -nav, -activity), a ribbon
  *    logo button and Alt+H to go back to the Dashboard, and a one-time Home to Dashboard rename
  *
@@ -19,7 +21,7 @@
  */
 const {
   Plugin, Modal, Notice, MarkdownView, TFile, ItemView, FuzzySuggestModal,
-  PluginSettingTab, Setting, MarkdownRenderChild, setIcon, addIcon, debounce,
+  PluginSettingTab, Setting, MarkdownRenderChild, setIcon, addIcon, debounce, parseYaml,
 } = require("obsidian");
 
 const INDEX_PATH = "index.md";
@@ -609,6 +611,417 @@ class ReviewSettings extends PluginSettingTab {
 
 /* ---------- plugin ---------- */
 
+/* ---------- search (pure helpers, tested outside Obsidian) ---------- */
+
+const SEARCH_LIMIT = 8;
+const SEARCH_SCOPE = [/^Wiki\//, /^Perspectives\//, /^Sources\/Source Cards\//];
+const TYPE_LABELS = { source: "Source card", "case-study": "Case study", perspective: "Perspective" };
+const TITLE_SCORE = [0, 45, 65, 80, 100];
+const ALIAS_SCORE = [0, 40, 55, 75, 95];
+const HEADING_SCORE = [0, 18, 25, 25, 25];
+const ALNUM = /[\p{L}\p{N}]/u;
+
+function inSearchScope(path) {
+  return SEARCH_SCOPE.some((re) => re.test(path));
+}
+
+/** Plain text of a note body: no frontmatter, no markdown punctuation, one line. */
+function plainBody(text) {
+  let t = text.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, "");
+  t = t
+    .replace(/```[^\n]*\n?/g, " ")
+    .replace(/\[\[([^\]|]*)\|([^\]]*)\]\]/g, "$2")
+    .replace(/\[\[([^\]#]*)#?([^\]]*)\]\]/g, (m, a, b) => a || b)
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/^\s*>\s*\[![a-z]+\][-+]?\s*/gim, " ")
+    .replace(/^[ \t]*(?:>[ \t]*)+/gm, "")
+    .replace(/^[ \t]*[-*+][ \t]+/gm, "")
+    .replace(/^#{1,6}[ \t]+/gm, "")
+    .replace(/[*_`|]+/g, " ")
+    .replace(/\s\^[a-z0-9-]+(?=\s|$)/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return t;
+}
+
+/** Short description for the card: the page's summary callout, else its first readable line. */
+function leadLine(text) {
+  const body = text.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, "");
+  const m = body.match(/^>[ \t]*\[!summary\][-+]?[^\n]*\n((?:>[^\n]*(?:\n|$))+)/im);
+  if (m) {
+    const p = plainBody(m[1].replace(/^>[ \t]?/gm, ""));
+    if (p.length >= 12) return clip(p, 150);
+  }
+  let inFence = false;
+  for (const raw of body.split(/\r?\n/)) {
+    const line = raw.trim();
+    if (line.startsWith("```")) { inFence = !inFence; continue; }
+    if (inFence || !line) continue;
+    if (/^(#|>|\||---|!\[\[|%%)/.test(line)) continue;
+    const p = plainBody(line);
+    if (p.length < 12) continue;
+    return clip(p, 150);
+  }
+  return "";
+}
+
+function clip(s, n) {
+  if (s.length <= n) return s;
+  const cut = s.slice(0, n);
+  const sp = cut.lastIndexOf(" ");
+  return (sp > n * 0.6 ? cut.slice(0, sp) : cut) + "…";
+}
+
+function titleCase(s) {
+  return s.replace(/[-_]+/g, " ").replace(/^\w/, (c) => c.toUpperCase());
+}
+
+/** Builds the searchable record of one page. */
+function makeEntry(path, text, yaml) {
+  const fm = yaml || {};
+  const name = path.replace(/^.*\//, "").replace(/\.md$/, "");
+  let aliases = fm.aliases || fm.alias || [];
+  if (typeof aliases === "string") aliases = aliases.split(",");
+  aliases = (Array.isArray(aliases) ? aliases : []).map((a) => String(a).trim()).filter(Boolean);
+  const type = fm.type ? String(fm.type) : "";
+  const body = plainBody(text);
+  const headings = [];
+  for (const m of text.matchAll(/^#{1,6}[ \t]+(.+?)[ \t]*$/gm)) headings.push(m[1].replace(/[*_`]/g, ""));
+  return {
+    path,
+    name,
+    nameL: name.toLowerCase(),
+    aliases,
+    aliasesL: aliases.map((a) => a.toLowerCase()),
+    type,
+    typeLabel: TYPE_LABELS[type] || (type ? titleCase(type) : ""),
+    status: fm.status === "verified" ? "verified" : fm.status === "draft" ? "draft" : "",
+    headingsL: headings.map((h) => h.toLowerCase()),
+    body,
+    bodyL: body.toLowerCase(),
+    lead: leadLine(text),
+  };
+}
+
+const STOPWORDS = new Set(["of", "the", "and", "to", "in", "a", "an", "is", "for", "on", "vs"]);
+
+/** The typed words: one-letter words dropped, and small joining words dropped when other words remain. */
+function tokenize(q) {
+  const all = q.toLowerCase().split(/\s+/).filter((t) => t.length >= 2).slice(0, 6);
+  const content = all.filter((t) => !STOPWORDS.has(t));
+  return content.length ? content : all;
+}
+
+/** 4 exact, 3 starts with, 2 starts a word, 1 appears inside, 0 absent. */
+function fieldMatch(s, tok) {
+  if (s === tok) return 4;
+  let i = s.indexOf(tok);
+  if (i < 0) return 0;
+  if (i === 0) return 3;
+  while (i >= 0) {
+    if (i === 0 || !ALNUM.test(s[i - 1])) return 2;
+    i = s.indexOf(tok, i + 1);
+  }
+  return 1;
+}
+
+/** True when a and b differ by at most one edit (insert, delete, replace, swap). */
+function within1(a, b) {
+  if (a === b) return true;
+  if (Math.abs(a.length - b.length) > 1) return false;
+  let i = 0;
+  while (i < a.length && i < b.length && a[i] === b[i]) i++;
+  if (a.length === b.length) {
+    if (a.slice(i + 1) === b.slice(i + 1)) return true;
+    return a[i] === b[i + 1] && a[i + 1] === b[i] && a.slice(i + 2) === b.slice(i + 2);
+  }
+  return a.length > b.length ? a.slice(i + 1) === b.slice(i) : b.slice(i + 1) === a.slice(i);
+}
+
+function countOccurrences(s, tok, max) {
+  let n = 0, i = s.indexOf(tok);
+  while (i >= 0 && n < max) { n++; i = s.indexOf(tok, i + tok.length); }
+  return n;
+}
+
+/** Score one page against the typed words. Every word must match somewhere; null if not. */
+function scoreEntry(e, tokens, full) {
+  let score = 0;
+  let aliasNote = "";
+  const bodyTokens = [];
+  const titleWords = e.nameL.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+  const aliasWords = e.aliasesL.flatMap((a) => a.split(/[^\p{L}\p{N}]+/u).filter(Boolean));
+  for (const tok of tokens) {
+    let best = 0, src = "";
+    const t = TITLE_SCORE[fieldMatch(e.nameL, tok)];
+    if (t > best) { best = t; src = "title"; }
+    let aliasHit = "";
+    e.aliasesL.forEach((a, i) => {
+      const s = ALIAS_SCORE[fieldMatch(a, tok)];
+      if (s > best) { best = s; src = "alias"; aliasHit = e.aliases[i]; }
+    });
+    for (const h of e.headingsL) {
+      const s = HEADING_SCORE[fieldMatch(h, tok)];
+      if (s > best) { best = s; src = "heading"; }
+    }
+    const c = countOccurrences(e.bodyL, tok, 4);
+    if (c && 9 + c > best) { best = 9 + c; src = "body"; }
+    if (!best && tok.length >= 4) {
+      if (titleWords.some((w) => within1(w, tok)) || aliasWords.some((w) => within1(w, tok))) { best = 28; src = "fuzzy"; }
+    }
+    if (!best) return null;
+    score += best;
+    if (src === "alias" && !aliasNote) aliasNote = aliasHit;
+    if (src === "heading" || src === "body") bodyTokens.push(tok);
+  }
+  if (e.nameL === full) score += 60;
+  else if (full.includes(" ") && e.nameL.includes(full)) score += 30;
+  return { score, aliasNote, bodyTokens };
+}
+
+/** A window of the body around a matched word. */
+function snippetAround(e, tok) {
+  const i = e.bodyL.indexOf(tok);
+  if (i < 0) return e.lead;
+  const start = Math.max(0, i - 55);
+  const end = Math.min(e.body.length, i + tok.length + 90);
+  let s = e.body.slice(start, end);
+  if (start > 0) s = "…" + s.replace(/^\S*\s/, "");
+  if (end < e.body.length) s = s.replace(/\s\S*$/, "") + "…";
+  return s;
+}
+
+/** Splits text into pieces, marking the parts that match a typed word. */
+function highlight(text, tokens) {
+  const low = text.toLowerCase();
+  const ranges = [];
+  for (const tok of tokens) {
+    let i = low.indexOf(tok);
+    while (i >= 0) { ranges.push([i, i + tok.length]); i = low.indexOf(tok, i + tok.length); }
+  }
+  ranges.sort((a, b) => a[0] - b[0]);
+  const merged = [];
+  for (const r of ranges) {
+    const last = merged[merged.length - 1];
+    if (last && r[0] <= last[1]) last[1] = Math.max(last[1], r[1]);
+    else merged.push([r[0], r[1]]);
+  }
+  const out = [];
+  let pos = 0;
+  for (const [a, b] of merged) {
+    if (a > pos) out.push({ t: text.slice(pos, a), hit: false });
+    out.push({ t: text.slice(a, b), hit: true });
+    pos = b;
+  }
+  if (pos < text.length) out.push({ t: text.slice(pos), hit: false });
+  return out;
+}
+
+/** The suggestions for what has been typed. entries is any iterable of makeEntry records. */
+function searchEntries(entries, query, limit) {
+  const tokens = tokenize(query);
+  if (!tokens.length) return [];
+  const full = tokens.join(" ");
+  const hits = [];
+  for (const e of entries) {
+    const r = scoreEntry(e, tokens, full);
+    if (!r) continue;
+    let snippet = "";
+    if (r.bodyTokens.length) snippet = snippetAround(e, r.bodyTokens[0]);
+    else snippet = e.lead;
+    hits.push({ entry: e, score: r.score, aliasNote: r.aliasNote, snippet, tokens });
+  }
+  hits.sort((a, b) =>
+    b.score - a.score ||
+    (a.entry.status === "verified" ? 0 : 1) - (b.entry.status === "verified" ? 0 : 1) ||
+    a.entry.name.length - b.entry.name.length ||
+    a.entry.name.localeCompare(b.entry.name));
+  return hits.slice(0, limit || SEARCH_LIMIT);
+}
+
+/* ---------- search box on the Dashboard ---------- */
+
+/** Keeps a searchable record of every page in scope, refreshed as pages change. */
+class SearchIndex {
+  constructor(app) {
+    this.app = app;
+    this.entries = new Map();
+    this.dirty = new Set();
+    this.ready = null;
+  }
+
+  start() {
+    this.ready = this.buildAll();
+    return this.ready;
+  }
+
+  async buildAll() {
+    const files = this.app.vault.getMarkdownFiles().filter((f) => inSearchScope(f.path));
+    for (const f of files) await this.index(f);
+    // Drop anything that has since left the scope or the vault.
+    for (const p of [...this.entries.keys()]) if (!this.app.vault.getAbstractFileByPath(p)) this.entries.delete(p);
+  }
+
+  async index(file) {
+    if (!(file instanceof TFile) || !inSearchScope(file.path)) return;
+    try {
+      const text = await this.app.vault.read(file);
+      const m = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+      let yaml = {};
+      if (m) { try { yaml = parseYaml(m[1]) || {}; } catch (e) { yaml = {}; } }
+      this.entries.set(file.path, makeEntry(file.path, text, yaml));
+    } catch (e) {
+      this.entries.delete(file.path);
+    }
+  }
+
+  /** Called when a page changes: re-reads it a moment later, once. */
+  touch(file) {
+    if (!(file instanceof TFile) || !inSearchScope(file.path)) return;
+    this.dirty.add(file.path);
+    if (this.timer) return;
+    this.timer = setTimeout(async () => {
+      this.timer = null;
+      const paths = [...this.dirty];
+      this.dirty.clear();
+      for (const p of paths) {
+        const f = this.app.vault.getAbstractFileByPath(p);
+        if (f) await this.index(f); else this.entries.delete(p);
+      }
+    }, 1200);
+  }
+
+  remove(path) { this.entries.delete(path); }
+
+  async rename(file, oldPath) {
+    this.entries.delete(oldPath);
+    await this.index(file);
+  }
+
+  search(q) { return searchEntries(this.entries.values(), q, SEARCH_LIMIT); }
+}
+
+class SearchBlock extends MarkdownRenderChild {
+  constructor(el, plugin) {
+    super(el);
+    this.plugin = plugin;
+    this.app = plugin.app;
+    this.hits = [];
+    this.active = 0;
+    this.query = "";
+  }
+
+  onload() {
+    const el = this.containerEl;
+    el.empty();
+    el.addClass("cm-search");
+    const bar = el.createDiv({ cls: "cm-search-bar" });
+    setIcon(bar.createSpan({ cls: "cm-search-icon" }), "search");
+    this.input = bar.createEl("input", { cls: "cm-search-input", attr: { type: "text", placeholder: "Search the Coppermind…", spellcheck: "false", autocomplete: "off", "aria-label": "Search the Coppermind" } });
+    this.clearBtn = bar.createSpan({ cls: "cm-search-clear", attr: { role: "button", "aria-label": "Clear search" } });
+    setIcon(this.clearBtn, "x");
+    this.list = el.createDiv({ cls: "cm-search-results" });
+    this.list.hide();
+
+    this.input.addEventListener("input", () => this.onType());
+    this.input.addEventListener("focus", () => { if (this.query.trim()) this.show(); });
+    this.input.addEventListener("keydown", (e) => this.onKey(e));
+    this.clearBtn.addEventListener("click", () => { this.input.value = ""; this.onType(); this.input.focus(); });
+    this.registerDomEvent(document, "mousedown", (e) => { if (!el.contains(e.target)) this.list.hide(); });
+  }
+
+  async onType() {
+    this.query = this.input.value;
+    this.clearBtn.toggleClass("is-visible", !!this.query);
+    if (!this.query.trim()) { this.hits = []; this.list.hide(); return; }
+    if (this.plugin.searchIndex.ready) await this.plugin.searchIndex.ready;
+    if (this.query !== this.input.value) return; // typed more while waiting
+    this.hits = this.plugin.searchIndex.search(this.query);
+    this.active = 0;
+    this.render();
+  }
+
+  show() {
+    if (this.query.trim()) { this.render(); }
+  }
+
+  render() {
+    const list = this.list;
+    list.empty();
+    list.show();
+    const tokens = tokenize(this.query);
+    if (!tokens.length) {
+      list.createDiv({ cls: "cm-search-empty", text: "Keep typing…" });
+      return;
+    }
+    if (!this.hits.length) {
+      list.createDiv({ cls: "cm-search-empty", text: `No pages match “${this.query.trim()}”.` });
+    }
+    this.hits.forEach((h, i) => {
+      const e = h.entry;
+      const card = list.createDiv({ cls: "cm-search-card" + (i === this.active ? " is-active" : "") });
+      card.setAttr("role", "option");
+      const top = card.createDiv({ cls: "cm-search-top" });
+      const title = top.createSpan({ cls: "cm-search-title" });
+      this.marked(title, e.name, tokens);
+      if (e.typeLabel) top.createSpan({ cls: "cm-search-tag", text: e.typeLabel });
+      if (e.status) top.createSpan({ cls: "cm-search-status cm-search-" + e.status, text: e.status });
+      if (h.aliasNote) {
+        const a = card.createDiv({ cls: "cm-search-alias" });
+        a.appendText("Also known as ");
+        this.marked(a.createSpan(), h.aliasNote, tokens);
+      }
+      if (h.snippet) this.marked(card.createDiv({ cls: "cm-search-snippet" }), h.snippet, tokens);
+      card.addEventListener("mousemove", () => this.setActive(i, false));
+      card.addEventListener("click", (ev) => this.open(h, ev.ctrlKey || ev.metaKey));
+    });
+    const foot = list.createDiv({ cls: "cm-search-foot" });
+    const link = foot.createSpan({ cls: "cm-search-more", text: "Search everything, including class notes ↗", attr: { role: "button", tabindex: "0" } });
+    const go = () => this.searchAll();
+    link.addEventListener("click", go);
+    link.addEventListener("keydown", (ev) => { if (ev.key === "Enter") { ev.preventDefault(); go(); } });
+  }
+
+  marked(el, text, tokens) {
+    for (const part of highlight(text, tokens)) {
+      if (part.hit) el.createEl("mark", { text: part.t });
+      else el.appendText(part.t);
+    }
+  }
+
+  setActive(i, scroll) {
+    if (i === this.active) return;
+    this.active = i;
+    const cards = this.list.querySelectorAll(".cm-search-card");
+    cards.forEach((c, k) => c.toggleClass("is-active", k === i));
+    if (scroll && cards[i]) cards[i].scrollIntoView({ block: "nearest" });
+  }
+
+  onKey(e) {
+    if (e.key === "ArrowDown" && this.hits.length) { e.preventDefault(); this.list.show(); this.setActive((this.active + 1) % this.hits.length, true); }
+    else if (e.key === "ArrowUp" && this.hits.length) { e.preventDefault(); this.setActive((this.active - 1 + this.hits.length) % this.hits.length, true); }
+    else if (e.key === "Enter") {
+      e.preventDefault();
+      const h = this.hits[this.active];
+      if (h) this.open(h, e.ctrlKey || e.metaKey);
+    } else if (e.key === "Escape") {
+      if (this.list.isShown()) this.list.hide();
+      else { this.input.value = ""; this.onType(); this.input.blur(); }
+    }
+  }
+
+  open(hit, newTab) {
+    this.app.workspace.openLinkText(hit.entry.path, "", !!newTab);
+    if (!newTab) { this.input.value = ""; this.onType(); }
+    else this.list.hide();
+  }
+
+  searchAll() {
+    const url = `obsidian://search?vault=${encodeURIComponent(this.app.vault.getName())}&query=${encodeURIComponent(this.query.trim())}`;
+    window.open(url);
+  }
+}
+
 module.exports = class CoppermindReview extends Plugin {
   async onload() {
     const data = (await this.loadData()) || {};
@@ -641,6 +1054,12 @@ module.exports = class CoppermindReview extends Plugin {
       this.registerMarkdownCodeBlockProcessor(name, (src, el, ctx) => ctx.addChild(new LiveBlock(el, this, method)));
     }
     this.registerMarkdownPostProcessor((el, ctx) => this.addResolveButtons(el, ctx));
+    this.searchIndex = new SearchIndex(this.app);
+    this.registerMarkdownCodeBlockProcessor("coppermind-search", (src, el, ctx) => ctx.addChild(new SearchBlock(el, this)));
+    this.registerEvent(this.app.vault.on("modify", (f) => this.searchIndex.touch(f)));
+    this.registerEvent(this.app.vault.on("create", (f) => this.searchIndex.touch(f)));
+    this.registerEvent(this.app.vault.on("delete", (f) => this.searchIndex.remove(f.path)));
+    this.registerEvent(this.app.vault.on("rename", (f, oldPath) => this.searchIndex.rename(f, oldPath)));
 
     this.scheduleRefresh = debounce(() => this.refresh(), 400, true);
     this.registerEvent(this.app.workspace.on("file-open", (file) => {
@@ -658,6 +1077,7 @@ module.exports = class CoppermindReview extends Plugin {
     this.registerEvent(this.app.vault.on("delete", () => this.scheduleRefresh()));
     this.registerEvent(this.app.vault.on("rename", (file, oldPath) => this.onRename(file, oldPath)));
     this.app.workspace.onLayoutReady(async () => {
+      this.searchIndex.start();
       await this.migrateHome();
       this.syncDashboardLeaves(true);
       const f = this.app.workspace.getActiveFile();
@@ -876,7 +1296,6 @@ module.exports = class CoppermindReview extends Plugin {
       { icon: "scroll-text", title: "Log", sub: "Every change and decision", go: open("log") },
       { icon: "book-open", title: "Schema", sub: "The rulebook", go: open("SCHEMA") },
       { icon: "life-buoy", title: "Guides", sub: "How the vault works", go: open(this.guidesLink()) },
-      { icon: "search", title: "Find", sub: "Search and browse, no AI needed", go: open("Find") },
     ];
     cards.forEach((c) => {
       const card = el.createDiv({ cls: "cm-navcard" });

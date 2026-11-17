@@ -1,0 +1,9 @@
+{
+  "id": "coppermind-schema-log",
+  "name": "Coppermind Schema Log",
+  "version": "1.0.0",
+  "minAppVersion": "1.5.0",
+  "description": "After editing SCHEMA.md by hand, press one button, enter the new version number and what changed, and it adds the line to the Changelog at the bottom of the schema.",
+  "author": "Harrison Nickles",
+  "isDesktopOnly": false
+}
