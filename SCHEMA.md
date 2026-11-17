@@ -62,7 +62,7 @@ The Coppermind/
 │   ├── Scans/              Photos of my handwritten notes
 │   └── Source Cards/       One "SRC - " card per source
 ├── Wiki/
-│   ├── Concepts/           One idea per page, in my words
+│   ├── Concepts/           One idea per page
 │   ├── Glossary/           Short definitions
 │   ├── Frameworks/         Structured ways of thinking
 │   ├── Case Studies/       Real events used to teach a lesson
