@@ -5,3 +5,5 @@ This folder is the Coppermind, Harrison's LLM wiki. Before doing anything here, 
 Key rules, in case of doubt: draft only, never mark a page verified without Harrison's explicit instruction, never edit `Sources/` originals or anything in `Perspectives/`, and log every operation in `log.md`.
 
 Also maintain the search tools: `Find.md` and `Library.base`. Check them at the end of every operation and in every health check, and keep them current (new class dates, courses, page types, flag kinds). The rules are in `SCHEMA.md` §2.
+
+`Tools/` holds the tools Harrison uses (browser extensions, scripts). Read it if relevant, but build or change a tool only when he asks. It is not part of the wiki: no status, not in the index. See `SCHEMA.md` §2.

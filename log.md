@@ -841,3 +841,15 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - New and changed files converted to the vault's CRLF line endings. [[index]] updated. [[Find]] and [[Library.base|Library]] needed no change: every cited class date (8/27, 9/1, 9/8, 9/10) was already listed, and no new course, page type, or flag kind.
 - **Verify:** pending. Item by item.
 - **Commit:** `ingest: SAIL Module 5 resources (Hossenfelder, Bengio, Sutton, Disneyland Without Children, Lewis) — 25 drafts + 12 page updates, pending review`
+
+### [2026-11-17] schema | Add Tools folder (version 2.0)
+
+- **Think:** I asked for a new `Tools/` folder to hold the tools I use, to save the YouTube to Coppermind Chrome extension in it, and to update the vault map and any other place that lists the folders.
+- **Calculate:**
+  - Created `Tools/` and saved `yt-to-coppermind.zip` (v1.1: Chrome extension that downloads a video's transcript as a Markdown file in the Coppermind transcript format) in it.
+  - [[SCHEMA]] updated: folder layout (§2), new "Tools: the toolbox" subsection (§2), permissions row (§9), export note (§13), frontmatter `version: 2`, and a 2.0 changelog line. Tools are not one of the six parts and are not in the index, so the six-parts table is unchanged.
+  - `AGENTS.md` updated with a pointer to `Tools/`.
+  - Because the schema's content changed, its `status` was set back to `draft` and `verified_on` cleared, per §7.
+  - [[index]], [[Find]], [[Library.base|Library]], and the Dashboard needed no change: Tools holds no pages, page types, courses, or class dates.
+- **Verify:** pending. Schema needs re-verifying.
+- **Commit:** `schema: add Tools folder (v2.0) and YouTube transcript extension`

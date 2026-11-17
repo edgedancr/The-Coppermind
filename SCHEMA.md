@@ -1,10 +1,10 @@
 ---
 type: schema
-version: 1
-status: verified
+version: 2
+status: draft
 owner: Harrison Nickles
-updated: 2026-11-11
-verified_on: 2026-11-11
+updated: 2026-11-17
+verified_on:
 ---
 # The Coppermind — Schema
 
@@ -73,6 +73,7 @@ The Coppermind/
 │   ├── Guides/             How-to pages for me or someone else
 │   └── Analyses/           Answers to questions, filed back from queries
 ├── Perspectives/           My views, organized by the Architecture of Worldview
+├── Tools/                  Tools I use and have built (browser extensions, scripts, templates)
 ├── _templates/             One template per page type
 └── _attachments/           Images and diagrams used on wiki pages
 ```
@@ -96,6 +97,15 @@ The Coppermind/
 | A property name or value used in a search or view changes | Fix every Find link and `Library.base` filter that uses it |
 
 Class-date searches match the display text of the citation, such as `SAIL notes, 10/20/26`, so citations must keep that form (§6).
+
+### Tools: the toolbox
+
+`Tools/` is where I keep the tools I use: browser extensions, scripts, and similar things, each as a single file or zip. It is not one of the six parts and not a wiki page folder: files there have no `status`, are not in `index.md`, and I don't verify them. They are my own working equipment, not sources or knowledge.
+
+- **I add and update the tools.** The agent may read them, and may build or revise one only when I ask.
+- **A tool that helps feed the wiki** (such as the YouTube transcript extension) does not change the rules for sources: whatever it produces still goes through Ingest like any other source.
+- **Naming:** a plain descriptive name, with the version in a zip's name only when I keep more than one (`yt-to-coppermind.zip`).
+- **Plain files only,** so the folder stays portable (§13).
 
 ---
 
@@ -267,6 +277,7 @@ Each source card rates the source with the Admiralty Code. The agent may propose
 | `SCHEMA.md`                 | Read, and suggest changes in chat       | Edit, unless I ask for a specific change              |
 | `index.md`, `log.md`        | Maintain                                | Delete or rewrite past log entries                    |
 | `Find.md`, `Library.base`   | Maintain and keep current (see §2)      | Delete, rename, or change their purpose, unless I ask |
+| `Tools/`                    | Read; build or revise a tool when I ask | Edit, rename, or delete otherwise                     |
 | `_templates/`, `.obsidian/` | Use                                     | Change, unless I ask                                  |
 
 
@@ -367,7 +378,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 
 The Coppermind must outlive any one tool or agent.
 
-1. **Everything that matters is plain text:** Markdown pages, YAML properties, and `[[wikilinks]]`. Images and PDFs sit in ordinary folders.
+1. **Everything that matters is plain text:** Markdown pages, YAML properties, and `[[wikilinks]]`. Images, PDFs, and tools sit in ordinary folders.
 2. **Obsidian-only extras are conveniences, never the only copy of anything:** `Review Queue.base`, `Library.base`, the `obsidian://` links in `Find.md`, CSS snippets, themes, and `.obsidian/` settings. Outside Obsidian, Find's search tips and the page's plain-text structure still read fine, and the search operators map to any tool that searches text.
 3. **This schema is written in plain language**, so any agent can follow it. `AGENTS.md` points agents here. For a new agent, point its instructions file at `SCHEMA.md`.
 4. **To move to a new tool:**
@@ -391,3 +402,4 @@ The Coppermind must outlive any one tool or agent.
 - **0.1 (2026-11-10):** First draft. Structure, naming, ontology, citation and attribution rules, draft/verified workflow, three operations, export protocol.
 - **0.2 (2026-11-11):** Guest lecturers added as a fourth voice in §6: named by title and name, with no personal details and no People pages unless I ask.
 - **1.0 (2026-11-11):** `Find.md` and `Library.base` added to the structure (§2 folder layout and a new "Find and Library" subsection). The agent now maintains them (§9, §10 ingest and health check, §11), and class-notes citations must keep the form `<Course> notes, M/D/YY` (§6). Ingest steps renumbered.
+- **2.0 (2026-11-17):** `Tools/` folder added to the structure (§2 folder layout and a new "Tools: the toolbox" subsection), with a permissions row (§9) and a note in the export protocol (§13). Tools are not one of the six parts: no status, not in the index, not verified. Because the schema changed, its status returns to `draft` until I verify it again (§7).
