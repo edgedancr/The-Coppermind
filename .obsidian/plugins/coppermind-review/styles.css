@@ -222,7 +222,8 @@ body.cm-on-dashboard .workspace-leaf-content[data-type="file-properties"] .view-
 .cm-search-bar:focus-within { border-color: var(--cm-copper); box-shadow: 0 0 0 3px var(--cm-copper-soft); }
 .cm-search-icon svg { width: 18px; height: 18px; color: var(--cm-copper); }
 .cm-search-bar .cm-search-input { flex: 1; min-width: 0; height: 100%; padding: 0; border: none; background: transparent; box-shadow: none; font-size: 1.05em; color: var(--text-normal); outline: none; }
-.cm-search-bar .cm-search-input:focus { box-shadow: none; }
+.cm-search-bar:hover:not(:focus-within) { border-color: var(--background-modifier-border); box-shadow: none; }
+.cm-search-bar .cm-search-input:hover, .cm-search-bar .cm-search-input:focus, .cm-search-bar .cm-search-input:active { background: transparent; border: none; box-shadow: none; }
 .cm-search-clear { display: none; cursor: pointer; color: var(--text-muted); }
 .cm-search-clear.is-visible { display: inline-flex; }
 .cm-search-clear:hover { color: var(--text-normal); }

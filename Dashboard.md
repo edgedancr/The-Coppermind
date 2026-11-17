@@ -10,14 +10,14 @@ It is not my position to judge truth... I simply carry it
 ```coppermind-search
 ```
 
-## Review progress
-
-```coppermind-dashboard
-```
-
 ## Where to start
 
 ```coppermind-nav
+```
+
+## Review progress
+
+```coppermind-dashboard
 ```
 
 ## Recent activity
