@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Page to Coppermind",
+  "version": "1.0.0",
+  "description": "Click the toolbar icon to download the current web page as clean Markdown formatted for the Coppermind.",
+  "permissions": ["activeTab", "scripting"],
+  "background": { "service_worker": "background.js" },
+  "action": {
+    "default_title": "Save this page to Downloads (Coppermind format)"
+  }
+}
