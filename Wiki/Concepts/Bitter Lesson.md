@@ -1,0 +1,32 @@
+---
+type: concept
+status: draft
+aliases:
+  - The Bitter Lesson
+courses:
+  - SAIL
+sources:
+  - "[[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End]]"
+related:
+  - "[[Richard Sutton]]"
+  - "[[Scaling Laws]]"
+  - "[[Critiques of Large Language Models]]"
+drafted_by: Claude (claude-opus-5-5)
+drafted_on: 2026-11-17
+verified_on:
+---
+> [!summary]
+> "The Bitter Lesson" is a 2019 essay by [[Richard Sutton]], which Dwarkesh Patel calls perhaps the most influential essay in the history of AI ([[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End|Sutton interview, "Are LLMs a dead end?"]]). As Sutton states it in the interview, ==methods that use human knowledge are eventually superseded by methods that learn from experience and computation== ([[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End|Sutton interview, "Are LLMs a dead end?"]]). Patel's reading is that human hand-tuning scales much worse than compute, which grows exponentially ([[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End|Sutton interview, "Will The Bitter Lesson still apply after AGI?"]]).
+
+## Key Points
+- **Why it keeps happening:** you can always start with human knowledge and then add scalable methods, but in practice "it has always turned out to be bad." People get locked into the human-knowledge approach and "get their lunch eaten by the methods that are truly scalable" ([[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End|Sutton interview, "Are LLMs a dead end?"]]).
+- **Weak vs. strong methods:** early AI called general methods such as search and learning "weak" and methods built on human knowledge, such as symbolic systems, "strong." Sutton says the weak methods "have just totally won" ([[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End|Sutton interview, "Surprises in the AI field"]]).
+- **AlphaZero as an example:** it improved on AlphaGo by not using human knowledge, learning only from experience ([[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End|Sutton interview, "Will The Bitter Lesson still apply after AGI?"]]).
+- **Not a law:** Sutton calls it "an empirical observation about a particular period in history," 70 years that need not predict the next 70 ([[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End|Sutton interview, "Will The Bitter Lesson still apply after AGI?"]]).
+
+**Are LLMs a case of it?** ([[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End|Sutton interview, "Are LLMs a dead end?"]])
+- Patel notes people cite the essay to justify scaling LLMs, as the one way found to pour huge amounts of compute into learning.
+- Sutton calls it "an interesting question": LLMs scale with computation up to the limits of the internet, but they also put in lots of human knowledge. He expects them to reach the limits of their data and be superseded by systems that learn from experience, which would be "another instance of the bitter lesson."
+
+## Why It Matters
+- It is the core of Sutton's case that LLMs are a dead end; see [[Critiques of Large Language Models]]. Compare [[Scaling Laws]].

@@ -6,9 +6,9 @@ updated: 2026-11-17
 
 A map of every page in the Coppermind, grouped by type. The AI agent updates this after every operation; I check it during health checks. Within each type, pages are listed under Verified or Drafts, each with a one-line summary.
 
-**Totals:** 63 verified · 131 drafts
+**Totals:** 63 verified · 156 drafts
 
-## Concepts (54)
+## Concepts (63)
 
 ### Verified (15)
 - [[AI in Intelligence Production]] — How AI changes collection, threat prediction, and policymaking
@@ -27,16 +27,21 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Security Classification]] — Classification levels, control systems, releasability, and need to know
 - [[Time Compression Trap]] — Faster early stages create pressure to skip analysis
 
-### Drafts (39)
+### Drafts (48)
 - [[Agentic AI]] — AI with tools, and the added risk
 - [[AI Alignment]] — Systems doing what we intend, even under pressure
+- [[AI Deception]] — Bengio: AI deception, cheating, and self-preservation; plans hidden from chain of thought
+- [[AI Succession]] — Sutton's four-part argument that succession to AI is inevitable, and Patel's pushback
 - [[Algorithmic Bias]] — Five types of bias in AI, the HireMe! example, and proposed fixes
 - [[Artificial Intelligence]] — What "artificial" and "intelligent" mean, and AI's progression
 - [[Automation Bias]] — Over-trusting confident AI output
+- [[Bitter Lesson]] — Sutton: methods built on human knowledge lose to experience and computation
 - [[Capability vs. Reliability]] — Fluent output is not verified output
 - [[Centaur Analyst]] — Five capabilities and the changing role of the analyst
 - [[China's AI Industrial Policy]] — RAND: Beijing's state support across the AI stack, and whether it will work
 - [[Cognitive Debt]] — The cost of letting AI think first
+- [[Continual Learning]] — Learning on the job, into the weights; Sutton's experiential paradigm
+- [[Critiques of Large Language Models]] — Hossenfelder and Sutton on why LLMs won't reach AGI, with Patel's rebuttals
 - [[Custom GPT]] — OpenAI's specialized ChatGPTs: instructions, knowledge files, capabilities, actions
 - [[Data and Model Poisoning]] — OWASP LLM05: corrupting what a model learns; backdoors and sleeper agents
 - [[Deep Learning]] — Progressive abstraction; ImageNet and AlphaGo
@@ -47,6 +52,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Future Strategic Threats]] — Three massive challenges, and cognitive information threats
 - [[Generative AI]] — AI that generates new content; foundation models and deepfakes
 - [[Generative vs. Agentic AI]] — IBM: reactive generation vs. proactive, goal-pursuing agents
+- [[Gradual Loss of Control]] — A slow AI catastrophe through local incentives, from "A Disneyland Without Children"
 - [[Hallucination]] — Confident, false AI output
 - [[Human-Centered AI]] — Augmentation, not abdication
 - [[Imago Dei]] — Humans made in God's image, as the foundation for AI ethics
@@ -56,9 +62,12 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Intelligence vs. Consciousness]] — AI acts like a human but does not think or feel like one
 - [[Large Language Model]] — A function that predicts the next word; training, scale, and emergence
 - [[Machine Learning]] — Classification vs. regression, learning methods, and scaling
+- [[Naturalism]] — Lewis: the view that Nature is all that exists, and why he thinks it refutes itself
 - [[Neural Network]] — Neurons, layers, weights, and biases: a network is just a function
+- [[Out-of-Distribution Generalization]] — "They interpolate, they don't extrapolate": Hossenfelder and Sutton
 - [[Prompt Engineering]] — Fundamentals and advanced techniques for instructing AI
 - [[Prompt Injection]] — OWASP LLM01: inputs that hijack a model; why defense must be architectural
+- [[Reinforcement Learning]] — Learning a policy from reward; SAIL's account and Sutton's four parts of an agent
 - [[Self-Attention]] — The transformer's core mechanism: queries, keys, values, and heads
 - [[Semiconductor Export Controls]] — U.S. controls on AI chips for China: effects, workarounds, and limits
 - [[Semiconductors and National Security]] — Chip Wars: why chips are the oil of the 21st century
@@ -68,7 +77,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Transformer]] — The architecture behind LLMs
 - [[United States Intelligence Community]] — The 18 IC organizations and how they're grouped
 
-## Glossary (69)
+## Glossary (72)
 
 ### Verified (25)
 - [[All-Source Intelligence]] — Drawing on every type of collection the topic needs
@@ -97,7 +106,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Unconventional Warfare]] — Training locals to defend themselves
 - [[Zero-Day Vulnerability]] — An exploitable fault not yet known, fixed, or exploited
 
-### Drafts (44)
+### Drafts (47)
 - [[AI Supply Chain Compromise]] — OWASP LLM04 and an ATLAS technique; includes slopsquatting
 - [[AI Technology Stack]] — The layers AI depends on, from chips to applications
 - [[Algorithmic Transparency]] — Examining inputs and outputs to see why an algorithm recommends what it does
@@ -134,14 +143,17 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Reinforcement Learning with Human Feedback]] — RLHF: human corrections that make a model a better assistant
 - [[Retrieval-Augmented Generation]] — RAG: retrieve, augment, generate; similarity search deciding what the model sees
 - [[Scaling Laws]] — Model performance scaling with compute
+- [[Scientist AI]] — Bengio's non-agentic AI, proposed as a guardrail on AI agents
 - [[Sensitive Information Disclosure]] — OWASP LLM02: protected data leaking through any channel
 - [[Sheep Dipping]] — Definition needs checking
 - [[Sigmoid Function]] — Squishes a number into 0–1; largely replaced by ReLU
 - [[Standing Reserve]] — Heidegger: things revealed as resources stockpiled for use
 - [[Structured Analytic Technique]] — Named but not yet defined in my notes; ACH is one
 - [[Technological Singularity]] — AGI outpacing human tracking or control
+- [[Temporal Difference Learning]] — TD learning: a value function that rewards progress toward a long-term goal
 - [[Unbounded Consumption]] — OWASP LLM06: uncontrolled inference; denial of wallet
 - [[Vector and Embedding Weaknesses]] — OWASP LLM09: attacks on embeddings and similarity search
+- [[World Model]] — Predicting what will happen; Sutton and Patel disagree on whether LLMs have one
 
 ## Frameworks (21)
 
@@ -181,34 +193,42 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Bing Sydney Incident (2023)]] — Microsoft's chatbot went off the rails in long conversations
 - [[PredPol]] — A predictive-policing feedback loop that amplified past bias
 
-## People (2)
+## People (5)
 
 ### Verified (1)
 - [[Richards Heuer]] — Developed ACH at the CIA
 
-### Drafts (1)
+### Drafts (4)
+- [[C. S. Lewis]] — Author of "On Living in an Atomic Age" (1948)
 - [[Martin Heidegger]] — German philosopher; "The Question Concerning Technology" (1954)
+- [[Richard Sutton]] — Founder of reinforcement learning; "The Bitter Lesson"; 2024 Turing Award
+- [[Yoshua Bengio]] — Deep learning pioneer warning of AI agency and deception; Scientist AI
 
-## Summaries (17)
+## Summaries (22)
 
 ### Verified (1)
 - [[Summary - ACH GenAI Workflow]] — Neutral summary of the SAIL ACH-with-AI prompt sequence
 
-### Drafts (16)
+### Drafts (21)
+- [[Summary - A Disneyland Without Children]] — Neutral summary of L Rudolf L's short story
 - [[Summary - About Us (Arena)]] — Neutral summary of Arena's About Us page
 - [[Summary - AI, Machine Learning, Deep Learning, and Generative AI Explained]] — Neutral summary of IBM Technology's explainer video
 - [[Summary - Algorithmic Bias and Fairness (Crash Course AI 18)]] — Neutral summary of the Crash Course AI episode on algorithmic bias
 - [[Summary - Artificial General Intelligence's Five Hard National Security Problems]] — Neutral summary of Mitre and Predd's RAND paper
 - [[Summary - Attention Is All You Need]] — Neutral summary of the 2017 transformer paper
 - [[Summary - But What Is a Neural Network]] — Neutral summary of 3Blue1Brown's neural network video
+- [[Summary - Current AI Models Have 3 Unfixable Problems]] — Neutral summary of Sabine Hossenfelder's video
 - [[Summary - Full Stack, China's Evolving Industrial Policy for AI]] — Neutral summary of Chan et al.'s RAND paper
 - [[Summary - Generative vs Agentic AI]] — Neutral summary of IBM Technology's generative vs. agentic video
 - [[Summary - How to Create Custom GPT]] — Neutral summary of Kevin Stratvert's custom GPT tutorial
 - [[Summary - How to Make a Music Video with AI]] — Neutral summary of Tao Prompts' AI music video tutorial
 - [[Summary - Large Language Models Explained Briefly]] — Neutral summary of 3Blue1Brown's LLM video
 - [[Summary - MITRE ATLAS Matrix]] — Neutral summary of the ATLAS matrix page
+- [[Summary - On Living in an Atomic Age]] — Neutral summary of C. S. Lewis's 1948 essay
 - [[Summary - OWASP Top 10 for LLM Applications 2026]] — Neutral summary of the 2026 OWASP LLM Top 10
 - [[Summary - RAG vs Fine-Tuning vs Prompt Engineering]] — Neutral summary of IBM Technology's video on three ways to improve LLM answers
+- [[Summary - Richard Sutton, Father of RL Thinks LLMs Are a Dead End]] — Neutral summary of the Dwarkesh Podcast interview
+- [[Summary - The Catastrophic Risks of AI and a Safer Path]] — Neutral summary of Yoshua Bengio's TED talk
 - [[Summary - The Question Concerning Technology (Then and Now)]] — Neutral summary of the Then & Now video on Heidegger
 - [[Summary - What Is Human-Centered AI]] — Neutral summary of IBM Research's HCAI explainer
 
@@ -237,27 +257,32 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 ### Verified (1)
 - [[My Worldview]] — The foundational convictions behind my perspectives, by layer of worldview
 
-## Source Cards (19)
+## Source Cards (24)
 
 ### Verified (3)
 - [[SRC - ACH GenAI Workflow]] — The SAIL ACH-with-AI course documents, eight files (rating proposed B-2)
 - [[SRC - Intro to Intelligence Class Notes (Fall 2026)]] — My Intro to Intelligence lecture notes, Fall 2026 (rating proposed B-2)
 - [[SRC - SAIL Class Notes (Fall 2026)]] — My SAIL lecture notes, Fall 2026 (rating proposed B-2)
 
-### Drafts (16)
+### Drafts (21)
+- [[SRC - A Disneyland Without Children]] — L Rudolf L, LessWrong, 2023; fiction (rating proposed F-6)
 - [[SRC - About Us (Arena)]] — Arena's About Us page, saved 2026-11-17 (rating proposed B-2)
 - [[SRC - AI, Machine Learning, Deep Learning, and Generative AI Explained]] — IBM Technology video transcript (rating proposed B-2)
 - [[SRC - Algorithmic Bias and Fairness (Crash Course AI 18)]] — Crash Course AI episode 18 transcript (rating proposed C-2)
 - [[SRC - Artificial General Intelligence's Five Hard National Security Problems]] — Mitre and Predd, RAND, 2025 (rating proposed B-3)
 - [[SRC - Attention Is All You Need]] — Vaswani et al., 2017 (rating proposed A-1)
 - [[SRC - But What Is a Neural Network]] — 3Blue1Brown video transcript (rating proposed B-2)
+- [[SRC - Current AI Models Have 3 Unfixable Problems]] — Sabine Hossenfelder video transcript (rating proposed C-3)
 - [[SRC - Full Stack, China's Evolving Industrial Policy for AI]] — Chan et al., RAND, 2025 (rating proposed B-2)
 - [[SRC - Generative vs Agentic AI]] — IBM Technology video transcript (rating proposed B-2)
 - [[SRC - How to Create Custom GPT]] — Kevin Stratvert tutorial transcript (rating proposed C-2)
 - [[SRC - How to Make a Music Video with AI]] — Tao Prompts tutorial transcript (rating proposed C-3)
 - [[SRC - Large Language Models Explained Briefly]] — 3Blue1Brown video transcript (rating proposed B-2)
 - [[SRC - MITRE ATLAS Matrix]] — The MITRE ATLAS matrix page (rating proposed B-2)
+- [[SRC - On Living in an Atomic Age]] — C. S. Lewis, 1948 (rating proposed B-6)
 - [[SRC - OWASP Top 10 for LLM Applications 2026]] — OWASP GenAI Security Project, 2026 edition (rating proposed B-2)
 - [[SRC - RAG vs Fine-Tuning vs Prompt Engineering]] — IBM Technology video transcript (rating proposed B-2)
+- [[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End]] — Dwarkesh Podcast interview page, 2025 (rating proposed B-2)
+- [[SRC - The Catastrophic Risks of AI and a Safer Path]] — Yoshua Bengio TED talk transcript (rating proposed B-3)
 - [[SRC - The Question Concerning Technology (Then and Now)]] — Then & Now video transcript on Heidegger (rating proposed C-3)
 - [[SRC - What Is Human-Centered AI]] — Geyer et al., IBM Research, 2022 (rating proposed C-2)

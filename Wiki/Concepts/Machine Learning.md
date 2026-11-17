@@ -23,7 +23,7 @@ verified_on:
 |---|---|---|
 | Supervised | Learn a mapping (x → y) from labeled data | *(not recorded)* |
 | Unsupervised | Find hidden structure in x, without labeled data | Clustering, dimensionality reduction |
-| Reinforcement | Learn a policy π(a \| s) that maximizes long-term reward, from feedback on actions | Sequential decision making, control problems |
+| [[Reinforcement Learning\|Reinforcement]] | Learn a policy π(a \| s) that maximizes long-term reward, from feedback on actions | Sequential decision making, control problems |
 | Deep learning | Learns implicitly | See [[Deep Learning]] |
 
 **Scaling** ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]])

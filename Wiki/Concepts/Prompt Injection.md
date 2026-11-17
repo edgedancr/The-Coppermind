@@ -10,6 +10,7 @@ courses:
 sources:
   - "[[SRC - OWASP Top 10 for LLM Applications 2026]]"
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
+  - "[[SRC - Current AI Models Have 3 Unfixable Problems]]"
 part_of:
   - "[[OWASP Top 10 for Large Language Model Applications]]"
 related:
@@ -40,5 +41,6 @@ verified_on:
 
 ## Why It Matters
 - OWASP's position is that ==no reliable prevention exists today==, so defense must be architectural: design the system on the assumption that the instruction boundary will be bypassed, and limit what the model may do and where its output may go ([[OWASP Top 10 for LLM Applications 2026.pdf#page=13|OWASP, p. 13]]).
+- Sabine Hossenfelder agrees: she calls prompt injection =="basically impossible to solve"== because LLMs "can't distinguish" instructions from other input. Formatting rules or outside screening can help, but she expects the models to "remain untrustworthy and unsuitable for many tasks" ([[Sabine Hossenfelder - Current AI Models Have 3 Unfixable Problems (transcript)|Hossenfelder, ch. 3]]). See [[Critiques of Large Language Models]].
 - Its recommended controls include holding credentials and privileges in application code rather than the model, requiring human confirmation of privileged or irreversible actions, and checking agents against the [[Lethal Trifecta]] and the Rule of Two ([[OWASP Top 10 for LLM Applications 2026.pdf#page=13|OWASP, pp. 13–14]]).
 - OWASP warns that defenses tested only against static attacks mislead: one study found static attack success near zero but adaptive success above 90% for most of 12 recent defenses ([[OWASP Top 10 for LLM Applications 2026.pdf#page=15|OWASP, p. 15]]).

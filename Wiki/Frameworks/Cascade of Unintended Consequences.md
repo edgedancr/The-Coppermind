@@ -19,7 +19,7 @@ verified_on: 2026-11-11
 ## Components
 - **Bias at scale:** small model biases become systemic outcomes (see [[Algorithmic Bias]]).
 - **Job displacement:** automation at scale, with uneven impacts.
-- **Rogue systems:** deceptive goal-seeking and misaligned goals (see [[AI Alignment]]).
+- **Rogue systems:** deceptive goal-seeking (see [[AI Deception]]) and misaligned goals (see [[AI Alignment]]).
 - **Information quality collapse:** synthetic content, rising verification costs, and the [[Liar's Dividend]].
 
 Source for the list: ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]])

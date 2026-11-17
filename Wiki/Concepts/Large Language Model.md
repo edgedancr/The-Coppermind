@@ -17,6 +17,7 @@ related:
   - "[[Transformer]]"
   - "[[Foundation Model]]"
   - "[[Emergent Behavior]]"
+  - "[[Critiques of Large Language Models]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:
@@ -45,3 +46,4 @@ verified_on:
 
 ## Why It Matters
 - Researchers design the framework, but ==the model's specific behavior is "an emergent phenomenon"== of how its parameters were tuned, so it is very hard to say why it makes a given prediction ([[3Blue1Brown - Large Language Models Explained Briefly (transcript)|3Blue1Brown, LLMs, ch. 10]]). See [[Emergent Behavior]].
+- For arguments that LLMs will not reach general intelligence, see [[Critiques of Large Language Models]].

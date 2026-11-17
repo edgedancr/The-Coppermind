@@ -9,11 +9,14 @@ sources:
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
   - "[[SRC - OWASP Top 10 for LLM Applications 2026]]"
   - "[[SRC - Generative vs Agentic AI]]"
+  - "[[SRC - The Catastrophic Risks of AI and a Safer Path]]"
 related:
   - "[[Emergent Behavior]]"
   - "[[Prompt Engineering]]"
   - "[[Artificial Intelligence]]"
   - "[[Excessive Agency]]"
+  - "[[AI Deception]]"
+  - "[[Scientist AI]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11
@@ -28,4 +31,7 @@ verified_on: 2026-11-11
 - **Example:** a personal shopping agent searches platforms for a product, monitors prices, handles checkout, and coordinates delivery, largely by itself, seeking input only when needed ([[IBM Technology - Generative vs Agentic AI (transcript)|IBM, generative vs. agentic, ch. 4]]).
 - AI agents at work are on the near horizon ([[SAIL Class Notes (Fall 2026)#10/15/26|SAIL notes, 10/15/26]]).
 - OWASP calls the vulnerability that lets an LLM's unexpected or manipulated output trigger damaging actions [[Excessive Agency]], caused by excessive functionality, permissions, or autonomy ([[OWASP Top 10 for LLM Applications 2026.pdf#page=23|OWASP, p. 23]]). It treats the model as a component; once the model becomes an actor, with tools it can call, memory it carries between sessions, and downstream consequences, the risk moves to the OWASP Top 10 for Agentic Applications ([[OWASP Top 10 for LLM Applications 2026.pdf#page=7|OWASP, p. 7]]).
+- **Bengio's main worry:** [[Yoshua Bengio]] says what worries him most is AI's increasing agency. He calls planning and agency the main thing separating current AI from human-level cognition; AIs are still weak at planning, but in one study the length of tasks they could complete has doubled every seven months over five years ([[TED - Yoshua Bengio, The Catastrophic Risks of AI and a Safer Path (transcript)|Bengio, ch. 6]]). On that curve, he estimates about five years to human level ([[TED - Yoshua Bengio, The Catastrophic Risks of AI and a Safer Path (transcript)|Bengio, ch. 11]]).
+- **Commercial pressure:** he argues there is "huge commercial pressure" to build AIs with more and more agency to replace human labor, without the scientific answers or societal guardrails to do it safely ([[TED - Yoshua Bengio, The Catastrophic Risks of AI and a Safer Path (transcript)|Bengio, ch. 8]]). See [[AI Deception]].
+- **His message to AI companies:** ==slow down on giving AIs agency==, and invest heavily in research on making agents behave safely ([[TED - Yoshua Bengio, The Catastrophic Risks of AI and a Safer Path (transcript)|Bengio, ch. 11]]). He proposes a non-agentic [[Scientist AI]] as a guardrail on untrusted agents ([[TED - Yoshua Bengio, The Catastrophic Risks of AI and a Safer Path (transcript)|Bengio, ch. 9]]).
 - See [[Emergent Behavior]].
