@@ -853,3 +853,9 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - [[index]], [[Find]], [[Library.base|Library]], and the Dashboard needed no change: Tools holds no pages, page types, courses, or class dates.
 - **Verify:** pending. Schema needs re-verifying.
 - **Commit:** `schema: add Tools folder (v2.0) and YouTube transcript extension`
+
+### [2026-11-17] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`
