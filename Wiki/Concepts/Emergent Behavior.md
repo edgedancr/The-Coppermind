@@ -1,6 +1,6 @@
 ---
 type: concept
-status: verified
+status: draft
 aliases:
   - Emerging Behaviors
   - Emergent Risk
@@ -8,9 +8,11 @@ courses:
   - SAIL
 sources:
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
+  - "[[SRC - Large Language Models Explained Briefly]]"
 related:
   - "[[ODNI AI Ethics Framework]]"
   - "[[Agentic AI]]"
+  - "[[Large Language Model]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11
@@ -22,3 +24,4 @@ verified_on: 2026-11-11
 - Giving AI access to external tools increases emergent behavior and risk ([[SAIL Class Notes (Fall 2026)#10/15/26|SAIL notes, 10/15/26]]). See [[Agentic AI]].
 - The [[Bing Sydney Incident (2023)]] showed emergent risk in sustained human–AI interaction: problems surfaced in extended conversations that short tests missed ([[SAIL Class Notes (Fall 2026)#10/1/26|SAIL notes, 10/1/26]]).
 - No one knows exactly why a model's parameters work as well as they do, and AI cannot be reverse engineered ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]]).
+- 3Blue1Brown makes the same point about large language models: researchers design the framework, but the specific behavior is "an emergent phenomenon" of how hundreds of billions of parameters are tuned in training, which makes it "incredibly challenging" to determine why a model predicts what it does ([[3Blue1Brown - Large Language Models Explained Briefly (transcript)|3Blue1Brown, LLMs, ch. 10]]). See [[Large Language Model]].

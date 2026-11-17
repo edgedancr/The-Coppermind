@@ -46,7 +46,7 @@ If the source is my own work (Sources/My Work/), its arguments are my voice. Don
 Check each idea against the wiki:
 - APPEND when an existing page already covers the same idea, under any title or alias. Put the new material under the heading of that page's template where it belongs, cite it to the new source, and add the new source card to the page's `sources`. A new name for an existing idea becomes an alias, not a new page.
 - CREATE when the idea is distinct and the source gives enough to write the page properly: a definition for a glossary term; roughly 150 words of sourced content for a concept, framework, or case study. Anything thinner becomes a glossary term or a bullet on its parent page. One idea per page; if an append would push a page past about 500 words, propose a split instead.
-- SKIP anything out of scope, anything the page already says with nothing new, and anything WHAT MATTERS rules out. List skips in the report.
+- SKIP anything out of scope, anything the page already says with nothing new, and anything WHAT MATTERS rules out. List skips in the report. If you are using a transcipt for a video, skip the timestamps when summarizing and dissecting the source.
 - For a reading or course document, also draft one summary page following the "In the Coppermind" rules of Wiki/Prompts/Intelligence Community Style Summaries. Not for class notes.
 
 4. RECONCILE WITH WHAT'S THERE

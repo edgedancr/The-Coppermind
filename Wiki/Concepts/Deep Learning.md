@@ -3,7 +3,7 @@ type: concept
 status: draft
 aliases: ["DL"]
 courses: ["SAIL"]
-sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
+sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - AI, Machine Learning, Deep Learning, and Generative AI Explained]]", "[[SRC - But What Is a Neural Network]]"]
 part_of: ["[[Machine Learning]]"]
 related: ["[[Transformer]]"]
 drafted_by: Claude (claude-opus-5-5)
@@ -18,7 +18,9 @@ verified_on:
 	- simple representations (edges in images, tones in audio, word fragments in text)
 	- → combinations (shapes, phonemes, phrases)
 	- → high-level concepts (objects such as faces or cars, words and meanings, strategies or intents).
-- **Examples:** convolutional neural networks (CNNs) for images; RNNs and [[Transformer|transformers]] for text ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]).
+	- 3Blue1Brown's digit network illustrates the same hope: edges in one layer, loops and lines in the next, digits at the end. Parsing speech similarly moves from sounds to syllables to words to phrases ([[3Blue1Brown - But What Is a Neural Network (transcript)|3Blue1Brown, neural networks, ch. 5]]). See [[Neural Network]].
+- **IBM's explainer:** deep learning uses [[Neural Network|neural networks]], and is called deep because it has multiple layers of them. Like human brains, it can be unpredictable, and with so many layers it can be hard to work out why it gives the results it does. IBM dates its popularity to the 2010s and calls it the basis of [[Generative AI|generative AI]] ([[IBM Technology - AI, Machine Learning, Deep Learning, and Generative AI Explained (transcript)|IBM Technology video, ch. 4]]).
+- **Examples:** convolutional neural networks (CNNs) for images; [[Recurrent Neural Network|RNNs]] and [[Transformer|transformers]] for text ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]).
 
 **Milestones** ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]])
 - **ImageNet competition (2012), "the Big Bang of modern AI":** deep learning was unlocked by combined breakthroughs in CNNs (specialized networks tailored to kinds of pattern recognition), GPUs (making training on very large datasets feasible), and reinforcement learning.

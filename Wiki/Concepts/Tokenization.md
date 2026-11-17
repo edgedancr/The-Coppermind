@@ -1,6 +1,6 @@
 ---
 type: concept
-status: verified
+status: draft
 aliases:
   - Token
   - Tokens
@@ -9,6 +9,7 @@ courses:
   - SAIL
 sources:
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
+  - "[[SRC - Attention Is All You Need]]"
 related:
   - "[[Transformer]]"
   - "[[Embedding]]"
@@ -24,4 +25,5 @@ verified_on: 2026-11-11
 - Tokenization requires understanding the meaning of the token, so it is a gross approximation of meaning, because humans do not understand everything ([[SAIL Class Notes (Fall 2026)#9/15/26|SAIL notes, 9/15/26]]).
 - Tokenizing everything is theoretically possible, but it would require omniscience ([[SAIL Class Notes (Fall 2026)#9/15/26|SAIL notes, 9/15/26]]).
 - An open question from class: what would tokenizing a soul look like? ([[SAIL Class Notes (Fall 2026)#9/15/26|SAIL notes, 9/15/26]]) (Compare [[Imago Dei]].)
+- The original transformer paper encoded sentences with byte-pair encoding, using a shared vocabulary of about 37,000 tokens for its English-German data ([[Vaswani et al. - Attention Is All You Need (2017).pdf#page=7|Vaswani et al., p. 7]]).
 - Tokens cost money and compute. Being "token conscious" means giving good instructions first instead of relying on trial and error ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]).

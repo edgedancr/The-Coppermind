@@ -3,7 +3,7 @@ type: concept
 status: draft
 aliases: ["ML"]
 courses: ["SAIL"]
-sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
+sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - AI, Machine Learning, Deep Learning, and Generative AI Explained]]"]
 related: ["[[Artificial Intelligence]]", "[[Deep Learning]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
@@ -34,6 +34,7 @@ verified_on:
 - Training minimizes a cost function; gradient descent points in the fastest direction to reduce local error.
 
 **Other points** ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]])
+- IBM's explainer: with machine learning, "I don't have to program it"; the machine is given lots of information and discovers patterns in it. More training data makes its predictions more confident, and it is especially good at prediction and at spotting outliers, which makes it useful in cybersecurity. It became popular in the 2010s ([[IBM Technology - AI, Machine Learning, Deep Learning, and Generative AI Explained (transcript)|IBM Technology video, ch. 3]]).
 - LLMs are ML with a very large number of parameters.
 - AI uses both example and enthymeme (inductive and deductive) reasoning.
 

@@ -766,3 +766,38 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - **Flags added:** sources disagree (1, on [[Artificial General Intelligence]]).
 - **Verify:** pending. Item by item, since all nine were verified pages.
 - **Commit:** `ingest: apply approved changes to 9 verified pages (back to draft for review)`
+
+### [2026-11-17] ingest | SAIL Module 2 resources: IBM AI explainer, two 3Blue1Brown videos, Then & Now on Heidegger, "Attention Is All You Need"
+
+- **Think:** I gave Claude the five SAIL Module 2 resources ("How we got here: Machine learning, deep learning, GenAI"): four video transcripts (skip the timestamps) and the transformer paper. Plan-first mode. I approved the plan as proposed, including its four proposed changes to verified pages.
+- **Calculate:** Claude (claude-opus-5-5) copied the five files unchanged into `Sources/Readings/` with descriptive names (transcripts saved as `.md`, text unchanged). It drafted 5 source cards (ratings proposed, left blank for me), 5 summaries, and 20 wiki pages:
+  - Concepts (5): [[Neural Network]], [[Large Language Model]], [[Generative AI]], [[Self-Attention]], [[Enframing]]
+  - Person (1): [[Martin Heidegger]]
+  - Glossary (14): [[Four Causes]], [[Standing Reserve]], [[Foundation Model]], [[Deepfake]], [[Parameter]], [[Sigmoid Function]], [[Backpropagation]], [[Pre-Training]], [[Reinforcement Learning with Human Feedback]], [[Positional Encoding]], [[Encoder-Decoder Architecture]], [[Recurrent Neural Network]], [[Feed-Forward Neural Network]], [[Hidden Layer]]
+  - Appended to drafts: [[Transformer]] (the 2017 paper, parallel processing, original design), [[Deep Learning]] (IBM's "multiple layers"; 3Blue1Brown's edges → loops → digits), [[Machine Learning]] (IBM's patterns, prediction, outliers), [[Embedding]] (why words become numbers; 512 dimensions), [[Algorithmic Transparency]] (why deep networks are hard to interpret).
+  - Changed verified pages, now back to `status: draft` (Schema §7, item 5), old `verified_on` kept: [[Artificial Intelligence]] (IBM's definition and nested view), [[Attention Head]] (eight heads, different tasks; `part_of` → [[Self-Attention]]), [[Tokenization]] (byte-pair encoding, ~37,000 tokens), [[Emergent Behavior]] (LLM behavior as emergent).
+  - **Flags added:** sources disagree (1: next word vs. next sentence/paragraph/document, on [[Large Language Model]]); possibly resolved (1: the "140 billion pieces of data" accuracy check on [[Transformer]]); accuracy check (3: garbled caption terms on the Then & Now source card and [[Four Causes]]; the paper's 41.8 vs. 41.0 BLEU on its source card); unsourced background (1: *Gestell* on [[Enframing]]); gap in the source (2: IBM's on-screen timeline; 3Blue1Brown's visuals).
+  - **Changed from the plan:** 14 glossary terms, not 15 (the plan miscounted after dropping Graphics Processing Unit), so 30 new pages, not 31.
+  - **Left out on purpose:** a Graphics Processing Unit glossary term (no source spells out "GPU"); an Expert System glossary term (no definition given; now a bullet on [[Artificial Intelligence]]); the paper's equations, hyperparameters, parsing results, and references; the videos' channel promotions.
+  - **Perspectives material (not written):** Heidegger's "instrument" vs. "revealing" view of technology bears on the "AI is a tool" line in [[My Worldview]].
+  - [[index]] updated. [[Find]] and [[Library.base|Library]] needed no change: every cited class date was already listed, and no new course, page type, or flag kind.
+- **Verify:** pending. Item by item.
+- **Commit:** `ingest: SAIL Module 2 resources (IBM, 3Blue1Brown x2, Then & Now, Attention Is All You Need) — 30 drafts + 9 page updates, pending review`
+
+### [2026-11-17] verify | Typed links from the SAIL Module 2 ingest
+
+- **Think:** I reviewed the typed links proposed in section D of the Module 2 ingest report.
+- **Calculate:** No page changes; the links were already in the drafts' properties.
+- **Verify:**
+  - Links approved:
+    - [[Neural Network]] → part_of → [[Deep Learning]]
+    - [[Generative AI]] → part_of → [[Deep Learning]]
+    - [[Large Language Model]] → part_of → [[Generative AI]]
+    - [[Self-Attention]] → part_of → [[Transformer]]
+    - [[Attention Head]] → part_of → [[Self-Attention]]
+    - [[Standing Reserve]] → part_of → [[Enframing]]
+    - [[Sigmoid Function]] → part_of → [[Neural Network]]
+    - [[Hidden Layer]] → part_of → [[Neural Network]]
+    - [[Positional Encoding]] → part_of → [[Transformer]]
+  - Pages themselves are still drafts, pending item-by-item review.
+- **Commit:** `verify: approve 9 typed links from SAIL Module 2 ingest`
