@@ -3,14 +3,14 @@ type: concept
 status: draft
 aliases: ["Intel"]
 courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"]
-related: ["[[Tasking, Collection, Processing, Exploitation, and Dissemination]]", "[[Levels of Intelligence]]"]
+sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]", "[[SRC - Intelligence in National Security, Definition in 7 Points]]"]
+related: ["[[Tasking, Collection, Processing, Exploitation, and Dissemination]]", "[[Levels of Intelligence]]", "[[Seven-Point Definition of Intelligence]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
 ---
 > [!summary]
-> Intro to Intelligence defined intelligence most simply as "information about those who would do us harm" ([[Intro to Intelligence Class Notes (Fall 2026)#8/25/26|Intro notes, 8/25/26]]), and more fully as the capability to inform decisions in time for it to make a difference ([[Intro to Intelligence Class Notes (Fall 2026)#9/1/26|Intro notes, 9/1/26]]). The course treated it as three things at once: a product, a process, and an organization ([[Intro to Intelligence Class Notes (Fall 2026)#8/25/26|Intro notes, 8/25/26]], [[Intro to Intelligence Class Notes (Fall 2026)#9/1/26|Intro notes, 9/1/26]]).
+> Intro to Intelligence defined intelligence most simply as "information about those who would do us harm" ([[Intro to Intelligence Class Notes (Fall 2026)#8/25/26|Intro notes, 8/25/26]]), a definition the course's seven-point handout credits to Maureen Baginski ([[SRC - Intelligence in National Security, Definition in 7 Points|7 Points, pt. 1]]), and more fully as the capability to inform decisions in time for it to make a difference ([[Intro to Intelligence Class Notes (Fall 2026)#9/1/26|Intro notes, 9/1/26]]). The course treated it as three things at once: a product, a process, and an organization ([[Intro to Intelligence Class Notes (Fall 2026)#8/25/26|Intro notes, 8/25/26]], [[Intro to Intelligence Class Notes (Fall 2026)#9/1/26|Intro notes, 9/1/26]]).
 
 ## Key Points
 **Why intelligence agencies exist** ([[Intro to Intelligence Class Notes (Fall 2026)#9/1/26|Intro notes, 9/1/26]])
@@ -32,6 +32,7 @@ verified_on:
 ## Why It Matters
 - Providing actionable intelligence is "an invaluable skill in the IC" ([[Intro to Intelligence Class Notes (Fall 2026)#8/25/26|Intro notes, 8/25/26]]).
 - In an Intro to Intelligence guest lecture, CDR Blocker put it this way: "Information shapes decisions. Decisions shape history." ([[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]])
+- For the course's fuller definition in seven points, see [[Seven-Point Definition of Intelligence]].
 - For how intelligence is produced, see [[Tasking, Collection, Processing, Exploitation, and Dissemination]], [[Information Model]], and [[Levels of Intelligence]].
 
 > [!question] Whose view is this?

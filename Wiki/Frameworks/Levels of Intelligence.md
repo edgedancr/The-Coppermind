@@ -1,6 +1,6 @@
 ---
 type: framework
-status: verified
+status: draft
 aliases:
   - Strategic, Operational, and Tactical Intelligence
   - Types of Intelligence
@@ -8,6 +8,8 @@ courses:
   - Intro to Intelligence
 sources:
   - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
+  - "[[SRC - Intelligence in National Security, Definition in 7 Points]]"
+  - "[[SRC - Themes in US Intelligence, Summary of Texts]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-13
@@ -20,6 +22,10 @@ verified_on: 2026-11-13
 - **Strategic (national or global):** strategic current events, strategic trends, and policy and existential capabilities (technology capabilities).
 - **Operational (regional):** major force activities in or to the field.
 - **Tactical (local or field):** "forces" in the field: diplomatic, military, economic, social, technical, and so on.
+
+**In the course's seven points** ([[SRC - Intelligence in National Security, Definition in 7 Points|7 Points, pt. 2]]): strategic is the largest scope and long-term, operational is regional and mid-term, tactical is line-of-sight and immediate, and **technical** covers threat capabilities, performance, and vulnerabilities, and engineering data.
+
+**Policy vs. tactical needs:** Lowenthal says policymakers need tailored, timely background, warning, and assessments, while tactical users need "dominant battlefield awareness" in real or near-real time (L: 3–4, 122–123, [[SRC - Themes in US Intelligence, Summary of Texts|Themes summary, theme 4]]).
 
 **Time horizons:** current events, then trends, then long-term assessments ([[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]]).
 

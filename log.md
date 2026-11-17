@@ -859,3 +859,56 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[SCHEMA]]
 - **Commit:** `verify: SCHEMA`
+
+### [2026-11-17] schema | Add Ingest Queue (version 3.0)
+
+- **Think:** After triaging the Intro to Intelligence course resources, I asked for the triage to be saved in the vault as an ingest queue, and chose option 1: a plain, agent-maintained file in the vault root, like `Find.md`.
+- **Calculate:**
+  - Created `Ingest Queue.md` with the full triage: Section 1 split into batches 1a–1e, Sections 2–13, the items left for my call, and the items not being added (logistics, personal, no content, duplicates).
+  - [[SCHEMA]] updated: folder layout and a new "Ingest Queue" subsection (§2), a permissions row (§9), the ingest commit step and the health check (§10), a new Ingest Queue subsection (§11), frontmatter `version: 3`, and a 3.0 changelog line. A new structural file bumps the whole number (§14).
+  - `AGENTS.md` updated with a pointer to the queue.
+  - Because the schema's content changed, its `status` was set back to `draft` and `verified_on` cleared (§7).
+  - [[index]], [[Find]], [[Library.base|Library]], and the Dashboard needed no change: the queue is not a page, page type, course, or class date.
+- **Verify:** pending. Schema needs re-verifying.
+- **Commit:** `schema: add Ingest Queue (v3.0)`
+
+### [2026-11-17] ingest | Intro to Intelligence resources, batch 1a: course framework handouts
+
+- **Think:** I asked for the Intro to Intelligence course resources to be ingested section by section, starting with Section 1 (analysis and writing tradecraft). The agent split Section 1 into five batches; I approved the plan for batch 1a as written, including summaries for only three of the seven handouts. Defaults otherwise: whole sources, skip logistics, plan first, verified pages proposed only.
+- **Calculate:**
+  - Originals copied unchanged into `Sources/Readings/` under descriptive names. They are Word, Excel, and PowerPoint files, which Obsidian can't open, so pages cite them through their source cards by point, theme, section, slide, or row.
+  - Source cards (7), ratings proposed: [[SRC - Intelligence in National Security, Definition in 7 Points]] (B-2), [[SRC - Themes in US Intelligence, Summary of Texts]] (B-2), [[SRC - SI Themes and Pearl Harbor Context]] (B-6), [[SRC - SEE-IT Checklist for Critical Thinking]] (B-6), [[SRC - Puzzles and Mysteries (Slides)]] (B-2), [[SRC - Collection Discipline Overview]] (B-2), [[SRC - IC Organizations, Leadership, Missions, and Functions]] (B-2).
+  - Summaries (3): [[Summary - Intelligence in National Security, Definition in 7 Points]], [[Summary - Themes in US Intelligence, Summary of Texts]], [[Summary - SEE-IT Checklist for Critical Thinking]].
+  - Frameworks (4): [[Seven-Point Definition of Intelligence]], [[Themes in U.S. Intelligence]], [[Elements and Standards of Critical Thinking]], [[Strengths and Weaknesses of the Collection Disciplines]].
+  - Concepts (2): [[Consumer-Producer Relations]], [[Intelligence Community Elements and Missions]]. Glossary (1): [[Redundant Analytic Structure]].
+  - Appended to drafts: [[Intelligence (National Security)]] (Baginski credited for the definition; pointer to the seven points), [[Puzzles and Mysteries]] (the slide's present-day examples and "Secrets" label, Treverton's "puzzle solving or mystery framing," and a "Possibly resolved by" line on the unsourced-Treverton callout), [[Intelligence Collection Disciplines]] (MASINT definition, DIA as MASINT functional manager, FININT's law-enforcement use, link to the strengths-and-weaknesses page; the FIS gap stays open), [[United States Intelligence Community]] (DIA as MASINT functional manager; pointer to the elements page; its CIA-reporting accuracy check stays open).
+  - **Proposed for verified pages, not made (7):** [[SEE-It Framework]], [[Mirror Imaging]], [[Denial and Deception]], [[Politicized Intelligence]], [[All-Source Intelligence]], [[Levels of Intelligence]], [[Traffic Analysis]].
+  - **Typed links proposed (11):** [[Seven-Point Definition of Intelligence]] → part_of → [[Intelligence (National Security)]]; [[Themes in U.S. Intelligence]] → part_of → [[Seven-Point Definition of Intelligence]]; [[Consumer-Producer Relations]] → part_of → [[Themes in U.S. Intelligence]]; [[Redundant Analytic Structure]] → part_of → [[Themes in U.S. Intelligence]]; [[Strengths and Weaknesses of the Collection Disciplines]] → part_of → [[Intelligence Collection Disciplines]]; [[Intelligence Community Elements and Missions]] → part_of → [[United States Intelligence Community]]; plus `related` links on the new pages and [[Intelligence (National Security)]].
+  - **Flags added:** gaps in the source (4: "malevolent empathy" undefined in the seven points; the SEE-IT example's missing Nosich list and blank illustrations; the SI Themes file has no Pearl Harbor material; the Puzzles slide's "Sources" row is unreadable); accuracy checks (2: typing slips in the theme spreadsheet's quotations; the IC handout's garbled title for Lowenthal's book); possibly resolved (1: the Treverton callout on [[Puzzles and Mysteries]]).
+  - **Left out on purpose:** the SEE-IT handout's worked examples about PHC courses (catalog entries, rooms, schedules); the "Best Jobs for Personality Types" slide (out of scope, Schema §1); the IC leaders' names (a September 2026 snapshot); the theme spreadsheet's further-readings column; the IC handout's web links.
+  - **Deferred:** the Grammar Summaries to batch 1b; Lowenthal's own definitions of competitive analysis and groupthink to 1b.
+  - New and changed files use the vault's CRLF line endings. [[index]] updated. `Ingest Queue.md` marks batch 1a as drafted, pending review. [[Find]] and [[Library.base|Library]] needed no change: no new class date, course, page type, or flag kind.
+- **Verify:** pending. Item by item.
+- **Commit:** `ingest: Intro to Intelligence batch 1a (course framework handouts) — 17 drafts + 4 page updates, pending review`
+
+### [2026-11-17] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`
+
+### [2026-11-17] ingest | Edits to verified pages from batch 1a
+
+- **Think:** I asked for the seven proposed changes to verified pages from the batch 1a ingest to be made.
+- **Calculate:**
+  - Made the before/after changes exactly as proposed in the batch 1a report, citing [[SRC - Themes in US Intelligence, Summary of Texts]], [[SRC - SEE-IT Checklist for Critical Thinking]], and [[SRC - Intelligence in National Security, Definition in 7 Points]], and added those cards to each page's `sources`:
+    - [[SEE-It Framework]]: the handout's "Illustrate It," sentence starters, and uses; `related` → [[Elements and Standards of Critical Thinking]].
+    - [[Mirror Imaging]]: Lowenthal's fuller definition, "clientism," and Treverton on intelligence failures.
+    - [[Denial and Deception]]: Lowenthal's framing, and the innocent state that looks the same as one with good D&D.
+    - [[Politicized Intelligence]]: Lowenthal's three ways policymakers politicize, and analysts' own bias.
+    - [[All-Source Intelligence]]: collection synergy, and IRTPA's all-source requirement for the DNI.
+    - [[Levels of Intelligence]]: the seven points' scope definitions, including technical intelligence, and Lowenthal on policy vs. tactical needs.
+    - [[Traffic Analysis]]: Treverton on encryption limiting SIGINT to traffic analysis.
+  - Because their content changed, all seven pages were set back to `status: draft` (Schema §7, item 5); `verified_on` was kept as the record of the earlier verification. [[index]] updated: the seven moved from Verified to Drafts. [[Find]] and [[Library.base|Library]] needed no change.
+- **Verify:** pending. Item by item.
+- **Commit:** `ingest: batch 1a edits to 7 verified pages — back to draft, pending review`

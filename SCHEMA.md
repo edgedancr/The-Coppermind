@@ -1,6 +1,6 @@
 ---
 type: schema
-version: 2
+version: 3
 status: verified
 owner: Harrison Nickles
 updated: 2026-11-17
@@ -28,7 +28,7 @@ The Coppermind has three jobs, in priority order:
 - Freedom's Foundations 1, Fall 2026
 - Readings, course documents, and my own assignments from those three courses
 
-**Out of scope until I say otherwise:** other courses, personal notes (personality typing, social notes, personal reminders), anything about my security clearance paperwork, and personal information about classmates or other private individuals. If a source mentions a classmate, refer to them by role ("a teammate"), not by name.
+**Out of scope until I say otherwise:** other courses, personal notes, anything about security clearance paperwork, and personal information about classmates or other private individuals. If a source mentions a classmate, refer to them by role ("a teammate"), not by name.
 
 ---
 
@@ -52,6 +52,7 @@ The Coppermind/
 ├── index.md                Map of every page
 ├── log.md                  Dated record of every operation
 ├── Find.md                 Offline search page: one-click searches and class dates
+├── Ingest Queue.md         Sources I've collected that are waiting to be ingested, in batches
 ├── Library.base            Table of every page, with views by type, course, and status
 ├── Review Queue.base       Live list of pages waiting for review
 ├── AGENTS.md               Pointers to this file for agents
@@ -97,6 +98,15 @@ The Coppermind/
 | A property name or value used in a search or view changes | Fix every Find link and `Library.base` filter that uses it |
 
 Class-date searches match the display text of the citation, such as `SAIL notes, 10/20/26`, so citations must keep that form (§6).
+
+### Ingest Queue: sources waiting their turn
+
+`Ingest Queue.md` lists sources I've collected but not yet ingested, grouped into the batches we plan to ingest them in, with each batch's status. Like Find and Library, it is not one of the six parts and not a wiki page: it has no `status`, is not in `index.md`, and I don't verify it. **The agent maintains it, and it must stay current.**
+
+- **It is a plan, not a record.** The log records what was done, and each source card's Ingest Progress records what has been ingested from that source. The queue only says what is still waiting and in what order.
+- **When I hand over a set of sources to triage,** the agent adds them to the queue in batches, and lists what it recommends skipping and why. I decide the order and the skips.
+- **At the end of every ingest that takes a batch from the queue,** the agent marks the batch done, links its source cards, and notes anything deferred to a later batch.
+- **I can reorder, split, or drop batches at any time;** the agent changes the order only when I ask.
 
 ### Tools: the toolbox
 
@@ -277,6 +287,7 @@ Each source card rates the source with the Admiralty Code. The agent may propose
 | `SCHEMA.md`                 | Read, and suggest changes in chat       | Edit, unless I ask for a specific change              |
 | `index.md`, `log.md`        | Maintain                                | Delete or rewrite past log entries                    |
 | `Find.md`, `Library.base`   | Maintain and keep current (see §2)      | Delete, rename, or change their purpose, unless I ask |
+| `Ingest Queue.md`           | Maintain and keep current (see §2)      | Reorder, drop, or skip batches, unless I ask          |
 | `Tools/`                    | Read; build or revise a tool when I ask | Edit, rename, or delete otherwise                     |
 | `_templates/`, `.obsidian/` | Use                                     | Change, unless I ask                                  |
 
@@ -298,7 +309,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
    - each proposed typed link, with its reason
    - each flag: "Whose view?", unsourced background, conflicts with existing pages, gaps in my notes
 5. **Verify (me).** For each page, I approve it, ask for revisions (back to step 4), or reject it. I check the links the same way.
-6. **Commit.** The agent updates `index.md`, **checks `Find.md` and `Library.base` and updates them if the operation changed what they list** (a new class date, course, or page type; see §2), appends the log entry, and suggests a git commit message. I commit.
+6. **Commit.** The agent updates `index.md`, **checks `Find.md` and `Library.base` and updates them if the operation changed what they list** (a new class date, course, or page type; see §2), **marks the batch done in `Ingest Queue.md` if it came from there**, appends the log entry, and suggests a git commit message. I commit.
 
 ### Query: asking the wiki a question
 
@@ -322,6 +333,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
    - gaps in the sources themselves (unfinished notes, "?" placeholders, empty definitions)
    - pages missing from `index.md`, or index entries for pages that no longer exist
    - `Find.md` or `Library.base` out of date: a cited class date missing from Find, a course or page type with no link or view, flag links that don't match §6, or a link or filter that no longer works
+   - `Ingest Queue.md` out of date: a batch still marked waiting whose sources already have source cards, or a batch marked done whose sources don't
 3. **Verify (me).** I decide how to resolve each flag: fix, accept as is, or defer. The agent changes nothing until I decide.
 4. **Commit and log** each flag and how I resolved it. Fixes to `Find.md` and `Library.base` are mechanical and can be approved as a batch (§7).
 
@@ -341,6 +353,12 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 - Not listed in `index.md`, because they are tools and not pages.
 - The agent keeps them current as described in §2, **at the end of every operation that could change them**, in the same step as the index. It notes any change to them in that operation's log entry. A change that only keeps Find current (adding a class date, say) is mentioned in the entry, but doesn't need its own.
 - I check them during each health check.
+
+### Ingest Queue (`Ingest Queue.md`)
+
+- Not listed in `index.md`, because it is a plan and not a page.
+- The agent updates it at the end of every ingest that takes a batch from it, and notes the change in that operation's log entry.
+- I check it during each health check.
 
 ### Log (`log.md`)
 
@@ -403,3 +421,4 @@ The Coppermind must outlive any one tool or agent.
 - **0.2 (2026-11-11):** Guest lecturers added as a fourth voice in §6: named by title and name, with no personal details and no People pages unless I ask.
 - **1.0 (2026-11-11):** `Find.md` and `Library.base` added to the structure (§2 folder layout and a new "Find and Library" subsection). The agent now maintains them (§9, §10 ingest and health check, §11), and class-notes citations must keep the form `<Course> notes, M/D/YY` (§6). Ingest steps renumbered.
 - **2.0 (2026-11-17):** `Tools/` folder added to the structure (§2 folder layout and a new "Tools: the toolbox" subsection), with a permissions row (§9) and a note in the export protocol (§13). Tools are not one of the six parts: no status, not in the index, not verified. Because the schema changed, its status returns to `draft` until I verify it again (§7).
+- **3.0 (2026-11-17):** `Ingest Queue.md` added to the structure (§2 folder layout and a new "Ingest Queue" subsection): a plan of the sources waiting to be ingested, in batches, maintained by the agent and not one of the six parts. Added to permissions (§9), the ingest commit step and the health check (§10), and §11. Status returns to `draft` until I verify it again (§7).

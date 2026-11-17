@@ -3,7 +3,7 @@ type: concept
 status: draft
 aliases: ["IC", "Intelligence Community"]
 courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"]
+sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]", "[[SRC - IC Organizations, Leadership, Missions, and Functions]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
@@ -23,7 +23,7 @@ verified_on:
 - The Coast Guard has both wartime and intelligence authorities, so it fits neither category.
 - ODNI is the head of intelligence, and the CIA is independent.
 
-**Functional managers:** the CIA for human intelligence and open-source intelligence, the NSA for signals intelligence, and the NGA for geospatial intelligence ([[Intro to Intelligence Class Notes (Fall 2026)#9/10/26|Intro notes, 9/10/26]], [[Intro to Intelligence Class Notes (Fall 2026)#9/15/26|Intro notes, 9/15/26]]). See [[Executive Order 12333]].
+**Functional managers:** the CIA for human intelligence and open-source intelligence, the NSA for signals intelligence, and the NGA for geospatial intelligence ([[Intro to Intelligence Class Notes (Fall 2026)#9/10/26|Intro notes, 9/10/26]], [[Intro to Intelligence Class Notes (Fall 2026)#9/15/26|Intro notes, 9/15/26]]). The course's IC handout adds DIA as the functional manager for measurement and signature intelligence (MASINT) ([[SRC - IC Organizations, Leadership, Missions, and Functions|IC Organizations, table]]). See [[Executive Order 12333]].
 
 **Oversight:** [[Intelligence Oversight Committees]]. **Culture:** [[Seven Tribes of Intelligence]].
 
@@ -31,4 +31,5 @@ verified_on:
 > My notes (8/25) say the CIA "reports directly to the president." Since the 2004 intelligence reform, the CIA Director reports to the Director of National Intelligence. Check what was taught.
 
 ## Why It Matters
+- For each member's mission, and the course's other grouping into program managers, departmental organizations, and military service organizations, see [[Intelligence Community Elements and Missions]] ([[SRC - IC Organizations, Leadership, Missions, and Functions|IC Organizations, table]]).
 - The agency an analyst works for shapes its priorities and culture; see [[Seven Tribes of Intelligence]] ([[Intro to Intelligence Class Notes (Fall 2026)#9/8/26|Intro notes, 9/8/26]]).
