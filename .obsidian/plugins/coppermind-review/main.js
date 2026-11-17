@@ -16,7 +16,7 @@
  *    over wiki pages, source cards, and perspectives (not raw class notes); it only reads
  *  - Dashboard page blocks (```coppermind-hero```, -dashboard, -nav, -activity), a ribbon
  *    logo button and Alt+H to go back to the Dashboard, and a one-time Home to Dashboard rename
- *  - "Log a schema change" (ribbon pen icon, or the command palette): asks for the new version number
+ *  - "Log a schema change" (a pen button in the header of the SCHEMA page, or the command palette): asks for the new version number
  *    and what I changed, then adds the line to the Changelog at the bottom of SCHEMA.md and keeps its
  *    `version` and `updated` properties in step. It does not touch status, verified_on, or log.md.
  *
@@ -1232,10 +1232,9 @@ module.exports = class Nicrosil extends Plugin {
     this.statusEl.addEventListener("click", () => this.activateView());
 
     addIcon("coppermind-logo", LOGO_ICON);
-    this.ribbonEl = this.addRibbonIcon("coppermind-logo", "Dashboard (Alt+H)", () => this.openDashboard());
+    this.ribbonEl = this.addRibbonIcon("coppermind-logo", "Dashboard (Alt+H). Alt+click opens it in a new tab", (evt) => this.openDashboard(!!(evt && evt.altKey)));
     this.ribbonEl.addClass("cm-ribbon-logo");
     this.addRibbonIcon("badge-check", "Review queue (Alt+Q)", () => this.activateView());
-    this.addRibbonIcon("file-pen", "Log a schema change", () => this.openSchemaLog());
 
     this.registerMarkdownCodeBlockProcessor("coppermind-hero", (src, el) => this.renderHero(el, src));
     for (const [name, method] of [["coppermind-dashboard", "renderDashboard"], ["coppermind-nav", "renderNav"], ["coppermind-activity", "renderActivity"]]) {
@@ -1251,6 +1250,7 @@ module.exports = class Nicrosil extends Plugin {
 
     this.scheduleRefresh = debounce(() => this.refresh(), 400, true);
     this.registerEvent(this.app.workspace.on("file-open", (file) => {
+      this.syncSchemaButtons();
       if (file) this.currentPath = file.path;
       this.syncDashboardLeaves(true);
       this.renderViews();
@@ -1259,13 +1259,14 @@ module.exports = class Nicrosil extends Plugin {
       this.syncDashboardLeaves(false);
       this.enforceReading(leaf);
     }));
-    this.registerEvent(this.app.workspace.on("layout-change", () => this.syncDashboardLeaves(false)));
+    this.registerEvent(this.app.workspace.on("layout-change", () => { this.syncSchemaButtons(); this.syncDashboardLeaves(false); }));
     this.registerEvent(this.app.metadataCache.on("changed", () => { this.scheduleRefresh(); this.syncDashboardLeaves(false); }));
     this.registerEvent(this.app.metadataCache.on("resolved", () => this.scheduleRefresh()));
     this.registerEvent(this.app.vault.on("delete", () => this.scheduleRefresh()));
     this.registerEvent(this.app.vault.on("rename", (file, oldPath) => this.onRename(file, oldPath)));
     this.app.workspace.onLayoutReady(async () => {
       this.searchIndex.start();
+      this.syncSchemaButtons();
       await this.migrateHome();
       this.syncDashboardLeaves(true);
       const f = this.app.workspace.getActiveFile();
@@ -1275,6 +1276,8 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   onunload() {
+    document.querySelectorAll(".cm-schema-log-btn").forEach((e) => e.remove());
+    this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view) l.view.__cmSchemaBtn = null; });
     document.querySelectorAll(".cm-resolve-btn, .cm-ribbon-logo").forEach((e) => e.remove());
     document.body.classList.remove("cm-on-dashboard");
     document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open").forEach((e) => e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open"));
@@ -1306,6 +1309,24 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   /* --- schema changelog --- */
+
+  /** Shows a pen button in the header of any open SCHEMA.md tab, and removes it from every other tab. It is drawn on screen only; nothing is written to the page. */
+  syncSchemaButtons() {
+    this.app.workspace.getLeavesOfType("markdown").forEach((leaf) => {
+      const view = leaf.view;
+      if (!view || typeof view.addAction !== "function") return;
+      const onSchema = !!(view.file && view.file.path === SCHEMA_PATH);
+      const has = view.__cmSchemaBtn && view.__cmSchemaBtn.isConnected;
+      if (onSchema && !has) {
+        const btn = view.addAction("file-pen", "Log a schema change", () => this.openSchemaLog());
+        btn.addClass("cm-schema-log-btn");
+        view.__cmSchemaBtn = btn;
+      } else if (!onSchema && view.__cmSchemaBtn) {
+        view.__cmSchemaBtn.remove();
+        view.__cmSchemaBtn = null;
+      }
+    });
+  }
 
   schemaFile() {
     const f = this.app.vault.getAbstractFileByPath(SCHEMA_PATH);
@@ -1713,12 +1734,12 @@ module.exports = class Nicrosil extends Plugin {
     await leaf.setViewState({ ...state, state: { ...state.state, mode: "preview" } });
   }
 
-  async openDashboard() {
+  async openDashboard(newTab) {
     const f = this.dashboardFile();
     if (!f) { new Notice("Couldn't find Dashboard.md."); return; }
     const already = this.app.workspace.getLeavesOfType("markdown").find((l) => l.view.file && l.view.file.path === f.path);
     if (already) { this.app.workspace.setActiveLeaf(already, { focus: true }); return; }
-    await this.app.workspace.getLeaf(false).openFile(f, { state: { mode: "preview" } });
+    await this.app.workspace.getLeaf(newTab ? "tab" : false).openFile(f, { state: { mode: "preview" } });
   }
 
   /** One-time: rename Home.md to Dashboard.md (Obsidian updates links) and repoint the startup-page plugin. */
