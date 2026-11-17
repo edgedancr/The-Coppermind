@@ -6,9 +6,9 @@ updated: 2026-11-17
 
 A map of every page in the Coppermind, grouped by type. The AI agent updates this after every operation; I check it during health checks. Within each type, pages are listed under Verified or Drafts, each with a one-line summary.
 
-**Totals:** 63 verified · 115 drafts
+**Totals:** 63 verified · 131 drafts
 
-## Concepts (51)
+## Concepts (54)
 
 ### Verified (15)
 - [[AI in Intelligence Production]] — How AI changes collection, threat prediction, and policymaking
@@ -27,7 +27,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Security Classification]] — Classification levels, control systems, releasability, and need to know
 - [[Time Compression Trap]] — Faster early stages create pressure to skip analysis
 
-### Drafts (36)
+### Drafts (39)
 - [[Agentic AI]] — AI with tools, and the added risk
 - [[AI Alignment]] — Systems doing what we intend, even under pressure
 - [[Algorithmic Bias]] — Five types of bias in AI, the HireMe! example, and proposed fixes
@@ -37,13 +37,16 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Centaur Analyst]] — Five capabilities and the changing role of the analyst
 - [[China's AI Industrial Policy]] — RAND: Beijing's state support across the AI stack, and whether it will work
 - [[Cognitive Debt]] — The cost of letting AI think first
+- [[Custom GPT]] — OpenAI's specialized ChatGPTs: instructions, knowledge files, capabilities, actions
 - [[Data and Model Poisoning]] — OWASP LLM05: corrupting what a model learns; backdoors and sleeper agents
 - [[Deep Learning]] — Progressive abstraction; ImageNet and AlphaGo
 - [[Emergent Behavior]] — Behavior developers didn't design and can't fully predict
 - [[Enframing]] — Heidegger's account of modern technology, via the Then & Now video
 - [[Excessive Agency]] — OWASP LLM03: too much functionality, permission, or autonomy
+- [[Fine-Tuning]] — Further specialized training that adjusts a model's weights; strengths and costs
 - [[Future Strategic Threats]] — Three massive challenges, and cognitive information threats
 - [[Generative AI]] — AI that generates new content; foundation models and deepfakes
+- [[Generative vs. Agentic AI]] — IBM: reactive generation vs. proactive, goal-pursuing agents
 - [[Hallucination]] — Confident, false AI output
 - [[Human-Centered AI]] — Augmentation, not abdication
 - [[Imago Dei]] — Humans made in God's image, as the foundation for AI ethics
@@ -65,7 +68,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Transformer]] — The architecture behind LLMs
 - [[United States Intelligence Community]] — The 18 IC organizations and how they're grouped
 
-## Glossary (67)
+## Glossary (69)
 
 ### Verified (25)
 - [[All-Source Intelligence]] — Drawing on every type of collection the topic needs
@@ -94,13 +97,15 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Unconventional Warfare]] — Training locals to defend themselves
 - [[Zero-Day Vulnerability]] — An exploitable fault not yet known, fixed, or exploited
 
-### Drafts (42)
+### Drafts (44)
 - [[AI Supply Chain Compromise]] — OWASP LLM04 and an ATLAS technique; includes slopsquatting
 - [[AI Technology Stack]] — The layers AI depends on, from chips to applications
 - [[Algorithmic Transparency]] — Examining inputs and outputs to see why an algorithm recommends what it does
 - [[Artificial General Intelligence]] — SAIL's and RAND's definitions of AGI, which disagree
 - [[Attention Head]] — What a token is compared against in a transformer
 - [[Backpropagation]] — The algorithm that nudges every parameter toward the right answer
+- [[Catastrophic Forgetting]] — A fine-tuned model losing general capabilities
+- [[Chain-of-Thought Reasoning]] — Breaking a task into smaller logical steps before answering or acting
 - [[Computer Network Attack]] — Attacking networks (definition needs checking)
 - [[Correlated Feature]] — How a protected class re-enters data that never collected it
 - [[Deepfake]] — Generated audio or video that makes someone seem to say what they never said
@@ -117,7 +122,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Jailbreak]] — Prompt injection aimed at breaking a model's safety protocols
 - [[Lethal Trifecta]] — Private data + untrusted content + external communication; and the Rule of Two
 - [[Liar's Dividend]] — Information quality collapse (definition needs checking)
-- [[LMSYS Chatbot Arena]] — Crowdsourced chatbot comparison
+- [[LMSYS Chatbot Arena]] — Crowdsourced chatbot comparison; now called Arena
 - [[Moral Injury]] — Its two causes: an overwhelming event, and betrayal of trust
 - [[Parameter]] — The weights and biases that set a model's behavior
 - [[Positional Encoding]] — How a transformer knows word order
@@ -127,7 +132,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Recurrent Neural Network]] — RNN: the step-by-step sequence model the transformer replaced
 - [[Recursive Self-Improvement]] — A model enhancing its own capabilities without human input
 - [[Reinforcement Learning with Human Feedback]] — RLHF: human corrections that make a model a better assistant
-- [[Retrieval-Augmented Generation]] — RAG: similarity search deciding what the model sees
+- [[Retrieval-Augmented Generation]] — RAG: retrieve, augment, generate; similarity search deciding what the model sees
 - [[Scaling Laws]] — Model performance scaling with compute
 - [[Sensitive Information Disclosure]] — OWASP LLM02: protected data leaking through any channel
 - [[Sheep Dipping]] — Definition needs checking
@@ -138,7 +143,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Unbounded Consumption]] — OWASP LLM06: uncontrolled inference; denial of wallet
 - [[Vector and Embedding Weaknesses]] — OWASP LLM09: attacks on embeddings and similarity search
 
-## Frameworks (20)
+## Frameworks (21)
 
 ### Verified (9)
 - [[Ages of U.S. Intelligence]] — Four ages since 1944, and a possible AI Age
@@ -151,7 +156,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Levels of Intelligence]] — Strategic, operational, tactical, and technical, with their questions
 - [[Tasking, Collection, Processing, Exploitation, and Dissemination]] — TCPED: from requirement to actionable intelligence
 
-### Drafts (11)
+### Drafts (12)
 - [[Cascade of Unintended Consequences]] — Four paths from AI side effects to catastrophe
 - [[Five Hard National Security Problems of Artificial General Intelligence]] — RAND's five AGI problems as a rubric for judging strategy
 - [[Intelligence-to-Action Convergence Matrix]] — ISR pipeline, intelligence cycle, OODA loop, and kill chain lined up stage by stage
@@ -160,6 +165,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[ODNI AI Ethics Framework]] — The IC's AI ethics framework and the misconceptions it corrects (principles not yet recorded)
 - [[OWASP Top 10 for Large Language Model Applications]] — The ten top security risks for LLM applications, 2026 edition
 - [[Puzzles and Mysteries]] — Answerable questions vs. ones that must be inferred
+- [[Retrieval-Augmented Generation vs. Fine-Tuning vs. Prompt Engineering]] — IBM's three ways to improve LLM answers, with trade-offs
 - [[Seven Tribes of Intelligence]] — IC culture read from where each tribe locates power
 - [[Think-Calculate-Verify Loop]] — Human thinks, AI calculates, human verifies
 - [[Three-Ps Risk Framework]] — Assess AI risk at the program, person, and population levels
@@ -183,21 +189,26 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 ### Drafts (1)
 - [[Martin Heidegger]] — German philosopher; "The Question Concerning Technology" (1954)
 
-## Summaries (12)
+## Summaries (17)
 
 ### Verified (1)
 - [[Summary - ACH GenAI Workflow]] — Neutral summary of the SAIL ACH-with-AI prompt sequence
 
-### Drafts (11)
+### Drafts (16)
+- [[Summary - About Us (Arena)]] — Neutral summary of Arena's About Us page
 - [[Summary - AI, Machine Learning, Deep Learning, and Generative AI Explained]] — Neutral summary of IBM Technology's explainer video
 - [[Summary - Algorithmic Bias and Fairness (Crash Course AI 18)]] — Neutral summary of the Crash Course AI episode on algorithmic bias
 - [[Summary - Artificial General Intelligence's Five Hard National Security Problems]] — Neutral summary of Mitre and Predd's RAND paper
 - [[Summary - Attention Is All You Need]] — Neutral summary of the 2017 transformer paper
 - [[Summary - But What Is a Neural Network]] — Neutral summary of 3Blue1Brown's neural network video
 - [[Summary - Full Stack, China's Evolving Industrial Policy for AI]] — Neutral summary of Chan et al.'s RAND paper
+- [[Summary - Generative vs Agentic AI]] — Neutral summary of IBM Technology's generative vs. agentic video
+- [[Summary - How to Create Custom GPT]] — Neutral summary of Kevin Stratvert's custom GPT tutorial
+- [[Summary - How to Make a Music Video with AI]] — Neutral summary of Tao Prompts' AI music video tutorial
 - [[Summary - Large Language Models Explained Briefly]] — Neutral summary of 3Blue1Brown's LLM video
 - [[Summary - MITRE ATLAS Matrix]] — Neutral summary of the ATLAS matrix page
 - [[Summary - OWASP Top 10 for LLM Applications 2026]] — Neutral summary of the 2026 OWASP LLM Top 10
+- [[Summary - RAG vs Fine-Tuning vs Prompt Engineering]] — Neutral summary of IBM Technology's video on three ways to improve LLM answers
 - [[Summary - The Question Concerning Technology (Then and Now)]] — Neutral summary of the Then & Now video on Heidegger
 - [[Summary - What Is Human-Centered AI]] — Neutral summary of IBM Research's HCAI explainer
 
@@ -226,22 +237,27 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 ### Verified (1)
 - [[My Worldview]] — The foundational convictions behind my perspectives, by layer of worldview
 
-## Source Cards (14)
+## Source Cards (19)
 
 ### Verified (3)
 - [[SRC - ACH GenAI Workflow]] — The SAIL ACH-with-AI course documents, eight files (rating proposed B-2)
 - [[SRC - Intro to Intelligence Class Notes (Fall 2026)]] — My Intro to Intelligence lecture notes, Fall 2026 (rating proposed B-2)
 - [[SRC - SAIL Class Notes (Fall 2026)]] — My SAIL lecture notes, Fall 2026 (rating proposed B-2)
 
-### Drafts (11)
+### Drafts (16)
+- [[SRC - About Us (Arena)]] — Arena's About Us page, saved 2026-11-17 (rating proposed B-2)
 - [[SRC - AI, Machine Learning, Deep Learning, and Generative AI Explained]] — IBM Technology video transcript (rating proposed B-2)
 - [[SRC - Algorithmic Bias and Fairness (Crash Course AI 18)]] — Crash Course AI episode 18 transcript (rating proposed C-2)
 - [[SRC - Artificial General Intelligence's Five Hard National Security Problems]] — Mitre and Predd, RAND, 2025 (rating proposed B-3)
 - [[SRC - Attention Is All You Need]] — Vaswani et al., 2017 (rating proposed A-1)
 - [[SRC - But What Is a Neural Network]] — 3Blue1Brown video transcript (rating proposed B-2)
 - [[SRC - Full Stack, China's Evolving Industrial Policy for AI]] — Chan et al., RAND, 2025 (rating proposed B-2)
+- [[SRC - Generative vs Agentic AI]] — IBM Technology video transcript (rating proposed B-2)
+- [[SRC - How to Create Custom GPT]] — Kevin Stratvert tutorial transcript (rating proposed C-2)
+- [[SRC - How to Make a Music Video with AI]] — Tao Prompts tutorial transcript (rating proposed C-3)
 - [[SRC - Large Language Models Explained Briefly]] — 3Blue1Brown video transcript (rating proposed B-2)
 - [[SRC - MITRE ATLAS Matrix]] — The MITRE ATLAS matrix page (rating proposed B-2)
 - [[SRC - OWASP Top 10 for LLM Applications 2026]] — OWASP GenAI Security Project, 2026 edition (rating proposed B-2)
+- [[SRC - RAG vs Fine-Tuning vs Prompt Engineering]] — IBM Technology video transcript (rating proposed B-2)
 - [[SRC - The Question Concerning Technology (Then and Now)]] — Then & Now video transcript on Heidegger (rating proposed C-3)
 - [[SRC - What Is Human-Centered AI]] — Geyer et al., IBM Research, 2022 (rating proposed C-2)

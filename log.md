@@ -801,3 +801,23 @@ A dated, append-only record of every ingest, query, health check, verification, 
     - [[Positional Encoding]] → part_of → [[Transformer]]
   - Pages themselves are still drafts, pending item-by-item review.
 - **Commit:** `verify: approve 9 typed links from SAIL Module 2 ingest`
+
+### [2026-11-17] ingest | SAIL Module 3 resources (IBM Technology x2, Kevin Stratvert, Tao Prompts, Arena)
+
+- **Think:** I asked for the five SAIL Module 3 resources to be ingested: IBM Technology's "Generative vs Agentic AI" and "RAG vs Fine-Tuning vs Prompt Engineering" videos, Kevin Stratvert's custom GPT tutorial, Tao Prompts' AI music video tutorial, and Arena's "About Us" page. Defaults: whole sources, everything substantive, plan first, verified pages proposed only. I approved the plan as written.
+- **Calculate:**
+  - Originals copied unchanged into `Sources/Readings/`. The four .txt transcripts were saved with a .md extension (content unchanged) so Obsidian can open and link to them; the Arena page stays HTML and is cited through its source card by section heading.
+  - Source cards (5), ratings proposed: [[SRC - Generative vs Agentic AI]] (B-2), [[SRC - RAG vs Fine-Tuning vs Prompt Engineering]] (B-2), [[SRC - How to Create Custom GPT]] (C-2), [[SRC - How to Make a Music Video with AI]] (C-3), [[SRC - About Us (Arena)]] (B-2).
+  - Summaries (5): [[Summary - Generative vs Agentic AI]], [[Summary - RAG vs Fine-Tuning vs Prompt Engineering]], [[Summary - How to Create Custom GPT]], [[Summary - How to Make a Music Video with AI]], [[Summary - About Us (Arena)]].
+  - Concepts (3): [[Generative vs. Agentic AI]], [[Fine-Tuning]], [[Custom GPT]]
+  - Framework (1): [[Retrieval-Augmented Generation vs. Fine-Tuning vs. Prompt Engineering]]
+  - Glossary (2): [[Catastrophic Forgetting]], [[Chain-of-Thought Reasoning]]
+  - Appended to drafts: [[Agentic AI]] (IBM's perceive–decide–execute–learn cycle, LLMs as reasoning engine, shopping-agent example), [[Generative AI]] (reactive by design; diffusion models; the music-video workflow), [[Prompt Engineering]] (IBM's account of why prompting works; formatting by example; link to Chain-of-Thought Reasoning), [[Retrieval-Augmented Generation]] (retrieve–augment–generate definition; `part_of` the new framework), [[LMSYS Chatbot Arena]] (now called Arena; aliases Arena and LMArena; history and funding), and "Used in" links to [[Fine-Tuning]] on [[Backpropagation]], [[Pre-Training]], and [[Parameter]].
+  - No verified pages changed.
+  - **Typed links proposed (6):** [[Fine-Tuning]] → applies_to → [[Large Language Model]]; [[Retrieval-Augmented Generation]] → part_of → [[Retrieval-Augmented Generation vs. Fine-Tuning vs. Prompt Engineering]]; [[Fine-Tuning]] → part_of → [[Retrieval-Augmented Generation vs. Fine-Tuning vs. Prompt Engineering]]; [[Chain-of-Thought Reasoning]] → part_of → [[Prompt Engineering]]; [[Catastrophic Forgetting]] → related → [[Fine-Tuning]]; [[Custom GPT]] → example_of → [[Generative AI]].
+  - **Flags added:** sources disagree (1: whether a GPT "has all" the internet's knowledge vs. training cutoffs, on [[Custom GPT]]); accuracy check (4: "train" used loosely, on [[Custom GPT]]; "tension mechanisms," on [[Prompt Engineering]] and the RAG video's source card; garbled tool names and parameters, on the music video's source card); gap in the source (3: no recording date, on [[Custom GPT]] and both tutorial source cards; plus the [transcript unclear] list on [[Summary - How to Make a Music Video with AI]]); possibly resolved (1: the name-change half of the accuracy check on [[LMSYS Chatbot Arena]]; the "sentiment analysis" half stays open).
+  - **Left out on purpose:** the music video's song lyrics; click-by-click interface steps beyond the summaries; asides (the fan-fiction anecdote, the mascot detour, subscribe requests); the name of the Midjourney user credited in the music video; Arena's navigation, footer, images, and social links. A Diffusion Model glossary term was not created (the source gives only a passing mention).
+  - **Perspectives material:** none (no work of mine in this ingest).
+  - [[index]] updated. [[Find]] and [[Library.base|Library]] needed no change: every cited class date (9/8, 10/1, 10/15) was already listed, and no new course, page type, or flag kind.
+- **Verify:** pending. Item by item.
+- **Commit:** `ingest: SAIL Module 3 resources (IBM x2, Stratvert, Tao Prompts, Arena) — 16 drafts + 8 page updates, pending review`
