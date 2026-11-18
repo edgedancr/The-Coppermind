@@ -20,7 +20,8 @@ The files Col. Middleton supplied for Intro to Intelligence, triaged on 2026-11-
 	- 2 - Puzzles-Mysteries → [[SRC - Puzzles and Mysteries (Slides)]]
 	- 4 - Collection Discipline Overview → [[SRC - Collection Discipline Overview]]
 	- 1 - IC Org Leadership, Missions, Functions Sep2026 → [[SRC - IC Organizations, Leadership, Missions, and Functions]]
-- `[ ]` **1b. Grammar Summaries, weeks 2–6**: I2I Week 2-7 Grammar Fall2026 (Lowenthal's terms; about 40 glossary candidates). Week 7 (cyber, IoT, AI) waits for Sections 6, 9, and 10.
+- `[~]` **1b. Grammar Summaries, weeks 2–6** (ingested 2026-11-18)
+	- I2I Week 2-7 Grammar Fall2026 → [[SRC - Grammar Summaries, Weeks 2-7]]. Week 7 (cyber, IoT, AI) waits for Sections 6, 9, and 10.
 - `[ ]` **1c. Analytic standards and the profession**: 5 - ICD 203 Analytic Standards (scan; needs OCR), Lowenthal - Intelligence is NOT About Telling Truth to Power, 14 - Marrin - Analytic Rigor and Epistemology, 12 - Limits of Prediction, 15 - Gartin - Future of Analysis, 13 - Hershcovitz - Future Intelligence Analyst, 14 - Johnson Recommendations Summary
 - `[ ]` **1d. Intelligence writing**: 3 - Pherson I–IV (scans; need OCR), 3 - BLUF Writing Format, 3 - Intelligence Writing2 PP (Williams and Molzon), 1 - Analytic Titles. Also the Grammar Summaries' Kaiser and Pherson terms (analytic titles, key judgments, topic sentences).
 - `[ ]` **1e. Books, a few chapters at a time**: 14 - Johnson - Analytic Culture in the US IC (173 pp.), 14 - Bodnar - Warning Analysis for the Information Age (208 pp.)
@@ -78,3 +79,16 @@ The files Col. Middleton supplied for Intro to Intelligence, triaged on 2026-11-
 - **Personal or private:** Resume-Diehl (personal contact information), 12 - CENTCOM intel distortions (personal email).
 - **No content to ingest:** Diehl Bibliography (reading list), 12 - The Future of Intelligence Panel (only a link; ingest the transcript if I get one), Poly-Helps (polygraph form), 2 - Rank and Insignia and 8 - Treasury Dept Intel Offices (charts), 10 - Wohlstetter Foreword slides and 2 - Info Model slide (image-only; covered elsewhere).
 - **Duplicates still in the folder:** 11 - Intelligence Def in 7 Points Middleton Nov2025 (older version of Oct2026), 9 - Thomas - Dialectical Versus Empirical Thinking (same as the week 8 copy).
+
+---
+
+## The 9/11 Commission Report (2004)
+
+Attached by me on 2026-11-18 → [[SRC - The 9-11 Commission Report]]. Intro to Intelligence's grammar summaries assign parts of it. Taken in five batches; the endnotes are used only to check attributions.
+
+- `[~]` **9/11-A. The Commission's findings and reforms** (ingested 2026-11-18): Preface, ch. 11 (Foresight and Hindsight), ch. 13 (How to Do It?)
+- `[~]` **9/11-B. Counterterrorism before 9/11** (ingested 2026-11-18): ch. 3 (Counterterrorism Evolves), ch. 8 ("The System Was Blinking Red")
+- `[~]` **9/11-C. The plot and the day** (ingested 2026-11-18): ch. 1, 2, 5, 7. Also re-cite [[September 11 Attacks (2001)]] to the Report directly and check the grammar summaries' claims.
+- `[~]` **9/11-D. U.S. responses** (ingested 2026-11-18): ch. 4, 6, 10
+- `[~]` **9/11-E. Emergency response and strategy** (ingested 2026-11-18): ch. 9, 12, and the summary page
+

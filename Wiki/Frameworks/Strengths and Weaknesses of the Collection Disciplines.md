@@ -9,6 +9,7 @@ courses:
 sources:
   - "[[SRC - Collection Discipline Overview]]"
   - "[[SRC - Themes in US Intelligence, Summary of Texts]]"
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 part_of:
   - "[[Intelligence Collection Disciplines]]"
 drafted_by: Claude (claude-opus-5-5)
@@ -32,6 +33,7 @@ All from ([[SRC - Collection Discipline Overview|Collection Overview]]), by row.
 | **ABI / POL / ADTECH** | Can reveal covert relationships; done remotely; extremely useful for issues such as counterintelligence | Large volume; requires interpretation; expensive; carried out by commercial entities; sources fragile if targets learn of the surveillance; incomplete where internet use is limited; legal limits differ between the U.S. and Europe |
 
 ## How to Use It
+- The course's grammar summaries give largely the same strengths and weaknesses, citing Lowenthal (Lowenthal, L: 143–44/115, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 4]]), and add a contrast: IMINT (now GEOINT) essentially tells you what has happened, while SIGINT generally tells you what may happen (Lowenthal, L: 116, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 4]]).
 - Some traits appear on both sides of the table: SIGINT lists "voluminous material" as a strength and a weakness, and GEOINT is "graphic and compelling" but also "overly compelling" ([[SRC - Collection Discipline Overview|Collection Overview, GEOINT and SIGINT rows]]).
 - For what each discipline is and who manages it, see [[Intelligence Collection Disciplines]].
 

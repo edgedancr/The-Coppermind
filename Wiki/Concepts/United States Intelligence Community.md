@@ -3,7 +3,7 @@ type: concept
 status: draft
 aliases: ["IC", "Intelligence Community"]
 courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]", "[[SRC - IC Organizations, Leadership, Missions, and Functions]]"]
+sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]", "[[SRC - IC Organizations, Leadership, Missions, and Functions]]", "[[SRC - The 9-11 Commission Report]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
@@ -25,10 +25,12 @@ verified_on:
 
 **Functional managers:** the CIA for human intelligence and open-source intelligence, the NSA for signals intelligence, and the NGA for geospatial intelligence ([[Intro to Intelligence Class Notes (Fall 2026)#9/10/26|Intro notes, 9/10/26]], [[Intro to Intelligence Class Notes (Fall 2026)#9/15/26|Intro notes, 9/15/26]]). The course's IC handout adds DIA as the functional manager for measurement and signature intelligence (MASINT) ([[SRC - IC Organizations, Leadership, Missions, and Functions|IC Organizations, table]]). See [[Executive Order 12333]].
 
+**In 2004:** the 9/11 Commission counted 15 agencies or parts of agencies in the IC, then headed by the Director of Central Intelligence ([[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=424|9/11 Report, pp. 407–410]]). See [[Director of National Intelligence]].
 **Oversight:** [[Intelligence Oversight Committees]]. **Culture:** [[Seven Tribes of Intelligence]].
 
 > [!caution] Accuracy check
 > My notes (8/25) say the CIA "reports directly to the president." Since the 2004 intelligence reform, the CIA Director reports to the Director of National Intelligence. Check what was taught.
+> Possibly resolved by [[SRC - The 9-11 Commission Report]], p. 86: before the 2004 reform, the CIA was the only IC element independent of a cabinet department, and "the CIA's number one customer is the president."
 
 ## Why It Matters
 - For each member's mission, and the course's other grouping into program managers, departmental organizations, and military service organizations, see [[Intelligence Community Elements and Missions]] ([[SRC - IC Organizations, Leadership, Missions, and Functions|IC Organizations, table]]).

@@ -13,6 +13,8 @@ sources:
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-13
+changes_since_verified:
+  - "2026-11-17: added the seven points' scope definitions, including technical intelligence, and Lowenthal on policy vs. tactical needs (batch 1a ingest, edits approved by Harrison)"
 ---
 > [!summary]
 > Intro to Intelligence sorted intelligence analysis and reporting into three levels, strategic, operational, and tactical, and by the time horizon and questions each answers ([[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]]). The course later added technical intelligence as a fourth type ([[Intro to Intelligence Class Notes (Fall 2026)#10/13/26|Intro notes, 10/13/26]]), and a guest lecture showed the same three levels at work in police intelligence ([[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]).

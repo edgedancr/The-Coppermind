@@ -1,16 +1,20 @@
 ---
 type: framework
-status: verified
+status: draft
 aliases:
   - EO 12333
 courses:
   - Intro to Intelligence
 sources:
   - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
+  - "[[SRC - The 9-11 Commission Report]]"
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-18
+changes_since_verified:
+  - "2026-11-18: linked 'Church Committee' to the Church and Pike Committees page (batch 9/11-B, approved by Harrison)"
+  - "2026-11-18: added the 9/11 Commission's account of the assassination ban and lethal authority against Bin Ladin (batch 9/11-D)"
 ---
 > [!summary]
 > Executive Order 12333, signed by President Reagan in 1981, defines the powers, restraints, and structure of the modern U.S. Intelligence Community ([[Intro to Intelligence Class Notes (Fall 2026)#9/10/26|Intro notes, 9/10/26]]). Intro to Intelligence taught it in two parts: definitions and roles, and the parameters that restrain intelligence activity ([[Intro to Intelligence Class Notes (Fall 2026)#9/10/26|Intro notes, 9/10/26]]).
@@ -35,9 +39,10 @@ verified_on: 2026-11-18
 **Restraints (Part 2)** ([[Intro to Intelligence Class Notes (Fall 2026)#9/10/26|Intro notes, 9/10/26]])
 1. **Undisclosed participation (2.9):** no IC element may join a U.S. organization without disclosing its affiliation, unless essential to a lawful purpose, approved by the Attorney General, and not meant to influence the organization.
 2. **Human experimentation (2.10):** the subject's informed consent must be documented.
-3. **Assassination ban (2.11):** "No person employed by or acting on behalf of the United States Government shall engage in, or conspire to engage in, assassination." It stems from the 1970s Church Committee revelations.
+3. **Assassination ban (2.11):** "No person employed by or acting on behalf of the United States Government shall engage in, or conspire to engage in, assassination." It stems from the 1970s [[Church and Pike Committees|Church Committee]] revelations.
 4. **Indirect participation (2.12):** no IC element may ask anyone to do what the order forbids.
 5. **Domestic covert action (2.13):** no [[Covert Action]] may be meant to influence U.S. political processes, public opinion, policies, or media.
 
 ## Limits and Cautions
 - Together, 2.12 and 2.13 stop the IC from outsourcing illegal acts to proxies and keep foreign covert influence from feeding back into domestic politics ([[Intro to Intelligence Class Notes (Fall 2026)#9/10/26|Intro notes, 9/10/26]]).
+- The 9/11 Commission reports that the Clinton administration held killing a person posing an imminent threat to be self-defense, "not an assassination" ([[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=149|9/11 Report, p. 132]]); in August 2001 the Deputies Committee took the same view of an armed Predator strike on Bin Ladin ([[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=229|9/11 Report, p. 212]]). See [[Covert Action Authorities Against Bin Ladin]].

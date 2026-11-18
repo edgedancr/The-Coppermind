@@ -1,20 +1,26 @@
 ---
 type: concept
-status: verified
+status: draft
 aliases:
   - Polygraph
 courses:
   - Intro to Intelligence
 sources:
   - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 related:
   - "[[Security Classification]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11
+changes_since_verified:
+  - "2026-11-18: added Lowenthal's account from the Grammar Summaries, with a 'Sources disagree' callout on whether it detects deception (batch 1b proposal, approved by Harrison)"
 ---
 > [!summary]
 > Intro to Intelligence taught that ==the polygraph does not grant clearances==: it is a data-collection tool that helps adjudicators resolve each case fairly and consistently ([[Intro to Intelligence Class Notes (Fall 2026)#9/29/26|Intro notes, 9/29/26]]). The instrument does not detect lies; it detects arousal of the sympathetic nervous system ([[Intro to Intelligence Class Notes (Fall 2026)#9/29/26|Intro notes, 9/29/26]]).
+
+> [!caution] Sources disagree
+> The instrument "does not detect lies," only arousal (Intro notes, 9/29/26) vs. changes in physical responses "typically indicate deception or falsehood," though the polygraph is imperfect and controversial (Lowenthal, L: 203–204, as summarized in Grammar, wk 6).
 
 ## Key Points
 All from ([[Intro to Intelligence Class Notes (Fall 2026)#9/29/26|Intro notes, 9/29/26]]).
@@ -35,6 +41,8 @@ All from ([[Intro to Intelligence Class Notes (Fall 2026)#9/29/26|Intro notes, 9
 3. *Review phase:* a walkthrough of the instrument, the SF-86, and every question that will be asked. This is the time to ask for clarification, so nothing is flagged that isn't really a concern.
 4. *Testing phase:* sensors attached; data collection begins.
 5. *Diagnostic and resolution:* clarifying any irregular responses.
+
+**Lowenthal's account:** a required part of vetting applicants to an Intelligence Community agency; the machine monitors physical responses, such as breathing rate and pulse, to a series of questions (Lowenthal, L: 203–204, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 6]]).
 
 ## Why It Matters
 - Detective Mennen's advice on clearances was the same in spirit: tell the truth about drugs, social media, foreign contacts, and finances ([[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]). See [[Law Enforcement Intelligence Internships]].

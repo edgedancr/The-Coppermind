@@ -1,6 +1,6 @@
 ---
 type: concept
-status: verified
+status: draft
 aliases:
   - Classification Levels
   - Need to Know
@@ -8,9 +8,14 @@ courses:
   - Intro to Intelligence
 sources:
   - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
+  - "[[SRC - The 9-11 Commission Report]]"
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11
+changes_since_verified:
+  - "2026-11-18: added the 9/11 Commission Report (batch 9/11-A, approved by Harrison)"
+  - "2026-11-18: added Lowenthal's level definitions from the Grammar Summaries (batch 1b proposal, approved by Harrison)"
 ---
 > [!summary]
 > Intro to Intelligence taught the U.S. classification levels by how much damage public release could cause, along with control systems and releasability markings that further limit who may see information ([[Intro to Intelligence Class Notes (Fall 2026)#9/10/26|Intro notes, 9/10/26]]). Access within those limits follows the principle of need to know ([[Intro to Intelligence Class Notes (Fall 2026)#10/13/26|Intro notes, 10/13/26]]).
@@ -22,6 +27,8 @@ verified_on: 2026-11-11
 3. **Confidential:** release could cause *some* damage.
 4. **Secret:** release could cause *serious* damage.
 5. **Top Secret:** release could cause ==*exceptionally grave* damage==; people could die.
+
+Lowenthal's definitions match: Confidential information might cause damage to national security if disclosed, Secret serious damage, and Top Secret exceptionally grave damage (Lowenthal, L: 91/78, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 4]]).
 
 The midterm shorthand: serious damage means Secret, grave damage means Top Secret ([[Intro to Intelligence Class Notes (Fall 2026)#10/13/26|Intro notes, 10/13/26]]).
 
@@ -35,7 +42,7 @@ The midterm shorthand: serious damage means Secret, grave damage means Top Secre
 - **Three Eyes:** USA, Australia, and Great Britain.
 - **USA NOFORN:** not releasable outside the U.S. community.
 
-**Need to know:** giving only the information someone needs to do their job, and nothing more ([[Intro to Intelligence Class Notes (Fall 2026)#10/13/26|Intro notes, 10/13/26]]).
+**Need to know:** giving only the information someone needs to do their job, and nothing more ([[Intro to Intelligence Class Notes (Fall 2026)#10/13/26|Intro notes, 10/13/26]]). The 9/11 Commission argued that a need-to-know culture should give way to "need to share," and that security rules nurture overclassification ([[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=434|9/11 Report, p. 417]]). See [[Need to Share]].
 
 ## Why It Matters
 - Access to classified information runs through the clearance process; see [[Polygraph Examination]].

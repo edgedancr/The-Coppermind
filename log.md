@@ -1466,3 +1466,103 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Nicrosil]]
 - **Commit:** `verify: Nicrosil`
+
+### [2026-11-18] ingest | Grammar Summaries, weeks 2–6 (batch 1b)
+
+- **Think:** Ingest Queue batch 1b: the Intro to Intelligence Grammar Summaries, weeks 2–6, plan first; I approved the plan. Week 7 waits for Sections 6, 9, and 10; the Kaiser and Pherson terms wait for batch 1d and the HPSCI Rogers terms for Section 4. Verified pages: proposals only.
+- **Calculate:**
+  - Copied the original unchanged to `Sources/Readings/Intro to Intelligence - Grammar Summaries, Weeks 2-7 (Fall 2026).docx`.
+  - Created (53, all drafts): [[SRC - Grammar Summaries, Weeks 2-7]] (proposed B-3); [[Summary - Grammar Summaries, Weeks 2-7]]; concepts [[Counterintelligence]], [[Ethical and Moral Issues in Intelligence]], [[National Intelligence Strategy]]; case study [[September 11 Attacks (2001)]]; 47 glossary terms, from [[Attribution (Cyber)]] to [[Worst-Case Analysis]] (see the index).
+  - Appended to drafts: [[Intelligence (National Security)]], [[Politicized Intelligence]], [[Consumer-Producer Relations]], [[Intelligence Oversight Committees]], [[Computer Network Attack]], [[Intelligence Satellite Orbits]], [[Strengths and Weaknesses of the Collection Disciplines]], [[Just War Theory]].
+  - Proposed before/after for verified pages (not applied): [[Analytic Confidence]], [[Computer Network Exploitation]], [[Covert Action]], [[Intelligence Cycle]], [[Key Judgments]], [[Priority Creep]], [[Revolution in Military Affairs]], [[Zero-Day Vulnerability]], [[Security Classification]], [[Polygraph Examination]] (with a "Sources disagree" callout).
+  - Proposed 9 typed links (type_of 1, part_of 4, example_of 1, counters 1, applies_to 2; no `related`).
+  - Flags: 7 accuracy checks, 1 gap in the source, 1 whose view; "Possibly resolved" added to the accuracy checks on [[Computer Network Attack]] and [[Intelligence Oversight Committees]].
+  - Ingest Queue: batch 1b marked `[~]`.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: Grammar Summaries wks 2–6 (batch 1b) — 53 drafted, 8 appended, 10 verified-page proposals`
+
+### [2026-11-18] ingest | The 9/11 Commission Report, batch 9/11-A
+
+- **Think:** I attached the 9/11 Commission Report and asked to ingest it. Plan first: five batches, starting with the Preface, ch. 11, and ch. 13; I approved the plan. I also approved two link fixes from batch 1b.
+- **Calculate:**
+  - Copied the original unchanged to `Sources/Readings/National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf`.
+  - Created (14, all drafts): [[SRC - The 9-11 Commission Report]] (proposed B-2); frameworks [[Failures of Imagination, Policy, Capabilities, and Management]], [[Institutionalizing Imagination]]; concepts [[National Counterterrorism Center]], [[Director of National Intelligence]], [[Need to Share]], [[Congressional Oversight of Intelligence]], [[Domestic Intelligence and the FBI]]; glossary [[National Intelligence Estimate]], [[Terrorist Threat Integration Center]], [[Counterterrorist Center (CIA)]], [[Goldwater-Nichols Act]], [[Red Team Analysis]], [[Tearline]].
+  - Appended to drafts: [[September 11 Attacks (2001)]], [[Stovepipe]], [[Metaphors for Intelligence]], [[National Intelligence Program]], [[Under Secretary of Defense for Intelligence]], [[Joint Terrorism Task Force]], [[The Wall (FBI)]], [[National Security Council]], [[United States Intelligence Community]]; links only on [[Intelligence Oversight Committees]], [[Intelligence Reform and Terrorism Prevention Act]], [[Originator Controlled]], [[Competitive Analysis]]; [[SRC - Grammar Summaries, Weeks 2-7]] updated (the Report is now in the vault).
+  - Proposed before/after for verified pages (not applied): [[Covert Action]], [[All-Source Intelligence]], [[Security Classification]], [[Pearl Harbor (1941)]].
+  - Proposed 4 typed links (part_of 2, counters 2; no `related`).
+  - Batch 1b link fixes: [[Insider Threat]] → part_of → [[Counterintelligence]] replaces Counterintelligence → counters → Insider Threat; Maskirovka → type_of → Denial and Deception removed.
+  - Ingest Queue: new section for the Report, five batches; 9/11-A marked `[~]`.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: 9/11 Commission Report batch A (preface, ch. 11, 13) — 14 drafted, 13 appended, 4 verified-page proposals`
+
+### [2026-11-18] ingest | The 9/11 Commission Report, batch 9/11-B
+
+- **Think:** I approved all the edits proposed in batch 9/11-A, and the next batch. The agent read that as approval of the four verified-page proposals and the four typed links, and as permission to draft batch 9/11-B directly (ch. 3 and ch. 8) without a separate plan.
+- **Calculate:**
+  - Applied the batch 9/11-A verified-page edits: [[Covert Action]], [[All-Source Intelligence]], [[Security Classification]], [[Pearl Harbor (1941)]]; each set back to `draft` with a `changes_since_verified` note (§7 rule 8).
+  - Created (16, all drafts): concepts [[Foreign Intelligence Surveillance Act]], [[FBI Counterterrorism Before September 11]]; case studies [[Summer of Threat (2001)]], [[Late Leads Before September 11 (2001)]]; glossary [[President's Daily Brief]], [[Office of Origin]], [[Phoenix Memo]], [[Zone Defense and Man-to-Man]], [[Layered Aviation Security]], [[TIPOFF Watchlist]], [[Church and Pike Committees]], [[Hughes-Ryan Amendment]], [[Plausible Deniability]], [[Iran-Contra Affair]], [[Counterterrorism Security Group]], [[Office of Strategic Services]].
+  - Appended to drafts: [[September 11 Attacks (2001)]] (What Went Wrong re-cited to the Report directly; the PDB title corrected to the Report's), [[The Wall (FBI)]], [[Joint Terrorism Task Force]], [[National Security Act of 1947]] (re-cited directly), [[Counterterrorist Center (CIA)]], [[Counterintelligence]], [[Director of National Intelligence]], [[United States Intelligence Community]], [[Intelligence Oversight Committees]], [[Congressional Oversight of Intelligence]], [[Domestic Intelligence and the FBI]], [[Current vs. Long-Term Intelligence]], [[Goldwater-Nichols Act]], [[Foreign Intelligence Surveillance Court]]; [[Traffic Analysis]] (a draft under re-review) also given the `changes_since_verified` lines it was missing from batch 1a.
+  - Proposed before/after for a verified page (not applied): [[Executive Order 12333]].
+  - Proposed 8 typed links (part_of 3, example_of 2, causes 1, applies_to 1, and FISC → part_of → FISA; no `related`).
+  - Flags: 1 "Sources disagree" on [[Intelligence Oversight Committees]]; "Possibly resolved" added to 2 accuracy checks ([[Intelligence Oversight Committees]], [[United States Intelligence Community]]).
+  - Ingest Queue: 9/11-B marked `[~]`.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: 9/11 Commission Report batch B (ch. 3, 8) — 16 drafted, 15 appended, 4 verified-page edits applied, 1 proposal`
+
+### [2026-11-18] ingest | The 9/11 Commission Report, batch 9/11-C
+
+- **Think:** I approved batch 9/11-B's proposals and asked the agent to move on to batch C (ch. 1, 2, 5, 7), drafting directly as with batch B.
+- **Calculate:**
+  - Applied the batch 9/11-B verified-page edit: [[Executive Order 12333]] (link to [[Church and Pike Committees]]); set back to `draft` with a `changes_since_verified` note.
+  - Created (16, all drafts): concepts [[Al-Qaeda]], [[Al-Qaeda Financing]], [[Planes Operation]]; framework [[Requirements for a Complex Terrorist Operation]]; case studies [[Alleged Atta-Ani Meeting in Prague (2001)]], [[East Africa Embassy Bombings (1998)]], [[Air Defense on September 11 (2001)]]; glossary [[World Islamic Front Fatwa]], [[Far Enemy]], [[Golden Chain]], [[Terrorist Entrepreneur]], [[Hamburg Cell]], [[Muscle Hijackers]], [[Jemaah Islamiyah]], [[Weapons Free]], [[North American Aerospace Defense Command]].
+  - Appended to drafts: [[September 11 Attacks (2001)]] (summary and What Happened re-cited to the Report; the shootdown bullet moved to [[Air Defense on September 11 (2001)]]; the ticket dates corrected to "between August 25 and September 5"), [[Hawala]] (re-cited directly), [[Late Leads Before September 11 (2001)]], [[Economic Intelligence]], [[Capabilities vs. Intentions]]; the source card's reliability notes now carry the Commission's caution on detainee reports.
+  - No verified-page proposals.
+  - Proposed 5 typed links (part_of 5; no `related`).
+  - Flags: 1 accuracy check on [[September 11 Attacks (2001)]] (the Report gives United 93 two destinations); 1 "Sources disagree" on [[Air Defense on September 11 (2001)]] (the basis for the shootdown order).
+  - Ingest Queue: 9/11-C marked `[~]`.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: 9/11 Commission Report batch C (ch. 1, 2, 5, 7) — 16 drafted, 6 appended, 1 verified-page edit applied`
+
+### [2026-11-18] ingest | The 9/11 Commission Report, batch 9/11-D
+
+- **Think:** I approved batch 9/11-C and asked the agent to move on to batch D (ch. 4, 6, 10), drafting directly.
+- **Calculate:**
+  - Created (14, all drafts): concept [[Covert Action Authorities Against Bin Ladin]]; case studies [[Tarnak Farms Capture Plan (1998)]], [[August 1998 Missile Strikes]], [[USS Cole Bombing (2000)]], [[Millennium Alert (1999–2000)]], [[Responses at Home After September 11 (2001)]]; glossary [[Delenda Plan]], [[The Plan (CIA)]], [[Memorandum of Notification]], [[Actionable Intelligence]], [[Small Group]], [[Predator Drone]], [[Blue Sky Memo]], [[Northern Alliance]].
+  - Appended: [[September 11 Attacks (2001)]] (the Cole and U.S.-approaches bullets re-cited to the Report; the case study now cites the grammar summaries only in Lessons); [[Executive Order 12333]] (a draft under re-review: the Commission's account of the assassination ban, with a second `changes_since_verified` line).
+  - Repaired: the `changes_since_verified` note on [[Executive Order 12333]] reached the vault with unescaped inner quotes (invalid YAML) in the batch 9/11-B commit; rewritten with single quotes.
+  - Proposed 2 typed links (applies_to 1, supports 1).
+  - Flags: none new.
+  - Ingest Queue: 9/11-D marked `[~]`.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: 9/11 Commission Report batch D (ch. 4, 6, 10) — 14 drafted, 2 appended, 1 YAML repair`
+
+### [2026-11-18] ingest | Approved edits to verified pages (batches 1a and 1b)
+
+- **Think:** I approved the ten verified-page proposals from batch 1b and adding the missing `changes_since_verified` lines to five batch 1a pages.
+- **Calculate:**
+  - Batch 1b proposals applied, each citing [[SRC - Grammar Summaries, Weeks 2-7]] and adding it to `sources`: [[Analytic Confidence]] (Lowenthal's three confidence levels), [[Computer Network Exploitation]] (Lowenthal's definition and the CNE-or-CNA choice; a stray space before the callout removed), [[Covert Action]] (Lowenthal on its ethics), [[Intelligence Cycle]] (the requirements stage, "processing and exploitation"), [[Key Judgments]] (the central conclusions of an NIE), [[Priority Creep]] (within the NIPF), [[Revolution in Military Affairs]], [[Zero-Day Vulnerability]] (the NSA's use of them), [[Security Classification]] (Lowenthal's level definitions), [[Polygraph Examination]] (Lowenthal's account, with a "Sources disagree" callout).
+  - The original before/after wording of these ten proposals was not saved outside the batch 1b chat report, so the agent rebuilt each from the same Grammar Summaries entries; the wording may differ slightly from what was shown then.
+  - All ten set to `status: draft`, `verified_on` kept, one `changes_since_verified` line each.
+  - Added the missing `changes_since_verified` lines (batch 1a edits of 2026-11-17) to [[SEE-It Framework]], [[Mirror Imaging]], [[Denial and Deception]], [[Politicized Intelligence]] (plus a line for its batch 1b append), and [[Levels of Intelligence]]. No content changed.
+- **Verify:**
+  - Pending my review: re-reviews, listed changes only
+- **Commit:** `edit: apply 10 batch-1b verified-page proposals; add changes_since_verified to 5 batch-1a pages`
+
+### [2026-11-18] ingest | The 9/11 Commission Report, batch 9/11-E
+
+- **Think:** I approved batch 9/11-D, the Sunni, Shia, and Caliphate glossary terms, and person pages for Bin Ladin and KSM, and asked the agent to do the last batch (ch. 9, ch. 12, and a summary of the whole report), drafting directly.
+- **Calculate:**
+  - Created (17, all drafts): case study [[Emergency Response on September 11 (2001)]]; framework [[Global Strategy Against Islamist Terrorism]]; concepts [[Terrorist Sanctuary]], [[Struggle of Ideas]], [[Terrorist Travel]]; people [[Usama Bin Ladin]], [[Khalid Sheikh Mohammed]]; summary [[Summary - The 9-11 Commission Report]]; glossary [[Incident Command System]], [[Unified Command]], [[Private-Sector Preparedness]], [[No-Fly List]], [[Article 3 of the Geneva Conventions]], [[Risk-Based Homeland Security Assistance]], [[Sunni]], [[Shia]], [[Caliphate]].
+  - Appended to drafts: [[Al-Qaeda Financing]] (ch. 12 on following the money); [[Need to Share]] (privacy in sharing guidelines); [[Requirements for a Complex Terrorist Operation]] (link to sanctuaries); [[Al-Qaeda]], [[Planes Operation]], and [[Terrorist Entrepreneur]] (links to the new person pages); "Used in" lines on [[Golden Chain]], [[World Islamic Front Fatwa]], [[Far Enemy]], [[Failed State]], [[TIPOFF Watchlist]], and [[Layered Aviation Security]].
+  - Source card: chapters ingested updated, the batch 9/11-C note on the pending Islam terms resolved, and batch 9/11-E's skipped material listed.
+  - Proposed 8 typed links (part_of 4, counters 1, example_of 1, developed_by 2; no `related`).
+  - Flags: 1 "Sources disagree" on [[Polygraph Examination]] (above); 1 unsourced background on [[Usama Bin Ladin]] (his death in 2011, after the Report); 1 whose view on [[Khalid Sheikh Mohammed]] (detainee statements).
+  - Ingest Queue: 9/11-E marked `[~]`. All five 9/11 batches are now drafted.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: 9/11 Commission Report batch E (ch. 9, 12, summary) — 17 drafted, 12 appended`
