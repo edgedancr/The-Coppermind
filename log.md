@@ -1155,3 +1155,52 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Ages of U.S. Intelligence]]
 - **Commit:** `verify: Ages of U.S. Intelligence`
+
+### [2026-11-18] schema | Verify animation
+- **Think:** You asked for a little animation when verifying a page: the page going away with the Dashboard's sparks, then a transition to the next page.
+- **Calculate:** Nicrosil v1.5.0 plays a check stamp with a ring and a burst of copper and teal sparks over the verified page while it slides up and away, then slides the next page in from the right with a short "Next: name · N left" note. It runs after the verify has been saved, so it never delays or changes what is written, and a new setting (on by default) turns it off. It is skipped under reduced motion. Tested the look in a real browser outside Obsidian; it has not run inside Obsidian.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `styles.css`, `manifest.json`); [[Nicrosil]] guide (review session, settings, version 1.5.0, history).
+- **Verify:** pending. Reload Nicrosil, verify a draft, and watch the animation.
+- **Commit:** `nicrosil 1.5.0: animation when verifying a page`
+
+### [2026-11-18] verify | AI in Intelligence Production
+
+- **Verify:**
+  - Approved: [[AI in Intelligence Production]]
+- **Commit:** `verify: AI in Intelligence Production`
+
+### [2026-11-18] verify | AI in Warfighting
+
+- **Verify:**
+  - Approved: [[AI in Warfighting]]
+- **Commit:** `verify: AI in Warfighting`
+
+### [2026-11-18] verify | Analysis of Competing Hypotheses
+
+- **Verify:**
+  - Approved: [[Analysis of Competing Hypotheses]]
+- **Commit:** `verify: Analysis of Competing Hypotheses`
+
+### [2026-11-18] schema | Nicrosil 1.6.0 ambience
+
+- **Think:** The vault felt still outside the verify animation. I asked for glow, sparkle and motion in more places, without the streak counter or time-of-day tint.
+- **Calculate:** Nothing to compute. All animations are CSS or short script timers, and a setting plus reduced-motion turns them off.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (1.6.0): title auras, flag callout glow, link glow, page fade-in, map sparks/ripple/amber pulse, hierarchy amber outline, relations draw-in, Dashboard spotlight and milestone burst, queue sheen/slide/badge pop, search stagger, status-bar glow, Ambient animations setting
+  - [[Nicrosil]]: new Ambience section, settings entry, version 1.6.0 and history line
+- **Verify:**
+  - Guide set back to draft until I verify it
+  - Reload Nicrosil, then try a verify, the map, and the Dashboard
+- **Commit:** `schema: Nicrosil 1.6.0 ambience`
+
+### [2026-11-18] verify | Architecture of Worldview
+
+- **Verify:**
+  - Approved: [[Architecture of Worldview]]
+- **Commit:** `verify: Architecture of Worldview`
+
+### [2026-11-18] verify | Bach Faucet
+
+- **Verify:**
+  - Approved: [[Bach Faucet]]
+- **Commit:** `verify: Bach Faucet`

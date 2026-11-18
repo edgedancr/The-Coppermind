@@ -58,7 +58,7 @@ const FLAG_KINDS = {
   warning: { label: "Warning", plural: "Warnings (unsourced)", short: "W" },
 };
 const STALE_DAYS = 14;
-const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean" };
+const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, ambient: true };
 const SORTS = { clean: "Clean pages first", flagged: "Flagged pages first", type: "By page type", az: "A to Z" };
 
 /* ---------- pure helpers (tested outside Obsidian) ---------- */
@@ -339,13 +339,20 @@ function progressBar(parent, done, total) {
   parent.createDiv({ cls: "cm-progress-label", text: `${done} of ${total} pages verified (${pct}%)` });
 }
 
-function flagBadges(parent, flags) {
+const BADGE_STATE = { seen: new Set(), primed: false };
+
+function flagBadges(parent, flags, key) {
   const counts = {};
   flags.forEach((f) => { counts[f.kind] = (counts[f.kind] || 0) + 1; });
   const wrap = parent.createSpan({ cls: "cm-badges" });
   Object.keys(FLAG_KINDS).forEach((k) => {
     if (!counts[k]) return;
     const b = wrap.createSpan({ cls: `cm-badge cm-badge-${k}`, text: `${FLAG_KINDS[k].short}${counts[k] > 1 ? counts[k] : ""}` });
+    if (key) {
+      const bk = `${key}|${k}|${counts[k]}`;
+      if (BADGE_STATE.primed && !BADGE_STATE.seen.has(bk)) b.addClass("is-new");
+      BADGE_STATE.seen.add(bk);
+    }
     b.setAttr("aria-label", `${counts[k]} ${counts[k] > 1 ? FLAG_KINDS[k].plural.toLowerCase() : FLAG_KINDS[k].label.toLowerCase()}`);
   });
   if (!flags.length) wrap.createSpan({ cls: "cm-badge cm-badge-clean", text: "✓" }).setAttr("aria-label", "No open flags");
@@ -516,6 +523,8 @@ class QueueView extends ItemView {
   render() {
     const p = this.plugin;
     const root = this.containerEl.children[1];
+    const before = new Map();
+    root.querySelectorAll(".cm-row[data-path]").forEach((r) => before.set(r.getAttribute("data-path"), r.getBoundingClientRect().top));
     root.empty();
     root.addClass("cm-queue");
 
@@ -602,7 +611,8 @@ class QueueView extends ItemView {
         const nameEl = row.createDiv({ cls: "cm-row-name", text: item.name });
         if (p.settings.sort !== "type") nameEl.createSpan({ cls: "cm-row-group", text: item.group });
         changeBadge(row, item.changes);
-        flagBadges(row, item.flags);
+        flagBadges(row, item.flags, item.path);
+        row.setAttr("data-path", item.path);
         row.addEventListener("click", () => p.openFile(item.path));
       });
     };
@@ -616,6 +626,19 @@ class QueueView extends ItemView {
         const row = det.createDiv({ cls: "cm-row" });
         row.createDiv({ cls: "cm-row-name", text: item.name });
         row.addEventListener("click", () => p.openFile(item.path));
+      });
+    }
+    BADGE_STATE.primed = true;
+    // rows that moved slide from their old place to their new one
+    if (before.size && p.settings.ambient !== false && !prefersReduced()) {
+      root.querySelectorAll(".cm-row[data-path]").forEach((r) => {
+        const old = before.get(r.getAttribute("data-path"));
+        if (old === undefined) return;
+        const d = old - r.getBoundingClientRect().top;
+        if (Math.abs(d) < 3) return;
+        r.style.transition = "none";
+        r.style.transform = `translateY(${d}px)`;
+        requestAnimationFrame(() => requestAnimationFrame(() => { r.style.transition = "transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1)"; r.style.transform = ""; }));
       });
     }
   }
@@ -760,6 +783,7 @@ class RelationsView extends ItemView {
     const cy = H / 2;
     const wrap = root.createDiv({ cls: "cm-rel-map" });
     const svg = svgEl(wrap, "svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img", "aria-label": `Relations map for ${file.basename}` });
+    if (this.lastDrawn !== file.path) { svg.addClass("cm-rel-anim"); this.lastDrawn = file.path; } // the lines draw themselves in when a different page opens
     const defs = svgEl(svg, "defs");
     for (const [t, info] of Object.entries(REL_TYPES)) {
       const m = svgEl(defs, "marker", { id: `cm-arrow-${t}`, viewBox: "0 0 8 8", refX: 7, refY: 4, markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse" });
@@ -774,8 +798,8 @@ class RelationsView extends ItemView {
         nd.types.forEach((t, k) => {
           const info = REL_TYPES[t];
           const off = (k - (nd.types.length - 1) / 2) * 4;
-          const attrs = { fill: "none", stroke: info.color, "stroke-width": 1.6, "stroke-opacity": 0.9, "marker-end": `url(#cm-arrow-${t})` };
-          if (info.dash) attrs["stroke-dasharray"] = info.dash;
+          const attrs = { fill: "none", stroke: info.color, "stroke-width": 1.6, "stroke-opacity": 0.9, "marker-end": `url(#cm-arrow-${t})`, pathLength: 1, class: info.dash ? "cm-rel-edge-dash" : "cm-rel-edge" };
+          if (info.dash) { attrs["stroke-dasharray"] = info.dash; attrs.pathLength = undefined; delete attrs.pathLength; }
           if (side === "out") svgEl(svg, "path", { ...attrs, d: edgePath(X2 + CW, cy + off, X3 - 1, y + off) });
           else svgEl(svg, "path", { ...attrs, d: edgePath(X1 + NW, y + off, X2 - 1, cy + off) });
         });
@@ -876,6 +900,7 @@ function buildWikiGraph(app) {
       path: f.path, name: f.basename, type: String(fm.type || ""),
       status: fm.status === "verified" ? "verified" : fm.status === "draft" ? "draft" : "",
       courses: [].concat(fm.courses || []).map(String), out: [], in: [], deg: 0,
+      changed: [].concat(fm.changes_since_verified || []).some((x) => String(x).trim()),
     });
   }
   const edges = [];
@@ -1149,7 +1174,7 @@ class WikiMapView extends ItemView {
     const hit = (n) => !!q && nm(n.p).toLowerCase().includes(q);
     items.forEach((n) => {
       const node = n.node || {};
-      const grp = svgEl(cards, "g", { class: "cm-wt-card" + (hit(n) ? " is-match" : ""), transform: `translate(${n.x},${n.y - CH / 2})` });
+      const grp = svgEl(cards, "g", { class: "cm-wt-card" + (hit(n) ? " is-match" : "") + (node.changed ? " is-changed" : ""), transform: `translate(${n.x},${n.y - CH / 2})` });
       n.el = grp;
       svgEl(grp, "rect", { width: n.w, height: CH, rx: 8, class: `cm-wt-box cm-wt-box-${node.status || "none"}` });
       svgEl(grp, "circle", { cx: 13, cy: CH / 2, r: 5, fill: pageColor(node.type), class: "cm-wt-pdot" });
@@ -1280,7 +1305,14 @@ class WikiMapView extends ItemView {
     const nodeEls = new Map();
     for (const id of ids) {
       const n = g.nodes.get(id), p = pos.get(id);
-      const grp = svgEl(world, "g", { class: "cm-wm-node" + (n.deg >= 3 ? " is-hub" : ""), transform: `translate(${p.x},${p.y})`, tabindex: 0, role: "button" });
+      const grp = svgEl(world, "g", { class: "cm-wm-node" + (n.deg >= 3 ? " is-hub" : "") + (n.changed ? " is-changed" : ""), transform: `translate(${p.x},${p.y})`, tabindex: 0, role: "button" });
+      if (n.changed) svgEl(grp, "circle", { r: radius(n), class: "cm-wm-pulse" });
+      if (n.status === "verified") {
+        for (let s = 0; s < 2; s++) {
+          const sp = svgEl(grp, "circle", { cx: (s ? 1 : -1) * radius(n) * 0.45, cy: -radius(n) * 0.6, r: 1.5, class: "cm-wm-spark" });
+          sp.style.animationDelay = `-${(((ids.indexOf(id) * 7 + s * 13) % 30) / 10).toFixed(1)}s`;
+        }
+      }
       svgEl(grp, "circle", { r: radius(n), fill: pageColor(n.type), class: `cm-wm-dot cm-wm-dot-${n.status || "none"}` });
       svgEl(grp, "text", { x: radius(n) + 3, y: 3.5, class: "cm-wm-label" }, clip(n.name, 26));
       svgEl(grp, "title", {}, `${n.name} (${n.type || "page"}, ${n.status || "no status"})`);
@@ -1307,9 +1339,9 @@ class WikiMapView extends ItemView {
       grp.addEventListener("click", (ev) => {
         ev.stopPropagation();
         if (suppress) { suppress = false; return; }
-        if (ev.ctrlKey || ev.metaKey) this.go(id, true); else { st.focus = st.focus === id ? null : id; apply(); if (st.focus) glideNode(id); }
+        if (ev.ctrlKey || ev.metaKey) this.go(id, true); else { st.focus = st.focus === id ? null : id; apply(); if (st.focus) { glideNode(id); ripple(id); } }
       });
-      grp.addEventListener("keydown", (ev) => { if (ev.key === "Enter") { st.focus = st.focus === id ? null : id; apply(); if (st.focus) glideNode(id); } });
+      grp.addEventListener("keydown", (ev) => { if (ev.key === "Enter") { st.focus = st.focus === id ? null : id; apply(); if (st.focus) { glideNode(id); ripple(id); } } });
       nodeEls.set(id, grp);
     }
     const draw = () => {
@@ -1336,6 +1368,20 @@ class WikiMapView extends ItemView {
         if ((e.from !== id && e.to !== id) || ln.hasClass("is-hidden")) return;
         ln.addClass("is-hl"); flow.addClass("is-hl");
         nodeEls.get(e.from).addClass("is-hl"); nodeEls.get(e.to).addClass("is-hl");
+      });
+    };
+    // a ring spreads out from a focused dot, and its neighbors flash one after another
+    const ripple = (id) => {
+      if (reduce || this.plugin.settings.ambient === false) return;
+      const q = pos.get(id);
+      const ring = svgEl(world, "circle", { cx: q.x, cy: q.y, r: 6, class: "cm-wm-ripple" });
+      setTimeout(() => ring.remove(), 1100);
+      const nb = new Set();
+      g.edges.forEach((e) => { if (e.from === id) nb.add(e.to); else if (e.to === id) nb.add(e.from); });
+      [...nb].forEach((nid, i) => {
+        const el2 = nodeEls.get(nid);
+        if (!el2) return;
+        setTimeout(() => { el2.addClass("is-ping"); setTimeout(() => el2.removeClass("is-ping"), 700); }, 160 + i * 90);
       });
     };
     // smooth camera moves
@@ -1478,6 +1524,17 @@ class ReviewSettings extends PluginSettingTab {
       .setDesc("Keeps a review session moving without going back to the queue.")
       .addToggle((t) => t.setValue(this.plugin.settings.autoAdvance).onChange(async (v) => {
         this.plugin.settings.autoAdvance = v; await this.plugin.persist();
+      }));
+    new Setting(el).setName("Play an animation when I verify a page")
+      .setDesc("A check stamp and a burst of sparks, then the next page slides in. It is skipped if your computer is set to reduce motion.")
+      .addToggle((t) => t.setValue(this.plugin.settings.celebrate !== false).onChange(async (v) => {
+        this.plugin.settings.celebrate = v; await this.plugin.persist();
+      }));
+    new Setting(el).setName("Ambient animations")
+      .setDesc("Glowing titles, breathing flag callouts, sparkles on the map, page fade-ins, and a slowly drifting background. Turn off for a still, quiet vault. They are also off if your computer is set to reduce motion.")
+      .addToggle((t) => t.setValue(this.plugin.settings.ambient !== false).onChange(async (v) => {
+        this.plugin.settings.ambient = v; await this.plugin.persist();
+        document.body.classList.toggle("cm-calm", !v);
       }));
     new Setting(el).setName("Queue order")
       .setDesc("Clean pages first gives quick wins; flagged first tackles the hard ones while you're fresh.")
@@ -1871,10 +1928,12 @@ class SearchBlock extends MarkdownRenderChild {
     if (!this.cards || this.shown >= this.hits.length) return;
     const tokens = tokenize(this.query);
     const end = Math.min(this.shown + SEARCH_PAGE, this.hits.length);
+    const first = this.shown;
     for (let i = this.shown; i < end; i++) {
       const h = this.hits[i];
       const e = h.entry;
       const card = this.cards.createDiv({ cls: "cm-search-card" + (i === this.active ? " is-active" : "") });
+      card.style.setProperty("--i", String(Math.min(i - first, 12)));
       card.setAttr("role", "option");
       const top = card.createDiv({ cls: "cm-search-top" });
       const title = top.createSpan({ cls: "cm-search-title" });
@@ -2142,6 +2201,14 @@ module.exports = class Nicrosil extends Plugin {
     this.addSettingTab(new ReviewSettings(this.app, this));
     this.registerCommands();
 
+    document.body.classList.toggle("cm-calm", this.settings.ambient === false);
+    this.registerDomEvent(document, "pointermove", (e) => {
+      const c = e.target && e.target.closest ? e.target.closest(".cm-navcard, .cm-tile, .cm-gcard") : null;
+      if (!c) return;
+      const r = c.getBoundingClientRect();
+      c.style.setProperty("--mx", `${e.clientX - r.left}px`);
+      c.style.setProperty("--my", `${e.clientY - r.top}px`);
+    });
     this.statusEl = this.addStatusBarItem();
     this.statusEl.addClass("cm-status", "mod-clickable");
     this.statusEl.setAttr("aria-label", "Open the review queue");
@@ -2190,6 +2257,7 @@ module.exports = class Nicrosil extends Plugin {
       if (file) this.currentPath = file.path;
       if (file && this.isDashboard(file)) this.startDashIntro();
       this.syncDashboardLeaves(true);
+      if (file && !this.isDashboard(file)) this.pageIn();
       this.renderViews();
     }));
     this.registerEvent(this.app.workspace.on("active-leaf-change", (leaf) => {
@@ -2219,7 +2287,8 @@ module.exports = class Nicrosil extends Plugin {
     this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view) l.view.__cmSchemaBtn = null; });
     document.querySelectorAll(".cm-resolve-btn, .cm-ribbon-logo").forEach((e) => e.remove());
     document.body.classList.remove("cm-on-dashboard");
-    document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open").forEach((e) => e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open"));
+    document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"));
+    document.body.classList.remove("cm-calm");
     document.querySelectorAll(".cm-propstrip").forEach((e) => e.remove());
     this.stripObservers.forEach((o) => o.disconnect());
     this.stripObservers.clear();
@@ -2346,6 +2415,12 @@ module.exports = class Nicrosil extends Plugin {
   renderStatus() {
     if (!this.statusEl) return;
     const done = this.items.filter((i) => i.status === "verified").length;
+    if (this.lastDone !== undefined && done > this.lastDone && this.settings.ambient !== false && !prefersReduced()) {
+      this.statusEl.addClass("cm-status-up");
+      clearTimeout(this.statusUpTimer);
+      this.statusUpTimer = setTimeout(() => this.statusEl.removeClass("cm-status-up"), 1500);
+    }
+    this.lastDone = done;
     this.statusEl.empty();
     const icon = this.statusEl.createSpan({ cls: "cm-status-icon" });
     setIcon(icon, "badge-check");
@@ -2437,7 +2512,8 @@ module.exports = class Nicrosil extends Plugin {
     const rbody = rc.createDiv({ cls: "cm-ring-body" });
     const pct = all.length ? verified / all.length : 0;
     const R = 46, C = 2 * Math.PI * R;
-    const rsvg = svgEl(rbody, "svg", { viewBox: "0 0 120 120", class: "cm-ring", role: "img", "aria-label": `${Math.round(pct * 100)} percent of pages verified` });
+    const rwrap = rbody.createDiv({ cls: "cm-ring-wrap" });
+    const rsvg = svgEl(rwrap, "svg", { viewBox: "0 0 120 120", class: "cm-ring", role: "img", "aria-label": `${Math.round(pct * 100)} percent of pages verified` });
     svgEl(rsvg, "circle", { cx: 60, cy: 60, r: R, class: "cm-ring-track" });
     // the filled part is drawn as small colored pieces that run from copper to green, so it needs no gradient reference
     const SEG = 72, segLen = C / SEG;
@@ -2457,6 +2533,16 @@ module.exports = class Nicrosil extends Plugin {
     }
     svgEl(rsvg, "text", { x: 60, y: 62, class: "cm-ring-pct" }, `${Math.round(pct * 100)}%`);
     svgEl(rsvg, "text", { x: 60, y: 77, class: "cm-ring-cap" }, "verified");
+    // a short burst of sparks each time the ring passes 25, 50, 75 or 100 percent
+    if (all.length) {
+      const ms = verified >= all.length ? 100 : Math.floor((pct * 100) / 25) * 25;
+      const prev = this.settings.milestone;
+      if (prev === undefined || ms !== prev) {
+        this.settings.milestone = ms;
+        this.persist();
+        if (prev !== undefined && ms > prev && this.settings.ambient !== false && !prefersReduced()) setTimeout(() => this.sparkBurst(rwrap, ms === 100 ? 80 : 36, ms === 100 ? 210 : 130), 650);
+      }
+    }
     const rside = rbody.createDiv({ cls: "cm-ring-side" });
     rside.createDiv({ cls: "cm-ring-big", text: `${verified} of ${all.length}` });
     rside.createDiv({ cls: "cm-sub", text: "pages verified" });
@@ -2621,6 +2707,7 @@ module.exports = class Nicrosil extends Plugin {
     entries.forEach((e, ei) => {
       const row = el.createDiv({ cls: "cm-act-row" });
       row.style.setProperty("--i", String(12 + ei));
+      if (ei === 0) row.addClass("cm-act-new");
       row.setAttr("role", "button");
       row.setAttr("tabindex", "0");
       setIcon(row.createSpan({ cls: `cm-act-icon cm-act-${e.rejected ? "rejected" : e.op}` }), e.rejected ? "x" : (icons[e.op] || "circle"));
@@ -2670,6 +2757,9 @@ module.exports = class Nicrosil extends Plugin {
       view.containerEl.classList.toggle("cm-dashboard-leaf", isDash);
       view.containerEl.classList.toggle("cm-log-leaf", isLog);
       view.containerEl.classList.toggle("cm-noprops-leaf", isDash || isLog || path === INDEX_PATH);
+      const pageStatus = view.file ? ((this.app.metadataCache.getFileCache(view.file) || {}).frontmatter || {}).status : "";
+      view.containerEl.classList.toggle("cm-st-verified", pageStatus === "verified");
+      view.containerEl.classList.toggle("cm-st-draft", pageStatus === "draft");
       const useStrip = !!view.file && !isDash && !isLog && path !== INDEX_PATH;
       view.containerEl.classList.toggle("cm-strip-leaf", useStrip);
       if (this.stripPaths.get(view) !== path) {
@@ -2932,7 +3022,12 @@ module.exports = class Nicrosil extends Plugin {
           delete this.resolved[file.path];
           await this.persist();
           new Notice(`Verified “${file.basename}”.` + (indexed || !file.path.includes("/") ? "" : " It wasn't in index.md; add it by hand."), 5000);
+          const nxt = nextAfter(order, file.path);
+          const fx = this.settings.celebrate !== false && !prefersReduced() ? await this.playVerifyOut(file, order.length > 1 ? "Verified" : "All drafts verified") : null;
           if (this.settings.autoAdvance) await this.openNext(file.path, order);
+          if (fx) this.playVerifyIn(fx, this.settings.autoAdvance && nxt ? `Next: ${nxt.name} · ${Math.max(0, order.length - 1)} left` : "");
+          else this.vfBusy = false;
+          if (!this.settings.autoAdvance) setTimeout(() => this.pulseStrip(file), 600);
         } catch (e) {
           console.error("Nicrosil: verify failed", e);
           new Notice(`Verify failed: ${e.message}. Check status, index.md and log.md.`, 10000);
@@ -2940,6 +3035,96 @@ module.exports = class Nicrosil extends Plugin {
         this.scheduleRefresh();
       },
     }).open();
+  }
+
+  /** A ring and a burst of sparks over an element (used for the Dashboard's milestone). */
+  sparkBurst(host, n, spread) {
+    if (!host || !host.isConnected) return;
+    const ov = host.createDiv({ cls: "cm-vf-overlay cm-ring-burst" });
+    ov.setAttr("aria-hidden", "true");
+    ov.createDiv({ cls: "cm-vf-ring" });
+    const cols = ["#d98a4a", "#86d2c1", "#e0a846", "#5fae9e"];
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2 + (i % 3) * 0.19;
+      const d = spread * 0.45 + ((i * 53) % Math.round(spread * 0.9));
+      const p = ov.createSpan({ cls: "cm-vf-p" });
+      p.style.setProperty("--dx", `${Math.round(Math.cos(a) * d)}px`);
+      p.style.setProperty("--dy", `${Math.round(Math.sin(a) * d)}px`);
+      p.style.setProperty("--s", `${3 + (i % 4)}px`);
+      p.style.setProperty("--c", cols[i % 4]);
+      p.style.animationDelay = `${(i % 6) * 24}ms`;
+    }
+    setTimeout(() => ov.remove(), 1600);
+  }
+
+  /**
+   * The verify animation: the page is stamped with a check, bursts into copper and teal sparks, and slides
+   * away. Returns what playVerifyIn needs to bring the next page in.
+   */
+  /** A newly opened page fades in with a slight rise. */
+  pageIn() {
+    if (this.vfBusy || this.settings.ambient === false || prefersReduced()) return;
+    const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+    const c = view && view.containerEl && view.containerEl.querySelector(".view-content");
+    if (!c) return;
+    c.removeClass("cm-page-in");
+    void c.offsetWidth;
+    c.addClass("cm-page-in");
+    setTimeout(() => c.removeClass("cm-page-in"), 450);
+  }
+
+  /** The properties strip glows once on a page that was just verified. */
+  pulseStrip(file) {
+    const view = this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).find((v) => v && v.file && v.file.path === file.path);
+    const strip = view && view.containerEl && view.containerEl.querySelector(".cm-propstrip");
+    if (!strip) return;
+    strip.addClass("cm-strip-pulse");
+    setTimeout(() => strip.removeClass("cm-strip-pulse"), 2200);
+  }
+
+  playVerifyOut(file, label) {
+    this.vfBusy = true;
+    const view = this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).find((v) => v && v.file && v.file.path === file.path);
+    const host = view && view.containerEl;
+    const content = host && host.querySelector(".view-content");
+    if (!content) { this.vfBusy = false; return Promise.resolve(null); }
+    host.addClass("cm-vf-host");
+    const ov = host.createDiv({ cls: "cm-vf-overlay" });
+    ov.setAttr("aria-hidden", "true");
+    ov.createDiv({ cls: "cm-vf-ring" });
+    setIcon(ov.createDiv({ cls: "cm-vf-badge" }), "check");
+    ov.createDiv({ cls: "cm-vf-label", text: label });
+    const cols = ["#d98a4a", "#86d2c1", "#e0a846", "#5fae9e"];
+    for (let i = 0; i < 30; i++) {
+      const a = (i / 30) * Math.PI * 2 + (i % 3) * 0.21;
+      const d = 90 + ((i * 53) % 150);
+      const p = ov.createSpan({ cls: "cm-vf-p" });
+      p.style.setProperty("--dx", `${Math.round(Math.cos(a) * d)}px`);
+      p.style.setProperty("--dy", `${Math.round(Math.sin(a) * d)}px`);
+      p.style.setProperty("--s", `${3 + (i % 4)}px`);
+      p.style.setProperty("--c", cols[i % 4]);
+      p.style.animationDelay = `${(i % 5) * 22}ms`;
+    }
+    content.addClass("cm-vf-out");
+    return new Promise((res) => setTimeout(() => { ov.remove(); res({ host, content }); }, 700));
+  }
+
+  playVerifyIn(fx, label) {
+    fx.content.removeClass("cm-vf-out");
+    const leaf = this.mainLeaf();
+    const host = leaf && leaf.view && leaf.view.containerEl;
+    const content = host && host.querySelector(".view-content");
+    if (content) {
+      content.addClass("cm-vf-in");
+      setTimeout(() => content.removeClass("cm-vf-in"), 650);
+    }
+    if (host && label) {
+      host.addClass("cm-vf-host");
+      const pill = host.createDiv({ cls: "cm-vf-next", text: label });
+      setTimeout(() => pill.remove(), 2200);
+    }
+    setTimeout(() => { fx.host.removeClass("cm-vf-host"); if (host) host.removeClass("cm-vf-host"); }, 2300);
+    setTimeout(() => { this.vfBusy = false; }, 700);
   }
 
   async reject(file) {

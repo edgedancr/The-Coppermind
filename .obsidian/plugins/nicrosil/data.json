@@ -2,8 +2,11 @@
   "settings": {
     "autoAdvance": true,
     "sort": "az",
+    "celebrate": true,
+    "ambient": true,
     "mapTab": "tree",
-    "mapFlow": true
+    "mapFlow": true,
+    "milestone": 0
   },
   "resolved": {}
 }

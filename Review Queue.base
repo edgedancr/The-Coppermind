@@ -4,7 +4,7 @@ views:
     filters:
       and:
         - status == "draft"
-        - '!changes_since_verified.isEmpty()'
+        - "!changes_since_verified.isEmpty()"
         - '!file.inFolder("_templates")'
     order:
       - file.name

@@ -19,7 +19,7 @@ verified_on:
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
-This guide describes Nicrosil **v1.4.1**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v1.6.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -56,7 +56,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 3. Read the page and check it against the sources it cites.
 4. **Resolve each flag.** If a claim needs correcting, edit the page text first. Then click **Resolve** and write what I decided. The callout is removed from the page, and my decision is saved and written into the log when I verify (or reject) the page.
 5. **Decide:**
-   - **Verify** (`Alt+V`): optionally note what I changed and why, then `Ctrl+Enter`. The page gets `status: verified` and `verified_on`, and [[log]] gets an entry listing any flags I resolved. If flags are still open, I have to tick a box to verify anyway, and the log records them.
+   - **Verify** (`Alt+V`): optionally note what I changed and why, then `Ctrl+Enter`. The page gets `status: verified` and `verified_on`, and [[log]] gets an entry listing any flags I resolved. Then a check stamps the page, a burst of copper and teal sparks plays, the page slides away, and the next one slides in with a small "Next: … · N left" note (see [[#Settings]] to turn it off). If flags are still open, I have to tick a box to verify anyway, and the log records them.
      - If the page has a `changes_since_verified` property, Verify deletes it, and the log keeps the record ([[SCHEMA#7. Draft vs. verified|Schema §7]], rule 8).
    - **Skip** (`Alt+S`): moves the page to the end of the queue for this session and opens the next one.
    - **Reject** (`Alt+R`): write the reason (required), then `Ctrl+Enter`. The reason is logged, the page is removed from the index, and the page is deleted ([[SCHEMA#7. Draft vs. verified|Schema §7]]). The dialog lists pages that link to it, so I can fix those links afterward.
@@ -111,6 +111,17 @@ Open it with `Alt+M` or the Wiki map card on the Dashboard. It opens in its own 
 ## The properties strip
 On every other note, Nicrosil hides the full Properties block and puts a one-line strip in its place, showing the page's **type**, **status**, and a date (`drafted` or `verified`). Click the strip to open the real Properties block. Each note starts collapsed again when I open it.
 
+## Ambience
+Small animations make the vault feel alive. None of them change how anything works.
+- **Notes:** a verified page's title has a teal glow with a slow shimmer; a draft's title has a dim copper ember. The properties strip glows once right after I verify. Flag callouts (`caution`, `todo`, `question`, `warning`) breathe softly in their flag color. Internal links glow when hovered. Each page fades in when opened, and the background drifts very slowly.
+- **Wiki map and hierarchy:** verified dots give off small sparks. Pages with `changes_since_verified` pulse amber on the map and have an amber outline in the hierarchy. Clicking a dot sends a ring out from it and pings its neighbors in turn.
+- **Relations panel:** the lines draw themselves in when a different page is shown.
+- **Dashboard:** a soft spotlight follows the mouse over cards and tiles. A burst of sparks goes off when the verification ring passes 25, 50, 75 or 100 percent. The newest activity row pulses once.
+- **Review queue:** the progress bar has a moving sheen, rows slide to their new places when the order changes, and new flag badges pop in.
+- **Smaller touches:** search results fade in one after another, notices have a teal edge, and the status-bar verified count glows when it goes up.
+
+Turn them all off with **Ambient animations** in the settings. They are also off if the computer is set to reduce motion.
+
 ## Logging a schema change
 Every change to [[SCHEMA]] needs a line in its Changelog ([[SCHEMA#14. Changing this schema|Schema §14]]). Nicrosil adds it for me:
 1. On the SCHEMA page, click the pen button in the page header, or run **Log a schema change** from the command palette.
@@ -139,6 +150,8 @@ Change any of them in **Settings → Hotkeys** (search "Nicrosil"). Beyond the k
 ## Settings
 In **Settings → Nicrosil**:
 - **Open the next draft after verifying or rejecting** (on by default)
+- **Play an animation when I verify a page** (on by default): the check, sparks and slide described in [[#A review session]]. It is skipped if the computer is set to reduce motion.
+- **Ambient animations** (on by default): the glows, sparkles and fades described in [[#Ambience]].
 - **Queue order:** clean pages first (default), flagged pages first, by page type, or A to Z. The same menu is at the top of the sidebar.
 
 ## What it will not do
@@ -166,6 +179,8 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
 ### Version history
+- **1.6.0:** Ambience: title auras, breathing flag callouts, map sparks, ripples and amber pulses, relations lines that draw in, Dashboard spotlight and milestone bursts, queue and search touches, page fade-ins, and a slow background drift. A new setting turns them off.
+- **1.5.0:** Verifying a page plays an animation: a check stamp and spark burst, the page slides away, and the next page slides in. A new setting turns it off.
 - **1.4.1:** Dashboard fixes: the verification ring's filled part is drawn again, shading from copper to green; the three stat tiles glow only when pointed at; and the six navigation cards have a colored outline all the way around.
 - **1.4.0:** The copper-and-teal gradient background now applies to every note, not just the Dashboard.
 - **1.3.2:** The Dashboard background is a stronger copper-to-teal gradient over the brown, defined as the reusable variable `--cm-bg-gradient`.
