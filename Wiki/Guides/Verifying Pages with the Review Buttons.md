@@ -49,7 +49,8 @@ The tools come from a plugin I keep in the vault, **Nicrosil** (its folder is st
 [[Dashboard]] is the page the vault opens on. From top to bottom it has:
 - **The header:** the Coppermind logo and name.
 - **Review progress:** stat tiles, the progress bar, and **Start reviewing**.
-- **Where to start:** seven cards (Index, Review queue, My Worldview, Log, Schema, Guides, Find). Find opens the offline search page, [[Find]].
+- **Search box:** type to see suggestion cards for wiki pages, source cards, and perspectives (not the raw class notes). Click one, or use the arrow keys and Enter, to open it. Ctrl+Enter opens it in a new tab.
+- **Where to start:** six cards (Index, Review queue, My Worldview, Log, Schema, Guides).
 - **Recent activity:** the last six log entries. Click one to open the page it names, or the log.
 - **Reference:** folded sections on what the Coppermind is, how to read it, what it covers, and its six parts.
 
@@ -57,7 +58,7 @@ Each section is a block in the page's text (`coppermind-hero`, `coppermind-dashb
 
 To edit the Dashboard, press `Ctrl+E` to switch to editing. It stays in editing until I click into the Dashboard again from another tab or note, which puts it back in Reading view.
 
-**Getting back to it from anywhere:** click the copper logo in the left ribbon, or press `Alt+H`. If the Dashboard is already open in a tab, this switches to that tab; otherwise it opens in the current tab. The ribbon icon can be dragged to the top of the ribbon (right-click the ribbon to rearrange or hide icons).
+**Getting back to it from anywhere:** click the copper logo in the left ribbon, or press `Alt+D`. If the Dashboard is already open in a tab, this switches to that tab; otherwise it opens in the current tab. The ribbon icon can be dragged to the top of the ribbon (right-click the ribbon to rearrange or hide icons).
 
 ## The index and the log
 - **Index:** [[index]] splits each type into **Verified** and **Drafts**. When I verify a page, the plugin moves its line to Verified and updates the counts and totals. When I reject one, its line is removed.

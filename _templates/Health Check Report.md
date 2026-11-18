@@ -30,7 +30,6 @@ flags_open = flags I haven't decided yet. The agent updates flags_open and each 
 | Verified pages changed since they were verified | | |
 | Gaps in sources ("?" placeholders, empty definitions) | | |
 | Pages missing from the index, or index entries with no page | | |
-| `Find.md` or `Library.base` out of date | | |
 | `Ingest Queue.md` out of date | | |
 | Anything else found (properties, formatting) | | |
 | **Total** | | |
@@ -45,7 +44,7 @@ flags_open = flags I haven't decided yet. The agent updates flags_open and each 
    - **Decision:** 
 
 ## Mechanical fixes
-%% Index updates, broken-link fixes, formatting, typos, and Find/Library updates. One line each. I can approve these as a single batch after reading them (SCHEMA §7). %%
+%% Index updates, broken-link fixes, formatting, and typos. One line each. I can approve these as a single batch after reading them (SCHEMA §7). %%
 
 **Batch decision:** 
 

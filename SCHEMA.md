@@ -1,6 +1,6 @@
 ---
 type: schema
-version: 4.3
+version: 4.4
 status: verified
 owner: Harrison Nickles
 updated: 2026-11-17
@@ -51,9 +51,7 @@ The Coppermind/
 ├── SCHEMA.md               This file
 ├── index.md                Map of every page
 ├── log.md                  Dated record of every operation
-├── Find.md                 Offline search page: one-click searches and class dates
 ├── Ingest Queue.md         Sources I've collected that are waiting to be ingested, in batches
-├── Library.base            Table of every page, with views by type, course, and status
 ├── Review Queue.base       Live list of pages waiting for review
 ├── AGENTS.md               Pointers to this file for agents
 ├── Sources/
@@ -80,29 +78,9 @@ The Coppermind/
 └── _attachments/           Images and diagrams used on wiki pages
 ```
 
-### Find and Library: the search tools
-
-`Find.md` and `Library.base` are how I look things up without AI or an internet connection. Both use only Obsidian's built-in search and Bases. They have no `status`, are not in `index.md`, and I don't verify them. Like the index and the log, **the agent maintains them, and they must stay current.** A stale Find page is worse than none, because it looks complete.
-
-- **`Find.md`** holds one-click searches by page type, course, review status, and open flag kind, plus a table of class dates that finds every page citing that day's notes, and a table of search operators.
-- **`Library.base`** is a table of every page with views for all pages by type, the glossary A–Z, each course, verified pages, and drafts.
-
-**The agent updates them at the end of every operation** that could change what they list, and checks them in every health check:
-
-| When this happens | Update |
-|---|---|
-| A page cites a class date that Find doesn't list | Add the date to its course's row in Find's class-date table, in date order, using the same search pattern as its neighbors |
-| A new course comes into scope | Add a link under "By course" and a row in the class-date table in Find, and a view in `Library.base` filtered on that course. Suggest the matching change to §1 and §4 here |
-| A page type or `Wiki/` folder is added or renamed | Add or fix its link under "By type of page" in Find |
-| A flag callout is added, renamed, or removed (§6, the ingest prompt, or the Nicrosil plugin) | Make "Pages that still need attention" in Find match |
-| The vault, `Find.md`, or `Library.base` is renamed or moved | Fix the vault name in every `obsidian://` link in Find, and every link to either file, including this file and the Dashboard |
-| A property name or value used in a search or view changes | Fix every Find link and `Library.base` filter that uses it |
-
-Class-date searches match the display text of the citation, such as `SAIL notes, 10/20/26`, so citations must keep that form (§6).
-
 ### Ingest Queue: sources waiting their turn
 
-`Ingest Queue.md` lists sources I've collected but not yet ingested, grouped into the batches we plan to ingest them in, with each batch's status. Like Find and Library, it is not one of the six parts and not a wiki page: it has no `status`, is not in `index.md`, and I don't verify it. **The agent maintains it, and it must stay current.**
+`Ingest Queue.md` lists sources I've collected but not yet ingested, grouped into the batches we plan to ingest them in, with each batch's status. Like the index and the log, it is not one of the six parts and not a wiki page: it has no `status`, is not in `index.md`, and I don't verify it. **The agent maintains it, and it must stay current.**
 
 - **It is a plan, not a record.** The log records what was done, and each source card's Ingest Progress records what has been ingested from that source. The queue only says what is still waiting and in what order.
 - **When I hand over a set of sources to triage,** the agent adds them to the queue in batches, and lists what it recommends skipping and why. I decide the order and the skips.
@@ -207,7 +185,7 @@ The first two and the last mirror the Supports / Contradicts / Neither marks in 
    - Classical texts, by Stephanus or Bekker number, plus where I took the note: `(Republic 425, via [[Freedom's Foundations 1 Class Notes (Fall 2026)#9/9/26|FF1 notes, 9/9/26]])`
    - PDFs, by page: `([[ODNI Principles of AI Ethics.pdf#page=2|ODNI, p. 2]])`
    - Other sources: a link to the source card plus a page, section, or timestamp.
-   - **Keep the class-notes display text in the form `<Course> notes, M/D/YY`** (`SAIL notes, 10/20/26`, `Intro notes, 10/20/26`), because the class-date searches in [[Find]] match it exactly.
+   - **Keep the class-notes display text in the form `<Course> notes, M/D/YY`** (`SAIL notes, 10/20/26`, `Intro notes, 10/20/26`) so citations read the same everywhere.
    - Web pages used only for a how-to guide about tools (not course content) may be cited by URL directly, without a source card.
 2. **Every source a page cites is also listed in its `sources` property.**
 3. **No unsourced claims.** If the agent thinks background knowledge is needed that no source in the vault provides, it goes in a callout that I must either source or delete before verifying:
@@ -297,7 +275,6 @@ Each source card rates the source with the Admiralty Code. The agent may propose
 | `Perspectives/`             | Read, and quote as *my* view in answers | Write or edit anything                                |
 | `SCHEMA.md`                 | Read, and suggest changes in chat       | Edit, unless I ask for a specific change              |
 | `index.md`, `log.md`        | Maintain                                | Delete or rewrite past log entries                    |
-| `Find.md`, `Library.base`   | Maintain and keep current (see §2)      | Delete, rename, or change their purpose, unless I ask |
 | `Ingest Queue.md`           | Maintain and keep current (see §2)      | Reorder, drop, or skip batches, unless I ask          |
 | `Health Checks/`            | Create a report for each health check; record my decisions in it (see §2) | Change a saved report's findings, or delete a report |
 | `Tools/`                    | Read; build or revise a tool when I ask | Edit, rename, or delete otherwise                     |
@@ -321,7 +298,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
    - each proposed typed link, with its reason
    - each flag: "Whose view?", unsourced background, conflicts with existing pages, gaps in my notes
 5. **Verify (me).** For each page, I approve it, ask for revisions (back to step 4), or reject it. I check the links the same way.
-6. **Commit.** The agent updates `index.md`, **checks `Find.md` and `Library.base` and updates them if the operation changed what they list** (a new class date, course, or page type; see §2), **marks the batch done in `Ingest Queue.md` if it came from there**, appends the log entry, and suggests a git commit message. I commit.
+6. **Commit.** The agent updates `index.md`, **marks the batch done in `Ingest Queue.md` if it came from there**, appends the log entry, and suggests a git commit message. I commit.
 
 ### Query: asking the wiki a question
 
@@ -344,10 +321,9 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
    - verified pages changed since they were verified
    - gaps in the sources themselves (unfinished notes, "?" placeholders, empty definitions)
    - pages missing from `index.md`, or index entries for pages that no longer exist
-   - `Find.md` or `Library.base` out of date: a cited class date missing from Find, a course or page type with no link or view, flag links that don't match §6, or a link or filter that no longer works
    - `Ingest Queue.md` out of date: a batch still marked waiting whose sources already have source cards, or a batch marked done whose sources don't
 3. **Verify (me).** I decide how to resolve each flag: fix, accept as is, or defer. The agent changes nothing until I decide, then records each decision in the report.
-4. **Commit and log.** The report keeps each flag and how I resolved it. The log entry links to the report and gives the counts, without repeating each flag. Fixes to `Find.md` and `Library.base` are mechanical and can be approved as a batch (§7).
+4. **Commit and log.** The report keeps each flag and how I resolved it. The log entry links to the report and gives the counts, without repeating each flag. Mechanical fixes (index updates, broken links, formatting) can be approved as a batch (§7).
 
 ---
 
@@ -359,12 +335,6 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 - Under each type, pages are split under a `### Verified` heading and a `### Drafts` heading (a heading appears only when it has pages). Each entry is one line: `- [[Page Name]] — one-line summary`, listed under the heading for its status.
 - The agent updates the index **at the end of every operation** that adds, removes, renames, or changes the status of a page.
 - I check the index during each health check.
-
-### Find and Library (`Find.md`, `Library.base`)
-
-- Not listed in `index.md`, because they are tools and not pages.
-- The agent keeps them current as described in §2, **at the end of every operation that could change them**, in the same step as the index. It notes any change to them in that operation's log entry. A change that only keeps Find current (adding a class date, say) is mentioned in the entry, but doesn't need its own.
-- I check them during each health check.
 
 ### Ingest Queue (`Ingest Queue.md`)
 
@@ -416,7 +386,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 The Coppermind must outlive any one tool or agent.
 
 1. **Everything that matters is plain text:** Markdown pages, YAML properties, and `[[wikilinks]]`. Images, PDFs, and tools sit in ordinary folders.
-2. **Obsidian-only extras are conveniences, never the only copy of anything:** `Review Queue.base`, `Library.base`, `Health Check History.base`, the `obsidian://` links in `Find.md`, CSS snippets, themes, and `.obsidian/` settings. Outside Obsidian, Find's search tips and the page's plain-text structure still read fine, and the search operators map to any tool that searches text.
+2. **Obsidian-only extras are conveniences, never the only copy of anything:** `Review Queue.base`, `Health Check History.base`, CSS snippets, themes, and `.obsidian/` settings. Outside Obsidian, the pages themselves are plain text and read fine.
 3. **This schema is written in plain language**, so any agent can follow it. `AGENTS.md` points agents here. For a new agent, point its instructions file at `SCHEMA.md`.
 4. **To move to a new tool:**
    1. Commit everything, then copy the whole folder (or clone the git repository).
@@ -445,3 +415,4 @@ The Coppermind must outlive any one tool or agent.
 - **4.1 (2026-11-17):** Removed a rule about empty list properties.
 - **4.2 (2026-11-17):** Reworded a small part of the Find and Search description.
 - **4.3 (2026-11-17):** The review plugin is now called Nicrosil (§2, §7, §11). The name only changed; nothing about how reviewing works. Status returns to `draft` until I verify it again (§7).
+- **4.4 (2026-11-17):** `Find.md` and `Library.base` removed from the vault, and every mention of them removed from the rules (§2, §6, §9, §10, §11, §13). Earlier changelog lines still name them, since they record what was true then. Status returns to `draft` until I verify it again (§7).

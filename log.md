@@ -954,3 +954,22 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[SCHEMA]]
 - **Commit:** `verify: SCHEMA`
+
+### [2026-11-17] schema | Remove Find and Library (version 4.4)
+
+- **Think:** I deleted `Find.md` and `Library.base` and asked for every mention of them to be removed from the Coppermind. The index stays as it is.
+- **Calculate:**
+  - [[SCHEMA]]: removed the two folder-layout lines, the "Find and Library" subsections in §2 and §11, the §9 permissions row, the Find/Library parts of the ingest commit step and the health check (§10), and the mentions in §6 and §13. Added a 4.4 line to the changelog, and set `status` back to `draft` and cleared `verified_on` (§7).
+  - `AGENTS.md`: removed the paragraph about maintaining the search tools.
+  - [[Verifying Pages with the Review Buttons]]: replaced the Find card with the search box, and corrected the card count to six. It was already a draft.
+  - `Health Check Report` template: removed the Find/Library row, so the report has 11 check rows plus "anything else".
+  - Left alone on purpose: older log entries and the saved [[Health Check 2026-11-17]], because they record what was true then. They still name Find and Library, so those links show as unresolved. The one open flag about Find's vault name in that report no longer applies.
+  - [[index]] and the Dashboard needed no change.
+- **Verify:** pending. [[SCHEMA]] needs re-verifying.
+- **Commit:** `schema: remove Find and Library (v4.4)`
+
+### [2026-11-17] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`

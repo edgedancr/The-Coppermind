@@ -15,7 +15,7 @@
  *  - a search box for the Dashboard (```coppermind-search```): suggestion cards under it as I type,
  *    over wiki pages, source cards, and perspectives (not raw class notes); it only reads
  *  - Dashboard page blocks (```coppermind-hero```, -dashboard, -nav, -activity), a ribbon
- *    logo button and Alt+H to go back to the Dashboard, and a one-time Home to Dashboard rename
+ *    logo button and Alt+D to go back to the Dashboard, and a one-time Home to Dashboard rename
  *  - "Log a schema change" (a pen button in the header of the SCHEMA page, or the command palette): asks for the new version number
  *    and what I changed, then adds the line to the Changelog at the bottom of SCHEMA.md and keeps its
  *    `version` and `updated` properties in step. It does not touch status, verified_on, or log.md.
@@ -1232,7 +1232,7 @@ module.exports = class Nicrosil extends Plugin {
     this.statusEl.addEventListener("click", () => this.activateView());
 
     addIcon("coppermind-logo", LOGO_ICON);
-    this.ribbonEl = this.addRibbonIcon("coppermind-logo", "Dashboard (Alt+H). Alt+click opens it in a new tab", (evt) => this.openDashboard(!!(evt && evt.altKey)));
+    this.ribbonEl = this.addRibbonIcon("coppermind-logo", "Dashboard (Alt+D)", (evt) => this.openDashboard(!!(evt && (evt.ctrlKey || evt.metaKey))));
     this.ribbonEl.addClass("cm-ribbon-logo");
     this.addRibbonIcon("badge-check", "Review queue (Alt+Q)", () => this.activateView());
 
@@ -1303,7 +1303,7 @@ module.exports = class Nicrosil extends Plugin {
     this.addCommand({ id: "skip-page", name: "Skip this draft for now", hotkeys: [{ modifiers: ["Alt"], key: "s" }], checkCallback: onPage((f) => this.skip(f)) });
     this.addCommand({ id: "resolve-flag", name: "Resolve a flag on this page", hotkeys: [{ modifiers: ["Alt"], key: "f" }], checkCallback: onPage((f) => this.pickFlag(f)) });
     this.addCommand({ id: "next-draft", name: "Open the next draft", hotkeys: [{ modifiers: ["Alt"], key: "n" }], callback: () => { const f = this.currentFile(); this.openNext(f ? f.path : null); } });
-    this.addCommand({ id: "open-dashboard", name: "Go to the Dashboard", hotkeys: [{ modifiers: ["Alt"], key: "h" }], callback: () => this.openDashboard() });
+    this.addCommand({ id: "open-dashboard", name: "Go to the Dashboard", hotkeys: [{ modifiers: ["Alt"], key: "d" }], callback: () => this.openDashboard() });
     this.addCommand({ id: "log-schema-change", name: "Log a schema change", callback: () => this.openSchemaLog() });
     this.addCommand({ id: "open-queue", name: "Open the review queue", hotkeys: [{ modifiers: ["Alt"], key: "q" }], callback: () => this.activateView() });
   }
