@@ -5,7 +5,7 @@
     "celebrate": true,
     "ambient": true,
     "hidePanels": true,
-    "mapTab": "tree",
+    "mapTab": "map",
     "mapFlow": true,
     "milestone": 25
   },

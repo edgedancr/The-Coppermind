@@ -717,3 +717,50 @@ body.cm-calm .workspace-leaf-content[data-type="markdown"] .view-content.cm-vf-i
 .cm-ring-card.cm-wide .cm-ring-side .cm-sub { font-size: var(--font-ui-medium, 15px); }
 .cm-ring-card.cm-wide .cm-ring-side button { margin-top: 8px; padding: 8px 22px; height: auto; font-size: var(--font-ui-medium, 15px); }
 @media (max-width: 600px) { .cm-ring-card.cm-wide .cm-ring-body { gap: 20px; } .cm-ring-card.cm-wide .cm-ring-wrap, .cm-ring-card.cm-wide .cm-ring { width: 120px; height: 120px; } }
+
+/* ---------- Left sidebar: a softer version of the note background ---------- */
+/* The file explorer used the flat near-black secondary color, which clashed with the copper and teal glow
+   on the notes and the review queue. This paints the whole left sidebar with the same two glows at a lower
+   strength, on a base that is a little warmer than before, and makes the layers inside it see-through.
+   To dial it up or down, change the alpha numbers (0.16 and 0.11). */
+.theme-dark .workspace-split.mod-left-split {
+  background:
+    radial-gradient(460px 380px at 0% 0%, rgba(214, 120, 48, 0.16), transparent 70%),
+    radial-gradient(460px 400px at 100% 100%, rgba(70, 170, 140, 0.11), transparent 70%),
+    linear-gradient(170deg, #1d1713 0%, #191512 55%, #161a17 100%) !important;
+}
+.theme-dark .workspace-split.mod-left-split .workspace-tabs,
+.theme-dark .workspace-split.mod-left-split .workspace-tab-container,
+.theme-dark .workspace-split.mod-left-split .workspace-leaf,
+.theme-dark .workspace-split.mod-left-split .workspace-leaf-content,
+.theme-dark .workspace-split.mod-left-split .view-content,
+.theme-dark .workspace-split.mod-left-split .nav-header,
+.theme-dark .workspace-split.mod-left-split .nav-files-container,
+.theme-dark .workspace-split.mod-left-split .workspace-sidedock-vault-profile {
+  background: transparent !important;
+}
+
+/* ---------- Right sidebar: the same glow, mirrored ---------- */
+/* Same idea as the left sidebar. The teal sits at the top-left so it continues the teal at the top-right
+   of the page next to it. To dial it up or down, change the alpha numbers (0.11 and 0.16). */
+.theme-dark .workspace-split.mod-right-split {
+  background:
+    radial-gradient(460px 380px at 0% 0%, rgba(70, 170, 140, 0.11), transparent 70%),
+    radial-gradient(460px 400px at 100% 100%, rgba(214, 120, 48, 0.16), transparent 70%),
+    linear-gradient(170deg, #161a17 0%, #191512 45%, #1d1713 100%) !important;
+}
+.theme-dark .workspace-split.mod-right-split .workspace-tabs,
+.theme-dark .workspace-split.mod-right-split .workspace-tab-container,
+.theme-dark .workspace-split.mod-right-split .workspace-leaf,
+.theme-dark .workspace-split.mod-right-split .workspace-leaf-content,
+.theme-dark .workspace-split.mod-right-split .view-content {
+  background: transparent !important;
+}
+
+/* ---------- File list: the open file's name is teal on the copper highlight ---------- */
+.nav-file-title.is-active,
+.nav-folder-title.is-active,
+.nav-file-title.is-active .nav-file-title-content,
+.nav-folder-title.is-active .nav-folder-title-content {
+  color: #86d2c1;
+}
