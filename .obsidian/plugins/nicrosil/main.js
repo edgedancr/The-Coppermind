@@ -58,7 +58,7 @@ const FLAG_KINDS = {
   warning: { label: "Warning", plural: "Warnings (unsourced)", short: "W" },
 };
 const STALE_DAYS = 14;
-const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, ambient: true, hidePanels: true };
+const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, ambient: true, hidePanels: true, dashStyle: "quiet" };
 const SORTS = { clean: "Clean pages first", flagged: "Flagged pages first", type: "By page type", az: "A to Z" };
 
 /* ---------- pure helpers (tested outside Obsidian) ---------- */
@@ -1533,6 +1533,16 @@ class ReviewSettings extends PluginSettingTab {
     new Setting(el).setName("Close the extra sidebar panels on startup")
       .setDesc("Closes Backlinks, Outgoing links, Tags, All properties and Outline in the sidebar each time Obsidian starts. You can still open any of them from the command palette during a session.")
       .addToggle((t) => t.setValue(this.plugin.settings.hidePanels !== false).onChange(async (v) => { this.plugin.settings.hidePanels = v; await this.plugin.persist(); }));
+    new Setting(el).setName("Dashboard style")
+      .setDesc("Quiet: plain text links, stats in one line, small serif capitals, no sparks or glow boxes. Classic: the original cards and tiles.")
+      .addDropdown((d) => {
+        d.addOption("quiet", "Quiet").addOption("classic", "Classic");
+        d.setValue(this.plugin.settings.dashStyle === "classic" ? "classic" : "quiet").onChange(async (v) => {
+          this.plugin.settings.dashStyle = v; await this.plugin.persist();
+          document.body.classList.toggle("cm-quiet", v !== "classic");
+          this.plugin.renderAll();
+        });
+      });
     new Setting(el).setName("Ambient animations")
       .setDesc("Glowing titles, breathing flag callouts, sparkles on the map, page fade-ins, and a slowly drifting background. Turn off for a still, quiet vault. They are also off if your computer is set to reduce motion.")
       .addToggle((t) => t.setValue(this.plugin.settings.ambient !== false).onChange(async (v) => {
@@ -2205,6 +2215,7 @@ module.exports = class Nicrosil extends Plugin {
     this.registerCommands();
 
     document.body.classList.toggle("cm-calm", this.settings.ambient === false);
+    document.body.classList.toggle("cm-quiet", this.settings.dashStyle !== "classic");
     this.statusEl = this.addStatusBarItem();
     this.statusEl.addClass("cm-status", "mod-clickable");
     this.statusEl.setAttr("aria-label", "Open the review queue");
@@ -2288,7 +2299,7 @@ module.exports = class Nicrosil extends Plugin {
     document.querySelectorAll(".cm-resolve-btn, .cm-ribbon-logo").forEach((e) => e.remove());
     document.body.classList.remove("cm-on-dashboard");
     document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"));
-    document.body.classList.remove("cm-calm");
+    document.body.classList.remove("cm-calm", "cm-quiet");
     document.querySelectorAll(".cm-propstrip").forEach((e) => e.remove());
     this.stripObservers.forEach((o) => o.disconnect());
     this.stripObservers.clear();
@@ -2447,13 +2458,15 @@ module.exports = class Nicrosil extends Plugin {
     this.dashIntroTimer = setTimeout(() => { this.dashIntro = false; }, 2400);
   }
 
+  isQuiet() { return this.settings.dashStyle !== "classic"; }
+
   renderHero(el, src, ctx) {
     el.empty();
     el.addClass("cm-hero");
     el.toggleClass("is-intro", !!this.dashIntro && !prefersReduced());
     const bg = el.createDiv({ cls: "cm-hero-bg" });
     bg.setAttr("aria-hidden", "true");
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < (this.isQuiet() ? 0 : 16); i++) {
       const s = bg.createSpan({ cls: "cm-hero-spark" + (i % 3 === 0 ? " is-teal" : "") });
       s.style.left = `${(i * 37 + 11) % 97}%`;
       s.style.setProperty("--d", `${6 + ((i * 7) % 6)}s`);
@@ -2483,8 +2496,30 @@ module.exports = class Nicrosil extends Plugin {
     el.toggleClass("is-intro", intro);
     let ix = 6;
 
+    const quiet = this.isQuiet();
+    if (quiet) {
+      // stats as one line of text above a thin bar, instead of number tiles and a ring
+      const pctQ = all.length ? verified / all.length : 0;
+      const box = el.createDiv({ cls: "cm-qstats" });
+      const line = box.createDiv({ cls: "cm-qstats-line" });
+      line.createSpan({ cls: "cm-q-verified", text: `${verified} of ${all.length}` });
+      line.appendText(` pages verified (${Math.round(pctQ * 100)}%) · ${drafts.length} draft${drafts.length === 1 ? "" : "s"} · ${flagCount} open flag${flagCount === 1 ? "" : "s"}`);
+      const bar = box.createDiv({ cls: "cm-qbar" }).createDiv({ cls: "cm-qbar-fill" });
+      bar.style.width = `${(pctQ * 100).toFixed(1)}%`;
+      const bdQ = Object.entries(FLAG_KINDS)
+        .map(([k, info]) => [info, drafts.reduce((n, i) => n + i.flags.filter((f) => f.kind === k).length, 0)])
+        .filter(([, n]) => n > 0).map(([info, n]) => `${n} ${(n === 1 ? info.label : info.plural.replace(/ \(.*\)$/, "")).toLowerCase()}`).join(", ");
+      const subBits = [bdQ ? `Open flags: ${bdQ}` : "", stale.length ? `${stale.length} draft${stale.length === 1 ? "" : "s"} older than ${STALE_DAYS} days` : ""].filter(Boolean);
+      if (subBits.length) box.createDiv({ cls: "cm-qstats-sub", text: subBits.join(". ") + "." });
+      // keep the milestone up to date, so switching back to Classic doesn't replay old bursts
+      if (all.length) {
+        const ms = verified >= all.length ? 100 : Math.floor((pctQ * 100) / 25) * 25;
+        if (this.settings.milestone !== ms) { this.settings.milestone = ms; this.persist(); }
+      }
+    }
+
     // stat tiles
-    const tiles = el.createDiv({ cls: "cm-tiles" });
+    const tiles = quiet ? createDiv() : el.createDiv({ cls: "cm-tiles" });
     const tile = (num, label, sub, cls) => {
       const t = tiles.createDiv({ cls: `cm-tile ${cls}` });
       t.style.setProperty("--i", String(ix++));
@@ -2502,13 +2537,14 @@ module.exports = class Nicrosil extends Plugin {
 
     // graphs: a verification ring and pages by type
     const graphs = el.createDiv({ cls: "cm-graphs" });
-    const gcard = (title, cls) => {
-      const c = graphs.createDiv({ cls: `cm-gcard ${cls || ""}` });
+    const ringHost = quiet ? createDiv() : graphs;
+    const gcard = (title, cls, host) => {
+      const c = (host || graphs).createDiv({ cls: `cm-gcard ${cls || ""}` });
       c.style.setProperty("--i", String(ix++));
       c.createDiv({ cls: "cm-gcard-title", text: title });
       return c;
     };
-    const rc = gcard("Verification", "cm-ring-card cm-wide");
+    const rc = gcard("Verification", "cm-ring-card cm-wide", ringHost);
     const rbody = rc.createDiv({ cls: "cm-ring-body" });
     const pct = all.length ? verified / all.length : 0;
     const R = 46, C = 2 * Math.PI * R;
@@ -2537,7 +2573,7 @@ module.exports = class Nicrosil extends Plugin {
     if (all.length) {
       const ms = verified >= all.length ? 100 : Math.floor((pct * 100) / 25) * 25;
       const prev = this.settings.milestone;
-      if (prev === undefined || ms !== prev) {
+      if (!quiet && (prev === undefined || ms !== prev)) {
         this.settings.milestone = ms;
         this.persist();
         if (prev !== undefined && ms > prev && this.settings.ambient !== false && !prefersReduced()) setTimeout(() => this.sparkBurst(rwrap, ms === 100 ? 80 : 36, ms === 100 ? 210 : 130), 650);
@@ -2630,6 +2666,7 @@ module.exports = class Nicrosil extends Plugin {
   renderNav(el) {
     el.empty();
     el.addClass("cm-nav");
+    el.toggleClass("is-quiet", this.isQuiet());
     el.toggleClass("is-intro", !!this.dashIntro && !prefersReduced());
     const drafts = this.items.filter((i) => i.status === "draft").length;
     const rechecks = this.items.filter((i) => i.status === "draft" && i.changes.length).length;
@@ -2644,11 +2681,11 @@ module.exports = class Nicrosil extends Plugin {
     ];
     cards.forEach((c, idx) => {
       const card = el.createDiv({ cls: "cm-navcard" });
-      card.style.setProperty("--acc", DASH_COLORS[idx % DASH_COLORS.length]);
+      if (!this.isQuiet()) card.style.setProperty("--acc", DASH_COLORS[idx % DASH_COLORS.length]);
       card.style.setProperty("--i", String(idx));
       card.setAttr("role", "button");
       card.setAttr("tabindex", "0");
-      setIcon(card.createSpan({ cls: "cm-navcard-icon" }), c.icon);
+      if (!this.isQuiet()) setIcon(card.createSpan({ cls: "cm-navcard-icon" }), c.icon);
       card.createDiv({ cls: "cm-navcard-title", text: c.title });
       card.createDiv({ cls: "cm-navcard-sub", text: c.sub });
       card.addEventListener("click", (e) => c.go(e.ctrlKey || e.metaKey));

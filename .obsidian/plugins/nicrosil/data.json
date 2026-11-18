@@ -5,6 +5,7 @@
     "celebrate": true,
     "ambient": true,
     "hidePanels": true,
+    "dashStyle": "quiet",
     "mapTab": "map",
     "mapFlow": true,
     "milestone": 25

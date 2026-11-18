@@ -764,3 +764,90 @@ body.cm-calm .workspace-leaf-content[data-type="markdown"] .view-content.cm-vf-i
 .nav-folder-title.is-active .nav-folder-title-content {
   color: #86d2c1;
 }
+
+/* ---------- Quiet dashboard (2.4.0) ---------- */
+/* Turned on by the "Dashboard style: Quiet" setting (body.cm-quiet). Color only where it means something:
+   copper for links and actions, teal for verified. Fewer boxes, borders, and effects; the background glow stays. */
+
+/* section headings: small serif capitals, a plain rule */
+body.cm-quiet .coppermind-dashboard h2 {
+  font-variant: small-caps; text-transform: none; letter-spacing: 0.05em; font-size: 1.25em; font-weight: 600;
+  color: var(--h2-color, #dca06a); background: none; border-bottom: 1px solid var(--background-modifier-border);
+  padding-bottom: 3px; margin: 1.8em 0 0.5em;
+}
+
+/* hero: no box, no sparks, no shimmer; smaller and left-aligned */
+body.cm-quiet .cm-hero { background: none; border: none; box-shadow: none; border-radius: 0; padding: 14px 0 4px; margin: 0 0 6px; column-gap: 16px; }
+body.cm-quiet .cm-hero-bg { display: none; }
+body.cm-quiet .cm-hero-title { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: var(--h1-color, #e8b27d); animation: none; font-size: 2.1em; letter-spacing: 0.01em; }
+body.cm-quiet .cm-hero-tagline { font-size: 0.95em; }
+body.cm-quiet .cm-logo-hero { animation: none; filter: none; transform: scale(0.8); transform-origin: left center; }
+body.cm-quiet .cm-hero.is-intro { animation: none; }
+body.cm-quiet .cm-hero-search { margin-top: 14px; }
+body.cm-quiet .cm-hero .cm-search-bar { height: 44px; border-radius: 6px; border-color: var(--background-modifier-border); background: rgba(16, 12, 9, 0.45); box-shadow: none; }
+body.cm-quiet .cm-hero .cm-search-bar:focus-within { border-color: var(--cm-copper); box-shadow: none; }
+body.cm-quiet .cm-search-results { border-radius: 6px; }
+body.cm-quiet .cm-search-card { border-radius: 4px; }
+
+/* where to start: a two-column list of text links, like a table of contents */
+body.cm-quiet .cm-nav.is-quiet { grid-template-columns: 1fr 1fr; column-gap: 36px; row-gap: 0; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard {
+  background: none; border: none; border-bottom: 1px solid var(--background-modifier-border); border-radius: 0;
+  box-shadow: none; padding: 10px 2px 9px; overflow: visible; transform: none; transition: none;
+  display: flex; align-items: baseline; gap: 12px; animation: none;
+}
+body.cm-quiet .cm-nav.is-quiet .cm-navcard::after { display: none; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard:last-child:nth-child(3n+1) { grid-column: auto; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard-title { margin: 0; font-size: 1.1em; color: var(--text-normal); white-space: nowrap; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard-sub { margin: 0; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard:hover, body.cm-quiet .cm-nav.is-quiet .cm-navcard:focus-visible { transform: none; box-shadow: none; border-color: var(--background-modifier-border); outline: none; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard:hover .cm-navcard-title, body.cm-quiet .cm-nav.is-quiet .cm-navcard:focus-visible .cm-navcard-title { color: var(--cm-copper); }
+@media (max-width: 600px) { body.cm-quiet .cm-nav.is-quiet { grid-template-columns: 1fr; } }
+
+/* review progress: one line of text above a thin bar */
+body.cm-quiet .cm-qstats { margin: 4px 0 14px; }
+body.cm-quiet .cm-qstats-line { font-size: 1.02em; color: var(--text-normal); }
+body.cm-quiet .cm-q-verified { color: var(--cm-patina); font-variant-numeric: tabular-nums; }
+body.cm-quiet .cm-qbar { height: 4px; margin: 8px 0 6px; border-radius: 2px; background: rgba(184, 115, 51, 0.2); overflow: hidden; }
+body.cm-quiet .cm-qbar-fill { height: 100%; background: var(--cm-patina); border-radius: 2px; }
+body.cm-quiet .cm-qstats-sub { font-size: var(--font-ui-smaller); color: var(--text-muted); }
+
+/* pages by type: no card box, thinner bars */
+body.cm-quiet .cm-gcard { background: none; border: none; border-radius: 0; box-shadow: none; padding: 2px 0; }
+body.cm-quiet .cm-gcard-title { font-family: Georgia, serif; font-variant: small-caps; text-transform: none; letter-spacing: 0.04em; font-size: 1em; color: var(--text-muted); margin-bottom: 6px; }
+body.cm-quiet .cm-tbar { height: 6px; border-radius: 3px; }
+body.cm-quiet .cm-tbar-fill { border-radius: 3px; }
+
+/* recent activity: no slide on hover; icon colors only for verified and rejected */
+body.cm-quiet .cm-act-row { border-radius: 3px; }
+body.cm-quiet .cm-act-row:hover { transform: none; }
+body.cm-quiet .cm-act-ingest svg, body.cm-quiet .cm-act-setup svg { color: var(--text-muted); }
+
+/* the reference callouts: smaller corners */
+body.cm-quiet .coppermind-dashboard .callout { border-radius: 4px; }
+
+/* ---------- Quiet dashboard, round 2 (2.4.1) ---------- */
+/* Where to start: small, sharp-cornered cards instead of plain rows */
+body.cm-quiet .cm-nav.is-quiet { column-gap: 12px; row-gap: 10px; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard {
+  background: rgba(20, 15, 12, 0.5); border: 1px solid var(--background-modifier-border); border-left: 2px solid var(--cm-copper);
+  border-radius: 4px; padding: 12px 14px; flex-direction: column; align-items: flex-start; gap: 2px;
+  transition: border-color 0.15s, background 0.15s;
+}
+body.cm-quiet .cm-nav.is-quiet .cm-navcard-sub { white-space: normal; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard:hover, body.cm-quiet .cm-nav.is-quiet .cm-navcard:focus-visible {
+  background: rgba(184, 115, 51, 0.08); border-color: rgba(184, 115, 51, 0.55); border-left-color: var(--cm-copper);
+}
+
+/* Review progress: the stats line sits in a card, larger, with a glowing copper-to-teal bar */
+body.cm-quiet .cm-qstats {
+  margin: 6px 0 16px; padding: 18px 20px 16px; border-radius: 4px;
+  background: rgba(20, 15, 12, 0.5); border: 1px solid var(--background-modifier-border);
+}
+body.cm-quiet .cm-qstats-line { font-size: 1.15em; line-height: 1.5; }
+body.cm-quiet .cm-q-verified { font-family: Georgia, serif; font-size: 1.9em; line-height: 1; margin-right: 4px; }
+body.cm-quiet .cm-qbar { height: 8px; margin: 14px 0 10px; border-radius: 4px; background: rgba(184, 115, 51, 0.16); overflow: visible; }
+body.cm-quiet .cm-qbar-fill {
+  border-radius: 4px; background: linear-gradient(90deg, var(--cm-copper), var(--cm-patina));
+  box-shadow: 0 0 10px rgba(184, 115, 51, 0.45), 0 0 14px rgba(95, 174, 158, 0.35);
+}
