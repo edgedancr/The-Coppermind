@@ -1093,3 +1093,10 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`); [[Nicrosil]] guide (version 1.0.1, history).
 - **Verify:** pending. Reload Nicrosil and open the wiki map.
 - **Commit:** `nicrosil 1.0.1: drop counts from wiki map relationship chips`
+
+### [2026-11-17] schema | Wiki map motion and polish
+- **Think:** The map felt like a static picture. You chose live physics, hover highlight with smooth focus, a cleaner look, and flowing links.
+- **Calculate:** Nicrosil v1.1.0 replaces the one-shot layout with a live physics simulation (dots drift out, can be dragged, then rest), adds hover highlighting and a camera glide on focus, curved arrows, a glow on verified pages, and a Flow switch for the pulsing links. I tested the physics and the page on a copy of the wiki's links outside Obsidian; the animation itself is untested in Obsidian.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `styles.css`, `manifest.json`); [[Nicrosil]] guide (map section, version 1.1.0, history).
+- **Verify:** pending. Reload Nicrosil, open the wiki map (`Alt+M`), and try dragging a dot, pointing at one, and the Flow button.
+- **Commit:** `nicrosil 1.1.0: animated wiki map with physics, hover, glide and flowing links`

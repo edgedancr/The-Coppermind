@@ -877,53 +877,60 @@ function buildWikiGraph(app) {
   return { nodes, edges };
 }
 
-/**
- * Places the nodes with a force layout (Fruchterman-Reingold). The start positions come from the
- * page paths, so the same wiki always gives the same map.
- */
-function layoutGraph(ids, edges, W, H) {
-  const n = ids.length;
-  const idx = new Map(ids.map((id, i) => [id, i]));
-  const pos = ids.map((id) => {
+const SIM = { rep: 500, spr: 0.25, len: 40, grav: 0.06 };
+
+/** Start positions for the map: a small, repeatable cloud around the middle, from the page paths. */
+function seedPositions(ids, W, H) {
+  return ids.map((id) => {
     let h = 7;
     for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
     const a = ((h % 3600) / 3600) * 2 * Math.PI;
-    const r = Math.sqrt(((h >>> 8) % 1000) / 1000) * Math.min(W, H) * 0.42;
-    return { x: W / 2 + Math.cos(a) * r, y: H / 2 + Math.sin(a) * r, dx: 0, dy: 0 };
+    const r = Math.sqrt(((h >>> 8) % 1000) / 1000) * Math.min(W, H) * 0.105;
+    return { x: W / 2 + Math.cos(a) * r, y: H / 2 + Math.sin(a) * r };
   });
-  const E = edges.map((e) => [idx.get(e.from), idx.get(e.to)]).filter(([a, b]) => a !== undefined && b !== undefined);
-  const k = Math.sqrt((W * H) / Math.max(n, 1)) * 0.75;
-  let t = W / 7;
-  for (let it = 0; it < 320; it++) {
-    for (const p of pos) { p.dx = 0; p.dy = 0; }
-    for (let i = 0; i < n; i++) {
-      for (let j = i + 1; j < n; j++) {
-        let dx = pos[i].x - pos[j].x, dy = pos[i].y - pos[j].y;
-        let d2 = dx * dx + dy * dy;
-        if (d2 < 0.01) { dx = 0.1 * (i - j || 1); dy = 0.1; d2 = dx * dx + dy * dy; }
-        const d = Math.sqrt(d2);
-        const f = (k * k) / d;
-        const fx = (dx / d) * f, fy = (dy / d) * f;
-        pos[i].dx += fx; pos[i].dy += fy; pos[j].dx -= fx; pos[j].dy -= fy;
-      }
+}
+
+/**
+ * Live physics for the map. State S = { p: [{x,y,vx,vy,r,fixed}], E: [[a,b]], W, H, k }.
+ * Each step pushes every pair of dots apart, pulls linked dots together, and nudges everything
+ * toward the middle. `alpha` is the "heat": it falls each step and the motion stops when it is low.
+ */
+function stepSim(S, alpha) {
+  const { p, E, W, H, k } = S;
+  const n = p.length;
+  const reach = k * 4;
+  for (let i = 0; i < n; i++) {
+    const a = p[i];
+    for (let j = i + 1; j < n; j++) {
+      const b = p[j];
+      let dx = a.x - b.x, dy = a.y - b.y;
+      let d2 = dx * dx + dy * dy;
+      if (d2 > reach * reach) continue;
+      if (d2 < 1) { dx = (i % 2 ? 1 : -1) * 0.7; dy = ((i + j) % 2 ? 1 : -1) * 0.7; d2 = dx * dx + dy * dy; }
+      const d = Math.sqrt(d2);
+      let f = SIM.rep / d;
+      const min = a.r + b.r + 9;
+      if (d < min) f += (min - d) * 1.2;
+      const fx = (dx / d) * f * alpha, fy = (dy / d) * f * alpha;
+      a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
     }
-    for (const [a, b] of E) {
-      const dx = pos[a].x - pos[b].x, dy = pos[a].y - pos[b].y;
-      const d = Math.sqrt(dx * dx + dy * dy) || 0.01;
-      const f = (d * d) / k;
-      const fx = (dx / d) * f, fy = (dy / d) * f;
-      pos[a].dx -= fx; pos[a].dy -= fy; pos[b].dx += fx; pos[b].dy += fy;
-    }
-    for (const p of pos) {
-      p.dx += (W / 2 - p.x) * 0.9; p.dy += (H / 2 - p.y) * 0.9; // gravity keeps separate groups on the canvas
-      const d = Math.sqrt(p.dx * p.dx + p.dy * p.dy) || 0.01;
-      const m = Math.min(d, t);
-      p.x = Math.min(W - 24, Math.max(24, p.x + (p.dx / d) * m));
-      p.y = Math.min(H - 24, Math.max(24, p.y + (p.dy / d) * m));
-    }
-    t *= 0.985;
   }
-  return pos.map((p) => ({ x: p.x, y: p.y }));
+  for (const [ia, ib] of E) {
+    const a = p[ia], b = p[ib];
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const d = Math.sqrt(dx * dx + dy * dy) || 0.01;
+    const f = ((d - SIM.len) / d) * SIM.spr * alpha;
+    a.vx += dx * f; a.vy += dy * f; b.vx -= dx * f; b.vy -= dy * f;
+  }
+  for (const a of p) {
+    a.vx += (W / 2 - a.x) * SIM.grav * alpha; a.vy += (H / 2 - a.y) * SIM.grav * alpha;
+    if (a.fixed) { a.vx = 0; a.vy = 0; continue; }
+    a.vx *= 0.6; a.vy *= 0.6;
+    const sp = Math.sqrt(a.vx * a.vx + a.vy * a.vy);
+    if (sp > 14) { a.vx *= 14 / sp; a.vy *= 14 / sp; }
+    a.x = Math.min(W - 20, Math.max(20, a.x + a.vx));
+    a.y = Math.min(H - 20, Math.max(20, a.y + a.vy));
+  }
 }
 
 class WikiMapView extends ItemView {
@@ -938,6 +945,8 @@ class WikiMapView extends ItemView {
     this.view = { x: 0, y: 0, k: 1 };
     this.layoutKey = "";
     this.layout = null;
+    this.simRaf = 0;
+    this.glideRaf = 0;
     this.rerender = debounce(() => this.render(), 600, true);
   }
   getViewType() { return MAP_VIEW_TYPE; }
@@ -949,7 +958,8 @@ class WikiMapView extends ItemView {
     this.registerEvent(this.app.vault.on("rename", () => this.rerender()));
     this.registerEvent(this.app.vault.on("delete", () => this.rerender()));
   }
-  async onClose() { this.containerEl.children[1].empty(); }
+  async onClose() { this.stopSim(); this.containerEl.children[1].empty(); }
+  stopSim() { cancelAnimationFrame(this.simRaf); cancelAnimationFrame(this.glideRaf); this.simRaf = 0; this.glideRaf = 0; }
 
   go(path, newTab) {
     if (!path) return;
@@ -959,6 +969,7 @@ class WikiMapView extends ItemView {
   }
 
   render() {
+    this.stopSim();
     const root = this.containerEl.children[1];
     root.empty();
     root.addClass("cm-wm");
@@ -1091,8 +1102,19 @@ class WikiMapView extends ItemView {
     if (!ids.length) { el.createDiv({ cls: "cm-sub cm-wt-empty", text: "No typed links yet, so there is nothing to map." }); return; }
     const W = 1000, H = 700;
     const key = ids.join("|") + "#" + g.edges.map((e) => `${e.from}>${e.to}`).sort().join(",");
-    if (key !== this.layoutKey || !this.layout) { this.layout = layoutGraph(ids, g.edges, W, H); this.layoutKey = key; this.ids = ids; }
-    const pos = new Map(ids.map((id, i) => [id, this.layout[i]]));
+    const radius = (n) => 4 + Math.sqrt(n.deg) * 2.4;
+    const reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const fresh = key !== this.layoutKey || !this.layout;
+    if (fresh) { this.layout = seedPositions(ids, W, H); this.layoutKey = key; this.ids = ids; }
+    const idx = new Map(ids.map((id, i) => [id, i]));
+    const S = {
+      p: ids.map((id, i) => ({ x: this.layout[i].x, y: this.layout[i].y, vx: 0, vy: 0, r: radius(g.nodes.get(id)), fixed: false })),
+      E: g.edges.map((e) => [idx.get(e.from), idx.get(e.to)]), W, H, k: Math.sqrt((W * H) / ids.length) * 0.75,
+    };
+    const pos = new Map(ids.map((id, i) => [id, S.p[i]]));
+    let alpha = fresh ? 1 : 0; // the "heat" of the physics; it cools to zero and the map comes to rest
+    if (fresh && reduce) { while (alpha > 0.02) { stepSim(S, alpha); alpha *= 0.99; } alpha = 0; this.layout = S.p.map((q) => ({ x: q.x, y: q.y })); }
+    let flowOn = this.plugin.settings.mapFlow !== false;
 
     // toolbar
     const bar = el.createDiv({ cls: "cm-wm-bar" });
@@ -1120,6 +1142,8 @@ class WikiMapView extends ItemView {
     sel("Any course", [...new Set(nodes.flatMap((n) => n.courses))].sort(), st.course, (v) => { st.course = v; });
     const find = bar.createEl("input", { type: "text", cls: "cm-wt-filter cm-wm-find", placeholder: "Find a page, Enter to focus it", value: st.q });
     const reset = bar.createEl("button", { text: "Reset view" });
+    const flowBtn = bar.createEl("button", { text: "Flow", attr: { "aria-label": "Animate the links" } });
+    flowBtn.toggleClass("is-active", flowOn);
 
     const stage = el.createDiv({ cls: "cm-wm-stage" });
     const svg = svgEl(stage, "svg", { viewBox: `0 0 ${W} ${H}`, class: "cm-wm-svg", role: "img", "aria-label": "Map of typed links between pages" });
@@ -1129,18 +1153,27 @@ class WikiMapView extends ItemView {
       svgEl(m, "path", { d: "M0,0 L8,4 L0,8 z", fill: info.color });
     }
     const world = svgEl(svg, "g", { class: "cm-wm-world" });
-    const radius = (n) => 4 + Math.sqrt(n.deg) * 2.4;
-    const edgeEls = g.edges.map((e) => {
-      const a = pos.get(e.from), b = pos.get(e.to);
-      const nb = g.nodes.get(e.to);
+    svg.toggleClass("no-flow", !flowOn);
+    flowBtn.addEventListener("click", async () => {
+      flowOn = !flowOn; flowBtn.toggleClass("is-active", flowOn); svg.toggleClass("no-flow", !flowOn);
+      this.plugin.settings.mapFlow = flowOn; await this.plugin.persist();
+    });
+    // curved arrow from a to b, ending at the edge of b's dot
+    const edgePath = (a, b, r) => {
       const dx = b.x - a.x, dy = b.y - a.y, d = Math.sqrt(dx * dx + dy * dy) || 1;
-      const r = radius(nb) + 1;
+      const ux = dx / d, uy = dy / d, bend = d * 0.13;
+      const ex = b.x - ux * r, ey = b.y - uy * r;
+      return `M${a.x.toFixed(1)},${a.y.toFixed(1)} Q${((a.x + b.x) / 2 - uy * bend).toFixed(1)},${((a.y + b.y) / 2 + ux * bend).toFixed(1)} ${ex.toFixed(1)},${ey.toFixed(1)}`;
+    };
+    const edgeEls = g.edges.map((e) => {
+      const nb = g.nodes.get(e.to);
       const info = REL_TYPES[e.type];
-      const attrs = { x1: a.x, y1: a.y, x2: b.x - (dx / d) * r, y2: b.y - (dy / d) * r, stroke: info.color, "stroke-width": 1.4, "marker-end": `url(#cm-wm-arrow-${e.type})`, class: "cm-wm-edge" };
+      const attrs = { d: "M0,0", fill: "none", stroke: info.color, "stroke-width": 1.2, "marker-end": `url(#cm-wm-arrow-${e.type})`, class: "cm-wm-edge" };
       if (info.dash) attrs["stroke-dasharray"] = info.dash;
-      const ln = svgEl(world, "line", attrs);
+      const ln = svgEl(world, "path", attrs);
       svgEl(ln, "title", {}, `${g.nodes.get(e.from).name} — ${e.type.replace("_", " ")} → ${nb.name}`);
-      return { e, el: ln };
+      const flow = svgEl(world, "path", { d: "M0,0", fill: "none", stroke: info.color, class: "cm-wm-flow" });
+      return { e, el: ln, flow, r: radius(nb) + 1 };
     });
     const nodeEls = new Map();
     for (const id of ids) {
@@ -1149,10 +1182,74 @@ class WikiMapView extends ItemView {
       svgEl(grp, "circle", { r: radius(n), fill: pageColor(n.type), class: `cm-wm-dot cm-wm-dot-${n.status || "none"}` });
       svgEl(grp, "text", { x: radius(n) + 3, y: 3.5, class: "cm-wm-label" }, clip(n.name, 26));
       svgEl(grp, "title", {}, `${n.name} (${n.type || "page"}, ${n.status || "no status"})`);
-      grp.addEventListener("click", (ev) => { ev.stopPropagation(); if (ev.ctrlKey || ev.metaKey) this.go(id, true); else { st.focus = st.focus === id ? null : id; apply(); } });
-      grp.addEventListener("keydown", (ev) => { if (ev.key === "Enter") { st.focus = st.focus === id ? null : id; apply(); } });
+      let nd = null, suppress = false;
+      grp.addEventListener("pointerdown", (ev) => {
+        suppress = false;
+        if (ev.button !== 0 || ev.ctrlKey || ev.metaKey) return;
+        nd = { x: ev.clientX, y: ev.clientY, moved: false };
+        grp.setPointerCapture(ev.pointerId);
+      });
+      grp.addEventListener("pointermove", (ev) => {
+        if (!nd || (!nd.moved && Math.hypot(ev.clientX - nd.x, ev.clientY - nd.y) < 5)) return;
+        if (!nd.moved) { nd.moved = true; grp.addClass("is-drag"); }
+        const q = toSvg(ev), pp = pos.get(id);
+        pp.fixed = true;
+        pp.x = Math.min(W - 20, Math.max(20, (q.x - v.x) / v.k));
+        pp.y = Math.min(H - 20, Math.max(20, (q.y - v.y) / v.k));
+        draw(); heat(0.35);
+      });
+      const drop = () => { if (!nd) return; pos.get(id).fixed = false; suppress = nd.moved; grp.removeClass("is-drag"); nd = null; };
+      grp.addEventListener("pointerup", drop); grp.addEventListener("pointercancel", drop);
+      grp.addEventListener("pointerenter", () => { if (!nd) hover(id); });
+      grp.addEventListener("pointerleave", () => { if (!nd) hover(null); });
+      grp.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        if (suppress) { suppress = false; return; }
+        if (ev.ctrlKey || ev.metaKey) this.go(id, true); else { st.focus = st.focus === id ? null : id; apply(); if (st.focus) glideNode(id); }
+      });
+      grp.addEventListener("keydown", (ev) => { if (ev.key === "Enter") { st.focus = st.focus === id ? null : id; apply(); if (st.focus) glideNode(id); } });
       nodeEls.set(id, grp);
     }
+    const draw = () => {
+      nodeEls.forEach((grp, id) => { const q = pos.get(id); grp.setAttribute("transform", `translate(${q.x.toFixed(1)},${q.y.toFixed(1)})`); });
+      edgeEls.forEach(({ e, el: ln, flow, r }) => { const d = edgePath(pos.get(e.from), pos.get(e.to), r); ln.setAttribute("d", d); flow.setAttribute("d", d); });
+    };
+    // physics: a few steps per frame while the map is warm, then it rests until a dot is dragged
+    const frame = () => {
+      this.simRaf = 0;
+      for (let s = 0; s < 3 && alpha > 0.02; s++) { stepSim(S, alpha); alpha *= 0.99; }
+      draw();
+      if (alpha > 0.02) this.simRaf = requestAnimationFrame(frame);
+      else { alpha = 0; this.layout = S.p.map((q) => ({ x: q.x, y: q.y })); }
+    };
+    const heat = (a) => { alpha = Math.max(alpha, a); if (!this.simRaf) this.simRaf = requestAnimationFrame(frame); };
+    // pointing at a dot lights up its links and neighbors
+    const hover = (id) => {
+      svg.toggleClass("is-hovering", !!id);
+      nodeEls.forEach((n) => n.removeClass("is-hl"));
+      edgeEls.forEach(({ el: ln, flow }) => { ln.removeClass("is-hl"); flow.removeClass("is-hl"); });
+      if (!id) return;
+      nodeEls.get(id).addClass("is-hl");
+      edgeEls.forEach(({ e, el: ln, flow }) => {
+        if ((e.from !== id && e.to !== id) || ln.hasClass("is-hidden")) return;
+        ln.addClass("is-hl"); flow.addClass("is-hl");
+        nodeEls.get(e.from).addClass("is-hl"); nodeEls.get(e.to).addClass("is-hl");
+      });
+    };
+    // smooth camera moves
+    const glideTo = (tx, ty, tk, ms = 480) => {
+      cancelAnimationFrame(this.glideRaf);
+      if (reduce) { v.x = tx; v.y = ty; v.k = tk; setView(); return; }
+      const f = { x: v.x, y: v.y, k: v.k }, t0 = performance.now();
+      const stepG = (now) => {
+        const u = Math.min(1, (now - t0) / ms), e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+        v.x = f.x + (tx - f.x) * e; v.y = f.y + (ty - f.y) * e; v.k = f.k + (tk - f.k) * e;
+        setView();
+        if (u < 1) this.glideRaf = requestAnimationFrame(stepG);
+      };
+      this.glideRaf = requestAnimationFrame(stepG);
+    };
+    const glideNode = (id, k) => { const q = pos.get(id), kk = k || Math.max(v.k, 1.5); glideTo(W / 2 - q.x * kk, H / 2 - q.y * kk, kk); };
     const info = el.createDiv({ cls: "cm-wm-info" });
     const legend = el.createDiv({ cls: "cm-wm-legend" });
     [...new Set(nodes.map((n) => n.type))].filter(Boolean).sort().forEach((t) => {
@@ -1160,7 +1257,7 @@ class WikiMapView extends ItemView {
       const dot = c.createSpan({ cls: "cm-wm-legdot" }); dot.style.background = pageColor(t);
       c.appendText(t);
     });
-    legend.createSpan({ cls: "cm-sub", text: "Dot size = number of linked pages. Teal ring = verified, dashed copper ring = draft. Click a dot to focus it, Ctrl+click to open the page. Scroll to zoom, drag to pan." + (isolated ? ` ${isolated} pages have no typed links and are not shown.` : "") });
+    legend.createSpan({ cls: "cm-sub", text: "Dot size = number of linked pages. Teal ring = verified, dashed copper ring = draft. Click a dot to focus it, Ctrl+click to open the page, drag a dot to move it. Scroll to zoom, drag the background to pan." + (isolated ? ` ${isolated} pages have no typed links and are not shown.` : "") });
 
     // zoom and pan
     const v = this.view;
@@ -1172,13 +1269,14 @@ class WikiMapView extends ItemView {
     const toSvg = (ev) => { const r = svg.getBoundingClientRect(); return { x: ((ev.clientX - r.left) / r.width) * W, y: ((ev.clientY - r.top) / r.height) * H }; };
     svg.addEventListener("wheel", (ev) => {
       ev.preventDefault();
+      cancelAnimationFrame(this.glideRaf);
       const p = toSvg(ev);
       const nk = Math.min(6, Math.max(0.4, v.k * (ev.deltaY < 0 ? 1.15 : 1 / 1.15)));
       v.x = p.x - ((p.x - v.x) / v.k) * nk; v.y = p.y - ((p.y - v.y) / v.k) * nk; v.k = nk;
       setView();
     }, { passive: false });
     let drag = null;
-    svg.addEventListener("pointerdown", (ev) => { if (ev.target.closest && ev.target.closest(".cm-wm-node")) return; drag = { x: ev.clientX, y: ev.clientY, vx: v.x, vy: v.y }; svg.setPointerCapture(ev.pointerId); svg.addClass("is-drag"); });
+    svg.addEventListener("pointerdown", (ev) => { if (ev.target.closest && ev.target.closest(".cm-wm-node")) return; cancelAnimationFrame(this.glideRaf); drag = { x: ev.clientX, y: ev.clientY, vx: v.x, vy: v.y }; svg.setPointerCapture(ev.pointerId); svg.addClass("is-drag"); });
     svg.addEventListener("pointermove", (ev) => { if (!drag) return; const r = svg.getBoundingClientRect(); v.x = drag.vx + ((ev.clientX - drag.x) / r.width) * W; v.y = drag.vy + ((ev.clientY - drag.y) / r.height) * H; setView(); });
     const end = () => { drag = null; svg.removeClass("is-drag"); };
     svg.addEventListener("pointerup", end); svg.addEventListener("pointercancel", end);
@@ -1190,8 +1288,7 @@ class WikiMapView extends ItemView {
       const hit = ids.map((i) => g.nodes.get(i)).filter((n) => !nodeEls.get(n.path).hasClass("is-hidden")).find((n) => n.name.toLowerCase().includes(q));
       if (!hit || !q) return;
       st.focus = hit.path;
-      const p = pos.get(hit.path); v.k = 2.2; v.x = W / 2 - p.x * v.k; v.y = H / 2 - p.y * v.k;
-      setView(); apply();
+      apply(); glideNode(hit.path, 2.2);
     });
 
     const apply = () => {
@@ -1205,10 +1302,10 @@ class WikiMapView extends ItemView {
         edgeEls.forEach(({ e }) => { if (edgeOn(e) && vis.has(e.from) && vis.has(e.to) && (e.from === st.focus || e.to === st.focus)) { near.add(e.from); near.add(e.to); } });
       }
       const focusing = near.size > 0;
-      edgeEls.forEach(({ e, el: ln }) => {
+      edgeEls.forEach(({ e, el: ln, flow }) => {
         const shown = edgeOn(e) && vis.has(e.from) && vis.has(e.to);
-        ln.toggleClass("is-hidden", !shown);
-        ln.toggleClass("is-dim", shown && focusing && !(e.from === st.focus || e.to === st.focus));
+        const dim = shown && focusing && !(e.from === st.focus || e.to === st.focus);
+        for (const x of [ln, flow]) { x.toggleClass("is-hidden", !shown); x.toggleClass("is-dim", dim); }
       });
       nodeEls.forEach((grp, id) => {
         grp.toggleClass("is-hidden", !vis.has(id));
@@ -1216,9 +1313,11 @@ class WikiMapView extends ItemView {
         grp.toggleClass("is-near", focusing && near.has(id));
         grp.toggleClass("is-focus", focusing && id === st.focus);
       });
-      this.drawInfo(info, focusing ? st.focus : null, vis, (id) => { st.focus = id; apply(); });
+      this.drawInfo(info, focusing ? st.focus : null, vis, (id) => { st.focus = id; apply(); glideNode(id); });
     };
     apply();
+    draw();
+    if (alpha > 0) this.simRaf = requestAnimationFrame(frame);
   }
 
   drawInfo(el, path, vis, focusOn) {

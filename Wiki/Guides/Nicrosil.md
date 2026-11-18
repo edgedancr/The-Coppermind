@@ -19,7 +19,7 @@ verified_on:
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
-This guide describes Nicrosil **v1.0.1**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v1.1.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -99,12 +99,13 @@ Open it with `Alt+L` or the branching-arrows button in the ribbon. It follows wh
 Open it with `Alt+M` or the Wiki map card on the Dashboard. It opens in its own tab and has two views, chosen at the top. Both read only the typed links in the properties ([[SCHEMA#5. Linking rules and ontology|Schema §5]]), never the plain links in the text, and neither changes a file.
 - **Hierarchy.** A collapsible tree built from `type_of`, `part_of`, and `example_of`: each page sits under the page it is a kind of, a part of, or an example of, so Artificial Intelligence → Machine Learning → Deep Learning reads as a branch. The number at the right of a row is how many pages sit below it. Click a name to open the page; click the arrow to open or close a branch. The box filters the tree by page name, **Expand all** and **Collapse all** do what they say, and **Show examples** adds or removes the `example_of` pages. A page that is part of two things appears under both. Wiki pages with none of these links are listed at the bottom, in a folded list.
 - **Map.** Every page that has a typed link is a dot, and every typed link is an arrow from the page that states it to the page it points at.
-  - **Colors:** arrows are colored by relationship type, with `related` dashed and `contradicts` dotted. Dots are colored by page type. A teal ring means verified, and a dashed copper ring means draft. Bigger dots have more links.
+  - **Colors:** arrows are curved and colored by relationship type, with `related` dashed and `contradicts` dotted. Dots are colored by page type. A teal ring means verified, and a dashed copper ring means draft. Bigger dots have more links.
   - **Move around:** scroll to zoom, drag the background to pan, and click **Reset view** to start over. Names show for the busiest pages, for a focused page and its neighbors, and for every page once zoomed in.
+  - **Motion:** when the map opens, the dots drift out from the middle and settle in about two seconds. Drag a dot to move it; the dots it links to follow, and everything settles again when you let go. Pointing at a dot lights up its links and neighbors and fades the rest. Clicking a dot, or choosing a neighbor in the panel, glides the view to it. A pulse of light travels along each arrow in the direction of the link; the **Flow** button turns this off, and it stays off between visits. If your computer is set to reduce motion, the map skips the drifting and the pulses.
   - **Filters:** click a relationship name at the top to hide or show that type. The menus filter by status, page type, and course. The box finds a page by name; press `Enter` to zoom to it.
   - **Focus:** click a dot to dim everything except that page and its neighbors. The panel under the map lists how it connects, and its neighbors are clickable. `Ctrl+click` a dot to open the page.
   - **Not shown:** pages with no typed links. The note under the map says how many there are.
-  - **Layout:** the layout is worked out from the links, so the same wiki always gives the same map, and it moves when links are added.
+  - **Layout:** the layout is worked out from the links, so the same wiki settles into the same map each time it opens, and it moves when links are added. A dot you dragged keeps its place while the tab stays open, and goes back to its settled spot the next time the map is reopened.
 
 ## The properties strip
 On every other note, Nicrosil hides the full Properties block and puts a one-line strip in its place, showing the page's **type**, **status**, and a date (`drafted` or `verified`). Click the strip to open the real Properties block. Each note starts collapsed again when I open it.
@@ -164,6 +165,7 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
 ### Version history
+- **1.1.0:** The wiki map is alive: dots settle with physics and can be dragged, pointing at a dot highlights its links, the view glides to a focused page, arrows are curved with a soft glow on verified pages, and a pulse flows along each link (with a **Flow** switch).
 - **1.0.1:** The wiki map's relationship chips no longer show a count after each name.
 - **1.0.0:** The wiki map moved from the left ribbon to a Dashboard card, replacing the My Worldview card (`Alt+M` still works).
 - **0.10.0:** New wiki map (`Alt+M`) with a hierarchy tree and a zoomable map of all typed links.
