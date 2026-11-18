@@ -1432,3 +1432,13 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Cascade of Unintended Consequences]]
 - **Commit:** `verify: Cascade of Unintended Consequences`
+
+### [2026-11-18] verify | ACH GenAI Workflow
+
+- **Verify:**
+  - Approved: [[ACH GenAI Workflow]]
+  - Flags I resolved before approving (3):
+    - Accuracy check (Sources disagree) — these are just two different systems
+    - Accuracy check — same thing for me
+    - Gap (Gap in the source) — this is fine
+- **Commit:** `verify: ACH GenAI Workflow`

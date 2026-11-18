@@ -1,6 +1,6 @@
 ---
 type: workflow
-status: draft
+status: verified
 aliases:
   - ACH Workflow
   - ACH with AI
@@ -16,7 +16,7 @@ counters:
   - "[[Hallucination]]"
 drafted_by: Claude (claude-sonnet-5-5)
 drafted_on: 2026-11-12
-verified_on:
+verified_on: 2026-11-18
 ---
 > [!summary]
 > The ACH GenAI Workflow is a seven-step prompt sequence (Steps 0–6) from the SAIL ACH module for running [[Analysis of Competing Hypotheses]] with a generative AI assistant as a structured reasoning partner, not a replacement for analytic judgment ([[SRC - ACH GenAI Workflow|ACH Workflow, Orchestrator]]). Each step has a prompt, guardrails for the AI, and a checkpoint where the analyst reviews and approves before moving on. ==The AI drafts; the analyst decides== ([[SRC - ACH GenAI Workflow|ACH Workflow, Orchestrator]]).
@@ -41,12 +41,3 @@ verified_on:
 - Using an evidence base that is entirely AI-generated and unverified ([[SRC - ACH GenAI Workflow|ACH Workflow, Orchestrator]]).
 - Starting from a vague analytic question ([[SRC - ACH GenAI Workflow|ACH Workflow, Orchestrator]]).
 - Treating the final output as finished intelligence without editorial review ([[SRC - ACH GenAI Workflow|ACH Workflow, Orchestrator]]).
-
-> [!caution] Sources disagree
-> My SAIL notes mark each matrix cell S (supports), C (contradicts) or N (neither) ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]) vs. this workflow, which uses CC, C, N, I and II, where C means *consistent* ([[SRC - ACH GenAI Workflow|ACH Workflow, Step 3]]). The same letter, C, means opposite things.
-
-> [!caution] Accuracy check
-> Step 0 says the method was developed by Richards Heuer, and Step 6 tells the AI to cite "Heuer, 1999" ([[SRC - ACH GenAI Workflow|ACH Workflow, Step 6]]). My notes say he developed ACH at the CIA in 1999 ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]). 1999 may be a publication date rather than the year the method was developed; check against Heuer's own text before verifying.
-
-> [!todo] Gap in the source
-> The orchestrator names a companion document, *ACH Student Primer*, that is not in the vault ([[SRC - ACH GenAI Workflow|ACH Workflow, Orchestrator]]). Add it to `Sources/Readings` if you have it. Note also that Step 4 rates linchpin confidence High / Medium / Low, while Step 6 rates overall confidence High / Moderate / Low.
