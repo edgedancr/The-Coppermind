@@ -1,6 +1,6 @@
 ---
 type: schema
-version: 5.1
+version: 5.2
 status: verified
 owner: Harrison Nickles
 updated: 2026-11-17
@@ -52,7 +52,7 @@ The Coppermind/
 ├── index.md                Map of every page
 ├── log.md                  Dated record of every operation
 ├── Ingest Queue.md         Sources I've collected that are waiting to be ingested, in batches
-├── Review Queue.base       Live list of pages waiting for review
+├── Review Queue.base       Live list of pages waiting for review, with a view for verified pages that changed
 ├── AGENTS.md               Pointers to this file for agents
 ├── Sources/
 │   ├── Class Notes/        Copies of my course notes (one file per course)
@@ -140,11 +140,13 @@ Every page in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/` starts with 
 | `drafted_by`                                                                            | e.g. `Claude (claude-opus-5-5)`                                                                                   | The agent and model that wrote the draft |
 | `drafted_on`                                                                            | YYYY-MM-DD                                                                                                        |                                          |
 | `verified_on`                                                                           | YYYY-MM-DD                                                                                                        | Set only when I verify the page          |
+| `changes_since_verified`                                                                | list of one-line notes                                                                                            | Only on a verified page the agent changed at my request. Deleted when I verify the page again (§7)|
 
 
 Rules:
 - Dates are always `YYYY-MM-DD`.
 - Links in properties are written in quotes: `supports: ["[[Automation Bias]]"]`.
+- `changes_since_verified` is not in the templates. The agent adds it only when it changes a verified page (§7), and it is deleted when I verify the page again.
 
 ---
 
@@ -251,9 +253,10 @@ Each source card rates the source with the Admiralty Code. The agent may propose
 2. **The agent only ever creates drafts.** It writes new pages directly into the vault with `status: draft`, so I can review them in Obsidian, where the links and formatting render and I can click through to check each citation.
 3. **Only I make a page verified.** I either change the property myself, or tell the agent explicitly, for that specific page, "mark it verified." The agent then sets `status: verified` and `verified_on`, and logs it. Clicking the **Verify** button added by the Nicrosil plugin counts as me making that change ([[Nicrosil]]).
 4. **"Saved as final" means verified and committed to git.** A draft in the vault is a proposal, not part of the wiki's baseline.
-5. **If the agent changes the content of a verified page, the page goes back to `draft`** and the change is logged. Purely mechanical fixes, like updating a link after a page is renamed, don't reset the status but are still logged.
+5. **If the agent changes the content of a verified page, the page goes back to `draft`** and the change is logged. It also records what changed in the page's `changes_since_verified` property (rule 8). Purely mechanical fixes, like updating a link after a page is renamed, don't reset the status but are still logged.
 6. **A rejected draft is deleted, never kept,** and the rejection is recorded in the log with my reason. The **Reject** button does this, and also removes the page from the index.
 7. **Drafts don't sit forever.** A health check flags any draft older than 14 days.
+8. **A verified page the agent changed carries a note of what changed.** The agent only changes a verified page when I tell it to. In that same edit it sets `status: draft`, keeps the old `verified_on`, and adds one line per change to `changes_since_verified`, written as `YYYY-MM-DD: what changed (why)`. A later edit adds another line. The field lives in the properties, never in the page text. When I verify the page, the field is deleted; the log keeps the history. A draft with `verified_on` and this field is a re-review: I check only the listed changes. A draft without the field is new. The **Verify** button in [[Nicrosil]] deletes the field, lists re-reviews first in the queue with an **R** badge, and shows the lines on the review card. `Review Queue.base` has a separate view for them.
 
 ### Review size
 
@@ -330,7 +333,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
    - broken links, orphan pages, and duplicate pages for the same idea
    - "Whose view?" callouts and unsourced-background callouts still open
    - drafts older than 14 days
-   - verified pages changed since they were verified
+   - verified pages changed since they were verified, and drafts that have `verified_on` but no `changes_since_verified` note, or verified pages that still carry one
    - gaps in the sources themselves (unfinished notes, "?" placeholders, empty definitions)
    - pages missing from `index.md`, or index entries for pages that no longer exist
    - `Ingest Queue.md` out of date: a batch still marked waiting whose sources already have source cards, or a batch marked done whose sources don't
@@ -430,3 +433,4 @@ The Coppermind must outlive any one tool or agent.
 - **4.4 (2026-11-17):** `Find.md` and `Library.base` removed from the vault, and every mention of them removed from the rules (§2, §6, §9, §10, §11, §13). Earlier changelog lines still name them, since they record what was true then. Status returns to `draft` until I verify it again (§7).
 - **5.0 (2026-11-17):** Typed links reworked after the first health check found 82% of them were `related`, about half of those stored on both pages. §5: three new types (`type_of`, `causes`, `developed_by`), `applies_to` widened to rules that govern something, `supports` and `contradicts` defined for concept pages, and the types listed in the order the agent tries them. New linking rules: store a relationship on the page the sentence starts with and never store the reverse; propose links to verified pages instead of falling back to `related`; "see also" links stay in the page text; every `related` link says why no stronger type fits; links rest on what a source says; "Sources disagree" across two pages becomes a `contradicts` proposal; glossary and concept pages link to each other in the text, not in both pages' properties. §4: the new property names. §10: the health check now reports the typed-link mix. The page templates, the Health Check Report template, and [[Dissect and Ingest a Source]] were updated to match. Status returns to `draft` until I verify it again (§7).
 - **5.1 (2026-11-17):** The index no longer splits each type into Verified and Drafts (§11). Each type is one alphabetical list with a single total, and a change of status no longer changes the index. Nicrosil v0.8.6 was updated to match. Status returns to `draft` until I verify it again (§7).
+- **5.2 (2026-11-17):** Verified pages the agent changes now say what changed. §4: new `changes_since_verified` property, a list of one-line notes. §7: new rule 8 and a longer rule 5; the agent adds the note in the same edit that sets the page back to `draft`, and verifying the page deletes it. §10: the health check flags re-reviews without a note. `Review Queue.base` has a "Changed since verified" view, and Nicrosil v0.8.11 deletes the field on Verify, lists these pages first with an R badge, and shows the notes on the card and the Dashboard. Status returns to `draft` until I verify it again (§7).

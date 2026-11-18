@@ -11,6 +11,8 @@ related:
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11
+changes_since_verified:
+  - "2026-11-17: removed related → [[Dissect and Ingest a Source]] (the page text already links it)"
 ---
 > [!summary]
 > My prompt for summarizing a single source as a neutral, attributed intelligence-style product of under 250 words, in four parts: Executive Summary, Main Points, Themes, and Key Takeaways. It works on its own in any chat. When the summary becomes a page in `Wiki/Summaries/`, the "In the Coppermind" section at the end applies too.

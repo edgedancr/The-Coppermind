@@ -9,3 +9,5 @@ Key rules, in case of doubt: draft only, never mark a page verified without Harr
 `Ingest Queue.md` lists the sources waiting to be ingested, in batches. Mark a batch done at the end of each ingest that comes from it. It is a plan, not a page: no status, not in the index. See `SCHEMA.md` §2.
 
 `Health Checks/` holds one short report for each health check, written from `_templates/Health Check Report.md`. Save a new report at the end of every health check and record Harrison's decisions in it. It is an archive, not part of the wiki: no status, not in the index. See `SCHEMA.md` §2 and §10.
+
+When Harrison tells you to change a verified page, set it back to `draft`, keep its `verified_on`, and add one line per change to its `changes_since_verified` property in the same edit (`YYYY-MM-DD: what changed (why)`). Never put that note in the page text. See `SCHEMA.md` §7 rule 8.

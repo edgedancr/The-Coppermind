@@ -1031,3 +1031,28 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Changed:** 29 pages set back to `draft` (§7), old `verified_on` kept: [[AI in Intelligence Production]], [[AI in Warfighting]], [[Ages of U.S. Intelligence]], [[Analysis of Competing Hypotheses]], [[Architecture of Worldview]], [[Bach Faucet]], [[Confirmation Bias]], [[Covert Action]], [[Curiosity, Character, and Competence]], [[Dissect and Ingest a Source]], [[Executive Order 12333]], [[Existential Risk]], [[Four Levels of Prompt Engineering]], [[Human Decision Point]], [[Information Model]], [[Intelligence Community Style Summaries]], [[Intelligence as Attentive Understanding]], [[Intelligence-Led Policing]], [[LLM Wiki]], [[Law Enforcement Intelligence Internships]], [[Law of Armed Conflict]], [[Mata v. Avianca (2023)]], [[Narrow AI]], [[Revolution in Military Affairs]], [[Richards Heuer]], [[Tasking, Collection, Processing, Exploitation, and Dissemination]], [[Time Compression Trap]], [[Unconventional Warfare]], [[Zero-Day Vulnerability]]. [[Health Check 2026-11-17]] flags 3 and 4 updated.
 - **Verify:** pending. All 29 pages need re-verifying, plus the 23 retyped links on drafts.
 - **Commit:** `schema: drop 37 repeated related links on 29 verified pages (approved)`
+
+### [2026-11-17] schema | Changes since verified
+
+- **Think:** Pages I set back to `draft` after you approved edits were mixed in with new drafts, so you couldn't tell which ones only needed a small re-check. You approved a field that lists what changed, deleted when you verify again.
+- **Calculate:** [[SCHEMA]] is now 5.2: new `changes_since_verified` property (§4), a new §7 rule 8 and a longer rule 5, a health-check item (§10), and the change to `Review Queue.base`. `AGENTS.md` carries the same rule for the agent.
+- **Changed:**
+  - `Review Queue.base`: new "Changed since verified" view; "Waiting for review" now shows only drafts without the field.
+  - Nicrosil v0.8.10 → v0.8.11 (`main.js`, `manifest.json`, `styles.css`): Verify deletes the field; the queue lists re-reviews first with an R badge; the review card and the Dashboard show the change lines; the Dashboard nav card counts them. [[Nicrosil]] guide updated to match. Not tested in Obsidian here: reload the plugin and try it on one page.
+  - 29 pages from the last round now carry a `changes_since_verified` line for each link removed. [[SCHEMA]] carries one for this edit, since it was verified earlier today.
+- **Verify:** pending. Test Nicrosil on one re-review (open it, check the card, click Verify, confirm the field is gone). [[SCHEMA]] needs re-verifying.
+- **Commit:** `schema: changes_since_verified field for re-reviews (v5.2); Nicrosil 0.8.11`
+
+### [2026-11-17] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`
+
+### [2026-11-17] schema | Relations panel
+
+- **Think:** The Properties dropdown shows only the links stored on the open page, and §5 stores each relationship once, so the other half of every relationship was invisible. You asked for a better way to see them and chose a panel with a local map.
+- **Calculate:** Nicrosil v0.9.0 adds a Relations panel (`Alt+L` or the ribbon button): a map of the open page's neighborhood (incoming on the left, outgoing on the right, edges colored by type, with dash patterns for `related` and `contradicts`) and grouped lists of outgoing and incoming relations. It reads the metadata cache only and changes no file.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`, `styles.css`); [[Nicrosil]] guide (new section, hotkey, and version history for 0.8.11 and 0.9.0). No schema change; no page content other than the guide.
+- **Verify:** pending. Not tested in Obsidian here (I ran the panel against sample data outside Obsidian). Reload Nicrosil, press `Alt+L` on a page such as Human Decision Point, and check the map, the lists, and clicking through.
+- **Commit:** `nicrosil 0.9.0: relations panel with local map`

@@ -12,6 +12,10 @@ related:
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11
+changes_since_verified:
+  - "2026-11-17: removed related → [[Automation Bias]] (the page text already links it)"
+  - "2026-11-17: removed related → [[Time Compression Trap]] (the page text already links it)"
+  - "2026-11-17: removed related → [[Human Decision Point]] (the page text already links it)"
 ---
 > [!summary]
 > SAIL taught that AI fundamentally reshapes the intelligence production process in three ways: how intelligence is collected, how threats are predicted, and how policy is made ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).

@@ -10,6 +10,8 @@ related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11
+changes_since_verified:
+  - "2026-11-17: removed related → [[Analysis of Competing Hypotheses]] (the page text already links it)"
 ---
 > [!summary]
 > **Confirmation bias:** the bias [[Analysis of Competing Hypotheses]] was developed to counteract. SAIL described it as "normal analysis": intuition → conclusion → gather evidence to support it. LLMs default to it because they pattern-match to the most plausible, fluent narrative ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).

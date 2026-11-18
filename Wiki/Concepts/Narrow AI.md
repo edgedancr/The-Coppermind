@@ -11,6 +11,9 @@ related:
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11
+changes_since_verified:
+  - "2026-11-17: removed related → [[AI-Enabled Surveillance]] (the page text already links it)"
+  - "2026-11-17: removed related → [[Cognitive Debt]] (the page text already links it)"
 ---
 > [!summary]
 > Narrow AI is AI that does a specific task, or set of tasks, really well ([[SAIL Class Notes (Fall 2026)#10/15/26|SAIL notes, 10/15/26]]). SAIL noted it is already everywhere (spam filters, recommendations, navigation, medical image screening), with drug and protein design, self-driving logistics, and AI agents at work on the near horizon ([[SAIL Class Notes (Fall 2026)#10/15/26|SAIL notes, 10/15/26]]).

@@ -1,6 +1,6 @@
 "use strict";
 /*
- * Nicrosil (v0.8.10)
+ * Nicrosil (v0.9.1)
  *
  * A nicrosil mind stores investiture and amplifies whoever draws on it. This plugin does the same for
  * the Coppermind: it holds the tools that make working in the vault faster. (Its folder and id are
@@ -20,8 +20,13 @@
  *    and what I changed, then adds the line to the Changelog at the bottom of SCHEMA.md and keeps its
  *    `version` and `updated` properties in step. It does not touch status, verified_on, or log.md.
  *
- * Verify: sets status: verified and verified_on, checks the page is listed in index.md,
- *         and appends to log.md.
+ * Relations panel (Alt+L): for the open page, a map and grouped lists of its typed links (SCHEMA §5),
+ *         outgoing and incoming, colored by type. The incoming side is worked out from the other pages.
+ *
+ * Verify: sets status: verified and verified_on, deletes `changes_since_verified` if the page has it,
+ *         checks the page is listed in index.md, and appends to log.md.
+ * Re-reviews: a draft that has a `changes_since_verified` list is a verified page the AI edited at my
+ *         request. The queue lists these first, with an R badge, and the card shows what changed.
  * Reject: asks for a reason, logs it, removes the page from index.md, and deletes the page
  *         (SCHEMA §7: a rejected draft is deleted, never kept).
  * Nothing is committed to git; do that yourself afterward.
@@ -123,14 +128,22 @@ function groupRank(g) {
 }
 
 /** Order drafts for review. Skipped pages go to the end, in the order they were skipped. */
+/** The `changes_since_verified` property as a list of plain strings (it may be a list or a single string). */
+function changeLines(v) {
+  if (v === undefined || v === null || v === "") return [];
+  return (Array.isArray(v) ? v : [v]).map((x) => String(x).trim()).filter(Boolean);
+}
+
 function sortQueue(drafts, mode, skipped) {
   const byType = (a, b) => groupRank(a.group) - groupRank(b.group) || a.name.localeCompare(b.name);
-  const cmp = {
+  const base = {
     clean: (a, b) => a.flags.length - b.flags.length || byType(a, b),
     flagged: (a, b) => b.flags.length - a.flags.length || byType(a, b),
     type: byType,
     az: (a, b) => a.name.localeCompare(b.name),
   }[mode] || byType;
+  // re-reviews (verified pages the AI changed) always come first
+  const cmp = (a, b) => (b.changes.length > 0) - (a.changes.length > 0) || base(a, b);
   const skip = skipped || [];
   const normal = drafts.filter((d) => !skip.includes(d.path)).sort(cmp);
   const later = skip.map((p) => drafts.find((d) => d.path === p)).filter(Boolean);
@@ -320,6 +333,13 @@ function flagBadges(parent, flags) {
   return wrap;
 }
 
+function changeBadge(parent, changes) {
+  if (!changes || !changes.length) return null;
+  const b = parent.createSpan({ cls: "cm-badge cm-badge-recheck", text: "R" });
+  b.setAttr("aria-label", `Changed since verified: ${changes.length} change${changes.length > 1 ? "s" : ""}`);
+  return b;
+}
+
 function confirmOnCtrlEnter(modal, button) {
   modal.scope.register(["Mod"], "Enter", () => { if (!button.disabled) button.click(); return false; });
 }
@@ -507,6 +527,12 @@ class QueueView extends ItemView {
       const card = root.createDiv({ cls: "cm-card" });
       card.createDiv({ cls: "cm-card-label", text: "Reviewing" });
       card.createDiv({ cls: "cm-card-title", text: curItem.name });
+      if (curItem.changes.length) {
+        const box = card.createDiv({ cls: "cm-changes" });
+        box.createDiv({ cls: "cm-changes-head", text: "Changed since verified" });
+        const cl = box.createEl("ul");
+        curItem.changes.forEach((c) => cl.createEl("li", { text: c }));
+      }
       if (curItem.flags.length) {
         const ul = card.createEl("ul", { cls: "cm-card-flags" });
         curItem.flags.forEach((f) => {
@@ -540,22 +566,29 @@ class QueueView extends ItemView {
 
     // the queue
     const order = p.queue();
-    const list = root.createDiv({ cls: "cm-list" });
-    list.createDiv({ cls: "cm-list-head", text: `Drafts (${order.length})` });
-    let lastGroup = null;
-    order.forEach((item) => {
-      if (p.settings.sort === "type" && item.group !== lastGroup) {
-        list.createDiv({ cls: "cm-group", text: item.group });
-        lastGroup = item.group;
-      }
-      const row = list.createDiv({ cls: "cm-row" });
-      if (cur && item.path === cur.path) row.addClass("is-current");
-      if (p.skipped.includes(item.path)) row.addClass("is-skipped");
-      const nameEl = row.createDiv({ cls: "cm-row-name", text: item.name });
-      if (p.settings.sort !== "type") nameEl.createSpan({ cls: "cm-row-group", text: item.group });
-      flagBadges(row, item.flags);
-      row.addEventListener("click", () => p.openFile(item.path));
-    });
+    const rechecks = order.filter((i) => i.changes.length);
+    const fresh = order.filter((i) => !i.changes.length);
+    const drawRows = (title, rows) => {
+      const list = root.createDiv({ cls: "cm-list" });
+      list.createDiv({ cls: "cm-list-head", text: `${title} (${rows.length})` });
+      let lastGroup = null;
+      rows.forEach((item) => {
+        if (p.settings.sort === "type" && item.group !== lastGroup) {
+          list.createDiv({ cls: "cm-group", text: item.group });
+          lastGroup = item.group;
+        }
+        const row = list.createDiv({ cls: "cm-row" });
+        if (cur && item.path === cur.path) row.addClass("is-current");
+        if (p.skipped.includes(item.path)) row.addClass("is-skipped");
+        const nameEl = row.createDiv({ cls: "cm-row-name", text: item.name });
+        if (p.settings.sort !== "type") nameEl.createSpan({ cls: "cm-row-group", text: item.group });
+        changeBadge(row, item.changes);
+        flagBadges(row, item.flags);
+        row.addEventListener("click", () => p.openFile(item.path));
+      });
+    };
+    if (rechecks.length) drawRows("Changed since verified", rechecks);
+    drawRows(rechecks.length ? "New drafts" : "Drafts", fresh);
 
     if (verified.length) {
       const det = root.createEl("details", { cls: "cm-verified" });
@@ -564,6 +597,237 @@ class QueueView extends ItemView {
         const row = det.createDiv({ cls: "cm-row" });
         row.createDiv({ cls: "cm-row-name", text: item.name });
         row.addEventListener("click", () => p.openFile(item.path));
+      });
+    }
+  }
+}
+
+/* ---------- Relations panel and local map ---------- */
+
+const REL_VIEW_TYPE = "nicrosil-relations";
+
+/** The typed-link properties, in the order SCHEMA §5 lists them, with how each reads from each side. */
+const REL_TYPES = {
+  type_of:      { out: "Is a kind of",     inn: "Kinds of this",         color: "#b87333", dash: "" },
+  part_of:      { out: "Is part of",       inn: "Parts of this",         color: "#5fae9e", dash: "" },
+  example_of:   { out: "Is an example of", inn: "Examples of this",      color: "#e0c040", dash: "" },
+  causes:       { out: "Causes",           inn: "Caused by",             color: "#e07a5f", dash: "" },
+  counters:     { out: "Counters",         inn: "Countered by",          color: "#b97f93", dash: "" },
+  applies_to:   { out: "Applies to",       inn: "Applied by",            color: "#6a9fd8", dash: "" },
+  supports:     { out: "Supports",         inn: "Supported by",          color: "#8bbf6a", dash: "" },
+  contradicts:  { out: "Contradicts",      inn: "Contradicted by",       color: "#d9435e", dash: "2 3" },
+  developed_by: { out: "Developed by",     inn: "Ideas developed here",  color: "#a58ad6", dash: "" },
+  related:      { out: "Related to",       inn: "Related from",          color: "#8a8a8a", dash: "5 4" },
+};
+
+/** Every typed link in the vault as {from, to, type}, read from the metadata cache (no file reads). */
+function collectRelations(app) {
+  const edges = [];
+  const mc = app.metadataCache;
+  for (const f of app.vault.getMarkdownFiles()) {
+    const fm = (mc.getFileCache(f) || {}).frontmatter;
+    if (!fm) continue;
+    for (const type of Object.keys(REL_TYPES)) {
+      const raw = fm[type];
+      if (raw === undefined || raw === null) continue;
+      const vals = [].concat(raw).flat(3);
+      for (const v of vals) {
+        const m = /\[\[([^\]|#]+)/.exec(String(v));
+        if (!m) continue;
+        const dest = mc.getFirstLinkpathDest(m[1].trim(), f.path);
+        edges.push({ from: f.path, to: dest ? dest.path : null, toName: m[1].trim(), type });
+      }
+    }
+  }
+  return edges;
+}
+
+const SVG_NS = "http://www.w3.org/2000/svg";
+function svgEl(parent, tag, attrs, text) {
+  const el = document.createElementNS(SVG_NS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) el.setAttribute(k, String(v));
+  if (text !== undefined) el.textContent = text;
+  parent.appendChild(el);
+  return el;
+}
+function clip(s, n) { return s.length > n ? s.slice(0, n - 1).trimEnd() + "…" : s; }
+
+class RelationsView extends ItemView {
+  constructor(leaf, plugin) {
+    super(leaf);
+    this.plugin = plugin;
+    this.file = null;
+    this.rerender = debounce(() => this.render(), 250, true);
+  }
+  getViewType() { return REL_VIEW_TYPE; }
+  getDisplayText() { return "Relations"; }
+  getIcon() { return "git-fork"; }
+  async onOpen() {
+    this.file = this.plugin.currentFile();
+    this.render();
+    this.registerEvent(this.app.workspace.on("file-open", (f) => { if (f) { this.file = f; this.render(); } }));
+    this.registerEvent(this.app.workspace.on("active-leaf-change", () => {
+      const f = this.plugin.currentFile();
+      if (f && (!this.file || f.path !== this.file.path)) { this.file = f; this.render(); }
+    }));
+    this.registerEvent(this.app.metadataCache.on("changed", () => this.rerender()));
+    this.registerEvent(this.app.metadataCache.on("resolved", () => this.rerender()));
+    this.registerEvent(this.app.vault.on("rename", () => this.rerender()));
+    this.registerEvent(this.app.vault.on("delete", () => this.rerender()));
+  }
+  async onClose() { this.containerEl.children[1].empty(); }
+
+  go(path, newTab) {
+    if (!path) return;
+    if (!newTab) { this.plugin.openFile(path); return; }
+    const f = this.app.vault.getAbstractFileByPath(path);
+    if (f instanceof TFile) this.app.workspace.getLeaf(true).openFile(f);
+  }
+
+  statusOf(path) {
+    const f = this.app.vault.getAbstractFileByPath(path);
+    const fm = f instanceof TFile ? (this.app.metadataCache.getFileCache(f) || {}).frontmatter : null;
+    return fm && fm.status ? String(fm.status) : "";
+  }
+
+  render() {
+    const root = this.containerEl.children[1];
+    root.empty();
+    root.addClass("cm-rel");
+    const file = this.file && this.app.vault.getAbstractFileByPath(this.file.path) instanceof TFile ? this.file : null;
+    if (!file) { root.createDiv({ cls: "cm-sub", text: "Open a page to see how it relates to the rest of the wiki." }); return; }
+
+    const edges = collectRelations(this.app);
+    const out = edges.filter((e) => e.from === file.path);
+    const inn = edges.filter((e) => e.to === file.path);
+
+    const head = root.createDiv({ cls: "cm-rel-head" });
+    head.createDiv({ cls: "cm-rel-title", text: file.basename });
+    const st = this.statusOf(file.path);
+    if (st) head.createSpan({ cls: `cm-rel-status cm-rel-${st}`, text: st });
+    head.createDiv({ cls: "cm-sub", text: `${out.length} outgoing · ${inn.length} incoming` });
+
+    if (!out.length && !inn.length) {
+      root.createDiv({ cls: "cm-sub cm-rel-empty", text: "No typed links to or from this page yet. Plain links in the text don't show here; only the typed properties do (Schema §5)." });
+      return;
+    }
+
+    this.drawMap(root, file, out, inn);
+    this.drawLegend(root, out, inn);
+    this.drawGroups(root, "This page…", out, "out", (e) => e.to, (e) => e.toName);
+    this.drawGroups(root, "Pointing at this page…", inn, "inn", (e) => e.from, (e) => this.app.vault.getAbstractFileByPath(e.from)?.basename || e.from);
+  }
+
+  /** Neighbors on both sides, deduplicated by page, each keeping the types that link it. */
+  neighbors(list, key, name) {
+    const map = new Map();
+    for (const e of list) {
+      const id = key(e) || "x:" + name(e);
+      if (!map.has(id)) map.set(id, { path: key(e), name: name(e), types: [] });
+      const n = map.get(id);
+      if (!n.types.includes(e.type)) n.types.push(e.type);
+    }
+    return [...map.values()];
+  }
+
+  drawMap(root, file, out, inn) {
+    const MAX = 10;
+    const L = this.neighbors(inn, (e) => e.from, (e) => this.app.vault.getAbstractFileByPath(e.from)?.basename || e.from);
+    const R = this.neighbors(out, (e) => e.to, (e) => e.toName);
+    const Ls = L.slice(0, MAX), Rs = R.slice(0, MAX);
+    const NW = 100, NH = 26, GAP = 10, CW = 100, X1 = 0, X2 = 136, X3 = 272, W = 372;
+    const rows = Math.max(Ls.length, Rs.length, 1) + ((L.length > MAX || R.length > MAX) ? 1 : 0);
+    const H = rows * (NH + GAP) + GAP;
+    const cy = H / 2;
+    const wrap = root.createDiv({ cls: "cm-rel-map" });
+    const svg = svgEl(wrap, "svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img", "aria-label": `Relations map for ${file.basename}` });
+    const defs = svgEl(svg, "defs");
+    for (const [t, info] of Object.entries(REL_TYPES)) {
+      const m = svgEl(defs, "marker", { id: `cm-arrow-${t}`, viewBox: "0 0 8 8", refX: 7, refY: 4, markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse" });
+      svgEl(m, "path", { d: "M0,0 L8,4 L0,8 z", fill: info.color });
+    }
+    const yFor = (i, n) => GAP + i * (NH + GAP) + ((rows - n - ((L.length > MAX || R.length > MAX) ? 1 : 0)) * (NH + GAP)) / 2;
+
+    const edgePath = (x1, y1, x2, y2) => `M${x1},${y1} C${(x1 + x2) / 2},${y1} ${(x1 + x2) / 2},${y2} ${x2},${y2}`;
+    const drawEdges = (side, nodes, n) => {
+      nodes.forEach((nd, i) => {
+        const y = yFor(i, n) + NH / 2;
+        nd.types.forEach((t, k) => {
+          const info = REL_TYPES[t];
+          const off = (k - (nd.types.length - 1) / 2) * 4;
+          const attrs = { fill: "none", stroke: info.color, "stroke-width": 1.6, "stroke-opacity": 0.9, "marker-end": `url(#cm-arrow-${t})` };
+          if (info.dash) attrs["stroke-dasharray"] = info.dash;
+          if (side === "out") svgEl(svg, "path", { ...attrs, d: edgePath(X2 + CW, cy + off, X3 - 1, y + off) });
+          else svgEl(svg, "path", { ...attrs, d: edgePath(X1 + NW, y + off, X2 - 1, cy + off) });
+        });
+      });
+    };
+    drawEdges("inn", Ls, Ls.length);
+    drawEdges("out", Rs, Rs.length);
+
+    const node = (x, y, w, nd, center) => {
+      const g = svgEl(svg, "g", { class: "cm-rel-node" + (center ? " is-center" : "") + (nd.path ? "" : " is-missing"), tabindex: 0, role: "button" });
+      const st = nd.path ? this.statusOf(nd.path) : "";
+      svgEl(g, "rect", { x, y, width: w, height: NH, rx: 5, class: `cm-rel-box ${st ? "cm-rel-box-" + st : ""}` });
+      svgEl(g, "text", { x: x + w / 2, y: y + NH / 2 + 4, "text-anchor": "middle", class: "cm-rel-label" }, clip(nd.name, center ? 15 : 16));
+      svgEl(g, "title", {}, nd.name + (nd.path ? "" : " (page not found)"));
+      if (nd.path && !center) {
+        g.addEventListener("click", (e) => this.go(nd.path, e.ctrlKey || e.metaKey));
+        g.addEventListener("keydown", (e) => { if (e.key === "Enter") this.go(nd.path, e.ctrlKey || e.metaKey); });
+      }
+    };
+    Ls.forEach((nd, i) => node(X1, yFor(i, Ls.length), NW, nd, false));
+    Rs.forEach((nd, i) => node(X3, yFor(i, Rs.length), NW, nd, false));
+    const ch = Math.min(H - 2 * GAP, 56);
+    const g = svgEl(svg, "g", { class: "cm-rel-node is-center" });
+    svgEl(g, "rect", { x: X2, y: cy - ch / 2, width: CW, height: ch, rx: 7, class: "cm-rel-box cm-rel-box-center" });
+    const words = file.basename.split(" "); const lines = []; let cur = "";
+    for (const w of words) { if ((cur + " " + w).trim().length > 15 && cur) { lines.push(cur); cur = w; } else cur = (cur + " " + w).trim(); }
+    if (cur) lines.push(cur);
+    const shown = lines.slice(0, 3);
+    shown.forEach((ln, i) => svgEl(g, "text", { x: X2 + CW / 2, y: cy - ((shown.length - 1) * 6.5) + i * 13 + 4, "text-anchor": "middle", class: "cm-rel-label cm-rel-center-label" }, clip(ln, 16)));
+    svgEl(g, "title", {}, file.basename);
+    const more = (L.length - Ls.length) + (R.length - Rs.length);
+    if (more > 0) svgEl(svg, "text", { x: W / 2, y: H - 4, "text-anchor": "middle", class: "cm-rel-more" }, `${L.length > MAX ? L.length - MAX + " more incoming" : ""}${L.length > MAX && R.length > MAX ? " · " : ""}${R.length > MAX ? R.length - MAX + " more outgoing" : ""} (see the lists below)`);
+    svgEl(svg, "text", { x: X1, y: 8, class: "cm-rel-side" }, "");
+  }
+
+  drawLegend(root, out, inn) {
+    const present = Object.keys(REL_TYPES).filter((t) => out.concat(inn).some((e) => e.type === t));
+    const lg = root.createDiv({ cls: "cm-rel-legend" });
+    present.forEach((t) => {
+      const chip = lg.createSpan({ cls: "cm-rel-chip" });
+      const sw = chip.createSpan({ cls: "cm-rel-swatch" });
+      sw.style.background = REL_TYPES[t].color;
+      if (REL_TYPES[t].dash) sw.addClass("is-dashed");
+      chip.appendText(t.replace("_", " "));
+    });
+  }
+
+  drawGroups(root, title, list, dir, key, name) {
+    if (!list.length) return;
+    root.createEl("h5", { cls: "cm-rel-h", text: title });
+    for (const t of Object.keys(REL_TYPES)) {
+      const items = this.neighbors(list.filter((e) => e.type === t), key, name);
+      if (!items.length) continue;
+      const grp = root.createDiv({ cls: "cm-rel-group" });
+      const h = grp.createDiv({ cls: "cm-rel-grouphead" });
+      const sw = h.createSpan({ cls: "cm-rel-swatch" });
+      sw.style.background = REL_TYPES[t].color;
+      if (REL_TYPES[t].dash) sw.addClass("is-dashed");
+      h.appendText(REL_TYPES[t][dir]);
+      h.createSpan({ cls: "cm-rel-count", text: String(items.length) });
+      items.sort((a, b) => a.name.localeCompare(b.name)).forEach((it) => {
+        const row = grp.createDiv({ cls: "cm-rel-item" + (it.path ? "" : " is-missing") });
+        const st = it.path ? this.statusOf(it.path) : "";
+        row.createSpan({ cls: `cm-rel-dot ${st ? "cm-rel-dot-" + st : ""}` }).setAttr("aria-label", st || "no status");
+        row.createSpan({ cls: "cm-rel-name", text: it.name });
+        if (!it.path) row.createSpan({ cls: "cm-rel-miss", text: "no page" });
+        else {
+          row.setAttr("role", "button"); row.setAttr("tabindex", "0");
+          row.addEventListener("click", (e) => this.go(it.path, e.ctrlKey || e.metaKey));
+          row.addEventListener("keydown", (e) => { if (e.key === "Enter") this.go(it.path, e.ctrlKey || e.metaKey); });
+        }
       });
     }
   }
@@ -1218,6 +1482,7 @@ module.exports = class Nicrosil extends Plugin {
     this.stripObservers = new Set();
 
     this.registerView(VIEW_TYPE, (leaf) => new QueueView(leaf, this));
+    this.registerView(REL_VIEW_TYPE, (leaf) => new RelationsView(leaf, this));
     this.addSettingTab(new ReviewSettings(this.app, this));
     this.registerCommands();
 
@@ -1242,6 +1507,7 @@ module.exports = class Nicrosil extends Plugin {
       this.openDashboard(!!(evt && (evt.ctrlKey || evt.metaKey)));
     });
     this.ribbonEl.addClass("cm-ribbon-logo");
+    this.addRibbonIcon("git-fork", "Relations panel (Alt+L)", () => this.activateRelations());
     this.ribbonEl.addEventListener("mousedown", (e) => {
       if (e.button !== 1) return;
       e.preventDefault();
@@ -1319,6 +1585,7 @@ module.exports = class Nicrosil extends Plugin {
     this.addCommand({ id: "next-draft", name: "Open the next draft", hotkeys: [{ modifiers: ["Alt"], key: "n" }], callback: () => { const f = this.currentFile(); this.openNext(f ? f.path : null); } });
     this.addCommand({ id: "open-dashboard", name: "Go to the Dashboard", hotkeys: [{ modifiers: ["Alt"], key: "d" }], callback: () => this.openDashboard() });
     this.addCommand({ id: "log-schema-change", name: "Log a schema change", callback: () => this.openSchemaLog() });
+    this.addCommand({ id: "open-relations", name: "Open the relations panel", hotkeys: [{ modifiers: ["Alt"], key: "l" }], callback: () => this.activateRelations() });
     this.addCommand({ id: "open-queue", name: "Open the review queue", hotkeys: [{ modifiers: ["Alt"], key: "q" }], callback: () => this.activateView() });
   }
 
@@ -1377,7 +1644,7 @@ module.exports = class Nicrosil extends Plugin {
       const fm = this.fm(f);
       if (fm.status !== "draft" && fm.status !== "verified") continue;
       const flags = fm.status === "draft" ? parseFlags(await this.app.vault.cachedRead(f)) : [];
-      items.push({ path: f.path, name: f.basename, group: groupOf(f.path), status: fm.status, flags, draftedOn: fm.drafted_on ? String(fm.drafted_on) : "" });
+      items.push({ path: f.path, name: f.basename, group: groupOf(f.path), status: fm.status, flags, draftedOn: fm.drafted_on ? String(fm.drafted_on) : "", changes: fm.status === "draft" ? changeLines(fm.changes_since_verified) : [] });
     }
     this.items = items;
     this.skipped = this.skipped.filter((p) => items.some((i) => i.path === p && i.status === "draft"));
@@ -1482,13 +1749,27 @@ module.exports = class Nicrosil extends Plugin {
     btn.addEventListener("click", async () => { await this.activateView(); this.openNext(null); });
 
     // details
-    const details = (key, title, openDefault, fill) => {
+    const details = (key, title, openDefault, fill, remember = true) => {
       const d = el.createEl("details", { cls: "cm-dash-details" });
-      d.open = this.dashOpen[key] !== undefined ? this.dashOpen[key] : openDefault;
+      d.open = remember && this.dashOpen[key] !== undefined ? this.dashOpen[key] : openDefault;
       d.createEl("summary", { text: title });
-      d.addEventListener("toggle", () => { this.dashOpen[key] = d.open; });
+      if (remember) d.addEventListener("toggle", () => { this.dashOpen[key] = d.open; });
       fill(d);
     };
+
+    const rechecks = drafts.filter((i) => i.changes.length);
+    if (rechecks.length) {
+      details("changes", `Changed since verified (${rechecks.length})`, false, (d) => {
+        rechecks.sort((a, b) => a.name.localeCompare(b.name)).forEach((i) => {
+          const row = d.createDiv({ cls: "cm-dash-change" });
+          row.createDiv({ cls: "cm-dash-change-name", text: i.name });
+          i.changes.forEach((c) => row.createDiv({ cls: "cm-dash-change-line", text: c }));
+          row.setAttr("role", "button");
+          row.setAttr("tabindex", "0");
+          row.addEventListener("click", () => this.openFile(i.path));
+        });
+      }, false);
+    }
 
     details("flags", `Open flags (${flagCount})`, false, (d) => {
       let any = false;
@@ -1540,10 +1821,11 @@ module.exports = class Nicrosil extends Plugin {
     el.empty();
     el.addClass("cm-nav");
     const drafts = this.items.filter((i) => i.status === "draft").length;
+    const rechecks = this.items.filter((i) => i.status === "draft" && i.changes.length).length;
     const open = (link) => (newTab) => this.app.workspace.openLinkText(link, "", !!newTab);
     const cards = [
       { icon: "list", title: "Index", sub: "Every page, by type", go: open("index") },
-      { icon: "badge-check", title: "Review queue", sub: drafts ? `${drafts} drafts waiting` : "Nothing waiting", go: () => this.activateView() },
+      { icon: "badge-check", title: "Review queue", sub: drafts ? `${drafts} drafts waiting${rechecks ? `, ${rechecks} changed since verified` : ""}` : "Nothing waiting", go: () => this.activateView() },
       { icon: "compass", title: "My Worldview", sub: "The convictions behind my views", go: open("My Worldview") },
       { icon: "scroll-text", title: "Log", sub: "Every change and decision", go: open("log") },
       { icon: "book-open", title: "Schema", sub: "The rulebook", go: open("SCHEMA") },
@@ -1797,6 +2079,15 @@ module.exports = class Nicrosil extends Plugin {
     return leaves.find((l) => l.view.file && l.view.file.path === cur) || leaves[0] || this.app.workspace.getLeaf(false);
   }
 
+  async activateRelations() {
+    let leaf = this.app.workspace.getLeavesOfType(REL_VIEW_TYPE)[0];
+    if (!leaf) {
+      leaf = this.app.workspace.getRightLeaf(false);
+      await leaf.setViewState({ type: REL_VIEW_TYPE, active: true });
+    }
+    this.app.workspace.revealLeaf(leaf);
+  }
+
   async openFile(path) {
     const f = this.app.vault.getAbstractFileByPath(path);
     if (!(f instanceof TFile)) return;
@@ -1858,6 +2149,7 @@ module.exports = class Nicrosil extends Plugin {
           await this.app.fileManager.processFrontMatter(file, (f) => {
             f.status = "verified";
             f.verified_on = date;
+            delete f.changes_since_verified;
           });
           const indexed = await this.updateIndex(file.basename, "verify", date);
           await this.appendLog(verifyLogEntry({ name: file.basename, date, note, openFlags: flags, resolved }));

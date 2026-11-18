@@ -19,12 +19,13 @@ verified_on:
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
-This guide describes Nicrosil **v0.8.10**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v0.9.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
 | --- | --- | --- |
 | **Review** | A queue of drafts, flag callouts with **Resolve** buttons, and **Verify**, **Skip**, and **Reject** | [[#Review tools]] |
+| **Relations** | A side panel for the open page: a map and grouped lists of its typed links, outgoing and incoming | [[#The relations panel]] |
 | **Dashboard** | The front page: progress, search box, six navigation cards, recent activity | [[#The Dashboard]] |
 | **Search** | A live search box over wiki pages, source cards, and perspectives | [[#Search]] |
 | **Index and log** | Checks [[index]] and writes to [[log]] after each verify or reject, and folds the log's entries | [[#The index and the log]] |
@@ -44,6 +45,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
   - a progress bar
   - a card for the page I'm on, with its flags and **Verify**, **Skip**, and **Reject** buttons
   - every draft, in review order, with flag badges: **A** accuracy check, **G** gap, **Q** question ("Whose view is this?"), **W** unsourced warning, **✓** no flags
+  - a **Changed since verified** list at the top, with an **R** badge on each page: verified pages the AI changed at my request. Their card shows the lines from the page's `changes_since_verified` property, so I check only what changed
   - a collapsed list of verified pages
 - **Resolve buttons on flags.** Each flag callout gets a **Resolve** button in its title bar in Reading view. In editing view, use the sidebar card or `Alt+F`.
 
@@ -54,6 +56,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 4. **Resolve each flag.** If a claim needs correcting, edit the page text first. Then click **Resolve** and write what I decided. The callout is removed from the page, and my decision is saved and written into the log when I verify (or reject) the page.
 5. **Decide:**
    - **Verify** (`Alt+V`): optionally note what I changed and why, then `Ctrl+Enter`. The page gets `status: verified` and `verified_on`, and [[log]] gets an entry listing any flags I resolved. If flags are still open, I have to tick a box to verify anyway, and the log records them.
+     - If the page has a `changes_since_verified` property, Verify deletes it, and the log keeps the record ([[SCHEMA#7. Draft vs. verified|Schema §7]], rule 8).
    - **Skip** (`Alt+S`): moves the page to the end of the queue for this session and opens the next one.
    - **Reject** (`Alt+R`): write the reason (required), then `Ctrl+Enter`. The reason is logged, the page is removed from the index, and the page is deleted ([[SCHEMA#7. Draft vs. verified|Schema §7]]). The dialog lists pages that link to it, so I can fix those links afterward.
 6. After Verify or Reject, the next draft opens automatically. Turn this off with the checkbox in the sidebar or in the plugin's settings.
@@ -64,7 +67,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 - **Header** (`coppermind-hero`): the Coppermind logo, name, and tagline.
 - **Six navigation cards** (`coppermind-nav`): Index, Review queue, My Worldview, Log, Schema, and Guides. A click opens the page in the current tab. ==`Ctrl+click` (or middle-click) opens it in a new tab.== The Review queue card opens the sidebar instead, so it has no new-tab version.
 - **Search box** (`coppermind-search`): see [[#Search]].
-- **Review progress** (`coppermind-dashboard`): stat tiles for verified, drafts, and open flags, a progress bar, and **Start reviewing**. Below that are the open flags by kind, a table by page type, and drafts older than 14 days.
+- **Review progress** (`coppermind-dashboard`): stat tiles for verified, drafts, and open flags, a progress bar, and **Start reviewing**. A **Changed since verified** section lists each re-review with its change lines. Below that are the open flags by kind, a table by page type, and drafts older than 14 days.
 - **Recent activity** (`coppermind-activity`): the last six log entries. Click one to open the page it names, or the log.
 - **Reference:** folded sections on what the Coppermind is, how to read it, what it covers, and its six parts. These are ordinary text in the note.
 
@@ -83,6 +86,12 @@ The search box on the [[Dashboard]] shows suggestion cards as I type, over wiki 
 - **Index:** [[index]] lists every page under its type, in alphabetical order, with a count per type and a total at the top. It does not show whether a page is verified; the review queue and the Dashboard do that. When I verify a page, Nicrosil only checks that the page is listed. When I reject one, its line is removed and the counts are updated.
 - **Log:** Nicrosil appends the entry for each verify and reject to [[log]] (newest at the bottom, never rewriting old entries). The log opens with every entry folded, so it reads as a short list. Click an entry's heading (or its arrow) to open it. This happens when the log opens in editing view, once per opening, so switching tabs doesn't re-fold it. It needs Obsidian's **Fold heading** option (Settings → Editor) to be on.
 - **Properties:** [[index]], [[log]], and the Dashboard hide their properties entirely.
+
+## The relations panel
+Open it with `Alt+L` or the branching-arrows button in the ribbon. It follows whichever page is open and shows how that page connects to the rest of the wiki through the typed links in its properties ([[SCHEMA#5. Linking rules and ontology|Schema §5]]):
+- **A map.** The page sits in the middle. Pages that point at it are on the left; pages it points at are on the right. Each arrow is colored by relationship type, and the legend under the map names the colors. Some types are also dashed (`related` is dashed, `contradicts` is dotted), so color is never the only cue. A solid teal outline means the other page is verified, a copper outline a draft, and a dashed grey outline no status. Click a page to open it, or `Ctrl+click` for a new tab. The map shows up to ten pages on each side; the lists below show them all.
+- **Two lists.** "This page…" groups the outgoing links by type ("Is part of", "Supports", and so on). "Pointing at this page…" groups the incoming links ("Parts of this", "Examples of this", "Supported by"). Incoming links are worked out from the other pages' properties, since each relationship is stored only once ([[SCHEMA#5. Linking rules and ontology|Schema §5]]).
+- **Not shown:** plain links in the page text. They are "see also" links, not relationships.
 
 ## The properties strip
 On every other note, Nicrosil hides the full Properties block and puts a one-line strip in its place, showing the page's **type**, **status**, and a date (`drafted` or `verified`). Click the strip to open the real Properties block. Each note starts collapsed again when I open it.
@@ -104,6 +113,7 @@ It does not touch `status`, `verified_on`, or [[log]]. After a schema change, th
 | `Alt+N` | Open the next draft |
 | `Alt+F` | Resolve a flag on this page |
 | `Alt+Q` | Open the review queue |
+| `Alt+L` | Open the relations panel |
 | `Alt+D` | Go to the Dashboard |
 | `Ctrl+Enter` | Confirm a dialog |
 | `Ctrl+click` or middle-click | Open a Dashboard card or the ribbon logo in a new tab (search results: `Ctrl+click` or `Ctrl+Enter`) |
@@ -140,6 +150,8 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
 ### Version history
+- **0.9.0:** New relations panel (`Alt+L`): a map and grouped lists of the open page's typed links, both outgoing and incoming.
+- **0.8.11:** Verified pages the AI changed at my request carry a `changes_since_verified` note. Verify deletes it; the queue lists these pages first with an **R** badge; the review card and the Dashboard show the notes.
 - **0.8.10:** Middle-clicking the Dashboard logo now opens exactly one new tab and leaves the current tab alone. Obsidian was sending the middle-click to the logo's click handler more than once, so the plugin now counts one middle-button press as one open.
 - **0.8.9:** Fixed middle-click on the Dashboard logo also loading the Dashboard into the current tab. It now opens one new tab and leaves the current tab alone.
 - **0.8.8:** Middle-click or Ctrl+click on the Dashboard logo now opens a new tab even when the Dashboard is already open; before, it just switched to the open tab.

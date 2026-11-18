@@ -13,6 +13,9 @@ related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11
+changes_since_verified:
+  - "2026-11-17: removed related → [[Think-Calculate-Verify Loop]] (the page text already links it)"
+  - "2026-11-17: removed related → [[SCHEMA]] (the page text already links it)"
 ---
 > [!summary]
 > An LLM wiki is a growing, interlinked knowledge base that a person develops and maintains with an AI agent. Instead of asking an AI the same questions over and over, the AI compiles what you learn into linked pages that compound over time ([[SAIL Class Notes (Fall 2026)#10/13/26|SAIL notes, 10/13/26]]). The Coppermind is one.

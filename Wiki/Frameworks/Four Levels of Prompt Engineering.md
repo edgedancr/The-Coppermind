@@ -13,6 +13,8 @@ related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11
+changes_since_verified:
+  - "2026-11-17: removed related → [[Think-Calculate-Verify Loop]] (the page text already links it)"
 ---
 > [!summary]
 > SAIL ranks how people work with AI in four levels, from asking a single question to fully steering the AI with the think-calculate-verify loop ([[SAIL Class Notes (Fall 2026)#9/3/26|SAIL notes, 9/3/26]]). What separates the levels is how much the person reads, challenges, and refines the AI's *content*, not how polished the output looks ([[SAIL Class Notes (Fall 2026)#9/3/26|SAIL notes, 9/3/26]]).
