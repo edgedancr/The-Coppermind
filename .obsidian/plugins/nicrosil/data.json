@@ -2,7 +2,8 @@
   "settings": {
     "autoAdvance": true,
     "sort": "az",
-    "mapTab": "tree"
+    "mapTab": "tree",
+    "mapFlow": true
   },
   "resolved": {}
 }
