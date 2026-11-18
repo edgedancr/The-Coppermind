@@ -1,6 +1,6 @@
 "use strict";
 /*
- * Nicrosil (v0.9.1)
+ * Nicrosil (v0.9.2)
  *
  * A nicrosil mind stores investiture and amplifies whoever draws on it. This plugin does the same for
  * the Coppermind: it holds the tools that make working in the vault faster. (Its folder and id are
@@ -880,7 +880,7 @@ class ReviewSettings extends PluginSettingTab {
 
 /* ---------- search (pure helpers, tested outside Obsidian) ---------- */
 
-const SEARCH_LIMIT = 8;
+const SEARCH_PAGE = 20; // cards drawn at a time; more are drawn as the results list is scrolled
 const SEARCH_SCOPE = [/^Wiki\//, /^Perspectives\//, /^Sources\/Source Cards\//];
 const TYPE_LABELS = { source: "Source card", "case-study": "Case study", perspective: "Perspective" };
 const TITLE_SCORE = [0, 45, 65, 80, 100];
@@ -1093,17 +1093,21 @@ function searchEntries(entries, query, limit) {
   for (const e of entries) {
     const r = scoreEntry(e, tokens, full);
     if (!r) continue;
-    let snippet = "";
-    if (r.bodyTokens.length) snippet = snippetAround(e, r.bodyTokens[0]);
-    else snippet = e.lead;
-    hits.push({ entry: e, score: r.score, aliasNote: r.aliasNote, snippet, tokens });
+    // The snippet is worked out only when a card is drawn, so every match can be ranked cheaply.
+    const hit = { entry: e, score: r.score, aliasNote: r.aliasNote, tokens, _snip: null };
+    const bodyTok = r.bodyTokens.length ? r.bodyTokens[0] : null;
+    Object.defineProperty(hit, "snippet", { enumerable: true, get() {
+      if (hit._snip === null) hit._snip = bodyTok ? snippetAround(e, bodyTok) : e.lead;
+      return hit._snip;
+    } });
+    hits.push(hit);
   }
   hits.sort((a, b) =>
     b.score - a.score ||
     (a.entry.status === "verified" ? 0 : 1) - (b.entry.status === "verified" ? 0 : 1) ||
     a.entry.name.length - b.entry.name.length ||
     a.entry.name.localeCompare(b.entry.name));
-  return hits.slice(0, limit || SEARCH_LIMIT);
+  return limit ? hits.slice(0, limit) : hits;
 }
 
 /* ---------- search box on the Dashboard ---------- */
@@ -1165,7 +1169,7 @@ class SearchIndex {
     await this.index(file);
   }
 
-  search(q) { return searchEntries(this.entries.values(), q, SEARCH_LIMIT); }
+  search(q) { return searchEntries(this.entries.values(), q); }
 }
 
 class SearchBlock extends MarkdownRenderChild {
@@ -1195,6 +1199,11 @@ class SearchBlock extends MarkdownRenderChild {
     this.input.addEventListener("keydown", (e) => this.onKey(e));
     this.clearBtn.addEventListener("click", () => { this.input.value = ""; this.onType(); this.input.focus(); });
     this.registerDomEvent(document, "mousedown", (e) => { if (!el.contains(e.target)) this.list.hide(); });
+    // keep drawing results as the list is scrolled toward its end
+    this.list.addEventListener("scroll", () => {
+      const l = this.list;
+      if (l.scrollTop + l.clientHeight >= l.scrollHeight - 160) this.more();
+    });
   }
 
   async onType() {
@@ -1216,6 +1225,7 @@ class SearchBlock extends MarkdownRenderChild {
     const list = this.list;
     list.empty();
     list.show();
+    this.cards = null;
     const tokens = tokenize(this.query);
     if (!tokens.length) {
       list.createDiv({ cls: "cm-search-empty", text: "Keep typing…" });
@@ -1224,9 +1234,29 @@ class SearchBlock extends MarkdownRenderChild {
     if (!this.hits.length) {
       list.createDiv({ cls: "cm-search-empty", text: `No pages match “${this.query.trim()}”.` });
     }
-    this.hits.forEach((h, i) => {
+    this.cards = list.createDiv({ cls: "cm-search-cards" });
+    this.shown = 0;
+    const foot = list.createDiv({ cls: "cm-search-foot" });
+    this.count = foot.createSpan({ cls: "cm-search-count" });
+    const link = foot.createSpan({ cls: "cm-search-more", text: "Search everything, including class notes ↗", attr: { role: "button", tabindex: "0" } });
+    const go = () => this.searchAll();
+    link.addEventListener("click", go);
+    link.addEventListener("keydown", (ev) => { if (ev.key === "Enter") { ev.preventDefault(); go(); } });
+    this.more();
+    this.updateCount();
+    // if the first batch doesn't fill the list, there is nothing to scroll: draw until it does
+    while (this.shown < this.hits.length && list.scrollHeight <= list.clientHeight + 160 && list.clientHeight > 0) this.more();
+  }
+
+  /** Draws the next batch of result cards (all of them stay reachable by scrolling or the arrow keys). */
+  more() {
+    if (!this.cards || this.shown >= this.hits.length) return;
+    const tokens = tokenize(this.query);
+    const end = Math.min(this.shown + SEARCH_PAGE, this.hits.length);
+    for (let i = this.shown; i < end; i++) {
+      const h = this.hits[i];
       const e = h.entry;
-      const card = list.createDiv({ cls: "cm-search-card" + (i === this.active ? " is-active" : "") });
+      const card = this.cards.createDiv({ cls: "cm-search-card" + (i === this.active ? " is-active" : "") });
       card.setAttr("role", "option");
       const top = card.createDiv({ cls: "cm-search-top" });
       const title = top.createSpan({ cls: "cm-search-title" });
@@ -1241,13 +1271,19 @@ class SearchBlock extends MarkdownRenderChild {
       if (h.snippet) this.marked(card.createDiv({ cls: "cm-search-snippet" }), h.snippet, tokens);
       card.addEventListener("mousemove", () => this.setActive(i, false));
       card.addEventListener("click", (ev) => this.open(h, ev.ctrlKey || ev.metaKey));
-    });
-    const foot = list.createDiv({ cls: "cm-search-foot" });
-    const link = foot.createSpan({ cls: "cm-search-more", text: "Search everything, including class notes ↗", attr: { role: "button", tabindex: "0" } });
-    const go = () => this.searchAll();
-    link.addEventListener("click", go);
-    link.addEventListener("keydown", (ev) => { if (ev.key === "Enter") { ev.preventDefault(); go(); } });
+    }
+    this.shown = end;
+    this.updateCount();
   }
+
+  updateCount() {
+    if (!this.count) return;
+    const n = this.hits.length;
+    this.count.setText(this.shown < n ? `${this.shown} of ${n} matches · scroll for more` : `${n} ${n === 1 ? "match" : "matches"}`);
+  }
+
+  /** Makes sure the card for result i has been drawn. */
+  ensure(i) { while (this.shown <= i && this.shown < this.hits.length) this.more(); }
 
   marked(el, text, tokens) {
     for (const part of highlight(text, tokens)) {
@@ -1259,6 +1295,7 @@ class SearchBlock extends MarkdownRenderChild {
   setActive(i, scroll) {
     if (i === this.active) return;
     this.active = i;
+    this.ensure(i);
     const cards = this.list.querySelectorAll(".cm-search-card");
     cards.forEach((c, k) => c.toggleClass("is-active", k === i));
     if (scroll && cards[i]) cards[i].scrollIntoView({ block: "nearest" });

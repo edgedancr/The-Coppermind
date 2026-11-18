@@ -1056,3 +1056,18 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`, `styles.css`); [[Nicrosil]] guide (new section, hotkey, and version history for 0.8.11 and 0.9.0). No schema change; no page content other than the guide.
 - **Verify:** pending. Not tested in Obsidian here (I ran the panel against sample data outside Obsidian). Reload Nicrosil, press `Alt+L` on a page such as Human Decision Point, and check the map, the lists, and clicking through.
 - **Commit:** `nicrosil 0.9.0: relations panel with local map`
+
+### [2026-11-17] schema | Dashboard: changes section always collapsed
+
+- **Think:** You'll rarely open the "Changed since verified" section on the Dashboard, so it shouldn't start open.
+- **Changed:** Nicrosil v0.9.1 (`main.js`, `manifest.json`): the section is collapsed whenever the Dashboard opens or refreshes, and it no longer remembers being opened. The other Dashboard sections behave as before.
+- **Verify:** pending. Reload Nicrosil and check the Dashboard.
+- **Commit:** `nicrosil 0.9.1: Dashboard changes section always collapsed`
+
+### [2026-11-17] schema | Dashboard search: scroll through every match
+
+- **Think:** The search box stopped at 8 results. You wanted to keep scrolling the dropdown until you find the page.
+- **Calculate:** Nicrosil v0.9.2: the search ranks every match instead of the top 8. The popup draws 20 cards at a time and draws more as you scroll or press the down arrow past the last card, with a sticky line at the bottom showing the count ("20 of 143 matches · scroll for more") next to the class-notes search link. Snippets are worked out only for cards that are drawn, so typing stays fast.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`, `styles.css`); [[Nicrosil]] guide (Search section, version 0.9.2, version history for 0.9.1 and 0.9.2). Ranking and what is searched are unchanged.
+- **Verify:** pending. Not tested in Obsidian here. Reload Nicrosil, type a common word such as "AI", and scroll the popup to the end.
+- **Commit:** `nicrosil 0.9.2: search shows every match, loaded as you scroll`

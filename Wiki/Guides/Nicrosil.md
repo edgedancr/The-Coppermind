@@ -19,7 +19,7 @@ verified_on:
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
-This guide describes Nicrosil **v0.9.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v0.9.2**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -78,6 +78,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 ## Search
 The search box on the [[Dashboard]] shows suggestion cards as I type, over wiki pages, source cards, and perspectives. It does not search the raw class notes or readings, and it only reads: it never changes a page.
 - **Open a result:** click it, or use the arrow keys and `Enter`. `Ctrl+Enter` opens it in a new tab.
+- **Every match is reachable.** The list shows the best matches first, and more cards appear as I scroll it (or press the down arrow past the last card). A line at the bottom of the list says how many pages matched, for example "20 of 143 matches · scroll for more", and stays in view while scrolling.
 - **Each card shows** the page's title, its type and status, any alias that matched, and a snippet of the text that matched.
 - **Esc** closes the list, and pressing it again clears the box.
 - It stays up to date on its own as pages are created, edited, renamed, or deleted.
@@ -150,6 +151,8 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
 ### Version history
+- **0.9.2:** The Dashboard search box no longer stops at 8 results. It ranks every match and draws 20 cards at a time, loading more as the list is scrolled or the arrow keys go past the end, with a running count at the bottom.
+- **0.9.1:** The Dashboard's "Changed since verified" section is always collapsed when the Dashboard opens or refreshes.
 - **0.9.0:** New relations panel (`Alt+L`): a map and grouped lists of the open page's typed links, both outgoing and incoming.
 - **0.8.11:** Verified pages the AI changed at my request carry a `changes_since_verified` note. Verify deletes it; the queue lists these pages first with an **R** badge; the review card and the Dashboard show the notes.
 - **0.8.10:** Middle-clicking the Dashboard logo now opens exactly one new tab and leaves the current tab alone. Obsidian was sending the middle-click to the logo's click handler more than once, so the plugin now counts one middle-button press as one open.

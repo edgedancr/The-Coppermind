@@ -317,3 +317,7 @@ body.cm-on-dashboard .workspace-leaf-content[data-type="file-properties"] .view-
 .cm-rel-dot-verified { background: var(--cm-patina); border-color: var(--cm-patina); }
 .cm-rel-dot-draft { border-color: var(--cm-copper); }
 .cm-rel-miss { margin-left: auto; font-size: var(--font-ui-smaller); color: var(--text-faint); }
+
+/* search: foot stays visible while scrolling */
+.cm-search-foot { position: sticky; bottom: -6px; display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--background-primary); }
+.cm-search-count { color: var(--text-muted); }
