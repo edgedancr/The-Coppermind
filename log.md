@@ -1071,3 +1071,25 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`, `styles.css`); [[Nicrosil]] guide (Search section, version 0.9.2, version history for 0.9.1 and 0.9.2). Ranking and what is searched are unchanged.
 - **Verify:** pending. Not tested in Obsidian here. Reload Nicrosil, type a common word such as "AI", and scroll the popup to the end.
 - **Commit:** `nicrosil 0.9.2: search shows every match, loaded as you scroll`
+
+### [2026-11-17] schema | Wiki map
+
+- **Think:** Obsidian's graph view draws every plain link, so it mixes "see also" with real relationships and tells you little. You asked for a whole-wiki view built on the typed links, like the page panel, and chose the hierarchy tree and the typed-link map.
+- **Calculate:** Nicrosil v0.10.0 adds a Wiki map tab (`Alt+M` or the ribbon): a hierarchy tree from `type_of`, `part_of` and `example_of`, and a zoomable map of all typed links with relationship, status, page-type and course filters, a page finder, and click-to-focus. Colors match the relations panel. It reads the metadata cache only and changes no file.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`, `styles.css`); [[Nicrosil]] guide (new section, hotkey, version 0.10.0). No schema change.
+- **Verify:** pending. Not tested in Obsidian here; I ran both views against a copy of the wiki's properties outside Obsidian. Reload Nicrosil, press `Alt+M`, and try both tabs.
+- **Commit:** `nicrosil 0.10.0: wiki map with hierarchy tree and typed-link map`
+
+### [2026-11-17] schema | Wiki map button on the Dashboard
+- **Think:** You wanted the wiki map as a Dashboard button instead of a ribbon icon, in place of the My Worldview card.
+- **Calculate:** Nicrosil v1.0.0 removes the ribbon icon and swaps the My Worldview nav card for a Wiki map card. `Alt+M` and the command still work. My Worldview stays reachable from the Index.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`); [[Nicrosil]] guide (version 1.0.0, card list, ribbon text, history).
+- **Verify:** pending. Reload Nicrosil and click the new card.
+- **Commit:** `nicrosil 1.0.0: wiki map as a Dashboard card`
+
+### [2026-11-17] schema | Wiki map chips without counts
+- **Think:** The number after each relationship name on the wiki map (for example "type of 3") was clutter.
+- **Calculate:** Nicrosil v1.0.1 removes the count from those chips. Nothing else changed.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`); [[Nicrosil]] guide (version 1.0.1, history).
+- **Verify:** pending. Reload Nicrosil and open the wiki map.
+- **Commit:** `nicrosil 1.0.1: drop counts from wiki map relationship chips`

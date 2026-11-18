@@ -19,13 +19,14 @@ verified_on:
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
-This guide describes Nicrosil **v0.9.2**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v1.0.1**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
 | --- | --- | --- |
 | **Review** | A queue of drafts, flag callouts with **Resolve** buttons, and **Verify**, **Skip**, and **Reject** | [[#Review tools]] |
 | **Relations** | A side panel for the open page: a map and grouped lists of its typed links, outgoing and incoming | [[#The relations panel]] |
+| **Wiki map** | Two views of the whole wiki's typed links: a collapsible hierarchy tree and a zoomable map | [[#The wiki map]] |
 | **Dashboard** | The front page: progress, search box, six navigation cards, recent activity | [[#The Dashboard]] |
 | **Search** | A live search box over wiki pages, source cards, and perspectives | [[#Search]] |
 | **Index and log** | Checks [[index]] and writes to [[log]] after each verify or reject, and folds the log's entries | [[#The index and the log]] |
@@ -65,7 +66,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 ## The Dashboard
 [[Dashboard]] is the page the vault opens on. Each section is a block in the page's text, so a section can be moved or deleted by editing the note. From top to bottom it has:
 - **Header** (`coppermind-hero`): the Coppermind logo, name, and tagline.
-- **Six navigation cards** (`coppermind-nav`): Index, Review queue, My Worldview, Log, Schema, and Guides. A click opens the page in the current tab. ==`Ctrl+click` (or middle-click) opens it in a new tab.== The Review queue card opens the sidebar instead, so it has no new-tab version.
+- **Six navigation cards** (`coppermind-nav`): Index, Review queue, Wiki map, Log, Schema, and Guides. A click opens the page in the current tab. ==`Ctrl+click` (or middle-click) opens it in a new tab.== The Review queue and Wiki map cards open a sidebar or their own tab instead, so they have no new-tab version.
 - **Search box** (`coppermind-search`): see [[#Search]].
 - **Review progress** (`coppermind-dashboard`): stat tiles for verified, drafts, and open flags, a progress bar, and **Start reviewing**. A **Changed since verified** section lists each re-review with its change lines. Below that are the open flags by kind, a table by page type, and drafts older than 14 days.
 - **Recent activity** (`coppermind-activity`): the last six log entries. Click one to open the page it names, or the log.
@@ -94,6 +95,17 @@ Open it with `Alt+L` or the branching-arrows button in the ribbon. It follows wh
 - **Two lists.** "This page…" groups the outgoing links by type ("Is part of", "Supports", and so on). "Pointing at this page…" groups the incoming links ("Parts of this", "Examples of this", "Supported by"). Incoming links are worked out from the other pages' properties, since each relationship is stored only once ([[SCHEMA#5. Linking rules and ontology|Schema §5]]).
 - **Not shown:** plain links in the page text. They are "see also" links, not relationships.
 
+## The wiki map
+Open it with `Alt+M` or the Wiki map card on the Dashboard. It opens in its own tab and has two views, chosen at the top. Both read only the typed links in the properties ([[SCHEMA#5. Linking rules and ontology|Schema §5]]), never the plain links in the text, and neither changes a file.
+- **Hierarchy.** A collapsible tree built from `type_of`, `part_of`, and `example_of`: each page sits under the page it is a kind of, a part of, or an example of, so Artificial Intelligence → Machine Learning → Deep Learning reads as a branch. The number at the right of a row is how many pages sit below it. Click a name to open the page; click the arrow to open or close a branch. The box filters the tree by page name, **Expand all** and **Collapse all** do what they say, and **Show examples** adds or removes the `example_of` pages. A page that is part of two things appears under both. Wiki pages with none of these links are listed at the bottom, in a folded list.
+- **Map.** Every page that has a typed link is a dot, and every typed link is an arrow from the page that states it to the page it points at.
+  - **Colors:** arrows are colored by relationship type, with `related` dashed and `contradicts` dotted. Dots are colored by page type. A teal ring means verified, and a dashed copper ring means draft. Bigger dots have more links.
+  - **Move around:** scroll to zoom, drag the background to pan, and click **Reset view** to start over. Names show for the busiest pages, for a focused page and its neighbors, and for every page once zoomed in.
+  - **Filters:** click a relationship name at the top to hide or show that type. The menus filter by status, page type, and course. The box finds a page by name; press `Enter` to zoom to it.
+  - **Focus:** click a dot to dim everything except that page and its neighbors. The panel under the map lists how it connects, and its neighbors are clickable. `Ctrl+click` a dot to open the page.
+  - **Not shown:** pages with no typed links. The note under the map says how many there are.
+  - **Layout:** the layout is worked out from the links, so the same wiki always gives the same map, and it moves when links are added.
+
 ## The properties strip
 On every other note, Nicrosil hides the full Properties block and puts a one-line strip in its place, showing the page's **type**, **status**, and a date (`drafted` or `verified`). Click the strip to open the real Properties block. Each note starts collapsed again when I open it.
 
@@ -115,11 +127,12 @@ It does not touch `status`, `verified_on`, or [[log]]. After a schema change, th
 | `Alt+F` | Resolve a flag on this page |
 | `Alt+Q` | Open the review queue |
 | `Alt+L` | Open the relations panel |
+| `Alt+M` | Open the wiki map |
 | `Alt+D` | Go to the Dashboard |
 | `Ctrl+Enter` | Confirm a dialog |
 | `Ctrl+click` or middle-click | Open a Dashboard card or the ribbon logo in a new tab (search results: `Ctrl+click` or `Ctrl+Enter`) |
 
-Change any of them in **Settings → Hotkeys** (search "Nicrosil"). Beyond the keys, Nicrosil adds two **ribbon** buttons (the copper logo for the Dashboard, and a check badge for the review queue) and a **status-bar counter** showing how many pages are verified (for example, `12/60 verified`). **Log a schema change** has no default hotkey.
+Change any of them in **Settings → Hotkeys** (search "Nicrosil"). Beyond the keys, Nicrosil adds three **ribbon** buttons (the copper logo for the Dashboard, branching arrows for the relations panel, and a check badge for the review queue; the wiki map has a Dashboard card instead) and a **status-bar counter** showing how many pages are verified (for example, `12/60 verified`). **Log a schema change** has no default hotkey.
 
 ## Settings
 In **Settings → Nicrosil**:
@@ -151,6 +164,9 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
 ### Version history
+- **1.0.1:** The wiki map's relationship chips no longer show a count after each name.
+- **1.0.0:** The wiki map moved from the left ribbon to a Dashboard card, replacing the My Worldview card (`Alt+M` still works).
+- **0.10.0:** New wiki map (`Alt+M`) with a hierarchy tree and a zoomable map of all typed links.
 - **0.9.2:** The Dashboard search box no longer stops at 8 results. It ranks every match and draws 20 cards at a time, loading more as the list is scrolled or the arrow keys go past the end, with a running count at the bottom.
 - **0.9.1:** The Dashboard's "Changed since verified" section is always collapsed when the Dashboard opens or refreshes.
 - **0.9.0:** New relations panel (`Alt+L`): a map and grouped lists of the open page's typed links, both outgoing and incoming.

@@ -1,7 +1,8 @@
 {
   "settings": {
     "autoAdvance": true,
-    "sort": "az"
+    "sort": "az",
+    "mapTab": "map"
   },
   "resolved": {}
 }

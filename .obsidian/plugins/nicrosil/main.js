@@ -1,6 +1,6 @@
 "use strict";
 /*
- * Nicrosil (v0.9.2)
+ * Nicrosil (v0.10.0)
  *
  * A nicrosil mind stores investiture and amplifies whoever draws on it. This plugin does the same for
  * the Coppermind: it holds the tools that make working in the vault faster. (Its folder and id are
@@ -22,6 +22,9 @@
  *
  * Relations panel (Alt+L): for the open page, a map and grouped lists of its typed links (SCHEMA §5),
  *         outgoing and incoming, colored by type. The incoming side is worked out from the other pages.
+ *
+ * Wiki map (Alt+M): two views of the whole wiki's typed links. Hierarchy is a collapsible tree built from
+ *         type_of, part_of and example_of; Map is a zoomable network of every typed link, with filters.
  *
  * Verify: sets status: verified and verified_on, deletes `changes_since_verified` if the page has it,
  *         checks the page is listed in index.md, and appends to log.md.
@@ -833,6 +836,420 @@ class RelationsView extends ItemView {
   }
 }
 
+/* ---------- Wiki map: hierarchy tree and typed-link map ---------- */
+
+const MAP_VIEW_TYPE = "nicrosil-wikimap";
+
+/** Fill colors for the map's dots, by page type. */
+const PAGE_COLORS = {
+  concept: "#7aa2d6", glossary: "#9ac28a", framework: "#d6a76a", "case-study": "#d98a8a",
+  person: "#c3a0d9", summary: "#8fb8b0", prompt: "#d9cf7a", workflow: "#8aa0b8",
+  guide: "#b8b08a", analysis: "#cc9a7a", perspective: "#a8a8a8", source: "#888888",
+};
+const pageColor = (t) => PAGE_COLORS[t] || "#999999";
+const inMapScope = (path) => /^(Wiki|Perspectives)\//.test(path) || path.startsWith("Sources/Source Cards/");
+
+/** Pages (nodes) and typed links (edges) for the whole wiki, from the metadata cache. */
+function buildWikiGraph(app) {
+  const mc = app.metadataCache;
+  const nodes = new Map();
+  for (const f of app.vault.getMarkdownFiles()) {
+    if (!inMapScope(f.path)) continue;
+    const fm = (mc.getFileCache(f) || {}).frontmatter || {};
+    nodes.set(f.path, {
+      path: f.path, name: f.basename, type: String(fm.type || ""),
+      status: fm.status === "verified" ? "verified" : fm.status === "draft" ? "draft" : "",
+      courses: [].concat(fm.courses || []).map(String), out: [], in: [], deg: 0,
+    });
+  }
+  const edges = [];
+  const seen = new Set();
+  for (const e of collectRelations(app)) {
+    if (!e.to || e.from === e.to || !nodes.has(e.from) || !nodes.has(e.to)) continue;
+    const k = `${e.from}|${e.to}|${e.type}`;
+    if (seen.has(k)) continue;
+    seen.add(k);
+    edges.push(e);
+    nodes.get(e.from).out.push(e);
+    nodes.get(e.to).in.push(e);
+  }
+  for (const n of nodes.values()) n.deg = new Set(n.out.map((e) => e.to).concat(n.in.map((e) => e.from))).size;
+  return { nodes, edges };
+}
+
+/**
+ * Places the nodes with a force layout (Fruchterman-Reingold). The start positions come from the
+ * page paths, so the same wiki always gives the same map.
+ */
+function layoutGraph(ids, edges, W, H) {
+  const n = ids.length;
+  const idx = new Map(ids.map((id, i) => [id, i]));
+  const pos = ids.map((id) => {
+    let h = 7;
+    for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+    const a = ((h % 3600) / 3600) * 2 * Math.PI;
+    const r = Math.sqrt(((h >>> 8) % 1000) / 1000) * Math.min(W, H) * 0.42;
+    return { x: W / 2 + Math.cos(a) * r, y: H / 2 + Math.sin(a) * r, dx: 0, dy: 0 };
+  });
+  const E = edges.map((e) => [idx.get(e.from), idx.get(e.to)]).filter(([a, b]) => a !== undefined && b !== undefined);
+  const k = Math.sqrt((W * H) / Math.max(n, 1)) * 0.75;
+  let t = W / 7;
+  for (let it = 0; it < 320; it++) {
+    for (const p of pos) { p.dx = 0; p.dy = 0; }
+    for (let i = 0; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        let dx = pos[i].x - pos[j].x, dy = pos[i].y - pos[j].y;
+        let d2 = dx * dx + dy * dy;
+        if (d2 < 0.01) { dx = 0.1 * (i - j || 1); dy = 0.1; d2 = dx * dx + dy * dy; }
+        const d = Math.sqrt(d2);
+        const f = (k * k) / d;
+        const fx = (dx / d) * f, fy = (dy / d) * f;
+        pos[i].dx += fx; pos[i].dy += fy; pos[j].dx -= fx; pos[j].dy -= fy;
+      }
+    }
+    for (const [a, b] of E) {
+      const dx = pos[a].x - pos[b].x, dy = pos[a].y - pos[b].y;
+      const d = Math.sqrt(dx * dx + dy * dy) || 0.01;
+      const f = (d * d) / k;
+      const fx = (dx / d) * f, fy = (dy / d) * f;
+      pos[a].dx -= fx; pos[a].dy -= fy; pos[b].dx += fx; pos[b].dy += fy;
+    }
+    for (const p of pos) {
+      p.dx += (W / 2 - p.x) * 0.9; p.dy += (H / 2 - p.y) * 0.9; // gravity keeps separate groups on the canvas
+      const d = Math.sqrt(p.dx * p.dx + p.dy * p.dy) || 0.01;
+      const m = Math.min(d, t);
+      p.x = Math.min(W - 24, Math.max(24, p.x + (p.dx / d) * m));
+      p.y = Math.min(H - 24, Math.max(24, p.y + (p.dy / d) * m));
+    }
+    t *= 0.985;
+  }
+  return pos.map((p) => ({ x: p.x, y: p.y }));
+}
+
+class WikiMapView extends ItemView {
+  constructor(leaf, plugin) {
+    super(leaf);
+    this.plugin = plugin;
+    this.state = {
+      tab: plugin.settings.mapTab === "map" ? "map" : "tree",
+      open: new Set(), openInit: false, filter: "", examples: true,
+      hidden: new Set(), status: "", ptype: "", course: "", focus: null, q: "",
+    };
+    this.view = { x: 0, y: 0, k: 1 };
+    this.layoutKey = "";
+    this.layout = null;
+    this.rerender = debounce(() => this.render(), 600, true);
+  }
+  getViewType() { return MAP_VIEW_TYPE; }
+  getDisplayText() { return "Wiki map"; }
+  getIcon() { return "network"; }
+  async onOpen() {
+    this.render();
+    this.registerEvent(this.app.metadataCache.on("resolved", () => this.rerender()));
+    this.registerEvent(this.app.vault.on("rename", () => this.rerender()));
+    this.registerEvent(this.app.vault.on("delete", () => this.rerender()));
+  }
+  async onClose() { this.containerEl.children[1].empty(); }
+
+  go(path, newTab) {
+    if (!path) return;
+    if (!newTab) { this.plugin.openFile(path); return; }
+    const f = this.app.vault.getAbstractFileByPath(path);
+    if (f instanceof TFile) this.app.workspace.getLeaf(true).openFile(f);
+  }
+
+  render() {
+    const root = this.containerEl.children[1];
+    root.empty();
+    root.addClass("cm-wm");
+    this.graph = buildWikiGraph(this.app);
+    const tabs = root.createDiv({ cls: "cm-wm-tabs" });
+    [["tree", "Hierarchy"], ["map", "Map"]].forEach(([id, label]) => {
+      const b = tabs.createEl("button", { text: label, cls: this.state.tab === id ? "is-active" : "" });
+      b.addEventListener("click", async () => {
+        this.state.tab = id; this.plugin.settings.mapTab = id; await this.plugin.persist(); this.render();
+      });
+    });
+    const connected = [...this.graph.nodes.values()].filter((n) => n.deg > 0).length;
+    tabs.createSpan({ cls: "cm-sub cm-wm-stats", text: `${this.graph.nodes.size} pages · ${this.graph.edges.length} typed links · ${connected} pages linked` });
+    this.body = root.createDiv({ cls: "cm-wm-body" });
+    if (this.state.tab === "map") this.renderMap(this.body); else this.renderTree(this.body);
+  }
+
+  /* ---------- hierarchy tree ---------- */
+
+  renderTree(el) {
+    const g = this.graph;
+    const HIER = { type_of: "kind of", part_of: "part of", example_of: "example" };
+    const kids = new Map(), hasParent = new Set();
+    for (const e of g.edges) {
+      if (!HIER[e.type] || (e.type === "example_of" && !this.state.examples)) continue;
+      if (!kids.has(e.to)) kids.set(e.to, []);
+      kids.get(e.to).push({ path: e.from, type: e.type });
+      hasParent.add(e.from);
+    }
+    const nm = (p) => (g.nodes.get(p) || {}).name || p;
+    // descendants of each page (as a set), guarding against loops
+    const desc = new Map();
+    const descOf = (p, seen) => {
+      if (desc.has(p)) return desc.get(p);
+      const s = new Set();
+      if (seen.has(p)) return s;
+      seen.add(p);
+      for (const c of kids.get(p) || []) { s.add(c.path); for (const d of descOf(c.path, seen)) s.add(d); }
+      seen.delete(p);
+      desc.set(p, s);
+      return s;
+    };
+    for (const p of kids.keys()) descOf(p, new Set());
+    let roots = [...kids.keys()].filter((p) => !hasParent.has(p));
+    const covered = new Set(roots.flatMap((r) => [r, ...descOf(r, new Set())]));
+    for (const p of kids.keys()) if (!covered.has(p)) { roots.push(p); descOf(p, new Set()).forEach((d) => covered.add(d)); covered.add(p); }
+    const size = (p) => (desc.get(p) ? desc.get(p).size : 0);
+    roots.sort((a, b) => size(b) - size(a) || nm(a).localeCompare(nm(b)));
+
+    const st = this.state;
+    if (!st.openInit) { roots.forEach((r) => st.open.add(r)); st.openInit = true; }
+    const q = st.filter.trim().toLowerCase();
+    // with a search, show only branches that contain a match
+    const matches = (p, seen) => {
+      if (nm(p).toLowerCase().includes(q)) return true;
+      if (seen.has(p)) return false;
+      seen.add(p);
+      const r = (kids.get(p) || []).some((c) => matches(c.path, seen));
+      seen.delete(p);
+      return r;
+    };
+
+    const bar = el.createDiv({ cls: "cm-wt-bar" });
+    const input = bar.createEl("input", { type: "text", cls: "cm-wt-filter", placeholder: "Filter the tree by page name…", value: st.filter });
+    input.addEventListener("input", () => { st.filter = input.value; this.drawTreeRows(rows, roots, kids, HIER, desc, nm, q, matches); });
+    const mkBtn = (txt, fn) => { const b = bar.createEl("button", { text: txt }); b.addEventListener("click", fn); };
+    mkBtn("Expand all", () => { const all = (p, key, seen) => { st.open.add(key); if (seen.has(p)) return; seen.add(p); (kids.get(p) || []).forEach((c) => all(c.path, key + "/" + c.path, seen)); seen.delete(p); }; roots.forEach((r) => all(r, r, new Set())); this.render(); });
+    mkBtn("Collapse all", () => { st.open.clear(); this.render(); });
+    const ex = bar.createEl("label", { cls: "cm-wt-ex" });
+    const cb = ex.createEl("input", { type: "checkbox" });
+    cb.checked = st.examples;
+    ex.appendText(" Show examples");
+    cb.addEventListener("change", () => { st.examples = cb.checked; this.render(); });
+
+    if (!roots.length) { el.createDiv({ cls: "cm-sub cm-wt-empty", text: "No kind-of, part-of or example-of links yet, so there is no hierarchy to show." }); return; }
+    const rows = el.createDiv({ cls: "cm-wt-rows" });
+    this.drawTreeRows(rows, roots, kids, HIER, desc, nm, q, matches);
+
+    // pages the hierarchy doesn't reach
+    const inTree = new Set(roots.flatMap((r) => [r, ...descOf(r, new Set())]));
+    const outside = [...g.nodes.values()].filter((n) => n.path.startsWith("Wiki/") && !inTree.has(n.path)).sort((a, b) => a.name.localeCompare(b.name));
+    const det = el.createEl("details", { cls: "cm-wt-outside" });
+    det.createEl("summary", { text: `Wiki pages outside the hierarchy (${outside.length})` });
+    outside.forEach((n) => {
+      const r = det.createDiv({ cls: "cm-wt-out-row" });
+      r.createSpan({ cls: `cm-rel-dot ${n.status ? "cm-rel-dot-" + n.status : ""}` });
+      r.createSpan({ text: n.name });
+      r.createSpan({ cls: "cm-wt-tag", text: n.type });
+      r.addEventListener("click", (e) => this.go(n.path, e.ctrlKey || e.metaKey));
+    });
+  }
+
+  drawTreeRows(rows, roots, kids, HIER, desc, nm, q, matches) {
+    rows.empty();
+    const g = this.graph, st = this.state;
+    const draw = (p, key, depth, via, path) => {
+      if (q && !matches(p, new Set())) return;
+      const node = g.nodes.get(p);
+      const ch = (kids.get(p) || []).slice().sort((a, b) => ((kids.get(b.path) || []).length > 0) - ((kids.get(a.path) || []).length > 0) || nm(a.path).localeCompare(nm(b.path)));
+      const isOpen = q ? true : st.open.has(key);
+      const row = rows.createDiv({ cls: "cm-wt-row" });
+      row.style.paddingLeft = 6 + depth * 18 + "px";
+      const chev = row.createSpan({ cls: "cm-wt-chev" });
+      if (ch.length && !path.has(p)) {
+        setIcon(chev, isOpen ? "chevron-down" : "chevron-right");
+        chev.addEventListener("click", () => { if (isOpen) st.open.delete(key); else st.open.add(key); this.drawTreeRows(rows, roots, kids, HIER, desc, nm, q, matches); });
+      }
+      row.createSpan({ cls: `cm-rel-dot ${node && node.status ? "cm-rel-dot-" + node.status : ""}` });
+      const name = row.createSpan({ cls: "cm-wt-name", text: nm(p) });
+      name.addEventListener("click", (e) => this.go(p, e.ctrlKey || e.metaKey));
+      if (via) { const c = row.createSpan({ cls: "cm-wt-via", text: HIER[via] }); c.style.color = REL_TYPES[via].color; }
+      if (node && node.type) row.createSpan({ cls: "cm-wt-tag", text: node.type });
+      const n = desc.get(p) ? desc.get(p).size : 0;
+      if (n) row.createSpan({ cls: "cm-wt-count", text: String(n) }).setAttr("aria-label", `${n} below this`);
+      if (isOpen && !path.has(p)) {
+        const np = new Set(path); np.add(p);
+        ch.forEach((c) => draw(c.path, key + "/" + c.path, depth + 1, c.type, np));
+      }
+    };
+    roots.forEach((r) => draw(r, r, 0, null, new Set()));
+    if (q && !rows.childElementCount) rows.createDiv({ cls: "cm-sub cm-wt-empty", text: `No page in the hierarchy matches “${st.filter.trim()}”.` });
+  }
+
+  /* ---------- typed-link map ---------- */
+
+  renderMap(el) {
+    const g = this.graph, st = this.state;
+    const ids = [...g.nodes.values()].filter((n) => n.deg > 0).map((n) => n.path).sort();
+    const isolated = g.nodes.size - ids.length;
+    if (!ids.length) { el.createDiv({ cls: "cm-sub cm-wt-empty", text: "No typed links yet, so there is nothing to map." }); return; }
+    const W = 1000, H = 700;
+    const key = ids.join("|") + "#" + g.edges.map((e) => `${e.from}>${e.to}`).sort().join(",");
+    if (key !== this.layoutKey || !this.layout) { this.layout = layoutGraph(ids, g.edges, W, H); this.layoutKey = key; this.ids = ids; }
+    const pos = new Map(ids.map((id, i) => [id, this.layout[i]]));
+
+    // toolbar
+    const bar = el.createDiv({ cls: "cm-wm-bar" });
+    const chips = bar.createDiv({ cls: "cm-wm-chips" });
+    const present = Object.keys(REL_TYPES).filter((t) => g.edges.some((e) => e.type === t));
+    const chipEls = {};
+    present.forEach((t) => {
+      const c = chips.createSpan({ cls: "cm-rel-chip cm-wm-chip" + (st.hidden.has(t) ? " is-off" : ""), attr: { role: "button", tabindex: "0" } });
+      const sw = c.createSpan({ cls: "cm-rel-swatch" }); sw.style.background = REL_TYPES[t].color; if (REL_TYPES[t].dash) sw.addClass("is-dashed");
+      c.appendText(t.replace("_", " "));
+      const tog = () => { if (st.hidden.has(t)) st.hidden.delete(t); else st.hidden.add(t); c.toggleClass("is-off", st.hidden.has(t)); apply(); };
+      c.addEventListener("click", tog);
+      c.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); tog(); } });
+      chipEls[t] = c;
+    });
+    const sel = (label, values, cur, setter) => {
+      const s = bar.createEl("select", { cls: "dropdown cm-wm-sel", attr: { "aria-label": label } });
+      s.createEl("option", { text: label, value: "" });
+      values.forEach((v) => { const o = s.createEl("option", { text: v, value: v }); if (v === cur) o.selected = true; });
+      s.addEventListener("change", () => { setter(s.value); apply(); });
+    };
+    const nodes = [...g.nodes.values()].filter((n) => n.deg > 0);
+    sel("Any status", ["verified", "draft"], st.status, (v) => { st.status = v; });
+    sel("Any page type", [...new Set(nodes.map((n) => n.type).filter(Boolean))].sort(), st.ptype, (v) => { st.ptype = v; });
+    sel("Any course", [...new Set(nodes.flatMap((n) => n.courses))].sort(), st.course, (v) => { st.course = v; });
+    const find = bar.createEl("input", { type: "text", cls: "cm-wt-filter cm-wm-find", placeholder: "Find a page, Enter to focus it", value: st.q });
+    const reset = bar.createEl("button", { text: "Reset view" });
+
+    const stage = el.createDiv({ cls: "cm-wm-stage" });
+    const svg = svgEl(stage, "svg", { viewBox: `0 0 ${W} ${H}`, class: "cm-wm-svg", role: "img", "aria-label": "Map of typed links between pages" });
+    const defs = svgEl(svg, "defs");
+    for (const [t, info] of Object.entries(REL_TYPES)) {
+      const m = svgEl(defs, "marker", { id: `cm-wm-arrow-${t}`, viewBox: "0 0 8 8", refX: 8, refY: 4, markerWidth: 6, markerHeight: 6, markerUnits: "userSpaceOnUse", orient: "auto" });
+      svgEl(m, "path", { d: "M0,0 L8,4 L0,8 z", fill: info.color });
+    }
+    const world = svgEl(svg, "g", { class: "cm-wm-world" });
+    const radius = (n) => 4 + Math.sqrt(n.deg) * 2.4;
+    const edgeEls = g.edges.map((e) => {
+      const a = pos.get(e.from), b = pos.get(e.to);
+      const nb = g.nodes.get(e.to);
+      const dx = b.x - a.x, dy = b.y - a.y, d = Math.sqrt(dx * dx + dy * dy) || 1;
+      const r = radius(nb) + 1;
+      const info = REL_TYPES[e.type];
+      const attrs = { x1: a.x, y1: a.y, x2: b.x - (dx / d) * r, y2: b.y - (dy / d) * r, stroke: info.color, "stroke-width": 1.4, "marker-end": `url(#cm-wm-arrow-${e.type})`, class: "cm-wm-edge" };
+      if (info.dash) attrs["stroke-dasharray"] = info.dash;
+      const ln = svgEl(world, "line", attrs);
+      svgEl(ln, "title", {}, `${g.nodes.get(e.from).name} — ${e.type.replace("_", " ")} → ${nb.name}`);
+      return { e, el: ln };
+    });
+    const nodeEls = new Map();
+    for (const id of ids) {
+      const n = g.nodes.get(id), p = pos.get(id);
+      const grp = svgEl(world, "g", { class: "cm-wm-node" + (n.deg >= 3 ? " is-hub" : ""), transform: `translate(${p.x},${p.y})`, tabindex: 0, role: "button" });
+      svgEl(grp, "circle", { r: radius(n), fill: pageColor(n.type), class: `cm-wm-dot cm-wm-dot-${n.status || "none"}` });
+      svgEl(grp, "text", { x: radius(n) + 3, y: 3.5, class: "cm-wm-label" }, clip(n.name, 26));
+      svgEl(grp, "title", {}, `${n.name} (${n.type || "page"}, ${n.status || "no status"})`);
+      grp.addEventListener("click", (ev) => { ev.stopPropagation(); if (ev.ctrlKey || ev.metaKey) this.go(id, true); else { st.focus = st.focus === id ? null : id; apply(); } });
+      grp.addEventListener("keydown", (ev) => { if (ev.key === "Enter") { st.focus = st.focus === id ? null : id; apply(); } });
+      nodeEls.set(id, grp);
+    }
+    const info = el.createDiv({ cls: "cm-wm-info" });
+    const legend = el.createDiv({ cls: "cm-wm-legend" });
+    [...new Set(nodes.map((n) => n.type))].filter(Boolean).sort().forEach((t) => {
+      const c = legend.createSpan({ cls: "cm-rel-chip" });
+      const dot = c.createSpan({ cls: "cm-wm-legdot" }); dot.style.background = pageColor(t);
+      c.appendText(t);
+    });
+    legend.createSpan({ cls: "cm-sub", text: "Dot size = number of linked pages. Teal ring = verified, dashed copper ring = draft. Click a dot to focus it, Ctrl+click to open the page. Scroll to zoom, drag to pan." + (isolated ? ` ${isolated} pages have no typed links and are not shown.` : "") });
+
+    // zoom and pan
+    const v = this.view;
+    const setView = () => {
+      world.setAttribute("transform", `translate(${v.x},${v.y}) scale(${v.k})`);
+      svg.toggleClass("zoom-all", v.k >= 1.7);
+    };
+    setView();
+    const toSvg = (ev) => { const r = svg.getBoundingClientRect(); return { x: ((ev.clientX - r.left) / r.width) * W, y: ((ev.clientY - r.top) / r.height) * H }; };
+    svg.addEventListener("wheel", (ev) => {
+      ev.preventDefault();
+      const p = toSvg(ev);
+      const nk = Math.min(6, Math.max(0.4, v.k * (ev.deltaY < 0 ? 1.15 : 1 / 1.15)));
+      v.x = p.x - ((p.x - v.x) / v.k) * nk; v.y = p.y - ((p.y - v.y) / v.k) * nk; v.k = nk;
+      setView();
+    }, { passive: false });
+    let drag = null;
+    svg.addEventListener("pointerdown", (ev) => { if (ev.target.closest && ev.target.closest(".cm-wm-node")) return; drag = { x: ev.clientX, y: ev.clientY, vx: v.x, vy: v.y }; svg.setPointerCapture(ev.pointerId); svg.addClass("is-drag"); });
+    svg.addEventListener("pointermove", (ev) => { if (!drag) return; const r = svg.getBoundingClientRect(); v.x = drag.vx + ((ev.clientX - drag.x) / r.width) * W; v.y = drag.vy + ((ev.clientY - drag.y) / r.height) * H; setView(); });
+    const end = () => { drag = null; svg.removeClass("is-drag"); };
+    svg.addEventListener("pointerup", end); svg.addEventListener("pointercancel", end);
+    svg.addEventListener("click", (ev) => { if (!ev.target.closest(".cm-wm-node")) { st.focus = null; apply(); } });
+    reset.addEventListener("click", () => { v.x = 0; v.y = 0; v.k = 1; st.focus = null; st.hidden.clear(); st.status = ""; st.ptype = ""; st.course = ""; st.q = ""; this.render(); });
+    find.addEventListener("keydown", (ev) => {
+      if (ev.key !== "Enter") return;
+      const q = find.value.trim().toLowerCase(); st.q = find.value;
+      const hit = ids.map((i) => g.nodes.get(i)).filter((n) => !nodeEls.get(n.path).hasClass("is-hidden")).find((n) => n.name.toLowerCase().includes(q));
+      if (!hit || !q) return;
+      st.focus = hit.path;
+      const p = pos.get(hit.path); v.k = 2.2; v.x = W / 2 - p.x * v.k; v.y = H / 2 - p.y * v.k;
+      setView(); apply();
+    });
+
+    const apply = () => {
+      const edgeOn = (e) => !st.hidden.has(e.type);
+      const passes = (n) => (!st.status || n.status === st.status) && (!st.ptype || n.type === st.ptype) && (!st.course || n.courses.includes(st.course));
+      const vis = new Set();
+      edgeEls.forEach(({ e }) => { if (edgeOn(e) && passes(g.nodes.get(e.from)) && passes(g.nodes.get(e.to))) { vis.add(e.from); vis.add(e.to); } });
+      const near = new Set();
+      if (st.focus && vis.has(st.focus)) {
+        near.add(st.focus);
+        edgeEls.forEach(({ e }) => { if (edgeOn(e) && vis.has(e.from) && vis.has(e.to) && (e.from === st.focus || e.to === st.focus)) { near.add(e.from); near.add(e.to); } });
+      }
+      const focusing = near.size > 0;
+      edgeEls.forEach(({ e, el: ln }) => {
+        const shown = edgeOn(e) && vis.has(e.from) && vis.has(e.to);
+        ln.toggleClass("is-hidden", !shown);
+        ln.toggleClass("is-dim", shown && focusing && !(e.from === st.focus || e.to === st.focus));
+      });
+      nodeEls.forEach((grp, id) => {
+        grp.toggleClass("is-hidden", !vis.has(id));
+        grp.toggleClass("is-dim", vis.has(id) && focusing && !near.has(id));
+        grp.toggleClass("is-near", focusing && near.has(id));
+        grp.toggleClass("is-focus", focusing && id === st.focus);
+      });
+      this.drawInfo(info, focusing ? st.focus : null, vis, (id) => { st.focus = id; apply(); });
+    };
+    apply();
+  }
+
+  drawInfo(el, path, vis, focusOn) {
+    el.empty();
+    const g = this.graph;
+    const n = path ? g.nodes.get(path) : null;
+    if (!n) { el.createDiv({ cls: "cm-sub", text: "Click a dot to see how that page connects." }); return; }
+    const head = el.createDiv({ cls: "cm-wm-info-head" });
+    head.createSpan({ cls: "cm-wm-info-name", text: n.name });
+    head.createSpan({ cls: "cm-wt-tag", text: n.type || "page" });
+    if (n.status) head.createSpan({ cls: `cm-rel-status cm-rel-${n.status}`, text: n.status });
+    const open = head.createEl("button", { text: "Open page", cls: "mod-cta" });
+    open.addEventListener("click", () => this.go(n.path, false));
+    const groups = el.createDiv({ cls: "cm-wm-info-groups" });
+    for (const t of Object.keys(REL_TYPES)) {
+      for (const [dir, list, other] of [["out", n.out.filter((e) => e.type === t), (e) => e.to], ["inn", n.in.filter((e) => e.type === t), (e) => e.from]]) {
+        const items = list.filter((e) => vis.has(other(e)));
+        if (!items.length) continue;
+        const row = groups.createDiv({ cls: "cm-wm-info-row" });
+        const lab = row.createSpan({ cls: "cm-wm-info-label", text: REL_TYPES[t][dir] });
+        lab.style.color = REL_TYPES[t].color;
+        items.forEach((e) => {
+          const id = other(e);
+          const c = row.createSpan({ cls: "cm-wm-info-link", text: g.nodes.get(id).name, attr: { role: "button", tabindex: "0" } });
+          c.addEventListener("click", () => focusOn(id));
+        });
+      }
+    }
+  }
+}
+
 /* ---------- Home dashboard block ---------- */
 
 class LiveBlock extends MarkdownRenderChild {
@@ -1520,6 +1937,7 @@ module.exports = class Nicrosil extends Plugin {
 
     this.registerView(VIEW_TYPE, (leaf) => new QueueView(leaf, this));
     this.registerView(REL_VIEW_TYPE, (leaf) => new RelationsView(leaf, this));
+    this.registerView(MAP_VIEW_TYPE, (leaf) => new WikiMapView(leaf, this));
     this.addSettingTab(new ReviewSettings(this.app, this));
     this.registerCommands();
 
@@ -1622,6 +2040,7 @@ module.exports = class Nicrosil extends Plugin {
     this.addCommand({ id: "next-draft", name: "Open the next draft", hotkeys: [{ modifiers: ["Alt"], key: "n" }], callback: () => { const f = this.currentFile(); this.openNext(f ? f.path : null); } });
     this.addCommand({ id: "open-dashboard", name: "Go to the Dashboard", hotkeys: [{ modifiers: ["Alt"], key: "d" }], callback: () => this.openDashboard() });
     this.addCommand({ id: "log-schema-change", name: "Log a schema change", callback: () => this.openSchemaLog() });
+    this.addCommand({ id: "open-wiki-map", name: "Open the wiki map", hotkeys: [{ modifiers: ["Alt"], key: "m" }], callback: () => this.activateWikiMap() });
     this.addCommand({ id: "open-relations", name: "Open the relations panel", hotkeys: [{ modifiers: ["Alt"], key: "l" }], callback: () => this.activateRelations() });
     this.addCommand({ id: "open-queue", name: "Open the review queue", hotkeys: [{ modifiers: ["Alt"], key: "q" }], callback: () => this.activateView() });
   }
@@ -1863,7 +2282,7 @@ module.exports = class Nicrosil extends Plugin {
     const cards = [
       { icon: "list", title: "Index", sub: "Every page, by type", go: open("index") },
       { icon: "badge-check", title: "Review queue", sub: drafts ? `${drafts} drafts waiting${rechecks ? `, ${rechecks} changed since verified` : ""}` : "Nothing waiting", go: () => this.activateView() },
-      { icon: "compass", title: "My Worldview", sub: "The convictions behind my views", go: open("My Worldview") },
+      { icon: "network", title: "Wiki map", sub: "Every typed link, as a tree and a map", go: () => this.activateWikiMap() },
       { icon: "scroll-text", title: "Log", sub: "Every change and decision", go: open("log") },
       { icon: "book-open", title: "Schema", sub: "The rulebook", go: open("SCHEMA") },
       { icon: "life-buoy", title: "Guides", sub: "How the vault works", go: open(this.guidesLink()) },
@@ -2114,6 +2533,15 @@ module.exports = class Nicrosil extends Plugin {
     const cur = this.currentPath;
     const leaves = this.app.workspace.getLeavesOfType("markdown");
     return leaves.find((l) => l.view.file && l.view.file.path === cur) || leaves[0] || this.app.workspace.getLeaf(false);
+  }
+
+  async activateWikiMap() {
+    let leaf = this.app.workspace.getLeavesOfType(MAP_VIEW_TYPE)[0];
+    if (!leaf) {
+      leaf = this.app.workspace.getLeaf("tab");
+      await leaf.setViewState({ type: MAP_VIEW_TYPE, active: true });
+    }
+    this.app.workspace.revealLeaf(leaf);
   }
 
   async activateRelations() {
