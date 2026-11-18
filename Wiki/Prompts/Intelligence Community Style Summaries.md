@@ -1,13 +1,12 @@
 ---
 type: prompt
-status: verified
+status: draft
 aliases:
   - SAIL IC Style Summaries
   - IC Style Summaries
 courses:
   - SAIL
 related:
-  - "[[Dissect and Ingest a Source]]"
   - "[[SCHEMA]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11

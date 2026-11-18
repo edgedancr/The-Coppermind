@@ -1,14 +1,13 @@
 ---
 type: framework
-status: verified
+status: draft
 aliases:
   - EO 12333
 courses:
   - Intro to Intelligence
 sources:
   - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
-related:
-  - "[[United States Intelligence Community]]"
+related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-12

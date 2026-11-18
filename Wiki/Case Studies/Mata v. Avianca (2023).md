@@ -1,6 +1,6 @@
 ---
 type: case-study
-status: verified
+status: draft
 aliases:
   - Mata v. Avianca
 courses:
@@ -12,8 +12,7 @@ supports:
   - "[[Capability vs. Reliability]]"
 example_of:
   - "[[Hallucination]]"
-related:
-  - "[[Think-Calculate-Verify Loop]]"
+related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11

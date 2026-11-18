@@ -1,6 +1,6 @@
 ---
 type: concept
-status: verified
+status: draft
 aliases:
   - Intel-Led Policing
   - Prosecution vs. Prevention
@@ -9,7 +9,6 @@ courses:
 sources:
   - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
 related:
-  - "[[Levels of Intelligence]]"
   - "[[Human Decision Point]]"
   - "[[Seven Tribes of Intelligence]]"
 drafted_by: Claude (claude-opus-5-5)

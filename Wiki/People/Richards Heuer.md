@@ -1,14 +1,13 @@
 ---
 type: person
-status: verified
+status: draft
 aliases:
   - Heuer
 courses:
   - SAIL
 sources:
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
-related:
-  - "[[Analysis of Competing Hypotheses]]"
+related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11

@@ -1,6 +1,6 @@
 ---
 type: concept
-status: verified
+status: draft
 aliases:
   - Compression Threat
 courses:
@@ -8,7 +8,6 @@ courses:
 sources:
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
 related:
-  - "[[Human Decision Point]]"
   - "[[AI in Warfighting]]"
   - "[[AI in Intelligence Production]]"
 drafted_by: Claude (claude-opus-5-5)

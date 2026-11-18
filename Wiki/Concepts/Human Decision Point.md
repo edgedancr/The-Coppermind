@@ -1,6 +1,6 @@
 ---
 type: concept
-status: verified
+status: draft
 aliases:
   - Analyst's Placement in the AI Pipeline
   - Human in the Loop
@@ -13,7 +13,6 @@ sources:
 related:
   - "[[Intelligence-to-Action Convergence Matrix]]"
   - "[[Kill Chain]]"
-  - "[[Law of Armed Conflict]]"
   - "[[Human-Centered AI]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11

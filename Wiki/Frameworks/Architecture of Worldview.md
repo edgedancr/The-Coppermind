@@ -1,6 +1,6 @@
 ---
 type: framework
-status: verified
+status: draft
 aliases:
   - Worldview Architecture
 courses:
@@ -11,7 +11,6 @@ applies_to:
   - "[[Prompt Engineering]]"
 related:
   - "[[Imago Dei]]"
-  - "[[My Worldview]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11

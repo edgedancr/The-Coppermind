@@ -1,6 +1,6 @@
 ---
 type: concept
-status: verified
+status: draft
 aliases: []
 courses:
   - SAIL
@@ -8,9 +8,6 @@ sources:
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
 related:
   - "[[Intelligence-to-Action Convergence Matrix]]"
-  - "[[Kill Chain]]"
-  - "[[OODA Loop]]"
-  - "[[Human Decision Point]]"
   - "[[Law of Armed Conflict]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11

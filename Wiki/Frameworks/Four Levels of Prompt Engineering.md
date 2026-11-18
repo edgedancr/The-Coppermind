@@ -1,6 +1,6 @@
 ---
 type: framework
-status: verified
+status: draft
 aliases:
   - NPC, Mid, Boss, Legendary
 courses:
@@ -9,8 +9,7 @@ sources:
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
 part_of:
   - "[[Prompt Engineering]]"
-related:
-  - "[[Think-Calculate-Verify Loop]]"
+related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11

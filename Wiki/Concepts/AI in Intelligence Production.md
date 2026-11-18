@@ -1,6 +1,6 @@
 ---
 type: concept
-status: verified
+status: draft
 aliases:
   - AI in Government
 courses:
@@ -8,9 +8,6 @@ courses:
 sources:
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
 related:
-  - "[[Automation Bias]]"
-  - "[[Time Compression Trap]]"
-  - "[[Human Decision Point]]"
   - "[[Intelligence-to-Action Convergence Matrix]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11

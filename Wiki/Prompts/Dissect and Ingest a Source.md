@@ -1,6 +1,6 @@
 ---
 type: prompt
-status: verified
+status: draft
 aliases:
   - Ingest Prompt
 courses:
@@ -8,7 +8,6 @@ courses:
 applies_to:
   - "[[LLM Wiki]]"
 related:
-  - "[[SCHEMA]]"
   - "[[Think-Calculate-Verify Loop]]"
   - "[[Nicrosil]]"
 drafted_by: Claude (claude-opus-5-5)

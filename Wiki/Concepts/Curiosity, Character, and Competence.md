@@ -1,14 +1,12 @@
 ---
 type: concept
-status: verified
+status: draft
 aliases: []
 courses:
   - Intro to Intelligence
 sources:
   - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
-related:
-  - "[[Centaur Analyst]]"
-  - "[[Intelligence as Attentive Understanding]]"
+related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11

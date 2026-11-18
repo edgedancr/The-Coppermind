@@ -1023,3 +1023,11 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[SCHEMA]]
 - **Commit:** `verify: SCHEMA`
+
+### [2026-11-17] schema | Apply approved verified-page link drops
+
+- **Think:** You approved the verified-page items from the retype round. Drops are mechanical: each removed `related` link already appears as a link in the page text (§5 rules 3 and 7). Keeps need no change.
+- **Calculate:** 37 `related` links removed from 29 pages. 24 links stay `related` on verified pages, with their reasons. Resolved pairs: [[AI in Intelligence Production]] ↔ [[Time Compression Trap]], [[AI-Enabled Surveillance]] ↔ [[Narrow AI]], [[Human Decision Point]] ↔ [[Law of Armed Conflict]], [[Analysis of Competing Hypotheses]] ↔ [[Richards Heuer]], and [[Confirmation Bias]] → [[Analysis of Competing Hypotheses]].
+- **Changed:** 29 pages set back to `draft` (§7), old `verified_on` kept: [[AI in Intelligence Production]], [[AI in Warfighting]], [[Ages of U.S. Intelligence]], [[Analysis of Competing Hypotheses]], [[Architecture of Worldview]], [[Bach Faucet]], [[Confirmation Bias]], [[Covert Action]], [[Curiosity, Character, and Competence]], [[Dissect and Ingest a Source]], [[Executive Order 12333]], [[Existential Risk]], [[Four Levels of Prompt Engineering]], [[Human Decision Point]], [[Information Model]], [[Intelligence Community Style Summaries]], [[Intelligence as Attentive Understanding]], [[Intelligence-Led Policing]], [[LLM Wiki]], [[Law Enforcement Intelligence Internships]], [[Law of Armed Conflict]], [[Mata v. Avianca (2023)]], [[Narrow AI]], [[Revolution in Military Affairs]], [[Richards Heuer]], [[Tasking, Collection, Processing, Exploitation, and Dissemination]], [[Time Compression Trap]], [[Unconventional Warfare]], [[Zero-Day Vulnerability]]. [[Health Check 2026-11-17]] flags 3 and 4 updated.
+- **Verify:** pending. All 29 pages need re-verifying, plus the 23 retyped links on drafts.
+- **Commit:** `schema: drop 37 repeated related links on 29 verified pages (approved)`

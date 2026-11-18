@@ -1,6 +1,6 @@
 ---
 type: framework
-status: verified
+status: draft
 aliases:
   - ACH
 courses:
@@ -12,7 +12,6 @@ example_of:
 counters:
   - "[[Confirmation Bias]]"
 related:
-  - "[[Richards Heuer]]"
   - "[[Prompt Engineering]]"
   - "[[Capability vs. Reliability]]"
 drafted_by: Claude (claude-opus-5-5)
