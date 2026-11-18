@@ -1114,3 +1114,44 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`); [[Nicrosil]] guide (version 1.2.1, history).
 - **Verify:** pending. Reload Nicrosil and click the Wiki map card.
 - **Commit:** `nicrosil 1.2.1: wiki map opens on the Map tab`
+
+### [2026-11-17] schema | Dashboard redesign
+- **Think:** The Dashboard felt stale and was mostly brown. You chose cooler colors with depth, motion, progress graphics, and a hero header with the search built in, keeping copper and dark mode.
+- **Calculate:** Nicrosil v1.3.0 gives the Dashboard page its own slate-ink background with copper and teal accents (the rest of the vault keeps the brown theme), gradient-edged cards with shading, colored navigation icons, an animated header with the search box inside it, a verification ring, a 14-day activity chart, per-type bars, and entrance animations that play only when the page opens and are off under reduced motion. The old By page type table was replaced by the bars. I moved the search into the header, so `Dashboard.md` lost its separate `coppermind-search` block. Tested outside Obsidian only; the look has not been seen in Obsidian.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `styles.css`, `manifest.json`); `Dashboard.md` (search block removed); [[Nicrosil]] guide (Dashboard section, version 1.3.0, history).
+- **Verify:** pending. Reload Nicrosil and open the Dashboard; tell me what to change.
+- **Commit:** `nicrosil 1.3.0: dashboard redesign with slate theme, graphs and motion`
+
+### [2026-11-17] schema | Dashboard back to the brown background
+- **Think:** The slate background made the Dashboard feel different from every other page.
+- **Calculate:** Nicrosil v1.3.1 removes the Dashboard's slate color override, so it uses the vault's brown, and re-tints the cards, header and search bar to brown. The glows, graphs and motion are unchanged.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`styles.css`, `manifest.json`); [[Nicrosil]] guide (look paragraph, version 1.3.1, history).
+- **Verify:** pending. Reload Nicrosil and open the Dashboard.
+- **Commit:** `nicrosil 1.3.1: dashboard uses the vault's brown background`
+
+### [2026-11-17] schema | Dashboard background gradient
+- **Think:** You liked the gradient but wanted it stronger and less blank, with the orange and green tones, and you may want one background on every page later.
+- **Calculate:** Nicrosil v1.3.2 makes the Dashboard background a stronger copper glow (top left) and teal glow (top right, plus a faint one lower left) over the brown, drifting to a slightly green dark at the bottom right. It is stored as one variable, `--cm-bg-gradient`, so applying it to every page later is one CSS rule (given in the guide). I did not apply it to other pages.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`styles.css`, `manifest.json`); [[Nicrosil]] guide (look paragraph, version 1.3.2, history).
+- **Verify:** pending. Reload Nicrosil and open the Dashboard.
+- **Commit:** `nicrosil 1.3.2: stronger dashboard gradient as a reusable variable`
+
+### [2026-11-18] schema | Gradient background on every page
+- **Think:** You liked the Dashboard background and wanted it as the default everywhere.
+- **Calculate:** Nicrosil v1.4.0 applies `--cm-bg-gradient` to every note's view (markdown notes only; sidebars, the graph and other panes are untouched). It lives in the plugin's `styles.css`, so it shows only while Nicrosil is enabled; editing the variable changes every page at once.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`styles.css`, `manifest.json`); [[Nicrosil]] guide (look paragraph, version 1.4.0, history).
+- **Verify:** pending. Reload Nicrosil and open a few different notes, in both reading and editing view.
+- **Commit:** `nicrosil 1.4.0: gradient background on every note`
+
+### [2026-11-18] schema | Dashboard fixes: ring, tile glow, card outlines
+- **Think:** You reported three problems: the verification ring showed 12% with no visible fill, the three stat tiles glowed all the time, and the six navigation cards had a colored outline only at the top left.
+- **Calculate:** Nicrosil v1.4.1 draws the ring's filled part as small colored pieces running copper to green (it no longer depends on a gradient reference, which I could not confirm was drawing in Obsidian); moves the tile glow to hover only; and makes each card's outline the same colored gradient all the way around. I checked all three in a real browser outside Obsidian; the old ring did draw there, so I could not reproduce the missing fill and cannot be sure this is the cause.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `styles.css`, `manifest.json`); [[Nicrosil]] guide (ring, version 1.4.1, history).
+- **Verify:** pending. Reload Nicrosil, open the Dashboard, and check the ring, the tiles and the card outlines.
+- **Commit:** `nicrosil 1.4.1: dashboard ring, tile glow and card outlines`
+
+### [2026-11-18] verify | Ages of U.S. Intelligence
+
+- **Verify:**
+  - Approved: [[Ages of U.S. Intelligence]]
+- **Commit:** `verify: Ages of U.S. Intelligence`

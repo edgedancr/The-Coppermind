@@ -316,6 +316,22 @@ function appendToLog(text, entry) {
 
 /* ---------- small DOM helpers ---------- */
 
+const prefersReduced = () => !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+const DASH_COLORS = ["#5fae9e", "#d98a4a", "#7aa2d6", "#e0a846", "#b97f93", "#8fc09a"];
+
+/** Counts a number up from zero (the Dashboard tiles use this when it opens). */
+function countUp(el, to, ms = 850) {
+  if (!to) return;
+  el.setText("0");
+  const t0 = performance.now();
+  const f = (now) => {
+    const u = Math.min(1, (now - t0) / ms);
+    el.setText(String(Math.round(to * (1 - Math.pow(1 - u, 3)))));
+    if (u < 1) requestAnimationFrame(f);
+  };
+  requestAnimationFrame(f);
+}
+
 function progressBar(parent, done, total) {
   const pct = total ? Math.round((done / total) * 100) : 0;
   const wrap = parent.createDiv({ cls: "cm-progress" });
@@ -2156,7 +2172,7 @@ module.exports = class Nicrosil extends Plugin {
     }, true);
     this.addRibbonIcon("badge-check", "Review queue (Alt+Q)", () => this.activateView());
 
-    this.registerMarkdownCodeBlockProcessor("coppermind-hero", (src, el) => this.renderHero(el, src));
+    this.registerMarkdownCodeBlockProcessor("coppermind-hero", (src, el, ctx) => this.renderHero(el, src, ctx));
     for (const [name, method] of [["coppermind-dashboard", "renderDashboard"], ["coppermind-nav", "renderNav"], ["coppermind-activity", "renderActivity"]]) {
       this.registerMarkdownCodeBlockProcessor(name, (src, el, ctx) => ctx.addChild(new LiveBlock(el, this, method)));
     }
@@ -2172,6 +2188,7 @@ module.exports = class Nicrosil extends Plugin {
     this.registerEvent(this.app.workspace.on("file-open", (file) => {
       this.syncSchemaButtons();
       if (file) this.currentPath = file.path;
+      if (file && this.isDashboard(file)) this.startDashIntro();
       this.syncDashboardLeaves(true);
       this.renderViews();
     }));
@@ -2185,6 +2202,7 @@ module.exports = class Nicrosil extends Plugin {
     this.registerEvent(this.app.vault.on("delete", () => this.scheduleRefresh()));
     this.registerEvent(this.app.vault.on("rename", (file, oldPath) => this.onRename(file, oldPath)));
     this.app.workspace.onLayoutReady(async () => {
+      this.startDashIntro();
       this.searchIndex.start();
       this.syncSchemaButtons();
       await this.migrateHome();
@@ -2196,6 +2214,7 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   onunload() {
+    clearTimeout(this.dashIntroTimer);
     document.querySelectorAll(".cm-schema-log-btn").forEach((e) => e.remove());
     this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view) l.view.__cmSchemaBtn = null; });
     document.querySelectorAll(".cm-resolve-btn, .cm-ribbon-logo").forEach((e) => e.remove());
@@ -2346,15 +2365,33 @@ module.exports = class Nicrosil extends Plugin {
     this.app.workspace.revealLeaf(leaf);
   }
 
-  renderHero(el, src) {
+  /** Starts the Dashboard's entrance animation; it lasts a couple of seconds after the page opens. */
+  startDashIntro() {
+    this.dashIntro = true;
+    clearTimeout(this.dashIntroTimer);
+    this.dashIntroTimer = setTimeout(() => { this.dashIntro = false; }, 2400);
+  }
+
+  renderHero(el, src, ctx) {
     el.empty();
     el.addClass("cm-hero");
+    el.toggleClass("is-intro", !!this.dashIntro && !prefersReduced());
+    const bg = el.createDiv({ cls: "cm-hero-bg" });
+    bg.setAttr("aria-hidden", "true");
+    for (let i = 0; i < 16; i++) {
+      const s = bg.createSpan({ cls: "cm-hero-spark" + (i % 3 === 0 ? " is-teal" : "") });
+      s.style.left = `${(i * 37 + 11) % 97}%`;
+      s.style.setProperty("--d", `${6 + ((i * 7) % 6)}s`);
+      s.style.setProperty("--s", `${2 + (i % 3)}px`);
+      s.style.animationDelay = `-${(i * 13) % 11}s`;
+    }
     el.createSpan({ cls: "cm-logo cm-logo-hero" }).setAttr("aria-hidden", "true");
     const text = el.createDiv({ cls: "cm-hero-text" });
     text.createDiv({ cls: "cm-hero-title", text: "The Coppermind" });
     const tagline = String(src || "").trim();
     if (tagline) text.createDiv({ cls: "cm-hero-tagline", text: tagline });
-    el.createDiv({ cls: "cm-hero-rule" });
+    const host = el.createDiv({ cls: "cm-hero-search" });
+    if (ctx) ctx.addChild(new SearchBlock(host, this));
   }
 
   renderDashboard(el) {
@@ -2367,11 +2404,17 @@ module.exports = class Nicrosil extends Plugin {
     const now = today();
     const stale = drafts.filter((i) => { const d = daysBetween(i.draftedOn, now); return d !== null && d > STALE_DAYS; });
 
+    const intro = !!this.dashIntro && !prefersReduced();
+    el.toggleClass("is-intro", intro);
+    let ix = 6;
+
     // stat tiles
     const tiles = el.createDiv({ cls: "cm-tiles" });
     const tile = (num, label, sub, cls) => {
       const t = tiles.createDiv({ cls: `cm-tile ${cls}` });
-      t.createDiv({ cls: "cm-tile-num", text: String(num) });
+      t.style.setProperty("--i", String(ix++));
+      const n = t.createDiv({ cls: "cm-tile-num", text: String(num) });
+      if (intro) countUp(n, num);
       t.createDiv({ cls: "cm-tile-label", text: label });
       t.createDiv({ cls: "cm-tile-sub", text: sub });
     };
@@ -2382,12 +2425,68 @@ module.exports = class Nicrosil extends Plugin {
       .filter(([, n]) => n > 0).map(([s, n]) => `${n} ${s}`).join(" · ");
     tile(flagCount, "Open flags", breakdown || "none", "cm-tile-flags");
 
-    // progress + start
-    const top = el.createDiv({ cls: "cm-dash-top" });
-    progressBar(top.createDiv({ cls: "cm-dash-progress" }), verified, all.length);
-    const btn = top.createEl("button", { cls: "mod-cta", text: drafts.length ? "Start reviewing" : "All verified" });
+    // graphs: a verification ring, a two-week activity chart, and pages by type
+    const graphs = el.createDiv({ cls: "cm-graphs" });
+    const gcard = (title, cls) => {
+      const c = graphs.createDiv({ cls: `cm-gcard ${cls || ""}` });
+      c.style.setProperty("--i", String(ix++));
+      c.createDiv({ cls: "cm-gcard-title", text: title });
+      return c;
+    };
+    const rc = gcard("Verification", "cm-ring-card");
+    const rbody = rc.createDiv({ cls: "cm-ring-body" });
+    const pct = all.length ? verified / all.length : 0;
+    const R = 46, C = 2 * Math.PI * R;
+    const rsvg = svgEl(rbody, "svg", { viewBox: "0 0 120 120", class: "cm-ring", role: "img", "aria-label": `${Math.round(pct * 100)} percent of pages verified` });
+    svgEl(rsvg, "circle", { cx: 60, cy: 60, r: R, class: "cm-ring-track" });
+    // the filled part is drawn as small colored pieces that run from copper to green, so it needs no gradient reference
+    const SEG = 72, segLen = C / SEG;
+    const nSeg = pct > 0 ? Math.max(1, Math.round(pct * SEG)) : 0;
+    const lerp = (x, y, t) => Math.round(x + (y - x) * t);
+    const from = [217, 138, 74], to = [134, 210, 193];
+    const arc = svgEl(rsvg, "g", { class: "cm-ring-arc", transform: "rotate(-90 60 60)" });
+    for (let i = 0; i < nSeg; i++) {
+      const t = nSeg > 1 ? i / (nSeg - 1) : 1;
+      const s = svgEl(arc, "circle", {
+        cx: 60, cy: 60, r: R, class: "cm-ring-seg",
+        stroke: `rgb(${lerp(from[0], to[0], t)},${lerp(from[1], to[1], t)},${lerp(from[2], to[2], t)})`,
+        "stroke-dasharray": `${(segLen + 0.7).toFixed(2)} ${C.toFixed(2)}`,
+        "stroke-dashoffset": (-(i * segLen)).toFixed(2),
+      });
+      s.style.setProperty("--k", String(i));
+    }
+    svgEl(rsvg, "text", { x: 60, y: 62, class: "cm-ring-pct" }, `${Math.round(pct * 100)}%`);
+    svgEl(rsvg, "text", { x: 60, y: 77, class: "cm-ring-cap" }, "verified");
+    const rside = rbody.createDiv({ cls: "cm-ring-side" });
+    rside.createDiv({ cls: "cm-ring-big", text: `${verified} of ${all.length}` });
+    rside.createDiv({ cls: "cm-sub", text: "pages verified" });
+    const btn = rside.createEl("button", { cls: "mod-cta", text: drafts.length ? "Start reviewing" : "All verified" });
     btn.disabled = !drafts.length;
     btn.addEventListener("click", async () => { await this.activateView(); this.openNext(null); });
+
+    this.fillActivityChart(gcard("Last 14 days"));
+
+    const tc = gcard("Pages by type", "cm-wide");
+    const groups = [...new Set(all.map((i) => i.group))].sort((a, b) => groupRank(a) - groupRank(b));
+    const gmax = Math.max(1, ...groups.map((g) => all.filter((i) => i.group === g).length));
+    groups.forEach((g, gi) => {
+      const inG = all.filter((i) => i.group === g);
+      const v = inG.filter((i) => i.status === "verified").length, d = inG.length - v;
+      const fl = inG.reduce((n, i) => n + i.flags.length, 0);
+      const row = tc.createDiv({ cls: "cm-tr" });
+      row.createSpan({ cls: "cm-tr-label", text: g });
+      const fill = row.createDiv({ cls: "cm-tbar" }).createDiv({ cls: "cm-tbar-fill" });
+      const sv = fill.createSpan({ cls: "cm-tseg-v" }); sv.style.flexGrow = String(v);
+      const sd = fill.createSpan({ cls: "cm-tseg-d" }); sd.style.flexGrow = String(d);
+      const target = `${(inG.length / gmax) * 100}%`;
+      fill.style.transitionDelay = `${gi * 60}ms`;
+      fill.style.width = intro ? "0%" : target;
+      if (intro) requestAnimationFrame(() => requestAnimationFrame(() => { fill.style.width = target; }));
+      const cnt = row.createSpan({ cls: "cm-tr-count", text: `${v} verified · ${d} draft${d === 1 ? "" : "s"}` });
+      if (fl) cnt.createSpan({ cls: "cm-tr-flag", text: ` · ${fl} flag${fl === 1 ? "" : "s"}` });
+    });
+    const key = tc.createDiv({ cls: "cm-wm-legend" });
+    [["verified", "#5fae9e"], ["draft", "#d98a4a"]].forEach(([t, c]) => { const s = key.createSpan({ cls: "cm-rel-chip" }); const dt = s.createSpan({ cls: "cm-legend-dot" }); dt.style.background = c; s.appendText(t); });
 
     // details
     const details = (key, title, openDefault, fill, remember = true) => {
@@ -2429,26 +2528,48 @@ module.exports = class Nicrosil extends Plugin {
       if (!any) d.createDiv({ cls: "cm-ok", text: "No open flags on any draft." });
     });
 
-    details("types", "By page type", false, (d) => {
-      const groups = [...new Set(all.map((i) => i.group))].sort((a, b) => groupRank(a) - groupRank(b));
-      const table = d.createEl("table", { cls: "cm-dash-table" });
-      const head = table.createEl("tr");
-      ["Page type", "Verified", "Drafts", "Open flags"].forEach((h) => head.createEl("th", { text: h }));
-      groups.forEach((g) => {
-        const inG = all.filter((i) => i.group === g);
-        const tr = table.createEl("tr");
-        tr.createEl("td", { text: g });
-        tr.createEl("td", { text: String(inG.filter((i) => i.status === "verified").length) });
-        tr.createEl("td", { text: String(inG.filter((i) => i.status === "draft").length) });
-        tr.createEl("td", { text: String(inG.reduce((n, i) => n + i.flags.length, 0)) });
-      });
-    });
-
     details("stale", `Drafts older than ${STALE_DAYS} days (${stale.length})`, false, (d) => {
       if (!stale.length) { d.createDiv({ cls: "cm-sub", text: "None." }); return; }
       const row = d.createDiv();
       stale.forEach((i, idx) => { if (idx) row.appendText(" · "); this.linkTo(row, i); });
     });
+  }
+
+  /** Draws the last 14 days of log activity as small stacked bars: verifications and other changes. */
+  async fillActivityChart(card) {
+    const f = this.app.vault.getAbstractFileByPath(LOG_PATH);
+    const entries = f instanceof TFile ? parseLog(await this.app.vault.cachedRead(f)) : [];
+    const pad = (n) => String(n).padStart(2, "0");
+    const base = new Date(today() + "T12:00:00");
+    const days = [];
+    for (let k = 13; k >= 0; k--) {
+      const d = new Date(base); d.setDate(d.getDate() - k);
+      days.push({ iso: `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`, v: 0, o: 0 });
+    }
+    const idx = new Map(days.map((d, i) => [d.iso, i]));
+    entries.forEach((e) => {
+      const i = idx.get(e.date);
+      if (i === undefined) return;
+      if (e.op === "verify" && !e.rejected) days[i].v++; else days[i].o++;
+    });
+    const tv = days.reduce((n, d) => n + d.v, 0), to = days.reduce((n, d) => n + d.o, 0);
+    const max = Math.max(1, ...days.map((d) => d.v + d.o));
+    card.createDiv({ cls: "cm-sub cm-spark-sum", text: `${tv} verified · ${to} other changes` });
+    const svg = svgEl(card, "svg", { viewBox: "0 0 280 72", class: "cm-spark", role: "img", "aria-label": "Log activity over the last 14 days" });
+    const H = 66;
+    days.forEach((d, i) => {
+      const x = i * 20 + 3;
+      const g = svgEl(svg, "g", { class: "cm-sp-day" });
+      g.style.setProperty("--i", String(i));
+      svgEl(g, "rect", { x, y: 3, width: 14, height: H, rx: 3, class: "cm-sp-back" });
+      const ho = d.o ? Math.max(3, (d.o / max) * H) : 0, hv = d.v ? Math.max(3, (d.v / max) * H) : 0;
+      if (ho) svgEl(g, "rect", { x, y: 3 + H - ho, width: 14, height: ho, rx: 3, class: "cm-sp-other" });
+      if (hv) svgEl(g, "rect", { x, y: 3 + H - ho - hv, width: 14, height: hv, rx: 3, class: "cm-sp-ver" });
+      svgEl(g, "title", {}, `${d.iso}: ${d.v} verified, ${d.o} other`);
+    });
+    const ax = card.createDiv({ cls: "cm-spark-axis" });
+    ax.createSpan({ text: "14 days ago" });
+    ax.createSpan({ text: "today" });
   }
 
   guidesLink() {
@@ -2461,6 +2582,7 @@ module.exports = class Nicrosil extends Plugin {
   renderNav(el) {
     el.empty();
     el.addClass("cm-nav");
+    el.toggleClass("is-intro", !!this.dashIntro && !prefersReduced());
     const drafts = this.items.filter((i) => i.status === "draft").length;
     const rechecks = this.items.filter((i) => i.status === "draft" && i.changes.length).length;
     const open = (link) => (newTab) => this.app.workspace.openLinkText(link, "", !!newTab);
@@ -2472,8 +2594,10 @@ module.exports = class Nicrosil extends Plugin {
       { icon: "book-open", title: "Schema", sub: "The rulebook", go: open("SCHEMA") },
       { icon: "life-buoy", title: "Guides", sub: "How the vault works", go: open(this.guidesLink()) },
     ];
-    cards.forEach((c) => {
+    cards.forEach((c, idx) => {
       const card = el.createDiv({ cls: "cm-navcard" });
+      card.style.setProperty("--acc", DASH_COLORS[idx % DASH_COLORS.length]);
+      card.style.setProperty("--i", String(idx));
       card.setAttr("role", "button");
       card.setAttr("tabindex", "0");
       setIcon(card.createSpan({ cls: "cm-navcard-icon" }), c.icon);
@@ -2491,10 +2615,12 @@ module.exports = class Nicrosil extends Plugin {
     const entries = f instanceof TFile ? parseLog(await this.app.vault.cachedRead(f)).slice(-6).reverse() : [];
     el.empty();
     el.addClass("cm-activity");
+    el.toggleClass("is-intro", !!this.dashIntro && !prefersReduced());
     if (!entries.length) { el.createDiv({ cls: "cm-sub", text: "Nothing in the log yet." }); return; }
     const icons = { verify: "check", ingest: "download", setup: "wrench", schema: "file-pen", query: "search", "health-check": "stethoscope" };
-    entries.forEach((e) => {
+    entries.forEach((e, ei) => {
       const row = el.createDiv({ cls: "cm-act-row" });
+      row.style.setProperty("--i", String(12 + ei));
       row.setAttr("role", "button");
       row.setAttr("tabindex", "0");
       setIcon(row.createSpan({ cls: `cm-act-icon cm-act-${e.rejected ? "rejected" : e.op}` }), e.rejected ? "x" : (icons[e.op] || "circle"));

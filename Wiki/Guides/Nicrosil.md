@@ -19,7 +19,7 @@ verified_on:
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
-This guide describes Nicrosil **v1.2.1**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v1.4.1**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -65,16 +65,17 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 
 ## The Dashboard
 [[Dashboard]] is the page the vault opens on. Each section is a block in the page's text, so a section can be moved or deleted by editing the note. From top to bottom it has:
-- **Header** (`coppermind-hero`): the Coppermind logo, name, and tagline.
+- **Header** (`coppermind-hero`): the Coppermind logo, name, and tagline on a panel with slowly rising copper and teal sparks, and the search box (see [[#Search]]) built into its bottom edge.
 - **Six navigation cards** (`coppermind-nav`): Index, Review queue, Wiki map, Log, Schema, and Guides. A click opens the page in the current tab. ==`Ctrl+click` (or middle-click) opens it in a new tab.== The Review queue and Wiki map cards open a sidebar or their own tab instead, so they have no new-tab version.
-- **Search box** (`coppermind-search`): see [[#Search]].
-- **Review progress** (`coppermind-dashboard`): stat tiles for verified, drafts, and open flags, a progress bar, and **Start reviewing**. A **Changed since verified** section lists each re-review with its change lines. Below that are the open flags by kind, a table by page type, and drafts older than 14 days.
+- **Review progress** (`coppermind-dashboard`): stat tiles for verified, drafts, and open flags; a ring showing how much of the wiki is verified (filled in copper shading to green), with **Start reviewing**; a small chart of the last 14 days of log activity (verifications in teal, other changes in copper); and a bar for each page type showing its verified and draft pages. A **Changed since verified** section lists each re-review with its change lines. Below that are the open flags by kind and drafts older than 14 days.
 - **Recent activity** (`coppermind-activity`): the last six log entries. Click one to open the page it names, or the log.
 - **Reference:** folded sections on what the Coppermind is, how to read it, what it covers, and its six parts. These are ordinary text in the note.
 
 **Reading and editing.** The Dashboard always opens in Reading view, whether I open it from the ribbon, a link, a tab, or at startup, and every other note keeps the mode it was in. Its properties are hidden, and so is the Properties side pane while the Dashboard is the active note. To edit it, press `Ctrl+E`. It stays in editing until I click into the Dashboard again from another tab or note, which puts it back in Reading view.
 
 **Getting back to it from anywhere:** click the copper logo in the left ribbon, or press `Alt+D`. If the Dashboard is already open in a tab, this switches to that tab; otherwise it opens in the current tab. `Ctrl+click` or middle-click on the logo always opens it in a new tab, even if the Dashboard is already open in another one. The ribbon icon can be dragged to the top of the ribbon (right-click the ribbon to rearrange or hide icons).
+
+**Look and motion.** Every note, the Dashboard included, sits on the vault's brown blended into a copper glow at the top left and a teal glow at the top right. The Dashboard adds shaded cards and teal accents. The background is a single CSS variable, `--cm-bg-gradient`, defined in the plugin's `styles.css`; change it there to change every page at once. It only applies while Nicrosil is enabled. When the Dashboard opens, the cards rise in one after another, the numbers count up, and the ring and bars fill. That plays only when the page opens, not every time it refreshes. If the computer is set to reduce motion, none of it plays.
 
 ## Search
 The search box on the [[Dashboard]] shows suggestion cards as I type, over wiki pages, source cards, and perspectives. It does not search the raw class notes or readings, and it only reads: it never changes a page.
@@ -165,6 +166,11 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
 ### Version history
+- **1.4.1:** Dashboard fixes: the verification ring's filled part is drawn again, shading from copper to green; the three stat tiles glow only when pointed at; and the six navigation cards have a colored outline all the way around.
+- **1.4.0:** The copper-and-teal gradient background now applies to every note, not just the Dashboard.
+- **1.3.2:** The Dashboard background is a stronger copper-to-teal gradient over the brown, defined as the reusable variable `--cm-bg-gradient`.
+- **1.3.1:** The Dashboard goes back to the vault's brown background, so moving to another page is less jarring. Cards and the header are re-tinted brown to match.
+- **1.3.0:** Dashboard redesign: copper and teal accents (first with a slate background, replaced in 1.3.1), gradient-edged cards, colored navigation icons, a header with drifting sparks and the search box inside it, a verification ring, a 14-day activity chart, per-type bars, and entrance animations. The separate search block was removed from the Dashboard page.
 - **1.2.1:** The wiki map always opens on the Map tab instead of remembering the last tab used.
 - **1.2.0:** The Hierarchy view is now a branching diagram of cards joined by curved colored lines, with open/close circles, hover highlighting of a page's path, and drag to pan. Fixed the filter box, which did not update the diagram as you typed.
 - **1.1.0:** The wiki map is alive: dots settle with physics and can be dragged, pointing at a dot highlights its links, the view glides to a focused page, arrows are curved with a soft glow on verified pages, and a pulse flows along each link (with a **Flow** switch).
