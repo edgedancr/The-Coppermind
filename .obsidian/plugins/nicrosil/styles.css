@@ -757,12 +757,16 @@ body.cm-calm .workspace-leaf-content[data-type="markdown"] .view-content.cm-vf-i
   background: transparent !important;
 }
 
-/* ---------- File list: the open file's name is teal on the copper highlight ---------- */
-.nav-file-title.is-active,
-.nav-folder-title.is-active,
-.nav-file-title.is-active .nav-file-title-content,
-.nav-folder-title.is-active .nav-folder-title-content {
-  color: #86d2c1;
+/* ---------- File list: the open file (2.4.2) ---------- */
+/* A soft copper highlight that fades toward teal, and a name that shades from teal to pale copper. */
+.theme-dark .nav-file-title.is-active,
+.theme-dark .nav-folder-title.is-active {
+  background: linear-gradient(90deg, rgba(184, 115, 51, 0.30), rgba(184, 115, 51, 0.14) 55%, rgba(95, 174, 158, 0.12)) !important;
+}
+.theme-dark .nav-file-title.is-active .nav-file-title-content,
+.theme-dark .nav-folder-title.is-active .nav-folder-title-content {
+  background: linear-gradient(90deg, #8fd6c5 0%, #bcd6bd 55%, #e6c193 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
 }
 
 /* ---------- Quiet dashboard (2.4.0) ---------- */

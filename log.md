@@ -1448,3 +1448,21 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[All-Source Intelligence]]
 - **Commit:** `verify: All-Source Intelligence`
+
+### [2026-11-18] schema | Nicrosil 2.4.2 quiet Dashboard and sidebar colors
+
+- **Think:** The Dashboard looked machine-made, so I asked for a quieter design, then adjusted it, kept only the quiet style, and asked for softer colors on the open file in the file list. Earlier the same day I asked for the verify animation to move up instead of left and for the sidebars to match the page's glow.
+- **Calculate:** Nothing to compute.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.4.0 to 2.4.2): quiet Dashboard (plain header, link cards without icons, one-line progress card with a glowing bar, small serif capital headings); the Classic/Quiet setting removed; verify animation moves up; both sidebars share the background glow; the open file's highlight and name use soft copper-to-teal gradients
+  - [[Nicrosil]]: Dashboard, Look and motion, Ambience, Settings wording, version 2.4.2 and history lines; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil and open the Dashboard
+- **Commit:** `schema: Nicrosil 2.4.2 quiet Dashboard, sidebar glow, open-file colors`
+
+### [2026-11-18] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`

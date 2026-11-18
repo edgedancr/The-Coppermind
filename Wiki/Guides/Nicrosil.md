@@ -12,14 +12,14 @@ courses:
 sources: []
 related:
   - "[[SCHEMA]]"
-drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5)
+drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-18
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
-This guide describes Nicrosil **v2.3.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.4.2**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -56,7 +56,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 3. Read the page and check it against the sources it cites.
 4. **Resolve each flag.** If a claim needs correcting, edit the page text first. Then click **Resolve** and write what I decided. The callout is removed from the page, and my decision is saved and written into the log when I verify (or reject) the page.
 5. **Decide:**
-   - **Verify** (`Alt+V`): optionally note what I changed and why, then `Ctrl+Enter`. The page gets `status: verified` and `verified_on`, and [[log]] gets an entry listing any flags I resolved. Then a check stamps the page, a burst of copper and teal sparks plays, the page slides away, and the next one slides in with a small "Next: … · N left" note (see [[#Settings]] to turn it off). If flags are still open, I have to tick a box to verify anyway, and the log records them.
+   - **Verify** (`Alt+V`): optionally note what I changed and why, then `Ctrl+Enter`. The page gets `status: verified` and `verified_on`, and [[log]] gets an entry listing any flags I resolved. Then a check stamps the page, a burst of copper and teal sparks plays, the page lifts up and fades out, and the next one rises in from the bottom with a small "Next: … · N left" note (see [[#Settings]] to turn it off). If flags are still open, I have to tick a box to verify anyway, and the log records them.
      - If the page has a `changes_since_verified` property, Verify deletes it, and the log keeps the record ([[SCHEMA#7. Draft vs. verified|Schema §7]], rule 8).
    - **Skip** (`Alt+S`): moves the page to the end of the queue for this session and opens the next one.
    - **Reject** (`Alt+R`): write the reason (required), then `Ctrl+Enter`. The reason is logged, the page is removed from the index, and the page is deleted ([[SCHEMA#7. Draft vs. verified|Schema §7]]). The dialog lists pages that link to it, so I can fix those links afterward.
@@ -65,9 +65,9 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 
 ## The Dashboard
 [[Dashboard]] is the page the vault opens on. Each section is a block in the page's text, so a section can be moved or deleted by editing the note. From top to bottom it has:
-- **Header** (`coppermind-hero`): the Coppermind logo, name, and tagline on a panel with slowly rising copper and teal sparks, and the search box (see [[#Search]]) built into its bottom edge.
-- **Six navigation cards** (`coppermind-nav`): Index, Review queue, Wiki map, Log, Schema, and Guides. A click opens the page in the current tab. ==`Ctrl+click` (or middle-click) opens it in a new tab.== The Review queue and Wiki map cards open a sidebar or their own tab instead, so they have no new-tab version.
-- **Review progress** (`coppermind-dashboard`): stat tiles for verified, drafts, and open flags; a large full-width ring showing how much of the wiki is verified (filled in copper shading to green), with **Start reviewing**; and a bar for each page type showing its verified and draft pages. A **Changed since verified** section lists each re-review with its change lines. Below that are the open flags by kind and drafts older than 14 days.
+- **Header** (`coppermind-hero`): the Coppermind logo, name, and tagline, left-aligned with no panel around them, and the search box (see [[#Search]]) right under them.
+- **Six link cards** (`coppermind-nav`), in two columns: small, sharp-cornered cards with a copper edge, each a name and a one-line description, with no icons. They are Index, Review queue, Wiki map, Log, Schema, and Guides. A click opens the page in the current tab. ==`Ctrl+click` (or middle-click) opens it in a new tab.== The Review queue and Wiki map cards open a sidebar or their own tab instead, so they have no new-tab version.
+- **Review progress** (`coppermind-dashboard`): a card with one line of stats (pages verified, with the share, drafts, and open flags), a glowing copper-to-teal bar showing how much is verified, and a small line counting the open flags by kind and the drafts older than 14 days. Under it is a bar for each page type showing its verified and draft pages. A **Changed since verified** section lists each re-review with its change lines. Below that are folded lists naming the pages with open flags, by kind, and the drafts older than 14 days. To start a review session from the Dashboard, use the Review queue card.
 - **Recent activity** (`coppermind-activity`): the last six log entries. Click one to open the page it names, or the log.
 - **Reference:** folded sections on what the Coppermind is, how to read it, what it covers, and its six parts. These are ordinary text in the note.
 
@@ -75,7 +75,9 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 
 **Getting back to it from anywhere:** click the copper logo in the left ribbon, or press `Alt+D`. If the Dashboard is already open in a tab, this switches to that tab; otherwise it opens in the current tab. `Ctrl+click` or middle-click on the logo always opens it in a new tab, even if the Dashboard is already open in another one. The ribbon icon can be dragged to the top of the ribbon (right-click the ribbon to rearrange or hide icons).
 
-**Look and motion.** Every note, the Dashboard included, sits on the vault's brown blended into a copper glow at the top left and a teal glow at the top right. The Dashboard adds shaded cards and teal accents. The background is a single CSS variable, `--cm-bg-gradient`, defined in the plugin's `styles.css`; change it there to change every page at once. It only applies while Nicrosil is enabled. When the Dashboard opens, the cards rise in one after another, the numbers count up, and the ring and bars fill. That plays only when the page opens, not every time it refreshes. If the computer is set to reduce motion, none of it plays.
+**Look and motion.** Every note, the Dashboard included, sits on the vault's brown blended into a copper glow at the top left and a teal glow at the top right. The background is a single CSS variable, `--cm-bg-gradient`, defined in the plugin's `styles.css`; change it there to change every page at once. Both sidebars carry a fainter version of the same glow (copper at the top of the left one, teal at the top of the right one), so they match the page between them. In the file list, the open file has a copper highlight that fades toward teal, and its name shades from teal to pale copper. All of this only applies while Nicrosil is enabled, and the sidebar and file-list colors only in dark mode.
+
+The Dashboard keeps its design quiet on purpose: color only where it means something (copper for links and actions, teal for verified), small serif capitals for the section headings, small corners, and no glow boxes or floating sparks. When it opens, the page-type bars fill; that plays only when the page opens, not every time it refreshes, and not at all if the computer is set to reduce motion.
 
 ## Search
 The search box on the [[Dashboard]] shows suggestion cards as I type, over wiki pages, source cards, and perspectives. It does not search the raw class notes or readings, and it only reads: it never changes a page.
@@ -115,8 +117,8 @@ On every other note, Nicrosil hides the full Properties block and puts a one-lin
 Small animations make the vault feel alive. None of them change how anything works.
 - **Notes:** a verified page's title has a teal glow with a slow shimmer; a draft's title has a dim copper ember. The properties strip glows once right after I verify. Flag callouts (`caution`, `todo`, `question`, `warning`) breathe softly in their flag color. Internal links glow when hovered. Opening a page plays a short, quiet fade-in. The background drifts very slowly.
 - **Wiki map and hierarchy:** verified dots give off small sparks. Pages with `changes_since_verified` have an amber outline on the map and in the hierarchy. Clicking a dot sends a ring out from it and pings its neighbors in turn.
-- **Dashboard:** a burst of sparks goes off when the verification ring passes 25, 50, 75 or 100 percent. The newest activity row pulses once.
-- **Review queue:** the title is a copper-to-teal gradient, the larger, sharp-edged progress bar has a steady glow like the Dashboard ring, rows slide to their new places when the order changes, and new flag badges pop in.
+- **Dashboard:** the newest activity row pulses once.
+- **Review queue:** the title is a copper-to-teal gradient, the larger, sharp-edged progress bar has a steady glow like the Dashboard's progress bar, rows slide to their new places when the order changes, and new flag badges pop in.
 - **Smaller touches:** search results fade in one after another, notices have a teal edge, and the status-bar verified count glows when it goes up.
 
 Turn them all off with **Ambient animations** in the settings. They are also off if the computer is set to reduce motion.
@@ -149,7 +151,7 @@ Change any of them in **Settings → Hotkeys** (search "Nicrosil"). Beyond the k
 ## Settings
 In **Settings → Nicrosil**:
 - **Open the next draft after verifying or rejecting** (on by default)
-- **Play an animation when I verify a page** (on by default): the check, sparks and slide described in [[#A review session]]. It is skipped if the computer is set to reduce motion.
+- **Play an animation when I verify a page** (on by default): the check, sparks, and page lift described in [[#A review session]]. It is skipped if the computer is set to reduce motion.
 - **Close the extra sidebar panels on startup** (on by default): closes Backlinks, Outgoing links, Tags, All properties and Outline each time Obsidian starts, so they stop coming back. They can still be opened from the command palette.
 - **Ambient animations** (on by default): the glows, sparkles and fades described in [[#Ambience]].
 - **Queue order:** clean pages first (default), flagged pages first, by page type, or A to Z. The same menu is at the top of the sidebar.
@@ -179,6 +181,9 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
 ### Version history
+- **2.4.2:** The Dashboard always uses the quiet style; the Classic/Quiet setting is gone. The open file in the file list has a soft copper-to-teal highlight and a teal-to-pale-copper name instead of flat orange and teal.
+- **2.4.1:** The Dashboard's six links are small, sharp-cornered cards again, and Review progress is a card with larger text and a glowing copper-to-teal bar.
+- **2.4.0:** A quieter Dashboard: plain header without a panel or sparks, links without icons or per-card colors, the stat tiles and ring replaced by one line of stats, and small serif capitals for headings. Also since 2.3.0: the verify animation lifts the page up and the next one rises from the bottom, both sidebars share the background glow, and the open file's name in the file list is teal.
 - **2.3.0:** Removed the 14-day activity chart from the Dashboard; the Verification card is now full width with a larger ring and larger text.
 - **2.2.1:** Fixed the verify animation: the page slides away and the next one slides in again (the background drift had been overriding it). Removed the sparks from opening a page, leaving only a short fade.
 - **2.2.0:** Review queue: the progress bar is sharper with a steady glow (no pulse or sheen), and the draft list is a set of cards with a colored edge (amber for flags, rust for changed since verified, teal for the current page) and the page type under each name.

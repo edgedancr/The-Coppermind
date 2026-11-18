@@ -58,7 +58,7 @@ const FLAG_KINDS = {
   warning: { label: "Warning", plural: "Warnings (unsourced)", short: "W" },
 };
 const STALE_DAYS = 14;
-const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, ambient: true, hidePanels: true, dashStyle: "quiet" };
+const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, ambient: true, hidePanels: true };
 const SORTS = { clean: "Clean pages first", flagged: "Flagged pages first", type: "By page type", az: "A to Z" };
 
 /* ---------- pure helpers (tested outside Obsidian) ---------- */
@@ -1533,16 +1533,6 @@ class ReviewSettings extends PluginSettingTab {
     new Setting(el).setName("Close the extra sidebar panels on startup")
       .setDesc("Closes Backlinks, Outgoing links, Tags, All properties and Outline in the sidebar each time Obsidian starts. You can still open any of them from the command palette during a session.")
       .addToggle((t) => t.setValue(this.plugin.settings.hidePanels !== false).onChange(async (v) => { this.plugin.settings.hidePanels = v; await this.plugin.persist(); }));
-    new Setting(el).setName("Dashboard style")
-      .setDesc("Quiet: plain text links, stats in one line, small serif capitals, no sparks or glow boxes. Classic: the original cards and tiles.")
-      .addDropdown((d) => {
-        d.addOption("quiet", "Quiet").addOption("classic", "Classic");
-        d.setValue(this.plugin.settings.dashStyle === "classic" ? "classic" : "quiet").onChange(async (v) => {
-          this.plugin.settings.dashStyle = v; await this.plugin.persist();
-          document.body.classList.toggle("cm-quiet", v !== "classic");
-          this.plugin.renderAll();
-        });
-      });
     new Setting(el).setName("Ambient animations")
       .setDesc("Glowing titles, breathing flag callouts, sparkles on the map, page fade-ins, and a slowly drifting background. Turn off for a still, quiet vault. They are also off if your computer is set to reduce motion.")
       .addToggle((t) => t.setValue(this.plugin.settings.ambient !== false).onChange(async (v) => {
@@ -2215,7 +2205,8 @@ module.exports = class Nicrosil extends Plugin {
     this.registerCommands();
 
     document.body.classList.toggle("cm-calm", this.settings.ambient === false);
-    document.body.classList.toggle("cm-quiet", this.settings.dashStyle !== "classic");
+    delete this.settings.dashStyle; // the Classic/Quiet switch was removed in 2.4.2
+    document.body.classList.add("cm-quiet");
     this.statusEl = this.addStatusBarItem();
     this.statusEl.addClass("cm-status", "mod-clickable");
     this.statusEl.setAttr("aria-label", "Open the review queue");
@@ -2458,7 +2449,7 @@ module.exports = class Nicrosil extends Plugin {
     this.dashIntroTimer = setTimeout(() => { this.dashIntro = false; }, 2400);
   }
 
-  isQuiet() { return this.settings.dashStyle !== "classic"; }
+  isQuiet() { return true; } // the Dashboard always uses the quiet style (2.4.2)
 
   renderHero(el, src, ctx) {
     el.empty();
