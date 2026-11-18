@@ -11,7 +11,6 @@ sources:
 applies_to:
   - "[[Artificial General Intelligence]]"
 related:
-  - "[[AI Alignment]]"
   - "[[Semiconductor Export Controls]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14

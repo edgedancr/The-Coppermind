@@ -4,7 +4,6 @@ status: draft
 aliases: ["Image of God"]
 courses: ["SAIL"]
 sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
-related: ["[[Architecture of Worldview]]", "[[Intelligence vs. Consciousness]]", "[[Intelligence as Attentive Understanding]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:

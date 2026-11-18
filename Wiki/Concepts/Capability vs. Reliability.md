@@ -4,7 +4,8 @@ status: draft
 aliases: []
 courses: ["SAIL", "Intro to Intelligence"]
 sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]", "[[SRC - OWASP Top 10 for LLM Applications 2026]]"]
-related: ["[[Hallucination]]", "[[Automation Bias]]", "[[Think-Calculate-Verify Loop]]", "[[OWASP Top 10 for Large Language Model Applications]]"]
+related:
+  - "[[Hallucination]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:

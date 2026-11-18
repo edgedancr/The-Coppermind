@@ -13,7 +13,6 @@ sources:
 part_of:
   - "[[Critiques of Large Language Models]]"
 related:
-  - "[[Catastrophic Forgetting]]"
   - "[[Continual Learning]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17

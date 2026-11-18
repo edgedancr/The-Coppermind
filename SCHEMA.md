@@ -1,6 +1,6 @@
 ---
 type: schema
-version: 4.4
+version: 5.1
 status: verified
 owner: Harrison Nickles
 updated: 2026-11-17
@@ -136,7 +136,7 @@ Every page in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/` starts with 
 | `aliases`                                                                               | list                                                                                                              | Acronyms and other names                 |
 | `courses`                                                                               | SAIL, Intro to Intelligence, Freedom's Foundations                                                                | Which course(s) the content comes from   |
 | `sources`                                                                               | list of source-card links                                                                                         | Every source the page draws on           |
-| `supports`, `contradicts`, `example_of`, `part_of`, `applies_to`, `counters`, `related` | lists of links                                                                                                    | Typed links. See section 5               |
+| `type_of`, `part_of`, `example_of`, `causes`, `counters`, `applies_to`, `supports`, `contradicts`, `developed_by`, `related` | lists of links                                                                                                    | Typed links. See section 5               |
 | `drafted_by`                                                                            | e.g. `Claude (claude-opus-5-5)`                                                                                   | The agent and model that wrote the draft |
 | `drafted_on`                                                                            | YYYY-MM-DD                                                                                                        |                                          |
 | `verified_on`                                                                           | YYYY-MM-DD                                                                                                        | Set only when I verify the page          |
@@ -154,25 +154,36 @@ Links should carry meaning. A plain link in the body says "see also"; a typed li
 
 ### Relationship types
 
-| Property      | Meaning: "This page ___ the target"     | Example                                                               |
-| ------------- | --------------------------------------- | --------------------------------------------------------------------- |
-| `supports`    | gives evidence for, or strengthens      | Mata v. Avianca (2023) → supports → Capability vs. Reliability        |
-| `contradicts` | conflicts with, or is in tension with   | (a claim) → contradicts → (another claim)                             |
-| `example_of`  | is an instance or case of               | Bing Sydney Incident → example_of → Emergent Behavior                 |
-| `part_of`     | is a component or stage of              | Person (Risk Level) → part_of → Three-Ps Risk Framework               |
-| `applies_to`  | is a method or tool used on             | Analysis of Competing Hypotheses → applies_to → Intelligence Analysis |
-| `counters`    | is a safeguard against, or mitigates    | Analysis of Competing Hypotheses → counters → Confirmation Bias       |
-| `related`     | is connected, but none of the above fit | Use sparingly, only if none of the other categories fit               |
+Read each one as a sentence: "this page ___ the target." The types are listed in the order the agent tries them (see rule 4).
 
-The first two and the last mirror the Supports / Contradicts / Neither marks in an ACH matrix.
+| Property       | Meaning: "This page ___ the target"                      | Example                                                                     |
+| -------------- | -------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `type_of`      | is a kind of                                             | Large Language Model → type_of → Generative AI                              |
+| `part_of`      | is a component or stage of                               | Attention Head → part_of → Self-Attention                                   |
+| `example_of`   | is a specific case or instance of                        | Mata v. Avianca (2023) → example_of → Hallucination                         |
+| `causes`       | leads to, enables, or makes more likely                  | Deepfake → causes → Liar's Dividend                                         |
+| `counters`     | is a safeguard against, or mitigates                     | Analysis of Competing Hypotheses → counters → Confirmation Bias             |
+| `applies_to`   | is a method, tool, or rule used on or governing          | Executive Order 12333 → applies_to → United States Intelligence Community   |
+| `supports`     | gives evidence or argument for the target's main claim   | Mata v. Avianca (2023) → supports → Capability vs. Reliability              |
+| `contradicts`  | argues against, or is in tension with, the target's main claim | Any "Sources disagree" callout that sets this page's claim against another page's |
+| `developed_by` | was created, proposed, or argued by (the target is a person page) | Bitter Lesson → developed_by → Richard Sutton                        |
+| `related`      | is connected, but none of the above fit                  | The last resort. Its reason must say why the closest type doesn't fit       |
+
+`part_of` is for components and stages; `type_of` is for kinds. A transformer has self-attention as a part; a large language model is a kind of generative AI.
+
+`supports`, `contradicts`, and `related` mirror the Supports / Contradicts / Neither marks in an ACH matrix. Concept pages can support or contradict each other: a page supports another when its content is evidence or argument for that page's main claim, and contradicts it when its content argues against it.
 
 ### Linking rules
 
-1. **Store a relationship once**, on the page doing the relating. Obsidian's backlinks show the reverse direction.
-2. **Every proposed link must be real.** When drafting, the agent lists each new typed link with a one-line reason so I can check it. I approve or reject links individually.
-3. **Glossary terms link to the concept pages where they matter**, and concept pages link to the glossary terms they use, on first use.
-4. **Link to a page that doesn't exist yet only if the agent is proposing to create it** in the same operation. Otherwise use plain text.
-5. **Links inside original source files are left alone**, even if they point to notes outside this vault.
+1. **Store a relationship once, on the page the sentence starts with.** "ACH counters Confirmation Bias" goes on the ACH page. Never also store the reverse, as `related` or as any other type; Obsidian's backlinks show it.
+2. **If that page is verified,** the agent proposes the link there as a before/after change (§7). It never puts a `related` link on the other page instead.
+3. **Typed links say how two ideas relate; plain links in the text say "see also."** A link that only means "see also" or "compare" stays in the page text ("Used in:", "See", "Compare") and does not also go in `related`.
+4. **Choose the type in table order.** Try each type from the top, and use `related` only when none fits. Every proposed `related` link names the closest type and says why it doesn't fit.
+5. **Every proposed link must be real.** It comes from what a source says, not from the agent's own view, so its one-line reason can point to the sentence or section it rests on. When drafting, the agent lists each new typed link with that reason so I can check it. I approve or reject links individually.
+6. **When a "Sources disagree" callout sets a claim on one page against a claim on another page,** the agent also proposes a `contradicts` link between the two pages.
+7. **Glossary terms and the concept pages that use them link to each other in the page text:** a glossary term's "Used in:" line names the concept pages, and a concept page links a glossary term on first use. Add a typed link only when a type fits, and only on one of the two pages (rule 1).
+8. **Link to a page that doesn't exist yet only if the agent is proposing to create it** in the same operation. Otherwise use plain text.
+9. **Links inside original source files are left alone**, even if they point to notes outside this vault.
 
 ---
 
@@ -238,7 +249,7 @@ Each source card rates the source with the Admiralty Code. The agent may propose
 
 1. **Every wiki page, source card, and perspective has a `status`**: `draft` (not yet reviewed by me) or `verified` (I reviewed and approved it).
 2. **The agent only ever creates drafts.** It writes new pages directly into the vault with `status: draft`, so I can review them in Obsidian, where the links and formatting render and I can click through to check each citation.
-3. **Only I make a page verified.** I either change the property myself, or tell the agent explicitly, for that specific page, "mark it verified." The agent then sets `status: verified` and `verified_on`, and logs it. Clicking the **Verify** button added by the Nicrosil plugin counts as me making that change ([[Verifying Pages with the Review Buttons]]).
+3. **Only I make a page verified.** I either change the property myself, or tell the agent explicitly, for that specific page, "mark it verified." The agent then sets `status: verified` and `verified_on`, and logs it. Clicking the **Verify** button added by the Nicrosil plugin counts as me making that change ([[Nicrosil]]).
 4. **"Saved as final" means verified and committed to git.** A draft in the vault is a proposal, not part of the wiki's baseline.
 5. **If the agent changes the content of a verified page, the page goes back to `draft`** and the change is logged. Purely mechanical fixes, like updating a link after a page is renamed, don't reset the status but are still logged.
 6. **A rejected draft is deleted, never kept,** and the rejection is recorded in the log with my reason. The **Reject** button does this, and also removes the page from the index.
@@ -315,6 +326,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
    - claims without citations, or citations that don't support the claim
    - contradictions between pages
    - typed links that don't hold up, and missing links that should exist
+   - the typed-link mix: how many links of each type, the share that are `related`, and any relationship stored twice (on both pages, or as `related` on one page and a stronger type on the other)
    - broken links, orphan pages, and duplicate pages for the same idea
    - "Whose view?" callouts and unsourced-background callouts still open
    - drafts older than 14 days
@@ -331,9 +343,9 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 
 ### Index (`index.md`)
 
-- Lists **every page** in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`, grouped by type, with a count per group.
-- Under each type, pages are split under a `### Verified` heading and a `### Drafts` heading (a heading appears only when it has pages). Each entry is one line: `- [[Page Name]] — one-line summary`, listed under the heading for its status.
-- The agent updates the index **at the end of every operation** that adds, removes, renames, or changes the status of a page.
+- Lists **every page** in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`, grouped by type, with a count per group and a total at the top.
+- Under each type, pages are listed alphabetically in one list, with no split by status. Each entry is one line: `- [[Page Name]] — one-line summary`. The index does not show whether a page is draft or verified; the review queue and the page's own `status` do.
+- The agent updates the index **at the end of every operation** that adds, removes, or renames a page. A change of status does not change the index.
 - I check the index during each health check.
 
 ### Ingest Queue (`Ingest Queue.md`)
@@ -416,3 +428,5 @@ The Coppermind must outlive any one tool or agent.
 - **4.2 (2026-11-17):** Reworded a small part of the Find and Search description.
 - **4.3 (2026-11-17):** The review plugin is now called Nicrosil (§2, §7, §11). The name only changed; nothing about how reviewing works. Status returns to `draft` until I verify it again (§7).
 - **4.4 (2026-11-17):** `Find.md` and `Library.base` removed from the vault, and every mention of them removed from the rules (§2, §6, §9, §10, §11, §13). Earlier changelog lines still name them, since they record what was true then. Status returns to `draft` until I verify it again (§7).
+- **5.0 (2026-11-17):** Typed links reworked after the first health check found 82% of them were `related`, about half of those stored on both pages. §5: three new types (`type_of`, `causes`, `developed_by`), `applies_to` widened to rules that govern something, `supports` and `contradicts` defined for concept pages, and the types listed in the order the agent tries them. New linking rules: store a relationship on the page the sentence starts with and never store the reverse; propose links to verified pages instead of falling back to `related`; "see also" links stay in the page text; every `related` link says why no stronger type fits; links rest on what a source says; "Sources disagree" across two pages becomes a `contradicts` proposal; glossary and concept pages link to each other in the text, not in both pages' properties. §4: the new property names. §10: the health check now reports the typed-link mix. The page templates, the Health Check Report template, and [[Dissect and Ingest a Source]] were updated to match. Status returns to `draft` until I verify it again (§7).
+- **5.1 (2026-11-17):** The index no longer splits each type into Verified and Drafts (§11). Each type is one alphabetical list with a single total, and a change of status no longer changes the index. Nicrosil v0.8.6 was updated to match. Status returns to `draft` until I verify it again (§7).

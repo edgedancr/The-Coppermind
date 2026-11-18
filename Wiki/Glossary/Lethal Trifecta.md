@@ -7,9 +7,6 @@ courses:
   - SAIL
 sources:
   - "[[SRC - OWASP Top 10 for LLM Applications 2026]]"
-related:
-  - "[[Prompt Injection]]"
-  - "[[Excessive Agency]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
 verified_on:

@@ -7,9 +7,6 @@ courses:
 sources:
   - "[[SRC - On Living in an Atomic Age]]"
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
-related:
-  - "[[C. S. Lewis]]"
-  - "[[Imago Dei]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:

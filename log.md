@@ -30,10 +30,10 @@ A dated, append-only record of every ingest, query, health check, verification, 
 ### [2026-11-11] setup | Verify and Reject buttons
 
 - **Think:** I wanted a button on each wiki page that does the logistics of verifying a draft, so reviewing is easier. Verifying still means I checked the page; the button only does the bookkeeping.
-- **Calculate:** Claude (claude-sonnet-5-5) wrote a small local plugin, Coppermind Review (`.obsidian/plugins/coppermind-review/`), with a Verify button and a Reject button on every page in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`. Verify sets `status` and `verified_on`, updates [[index]], and appends to this log; it warns about open flag callouts and blocks source cards with no reliability rating. Reject requires a reason, logs it, removes the index entry, and deletes the page. Neither button commits to git. Drafted the guide [[Verifying Pages with the Review Buttons]]. Also added one sentence to [[SCHEMA#7. Draft vs. verified|Schema §7]] (items 3 and 6) saying the buttons count as me marking a page verified or rejecting it.
+- **Calculate:** Claude (claude-sonnet-5-5) wrote a small local plugin, Coppermind Review (`.obsidian/plugins/coppermind-review/`), with a Verify button and a Reject button on every page in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`. Verify sets `status` and `verified_on`, updates [[index]], and appends to this log; it warns about open flag callouts and blocks source cards with no reliability rating. Reject requires a reason, logs it, removes the index entry, and deletes the page. Neither button commits to git. Drafted the guide [[Nicrosil]]. Also added one sentence to [[SCHEMA#7. Draft vs. verified|Schema §7]] (items 3 and 6) saying the buttons count as me marking a page verified or rejecting it.
   - Tested on copies of the real [[index]] and this log (text changes only). Not yet tried inside Obsidian.
 - **Verify:** pending
-  - [[Verifying Pages with the Review Buttons]]: to verify after I follow it
+  - [[Nicrosil]]: to verify after I follow it
   - Plugin: to try on one page and check that the page, [[index]], and this log all change correctly
   - [[SCHEMA]]: the §7 wording is mine to approve or rewrite
 - **Commit:** `setup: Verify and Reject buttons (Coppermind Review plugin)`
@@ -53,11 +53,11 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - **Resolve flags:** a Resolve button on accuracy-check, gap, question, and warning callouts (Reading view), in the sidebar card, and on `Alt+F`. It asks what I decided, removes the callout, and saves the decision; the decision is written into this log when I verify or reject the page.
   - **Hotkeys and status bar:** `Alt+V` verify, `Alt+R` reject, `Alt+S` skip, `Alt+N` next, `Alt+F` resolve, `Alt+Q` queue, `Ctrl+Enter` to confirm; "X/Y verified" in the status bar opens the queue.
   - **Home dashboard:** a live `coppermind-dashboard` block added to [[Dashboard]] under "Review progress": progress, a table by page type, open flags by kind with links, and drafts older than 14 days ([[SCHEMA#7. Draft vs. verified|Schema §7]], item 7).
-  - Rewrote [[Verifying Pages with the Review Buttons]] to cover all of it.
+  - Rewrote [[Nicrosil]] to cover all of it.
   - Tested outside Obsidian against copies of the SAIL drafts, [[index]], and this log (flag parsing and removal on every draft, queue order, skip, verify, reject, and log entries). Not yet tried inside Obsidian.
 - **Verify:** pending
   - Plugin v0.2: to try a short review session and check the page, [[index]], and this log after each action
-  - [[Verifying Pages with the Review Buttons]]: to verify after I follow it
+  - [[Nicrosil]]: to verify after I follow it
   - [[Dashboard]]: whether I want the dashboard there
 - **Commit:** `setup: review queue, flag resolving, hotkeys, Home dashboard (Coppermind Review v0.2)`
 
@@ -79,7 +79,7 @@ A dated, append-only record of every ingest, query, health check, verification, 
 ### [2026-11-11] setup | Sidebar-only review controls
 
 - **Think:** The Verify and Reject icons at the top of each page are redundant now that the review sidebar does the same job. I want to review from the sidebar only.
-- **Calculate:** Claude (claude-sonnet-5-5) removed the page-header Verify and Reject icons from the Coppermind Review plugin, and their styles. Verify, Skip, and Reject are now in the sidebar card and on the hotkeys (`Alt+V`, `Alt+S`, `Alt+R`). Updated [[Verifying Pages with the Review Buttons]] to match. Nothing else changed. Re-ran the outside-Obsidian tests; they still pass.
+- **Calculate:** Claude (claude-sonnet-5-5) removed the page-header Verify and Reject icons from the Coppermind Review plugin, and their styles. Verify, Skip, and Reject are now in the sidebar card and on the hotkeys (`Alt+V`, `Alt+S`, `Alt+R`). Updated [[Nicrosil]] to match. Nothing else changed. Re-ran the outside-Obsidian tests; they still pass.
 - **Verify:** pending. To check that no icons show on a page after reloading the plugin.
 - **Commit:** `setup: remove page-header review buttons, sidebar only`
 
@@ -90,13 +90,13 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - **Page:** a header with the logo, stat tiles (verified, drafts, open flags), the progress bar and Start reviewing, six navigation cards, a Recent activity list read from this log, and the old explanatory text folded under Reference. The title and properties are hidden on this page, and the Homepage plugin is set to open it in Reading view.
   - **Home button:** the copper logo in the left ribbon, and `Alt+H`. It switches to the Dashboard if it's already open.
   - **Rename:** when the plugin loads, it renames `Home.md` to `Dashboard.md` through Obsidian (which updates links) and points the Homepage plugin at the new name; it adds its own log entry when it does.
-  - Saved the logo as `_attachments/coppermind-logo.svg` and updated [[SCHEMA]]'s folder tree and [[Verifying Pages with the Review Buttons]].
+  - Saved the logo as `_attachments/coppermind-logo.svg` and updated [[SCHEMA]]'s folder tree and [[Nicrosil]].
   - Left out of the Dashboard: the link to [[Review Queue.base|Review Queue]] (the sidebar replaces it; the file is still there).
   - **Restored this log:** two of my earlier writes to this file were reverted on disk, so the entries for [[Architecture of Worldview]], [[Setting Up Git for the Coppermind]], and the "Sidebar-only review controls" change were missing. I put them back from my copy.
   - Tested outside Obsidian (rename, ribbon, hotkey, all four page blocks, the activity list, link clicks) and previewed the layout in a browser at desktop and phone widths. Not yet seen in Obsidian itself, where the icons will be Obsidian's own.
 - **Verify:** pending
   - Plugin v0.3 and the Dashboard: to reload the plugin, restart Obsidian once, and check the page, the ribbon button, and `Alt+H`
-  - [[Verifying Pages with the Review Buttons]]: to verify after I follow it
+  - [[Nicrosil]]: to verify after I follow it
 - **Commit:** `setup: Dashboard page, logo home button, Home renamed (Coppermind Review v0.3)`
 
 ### [2026-11-11] setup | Renamed Home to Dashboard
@@ -112,7 +112,7 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Calculate:** Claude (claude-sonnet-5-5) updated the Coppermind Review plugin to v0.3.1:
   - **Properties:** the plugin now tags every pane showing the Dashboard, and the hiding rule applies to that tag as well as to the page's `cssclasses`, with `!important` so nothing overrides it. The Properties side pane is also emptied while the Dashboard is the active note.
   - **Reading view:** the plugin switches the Dashboard to Reading view whenever it is opened or I click into it (switching tabs counts). `Ctrl+E` still lets me edit; it holds until I leave and come back. Other notes are untouched, and the ribbon button and `Alt+H` open it in Reading view directly.
-  - Updated [[Verifying Pages with the Review Buttons]]. Left the tagline I wrote on the [[Dashboard]] as it is.
+  - Updated [[Nicrosil]]. Left the tagline I wrote on the [[Dashboard]] as it is.
   - Tested outside Obsidian: open, click-in, already-in-Reading-view, another note staying in editing, and cleanup on unload. Not yet seen in Obsidian itself.
 - **Verify:** pending. To reload the plugin and check that the Dashboard shows no properties and opens in Reading view.
 - **Commit:** `setup: Dashboard always in Reading view, properties hidden (Coppermind Review v0.3.1)`
@@ -130,7 +130,7 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - **Properties:** hidden on [[index]] and [[log]] (and still on the [[Dashboard]]), by the Coppermind Review plugin (v0.4.0). The titles stay.
   - **Log:** entry headings changed from `##` to `###` (12 existing entries, a formatting change only; the text is untouched), and the plugin appends new entries as `###`. When the log opens in editing view, the plugin folds every entry heading and nothing else. It does this once each time the log is opened, so switching tabs doesn't re-fold what I opened. Reading view doesn't fold.
   - **Index:** under each type, pages are split under `### Verified` and `### Drafts` headings (shown only when that group has pages). The `(draft)` and `(verified)` endings are gone from the lines. The plugin moves a page from Drafts to Verified when I verify it, and keeps the counts and totals right.
-  - Updated [[SCHEMA#11. Index and log|Schema §11]] to describe the new index and log formats, and [[Verifying Pages with the Review Buttons]].
+  - Updated [[SCHEMA#11. Index and log|Schema §11]] to describe the new index and log formats, and [[Nicrosil]].
   - Tested outside Obsidian on copies of the real index and log (reading the old format, writing the new one, verify and reject moves, empty groups, folding only the entry headings). Not yet seen in Obsidian itself.
 - **Verify:** pending. To reload the plugin, open the log and the index, then verify one page to check that it moves to the Verified list.
 - **Commit:** `setup: index split by status, folded log, properties hidden (Coppermind Review v0.4.0)`
@@ -441,7 +441,7 @@ A dated, append-only record of every ingest, query, health check, verification, 
 ### [2026-11-11] setup | Find card on the Dashboard (plugin v0.5.2)
 
 - **Think:** I asked for a Find card on the Dashboard.
-- **Calculate:** Claude (claude-sonnet-5-5) added a seventh nav card, "Find", which opens [[Find]]. It sits last and spans the full row so the grid has no gap. Plugin version 0.5.1 → 0.5.2. The guide [[Verifying Pages with the Review Buttons]] now says seven cards and mentions Find; it was still a draft, so its status didn't change.
+- **Calculate:** Claude (claude-sonnet-5-5) added a seventh nav card, "Find", which opens [[Find]]. It sits last and spans the full row so the grid has no gap. Plugin version 0.5.1 → 0.5.2. The guide [[Nicrosil]] now says seven cards and mentions Find; it was still a draft, so its status didn't change.
 - **Verify:** pending. To reload the plugin and open the Dashboard.
 - **Commit:** `plugin: Find card on Dashboard (v0.5.2)`
 
@@ -455,7 +455,7 @@ A dated, append-only record of every ingest, query, health check, verification, 
 ### [2026-11-11] verify | Verifying Pages with the Review Buttons
 
 - **Verify:**
-  - Approved: [[Verifying Pages with the Review Buttons]]
+  - Approved: [[Nicrosil]]
 - **Commit:** `verify: Verifying Pages with the Review Buttons`
 
 ### [2026-11-11] verify | Law Enforcement Intelligence Internships
@@ -944,9 +944,9 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Calculate:**
   - Plugin: the schema changelog button now lives inside Nicrosil. Its folder and id stay `coppermind-review`, so my settings, saved flag decisions, queue layout, and the Alt+D hotkey carry over. The old `coppermind-schema-log` folder is now an empty stub, to be turned off and deleted.
   - [[SCHEMA]]: changed the three places that named the old plugin (§2, §7, §11), added a 4.3 line to the changelog, and set `status` back to `draft` and cleared `verified_on` (§7).
-  - [[Verifying Pages with the Review Buttons]]: changed the three mentions of the plugin name, and set `status` back to `draft` and cleared `verified_on` (§7). The guide still says the Dashboard has seven cards including Find, which is no longer true; I did not change that.
+  - [[Nicrosil]]: changed the three mentions of the plugin name, and set `status` back to `draft` and cleared `verified_on` (§7). The guide still says the Dashboard has seven cards including Find, which is no longer true; I did not change that.
   - [[index]]: moved the guide from Verified to Drafts and updated the totals (55 verified, 181 drafts). Older log entries still say "Coppermind Review", since they record what was true then.
-- **Verify:** pending. [[SCHEMA]] and [[Verifying Pages with the Review Buttons]] need re-verifying.
+- **Verify:** pending. [[SCHEMA]] and [[Nicrosil]] need re-verifying.
 - **Commit:** `schema: rename the review plugin to Nicrosil (v4.3)`
 
 ### [2026-11-17] verify | SCHEMA
@@ -961,12 +961,62 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Calculate:**
   - [[SCHEMA]]: removed the two folder-layout lines, the "Find and Library" subsections in §2 and §11, the §9 permissions row, the Find/Library parts of the ingest commit step and the health check (§10), and the mentions in §6 and §13. Added a 4.4 line to the changelog, and set `status` back to `draft` and cleared `verified_on` (§7).
   - `AGENTS.md`: removed the paragraph about maintaining the search tools.
-  - [[Verifying Pages with the Review Buttons]]: replaced the Find card with the search box, and corrected the card count to six. It was already a draft.
+  - [[Nicrosil]]: replaced the Find card with the search box, and corrected the card count to six. It was already a draft.
   - `Health Check Report` template: removed the Find/Library row, so the report has 11 check rows plus "anything else".
   - Left alone on purpose: older log entries and the saved [[Health Check 2026-11-17]], because they record what was true then. They still name Find and Library, so those links show as unresolved. The one open flag about Find's vault name in that report no longer applies.
   - [[index]] and the Dashboard needed no change.
 - **Verify:** pending. [[SCHEMA]] needs re-verifying.
 - **Commit:** `schema: remove Find and Library (v4.4)`
+
+### [2026-11-17] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`
+
+### [2026-11-17] schema | Typed links reworked (version 5.0)
+
+- **Think:** After the first health check found 82% of typed links were `related`, I asked why ingest makes so few strong links and where to fix it. I approved the proposed changes, and the clean-up of `related` links stored twice (health check flags 3 and 4).
+- **Calculate:** Claude (claude-opus-5-5) found that 157 of the 313 `related` links repeated a link already stored on the other page (140 in 70 two-way pairs, 17 as the reverse of a stronger type), 11 pointed at person pages with no type for authorship, and the rest mostly needed a cause, kind-of, or governing type the schema didn't have. The old §5 rule 3 asked for glossary and concept links in both directions, the Glossary, Person, Summary, Guide, and Prompt templates offered little besides `related`, and nothing made the agent justify a `related` link. Changes:
+  - [[SCHEMA]]: §5 rewritten. New types `type_of`, `causes`, and `developed_by`; `applies_to` now covers rules that govern something; `supports` and `contradicts` defined for concept pages; types listed in the order to try them, with `related` last. New rules: store a link on the page the sentence starts with and never the reverse; propose links to verified pages rather than falling back to `related`; "see also" links stay in the page text; every `related` link names the closest type and why it doesn't fit; links rest on what a source says; "Sources disagree" across two pages becomes a `contradicts` proposal; glossary and concept pages link to each other in the text. §4 lists the new properties, §10 adds the typed-link mix to the health check, and a 5.0 line was added to the changelog. `status` set back to `draft` and `verified_on` cleared (§7).
+  - `_templates/`: Analysis, Case Study, Concept, Framework, Glossary Term, Guide, Person, Prompt, Summary, and Workflow now carry the same ten typed-link properties, in table order. The `Health Check Report` template has a new row, "Typed-link mix".
+  - [[Dissect and Ingest a Source]]: step 2 records the relations a source states; step 4 applies the §5 rules; report section D groups links by type and gives a reason for each `related`. It was verified, so `status` is back to `draft`, old `verified_on` kept (§7).
+  - Clean-up: removed 82 repeated `related` links from 47 draft pages (one side of 66 pairs, and 16 reverse copies of a stronger type). No verified page changed. Typed links are now 299: 231 `related`, 49 `part_of`, 7 `example_of`, 7 `applies_to`, 4 `counters`, 1 `supports`.
+  - Left for item-by-item review (both pages verified): 4 two-way pairs and Confirmation Bias → related → [[Analysis of Competing Hypotheses]]. Listed in [[Health Check 2026-11-17]], where flags 3 and 4 are now recorded as fixed (9 open).
+  - [[index]]: moved [[Dissect and Ingest a Source]] to Drafts; totals now 54 verified, 182 drafts.
+- **Verify:** pending. [[SCHEMA]] and [[Dissect and Ingest a Source]] need re-verifying.
+- **Commit:** `schema: typed links reworked (v5.0); remove 82 repeated related links`
+
+### [2026-11-17] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`
+
+### [2026-11-17] verify | Dissect and Ingest a Source
+
+- **Verify:**
+  - Approved: [[Dissect and Ingest a Source]]
+- **Commit:** `verify: Dissect and Ingest a Source`
+
+### [2026-11-17] setup | Guide: choosing a Claude model
+
+- **Think:** I asked for a guide on which Claude model to use for the different kinds of Coppermind work: ingesting, health checks, queries, editing pages, and developing features.
+- **Calculate:** Claude (claude-opus-5-5) drafted [[Choosing a Claude Model for Coppermind Work]] in `Wiki/Guides/`: the four current models (Fable 5.2, Opus 5.5, Sonnet 5.5, Haiku 5.5) cited to Anthropic's model docs by URL (Schema §6, how-to guides about tools), what this log shows about which model did which work so far, a task-by-task table with a default model and when to step down or up, and steps for choosing per session. Proposed typed link: [[Choosing a Claude Model for Coppermind Work]] → applies_to → [[LLM Wiki]] (the guide is a method used on running this LLM wiki). The recommendations are the agent's advice, not claims from a course source. Updated [[index]] (Guides 4; totals 55 verified, 182 drafts).
+- **Verify:** pending.
+- **Commit:** `setup: draft guide on choosing a Claude model`
+### [2026-11-17] schema | Retype remaining related links
+- **Think:** After schema 5.0, 231 `related` links were left. Each was checked against the page text and its sources, trying the types in table order (§5).
+- **Calculate:** 231 links decided: 23 retyped, 93 dropped (already linked in the page text), 55 kept as `related` with a reason, 60 on verified pages left as proposals. Typed links went from 299 to 206: 115 `related`, 57 `part_of`, 8 `example_of`, 8 `applies_to`, 5 `developed_by`, 5 `counters`, 3 `supports`, 3 `type_of`, 2 `causes`.
+- **Changed:** 90 draft pages in `Wiki/`. No verified page changed; [[Dissect and Ingest a Source]] was verified meanwhile, so its one proposed change (drop `related` → [[SCHEMA]], already linked in the text) is left for you. [[Health Check 2026-11-17]] flag 4 updated.
+- **Verify:** pending. The 23 retyped links need your approval or rejection one by one. The 60 verified-page proposals need item-by-item review. [[SCHEMA]] and [[Dissect and Ingest a Source]] still need re-verifying.
+- **Commit:** `schema: retype related links — 23 typed, 93 dropped as duplicates of text links`
+
+### [2026-11-17] verify | Choosing a Claude Model for Coppermind Work
+
+- **Verify:**
+  - Approved: [[Choosing a Claude Model for Coppermind Work]]
+- **Commit:** `verify: Choosing a Claude Model for Coppermind Work`
 
 ### [2026-11-17] verify | SCHEMA
 

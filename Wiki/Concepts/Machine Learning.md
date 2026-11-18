@@ -4,7 +4,8 @@ status: draft
 aliases: ["ML"]
 courses: ["SAIL"]
 sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - AI, Machine Learning, Deep Learning, and Generative AI Explained]]"]
-related: ["[[Artificial Intelligence]]", "[[Deep Learning]]"]
+type_of:
+  - "[[Artificial Intelligence]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:

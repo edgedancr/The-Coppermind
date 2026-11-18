@@ -10,11 +10,6 @@ sources:
   - "[[SRC - Artificial General Intelligence's Five Hard National Security Problems]]"
   - "[[SRC - The Catastrophic Risks of AI and a Safer Path]]"
 related:
-  - "[[Cascade of Unintended Consequences]]"
-  - "[[Bing Sydney Incident (2023)]]"
-  - "[[Existential Risk]]"
-  - "[[Five Hard National Security Problems of Artificial General Intelligence]]"
-  - "[[AI Deception]]"
   - "[[Gradual Loss of Control]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11

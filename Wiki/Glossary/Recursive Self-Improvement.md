@@ -7,7 +7,6 @@ courses:
 sources:
   - "[[SRC - Artificial General Intelligence's Five Hard National Security Problems]]"
 related:
-  - "[[Technological Singularity]]"
   - "[[Artificial General Intelligence]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14

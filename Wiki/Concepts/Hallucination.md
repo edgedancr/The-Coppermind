@@ -4,7 +4,8 @@ status: draft
 aliases: ["AI Hallucination", "Hallucinated Citation"]
 courses: ["SAIL", "Intro to Intelligence"]
 sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]", "[[SRC - ACH GenAI Workflow]]", "[[SRC - OWASP Top 10 for LLM Applications 2026]]", "[[SRC - Current AI Models Have 3 Unfixable Problems]]"]
-related: ["[[Capability vs. Reliability]]", "[[Transformer]]", "[[Critiques of Large Language Models]]"]
+related:
+  - "[[Transformer]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:

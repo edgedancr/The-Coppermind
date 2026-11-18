@@ -7,8 +7,9 @@ courses:
   - SAIL
 sources:
   - "[[SRC - Large Language Models Explained Briefly]]"
-related:
+applies_to:
   - "[[Parameter]]"
+related:
   - "[[Pre-Training]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17

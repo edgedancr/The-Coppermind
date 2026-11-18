@@ -9,7 +9,7 @@ sources:
   - "[[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End]]"
 part_of:
   - "[[Reinforcement Learning]]"
-related:
+developed_by:
   - "[[Richard Sutton]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17

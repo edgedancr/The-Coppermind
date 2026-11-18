@@ -5,7 +5,6 @@ aliases: ["TCV Loop", "Think, Calculate, Verify"]
 courses: ["SAIL"]
 sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
 counters: ["[[Hallucination]]"]
-related: ["[[LLM Wiki]]", "[[Capability vs. Reliability]]", "[[Centaur Analyst]]", "[[Four Levels of Prompt Engineering]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:

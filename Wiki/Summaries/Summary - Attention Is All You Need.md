@@ -5,9 +5,6 @@ courses:
   - SAIL
 sources:
   - "[[SRC - Attention Is All You Need]]"
-related:
-  - "[[Transformer]]"
-  - "[[Self-Attention]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:

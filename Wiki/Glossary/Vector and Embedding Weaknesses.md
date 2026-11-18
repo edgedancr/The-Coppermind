@@ -9,9 +9,6 @@ sources:
   - "[[SRC - OWASP Top 10 for LLM Applications 2026]]"
 part_of:
   - "[[OWASP Top 10 for Large Language Model Applications]]"
-related:
-  - "[[Embedding]]"
-  - "[[Retrieval-Augmented Generation]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
 verified_on:

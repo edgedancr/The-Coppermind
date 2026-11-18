@@ -10,7 +10,7 @@ courses:
 sources:
   - "[[SRC - Attention Is All You Need]]"
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
-related:
+part_of:
   - "[[Transformer]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17

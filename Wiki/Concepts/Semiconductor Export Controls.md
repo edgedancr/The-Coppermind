@@ -12,8 +12,6 @@ sources:
   - "[[SRC - Artificial General Intelligence's Five Hard National Security Problems]]"
   - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
 related:
-  - "[[Semiconductors and National Security]]"
-  - "[[China's AI Industrial Policy]]"
   - "[[AI Technology Stack]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14

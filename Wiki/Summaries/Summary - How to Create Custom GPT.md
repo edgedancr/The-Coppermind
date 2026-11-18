@@ -5,8 +5,6 @@ courses:
   - SAIL
 sources:
   - "[[SRC - How to Create Custom GPT]]"
-related:
-  - "[[Custom GPT]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:

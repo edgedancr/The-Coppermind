@@ -5,9 +5,10 @@ courses:
   - SAIL
 sources:
   - "[[SRC - The Catastrophic Risks of AI and a Safer Path]]"
-related:
-  - "[[Yoshua Bengio]]"
+counters:
   - "[[Agentic AI]]"
+developed_by:
+  - "[[Yoshua Bengio]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:

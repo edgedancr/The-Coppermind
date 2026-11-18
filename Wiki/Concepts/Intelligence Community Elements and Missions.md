@@ -13,7 +13,6 @@ part_of:
   - "[[United States Intelligence Community]]"
 related:
   - "[[Executive Order 12333]]"
-  - "[[Redundant Analytic Structure]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:

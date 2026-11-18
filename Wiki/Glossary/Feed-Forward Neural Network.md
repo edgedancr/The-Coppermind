@@ -9,8 +9,9 @@ courses:
 sources:
   - "[[SRC - Large Language Models Explained Briefly]]"
   - "[[SRC - Attention Is All You Need]]"
-related:
+part_of:
   - "[[Transformer]]"
+related:
   - "[[Neural Network]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17

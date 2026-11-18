@@ -4,7 +4,6 @@ status: draft
 aliases: ["Intel"]
 courses: ["Intro to Intelligence"]
 sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]", "[[SRC - Intelligence in National Security, Definition in 7 Points]]"]
-related: ["[[Tasking, Collection, Processing, Exploitation, and Dissemination]]", "[[Levels of Intelligence]]", "[[Seven-Point Definition of Intelligence]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:

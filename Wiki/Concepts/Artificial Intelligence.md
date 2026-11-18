@@ -8,13 +8,6 @@ courses:
 sources:
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
   - "[[SRC - AI, Machine Learning, Deep Learning, and Generative AI Explained]]"
-related:
-  - "[[Machine Learning]]"
-  - "[[Narrow AI]]"
-  - "[[Artificial General Intelligence]]"
-  - "[[Intelligence vs. Consciousness]]"
-  - "[[Agentic AI]]"
-  - "[[Generative AI]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11

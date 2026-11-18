@@ -8,10 +8,10 @@ courses:
 sources:
   - "[[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End]]"
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
-related:
+developed_by:
   - "[[Richard Sutton]]"
+related:
   - "[[Artificial General Intelligence]]"
-  - "[[Existential Risk]]"
   - "[[AI Alignment]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17

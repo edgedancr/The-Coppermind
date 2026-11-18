@@ -8,8 +8,6 @@ courses:
   - SAIL
 sources:
   - "[[SRC - On Living in an Atomic Age]]"
-related:
-  - "[[Naturalism]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:

@@ -13,9 +13,6 @@ sources:
   - "[[SRC - The Catastrophic Risks of AI and a Safer Path]]"
 applies_to:
   - "[[Large Language Model]]"
-related:
-  - "[[Artificial General Intelligence]]"
-  - "[[Bitter Lesson]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:

@@ -10,8 +10,6 @@ sources:
   - "[[SRC - A Disneyland Without Children]]"
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
 related:
-  - "[[Existential Risk]]"
-  - "[[AI Alignment]]"
   - "[[Cascade of Unintended Consequences]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17

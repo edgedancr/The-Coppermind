@@ -10,10 +10,10 @@ applies_to:
 related:
   - "[[SCHEMA]]"
   - "[[Think-Calculate-Verify Loop]]"
-  - "[[Verifying Pages with the Review Buttons]]"
+  - "[[Nicrosil]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
+verified_on: 2026-11-17
 ---
 > [!summary]
 > The prompt I paste when I want the agent to break a source into its ideas and either create new wiki pages from it or add the new information to pages that already exist. It holds only the inputs for each run and the steps [[SCHEMA]] doesn't spell out; everything else (naming, properties, citations, attribution, review, index, log) comes from the schema itself.
@@ -40,6 +40,7 @@ Before thinking about pages, break the in-scope part of the source into its idea
 - its location (date heading, page number, section, or timestamp)
 - its voice: the author, the course and date, a quoted person, or unclear (unclear becomes a "Whose view is this?" flag; never guess)
 - its kind: term, concept, framework, case, person, or procedure
+- its relations: any link the source itself states between this idea and another idea, in the source or already in the wiki ("X is a kind of Y", "X is part of Y", "X is an example of Y", "X causes Y", "X counters Y", "X is used on Y", "X is evidence for or against Y", "X was developed by Y"), with its location. These become the proposed typed links.
 If the source is my own work (Sources/My Work/), its arguments are my voice. Don't turn them into wiki claims; list them in the report as material for Perspectives, which I write. Facts my paper takes from another source can be used only if that source is in the vault.
 
 3. DECIDE: APPEND, CREATE, OR SKIP
@@ -54,6 +55,7 @@ Check each idea against the wiki:
 - If the new source disagrees with an existing page, overwrite neither claim. Keep both, each attributed and cited, and add:
   > [!caution] Sources disagree
   > <claim A> (source A) vs. <claim B> (source B)
+- Typed links (Schema §5): for each relation from step 2, pick the type in the order of the §5 table and use `related` only when none fits. Put the link on the page the sentence starts with, which may be an existing page, not the page you are drafting. Never store the reverse as well. If that page is verified, propose the link as a before/after (see below) instead of putting `related` on the other page. Links that only mean "see also" stay in the page text, not in `related`. If a "Sources disagree" callout sets a claim on one page against another page, propose `contradicts` between them.
 - Use only these four flag callouts, so the review queue sees them: [!question] Whose view is this?, [!warning] Unsourced background — verify or remove, [!caution] Accuracy check (or "Sources disagree"), [!todo] Gap in my notes (or "Gap in the source").
 - Verified pages: by default, don't edit them. Put the exact proposed change in the report as a before/after. If VERIFIED PAGES is "edit", make the change and set the page back to status: draft (Schema §7, item 5).
 
@@ -65,7 +67,7 @@ If MODE is "plan first", do steps 1–3, give me sections A–C below as a plan,
 A. Defaults used, and any reading of my request you had to choose
 B. Created: [[Page]] (type) — one line each
 C. Appended: [[Page]] — what was added; verified pages as a proposed before/after
-D. Proposed typed links: [[A]] → relation → [[B]] — one-line reason each
+D. Proposed typed links, grouped by type: [[A]] → relation → [[B]] — one-line reason each, pointing to where the source says it. Each `related` link also says which type came closest and why it doesn't fit. If more than about a third of the links are `related`, re-check them before reporting.
 E. Flags: whose view, unsourced background, accuracy checks, sources disagree, gaps, and flags this source may resolve
 F. Skipped on purpose, and Perspectives material from my own work
 Then update index.md, append the log entry (operation: ingest), and suggest a commit message in the schema's format.

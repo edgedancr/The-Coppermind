@@ -13,9 +13,6 @@ sources:
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
 part_of:
   - "[[Transformer]]"
-related:
-  - "[[Attention Head]]"
-  - "[[Recurrent Neural Network]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:

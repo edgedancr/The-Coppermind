@@ -11,8 +11,6 @@ sources:
   - "[[SRC - Themes in US Intelligence, Summary of Texts]]"
 part_of:
   - "[[Intelligence Collection Disciplines]]"
-related:
-  - "[[All-Source Intelligence]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:

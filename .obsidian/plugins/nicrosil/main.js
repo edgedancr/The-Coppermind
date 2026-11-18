@@ -1,10 +1,10 @@
 "use strict";
 /*
- * Nicrosil (v0.7)
+ * Nicrosil (v0.8.10)
  *
  * A nicrosil mind stores investiture and amplifies whoever draws on it. This plugin does the same for
  * the Coppermind: it holds the tools that make working in the vault faster. (Its folder and id are
- * still `coppermind-review`, so my settings, saved decisions, and hotkeys carry over.)
+ * `nicrosil`; they used to be `coppermind-review`.)
  *
  * Review tools for draft pages (all in the sidebar and on hotkeys; no buttons on the page header):
  *  - verify-and-next and skip, so a review session never goes back to a list
@@ -20,8 +20,8 @@
  *    and what I changed, then adds the line to the Changelog at the bottom of SCHEMA.md and keeps its
  *    `version` and `updated` properties in step. It does not touch status, verified_on, or log.md.
  *
- * Verify: sets status: verified and verified_on, flips the page's entry in index.md,
- *         recomputes the totals, and appends to log.md.
+ * Verify: sets status: verified and verified_on, checks the page is listed in index.md,
+ *         and appends to log.md.
  * Reject: asks for a reason, logs it, removes the page from index.md, and deletes the page
  *         (SCHEMA §7: a rejected draft is deleted, never kept).
  * Nothing is committed to git; do that yourself afterward.
@@ -38,7 +38,7 @@ const SCHEMA_PATH = "SCHEMA.md";
 const OLD_HOME_PATH = "Home.md";
 // Feruchemical copper symbol, drawn for Obsidian's 100x100 icon box.
 const LOGO_ICON = `<g transform="translate(9.79 0) scale(0.2)"><path fill="currentColor" transform="translate(283.29507 359.37144)" d="M -161.19707,-1.8874443 V -79.964444 c 22.166,18.637 46.922,37.621 46.922,37.621 l 22.132996,-22.167 c 0,0 -40.038996,-25.523 -69.054996,-46.888996 v -143.076 l 279.99996,395.104 -10.77,-47.203004 -307.69096,-452.796996 v 212.379 c -21.332,-25.804 -50.807,-66.68 -53.221,-69.965 1.504,3.705 25.49,61.466 53.221,98.776 v 82.970996 l -83.637,-72.412996 v 33.812996 l 83.637,73.28499966 V 140.62856 H 3.4179256 L -43.020074,100.41856 -161.19707,-1.8874443 z m 0,102.3070043 V 33.147556 l 76.743996,67.272004 h -76.743996 z"/></g>`;
-const VIEW_TYPE = "coppermind-review-queue";
+const VIEW_TYPE = "nicrosil-queue";
 // Root-level .md files (e.g. SCHEMA.md) are reviewable too, but only count once they carry a status property.
 const REVIEWABLE = [/^Wiki\//, /^Perspectives\//, /^Sources\/Source Cards\//, /^[^/]+\.md$/];
 const GROUP_ORDER = ["Frameworks", "Concepts", "Case Studies", "Glossary", "People", "Summaries",
@@ -154,9 +154,9 @@ function daysBetween(fromIso, toIso) {
 }
 
 /**
- * index.md model. Each "## Type (n)" section holds entries, split under "### Verified (n)" and
- * "### Drafts (n)". The older format (status in brackets at the end of each line) is read too,
- * and rewritten in the new format.
+ * index.md model. Each "## Type (n)" section holds its entries in one alphabetical list, with no
+ * split by status. The older formats are still read, and rewritten in this one: entries under
+ * "### Verified (n)" and "### Drafts (n)" headings, or with the status in brackets at the end of each line.
  */
 function entryName(line) {
   const m = line.match(/^- \[\[([^\]|#]+)/);
@@ -168,22 +168,17 @@ function parseIndex(text) {
   const head = [];
   const sections = [];
   let cur = null;
-  let sub = "draft";
   for (const line of lines) {
     let m;
     if ((m = line.match(/^## (.+?)\s*\(\d+\)\s*$/))) {
       cur = { title: m[1], entries: [], extra: [] };
       sections.push(cur);
-      sub = "draft";
     } else if (!cur) {
       head.push(line);
-    } else if ((m = line.match(/^### (Verified|Drafts)\b/i))) {
-      sub = m[1].toLowerCase() === "verified" ? "verified" : "draft";
+    } else if (/^### (Verified|Drafts)\b/i.test(line)) {
+      // an old status heading: dropped
     } else if (/^- \[\[/.test(line)) {
-      let status = sub;
-      const t = line.match(/\s\((draft|verified)\)\s*$/);
-      if (t) status = t[1];
-      cur.entries.push({ name: entryName(line), status, text: line.replace(/\s\((draft|verified)\)\s*$/, "").replace(/\s+$/, "") });
+      cur.entries.push({ name: entryName(line), text: line.replace(/\s\((draft|verified)\)\s*$/, "").replace(/\s+$/, "") });
     } else if (line.trim() !== "") {
       cur.extra.push(line);
     }
@@ -194,25 +189,25 @@ function parseIndex(text) {
 
 function renderIndex(model, date) {
   const byName = (a, b) => (a.name || "").localeCompare(b.name || "", "en", { sensitivity: "base" });
-  let verified = 0, drafts = 0;
+  let total = 0;
   const body = [];
   for (const sec of model.sections) {
-    const v = sec.entries.filter((e) => e.status === "verified").sort(byName);
-    const d = sec.entries.filter((e) => e.status !== "verified").sort(byName);
-    verified += v.length;
-    drafts += d.length;
-    body.push(`## ${sec.title} (${v.length + d.length})`, "");
-    if (v.length) body.push(`### Verified (${v.length})`, ...v.map((e) => e.text), "");
-    if (d.length) body.push(`### Drafts (${d.length})`, ...d.map((e) => e.text), "");
+    const all = sec.entries.slice().sort(byName);
+    total += all.length;
+    body.push(`## ${sec.title} (${all.length})`, "");
+    if (all.length) body.push(...all.map((e) => e.text), "");
     if (sec.extra.length) body.push(...sec.extra, "");
   }
   let head = model.head.join("\n");
-  head = head.replace(/^\*\*Totals:\*\*.*$/m, `**Totals:** ${verified} verified · ${drafts} drafts`);
+  head = head.replace(/^\*\*Totals?:\*\*.*$/m, `**Total:** ${total} pages`);
   head = head.replace(/^updated:.*$/m, `updated: ${date}`);
   return head + "\n\n" + body.join("\n").replace(/\n+$/, "") + "\n";
 }
 
-/** Returns { text, found }. mode: "verify" moves the entry to Verified; "remove" deletes it. */
+/**
+ * Returns { text, found }. mode "remove" deletes the entry and fixes the counts. mode "verify" only
+ * checks that the entry exists, since the index no longer shows a page's status.
+ */
 function editIndex(text, name, mode, date) {
   const eol = text.includes("\r\n") ? "\r\n" : "\n";
   const model = parseIndex(text);
@@ -222,10 +217,10 @@ function editIndex(text, name, mode, date) {
     if (k < 0) continue;
     found = true;
     if (mode === "remove") sec.entries.splice(k, 1);
-    else sec.entries[k].status = "verified";
     break;
   }
   if (!found) return { text, found: false };
+  if (mode !== "remove") return { text, found: true };
   return { text: renderIndex(model, date).replace(/\n/g, eol), found: true };
 }
 
@@ -340,7 +335,7 @@ class ReviewModal extends Modal {
   onOpen() {
     const { mode, name, flags, resolved, backlinks, onConfirm } = this.opts;
     const el = this.contentEl;
-    this.modalEl.addClass("coppermind-review-modal");
+    this.modalEl.addClass("nicrosil-modal");
     el.empty();
     const isVerify = mode === "verify";
     el.createEl("h2", { text: isVerify ? `Verify “${name}”?` : `Reject “${name}”?` });
@@ -424,7 +419,7 @@ class ResolveModal extends Modal {
 
   onOpen() {
     const el = this.contentEl;
-    this.modalEl.addClass("coppermind-review-modal");
+    this.modalEl.addClass("nicrosil-modal");
     el.empty();
     el.createEl("h2", { text: `Resolve: ${flagName(this.flag)}` });
     if (this.flag.body) el.createDiv({ cls: `cm-flagbody cm-flagbody-${this.flag.kind}`, text: this.flag.body });
@@ -1232,8 +1227,27 @@ module.exports = class Nicrosil extends Plugin {
     this.statusEl.addEventListener("click", () => this.activateView());
 
     addIcon("coppermind-logo", LOGO_ICON);
-    this.ribbonEl = this.addRibbonIcon("coppermind-logo", "Dashboard (Alt+D)", (evt) => this.openDashboard(!!(evt && (evt.ctrlKey || evt.metaKey))));
+    // A middle-click can reach the ribbon callback more than once (and without a usable button number),
+    // so remember when the middle button went down and open the new tab exactly once per press.
+    this.middleDownAt = 0;
+    this.middleHandled = false;
+    this.ribbonEl = this.addRibbonIcon("coppermind-logo", "Dashboard (Alt+D)", (evt) => {
+      const middle = Date.now() - this.middleDownAt < 800 || !!(evt && evt.button === 1);
+      if (middle) {
+        if (this.middleHandled) return;
+        this.middleHandled = true;
+        this.openDashboard(true);
+        return;
+      }
+      this.openDashboard(!!(evt && (evt.ctrlKey || evt.metaKey)));
+    });
     this.ribbonEl.addClass("cm-ribbon-logo");
+    this.ribbonEl.addEventListener("mousedown", (e) => {
+      if (e.button !== 1) return;
+      e.preventDefault();
+      this.middleDownAt = Date.now();
+      this.middleHandled = false;
+    }, true);
     this.addRibbonIcon("badge-check", "Review queue (Alt+Q)", () => this.activateView());
 
     this.registerMarkdownCodeBlockProcessor("coppermind-hero", (src, el) => this.renderHero(el, src));
@@ -1526,7 +1540,7 @@ module.exports = class Nicrosil extends Plugin {
     el.empty();
     el.addClass("cm-nav");
     const drafts = this.items.filter((i) => i.status === "draft").length;
-    const open = (link) => () => this.app.workspace.openLinkText(link, "", false);
+    const open = (link) => (newTab) => this.app.workspace.openLinkText(link, "", !!newTab);
     const cards = [
       { icon: "list", title: "Index", sub: "Every page, by type", go: open("index") },
       { icon: "badge-check", title: "Review queue", sub: drafts ? `${drafts} drafts waiting` : "Nothing waiting", go: () => this.activateView() },
@@ -1542,8 +1556,10 @@ module.exports = class Nicrosil extends Plugin {
       setIcon(card.createSpan({ cls: "cm-navcard-icon" }), c.icon);
       card.createDiv({ cls: "cm-navcard-title", text: c.title });
       card.createDiv({ cls: "cm-navcard-sub", text: c.sub });
-      card.addEventListener("click", c.go);
-      card.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); c.go(); } });
+      card.addEventListener("click", (e) => c.go(e.ctrlKey || e.metaKey));
+      card.addEventListener("auxclick", (e) => { if (e.button === 1) { e.preventDefault(); c.go(true); } });
+      card.addEventListener("mousedown", (e) => { if (e.button === 1) e.preventDefault(); });
+      card.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); c.go(e.ctrlKey || e.metaKey); } });
     });
   }
 
@@ -1738,7 +1754,7 @@ module.exports = class Nicrosil extends Plugin {
     const f = this.dashboardFile();
     if (!f) { new Notice("Couldn't find Dashboard.md."); return; }
     const already = this.app.workspace.getLeavesOfType("markdown").find((l) => l.view.file && l.view.file.path === f.path);
-    if (already) { this.app.workspace.setActiveLeaf(already, { focus: true }); return; }
+    if (already && !newTab) { this.app.workspace.setActiveLeaf(already, { focus: true }); return; }
     await this.app.workspace.getLeaf(newTab ? "tab" : false).openFile(f, { state: { mode: "preview" } });
   }
 

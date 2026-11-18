@@ -24,6 +24,7 @@ flags_open = flags I haven't decided yet. The agent updates flags_open and each 
 | Claims without citations, or citations that don't support them | | |
 | Contradictions between pages | | |
 | Typed links that don't hold up, or links that are missing | | |
+| Typed-link mix: share that are `related`, relationships stored twice | | |
 | Broken links, orphan pages, duplicate pages | | |
 | "Whose view?" and unsourced-background callouts still open | | |
 | Drafts older than 14 days | | |
@@ -34,7 +35,8 @@ flags_open = flags I haven't decided yet. The agent updates flags_open and each 
 | Anything else found (properties, formatting) | | |
 | **Total** | | |
 
-%% Flags = the number of numbered flags below for that check. One flag can cover many pages; say how many in its text. Since last check: "+2", "−1", "same", or "new" on the first report. %%
+%% Flags = the number of numbered flags below for that check. One flag can cover many pages; say how many in its text. Since last check: "+2", "−1", "same", or "new" on the first report.
+For the typed-link mix, give the counts in the flag's text: links of each type, the share that are `related`, and how many relationships are stored twice. %%
 
 ## Needs my decision
 %% Flags that need judgment. Numbered, most important first, numbering continues into the next section. If there are more than 10, list the top 10 and group the rest by check, with a count and the pages involved. Leave Decision blank for me: fix, accept as is, or defer (with a one-line reason if deferred). %%

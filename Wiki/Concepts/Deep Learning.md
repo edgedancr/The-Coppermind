@@ -5,7 +5,6 @@ aliases: ["DL"]
 courses: ["SAIL"]
 sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - AI, Machine Learning, Deep Learning, and Generative AI Explained]]", "[[SRC - But What Is a Neural Network]]"]
 part_of: ["[[Machine Learning]]"]
-related: ["[[Transformer]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:

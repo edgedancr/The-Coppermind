@@ -11,9 +11,9 @@ sources:
   - "[[SRC - MITRE ATLAS Matrix]]"
 part_of:
   - "[[OWASP Top 10 for Large Language Model Applications]]"
+  - "[[MITRE ATLAS]]"
 related:
   - "[[Data and Model Poisoning]]"
-  - "[[MITRE ATLAS]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
 verified_on:

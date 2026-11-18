@@ -5,7 +5,7 @@ scope: whole vault
 checked_by: Claude (claude-sonnet-5-5)
 pages_checked: 236
 flags_total: 11
-flags_open: 11
+flags_open: 9
 previous:
 ---
 > [!summary]
@@ -41,11 +41,11 @@ previous:
 
 3. **Reciprocal `related` links** (typed links): 70 pairs of pages store the same `related` link on both pages, and 17 of those pairs include a verified page. §5 says to store a relationship once, on the page doing the relating.
    - **Fix:** keep the link on one page of each pair. Pairs that include a verified page are reviewed item by item.
-   - **Decision:** 
+   - **Decision:** fix (2026-11-17). Removed the repeated `related` link from the draft side of 66 pairs, and 16 `related` links that repeated a stronger type stored on the other page (82 in all, on 47 draft pages; no verified page changed). Left for item-by-item review, because both pages are verified: AI in Intelligence Production ↔ Time Compression Trap, AI-Enabled Surveillance ↔ Narrow AI, Human Decision Point ↔ Law of Armed Conflict, Analysis of Competing Hypotheses ↔ Richards Heuer, and Confirmation Bias → related → Analysis of Competing Hypotheses (which repeats ACH → counters → Confirmation Bias).
 
 4. **`related` is 313 of 381 typed links** (82%): `supports` is used once and `contradicts` never. §5 says to use `related` sparingly, only when no other type fits.
    - **Fix:** I propose stronger types (`part_of`, `example_of`, `supports`) for a sample of pages, with a reason for each, and you approve each one. Or accept as is.
-   - **Decision:** 
+   - **Decision:** fix (2026-11-17). Schema 5.0 adds `type_of`, `causes`, and `developed_by`, defines `supports` and `contradicts` for concept pages, and makes every `related` link say why no stronger type fits. Retype round (2026-11-17): went through the 231 remaining `related` links. 23 were retyped (some moved to the page the sentence starts with), 93 were dropped because the page text already links the target, and 55 stay `related` on draft pages with a reason. 60 links sit on verified pages and are left as proposals for item-by-item review. Typed links are now 206: 115 `related`, 57 `part_of`, 8 `example_of`, 8 `applies_to`, 5 `developed_by`, 5 `counters`, 3 `supports`, 3 `type_of`, 2 `causes`.
 
 5. **Unlinked mentions** (missing links): 80 mentions of another page's title on 54 pages have no link anywhere on the page. For example, [[MITRE ATLAS]] names Prompt Injection, Jailbreak, and Data and Model Poisoning but links none of them.
    - **Fix:** I list the proposed links page by page, with a reason for each (§5).
@@ -72,7 +72,7 @@ previous:
 **Batch decision:** 
 
 10. **[[Intelligence Collection Disciplines]]** lists `SRC - SAIL Class Notes (Fall 2026)` in `sources` but never cites it. Remove it from `sources`, or add the citation if something on the page came from there.
-11. **Empty lists in properties:** 26 pages have `aliases: []` (13 verified), and the verified guides [[Setting Up Git for the Coppermind]] and [[Verifying Pages with the Review Buttons]] have `sources: []`. §4 says not to leave empty lists on finished pages. Remove them; the 15 verified pages are approved item by item.
+11. **Empty lists in properties:** 26 pages have `aliases: []` (13 verified), and the verified guides [[Setting Up Git for the Coppermind]] and [[Nicrosil]] have `sources: []`. §4 says not to leave empty lists on finished pages. Remove them; the 15 verified pages are approved item by item.
 
 ## Since last check
 First health check; nothing to compare.

@@ -13,9 +13,6 @@ sources:
   - "[[SRC - Current AI Models Have 3 Unfixable Problems]]"
 part_of:
   - "[[OWASP Top 10 for Large Language Model Applications]]"
-related:
-  - "[[Excessive Agency]]"
-  - "[[Hidden Context Exposure]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
 verified_on:

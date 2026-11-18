@@ -7,12 +7,10 @@ cssclasses:
 It is not my position to judge truth... I simply carry it
 ```
 
-```coppermind-search
+```coppermind-nav
 ```
 
-## Where to start
-
-```coppermind-nav
+```coppermind-search
 ```
 
 ## Review progress

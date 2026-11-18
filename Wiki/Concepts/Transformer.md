@@ -4,7 +4,6 @@ status: draft
 aliases: ["GPT", "Generative Pre-trained Transformer"]
 courses: ["SAIL"]
 sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - Attention Is All You Need]]", "[[SRC - Large Language Models Explained Briefly]]"]
-related: ["[[Tokenization]]", "[[Embedding]]", "[[Attention Head]]", "[[Deep Learning]]", "[[Self-Attention]]", "[[Large Language Model]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:

@@ -9,8 +9,6 @@ courses:
 sources:
   - "[[SRC - MITRE ATLAS Matrix]]"
   - "[[SRC - OWASP Top 10 for LLM Applications 2026]]"
-related:
-  - "[[OWASP Top 10 for Large Language Model Applications]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
 verified_on:

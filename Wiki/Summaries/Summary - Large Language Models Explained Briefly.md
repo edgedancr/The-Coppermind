@@ -5,8 +5,6 @@ courses:
   - SAIL
 sources:
   - "[[SRC - Large Language Models Explained Briefly]]"
-related:
-  - "[[Large Language Model]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:

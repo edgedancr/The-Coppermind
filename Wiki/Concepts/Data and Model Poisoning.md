@@ -14,8 +14,6 @@ sources:
   - "[[SRC - Algorithmic Bias and Fairness (Crash Course AI 18)]]"
 part_of:
   - "[[OWASP Top 10 for Large Language Model Applications]]"
-related:
-  - "[[AI Supply Chain Compromise]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
 verified_on:

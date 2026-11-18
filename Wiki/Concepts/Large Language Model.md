@@ -11,13 +11,10 @@ sources:
   - "[[SRC - Large Language Models Explained Briefly]]"
   - "[[SRC - AI, Machine Learning, Deep Learning, and Generative AI Explained]]"
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
+type_of:
+  - "[[Foundation Model]]"
 part_of:
   - "[[Generative AI]]"
-related:
-  - "[[Transformer]]"
-  - "[[Foundation Model]]"
-  - "[[Emergent Behavior]]"
-  - "[[Critiques of Large Language Models]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:

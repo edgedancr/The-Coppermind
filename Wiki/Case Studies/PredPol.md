@@ -11,8 +11,6 @@ year: 2012
 example_of:
   - "[[Positive Feedback Loop]]"
   - "[[Algorithmic Bias]]"
-related:
-  - "[[Intelligence-Led Policing]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
 verified_on:

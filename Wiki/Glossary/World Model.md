@@ -11,8 +11,6 @@ sources:
   - "[[SRC - Current AI Models Have 3 Unfixable Problems]]"
 part_of:
   - "[[Reinforcement Learning]]"
-related:
-  - "[[Critiques of Large Language Models]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:

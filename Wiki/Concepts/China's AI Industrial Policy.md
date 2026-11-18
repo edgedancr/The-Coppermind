@@ -8,9 +8,6 @@ courses:
   - SAIL
 sources:
   - "[[SRC - Full Stack, China's Evolving Industrial Policy for AI]]"
-related:
-  - "[[Semiconductor Export Controls]]"
-  - "[[AI Technology Stack]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
 verified_on:

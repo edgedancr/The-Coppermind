@@ -10,8 +10,6 @@ sources:
   - "[[SRC - OWASP Top 10 for LLM Applications 2026]]"
 part_of:
   - "[[Retrieval-Augmented Generation vs. Fine-Tuning vs. Prompt Engineering]]"
-related:
-  - "[[Embedding]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
 verified_on:

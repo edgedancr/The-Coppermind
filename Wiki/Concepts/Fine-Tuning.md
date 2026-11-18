@@ -10,6 +10,8 @@ sources:
   - "[[SRC - RAG vs Fine-Tuning vs Prompt Engineering]]"
 part_of:
   - "[[Retrieval-Augmented Generation vs. Fine-Tuning vs. Prompt Engineering]]"
+causes:
+  - "[[Catastrophic Forgetting]]"
 applies_to:
   - "[[Large Language Model]]"
 drafted_by: Claude (claude-opus-5-5)

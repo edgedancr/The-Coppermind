@@ -8,9 +8,6 @@ courses:
 sources:
   - "[[SRC - AI, Machine Learning, Deep Learning, and Generative AI Explained]]"
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
-related:
-  - "[[Generative AI]]"
-  - "[[Liar's Dividend]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:

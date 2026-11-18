@@ -4,7 +4,8 @@ status: draft
 aliases: ["Your Brain on ChatGPT"]
 courses: ["SAIL"]
 sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
-related: ["[[Think-Calculate-Verify Loop]]", "[[Centaur Analyst]]"]
+related:
+  - "[[Centaur Analyst]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:

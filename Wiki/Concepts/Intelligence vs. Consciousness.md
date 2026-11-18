@@ -4,7 +4,6 @@ status: draft
 aliases: ["AI Consciousness"]
 courses: ["SAIL"]
 sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]"]
-related: ["[[Imago Dei]]", "[[Artificial Intelligence]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:

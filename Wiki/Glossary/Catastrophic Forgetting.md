@@ -8,8 +8,6 @@ courses:
 sources:
   - "[[SRC - RAG vs Fine-Tuning vs Prompt Engineering]]"
   - "[[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End]]"
-related:
-  - "[[Fine-Tuning]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:

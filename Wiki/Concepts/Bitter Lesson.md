@@ -7,10 +7,10 @@ courses:
   - SAIL
 sources:
   - "[[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End]]"
-related:
-  - "[[Richard Sutton]]"
-  - "[[Scaling Laws]]"
+supports:
   - "[[Critiques of Large Language Models]]"
+developed_by:
+  - "[[Richard Sutton]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:

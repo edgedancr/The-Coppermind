@@ -13,9 +13,6 @@ sources:
   - "[[SRC - How to Make a Music Video with AI]]"
 part_of:
   - "[[Deep Learning]]"
-related:
-  - "[[Foundation Model]]"
-  - "[[Deepfake]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:

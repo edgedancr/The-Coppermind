@@ -4,7 +4,7 @@ status: draft
 aliases: ["Centaur Professional"]
 courses: ["SAIL", "Intro to Intelligence"]
 sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"]
-related: ["[[Human-Centered AI]]", "[[Pi-Shaped Person]]", "[[Think-Calculate-Verify Loop]]"]
+related: ["[[Human-Centered AI]]", "[[Think-Calculate-Verify Loop]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:

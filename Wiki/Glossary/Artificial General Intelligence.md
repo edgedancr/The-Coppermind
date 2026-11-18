@@ -10,11 +10,7 @@ sources:
   - "[[SRC - Artificial General Intelligence's Five Hard National Security Problems]]"
   - "[[SRC - Current AI Models Have 3 Unfixable Problems]]"
 related:
-  - "[[Artificial Intelligence]]"
   - "[[Technological Singularity]]"
-  - "[[Existential Risk]]"
-  - "[[Five Hard National Security Problems of Artificial General Intelligence]]"
-  - "[[Critiques of Large Language Models]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11

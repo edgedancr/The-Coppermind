@@ -7,8 +7,9 @@ courses:
   - SAIL
 sources:
   - "[[SRC - Large Language Models Explained Briefly]]"
-related:
+part_of:
   - "[[Large Language Model]]"
+related:
   - "[[Reinforcement Learning with Human Feedback]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17

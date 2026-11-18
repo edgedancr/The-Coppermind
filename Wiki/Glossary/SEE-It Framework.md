@@ -9,7 +9,6 @@ sources:
   - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
   - "[[SRC - SEE-IT Checklist for Critical Thinking]]"
 related:
-  - "[[Intelligence Writing Style]]"
   - "[[Elements and Standards of Critical Thinking]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11

@@ -10,13 +10,12 @@ sources:
   - "[[SRC - OWASP Top 10 for LLM Applications 2026]]"
   - "[[SRC - Generative vs Agentic AI]]"
   - "[[SRC - The Catastrophic Risks of AI and a Safer Path]]"
-related:
-  - "[[Emergent Behavior]]"
-  - "[[Prompt Engineering]]"
+type_of:
   - "[[Artificial Intelligence]]"
-  - "[[Excessive Agency]]"
-  - "[[AI Deception]]"
-  - "[[Scientist AI]]"
+causes:
+  - "[[Emergent Behavior]]"
+related:
+  - "[[Prompt Engineering]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11

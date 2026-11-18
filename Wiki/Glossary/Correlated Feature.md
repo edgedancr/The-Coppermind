@@ -9,8 +9,6 @@ sources:
   - "[[SRC - Algorithmic Bias and Fairness (Crash Course AI 18)]]"
 part_of:
   - "[[Algorithmic Bias]]"
-related:
-  - "[[Protected Class]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
 verified_on:

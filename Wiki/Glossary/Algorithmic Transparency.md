@@ -10,7 +10,6 @@ sources:
   - "[[SRC - AI, Machine Learning, Deep Learning, and Generative AI Explained]]"
   - "[[SRC - Large Language Models Explained Briefly]]"
 related:
-  - "[[Explainable AI]]"
   - "[[Deep Learning]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14

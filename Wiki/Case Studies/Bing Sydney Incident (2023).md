@@ -12,7 +12,6 @@ year: 2023
 example_of:
   - "[[Emergent Behavior]]"
   - "[[Prompt Injection]]"
-related:
   - "[[AI Alignment]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11

@@ -4,8 +4,15 @@ status: draft
 aliases: []
 courses: []
 sources: []
+type_of: []
 part_of: []
+example_of: []
+causes: []
+counters: []
 applies_to: []
+supports: []
+contradicts: []
+developed_by: []
 related: []
 drafted_by: 
 drafted_on: "{{date:YYYY-MM-DD}}"

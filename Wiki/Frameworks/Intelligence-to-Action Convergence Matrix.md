@@ -4,7 +4,6 @@ status: draft
 aliases: ["Convergence Matrix"]
 courses: ["SAIL", "Intro to Intelligence"]
 sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"]
-related: ["[[Kill Chain]]", "[[OODA Loop]]", "[[AI in Warfighting]]", "[[Human Decision Point]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:

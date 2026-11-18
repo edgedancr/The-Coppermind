@@ -9,9 +9,10 @@ courses:
   - SAIL
 sources:
   - "[[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End]]"
+supports:
+  - "[[Critiques of Large Language Models]]"
 related:
   - "[[Reinforcement Learning]]"
-  - "[[Critiques of Large Language Models]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:
