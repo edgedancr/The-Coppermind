@@ -609,13 +609,8 @@ body {
 .markdown-rendered a.internal-link:hover, .cm-s-obsidian .cm-hmd-internal-link:hover { text-shadow: 0 0 10px rgba(217, 138, 74, 0.7); }
 
 /* a page fades in when opened */
-.cm-page-in { animation: cm-page-in 0.4s ease-out both; }
-@keyframes cm-page-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-.cm-page-in { animation-duration: 0.55s; }
-.cm-pg-host { position: relative; overflow: hidden; }
-.cm-pg-overlay { position: absolute; inset: 0; z-index: 40; pointer-events: none; overflow: hidden; }
-.cm-pg-p { position: absolute; bottom: -6px; width: var(--s, 3px); height: var(--s, 3px); border-radius: 50%; background: var(--c, #d98a4a); box-shadow: 0 0 8px 2px var(--c, #d98a4a); opacity: 0; animation: cm-pg-rise 1.3s ease-out both; }
-@keyframes cm-pg-rise { 0% { transform: translate(0, 0); opacity: 0; } 20% { opacity: 0.95; } 100% { transform: translate(var(--dx, 0), calc(var(--rise, 100px) * -1)); opacity: 0; } }
+.cm-page-in { animation: cm-page-in 0.35s ease-out both; }
+@keyframes cm-page-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
 /* the background drifts very slowly */
 .workspace-leaf-content[data-type="markdown"] .view-content, .cm-dashboard-leaf .view-content { background-size: 130% 130%; animation: cm-drift 160s steps(80) infinite alternate; }
@@ -658,13 +653,13 @@ body {
 @keyframes cm-status-up { 0% { text-shadow: 0 0 0 transparent; } 25% { text-shadow: 0 0 10px #86d2c1, 0 0 20px #5fae9e; color: #86d2c1; } 100% { text-shadow: 0 0 0 transparent; } }
 
 /* calm mode and reduced motion turn the ongoing animations off */
-body.cm-calm .inline-title, body.cm-calm .callout, body.cm-calm .view-content, body.cm-calm .cm-pg-p, body.cm-calm .cm-wm-spark,
-body.cm-calm .cm-propstrip, body.cm-calm .cm-search-card, body.cm-calm .cm-pg-overlay,
+body.cm-calm .inline-title, body.cm-calm .callout, body.cm-calm .view-content, body.cm-calm .cm-wm-spark,
+body.cm-calm .cm-propstrip, body.cm-calm .cm-search-card,
 body.cm-calm .cm-act-row, body.cm-calm .cm-badge, body.cm-calm .cm-status-up { animation: none !important; }
 body.cm-calm .cm-st-verified .inline-title { background: none; -webkit-text-fill-color: currentColor; color: inherit; filter: none; }
 @media (prefers-reduced-motion: reduce) {
   .inline-title, .callout, .view-content, .cm-wm-spark, .cm-propstrip, .cm-search-card,
-  .cm-pg-p, .cm-act-row, .cm-badge, .cm-status-up, .notice { animation: none !important; }
+  .cm-act-row, .cm-badge, .cm-status-up, .notice { animation: none !important; }
   .cm-st-verified .inline-title { background: none; -webkit-text-fill-color: currentColor; color: inherit; filter: none; }
 }
 
@@ -701,3 +696,13 @@ body.cm-calm .cm-queue h4 { animation: none !important; }
 .cm-queue .cm-row-group { display: block; margin: 2px 0 0; font-size: 10px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); }
 .cm-queue .cm-verified .cm-row::before { background: rgba(95, 174, 158, 0.6); }
 .cm-queue .cm-verified summary { color: var(--cm-patina); font-weight: 600; margin: 12px 0 6px; cursor: pointer; }
+
+/* The slow background drift sets "animation" on .view-content, so these need to be more specific to run (2.2.1) */
+.workspace-leaf-content[data-type="markdown"] .view-content.cm-vf-out { animation: cm-vf-out 0.62s cubic-bezier(0.5, 0, 0.9, 0.4) forwards; }
+.workspace-leaf-content[data-type="markdown"] .view-content.cm-vf-in { animation: cm-vf-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
+.workspace-leaf-content[data-type="markdown"] .view-content.cm-page-in { animation: cm-page-in 0.35s ease-out both; }
+body.cm-calm .workspace-leaf-content[data-type="markdown"] .view-content.cm-page-in { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .workspace-leaf-content[data-type="markdown"] .view-content.cm-page-in { animation: none !important; } }
+/* calm mode stops the ambient animations, but the verify animation has its own setting */
+body.cm-calm .workspace-leaf-content[data-type="markdown"] .view-content.cm-vf-out { animation: cm-vf-out 0.62s cubic-bezier(0.5, 0, 0.9, 0.4) forwards !important; }
+body.cm-calm .workspace-leaf-content[data-type="markdown"] .view-content.cm-vf-in { animation: cm-vf-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) backwards !important; }

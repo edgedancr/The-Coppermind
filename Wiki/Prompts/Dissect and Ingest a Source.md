@@ -1,6 +1,6 @@
 ---
 type: prompt
-status: draft
+status: verified
 aliases:
   - Ingest Prompt
 courses:
@@ -12,9 +12,7 @@ related:
   - "[[Nicrosil]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-17
-changes_since_verified:
-  - "2026-11-17: removed related → [[SCHEMA]] (the page text already links it)"
+verified_on: 2026-11-18
 ---
 > [!summary]
 > The prompt I paste when I want the agent to break a source into its ideas and either create new wiki pages from it or add the new information to pages that already exist. It holds only the inputs for each run and the steps [[SCHEMA]] doesn't spell out; everything else (naming, properties, citations, attribution, review, index, log) comes from the schema itself.

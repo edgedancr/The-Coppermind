@@ -3061,31 +3061,16 @@ module.exports = class Nicrosil extends Plugin {
    * The verify animation: the page is stamped with a check, bursts into copper and teal sparks, and slides
    * away. Returns what playVerifyIn needs to bring the next page in.
    */
-  /** A newly opened page fades in while copper sparks rise. */
+  /** A newly opened page fades in with a slight rise. */
   pageIn() {
     if (this.vfBusy || this.settings.ambient === false || prefersReduced()) return;
     const view = this.app.workspace.getActiveViewOfType(MarkdownView);
-    const host = view && view.containerEl;
-    const c = host && host.querySelector(".view-content");
+    const c = view && view.containerEl && view.containerEl.querySelector(".view-content");
     if (!c) return;
-    host.querySelectorAll(".cm-pg-overlay").forEach((o) => o.remove());
     c.removeClass("cm-page-in");
     void c.offsetWidth;
     c.addClass("cm-page-in");
-    host.addClass("cm-pg-host");
-    const ov = host.createDiv({ cls: "cm-pg-overlay" });
-    ov.setAttr("aria-hidden", "true");
-        const cols = ["#d98a4a", "#e0a846", "#f0b985", "#86d2c1"];
-    for (let i = 0; i < 28; i++) {
-      const s = ov.createSpan({ cls: "cm-pg-p" });
-      s.style.left = `${4 + ((i * 37) % 92)}%`;
-      s.style.setProperty("--s", `${2 + (i % 3)}px`);
-      s.style.setProperty("--c", cols[i % 4]);
-      s.style.setProperty("--rise", `${150 + ((i * 41) % 190)}px`);
-      s.style.setProperty("--dx", `${((i % 5) - 2) * 10}px`);
-      s.style.animationDelay = `${(i % 9) * 55}ms`;
-    }
-    setTimeout(() => { c.removeClass("cm-page-in"); ov.remove(); host.removeClass("cm-pg-host"); }, 1300);
+    setTimeout(() => c.removeClass("cm-page-in"), 450);
   }
 
   /** The properties strip glows once on a page that was just verified. */

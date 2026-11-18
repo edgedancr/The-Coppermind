@@ -1,6 +1,6 @@
 ---
 type: guide
-status: draft
+status: verified
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -14,12 +14,12 @@ related:
   - "[[SCHEMA]]"
 drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-18
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
-This guide describes Nicrosil **v2.2.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.2.1**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -113,7 +113,7 @@ On every other note, Nicrosil hides the full Properties block and puts a one-lin
 
 ## Ambience
 Small animations make the vault feel alive. None of them change how anything works.
-- **Notes:** a verified page's title has a teal glow with a slow shimmer; a draft's title has a dim copper ember. The properties strip glows once right after I verify. Flag callouts (`caution`, `todo`, `question`, `warning`) breathe softly in their flag color. Internal links glow when hovered. Opening a page plays a short transition: the page fades in while a shower of copper sparks rises. The background drifts very slowly.
+- **Notes:** a verified page's title has a teal glow with a slow shimmer; a draft's title has a dim copper ember. The properties strip glows once right after I verify. Flag callouts (`caution`, `todo`, `question`, `warning`) breathe softly in their flag color. Internal links glow when hovered. Opening a page plays a short, quiet fade-in. The background drifts very slowly.
 - **Wiki map and hierarchy:** verified dots give off small sparks. Pages with `changes_since_verified` have an amber outline on the map and in the hierarchy. Clicking a dot sends a ring out from it and pings its neighbors in turn.
 - **Dashboard:** a burst of sparks goes off when the verification ring passes 25, 50, 75 or 100 percent. The newest activity row pulses once.
 - **Review queue:** the title is a copper-to-teal gradient, the larger, sharp-edged progress bar has a steady glow like the Dashboard ring, rows slide to their new places when the order changes, and new flag badges pop in.
@@ -179,6 +179,7 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
 ### Version history
+- **2.2.1:** Fixed the verify animation: the page slides away and the next one slides in again (the background drift had been overriding it). Removed the sparks from opening a page, leaving only a short fade.
 - **2.2.0:** Review queue: the progress bar is sharper with a steady glow (no pulse or sheen), and the draft list is a set of cards with a colored edge (amber for flags, rust for changed since verified, teal for the current page) and the page type under each name.
 - **2.1.0:** The page-open transition is sparks only (no light sweep), with more sparks that rise higher. A new setting closes the Backlinks, Outgoing links, Tags, All properties and Outline panels at startup.
 - **2.0.0:** Page-open transition (copper light sweep and rising sparks), a larger glowing progress bar and a gradient title in the review queue. Removed the Dashboard spotlight, the amber pulse on the map, and the relations-panel line animation. Fixed two animation names that clashed with the Dashboard hero.

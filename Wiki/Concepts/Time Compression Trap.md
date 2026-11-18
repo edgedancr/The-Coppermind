@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - Compression Threat
 courses:
@@ -12,9 +12,7 @@ related:
   - "[[AI in Intelligence Production]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
-changes_since_verified:
-  - "2026-11-17: removed related → [[Human Decision Point]] (the page text already links it)"
+verified_on: 2026-11-18
 ---
 > [!summary]
 > The time compression trap is the pressure created when AI speeds up the early stages of a process. In intelligence, AI dramatically compresses the collect and process stages, creating immense institutional pressure to ==skip the crucial analyze step== ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).

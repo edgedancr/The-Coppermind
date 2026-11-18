@@ -1,6 +1,6 @@
 ---
 type: person
-status: draft
+status: verified
 aliases:
   - Heuer
 courses:
@@ -10,9 +10,7 @@ sources:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
-changes_since_verified:
-  - "2026-11-17: removed related → [[Analysis of Competing Hypotheses]] (the page text already links it)"
+verified_on: 2026-11-18
 ---
 > [!summary]
 > Richards Heuer developed [[Analysis of Competing Hypotheses]] (ACH) at the CIA in 1999 to counteract confirmation bias ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).

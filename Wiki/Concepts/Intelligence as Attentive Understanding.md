@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - Why Liberal Arts Matter in SI
   - Analyst as Sub-Creator
@@ -13,9 +13,7 @@ sources:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
-changes_since_verified:
-  - "2026-11-17: removed related → [[Imago Dei]] (the page text already links it)"
+verified_on: 2026-11-18
 ---
 > [!summary]
 > In its discussion of "How to Read Tolkien and Why," SAIL argued that Strategic Intelligence (SI) is a liberal-arts practice of understanding human beings, cultures, and motives, and that literature trains the habits by which intelligence is done well ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]). ==Frameworks and methods are the means; faithful understanding is the goal.== ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]])

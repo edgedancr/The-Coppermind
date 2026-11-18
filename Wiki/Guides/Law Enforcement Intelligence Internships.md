@@ -1,6 +1,6 @@
 ---
 type: guide
-status: draft
+status: verified
 aliases:
   - Internship Guide
 courses:
@@ -11,9 +11,7 @@ related:
   - "[[Intelligence-Led Policing]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
-changes_since_verified:
-  - "2026-11-17: removed related → [[Polygraph Examination]] (the page text already links it)"
+verified_on: 2026-11-18
 ---
 > [!summary]
 > Advice from Detective Mennen's Intro to Intelligence guest lecture on getting a law enforcement intelligence internship that leads to full-time work: start early, build a clean record and an intel-style writing sample, and pick internships that produce real work near operators ([[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]). It is written for Strategic Intelligence students looking in Northern Virginia.

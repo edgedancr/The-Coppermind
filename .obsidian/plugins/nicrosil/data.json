@@ -1,13 +1,13 @@
 {
   "settings": {
     "autoAdvance": true,
-    "sort": "az",
+    "sort": "type",
     "celebrate": true,
     "ambient": true,
     "hidePanels": true,
     "mapTab": "tree",
     "mapFlow": true,
-    "milestone": 0
+    "milestone": 25
   },
   "resolved": {}
 }

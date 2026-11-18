@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - RMA
 courses:
@@ -10,9 +10,7 @@ sources:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
-changes_since_verified:
-  - "2026-11-17: removed related → [[Future Strategic Threats]] (the page text already links it)"
+verified_on: 2026-11-18
 ---
 > [!summary]
 > **Revolution in military affairs (RMA):** the ongoing debate about how evolving technology will change future warfare ([[Intro to Intelligence Class Notes (Fall 2026)#10/13/26|Intro notes, 10/13/26]]).

@@ -1252,3 +1252,159 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Covert Action]]
 - **Commit:** `verify: Covert Action`
+
+### [2026-11-18] schema | Nicrosil 2.2.1 verify animation fix, no page-open sparks
+
+- **Think:** The verify animation no longer moved the page away, and the sparks when opening a page were annoying.
+- **Calculate:** Nothing to compute. The cause was the slow background drift (added in 1.6.0) setting `animation` on the page area, which overrode the verify slide.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.2.1): verify slide-out and slide-in rules made more specific so they win again (also in calm mode); page-open sparks removed, leaving a short fade
+  - [[Nicrosil]]: Ambience section, version 2.2.1 and history line
+- **Verify:**
+  - Guide set back to draft until I verify it
+  - Reload Nicrosil and verify a draft to check the slide
+- **Commit:** `schema: Nicrosil 2.2.1 verify animation fix, no page-open sparks`
+
+### [2026-11-18] verify | Curiosity, Character, and Competence
+
+- **Verify:**
+  - Approved: [[Curiosity, Character, and Competence]]
+- **Commit:** `verify: Curiosity, Character, and Competence`
+
+### [2026-11-18] verify | Dissect and Ingest a Source
+
+- **Verify:**
+  - Approved: [[Dissect and Ingest a Source]]
+- **Commit:** `verify: Dissect and Ingest a Source`
+
+### [2026-11-18] verify | Executive Order 12333
+
+- **Verify:**
+  - Approved: [[Executive Order 12333]]
+- **Commit:** `verify: Executive Order 12333`
+
+### [2026-11-18] verify | Existential Risk
+
+- **Verify:**
+  - Approved: [[Existential Risk]]
+- **Commit:** `verify: Existential Risk`
+
+### [2026-11-18] verify | Four Levels of Prompt Engineering
+
+- **Verify:**
+  - Approved: [[Four Levels of Prompt Engineering]]
+- **Commit:** `verify: Four Levels of Prompt Engineering`
+
+### [2026-11-18] verify | Human Decision Point
+
+- **Verify:**
+  - Approved: [[Human Decision Point]]
+- **Commit:** `verify: Human Decision Point`
+
+### [2026-11-18] verify | Information Model
+
+- **Verify:**
+  - Approved: [[Information Model]]
+- **Commit:** `verify: Information Model`
+
+### [2026-11-18] verify | Intelligence as Attentive Understanding
+
+- **Verify:**
+  - Approved: [[Intelligence as Attentive Understanding]]
+- **Commit:** `verify: Intelligence as Attentive Understanding`
+
+### [2026-11-18] verify | Intelligence Community Style Summaries
+
+- **Verify:**
+  - Approved: [[Intelligence Community Style Summaries]]
+- **Commit:** `verify: Intelligence Community Style Summaries`
+
+### [2026-11-18] verify | Intelligence-Led Policing
+
+- **Verify:**
+  - Approved: [[Intelligence-Led Policing]]
+- **Commit:** `verify: Intelligence-Led Policing`
+
+### [2026-11-18] verify | Law Enforcement Intelligence Internships
+
+- **Verify:**
+  - Approved: [[Law Enforcement Intelligence Internships]]
+- **Commit:** `verify: Law Enforcement Intelligence Internships`
+
+### [2026-11-18] verify | Law of Armed Conflict
+
+- **Verify:**
+  - Approved: [[Law of Armed Conflict]]
+- **Commit:** `verify: Law of Armed Conflict`
+
+### [2026-11-18] verify | LLM Wiki
+
+- **Verify:**
+  - Approved: [[LLM Wiki]]
+- **Commit:** `verify: LLM Wiki`
+
+### [2026-11-18] verify | Mata v. Avianca (2023)
+
+- **Verify:**
+  - Approved: [[Mata v. Avianca (2023)]]
+- **Commit:** `verify: Mata v. Avianca (2023)`
+
+### [2026-11-18] verify | Narrow AI
+
+- **Verify:**
+  - Approved: [[Narrow AI]]
+- **Commit:** `verify: Narrow AI`
+
+### [2026-11-18] verify | Revolution in Military Affairs
+
+- **Verify:**
+  - Approved: [[Revolution in Military Affairs]]
+- **Commit:** `verify: Revolution in Military Affairs`
+
+### [2026-11-18] verify | Richards Heuer
+
+- **Verify:**
+  - Approved: [[Richards Heuer]]
+- **Commit:** `verify: Richards Heuer`
+
+### [2026-11-18] verify | Tasking, Collection, Processing, Exploitation, and Dissemination
+
+- **Verify:**
+  - Approved: [[Tasking, Collection, Processing, Exploitation, and Dissemination]]
+- **Commit:** `verify: Tasking, Collection, Processing, Exploitation, and Dissemination`
+
+### [2026-11-18] verify | Time Compression Trap
+
+- **Verify:**
+  - Approved: [[Time Compression Trap]]
+- **Commit:** `verify: Time Compression Trap`
+
+### [2026-11-18] verify | Unconventional Warfare
+
+- **Verify:**
+  - Approved: [[Unconventional Warfare]]
+- **Commit:** `verify: Unconventional Warfare`
+
+### [2026-11-18] verify | Zero-Day Vulnerability
+
+- **Verify:**
+  - Approved: [[Zero-Day Vulnerability]]
+- **Commit:** `verify: Zero-Day Vulnerability`
+
+### [2026-11-18] verify | Agentic AI
+
+- **Verify:**
+  - Approved: [[Agentic AI]]
+- **Commit:** `verify: Agentic AI`
+
+### [2026-11-18] verify | AI Alignment
+
+- **Verify:**
+  - Approved: [[AI Alignment]]
+- **Commit:** `verify: AI Alignment`
+
+### [2026-11-18] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
