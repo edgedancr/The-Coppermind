@@ -19,7 +19,7 @@ verified_on:
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
-This guide describes Nicrosil **v1.1.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v1.2.1**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -96,8 +96,8 @@ Open it with `Alt+L` or the branching-arrows button in the ribbon. It follows wh
 - **Not shown:** plain links in the page text. They are "see also" links, not relationships.
 
 ## The wiki map
-Open it with `Alt+M` or the Wiki map card on the Dashboard. It opens in its own tab and has two views, chosen at the top. Both read only the typed links in the properties ([[SCHEMA#5. Linking rules and ontology|Schema §5]]), never the plain links in the text, and neither changes a file.
-- **Hierarchy.** A collapsible tree built from `type_of`, `part_of`, and `example_of`: each page sits under the page it is a kind of, a part of, or an example of, so Artificial Intelligence → Machine Learning → Deep Learning reads as a branch. The number at the right of a row is how many pages sit below it. Click a name to open the page; click the arrow to open or close a branch. The box filters the tree by page name, **Expand all** and **Collapse all** do what they say, and **Show examples** adds or removes the `example_of` pages. A page that is part of two things appears under both. Wiki pages with none of these links are listed at the bottom, in a folded list.
+Open it with `Alt+M` or the Wiki map card on the Dashboard. It opens in its own tab, on the Map view, and has two views, chosen at the top. Both read only the typed links in the properties ([[SCHEMA#5. Linking rules and ontology|Schema §5]]), never the plain links in the text, and neither changes a file.
+- **Hierarchy.** A branching diagram built from `type_of`, `part_of`, and `example_of`. Each page is a rounded card, and a curved line, colored by the relationship, joins it to the page it is a kind of, a part of, or an example of, so Artificial Intelligence → Machine Learning → Deep Learning reads left to right as a branch. A card has a dot in its page-type color, a teal ring if verified or a dashed copper ring if draft, and the number of pages below it. Click a card to open the page (`Ctrl+click` for a new tab). The circle at its right edge opens or closes the branch. Pointing at a card lights up the path to its top page and everything below it. The box filters the diagram by page name and outlines the matches, **Expand all** and **Collapse all** do what they say, and **Show examples** adds or removes the `example_of` pages. Drag the background to pan. A page that is part of two things appears under both. Wiki pages with none of these links are listed at the bottom, in a folded list.
 - **Map.** Every page that has a typed link is a dot, and every typed link is an arrow from the page that states it to the page it points at.
   - **Colors:** arrows are curved and colored by relationship type, with `related` dashed and `contradicts` dotted. Dots are colored by page type. A teal ring means verified, and a dashed copper ring means draft. Bigger dots have more links.
   - **Move around:** scroll to zoom, drag the background to pan, and click **Reset view** to start over. Names show for the busiest pages, for a focused page and its neighbors, and for every page once zoomed in.
@@ -165,6 +165,8 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
 ### Version history
+- **1.2.1:** The wiki map always opens on the Map tab instead of remembering the last tab used.
+- **1.2.0:** The Hierarchy view is now a branching diagram of cards joined by curved colored lines, with open/close circles, hover highlighting of a page's path, and drag to pan. Fixed the filter box, which did not update the diagram as you typed.
 - **1.1.0:** The wiki map is alive: dots settle with physics and can be dragged, pointing at a dot highlights its links, the view glides to a focused page, arrows are curved with a soft glow on verified pages, and a pulse flows along each link (with a **Flow** switch).
 - **1.0.1:** The wiki map's relationship chips no longer show a count after each name.
 - **1.0.0:** The wiki map moved from the left ribbon to a Dashboard card, replacing the My Worldview card (`Alt+M` still works).

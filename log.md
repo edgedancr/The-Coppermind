@@ -1100,3 +1100,17 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `styles.css`, `manifest.json`); [[Nicrosil]] guide (map section, version 1.1.0, history).
 - **Verify:** pending. Reload Nicrosil, open the wiki map (`Alt+M`), and try dragging a dot, pointing at one, and the Flow button.
 - **Commit:** `nicrosil 1.1.0: animated wiki map with physics, hover, glide and flowing links`
+
+### [2026-11-17] schema | Hierarchy as a branching diagram
+- **Think:** The Hierarchy view read as a bulleted list. You chose a branching tree diagram.
+- **Calculate:** Nicrosil v1.2.0 draws the hierarchy as left-to-right cards joined by curved lines colored by relationship, with open/close circles, hover highlighting, and drag to pan. Filtering, expand/collapse, the examples switch, counts, click-to-open and the outside-the-hierarchy list all still work. While testing I found the filter box did not update the view as you typed (it used a stale search value); that is fixed. Tested on a copy of the wiki's links outside Obsidian, not in Obsidian itself.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `styles.css`, `manifest.json`); [[Nicrosil]] guide (Hierarchy section, version 1.2.0, history).
+- **Verify:** pending. Reload Nicrosil, open the wiki map (`Alt+M`), and try the Hierarchy tab: open a branch, point at a card, and type in the filter box.
+- **Commit:** `nicrosil 1.2.0: hierarchy as a branching diagram, fix live filter`
+
+### [2026-11-17] schema | Wiki map opens on the Map tab
+- **Think:** You wanted the wiki map to open on the Map tab, not Hierarchy.
+- **Calculate:** Nicrosil v1.2.1 makes Map the starting tab every time the wiki map opens, instead of remembering the last tab. Switching tabs still works while it is open.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`); [[Nicrosil]] guide (version 1.2.1, history).
+- **Verify:** pending. Reload Nicrosil and click the Wiki map card.
+- **Commit:** `nicrosil 1.2.1: wiki map opens on the Map tab`

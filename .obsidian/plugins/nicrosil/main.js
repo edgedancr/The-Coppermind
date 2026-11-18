@@ -938,7 +938,7 @@ class WikiMapView extends ItemView {
     super(leaf);
     this.plugin = plugin;
     this.state = {
-      tab: plugin.settings.mapTab === "map" ? "map" : "tree",
+      tab: "map", // the map always opens first; the Hierarchy tab is one click away
       open: new Set(), openInit: false, filter: "", examples: true,
       hidden: new Set(), status: "", ptype: "", course: "", focus: null, q: "",
     };
@@ -1021,7 +1021,7 @@ class WikiMapView extends ItemView {
 
     const st = this.state;
     if (!st.openInit) { roots.forEach((r) => st.open.add(r)); st.openInit = true; }
-    const q = st.filter.trim().toLowerCase();
+    let q = st.filter.trim().toLowerCase();
     // with a search, show only branches that contain a match
     const matches = (p, seen) => {
       if (nm(p).toLowerCase().includes(q)) return true;
@@ -1034,7 +1034,7 @@ class WikiMapView extends ItemView {
 
     const bar = el.createDiv({ cls: "cm-wt-bar" });
     const input = bar.createEl("input", { type: "text", cls: "cm-wt-filter", placeholder: "Filter the tree by page name…", value: st.filter });
-    input.addEventListener("input", () => { st.filter = input.value; this.drawTreeRows(rows, roots, kids, HIER, desc, nm, q, matches); });
+    input.addEventListener("input", () => { st.filter = input.value; q = input.value.trim().toLowerCase(); this.drawTreeRows(rows, roots, kids, HIER, desc, nm, q, matches); });
     const mkBtn = (txt, fn) => { const b = bar.createEl("button", { text: txt }); b.addEventListener("click", fn); };
     mkBtn("Expand all", () => { const all = (p, key, seen) => { st.open.add(key); if (seen.has(p)) return; seen.add(p); (kids.get(p) || []).forEach((c) => all(c.path, key + "/" + c.path, seen)); seen.delete(p); }; roots.forEach((r) => all(r, r, new Set())); this.render(); });
     mkBtn("Collapse all", () => { st.open.clear(); this.render(); });
@@ -1046,11 +1046,24 @@ class WikiMapView extends ItemView {
 
     if (!roots.length) { el.createDiv({ cls: "cm-sub cm-wt-empty", text: "No kind-of, part-of or example-of links yet, so there is no hierarchy to show." }); return; }
     const rows = el.createDiv({ cls: "cm-wt-rows" });
+    this._treeFresh = true;
     this.drawTreeRows(rows, roots, kids, HIER, desc, nm, q, matches);
 
     // pages the hierarchy doesn't reach
     const inTree = new Set(roots.flatMap((r) => [r, ...descOf(r, new Set())]));
     const outside = [...g.nodes.values()].filter((n) => n.path.startsWith("Wiki/") && !inTree.has(n.path)).sort((a, b) => a.name.localeCompare(b.name));
+    const legend = el.createDiv({ cls: "cm-wm-legend" });
+    for (const t of Object.keys(HIER)) {
+      const c = legend.createSpan({ cls: "cm-rel-chip" });
+      const sw = c.createSpan({ cls: "cm-rel-swatch" }); sw.style.background = REL_TYPES[t].color; if (REL_TYPES[t].dash) sw.addClass("is-dashed");
+      c.appendText(`${HIER[t]} (line to the page above)`);
+    }
+    [...new Set([...inTree].map((p) => (g.nodes.get(p) || {}).type))].filter(Boolean).sort().forEach((t) => {
+      const c = legend.createSpan({ cls: "cm-rel-chip" });
+      const dot = c.createSpan({ cls: "cm-wm-legdot" }); dot.style.background = pageColor(t);
+      c.appendText(t);
+    });
+    legend.createSpan({ cls: "cm-sub", text: "Click a card to open the page (Ctrl+click for a new tab). The circle at its right opens or closes a branch; the number is how many pages sit below. Teal ring = verified, dashed copper ring = draft. Drag the background to pan." });
     const det = el.createEl("details", { cls: "cm-wt-outside" });
     det.createEl("summary", { text: `Wiki pages outside the hierarchy (${outside.length})` });
     outside.forEach((n) => {
@@ -1062,35 +1075,108 @@ class WikiMapView extends ItemView {
     });
   }
 
+  /** Draws the hierarchy as a left-to-right branching diagram of cards joined by curved lines. */
   drawTreeRows(rows, roots, kids, HIER, desc, nm, q, matches) {
-    rows.empty();
     const g = this.graph, st = this.state;
-    const draw = (p, key, depth, via, path) => {
-      if (q && !matches(p, new Set())) return;
+    const keepX = rows.scrollLeft, keepY = this.body ? this.body.scrollTop : 0;
+    rows.empty();
+    const ROW = 34, CH = 26, GAP = 66, PAD = 14;
+    const items = [];
+    const build = (p, key, depth, via, path, parent) => {
+      if (q && !matches(p, new Set())) return null;
       const node = g.nodes.get(p);
-      const ch = (kids.get(p) || []).slice().sort((a, b) => ((kids.get(b.path) || []).length > 0) - ((kids.get(a.path) || []).length > 0) || nm(a.path).localeCompare(nm(b.path)));
-      const isOpen = q ? true : st.open.has(key);
-      const row = rows.createDiv({ cls: "cm-wt-row" });
-      row.style.paddingLeft = 6 + depth * 18 + "px";
-      const chev = row.createSpan({ cls: "cm-wt-chev" });
-      if (ch.length && !path.has(p)) {
-        setIcon(chev, isOpen ? "chevron-down" : "chevron-right");
-        chev.addEventListener("click", () => { if (isOpen) st.open.delete(key); else st.open.add(key); this.drawTreeRows(rows, roots, kids, HIER, desc, nm, q, matches); });
-      }
-      row.createSpan({ cls: `cm-rel-dot ${node && node.status ? "cm-rel-dot-" + node.status : ""}` });
-      const name = row.createSpan({ cls: "cm-wt-name", text: nm(p) });
-      name.addEventListener("click", (e) => this.go(p, e.ctrlKey || e.metaKey));
-      if (via) { const c = row.createSpan({ cls: "cm-wt-via", text: HIER[via] }); c.style.color = REL_TYPES[via].color; }
-      if (node && node.type) row.createSpan({ cls: "cm-wt-tag", text: node.type });
-      const n = desc.get(p) ? desc.get(p).size : 0;
-      if (n) row.createSpan({ cls: "cm-wt-count", text: String(n) }).setAttr("aria-label", `${n} below this`);
-      if (isOpen && !path.has(p)) {
+      const ch = (kids.get(p) || []).slice().sort((x, y) => ((kids.get(y.path) || []).length > 0) - ((kids.get(x.path) || []).length > 0) || nm(x.path).localeCompare(nm(y.path)));
+      const hasKids = ch.length > 0 && !path.has(p);
+      const inst = { p, key, depth, via, parent, node, ch: [], hasKids, open: hasKids && (q ? true : st.open.has(key)), cnt: desc.get(p) ? desc.get(p).size : 0 };
+      const name = nm(p);
+      inst.label = clip(name, 26);
+      inst.w = Math.max(100, Math.min(26, name.length) * 6.4 + (inst.cnt ? 62 : 42));
+      items.push(inst);
+      if (inst.open) {
         const np = new Set(path); np.add(p);
-        ch.forEach((c) => draw(c.path, key + "/" + c.path, depth + 1, c.type, np));
+        ch.forEach((c) => { const k = build(c.path, key + "/" + c.path, depth + 1, c.type, np, inst); if (k) inst.ch.push(k); });
       }
+      return inst;
     };
-    roots.forEach((r) => draw(r, r, 0, null, new Set()));
-    if (q && !rows.childElementCount) rows.createDiv({ cls: "cm-sub cm-wt-empty", text: `No page in the hierarchy matches “${st.filter.trim()}”.` });
+    const tops = roots.map((r) => build(r, r, 0, null, new Set(), null)).filter(Boolean);
+    if (!tops.length) {
+      if (q) rows.createDiv({ cls: "cm-sub cm-wt-empty", text: `No page in the hierarchy matches \u201c${st.filter.trim()}\u201d.` });
+      return;
+    }
+    let row = 0;
+    const place = (n) => {
+      if (!n.ch.length) { n.y = PAD + row * ROW + ROW / 2; row++; return; }
+      n.ch.forEach(place);
+      n.y = (n.ch[0].y + n.ch[n.ch.length - 1].y) / 2;
+    };
+    tops.forEach((t) => { place(t); row += 0.45; });
+    const cw = [];
+    items.forEach((n) => { cw[n.depth] = Math.max(cw[n.depth] || 0, n.w); });
+    const cx = [PAD];
+    for (let d = 1; d < cw.length; d++) cx[d] = cx[d - 1] + cw[d - 1] + GAP;
+    items.forEach((n) => { n.x = cx[n.depth]; });
+    const Wd = cx[cw.length - 1] + cw[cw.length - 1] + PAD + 14, Ht = PAD * 2 + row * ROW;
+
+    const svg = svgEl(rows, "svg", { width: Wd, height: Ht, viewBox: `0 0 ${Wd} ${Ht}`, class: "cm-wt-svg" + (this._treeFresh ? " is-new" : ""), role: "img", "aria-label": "Hierarchy of pages" });
+    this._treeFresh = false;
+    const lines = svgEl(svg, "g");
+    const cards = svgEl(svg, "g");
+    items.forEach((n) => {
+      if (n.parent) {
+        const pa = n.parent, x1 = pa.x + pa.w + 17, x2 = n.x, xm = (x1 + x2) / 2, info = REL_TYPES[n.via];
+        const attrs = { d: `M${x1},${pa.y} C${xm},${pa.y} ${xm},${n.y} ${x2},${n.y}`, fill: "none", stroke: info.color, "stroke-width": 1.7, class: "cm-wt-edge" };
+        if (info.dash) attrs["stroke-dasharray"] = info.dash;
+        n.edge = svgEl(lines, "path", attrs);
+        svgEl(n.edge, "title", {}, `${nm(n.p)} \u2014 ${HIER[n.via]} \u2192 ${nm(pa.p)}`);
+      }
+    });
+    const hit = (n) => !!q && nm(n.p).toLowerCase().includes(q);
+    items.forEach((n) => {
+      const node = n.node || {};
+      const grp = svgEl(cards, "g", { class: "cm-wt-card" + (hit(n) ? " is-match" : ""), transform: `translate(${n.x},${n.y - CH / 2})` });
+      n.el = grp;
+      svgEl(grp, "rect", { width: n.w, height: CH, rx: 8, class: `cm-wt-box cm-wt-box-${node.status || "none"}` });
+      svgEl(grp, "circle", { cx: 13, cy: CH / 2, r: 5, fill: pageColor(node.type), class: "cm-wt-pdot" });
+      svgEl(grp, "text", { x: 24, y: CH / 2 + 4, class: "cm-wt-label" }, n.label);
+      if (n.cnt) svgEl(grp, "text", { x: n.w - 9, y: CH / 2 + 4, "text-anchor": "end", class: "cm-wt-cnt" }, String(n.cnt));
+      svgEl(grp, "title", {}, `${nm(n.p)} (${node.type || "page"}, ${node.status || "no status"})${n.cnt ? `, ${n.cnt} below` : ""}`);
+      grp.addEventListener("click", (e) => this.go(n.p, e.ctrlKey || e.metaKey));
+      const chain = (on) => {
+        svg.toggleClass("is-hovering", on);
+        const mark = (x, up) => {
+          x.el.toggleClass("is-hl", on);
+          if (x.edge) x.edge.toggleClass("is-hl", on);
+          if (up && x.parent) mark(x.parent, true);
+        };
+        mark(n, true);
+        const down = (x) => x.ch.forEach((c) => { c.el.toggleClass("is-hl", on); c.edge.toggleClass("is-hl", on); down(c); });
+        down(n);
+      };
+      grp.addEventListener("pointerenter", () => chain(true));
+      grp.addEventListener("pointerleave", () => chain(false));
+      if (n.hasKids) {
+        const tg = svgEl(svg, "g", { class: "cm-wt-tog", transform: `translate(${n.x + n.w + 17},${n.y})`, role: "button", tabindex: 0 });
+        const col = REL_TYPES[n.ch.length ? n.ch[0].via : "part_of"].color;
+        svgEl(tg, "circle", { r: 8.5, class: "cm-wt-tog-bg", stroke: col });
+        svgEl(tg, "path", { d: n.open ? "M-3.5,0 H3.5" : "M-3.5,0 H3.5 M0,-3.5 V3.5", class: "cm-wt-tog-mark" });
+        svgEl(tg, "title", {}, n.open ? "Close this branch" : "Open this branch");
+        const flip = () => { if (n.open) st.open.delete(n.key); else st.open.add(n.key); this.drawTreeRows(rows, roots, kids, HIER, desc, nm, q, matches); };
+        tg.addEventListener("click", flip);
+        tg.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); } });
+      }
+    });
+    // drag the background to pan
+    let pan = null;
+    svg.addEventListener("pointerdown", (ev) => {
+      if (ev.target.closest && (ev.target.closest(".cm-wt-card") || ev.target.closest(".cm-wt-tog"))) return;
+      pan = { x: ev.clientX, y: ev.clientY, l: rows.scrollLeft, t: this.body ? this.body.scrollTop : 0 };
+      svg.setPointerCapture(ev.pointerId); svg.addClass("is-drag");
+    });
+    svg.addEventListener("pointermove", (ev) => { if (!pan) return; rows.scrollLeft = pan.l - (ev.clientX - pan.x); if (this.body) this.body.scrollTop = pan.t - (ev.clientY - pan.y); });
+    const endPan = () => { pan = null; svg.removeClass("is-drag"); };
+    svg.addEventListener("pointerup", endPan); svg.addEventListener("pointercancel", endPan);
+    rows.scrollLeft = keepX;
+    if (this.body) this.body.scrollTop = keepY;
   }
 
   /* ---------- typed-link map ---------- */

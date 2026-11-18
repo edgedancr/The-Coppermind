@@ -331,16 +331,29 @@ body.cm-on-dashboard .workspace-leaf-content[data-type="file-properties"] .view-
 .cm-wt-bar, .cm-wm-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; }
 .cm-wt-filter { flex: 1; min-width: 160px; }
 .cm-wt-ex { font-size: var(--font-ui-small); color: var(--text-muted); white-space: nowrap; }
-.cm-wt-rows { padding-bottom: 12px; }
-.cm-wt-row { display: flex; align-items: center; gap: 6px; padding-top: 3px; padding-bottom: 3px; border-radius: 4px; font-size: var(--font-ui-small); }
-.cm-wt-row:hover { background: var(--background-modifier-hover); }
-.cm-wt-chev { width: 16px; height: 16px; flex: none; color: var(--text-muted); cursor: pointer; }
-.cm-wt-chev svg { width: 16px; height: 16px; }
-.cm-wt-name { cursor: pointer; }
-.cm-wt-name:hover { color: var(--cm-copper); text-decoration: underline; }
-.cm-wt-via { font-size: var(--font-ui-smaller); font-style: italic; }
+.cm-wt-rows { padding-bottom: 8px; overflow-x: auto; }
+.cm-wt-svg { display: block; cursor: grab; }
+.cm-wt-svg.is-drag { cursor: grabbing; }
+.cm-wt-svg.is-new .cm-wt-card, .cm-wt-svg.is-new .cm-wt-edge { animation: cm-wt-in .35s ease-out both; }
+@keyframes cm-wt-in { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; } }
+.cm-wt-edge { transition: stroke-opacity .2s, stroke-width .2s; stroke-opacity: .6; stroke-linecap: round; }
+.cm-wt-card { cursor: pointer; transition: opacity .2s; }
+.cm-wt-box { fill: var(--background-primary-alt); stroke: var(--background-modifier-border-hover); stroke-width: 1.2; transition: fill .15s; }
+.cm-wt-box-verified { stroke: var(--cm-patina); stroke-width: 1.8; }
+.cm-wt-box-draft { stroke: var(--cm-copper); stroke-width: 1.5; stroke-dasharray: 3 2.2; }
+.cm-wt-card:hover .cm-wt-box { fill: var(--background-modifier-hover); }
+.cm-wt-card.is-match .cm-wt-box { fill: var(--cm-copper-soft); }
+.cm-wt-label { font-size: 12px; fill: var(--text-normal); pointer-events: none; }
+.cm-wt-cnt { font-size: 10px; fill: var(--text-faint); pointer-events: none; }
+.cm-wt-tog { cursor: pointer; outline: none; }
+.cm-wt-tog-bg { fill: var(--background-primary); stroke-width: 1.5; transition: fill .15s; }
+.cm-wt-tog:hover .cm-wt-tog-bg { fill: var(--background-modifier-hover); }
+.cm-wt-tog-mark { stroke: var(--text-muted); stroke-width: 1.6; stroke-linecap: round; fill: none; pointer-events: none; }
+.cm-wt-svg.is-hovering .cm-wt-card:not(.is-hl) { opacity: .3; }
+.cm-wt-svg.is-hovering .cm-wt-edge:not(.is-hl) { stroke-opacity: .1; }
+.cm-wt-edge.is-hl { stroke-opacity: 1; stroke-width: 2.4; }
+@media (prefers-reduced-motion: reduce) { .cm-wt-svg.is-new .cm-wt-card, .cm-wt-svg.is-new .cm-wt-edge { animation: none; } .cm-wt-card, .cm-wt-edge { transition: none; } }
 .cm-wt-tag { font-size: var(--font-ui-smaller); padding: 0 7px; border-radius: 9px; background: var(--background-modifier-hover); color: var(--text-muted); }
-.cm-wt-count { margin-left: auto; color: var(--text-faint); font-size: var(--font-ui-smaller); padding-right: 8px; }
 .cm-wt-empty { padding: 16px 6px; }
 .cm-wt-outside { margin-top: 12px; border-top: 1px solid var(--background-modifier-border); padding-top: 8px; }
 .cm-wt-outside summary { cursor: pointer; color: var(--text-muted); }
