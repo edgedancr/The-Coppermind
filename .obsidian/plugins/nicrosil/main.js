@@ -608,6 +608,8 @@ class QueueView extends ItemView {
         const row = list.createDiv({ cls: "cm-row" });
         if (cur && item.path === cur.path) row.addClass("is-current");
         if (p.skipped.includes(item.path)) row.addClass("is-skipped");
+        if (item.changes.length) row.addClass("has-changes");
+        if (item.flags.length) row.addClass("has-flags");
         const nameEl = row.createDiv({ cls: "cm-row-name", text: item.name });
         if (p.settings.sort !== "type") nameEl.createSpan({ cls: "cm-row-group", text: item.group });
         changeBadge(row, item.changes);

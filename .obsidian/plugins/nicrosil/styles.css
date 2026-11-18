@@ -643,9 +643,6 @@ body {
 @keyframes cm-act-new { 0%, 100% { background: transparent; } 30% { background: rgba(95, 174, 158, 0.2); } }
 
 /* review queue */
-.cm-progress-fill { position: relative; overflow: hidden; box-shadow: 0 0 8px rgba(95, 174, 158, 0.4); }
-.cm-progress-fill::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%); background-size: 220% 100%; animation: cm-sheen 3.2s linear infinite; }
-@keyframes cm-sheen { from { background-position: 160% 0; } to { background-position: -60% 0; } }
 .cm-badge.is-new { animation: cm-badge-pop 0.45s cubic-bezier(0.3, 1.6, 0.5, 1) both; }
 @keyframes cm-badge-pop { from { transform: scale(0); } to { transform: scale(1); } }
 
@@ -662,11 +659,11 @@ body {
 
 /* calm mode and reduced motion turn the ongoing animations off */
 body.cm-calm .inline-title, body.cm-calm .callout, body.cm-calm .view-content, body.cm-calm .cm-pg-p, body.cm-calm .cm-wm-spark,
-body.cm-calm .cm-progress-fill::after, body.cm-calm .cm-propstrip, body.cm-calm .cm-search-card, body.cm-calm .cm-pg-overlay,
+body.cm-calm .cm-propstrip, body.cm-calm .cm-search-card, body.cm-calm .cm-pg-overlay,
 body.cm-calm .cm-act-row, body.cm-calm .cm-badge, body.cm-calm .cm-status-up { animation: none !important; }
 body.cm-calm .cm-st-verified .inline-title { background: none; -webkit-text-fill-color: currentColor; color: inherit; filter: none; }
 @media (prefers-reduced-motion: reduce) {
-  .inline-title, .callout, .view-content, .cm-wm-spark, .cm-progress-fill::after, .cm-propstrip, .cm-search-card,
+  .inline-title, .callout, .view-content, .cm-wm-spark, .cm-propstrip, .cm-search-card,
   .cm-pg-p, .cm-act-row, .cm-badge, .cm-status-up, .notice { animation: none !important; }
   .cm-st-verified .inline-title { background: none; -webkit-text-fill-color: currentColor; color: inherit; filter: none; }
 }
@@ -678,9 +675,29 @@ body.cm-calm .cm-st-verified .inline-title { background: none; -webkit-text-fill
   background-size: 230% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
   animation: cm-shimmer 10s ease-in-out infinite alternate;
 }
-.cm-queue .cm-progress { height: 16px; border-radius: 8px; overflow: visible; background: rgba(184, 115, 51, 0.2); box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.45); }
-.cm-queue .cm-progress-fill { border-radius: 8px; min-width: 8px; background: linear-gradient(90deg, #b87333, #d98a4a 45%, #5fae9e 100%); box-shadow: 0 0 10px 1px rgba(120, 190, 150, 0.55), 0 0 22px 2px rgba(184, 115, 51, 0.4); animation: cm-glow-pulse 3.6s ease-in-out infinite; }
-@keyframes cm-glow-pulse { 0%, 100% { box-shadow: 0 0 10px 1px rgba(120, 190, 150, 0.45), 0 0 20px 2px rgba(184, 115, 51, 0.32); } 50% { box-shadow: 0 0 14px 2px rgba(120, 190, 150, 0.8), 0 0 30px 4px rgba(184, 115, 51, 0.55); } }
+.cm-queue .cm-progress { height: 14px; border-radius: 2px; overflow: visible; background: rgba(184, 115, 51, 0.2); box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5); }
+.cm-queue .cm-progress-fill { border-radius: 2px; min-width: 6px; background: linear-gradient(90deg, #b87333, #d98a4a 45%, #5fae9e 100%); box-shadow: 0 0 8px 1px rgba(120, 190, 150, 0.5), 0 0 18px 2px rgba(184, 115, 51, 0.35); }
 .cm-queue .cm-progress-label { margin: 8px 0 12px; }
-body.cm-calm .cm-queue h4, body.cm-calm .cm-queue .cm-progress-fill { animation: none !important; }
-@media (prefers-reduced-motion: reduce) { .cm-queue h4, .cm-queue .cm-progress-fill { animation: none !important; } }
+body.cm-calm .cm-queue h4 { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .cm-queue h4 { animation: none !important; } }
+
+/* Review queue list (2.2.0) */
+.cm-queue .cm-list-head { display: flex; align-items: center; gap: 8px; margin: 14px 0 8px; color: var(--cm-copper); font-weight: 600; letter-spacing: 0.08em; }
+.cm-queue .cm-list-head::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(184, 115, 51, 0.6), rgba(95, 174, 158, 0.25), transparent); }
+.cm-queue .cm-group { display: flex; align-items: center; gap: 8px; margin: 12px 0 5px; font-size: var(--font-ui-smaller); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+.cm-queue .cm-group::after { content: ""; flex: 1; height: 1px; background: rgba(184, 115, 51, 0.25); }
+.cm-queue .cm-row {
+  position: relative; margin-bottom: 5px; padding: 7px 10px 7px 12px; border-radius: 6px; border: 1px solid rgba(184, 115, 51, 0.16);
+  background: linear-gradient(160deg, rgba(42, 36, 32, 0.9), rgba(30, 25, 21, 0.9)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+.cm-queue .cm-row::before { content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 3px; border-radius: 0 2px 2px 0; background: rgba(184, 115, 51, 0.55); }
+.cm-queue .cm-row.has-flags::before { background: var(--cm-amber); }
+.cm-queue .cm-row.has-changes::before { background: var(--cm-rust); }
+.cm-queue .cm-row:hover { background: linear-gradient(160deg, rgba(54, 45, 38, 0.95), rgba(36, 30, 25, 0.95)); border-color: rgba(217, 138, 74, 0.55); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 4px 14px -6px rgba(217, 138, 74, 0.5); }
+.cm-queue .cm-row.is-current { background: linear-gradient(160deg, rgba(184, 115, 51, 0.3), rgba(30, 25, 21, 0.92)); border-color: var(--cm-copper); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 0 14px -2px rgba(184, 115, 51, 0.5); }
+.cm-queue .cm-row.is-current::before { background: #86d2c1; box-shadow: 0 0 8px #5fae9e; }
+.cm-queue .cm-row-name { font-weight: 500; color: var(--text-normal); line-height: 1.3; }
+.cm-queue .cm-row-group { display: block; margin: 2px 0 0; font-size: 10px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); }
+.cm-queue .cm-verified .cm-row::before { background: rgba(95, 174, 158, 0.6); }
+.cm-queue .cm-verified summary { color: var(--cm-patina); font-weight: 600; margin: 12px 0 6px; cursor: pointer; }

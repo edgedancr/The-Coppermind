@@ -1229,3 +1229,26 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - Restart Obsidian and check the sidebar icons
 - **Commit:** `schema: Nicrosil 2.1.0 sparks only, close sidebar panels at startup`
 
+### [2026-11-18] schema | Nicrosil 2.2.0 review queue list and progress bar
+
+- **Think:** The review queue's progress bar should be sharper with a steady glow, not pulsing. The draft list was only file names.
+- **Calculate:** Nothing to compute.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.2.0): sharp-edged progress bar with a steady glow (pulse and sheen removed); draft rows are cards with a colored edge (amber flags, rust changed, teal current) and the page type under the name; styled section headings
+  - [[Nicrosil]]: Ambience section, version 2.2.0 and history line
+- **Verify:**
+  - Guide set back to draft until I verify it
+  - Reload Nicrosil and look at the review queue
+- **Commit:** `schema: Nicrosil 2.2.0 review queue list and progress bar`
+
+### [2026-11-18] verify | Confirmation Bias
+
+- **Verify:**
+  - Approved: [[Confirmation Bias]]
+- **Commit:** `verify: Confirmation Bias`
+
+### [2026-11-18] verify | Covert Action
+
+- **Verify:**
+  - Approved: [[Covert Action]]
+- **Commit:** `verify: Covert Action`
