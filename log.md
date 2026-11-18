@@ -1408,3 +1408,27 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Nicrosil]]
 - **Commit:** `verify: Nicrosil`
+
+### [2026-11-18] schema | Nicrosil 2.3.0 Dashboard activity chart removed
+
+- **Think:** The 14-day activity chart on the Dashboard was not wanted. The Verification card should use the space instead.
+- **Calculate:** Nothing to compute.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.3.0): removed the 14-day chart; the Verification card is full width with a larger ring and larger text
+  - [[Nicrosil]]: Dashboard section, version 2.3.0 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil and open the Dashboard
+- **Commit:** `schema: Nicrosil 2.3.0 remove Dashboard activity chart, widen verification card`
+
+### [2026-11-18] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-18] verify | Cascade of Unintended Consequences
+
+- **Verify:**
+  - Approved: [[Cascade of Unintended Consequences]]
+- **Commit:** `verify: Cascade of Unintended Consequences`

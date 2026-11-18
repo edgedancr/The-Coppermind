@@ -2500,7 +2500,7 @@ module.exports = class Nicrosil extends Plugin {
       .filter(([, n]) => n > 0).map(([s, n]) => `${n} ${s}`).join(" · ");
     tile(flagCount, "Open flags", breakdown || "none", "cm-tile-flags");
 
-    // graphs: a verification ring, a two-week activity chart, and pages by type
+    // graphs: a verification ring and pages by type
     const graphs = el.createDiv({ cls: "cm-graphs" });
     const gcard = (title, cls) => {
       const c = graphs.createDiv({ cls: `cm-gcard ${cls || ""}` });
@@ -2508,7 +2508,7 @@ module.exports = class Nicrosil extends Plugin {
       c.createDiv({ cls: "cm-gcard-title", text: title });
       return c;
     };
-    const rc = gcard("Verification", "cm-ring-card");
+    const rc = gcard("Verification", "cm-ring-card cm-wide");
     const rbody = rc.createDiv({ cls: "cm-ring-body" });
     const pct = all.length ? verified / all.length : 0;
     const R = 46, C = 2 * Math.PI * R;
@@ -2550,9 +2550,7 @@ module.exports = class Nicrosil extends Plugin {
     btn.disabled = !drafts.length;
     btn.addEventListener("click", async () => { await this.activateView(); this.openNext(null); });
 
-    this.fillActivityChart(gcard("Last 14 days"));
-
-    const tc = gcard("Pages by type", "cm-wide");
+        const tc = gcard("Pages by type", "cm-wide");
     const groups = [...new Set(all.map((i) => i.group))].sort((a, b) => groupRank(a) - groupRank(b));
     const gmax = Math.max(1, ...groups.map((g) => all.filter((i) => i.group === g).length));
     groups.forEach((g, gi) => {
@@ -2622,42 +2620,6 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   /** Draws the last 14 days of log activity as small stacked bars: verifications and other changes. */
-  async fillActivityChart(card) {
-    const f = this.app.vault.getAbstractFileByPath(LOG_PATH);
-    const entries = f instanceof TFile ? parseLog(await this.app.vault.cachedRead(f)) : [];
-    const pad = (n) => String(n).padStart(2, "0");
-    const base = new Date(today() + "T12:00:00");
-    const days = [];
-    for (let k = 13; k >= 0; k--) {
-      const d = new Date(base); d.setDate(d.getDate() - k);
-      days.push({ iso: `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`, v: 0, o: 0 });
-    }
-    const idx = new Map(days.map((d, i) => [d.iso, i]));
-    entries.forEach((e) => {
-      const i = idx.get(e.date);
-      if (i === undefined) return;
-      if (e.op === "verify" && !e.rejected) days[i].v++; else days[i].o++;
-    });
-    const tv = days.reduce((n, d) => n + d.v, 0), to = days.reduce((n, d) => n + d.o, 0);
-    const max = Math.max(1, ...days.map((d) => d.v + d.o));
-    card.createDiv({ cls: "cm-sub cm-spark-sum", text: `${tv} verified · ${to} other changes` });
-    const svg = svgEl(card, "svg", { viewBox: "0 0 280 72", class: "cm-spark", role: "img", "aria-label": "Log activity over the last 14 days" });
-    const H = 66;
-    days.forEach((d, i) => {
-      const x = i * 20 + 3;
-      const g = svgEl(svg, "g", { class: "cm-sp-day" });
-      g.style.setProperty("--i", String(i));
-      svgEl(g, "rect", { x, y: 3, width: 14, height: H, rx: 3, class: "cm-sp-back" });
-      const ho = d.o ? Math.max(3, (d.o / max) * H) : 0, hv = d.v ? Math.max(3, (d.v / max) * H) : 0;
-      if (ho) svgEl(g, "rect", { x, y: 3 + H - ho, width: 14, height: ho, rx: 3, class: "cm-sp-other" });
-      if (hv) svgEl(g, "rect", { x, y: 3 + H - ho - hv, width: 14, height: hv, rx: 3, class: "cm-sp-ver" });
-      svgEl(g, "title", {}, `${d.iso}: ${d.v} verified, ${d.o} other`);
-    });
-    const ax = card.createDiv({ cls: "cm-spark-axis" });
-    ax.createSpan({ text: "14 days ago" });
-    ax.createSpan({ text: "today" });
-  }
-
   guidesLink() {
     const f = this.app.vault.getAbstractFileByPath(INDEX_PATH);
     const cache = f instanceof TFile ? this.app.metadataCache.getFileCache(f) : null;

@@ -532,14 +532,13 @@ body {
 }
 .cm-hero.is-intro { animation: cm-rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
 @keyframes cm-rise { from { opacity: 0; transform: translateY(16px) scale(0.98); } to { opacity: 1; transform: none; } }
-.is-intro .cm-sp-day rect { transform-box: fill-box; transform-origin: bottom; animation: cm-grow 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; animation-delay: calc(var(--i, 0) * 45ms + 500ms); }
 @keyframes cm-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 
 @media (max-width: 600px) { .cm-graphs { grid-template-columns: 1fr; } .cm-tr { grid-template-columns: 90px 1fr; } .cm-tr-count { grid-column: 1 / -1; } }
 @media (prefers-reduced-motion: reduce) {
   .cm-hero-spark { display: none; }
   .cm-hero-title, .cm-logo-hero, .cm-hero.is-intro { animation: none; }
-  .is-intro .cm-tile, .is-intro .cm-navcard, .is-intro .cm-gcard, .is-intro .cm-act-row, .is-intro .cm-sp-day rect, .is-intro .cm-ring-seg { animation: none; }
+  .is-intro .cm-tile, .is-intro .cm-navcard, .is-intro .cm-gcard, .is-intro .cm-act-row, .is-intro .cm-ring-seg { animation: none; }
   .cm-ring-arc, .cm-tbar-fill, .cm-navcard, .cm-tile, .cm-act-row { transition: none; }
 }
 
@@ -706,3 +705,15 @@ body.cm-calm .workspace-leaf-content[data-type="markdown"] .view-content.cm-page
 /* calm mode stops the ambient animations, but the verify animation has its own setting */
 body.cm-calm .workspace-leaf-content[data-type="markdown"] .view-content.cm-vf-out { animation: cm-vf-out 0.62s cubic-bezier(0.5, 0, 0.9, 0.4) forwards !important; }
 body.cm-calm .workspace-leaf-content[data-type="markdown"] .view-content.cm-vf-in { animation: cm-vf-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) backwards !important; }
+
+/* Verification card fills the full width (2.3.0) */
+.cm-ring-card.cm-wide { padding: 22px 24px; }
+.cm-ring-card.cm-wide .cm-ring-body { justify-content: center; gap: 44px; }
+.cm-ring-card.cm-wide .cm-ring-wrap { width: 168px; height: 168px; }
+.cm-ring-card.cm-wide .cm-ring { width: 168px; height: 168px; }
+.cm-ring-card.cm-wide .cm-ring-burst .cm-vf-ring, .cm-ring-card.cm-wide .cm-ring-wrap .cm-vf-ring { width: 168px; height: 168px; margin: -84px 0 0 -84px; }
+.cm-ring-card.cm-wide .cm-ring-big { font-size: 2.4em; }
+.cm-ring-card.cm-wide .cm-ring-side { gap: 8px; }
+.cm-ring-card.cm-wide .cm-ring-side .cm-sub { font-size: var(--font-ui-medium, 15px); }
+.cm-ring-card.cm-wide .cm-ring-side button { margin-top: 8px; padding: 8px 22px; height: auto; font-size: var(--font-ui-medium, 15px); }
+@media (max-width: 600px) { .cm-ring-card.cm-wide .cm-ring-body { gap: 20px; } .cm-ring-card.cm-wide .cm-ring-wrap, .cm-ring-card.cm-wide .cm-ring { width: 120px; height: 120px; } }

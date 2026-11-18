@@ -19,7 +19,7 @@ verified_on: 2026-11-18
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
-This guide describes Nicrosil **v2.2.1**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.3.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -67,7 +67,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 [[Dashboard]] is the page the vault opens on. Each section is a block in the page's text, so a section can be moved or deleted by editing the note. From top to bottom it has:
 - **Header** (`coppermind-hero`): the Coppermind logo, name, and tagline on a panel with slowly rising copper and teal sparks, and the search box (see [[#Search]]) built into its bottom edge.
 - **Six navigation cards** (`coppermind-nav`): Index, Review queue, Wiki map, Log, Schema, and Guides. A click opens the page in the current tab. ==`Ctrl+click` (or middle-click) opens it in a new tab.== The Review queue and Wiki map cards open a sidebar or their own tab instead, so they have no new-tab version.
-- **Review progress** (`coppermind-dashboard`): stat tiles for verified, drafts, and open flags; a ring showing how much of the wiki is verified (filled in copper shading to green), with **Start reviewing**; a small chart of the last 14 days of log activity (verifications in teal, other changes in copper); and a bar for each page type showing its verified and draft pages. A **Changed since verified** section lists each re-review with its change lines. Below that are the open flags by kind and drafts older than 14 days.
+- **Review progress** (`coppermind-dashboard`): stat tiles for verified, drafts, and open flags; a large full-width ring showing how much of the wiki is verified (filled in copper shading to green), with **Start reviewing**; and a bar for each page type showing its verified and draft pages. A **Changed since verified** section lists each re-review with its change lines. Below that are the open flags by kind and drafts older than 14 days.
 - **Recent activity** (`coppermind-activity`): the last six log entries. Click one to open the page it names, or the log.
 - **Reference:** folded sections on what the Coppermind is, how to read it, what it covers, and its six parts. These are ordinary text in the note.
 
@@ -179,6 +179,7 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
 ### Version history
+- **2.3.0:** Removed the 14-day activity chart from the Dashboard; the Verification card is now full width with a larger ring and larger text.
 - **2.2.1:** Fixed the verify animation: the page slides away and the next one slides in again (the background drift had been overriding it). Removed the sparks from opening a page, leaving only a short fade.
 - **2.2.0:** Review queue: the progress bar is sharper with a steady glow (no pulse or sheen), and the draft list is a set of cards with a colored edge (amber for flags, rust for changed since verified, teal for the current page) and the page type under each name.
 - **2.1.0:** The page-open transition is sparks only (no light sweep), with more sparks that rise higher. A new setting closes the Backlinks, Outgoing links, Tags, All properties and Outline panels at startup.
