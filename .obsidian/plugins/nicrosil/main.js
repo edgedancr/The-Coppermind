@@ -58,7 +58,7 @@ const FLAG_KINDS = {
   warning: { label: "Warning", plural: "Warnings (unsourced)", short: "W" },
 };
 const STALE_DAYS = 14;
-const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, ambient: true };
+const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, ambient: true, hidePanels: true };
 const SORTS = { clean: "Clean pages first", flagged: "Flagged pages first", type: "By page type", az: "A to Z" };
 
 /* ---------- pure helpers (tested outside Obsidian) ---------- */
@@ -783,7 +783,6 @@ class RelationsView extends ItemView {
     const cy = H / 2;
     const wrap = root.createDiv({ cls: "cm-rel-map" });
     const svg = svgEl(wrap, "svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img", "aria-label": `Relations map for ${file.basename}` });
-    if (this.lastDrawn !== file.path) { svg.addClass("cm-rel-anim"); this.lastDrawn = file.path; } // the lines draw themselves in when a different page opens
     const defs = svgEl(svg, "defs");
     for (const [t, info] of Object.entries(REL_TYPES)) {
       const m = svgEl(defs, "marker", { id: `cm-arrow-${t}`, viewBox: "0 0 8 8", refX: 7, refY: 4, markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse" });
@@ -798,8 +797,8 @@ class RelationsView extends ItemView {
         nd.types.forEach((t, k) => {
           const info = REL_TYPES[t];
           const off = (k - (nd.types.length - 1) / 2) * 4;
-          const attrs = { fill: "none", stroke: info.color, "stroke-width": 1.6, "stroke-opacity": 0.9, "marker-end": `url(#cm-arrow-${t})`, pathLength: 1, class: info.dash ? "cm-rel-edge-dash" : "cm-rel-edge" };
-          if (info.dash) { attrs["stroke-dasharray"] = info.dash; attrs.pathLength = undefined; delete attrs.pathLength; }
+          const attrs = { fill: "none", stroke: info.color, "stroke-width": 1.6, "stroke-opacity": 0.9, "marker-end": `url(#cm-arrow-${t})` };
+          if (info.dash) attrs["stroke-dasharray"] = info.dash;
           if (side === "out") svgEl(svg, "path", { ...attrs, d: edgePath(X2 + CW, cy + off, X3 - 1, y + off) });
           else svgEl(svg, "path", { ...attrs, d: edgePath(X1 + NW, y + off, X2 - 1, cy + off) });
         });
@@ -1306,7 +1305,6 @@ class WikiMapView extends ItemView {
     for (const id of ids) {
       const n = g.nodes.get(id), p = pos.get(id);
       const grp = svgEl(world, "g", { class: "cm-wm-node" + (n.deg >= 3 ? " is-hub" : "") + (n.changed ? " is-changed" : ""), transform: `translate(${p.x},${p.y})`, tabindex: 0, role: "button" });
-      if (n.changed) svgEl(grp, "circle", { r: radius(n), class: "cm-wm-pulse" });
       if (n.status === "verified") {
         for (let s = 0; s < 2; s++) {
           const sp = svgEl(grp, "circle", { cx: (s ? 1 : -1) * radius(n) * 0.45, cy: -radius(n) * 0.6, r: 1.5, class: "cm-wm-spark" });
@@ -1530,6 +1528,9 @@ class ReviewSettings extends PluginSettingTab {
       .addToggle((t) => t.setValue(this.plugin.settings.celebrate !== false).onChange(async (v) => {
         this.plugin.settings.celebrate = v; await this.plugin.persist();
       }));
+    new Setting(el).setName("Close the extra sidebar panels on startup")
+      .setDesc("Closes Backlinks, Outgoing links, Tags, All properties and Outline in the sidebar each time Obsidian starts. You can still open any of them from the command palette during a session.")
+      .addToggle((t) => t.setValue(this.plugin.settings.hidePanels !== false).onChange(async (v) => { this.plugin.settings.hidePanels = v; await this.plugin.persist(); }));
     new Setting(el).setName("Ambient animations")
       .setDesc("Glowing titles, breathing flag callouts, sparkles on the map, page fade-ins, and a slowly drifting background. Turn off for a still, quiet vault. They are also off if your computer is set to reduce motion.")
       .addToggle((t) => t.setValue(this.plugin.settings.ambient !== false).onChange(async (v) => {
@@ -2202,13 +2203,6 @@ module.exports = class Nicrosil extends Plugin {
     this.registerCommands();
 
     document.body.classList.toggle("cm-calm", this.settings.ambient === false);
-    this.registerDomEvent(document, "pointermove", (e) => {
-      const c = e.target && e.target.closest ? e.target.closest(".cm-navcard, .cm-tile, .cm-gcard") : null;
-      if (!c) return;
-      const r = c.getBoundingClientRect();
-      c.style.setProperty("--mx", `${e.clientX - r.left}px`);
-      c.style.setProperty("--my", `${e.clientY - r.top}px`);
-    });
     this.statusEl = this.addStatusBarItem();
     this.statusEl.addClass("cm-status", "mod-clickable");
     this.statusEl.setAttr("aria-label", "Open the review queue");
@@ -2270,6 +2264,10 @@ module.exports = class Nicrosil extends Plugin {
     this.registerEvent(this.app.vault.on("delete", () => this.scheduleRefresh()));
     this.registerEvent(this.app.vault.on("rename", (file, oldPath) => this.onRename(file, oldPath)));
     this.app.workspace.onLayoutReady(async () => {
+      // close the panels Obsidian keeps bringing back in the right sidebar (backlinks, outgoing links, tags, properties, outline)
+      if (this.settings.hidePanels !== false) {
+        for (const t of ["backlink", "outgoing-link", "tag", "all-properties", "outline"]) this.app.workspace.detachLeavesOfType(t);
+      }
       this.startDashIntro();
       this.searchIndex.start();
       this.syncSchemaButtons();
@@ -3061,16 +3059,31 @@ module.exports = class Nicrosil extends Plugin {
    * The verify animation: the page is stamped with a check, bursts into copper and teal sparks, and slides
    * away. Returns what playVerifyIn needs to bring the next page in.
    */
-  /** A newly opened page fades in with a slight rise. */
+  /** A newly opened page fades in while copper sparks rise. */
   pageIn() {
     if (this.vfBusy || this.settings.ambient === false || prefersReduced()) return;
     const view = this.app.workspace.getActiveViewOfType(MarkdownView);
-    const c = view && view.containerEl && view.containerEl.querySelector(".view-content");
+    const host = view && view.containerEl;
+    const c = host && host.querySelector(".view-content");
     if (!c) return;
+    host.querySelectorAll(".cm-pg-overlay").forEach((o) => o.remove());
     c.removeClass("cm-page-in");
     void c.offsetWidth;
     c.addClass("cm-page-in");
-    setTimeout(() => c.removeClass("cm-page-in"), 450);
+    host.addClass("cm-pg-host");
+    const ov = host.createDiv({ cls: "cm-pg-overlay" });
+    ov.setAttr("aria-hidden", "true");
+        const cols = ["#d98a4a", "#e0a846", "#f0b985", "#86d2c1"];
+    for (let i = 0; i < 28; i++) {
+      const s = ov.createSpan({ cls: "cm-pg-p" });
+      s.style.left = `${4 + ((i * 37) % 92)}%`;
+      s.style.setProperty("--s", `${2 + (i % 3)}px`);
+      s.style.setProperty("--c", cols[i % 4]);
+      s.style.setProperty("--rise", `${150 + ((i * 41) % 190)}px`);
+      s.style.setProperty("--dx", `${((i % 5) - 2) * 10}px`);
+      s.style.animationDelay = `${(i % 9) * 55}ms`;
+    }
+    setTimeout(() => { c.removeClass("cm-page-in"); ov.remove(); host.removeClass("cm-pg-host"); }, 1300);
   }
 
   /** The properties strip glows once on a page that was just verified. */

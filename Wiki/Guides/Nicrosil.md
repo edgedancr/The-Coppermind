@@ -19,7 +19,7 @@ verified_on:
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
-This guide describes Nicrosil **v1.6.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.1.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -113,11 +113,10 @@ On every other note, Nicrosil hides the full Properties block and puts a one-lin
 
 ## Ambience
 Small animations make the vault feel alive. None of them change how anything works.
-- **Notes:** a verified page's title has a teal glow with a slow shimmer; a draft's title has a dim copper ember. The properties strip glows once right after I verify. Flag callouts (`caution`, `todo`, `question`, `warning`) breathe softly in their flag color. Internal links glow when hovered. Each page fades in when opened, and the background drifts very slowly.
-- **Wiki map and hierarchy:** verified dots give off small sparks. Pages with `changes_since_verified` pulse amber on the map and have an amber outline in the hierarchy. Clicking a dot sends a ring out from it and pings its neighbors in turn.
-- **Relations panel:** the lines draw themselves in when a different page is shown.
-- **Dashboard:** a soft spotlight follows the mouse over cards and tiles. A burst of sparks goes off when the verification ring passes 25, 50, 75 or 100 percent. The newest activity row pulses once.
-- **Review queue:** the progress bar has a moving sheen, rows slide to their new places when the order changes, and new flag badges pop in.
+- **Notes:** a verified page's title has a teal glow with a slow shimmer; a draft's title has a dim copper ember. The properties strip glows once right after I verify. Flag callouts (`caution`, `todo`, `question`, `warning`) breathe softly in their flag color. Internal links glow when hovered. Opening a page plays a short transition: the page fades in while a shower of copper sparks rises. The background drifts very slowly.
+- **Wiki map and hierarchy:** verified dots give off small sparks. Pages with `changes_since_verified` have an amber outline on the map and in the hierarchy. Clicking a dot sends a ring out from it and pings its neighbors in turn.
+- **Dashboard:** a burst of sparks goes off when the verification ring passes 25, 50, 75 or 100 percent. The newest activity row pulses once.
+- **Review queue:** the title is a copper-to-teal gradient, the larger progress bar glows like the Dashboard ring and has a moving sheen, rows slide to their new places when the order changes, and new flag badges pop in.
 - **Smaller touches:** search results fade in one after another, notices have a teal edge, and the status-bar verified count glows when it goes up.
 
 Turn them all off with **Ambient animations** in the settings. They are also off if the computer is set to reduce motion.
@@ -151,6 +150,7 @@ Change any of them in **Settings → Hotkeys** (search "Nicrosil"). Beyond the k
 In **Settings → Nicrosil**:
 - **Open the next draft after verifying or rejecting** (on by default)
 - **Play an animation when I verify a page** (on by default): the check, sparks and slide described in [[#A review session]]. It is skipped if the computer is set to reduce motion.
+- **Close the extra sidebar panels on startup** (on by default): closes Backlinks, Outgoing links, Tags, All properties and Outline each time Obsidian starts, so they stop coming back. They can still be opened from the command palette.
 - **Ambient animations** (on by default): the glows, sparkles and fades described in [[#Ambience]].
 - **Queue order:** clean pages first (default), flagged pages first, by page type, or A to Z. The same menu is at the top of the sidebar.
 
@@ -179,6 +179,8 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
 ### Version history
+- **2.1.0:** The page-open transition is sparks only (no light sweep), with more sparks that rise higher. A new setting closes the Backlinks, Outgoing links, Tags, All properties and Outline panels at startup.
+- **2.0.0:** Page-open transition (copper light sweep and rising sparks), a larger glowing progress bar and a gradient title in the review queue. Removed the Dashboard spotlight, the amber pulse on the map, and the relations-panel line animation. Fixed two animation names that clashed with the Dashboard hero.
 - **1.6.0:** Ambience: title auras, breathing flag callouts, map sparks, ripples and amber pulses, relations lines that draw in, Dashboard spotlight and milestone bursts, queue and search touches, page fade-ins, and a slow background drift. A new setting turns them off.
 - **1.5.0:** Verifying a page plays an animation: a check stamp and spark burst, the page slides away, and the next page slides in. A new setting turns it off.
 - **1.4.1:** Dashboard fixes: the verification ring's filled part is drawn again, shading from copper to green; the three stat tiles glow only when pointed at; and the six navigation cards have a colored outline all the way around.

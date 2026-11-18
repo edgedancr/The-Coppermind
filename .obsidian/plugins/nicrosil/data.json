@@ -4,6 +4,7 @@
     "sort": "az",
     "celebrate": true,
     "ambient": true,
+    "hidePanels": true,
     "mapTab": "tree",
     "mapFlow": true,
     "milestone": 0

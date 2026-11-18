@@ -1204,3 +1204,28 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Bach Faucet]]
 - **Commit:** `verify: Bach Faucet`
+
+### [2026-11-18] schema | Nicrosil 2.0.0 page transition and queue polish
+
+- **Think:** The 1.6.0 ambience had a few parts I did not want (Dashboard spotlight, amber map pulse, relations-panel animation). Opening a page felt abrupt, and the review queue header and progress bar looked plain next to the Dashboard.
+- **Calculate:** Nothing to compute.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.0.0): removed the spotlight, the amber map pulse (changed pages keep a still amber outline) and the relations line animation; added a page-open transition (copper light sweep plus rising sparks); larger glowing progress bar and a gradient title in the review queue; renamed two animation names that clashed with the Dashboard hero
+  - [[Nicrosil]]: Ambience section, version 2.0.0 and history line
+- **Verify:**
+  - Guide set back to draft until I verify it
+  - Reload Nicrosil, open a few pages, and check the review queue
+- **Commit:** `schema: Nicrosil 2.0.0 page transition and queue polish`
+
+### [2026-11-18] schema | Nicrosil 2.1.0 sparks only, sidebar panels closed at startup
+
+- **Think:** The copper light sweep in the page transition was too much. The five extra sidebar panels (backlinks, outgoing links, tags, all properties, outline) kept coming back after Obsidian restarted.
+- **Calculate:** Nothing to compute.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.1.0): removed the light sweep, 28 sparks that rise higher, new setting that closes those five panels on startup
+  - [[Nicrosil]]: Ambience section, settings entry, version 2.1.0 and history line
+- **Verify:**
+  - Guide set back to draft until I verify it
+  - Restart Obsidian and check the sidebar icons
+- **Commit:** `schema: Nicrosil 2.1.0 sparks only, close sidebar panels at startup`
+
