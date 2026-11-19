@@ -2331,3 +2331,16 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Nicrosil]]
 - **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] schema | Nicrosil 2.4.8 Dashboard health check card
+
+- **Think:** I do a health check every 14 days, so I asked for a small card on the Dashboard showing how long it has been since the last one, turning red when it is overdue.
+- **Calculate:** Nothing to compute.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.4.7 to 2.4.8): a health check card in the Dashboard's review progress section, with a bar that fills over the 14 days since the newest report in `Health Checks/` (read from the report's file name), teal while on time, amber in the last two days, red and gently pulsing once overdue or if no report exists; clicking it opens the latest report; the Dashboard also refreshes hourly so the card is current if Obsidian stays open overnight; new setting **Days between health checks** (14)
+  - [[Nicrosil]]: Dashboard section, Settings section, version 2.4.8 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
+  - Not changed: [[SCHEMA]]. The 14-day rhythm for health checks is not written there (§7 rule 7 only covers drafts older than 14 days); it lives in the plugin setting.
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil and open the Dashboard
+- **Commit:** `schema: Nicrosil 2.4.8 Dashboard health check card`

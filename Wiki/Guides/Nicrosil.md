@@ -1,6 +1,6 @@
 ---
 type: guide
-status: verified
+status: draft
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -12,14 +12,16 @@ courses:
 sources: []
 related:
   - "[[SCHEMA]]"
-drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow and Reading view on open by claude-sonnet-5-5)
+drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow and Reading view on open and health check card by claude-sonnet-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-19
+changes_since_verified:
+  - "2026-11-19: new Dashboard health check card (days since the last report, amber then red when overdue) and a Days between health checks setting; version 2.4.8 and history line added"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.4.7**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.4.8**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -68,6 +70,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 - **Header** (`coppermind-hero`): the Coppermind logo, name, and tagline, left-aligned with no panel around them, and the search box (see [[#Search]]) right under them.
 - **Six link cards** (`coppermind-nav`), in two columns: small, sharp-cornered cards with a copper edge, each a name and a one-line description, with no icons. They are Index, Review queue, Wiki map, Log, Schema, and Guides. A click opens the page in the current tab. ==`Ctrl+click` (or middle-click) opens it in a new tab.== The Review queue and Wiki map cards open a sidebar or their own tab instead, so they have no new-tab version.
 - **Review progress** (`coppermind-dashboard`): a card with one line of stats (pages verified, with the share, drafts, and open flags), a glowing copper-to-teal bar showing how much is verified, and a small line counting the open flags by kind and the drafts older than 14 days. Under it is a bar for each page type showing its verified and draft pages. A **Changed since verified** section lists each re-review with its change lines. Below that are folded lists naming the pages with open flags, by kind, and the drafts older than 14 days. To start a review session from the Dashboard, use the Review queue card.
+- **Health check card:** a small card inside the review progress section showing how long it has been since the last health check. A bar fills over the 14 days between checks. It is teal while there is time, amber for the last two days, and red with a gentle pulse once the check is overdue (or if none has been saved yet). It reads the dates from the report names in `Health Checks/`, so it updates itself when a new report is saved, and clicking it opens the latest report.
 - **Recent activity** (`coppermind-activity`): the last six log entries. Click one to open the page it names, or the log.
 - **Reference:** folded sections on what the Coppermind is, how to read it, what it covers, and its six parts. These are ordinary text in the note.
 
@@ -155,6 +158,7 @@ In **Settings → Nicrosil**:
 - **Close the extra sidebar panels on startup** (on by default): closes Backlinks, Outgoing links, Tags, All properties and Outline each time Obsidian starts, so they stop coming back. They can still be opened from the command palette.
 - **Ambient animations** (on by default): the glows, sparkles and fades described in [[#Ambience]].
 - **Open pages in Reading view:** "Verified pages only" (the default), "Every page", or "Off". When a page is opened from a link, the file list, search or the Dashboard, it opens in Reading view instead of editing. If I switch a page to editing myself, it stays that way until that tab opens a different page. "Every page" also covers drafts, but a new empty note always opens ready to type.
+- **Days between health checks** (14 by default): how long the Dashboard's health check card counts before it calls the check overdue.
 - **Queue order:** clean pages first (default), flagged pages first, by page type, or A to Z. The same menu is at the top of the sidebar.
 
 ## What it will not do
@@ -182,6 +186,7 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it.[^1]
 
 ### Version history
+- **2.4.8:** The Dashboard has a health check card: a bar that fills over the 14 days since the last report in `Health Checks/`, amber when the next check is due within two days and red when it is overdue. New setting **Days between health checks**.
 - **2.4.7:** New setting **Open pages in Reading view**: verified pages (or every page, or none) open in Reading view instead of editing, and stay in editing if I switch them there myself.
 - **2.4.6:** The relations map is livelier: glowing arrows with dots flowing along them, a pulsing center page, a dotted copper-lit backdrop, nodes that fade in, and a hover highlight that lights a page's arrows and dims the rest.
 - **2.4.5:** Search snippets and review-card summaries leave out footnote markers (`[^1]`) and the Footnotes section, after citations moved to footnotes (Schema §6).

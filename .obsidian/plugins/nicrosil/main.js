@@ -58,7 +58,7 @@ const FLAG_KINDS = {
   warning: { label: "Warning", plural: "Warnings (unsourced)", short: "W" },
 };
 const STALE_DAYS = 14;
-const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, ambient: true, hidePanels: true, readMode: "verified" };
+const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, ambient: true, hidePanels: true, readMode: "verified", healthDays: 14 };
 const READ_MODES = { verified: "Verified pages only", all: "Every page", off: "Off" };
 const SORTS = { clean: "Clean pages first", flagged: "Flagged pages first", type: "By page type", az: "A to Z" };
 
@@ -163,6 +163,17 @@ function nextAfter(order, path) {
   for (let k = i + 1; k < order.length; k++) if (order[k].path !== path) return order[k];
   return rest[0];
 }
+
+/** Where a health check stands: how many days since the last one, and whether the next is on time, close, or overdue. */
+function healthStatus(lastIso, nowIso, every) {
+  if (!lastIso) return { state: "none", elapsed: null, left: null, pct: 1 };
+  const elapsed = daysBetween(lastIso, nowIso);
+  if (elapsed === null) return { state: "none", elapsed: null, left: null, pct: 1 };
+  const left = every - elapsed;
+  const state = left < 0 ? "overdue" : left <= 2 ? "soon" : "ok";
+  return { state, elapsed, left, pct: Math.max(0, Math.min(1, elapsed / every)) };
+}
+const plural = (n, w) => `${n} ${w}${n === 1 ? "" : "s"}`;
 
 function daysBetween(fromIso, toIso) {
   const a = Date.parse(fromIso), b = Date.parse(toIso);
@@ -1570,6 +1581,16 @@ class ReviewSettings extends PluginSettingTab {
         Object.entries(READ_MODES).forEach(([k, v]) => d.addOption(k, v));
         d.setValue(this.plugin.settings.readMode || "verified").onChange(async (v) => { this.plugin.settings.readMode = v; await this.plugin.persist(); });
       });
+    new Setting(el).setName("Days between health checks")
+      .setDesc("The Dashboard's health check card fills up over this many days since the last report in Health Checks/, turns amber in the last two days, and turns red once it is overdue.")
+      .addText((t) => {
+        t.inputEl.type = "number"; t.inputEl.min = "1"; t.inputEl.max = "365"; t.inputEl.style.width = "70px";
+        t.setValue(String(this.plugin.settings.healthDays || 14)).onChange(async (v) => {
+          const n = parseInt(v, 10);
+          if (!(n >= 1 && n <= 365)) return;
+          this.plugin.settings.healthDays = n; await this.plugin.persist(); this.plugin.renderAll();
+        });
+      });
     new Setting(el).setName("Queue order")
       .setDesc("Clean pages first gives quick wins; flagged first tackles the hard ones while you're fresh.")
       .addDropdown((d) => {
@@ -2286,6 +2307,7 @@ module.exports = class Nicrosil extends Plugin {
     this.registerEvent(this.app.vault.on("rename", (f, oldPath) => this.searchIndex.rename(f, oldPath)));
 
     this.scheduleRefresh = debounce(() => this.refresh(), 400, true);
+    this.registerInterval(window.setInterval(() => this.scheduleRefresh(), 60 * 60 * 1000)); // keeps the health check card current overnight
     this.registerEvent(this.app.workspace.on("file-open", (file) => {
       this.readOnOpen(file);
       this.syncSchemaButtons();
@@ -2545,6 +2567,8 @@ module.exports = class Nicrosil extends Plugin {
         if (this.settings.milestone !== ms) { this.settings.milestone = ms; this.persist(); }
       }
     }
+
+    this.drawHealthCard(el, intro);
 
     // stat tiles
     const tiles = quiet ? createDiv() : el.createDiv({ cls: "cm-tiles" });
@@ -2938,6 +2962,51 @@ module.exports = class Nicrosil extends Plugin {
     } catch (e) {
       console.error("Nicrosil: couldn't open the page in Reading view", e);
     }
+  }
+
+  /** The newest saved health check report (Health Checks/Health Check YYYY-MM-DD), read from file names. */
+  latestHealthCheck() {
+    let best = null;
+    for (const f of this.app.vault.getMarkdownFiles()) {
+      const m = /^Health Checks\/Health Check (\d{4}-\d{2}-\d{2})(?: \(\d+\))?\.md$/.exec(f.path);
+      if (m && (!best || m[1] > best.date)) best = { date: m[1], file: f };
+    }
+    return best;
+  }
+
+  /** A small card on the Dashboard: days since the last health check against the schedule; amber when close, red when overdue. */
+  drawHealthCard(el, intro) {
+    const every = Math.max(1, parseInt(this.settings.healthDays, 10) || 14);
+    const last = this.latestHealthCheck();
+    const h = healthStatus(last ? last.date : null, today(), every);
+    const card = el.createDiv({ cls: `cm-hc cm-hc-${h.state}` });
+    const head = card.createDiv({ cls: "cm-hc-head" });
+    head.createSpan({ cls: "cm-hc-title", text: "Health check" });
+    const verdict = h.state === "none" ? "None recorded yet"
+      : h.left < 0 ? `${plural(-h.left, "day")} overdue`
+      : h.left === 0 ? "Due today"
+      : h.left === 1 ? "Due tomorrow"
+      : `Due in ${plural(h.left, "day")}`;
+    head.createSpan({ cls: "cm-hc-verdict", text: verdict });
+    const track = card.createDiv({ cls: "cm-hc-track" });
+    const fill = track.createDiv({ cls: "cm-hc-fill" });
+    const target = `${(h.pct * 100).toFixed(1)}%`;
+    fill.style.width = intro ? "0%" : target;
+    if (intro) requestAnimationFrame(() => requestAnimationFrame(() => { fill.style.width = target; }));
+    let sub = `One every ${plural(every, "day")}.`;
+    if (last) {
+      const [y, mo, d] = last.date.split("-").map(Number);
+      const when = new Date(y, mo - 1, d).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+      const ago = h.elapsed === 0 ? "today" : h.elapsed === 1 ? "yesterday" : `${plural(h.elapsed, "day")} ago`;
+      sub = `Last one ${when} (${ago}). One every ${plural(every, "day")}.`;
+      card.addClass("is-link");
+      card.setAttr("role", "button"); card.setAttr("tabindex", "0");
+      card.setAttr("aria-label", `Open the health check from ${when}`);
+      const go = (e) => this.app.workspace.getLeaf(e.ctrlKey || e.metaKey ? "tab" : false).openFile(last.file);
+      card.addEventListener("click", go);
+      card.addEventListener("keydown", (e) => { if (e.key === "Enter") go(e); });
+    }
+    card.createDiv({ cls: "cm-hc-sub", text: sub });
   }
 
   async openDashboard(newTab) {
