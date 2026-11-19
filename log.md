@@ -2382,3 +2382,32 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[SCHEMA]]
 - **Commit:** `verify: SCHEMA`
+
+### [2026-11-19] schema | Nicrosil 2.5.0 wiki map and hierarchy restyled
+
+- **Think:** The wiki map and the hierarchy looked like the older Coppermind and out of place next to the relations panel, so I asked for them to match it: more polished, with the animation and glow.
+- **Calculate:** Nothing to compute. The look was checked in a test page with sample pages before saving; I have not seen it in Obsidian yet.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.4.9 to 2.5.0): both views get the relations panel's dotted backdrop with a copper glow and glowing border; the buttons, menus, filter boxes and relationship chips are rounded and glow in copper on hover; the info card under the map has the gradient border and serif name used on the Dashboard
+  - Map: dots are lit orbs (a soft gradient per page type) with a halo, hub halos breathe slowly, dots fade in one after another when the map opens, the arrows and their traveling lights are slightly stronger, hovered arrows glow in their relationship color, labels are crisper
+  - Hierarchy: cards have a gradient fill and a teal (verified) or copper (draft) glow, the page-type dot glows, branches glow in their relationship color with lights running from parent to child, cards and branches fade in from left to right, the open/close circles glow and grow on hover, hovering a card brightens its whole path
+  - Motion is off under reduced-motion settings and when Ambient animations is off. To keep the map fast with several hundred dots, the glow on the map is drawn with halos instead of filters, and only hovered arrows get a filter glow.
+  - [[Nicrosil]]: the wiki map section, version 2.5.0 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil, then open the wiki map (`Alt+M`) and look at both tabs
+- **Commit:** `schema: Nicrosil 2.5.0 wiki map and hierarchy restyled`
+
+### [2026-11-19] schema | Nicrosil 2.5.1 quieter wiki map
+
+- **Think:** The restyled wiki map felt slow and too cluttered, so I asked for the halos and the breathing to go.
+- **Calculate:** Nothing to compute. Checked by rendering both tabs in a test page; not yet seen in Obsidian.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.5.0 to 2.5.1): the map's dot halos, the breathing, the fade-in of the dots, the lit-orb dot gradient, the dotted backdrop, and the heavier arrows and labels are removed, so the map's dots, arrows and labels look as before; the frame keeps a thin copper edge and a faint glow, and a hovered arrow still glows in its color. That also drops several hundred extra shapes and animations from the map, which should make it lighter.
+  - Fixed: the dropdown menus (status, page type, course) showed repeated arrows after 2.5.0, because the new style replaced their background; they keep Obsidian's own arrow again.
+  - Kept: the buttons, filter boxes and chips, the info card, and the whole hierarchy restyle.
+  - [[Nicrosil]]: the wiki map section, version 2.5.1 and history line; one more `changes_since_verified` line (the guide was already a re-review draft)
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil and open the wiki map (`Alt+M`)
+- **Commit:** `schema: Nicrosil 2.5.1 quieter wiki map, fix dropdown arrows`

@@ -964,6 +964,17 @@ const PAGE_COLORS = {
   guide: "#b8b08a", analysis: "#cc9a7a", perspective: "#a8a8a8", source: "#888888",
 };
 const pageColor = (t) => PAGE_COLORS[t] || "#999999";
+const lighten = (hex, t) => { const n = parseInt(hex.slice(1), 16); return `rgb(${[(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => Math.round(v + (255 - v) * t)).join(",")})`; };
+const pageGradId = (t) => `cm-wm-g-${PAGE_COLORS[t] ? t : "other"}`;
+/** One soft radial gradient per page type, so dots read as small lit orbs instead of flat discs. */
+function addPageGradients(defs) {
+  for (const t of [...Object.keys(PAGE_COLORS), "other"]) {
+    const col = pageColor(t === "other" ? "" : t);
+    const g = svgEl(defs, "radialGradient", { id: `cm-wm-g-${t}`, cx: 0.35, cy: 0.3, r: 0.8 });
+    svgEl(g, "stop", { offset: "0%", "stop-color": lighten(col, 0.55) });
+    svgEl(g, "stop", { offset: "100%", "stop-color": col });
+  }
+}
 const inMapScope = (path) => /^(Wiki|Perspectives)\//.test(path) || path.startsWith("Sources/Source Cards/");
 
 /** Pages (nodes) and typed links (edges) for the whole wiki, from the metadata cache. */
@@ -1178,7 +1189,7 @@ class WikiMapView extends ItemView {
     }
     [...new Set([...inTree].map((p) => (g.nodes.get(p) || {}).type))].filter(Boolean).sort().forEach((t) => {
       const c = legend.createSpan({ cls: "cm-rel-chip" });
-      const dot = c.createSpan({ cls: "cm-wm-legdot" }); dot.style.background = pageColor(t);
+      const dot = c.createSpan({ cls: "cm-wm-legdot" }); dot.style.background = pageColor(t); dot.style.setProperty("--c", pageColor(t));
       c.appendText(t);
     });
     legend.createSpan({ cls: "cm-sub", text: "Click a card to open the page (Ctrl+click for a new tab). The circle at its right opens or closes a branch; the number is how many pages sit below. Teal ring = verified, dashed copper ring = draft. Drag the background to pan." });
@@ -1237,6 +1248,11 @@ class WikiMapView extends ItemView {
 
     const svg = svgEl(rows, "svg", { width: Wd, height: Ht, viewBox: `0 0 ${Wd} ${Ht}`, class: "cm-wt-svg" + (this._treeFresh ? " is-new" : ""), role: "img", "aria-label": "Hierarchy of pages" });
     this._treeFresh = false;
+    const defs = svgEl(svg, "defs");
+    const ng = svgEl(defs, "linearGradient", { id: "cm-wt-ng", x1: 0, y1: 0, x2: 0, y2: 1 });
+    svgEl(ng, "stop", { offset: "0%", style: "stop-color: var(--background-secondary)" });
+    svgEl(ng, "stop", { offset: "100%", style: "stop-color: var(--background-primary)" });
+    addPageGradients(defs);
     const lines = svgEl(svg, "g");
     const cards = svgEl(svg, "g");
     items.forEach((n) => {
@@ -1245,6 +1261,9 @@ class WikiMapView extends ItemView {
         const attrs = { d: `M${x1},${pa.y} C${xm},${pa.y} ${xm},${n.y} ${x2},${n.y}`, fill: "none", stroke: info.color, "stroke-width": 1.7, class: "cm-wt-edge" };
         if (info.dash) attrs["stroke-dasharray"] = info.dash;
         n.edge = svgEl(lines, "path", attrs);
+        n.edge.style.setProperty("--c", info.color); n.edge.style.setProperty("--i", String(n.depth));
+        n.flow = svgEl(lines, "path", { d: attrs.d, fill: "none", stroke: info.color, class: "cm-wt-flow" });
+        n.flow.style.setProperty("--c", info.color); n.flow.style.setProperty("--i", String(n.depth));
         svgEl(n.edge, "title", {}, `${nm(n.p)} \u2014 ${HIER[n.via]} \u2192 ${nm(pa.p)}`);
       }
     });
@@ -1253,8 +1272,10 @@ class WikiMapView extends ItemView {
       const node = n.node || {};
       const grp = svgEl(cards, "g", { class: "cm-wt-card" + (hit(n) ? " is-match" : "") + (node.changed ? " is-changed" : ""), transform: `translate(${n.x},${n.y - CH / 2})` });
       n.el = grp;
+      grp.style.setProperty("--i", String(n.depth));
       svgEl(grp, "rect", { width: n.w, height: CH, rx: 8, class: `cm-wt-box cm-wt-box-${node.status || "none"}` });
-      svgEl(grp, "circle", { cx: 13, cy: CH / 2, r: 5, fill: pageColor(node.type), class: "cm-wt-pdot" });
+      const pd = svgEl(grp, "circle", { cx: 13, cy: CH / 2, r: 5, fill: `url(#${pageGradId(node.type)})`, class: "cm-wt-pdot" });
+      pd.style.setProperty("--c", pageColor(node.type));
       svgEl(grp, "text", { x: 24, y: CH / 2 + 4, class: "cm-wt-label" }, n.label);
       if (n.cnt) svgEl(grp, "text", { x: n.w - 9, y: CH / 2 + 4, "text-anchor": "end", class: "cm-wt-cnt" }, String(n.cnt));
       svgEl(grp, "title", {}, `${nm(n.p)} (${node.type || "page"}, ${node.status || "no status"})${n.cnt ? `, ${n.cnt} below` : ""}`);
@@ -1263,11 +1284,11 @@ class WikiMapView extends ItemView {
         svg.toggleClass("is-hovering", on);
         const mark = (x, up) => {
           x.el.toggleClass("is-hl", on);
-          if (x.edge) x.edge.toggleClass("is-hl", on);
+          if (x.edge) { x.edge.toggleClass("is-hl", on); x.flow.toggleClass("is-hl", on); }
           if (up && x.parent) mark(x.parent, true);
         };
         mark(n, true);
-        const down = (x) => x.ch.forEach((c) => { c.el.toggleClass("is-hl", on); c.edge.toggleClass("is-hl", on); down(c); });
+        const down = (x) => x.ch.forEach((c) => { c.el.toggleClass("is-hl", on); c.edge.toggleClass("is-hl", on); c.flow.toggleClass("is-hl", on); down(c); });
         down(n);
       };
       grp.addEventListener("pointerenter", () => chain(true));
@@ -1275,7 +1296,7 @@ class WikiMapView extends ItemView {
       if (n.hasKids) {
         const tg = svgEl(svg, "g", { class: "cm-wt-tog", transform: `translate(${n.x + n.w + 17},${n.y})`, role: "button", tabindex: 0 });
         const col = REL_TYPES[n.ch.length ? n.ch[0].via : "part_of"].color;
-        svgEl(tg, "circle", { r: 8.5, class: "cm-wt-tog-bg", stroke: col });
+        svgEl(tg, "circle", { r: 8.5, class: "cm-wt-tog-bg", stroke: col }).style.setProperty("--c", col);
         svgEl(tg, "path", { d: n.open ? "M-3.5,0 H3.5" : "M-3.5,0 H3.5 M0,-3.5 V3.5", class: "cm-wt-tog-mark" });
         svgEl(tg, "title", {}, n.open ? "Close this branch" : "Open this branch");
         const flip = () => { if (n.open) st.open.delete(n.key); else st.open.add(n.key); this.drawTreeRows(rows, roots, kids, HIER, desc, nm, q, matches); };
@@ -1377,6 +1398,7 @@ class WikiMapView extends ItemView {
       const ln = svgEl(world, "path", attrs);
       svgEl(ln, "title", {}, `${g.nodes.get(e.from).name} — ${e.type.replace("_", " ")} → ${nb.name}`);
       const flow = svgEl(world, "path", { d: "M0,0", fill: "none", stroke: info.color, class: "cm-wm-flow" });
+      ln.style.setProperty("--c", info.color); flow.style.setProperty("--c", info.color);
       return { e, el: ln, flow, r: radius(nb) + 1 };
     });
     const nodeEls = new Map();
@@ -1478,7 +1500,7 @@ class WikiMapView extends ItemView {
     const legend = el.createDiv({ cls: "cm-wm-legend" });
     [...new Set(nodes.map((n) => n.type))].filter(Boolean).sort().forEach((t) => {
       const c = legend.createSpan({ cls: "cm-rel-chip" });
-      const dot = c.createSpan({ cls: "cm-wm-legdot" }); dot.style.background = pageColor(t);
+      const dot = c.createSpan({ cls: "cm-wm-legdot" }); dot.style.background = pageColor(t); dot.style.setProperty("--c", pageColor(t));
       c.appendText(t);
     });
     legend.createSpan({ cls: "cm-sub", text: "Dot size = number of linked pages. Teal ring = verified, dashed copper ring = draft. Click a dot to focus it, Ctrl+click to open the page, drag a dot to move it. Scroll to zoom, drag the background to pan." + (isolated ? ` ${isolated} pages have no typed links and are not shown.` : "") });

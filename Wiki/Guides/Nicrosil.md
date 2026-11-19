@@ -1,6 +1,6 @@
 ---
 type: guide
-status: verified
+status: draft
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -12,14 +12,17 @@ courses:
 sources: []
 related:
   - "[[SCHEMA]]"
-drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card and clickable change lines by claude-sonnet-5-5)
+drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines and the restyled map and hierarchy by claude-sonnet-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-19
+changes_since_verified:
+  - "2026-11-19: the wiki map and hierarchy now share the relations panel's look (dotted copper-glow backdrop, lit cards, glowing branches with lights flowing along them, fade-in); version 2.5.0 and history line added [[#The wiki map]]"
+  - "2026-11-19: the map is kept plain again (no halos, breathing or fade-in on dots; the backdrop has no dots); the dropdown arrows are fixed; version 2.5.1 and history line added [[#The wiki map]]"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.4.9**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.5.1**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -100,12 +103,12 @@ Open it with `Alt+L` or the branching-arrows button in the ribbon. It follows wh
 - **Not shown:** plain links in the page text. They are "see also" links, not relationships.
 
 ## The wiki map
-Open it with `Alt+M` or the Wiki map card on the Dashboard. It opens in its own tab, on the Map view, and has two views, chosen at the top. Both read only the typed links in the properties,[^3] never the plain links in the text, and neither changes a file.
-- **Hierarchy.** A branching diagram built from `type_of`, `part_of`, and `example_of`. Each page is a rounded card, and a curved line, colored by the relationship, joins it to the page it is a kind of, a part of, or an example of, so Artificial Intelligence → Machine Learning → Deep Learning reads left to right as a branch. A card has a dot in its page-type color, a teal ring if verified or a dashed copper ring if draft, and the number of pages below it. Click a card to open the page (`Ctrl+click` for a new tab). The circle at its right edge opens or closes the branch. Pointing at a card lights up the path to its top page and everything below it. The box filters the diagram by page name and outlines the matches, **Expand all** and **Collapse all** do what they say, and **Show examples** adds or removes the `example_of` pages. Drag the background to pan. A page that is part of two things appears under both. Wiki pages with none of these links are listed at the bottom, in a folded list.
+Open it with `Alt+M` or the Wiki map card on the Dashboard. It opens in its own tab, on the Map view, and has two views, chosen at the top. Both read only the typed links in the properties,[^3] never the plain links in the text, and neither changes a file. Both share the look of the [[#The relations panel]]: a soft copper glow behind it, with glowing cards and lines in the hierarchy (the map's dots and arrows stay plain).
+- **Hierarchy.** A branching diagram built from `type_of`, `part_of`, and `example_of`. Each page is a rounded card, and a curved line, colored by the relationship, joins it to the page it is a kind of, a part of, or an example of, so Artificial Intelligence → Machine Learning → Deep Learning reads left to right as a branch. The cards fade in from left to right when the tree opens, and a small light runs along each branch from the page above to the page below. A card has a dot in its page-type color, a teal ring if verified or a dashed copper ring if draft, and the number of pages below it. Click a card to open the page (`Ctrl+click` for a new tab). The circle at its right edge opens or closes the branch. Pointing at a card lights up the path to its top page and everything below it. The box filters the diagram by page name and outlines the matches, **Expand all** and **Collapse all** do what they say, and **Show examples** adds or removes the `example_of` pages. Drag the background to pan. A page that is part of two things appears under both. Wiki pages with none of these links are listed at the bottom, in a folded list.
 - **Map.** Every page that has a typed link is a dot, and every typed link is an arrow from the page that states it to the page it points at.
   - **Colors:** arrows are curved and colored by relationship type, with `related` dashed and `contradicts` dotted. Dots are colored by page type. A teal ring means verified, and a dashed copper ring means draft. Bigger dots have more links.
   - **Move around:** scroll to zoom, drag the background to pan, and click **Reset view** to start over. Names show for the busiest pages, for a focused page and its neighbors, and for every page once zoomed in.
-  - **Motion:** when the map opens, the dots drift out from the middle and settle in about two seconds. Drag a dot to move it; the dots it links to follow, and everything settles again when you let go. Pointing at a dot lights up its links and neighbors and fades the rest. Clicking a dot, or choosing a neighbor in the panel, glides the view to it. A pulse of light travels along each arrow in the direction of the link; the **Flow** button turns this off, and it stays off between visits. If your computer is set to reduce motion, the map skips the drifting and the pulses.
+  - **Motion:** when the map opens, the dots drift out from the middle and settle in about two seconds. Drag a dot to move it; the dots it links to follow, and everything settles again when you let go. Pointing at a dot lights up its links and neighbors and fades the rest. Clicking a dot, or choosing a neighbor in the panel, glides the view to it. A pulse of light travels along each arrow in the direction of the link; the **Flow** button turns this off, and it stays off between visits. If your computer is set to reduce motion, or **Ambient animations** is off, the map skips the drifting and the pulses, and the hierarchy skips its fade-in and flowing lights.
   - **Filters:** click a relationship name at the top to hide or show that type. The menus filter by status, page type, and course. The box finds a page by name; press `Enter` to zoom to it.
   - **Focus:** click a dot to dim everything except that page and its neighbors. The panel under the map lists how it connects, and its neighbors are clickable. `Ctrl+click` a dot to open the page.
   - **Not shown:** pages with no typed links. The note under the map says how many there are.
@@ -184,6 +187,8 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it.[^1]
 
 ### Version history
+- **2.5.1:** The wiki map is plain again: no halos around the dots, no breathing, no fade-in, and no dotted backdrop, only a soft copper edge and glow on the frame. The dropdown menus keep their arrows. The hierarchy keeps its glow.
+- **2.5.0:** The wiki map and the hierarchy look like the relations panel: a dotted backdrop with a copper glow, glowing borders and buttons, lit dots with halos, cards with teal or copper glow, glowing branches with lights flowing from parent to child, and a fade-in when they open. The info card and the buttons, menus and relationship chips are restyled to match.
 - **2.4.9:** A line in a page's **Changed since verified** list is a link when it ends with `[[#Heading]]`: clicking it, on the review card or the Dashboard, goes to that section of the page. A line with no location still opens the page.
 - **2.4.8:** The Dashboard has a health check card: a bar that fills over the 14 days since the last report in `Health Checks/`, amber when the next check is due within two days and red when it is overdue. New setting **Days between health checks**.
 - **2.4.7:** New setting **Open pages in Reading view**: verified pages (or every page, or none) open in Reading view instead of editing, and stay in editing if I switch them there myself.
