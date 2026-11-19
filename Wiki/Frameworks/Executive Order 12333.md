@@ -1,6 +1,6 @@
 ---
 type: framework
-status: draft
+status: verified
 aliases:
   - EO 12333
 courses:
@@ -12,9 +12,6 @@ related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-18: linked 'Church Committee' to the Church and Pike Committees page (batch 9/11-B, approved by Harrison)"
-  - "2026-11-18: added the 9/11 Commission's account of the assassination ban and lethal authority against Bin Ladin (batch 9/11-D)"
 ---
 > [!summary]
 > Executive Order 12333, signed by President Reagan in 1981, defines the powers, restraints, and structure of the modern U.S. Intelligence Community ([[Intro to Intelligence Class Notes (Fall 2026)#9/10/26|Intro notes, 9/10/26]]). Intro to Intelligence taught it in two parts: definitions and roles, and the parameters that restrain intelligence activity ([[Intro to Intelligence Class Notes (Fall 2026)#9/10/26|Intro notes, 9/10/26]]).
