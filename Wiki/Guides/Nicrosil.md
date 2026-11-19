@@ -12,14 +12,14 @@ courses:
 sources: []
 related:
   - "[[SCHEMA]]"
-drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines and the restyled map and hierarchy by claude-sonnet-5-5)
+drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-19
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.5.1**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.5.3**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -32,7 +32,7 @@ This guide describes Nicrosil **v2.5.1**. Its folder is `.obsidian/plugins/nicro
 | **Index and log** | Checks [[index]] and writes to [[log]] after each verify or reject, and folds the log's entries | [[#The index and the log]] |
 | **Page tidying** | Replaces each page's properties block with a one-line strip | [[#The properties strip]] |
 | **Schema changes** | A button that adds a line to the Changelog in [[SCHEMA]] | [[#Logging a schema change]] |
-| **Shortcuts** | Hotkeys, a ribbon logo, and a status-bar counter | [[#Hotkeys and buttons]] |
+| **Shortcuts** | Hotkeys, a Coppermind button above the file list, and a status-bar counter | [[#Hotkeys and buttons]] |
 
 ## Turn it on (once per computer)
 1. In Obsidian: **Settings → Community plugins**, click the refresh icon next to "Installed plugins," and switch on **Nicrosil**.
@@ -74,7 +74,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 
 **Reading and editing.** The Dashboard always opens in Reading view, whether I open it from the ribbon, a link, a tab, or at startup, and every other note keeps the mode it was in. Its properties are hidden, and so is the Properties side pane while the Dashboard is the active note. To edit it, press `Ctrl+E`. It stays in editing until I click into the Dashboard again from another tab or note, which puts it back in Reading view.
 
-**Getting back to it from anywhere:** click the copper logo in the left ribbon, or press `Alt+D`. If the Dashboard is already open in a tab, this switches to that tab; otherwise it opens in the current tab. `Ctrl+click` or middle-click on the logo always opens it in a new tab, even if the Dashboard is already open in another one. The ribbon icon can be dragged to the top of the ribbon (right-click the ribbon to rearrange or hide icons).
+**Getting back to it from anywhere:** click the large **The Coppermind** button at the top of the file list, or press `Alt+D`. If the Dashboard is already open in a tab, this switches to that tab; otherwise it opens in the current tab. `Ctrl+click` or middle-click on the button always opens it in a new tab, even if the Dashboard is already open in another one. The button has the copper logo and the name, and it is outlined more brightly while the Dashboard is the open page.
 
 **Look and motion.** Every note, the Dashboard included, sits on the vault's brown blended into a copper glow at the top left and a teal glow at the top right. The background is a single CSS variable, `--cm-bg-gradient`, defined in the plugin's `styles.css`; change it there to change every page at once. Both sidebars carry a fainter version of the same glow (copper at the top of the left one, teal at the top of the right one), so they match the page between them. In the file list, the open file has a copper highlight that fades toward teal, and its name shades from teal to pale copper. All of this only applies while Nicrosil is enabled, and the sidebar and file-list colors only in dark mode.
 
@@ -112,7 +112,7 @@ Open it with `Alt+M` or the Wiki map card on the Dashboard. It opens in its own 
   - **Layout:** the layout is worked out from the links, so the same wiki settles into the same map each time it opens, and it moves when links are added. A dot you dragged keeps its place while the tab stays open, and goes back to its settled spot the next time the map is reopened.
 
 ## The properties strip
-On every other note, Nicrosil hides the full Properties block and puts a one-line strip in its place, showing the page's **type**, **status**, and a date (`drafted` or `verified`). Click the strip to open the real Properties block. Each note starts collapsed again when I open it.
+On every other note, Nicrosil hides the full Properties block and puts a one-line strip in its place, showing the page's **type**, **status**, and a date (`drafted` or `verified`). Click the strip to open the real Properties block. Each note starts collapsed again when I open it. The pop-up preview that appears when I point at a link shows the same strip, so a preview looks like the page itself.
 
 ## Ambience
 Small animations make the vault feel alive. None of them change how anything works.
@@ -145,9 +145,9 @@ It does not touch `status`, `verified_on`, or [[log]]. After a schema change, th
 | `Alt+M` | Open the wiki map |
 | `Alt+D` | Go to the Dashboard |
 | `Ctrl+Enter` | Confirm a dialog |
-| `Ctrl+click` or middle-click | Open a Dashboard card or the ribbon logo in a new tab (search results: `Ctrl+click` or `Ctrl+Enter`) |
+| `Ctrl+click` or middle-click | Open a Dashboard card or the Coppermind button in a new tab (search results: `Ctrl+click` or `Ctrl+Enter`) |
 
-Change any of them in **Settings → Hotkeys** (search "Nicrosil"). Beyond the keys, Nicrosil adds three **ribbon** buttons (the copper logo for the Dashboard, branching arrows for the relations panel, and a check badge for the review queue; the wiki map has a Dashboard card instead) and a **status-bar counter** showing how many pages are verified (for example, `12/60 verified`). **Log a schema change** has no default hotkey.
+Change any of them in **Settings → Hotkeys** (search "Nicrosil"). Beyond the keys, Nicrosil adds a large **The Coppermind** button above the files in the file list (it opens the Dashboard), and two **ribbon** buttons (branching arrows for the relations panel and a check badge for the review queue; the wiki map has a Dashboard card instead) and a **status-bar counter** showing how many pages are verified (for example, `12/60 verified`). **Log a schema change** has no default hotkey.
 
 ## Settings
 In **Settings → Nicrosil**:
@@ -184,6 +184,8 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it.[^1]
 
 ### Version history
+- **2.5.3:** The Dashboard button moved from the left ribbon to a large **The Coppermind** button, with the logo, at the top of the file list. Click opens the Dashboard; `Ctrl+click` or middle-click opens it in a new tab. The ribbon logo is gone.
+- **2.5.2:** The pop-up preview of a linked page shows the one-line properties strip (type, status, date) instead of the full Properties block, like an open page. Click the strip in the preview to open the real block.
 - **2.5.1:** The wiki map is plain again: no halos around the dots, no breathing, no fade-in, and no dotted backdrop, only a soft copper edge and glow on the frame. The dropdown menus keep their arrows. The hierarchy keeps its glow.
 - **2.5.0:** The wiki map and the hierarchy look like the relations panel: a dotted backdrop with a copper glow, glowing borders and buttons, lit dots with halos, cards with teal or copper glow, glowing branches with lights flowing from parent to child, and a fade-in when they open. The info card and the buttons, menus and relationship chips are restyled to match.
 - **2.4.9:** A line in a page's **Changed since verified** list is a link when it ends with `[[#Heading]]`: clicking it, on the review card or the Dashboard, goes to that section of the page. A line with no location still opens the page.

@@ -2429,3 +2429,81 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Institutionalizing Imagination]]
 - **Commit:** `verify: Institutionalizing Imagination`
+
+### [2026-11-19] schema | Nicrosil 2.5.2 properties strip in hover previews
+
+- **Think:** When I point at a link, the pop-up preview showed the full Properties block, while an open page shows the one-line strip. I asked for the preview to look like a normal page.
+- **Calculate:** Nothing to compute. The preview is not a normal tab, so the plugin notes which page the pointer last hovered a link to (Obsidian's `hover-link` event), and when a preview pop-up appears within a few seconds it treats the pop-up like a page: the full block is hidden, and the same strip is put in its place. Clicking the strip in the preview opens the real block. Not checked in Obsidian yet.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `manifest.json` (2.5.1 to 2.5.2): the strip code now works on any container, not only an open tab, and watches new hover previews; the Dashboard, index and log are left alone; the watchers are dropped when a preview closes and when the plugin unloads
+  - [[Nicrosil]]: the properties strip section, version 2.5.2 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil, then point at a link in a page (for example a term in the AI Deception summary)
+- **Commit:** `schema: Nicrosil 2.5.2 properties strip in hover previews`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] verify | AI Deception
+
+- **Verify:**
+  - Approved: [[AI Deception]]
+- **Commit:** `verify: AI Deception`
+
+### [2026-11-19] schema | Nicrosil 2.5.3 Coppermind button above the file list
+
+- **Think:** The Dashboard logo in the left ribbon was too small, so I asked for a larger button at the top of the file directory that says "The Coppermind", with the logo; click opens the Dashboard and Ctrl+click opens it in a new tab. The ribbon logo goes.
+- **Calculate:** Nothing to compute. Not seen in Obsidian yet.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.5.2 to 2.5.3): the ribbon logo and its middle-click handling are removed; a 46 px **The Coppermind** button with the copper logo is added between the file list's header buttons and the files, in every file explorer; click opens the Dashboard (or switches to it if it is already open), `Ctrl+click` or middle-click opens a new tab, `Enter` works from the keyboard; it is outlined more brightly while the Dashboard is open; `Alt+D` still works
+  - [[Nicrosil]]: Dashboard, Hotkeys and buttons, and the summary table updated for the button; version 2.5.3 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil, then click the button at the top of the file list
+- **Commit:** `schema: Nicrosil 2.5.3 Coppermind button above the file list`
+
+### [2026-11-19] schema | Nicrosil 2.5.3 fix: Coppermind button did not appear
+
+- **Think:** The new button was not showing. The likely cause is that Obsidian can leave sidebar views unloaded at startup, so looking the file list up through the workspace found nothing to attach to, and nothing tried again.
+- **Calculate:** Nothing to compute. Not seen in Obsidian yet.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`: the button is now attached by finding the file list in the page itself, and it is re-checked every 1.5 seconds so it appears once the sidebar loads and comes back if the list is rebuilt. Version stays 2.5.3.
+- **Verify:** Reload Nicrosil; the button should be at the top of the file list
+- **Commit:** `schema: Nicrosil 2.5.3 fix Coppermind button not appearing`
+
+### [2026-11-19] schema | Nicrosil 2.5.3 fix 2: attach to the file list's own header
+
+- **Think:** The button still did not appear. Running a check in the console showed the page has one file list but my code found no place in it: the file list has no `.view-content` wrapper, and I had been looking for one.
+- **Calculate:** Nothing to compute. Not seen in Obsidian yet.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`: the button is now placed right after the file list's header buttons (`.nav-header`), wherever that sits. Version stays 2.5.3.
+- **Verify:** Reload Nicrosil; the button should be at the top of the file list
+- **Commit:** `schema: Nicrosil 2.5.3 fix Coppermind button placement in the file list`
+
+### [2026-11-19] schema | Nicrosil 2.5.3 fix 3: Coppermind button spacing
+
+- **Think:** The button appeared, but in the narrow sidebar the logo was squeezed and clipped at the left and the name ran past the right edge.
+- **Calculate:** Nothing to compute. Not seen in Obsidian yet.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/styles.css`: the logo has a fixed size so it can't be squeezed; the name is slightly smaller and cuts off with an ellipsis rather than overflowing; the button clips anything that would stick out and has a little less padding. Version stays 2.5.3.
+- **Verify:** Reload Nicrosil (or toggle the CSS); the logo and name should sit inside the button
+- **Commit:** `schema: Nicrosil 2.5.3 fix Coppermind button spacing`
+
+### [2026-11-19] schema | Nicrosil 2.5.3 fix 4: Coppermind name always fully visible
+
+- **Think:** I did not want the name cut off with an ellipsis; the whole name should show on the button, even if it has to shrink.
+- **Calculate:** The name is about 9.4 times its font size wide, and the logo, gap and padding take about 57 px, so the font size is set to (button width - 31 px) / 9.4, capped at the normal size and floored at 0.7 em.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/styles.css`: the ellipsis is gone; the name's font size now scales with the button's width, so it shrinks in a narrow sidebar and stays full size in a wide one. Version stays 2.5.3.
+- **Verify:** Reload Nicrosil, then drag the sidebar narrower and wider and check the whole name stays inside the button
+- **Commit:** `schema: Nicrosil 2.5.3 Coppermind name scales to fit`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`

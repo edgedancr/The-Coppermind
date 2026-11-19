@@ -44,8 +44,6 @@ const LOG_PATH = "log.md";
 const DASHBOARD_PATH = "Dashboard.md";
 const SCHEMA_PATH = "SCHEMA.md";
 const OLD_HOME_PATH = "Home.md";
-// Feruchemical copper symbol, drawn for Obsidian's 100x100 icon box.
-const LOGO_ICON = `<g transform="translate(9.79 0) scale(0.2)"><path fill="currentColor" transform="translate(283.29507 359.37144)" d="M -161.19707,-1.8874443 V -79.964444 c 22.166,18.637 46.922,37.621 46.922,37.621 l 22.132996,-22.167 c 0,0 -40.038996,-25.523 -69.054996,-46.888996 v -143.076 l 279.99996,395.104 -10.77,-47.203004 -307.69096,-452.796996 v 212.379 c -21.332,-25.804 -50.807,-66.68 -53.221,-69.965 1.504,3.705 25.49,61.466 53.221,98.776 v 82.970996 l -83.637,-72.412996 v 33.812996 l 83.637,73.28499966 V 140.62856 H 3.4179256 L -43.020074,100.41856 -161.19707,-1.8874443 z m 0,102.3070043 V 33.147556 l 76.743996,67.272004 h -76.743996 z"/></g>`;
 const VIEW_TYPE = "nicrosil-queue";
 // Root-level .md files (e.g. SCHEMA.md) are reviewable too, but only count once they carry a status property.
 const REVIEWABLE = [/^Wiki\//, /^Perspectives\//, /^Sources\/Source Cards\//, /^[^/]+\.md$/];
@@ -2316,6 +2314,8 @@ module.exports = class Nicrosil extends Plugin {
     this.readHandled = new WeakMap(); // leaf -> path already considered for Reading view
     this.stripPaths = new WeakMap();
     this.stripObservers = new Set();
+    this.popObservers = new Set(); // watchers on hover previews, dropped when the preview closes
+    this.lastHover = null;         // the page the pointer last hovered a link to, so a hover preview knows which page it shows
 
     this.registerView(VIEW_TYPE, (leaf) => new QueueView(leaf, this));
     this.registerView(REL_VIEW_TYPE, (leaf) => new RelationsView(leaf, this));
@@ -2331,29 +2331,7 @@ module.exports = class Nicrosil extends Plugin {
     this.statusEl.setAttr("aria-label", "Open the review queue");
     this.statusEl.addEventListener("click", () => this.activateView());
 
-    addIcon("coppermind-logo", LOGO_ICON);
-    // A middle-click can reach the ribbon callback more than once (and without a usable button number),
-    // so remember when the middle button went down and open the new tab exactly once per press.
-    this.middleDownAt = 0;
-    this.middleHandled = false;
-    this.ribbonEl = this.addRibbonIcon("coppermind-logo", "Dashboard (Alt+D)", (evt) => {
-      const middle = Date.now() - this.middleDownAt < 800 || !!(evt && evt.button === 1);
-      if (middle) {
-        if (this.middleHandled) return;
-        this.middleHandled = true;
-        this.openDashboard(true);
-        return;
-      }
-      this.openDashboard(!!(evt && (evt.ctrlKey || evt.metaKey)));
-    });
-    this.ribbonEl.addClass("cm-ribbon-logo");
     this.addRibbonIcon("git-fork", "Relations panel (Alt+L)", () => this.activateRelations());
-    this.ribbonEl.addEventListener("mousedown", (e) => {
-      if (e.button !== 1) return;
-      e.preventDefault();
-      this.middleDownAt = Date.now();
-      this.middleHandled = false;
-    }, true);
     this.addRibbonIcon("badge-check", "Review queue (Alt+Q)", () => this.activateView());
 
     this.registerMarkdownCodeBlockProcessor("coppermind-hero", (src, el, ctx) => this.renderHero(el, src, ctx));
@@ -2372,7 +2350,7 @@ module.exports = class Nicrosil extends Plugin {
     this.registerInterval(window.setInterval(() => this.scheduleRefresh(), 60 * 60 * 1000)); // keeps the health check card current overnight
     this.registerEvent(this.app.workspace.on("file-open", (file) => {
       this.readOnOpen(file);
-      this.syncSchemaButtons();
+      this.syncSchemaButtons(); this.syncHomeButtons();
       if (file) this.currentPath = file.path;
       if (file && this.isDashboard(file)) this.startDashIntro();
       this.syncDashboardLeaves(true);
@@ -2383,7 +2361,19 @@ module.exports = class Nicrosil extends Plugin {
       this.syncDashboardLeaves(false);
       this.enforceReading(leaf);
     }));
-    this.registerEvent(this.app.workspace.on("layout-change", () => { this.syncSchemaButtons(); this.syncDashboardLeaves(false); }));
+    this.registerEvent(this.app.workspace.on("layout-change", () => { this.syncSchemaButtons(); this.syncHomeButtons(); this.syncDashboardLeaves(false); }));
+    this.registerEvent(this.app.workspace.on("hover-link", (e) => {
+      try {
+        const lt = String(e.linktext || "").split("#")[0].split("|")[0];
+        const file = this.app.metadataCache.getFirstLinkpathDest(lt, e.sourcePath || "") || this.app.vault.getAbstractFileByPath(lt);
+        this.lastHover = file instanceof TFile ? { file, t: Date.now() } : null;
+      } catch (err) { this.lastHover = null; }
+    }));
+    const popWatch = new MutationObserver((muts) => {
+      for (const m of muts) m.addedNodes.forEach((n) => { if (n instanceof HTMLElement && n.classList.contains("hover-popover")) this.watchPopover(n); });
+    });
+    popWatch.observe(document.body, { childList: true });
+    this.register(() => popWatch.disconnect());
     this.registerEvent(this.app.metadataCache.on("changed", () => { this.scheduleRefresh(); this.syncDashboardLeaves(false); }));
     this.registerEvent(this.app.metadataCache.on("resolved", () => this.scheduleRefresh()));
     this.registerEvent(this.app.vault.on("delete", () => this.scheduleRefresh()));
@@ -2395,7 +2385,7 @@ module.exports = class Nicrosil extends Plugin {
       }
       this.startDashIntro();
       this.searchIndex.start();
-      this.syncSchemaButtons();
+      this.syncSchemaButtons(); this.syncHomeButtons();
       await this.migrateHome();
       this.syncDashboardLeaves(true);
       const f = this.app.workspace.getActiveFile();
@@ -2408,13 +2398,15 @@ module.exports = class Nicrosil extends Plugin {
     clearTimeout(this.dashIntroTimer);
     document.querySelectorAll(".cm-schema-log-btn").forEach((e) => e.remove());
     this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view) l.view.__cmSchemaBtn = null; });
-    document.querySelectorAll(".cm-resolve-btn, .cm-ribbon-logo").forEach((e) => e.remove());
+    document.querySelectorAll(".cm-resolve-btn, .cm-home-btn").forEach((e) => e.remove());
     document.body.classList.remove("cm-on-dashboard");
     document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"));
     document.body.classList.remove("cm-calm", "cm-quiet");
     document.querySelectorAll(".cm-propstrip").forEach((e) => e.remove());
     this.stripObservers.forEach((o) => o.disconnect());
     this.stripObservers.clear();
+    this.popObservers.forEach((o) => o.disconnect());
+    this.popObservers.clear();
     this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view && l.view.containerEl) { l.view.containerEl.classList.remove("cm-strip-leaf", "cm-props-open"); l.view.containerEl.querySelectorAll(".cm-propstrip").forEach((e) => e.remove()); l.view.__cmStripObs = null; } });
   }
 
@@ -2435,10 +2427,35 @@ module.exports = class Nicrosil extends Plugin {
     this.addCommand({ id: "resolve-flag", name: "Resolve a flag on this page", hotkeys: [{ modifiers: ["Alt"], key: "f" }], checkCallback: onPage((f) => this.pickFlag(f)) });
     this.addCommand({ id: "next-draft", name: "Open the next draft", hotkeys: [{ modifiers: ["Alt"], key: "n" }], callback: () => { const f = this.currentFile(); this.openNext(f ? f.path : null); } });
     this.addCommand({ id: "open-dashboard", name: "Go to the Dashboard", hotkeys: [{ modifiers: ["Alt"], key: "d" }], callback: () => this.openDashboard() });
+    this.registerInterval(window.setInterval(() => this.syncHomeButtons(), 1500));
     this.addCommand({ id: "log-schema-change", name: "Log a schema change", callback: () => this.openSchemaLog() });
     this.addCommand({ id: "open-wiki-map", name: "Open the wiki map", hotkeys: [{ modifiers: ["Alt"], key: "m" }], callback: () => this.activateWikiMap() });
     this.addCommand({ id: "open-relations", name: "Open the relations panel", hotkeys: [{ modifiers: ["Alt"], key: "l" }], callback: () => this.activateRelations() });
     this.addCommand({ id: "open-queue", name: "Open the review queue", hotkeys: [{ modifiers: ["Alt"], key: "q" }], callback: () => this.activateView() });
+  }
+
+  /* --- the Coppermind button at the top of the file list --- */
+
+  /** Puts a large "The Coppermind" button above the files in every file explorer. It opens the Dashboard; Ctrl+click or middle-click opens it in a new tab. */
+  syncHomeButtons() {
+    // Find the file explorers in the page itself rather than through leaf.view: sidebar views can still be
+    // "deferred" (not loaded) when Obsidian starts, and then leaf.view has no content to look at.
+    document.querySelectorAll('.workspace-leaf-content[data-type="file-explorer"]').forEach((leafEl) => {
+      // The file list keeps its header buttons (.nav-header) and the files directly in the leaf, with no .view-content around them.
+      const header = leafEl.querySelector(".nav-header");
+      const holder = header ? header.parentElement : (leafEl.querySelector(".view-content") || leafEl);
+      if (holder.querySelector(":scope > .cm-home-btn")) return;
+      const btn = createDiv({ cls: "cm-home-btn" });
+      btn.setAttr("role", "button"); btn.setAttr("tabindex", "0");
+      btn.setAttr("aria-label", "Open the Dashboard (Ctrl+click for a new tab)");
+      btn.createSpan({ cls: "cm-logo cm-home-logo" }).setAttr("aria-hidden", "true");
+      btn.createSpan({ cls: "cm-home-name", text: "The Coppermind" });
+      btn.addEventListener("mousedown", (e) => { if (e.button === 1) e.preventDefault(); }); // no autoscroll on middle-click
+      btn.addEventListener("click", (e) => this.openDashboard(e.ctrlKey || e.metaKey));
+      btn.addEventListener("auxclick", (e) => { if (e.button === 1) { e.preventDefault(); this.openDashboard(true); } });
+      btn.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); this.openDashboard(e.ctrlKey || e.metaKey); } });
+      if (header) header.after(btn); else holder.prepend(btn);
+    });
   }
 
   /* --- schema changelog --- */
@@ -2908,6 +2925,24 @@ module.exports = class Nicrosil extends Plugin {
     }
   }
 
+  /** A hover preview of a page gets the same one-line strip as an open page, in place of its Properties block. */
+  watchPopover(el) {
+    const hv = this.lastHover;
+    if (!hv || Date.now() - hv.t > 4000) return;
+    const file = hv.file;
+    if ([DASHBOARD_PATH, OLD_HOME_PATH, LOG_PATH, INDEX_PATH].includes(file.path) || !this.stripInfo(file)) return;
+    el.classList.add("cm-strip-leaf");
+    this.ensureStripsIn(el, file);
+    let timer = null;
+    const obs = new MutationObserver(() => {
+      if (!el.isConnected) { obs.disconnect(); this.popObservers.delete(obs); return; }
+      if (timer) return;
+      timer = setTimeout(() => { timer = null; this.ensureStripsIn(el, file); }, 60);
+    });
+    obs.observe(el, { childList: true, subtree: true });
+    this.popObservers.add(obs);
+  }
+
   removeStrips(view) {
     view.containerEl.querySelectorAll(".cm-propstrip").forEach((e) => e.remove());
     if (view.__cmStripObs) { view.__cmStripObs.disconnect(); this.stripObservers.delete(view.__cmStripObs); view.__cmStripObs = null; }
@@ -2923,10 +2958,11 @@ module.exports = class Nicrosil extends Plugin {
     return { type: fm.type ? String(fm.type) : "", status, when };
   }
 
-  ensureStrips(view) {
-    if (!view.file) return;
-    const info = this.stripInfo(view.file);
-    const root = view.containerEl;
+  ensureStrips(view) { this.ensureStripsIn(view.containerEl, view.file); }
+
+  ensureStripsIn(root, file) {
+    if (!file) return;
+    const info = this.stripInfo(file);
     // When Obsidian re-renders a note (for example on switching between editing and reading),
     // it can re-create the Properties block or move the title, leaving an old strip stranded
     // somewhere else. Remove every strip that isn't directly in front of a Properties block,

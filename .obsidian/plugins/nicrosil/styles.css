@@ -111,8 +111,13 @@ button.cm-danger { background: var(--cm-rust); color: #fff; }
   -webkit-mask: var(--cm-logo-mask) center / contain no-repeat;
   mask: var(--cm-logo-mask) center / contain no-repeat;
 }
-.cm-ribbon-logo svg { color: var(--cm-copper); }
-.cm-ribbon-logo:hover svg { color: #ecae70; }
+/* the button at the top of the file list that opens the Dashboard */
+.cm-home-btn { display: flex; align-items: center; justify-content: center; gap: 10px; box-sizing: border-box; min-width: 0; overflow: hidden; container-type: inline-size; height: 46px; margin: 4px 10px 10px; padding: 0 12px; border: 1px solid rgba(184, 115, 51, 0.4); border-radius: 8px; background: linear-gradient(180deg, rgba(184, 115, 51, 0.16), rgba(184, 115, 51, 0.06)); cursor: pointer; user-select: none; transition: border-color .2s, box-shadow .2s, background .2s; }
+.cm-home-btn:hover, .cm-home-btn:focus-visible { border-color: var(--cm-copper); background: linear-gradient(180deg, rgba(184, 115, 51, 0.26), rgba(184, 115, 51, 0.1)); box-shadow: 0 0 12px rgba(184, 115, 51, 0.35); outline: none; }
+.cm-home-logo { flex: none; width: 21px; height: 26px; filter: drop-shadow(0 1px 3px rgba(184, 115, 51, 0.4)); }
+.cm-home-name { font-family: Georgia, serif; font-size: 1.08em; font-size: clamp(0.7em, calc((100cqw - 31px) / 9.4), 1.08em); font-weight: 600; letter-spacing: 0; flex: none; background: linear-gradient(160deg, #f0c48c, #d98a4a); -webkit-background-clip: text; background-clip: text; color: transparent; white-space: nowrap; }
+body.cm-on-dashboard .cm-home-btn { border-color: var(--cm-copper); box-shadow: inset 0 0 10px rgba(184, 115, 51, 0.2); }
+@media (prefers-reduced-motion: reduce) { .cm-home-btn { transition: none; } }
 
 /* ---------- Dashboard page ---------- */
 .coppermind-dashboard .inline-title,
