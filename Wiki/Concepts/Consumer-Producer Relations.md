@@ -34,5 +34,8 @@ verified_on:
 - Some prefer to read and others to be briefed; they are best served if they say which, instead of leaving the IC to guess.
 - Policymakers generally prefer to read current intelligence, while analysts prefer to produce long-term reports (Lowenthal, L: 154/122, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]). See [[Current vs. Long-Term Intelligence]].
 
+**What consumers expect** ([[Bobby W. - The Limits of Prediction (2019).pdf#page=1|Bobby W., p. 7]])
+- Bobby W. borrows Douglas MacEachin's analogy: analysts are best at scouting reports on opposing teams, but policymakers want to hear the score of the game. See [[Limits of Prediction]].
+
 ## Why It Matters
 - The course pairs it with politicization: Lowenthal notes policymakers can politicize intelligence overtly, covertly, or inadvertently ([[SRC - Themes in US Intelligence, Summary of Texts|Themes summary, theme 6]]). See [[Politicized Intelligence]] and [[Themes in U.S. Intelligence]].

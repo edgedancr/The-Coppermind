@@ -1700,3 +1700,101 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Five Hard National Security Problems of Artificial General Intelligence]]
 - **Commit:** `verify: Five Hard National Security Problems of Artificial General Intelligence`
+
+### [2026-11-19] ingest | Intro to Intelligence batch 1c: analytic standards and the profession
+
+- **Think:** I approved the batch 1c plan: seven course readings on analytic standards, objectivity, forecasting, and the future of analysis, with the author spelled Johnston and no summaries for the slide deck or the handout.
+- **Calculate:**
+  - Copied the seven originals into `Sources/Readings/` under descriptive names. ICD 203 is a scan; the agent ran OCR and checked the headings and the likelihood table against the page images.
+  - Created (27, all drafts): source cards [[SRC - ICD 203, Analytic Standards]] (proposed A-1), [[SRC - Intelligence Is NOT About Telling Truth to Power]], [[SRC - Analytic Objectivity and Science]], [[SRC - The Limits of Prediction]], [[SRC - The Future of Analysis]] (each proposed B-2), [[SRC - The Future Intelligence Analyst (Slides)]], and [[SRC - Johnston Recommendations Summary]] (each proposed B-3); summaries of the first five; frameworks [[ICD 203 Analytic Standards]], [[Six Roles of the Future Intelligence Analyst]], [[Johnston's Analytic Culture Recommendations]]; concepts [[Estimative Language]], [[Analytic Objectivity]], [[Speaking Truth to Power]], [[Limits of Prediction]], [[Future of Intelligence Analysis]]; person [[Sherman Kent]]; glossary [[Analytic Assumption]], [[Analytic Ombuds]], [[Indicators and Signposts]], [[Superforecaster]], [[Prejudice Toward Continuity]], [[Prediction Market]].
+  - Appended to drafts: [[Intelligence Community Directive]], [[Structured Analytic Technique]] (with a "Possibly resolved by" line on my gap note), [[Intelligence (National Security)]], [[Current vs. Long-Term Intelligence]], [[Red Team Analysis]], [[Consumer-Producer Relations]], [[Centaur Analyst]], [[Linchpin Evidence]].
+  - Updated two stale lines on [[SRC - Grammar Summaries, Weeks 2-7]] (the Sunni, Shia, and Caliphate terms, and the ten proposals since applied).
+  - Proposed for verified pages, not yet applied: [[Analytic Confidence]], [[Politicized Intelligence]], [[Richards Heuer]], [[AI in Intelligence Production]].
+  - Proposed 5 typed links (type_of 1, part_of 3, developed_by 1; no `related`).
+  - Flags: 1 accuracy check (Johnson vs. Johnston, on the framework page and the handout's card); 4 whose view (Analytic Objectivity, Speaking Truth to Power, Limits of Prediction, Future of Intelligence Analysis).
+  - Ingest Queue: 1c marked `[~]`.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: Intro to Intelligence batch 1c (analytic standards) — 27 drafted, 8 appended, 7 originals copied`
+
+### [2026-11-19] ingest | Batch 1c proposals for verified pages
+
+- **Think:** I approved all four batch 1c proposals for verified pages.
+- **Calculate:**
+  - [[Analytic Confidence]]: ICD 203 on the basis for confidence and keeping it apart from likelihood; Used in updated.
+  - [[Politicized Intelligence]]: ICD 203's independence standard and the [[Analytic Ombuds]], and Marrin on intent.
+  - [[Richards Heuer]]: *Psychology of Intelligence Analysis* (1999), from Gartin; Intro to Intelligence added to courses.
+  - [[AI in Intelligence Production]]: Gartin's 2030 scenario and Bobby W.'s caution; Intro to Intelligence added to courses.
+  - Mechanical: added [[Richards Heuer]] to the "Used in" line of [[Structured Analytic Technique]] (a draft).
+  - Each set to `status: draft` with `verified_on` kept and one `changes_since_verified` line.
+- **Verify:**
+  - Pending my review: re-reviews, listed changes only
+- **Commit:** `edit: apply 4 batch-1c verified-page proposals`
+
+### [2026-11-19] ingest | Intro to Intelligence batch 1d: intelligence writing
+
+- **Think:** I approved the batch 1d plan: Kaiser and Pherson's *Analytic Writing Guide* excerpts, the BLUF format handout, the Williams and Molzon slides, the analytic titles handout, and the Grammar Summaries' Kaiser and Pherson terms.
+- **Calculate:**
+  - Copied the seven originals into `Sources/Readings/`. The four Kaiser and Pherson scans were upside down with no text layer; the agent rotated them, ran OCR, and matched each PDF page to the book's printed page.
+  - Created (19, all drafts): source cards [[SRC - Analytic Writing Guide (Kaiser and Pherson)]] (proposed B-2), [[SRC - How to Write an Intelligence Product in BLUF Format]], [[SRC - Intelligence Writing (Williams and Molzon Slides)]], and [[SRC - Developing Analytic Titles]] (each proposed B-3); summaries of the first two; concepts [[Bottom Line Up Front]], [[Analytic Title]], [[Detailed Outline]], [[Economizing on Words]], [[Self-Editing and Final Review]]; frameworks [[Analytic Line of March]], [[Six Qualities of an Analytic Topic Sentence]], [[Six-Step Paragraph Review]]; glossary [[Inverted Triangle]], [[Analytic Mission Statement]], [[Two-Degrees-of-Separation Rule]], [[Active Voice]], [[No-Kidding Rule]].
+  - Appended to drafts: [[Topic Sentence]] (Kaiser and Pherson's standard, the Grammar Summaries' definition, and a "Possibly resolved by" line on my gap note), [[Estimative Language]], [[ICD 203 Analytic Standards]]; updated the deferred-terms line on [[SRC - Grammar Summaries, Weeks 2-7]].
+  - Proposed for verified pages, not yet applied: [[Intelligence Writing Style]] and [[Key Judgments]].
+  - Proposed 2 typed links (part_of 1, applies_to 1; no `related`).
+  - Flags: 1 accuracy check (the Williams and Molzon slide cites ICD 203 §D.6.e(5) for a rule that is in (6), on [[Bottom Line Up Front]] and the slides' card); 1 gap (chapters 1, 2, and 8 not in the course scans); 1 whose view (the titles handout's academic origin).
+  - Ingest Queue: 1d marked `[~]`.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: Intro to Intelligence batch 1d (intelligence writing) — 19 drafted, 4 appended, 7 originals copied`
+
+### [2026-11-19] ingest | Batch 1d proposals for verified pages
+
+- **Think:** I approved both batch 1d proposals for verified pages.
+- **Calculate:**
+  - [[Intelligence Writing Style]]: cited the Williams and Molzon slides as matching my 9/15 notes, and linked the batch 1d writing pages.
+  - [[Key Judgments]]: added Kaiser and Pherson's view (via the Grammar Summaries) and the message-driven order; Used in updated.
+  - Each set to `status: draft` with `verified_on` kept and one `changes_since_verified` line.
+- **Verify:**
+  - Pending my review: re-reviews, listed changes only
+- **Commit:** `edit: apply 2 batch-1d verified-page proposals`
+
+### [2026-11-19] ingest | Intro to Intelligence batch 1e-1: Johnston, Analytic Culture (front matter, ch. 1–2, 8–9)
+
+- **Think:** I approved splitting batch 1e into seven sub-batches (three for Johnston, four for Bodnar) and the 1e-1 plan: Johnston's foreword, introduction, ch. 1–2, ch. 8–9, afterword, and author note.
+- **Calculate:**
+  - Copied the original into `Sources/Readings/` as `Johnston - Analytic Culture in the US Intelligence Community (2005).pdf`. It has a text layer; the agent matched PDF pages to printed page numbers from the page footers.
+  - Created (13, all drafts): source card [[SRC - Analytic Culture in the US Intelligence Community (Johnston)]] (proposed B-2); [[Summary - Analytic Culture in the US Intelligence Community]]; concepts [[Analytic Culture]], [[Tradecraft vs. Science in Intelligence Analysis]]; framework [[Performance Improvement Infrastructure]]; person [[Rob Johnston]]; glossary [[Intelligence Analysis]], [[Intelligence Error and Intelligence Failure]], [[Secrecy vs. Efficacy]], [[Corporate Judgment]], [[Anticipatory Socialization]], [[Community of Practice]], [[Indications and Warning]].
+  - Revised my draft [[Johnston's Analytic Culture Recommendations]] against the book (each of the handout's five points checked against ch. 8–9 and cited to the book; research programs and access added; the spelling flag now points to the title page; Gartin's quote located on p. 43).
+  - Appended to drafts: [[Current vs. Long-Term Intelligence]] (the book replaces the handout), [[Groupthink]], [[Stovepipe]], [[President's Daily Brief]], [[Structured Analytic Technique]], [[Intelligence (National Security)]] (Johnston's working definition).
+  - Proposed, not yet applied: [[Confirmation Bias]] (verified), [[Richards Heuer]] (verified, re-review pending), and a rating change on [[SRC - Johnston Recommendations Summary]] (proposed B-3 to B-2).
+  - Proposed 4 typed links (developed_by 3, part_of 1; no `related`).
+  - Flags: 2 whose view (Johnston's findings are post-9/11 perceptions he gathered while growing sympathetic to analysts, on [[Analytic Culture]]; his tradecraft-vs-science argument against his own "art, tradecraft, and science," on [[Tradecraft vs. Science in Intelligence Analysis]]); 1 accuracy check updated (the Johnson/Johnston spelling).
+  - Ingest Queue: 1e split into sub-batches 1e-1 to 1e-7; 1e-1 marked `[~]`.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: Intro to Intelligence batch 1e-1 (Johnston front matter, ch. 1-2, 8-9) — 13 drafted, 7 updated, 1 original copied`
+
+### [2026-11-19] ingest | Batch 1e-1 proposals
+
+- **Think:** I approved all three batch 1e-1 proposals.
+- **Calculate:**
+  - [[Confirmation Bias]] (verified): added Johnston's definition and his corporate-judgment finding; added Intro to Intelligence to courses; Used in updated.
+  - [[Richards Heuer]] (re-review pending): added Johnston's citation of Heuer; added the Johnston card to sources and Appears In.
+  - [[SRC - Johnston Recommendations Summary]]: proposed rating raised from B-3 to B-2 after checking it against the book; the spelling flag now points to the book's title page; index line updated.
+  - Both wiki pages set to `status: draft` with `verified_on` kept and a `changes_since_verified` line added.
+- **Verify:**
+  - Pending my review: re-reviews, listed changes only
+- **Commit:** `edit: apply 3 batch-1e-1 proposals`
+
+### [2026-11-19] ingest | Intro to Intelligence batch 1e-2: Johnston, Analytic Culture ch. 3–4
+
+- **Think:** I approved the 1e-2 plan, including the two verified-page edits: Johnston's taxonomy of intelligence variables (ch. 3) and Judith Meister Johnston and Rob Johnston's systems model of the intelligence cycle (ch. 4).
+- **Calculate:**
+  - Created (3, all drafts): frameworks [[Taxonomy of Intelligence Analysis Variables]] and [[Systems Model of the Intelligence Cycle]]; glossary [[Cognitive Load]].
+  - Appended to drafts: [[Intelligence Analysis]] (ch. 3's fuller definition), [[Tradecraft vs. Science in Intelligence Analysis]] (the medicine parallel), [[Sherman Kent]] (his three elements of analysis); updated [[SRC - Analytic Culture in the US Intelligence Community (Johnston)]] (ingest progress) and [[Summary - Analytic Culture in the US Intelligence Community]].
+  - Edited verified pages, as approved in the plan: [[Intelligence Cycle]] (the five-step version, the critique, and a sources-disagree flag) and [[Denial and Deception]] (deception is the rule in intelligence). Each set to `status: draft` with `verified_on` kept and a `changes_since_verified` line.
+  - Proposed 2 typed links (developed_by 1, applies_to 1; no `related`).
+  - Flags: 1 sources disagree (the number and first step of the intelligence cycle, on [[Intelligence Cycle]]); 1 whose view (the simulation is unvalidated, on [[Systems Model of the Intelligence Cycle]]).
+  - Ingest Queue: 1e-2 marked `[~]`.
+- **Verify:**
+  - Pending my review (including re-reviews of the two verified pages, listed changes only)
+- **Commit:** `ingest: Intro to Intelligence batch 1e-2 (Johnston ch. 3-4) — 3 drafted, 7 updated`

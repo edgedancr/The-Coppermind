@@ -23,9 +23,9 @@ A Word document from the Intro to Intelligence course resources, "I2I Grammar Su
 
 ## Ingest Progress
 - **Weeks 2–6:** ingested 2026-11-18 (Ingest Queue batch 1b). Skipped on purpose:
-	- Deferred: week 7 (cyber, IoT, AI) to Ingest Queue Sections 6, 9, and 10; the Kaiser and Pherson terms (analytic titles, key judgments, topic sentences, wk 3) to batch 1d; the HPSCI Rogers interview terms (wk 5) to Section 4.
+	- Deferred: week 7 (cyber, IoT, AI) to Ingest Queue Sections 6, 9, and 10; the Kaiser and Pherson terms (analytic titles, key judgments, topic sentences, wk 3) to batch 1d (since ingested, 2026-11-19); the HPSCI Rogers interview terms (wk 5) to Section 4.
 	- The opening note on acronyms (wk 2), the empty "Intelligence Themes" heading (wk 5), and the orbits web link (wk 4).
 	- Two discussion answers that give opinions: how the National Security Strategy and National Intelligence Strategy should relate, and a restatement of Lowenthal's definition (wk 2).
-	- Shia, Sunni, and Caliphate (wk 2): general religious background, pending Harrison's call.
+	- Shia, Sunni, and Caliphate (wk 2): later drafted from the 9/11 Commission Report in batch 9/11-E, at Harrison's approval.
 	- Entries the wiki already covers: mirror imaging (wks 2–3), all-source intelligence and denial and deception (wk 4), and "17 agencies" (wk 2).
-	- Proposed for verified pages, not yet applied: Analytic Confidence, Computer Network Exploitation, Covert Action, Intelligence Cycle, Key Judgments, Priority Creep, Revolution in Military Affairs, Zero-Day Vulnerability, Security Classification, and Polygraph Examination.
+	- Proposals for verified pages, applied 2026-11-18 at Harrison's approval and since re-verified: Analytic Confidence, Computer Network Exploitation, Covert Action, Intelligence Cycle, Key Judgments, Priority Creep, Revolution in Military Affairs, Zero-Day Vulnerability, Security Classification, and Polygraph Examination.

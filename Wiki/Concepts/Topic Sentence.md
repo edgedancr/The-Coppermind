@@ -35,6 +35,9 @@ verified_on:
 
 > [!todo] Gap in my notes
 > "Overly broad or vague" has no description, and the general topic sentence has "(example)" as a placeholder (9/3).
+> Possibly resolved by [[SRC - Analytic Writing Guide (Kaiser and Pherson)]], pp. 31–32 (topic sentences that only hint at their point)
+
+**Kaiser and Pherson's standard:** a topic sentence in an analytic paper must include analysis, a judgment that helps the reader follow the argument; see [[Six Qualities of an Analytic Topic Sentence]] ([[Kaiser and Pherson - Analytic Writing Guide, ch. 5-7 (scan).pdf#page=3|Kaiser & Pherson, p. 29]]). The Grammar Summaries, drawing on them, say topic sentences concisely state each paragraph's summary, following the BLUF format ([[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]).
 
 ## Why It Matters
 - Lead the reader by the hand: a reader who wanted to do their own analysis would do it anyway ([[Intro to Intelligence Class Notes (Fall 2026)#9/8/26|Intro notes, 9/8/26]]).

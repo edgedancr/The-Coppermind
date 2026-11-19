@@ -3,7 +3,7 @@ type: concept
 status: draft
 aliases: ["Intel"]
 courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]", "[[SRC - Intelligence in National Security, Definition in 7 Points]]", "[[SRC - Grammar Summaries, Weeks 2-7]]"]
+sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]", "[[SRC - Intelligence in National Security, Definition in 7 Points]]", "[[SRC - Grammar Summaries, Weeks 2-7]]", "[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on:
@@ -20,9 +20,11 @@ verified_on:
 
 **Intelligence is not "truth"**
 - ==Intelligence is closer to "proximate reality"==: as close as possible to objective truth, while accounting for the credibility of sources, the information still missing, and above all the unknown-unknowns ([[Intro to Intelligence Class Notes (Fall 2026)#9/1/26|Intro notes, 9/1/26]]). Lowenthal makes the same point: intelligence is not about truth, and is better thought of as proximate reality (Lowenthal, L: 7, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 2]]).
+- In a 2021 article, Lowenthal argues that calling intelligence "telling truth to power" is wrong, because intelligence conveys uncertainty; see [[Speaking Truth to Power]] ([[Lowenthal - Intelligence Is NOT About Telling Truth to Power (2021).pdf#page=2|Lowenthal, pp. 1–2]]).
 - "The enemy always gets a vote": even with detailed information, the enemy may think or decide differently than expected ([[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]]).
 
 **Lowenthal's definition:** the capability to forecast changes, positive or negative, in time to do something about them; information collected, analyzed, and narrowed to meet the defined needs of users such as policy, military, law enforcement, and diplomatic. All intelligence is information, but not all information is intelligence (Lowenthal, L: 9, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 2]]).
+**Johnston's working definition:** "Intelligence is secret state or group activity to understand or influence foreign or domestic entities," adapted from Michael Warner's to include nonstate and domestic activity ([[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=24|Johnston, p. 4]]).
 **Who it serves:** customers include law enforcement and policymakers ([[Intro to Intelligence Class Notes (Fall 2026)#9/1/26|Intro notes, 9/1/26]]). The national security strategy is the *supported* strategy, and the national intelligence strategy is the *supporting* one ([[Intro to Intelligence Class Notes (Fall 2026)#9/1/26|Intro notes, 9/1/26]]).
 
 **Qualities of good intelligence** ([[Intro to Intelligence Class Notes (Fall 2026)#10/13/26|Intro notes, 10/13/26]]): timely, tailored, concise, validated, digestible, and stating what is known and what is not. Lowenthal's version: intelligence that helps decision makers make good decisions, being timely, tailored, and digestible, with knowns and unknowns clearly stated (Lowenthal, L: 194–95/157–58, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]).

@@ -33,5 +33,7 @@ verified_on:
 - ==Verification appears in both the new and the future role==, which is the job this wiki's review process practices ([[SAIL Class Notes (Fall 2026)#9/24/26|SAIL notes, 9/24/26]]).
 - In an Intro to Intelligence guest lecture, Detective Mennen said AI is not taking analysts' jobs, but using it effectively is necessary; because AI will make mistakes or hallucinate, verifying its output is part of the job ([[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]). Compare CDR Blocker's [[Curiosity, Character, and Competence]] ([[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]]).
 
+- Compare the course's [[Six Roles of the Future Intelligence Analyst]], adapted from Hershkovitz ([[SRC - The Future Intelligence Analyst (Slides)|Future Analyst slides, slide 8]]).
+
 > [!question] Whose view is this?
 > "The people that will benefit from AI the most are those who can both engineer and design. Those who can do neither will be replaced by AI." (SAIL notes, 10/15/26)

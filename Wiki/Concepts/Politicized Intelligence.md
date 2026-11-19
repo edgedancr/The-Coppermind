@@ -1,6 +1,6 @@
 ---
 type: concept
-status: verified
+status: draft
 aliases:
   - Politicization
 courses:
@@ -9,9 +9,13 @@ sources:
   - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
   - "[[SRC - Themes in US Intelligence, Summary of Texts]]"
   - "[[SRC - Grammar Summaries, Weeks 2-7]]"
+  - "[[SRC - ICD 203, Analytic Standards]]"
+  - "[[SRC - Analytic Objectivity and Science]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-18
+changes_since_verified:
+  - "2026-11-19: added ICD 203's independence standard and the Analytic Ombuds, and Marrin on intent (batch 1c proposal, approved by Harrison)"
 ---
 > [!summary]
 > Politicized intelligence is giving the intelligence you think the client wants, instead of what the information actually supports ([[Intro to Intelligence Class Notes (Fall 2026)#10/13/26|Intro notes, 10/13/26]]). Intro to Intelligence taught that it happens when strong preferences about a topic shape the analysis, and that ==any and all of these preferences may influence and bias the analysis== ([[Intro to Intelligence Class Notes (Fall 2026)#9/1/26|Intro notes, 9/1/26]]).
@@ -33,3 +37,5 @@ verified_on: 2026-11-18
 ## Why It Matters
 - Good intelligence states what is known and what is not ([[Intro to Intelligence Class Notes (Fall 2026)#10/13/26|Intro notes, 10/13/26]]); politicized intelligence trades that for what the customer wants to hear. See [[Intelligence (National Security)]].
 - Related analytic errors: [[Mirror Imaging]] and [[Priority Creep]].
+- ICD 203 makes independence from political consideration one of its five analytic standards, and analysts can raise concerns about politicization with the [[Analytic Ombuds]] ([[ODNI - ICD 203, Analytic Standards (2015).pdf#page=2|ICD 203, §D.6.b]]) ([[ODNI - ICD 203, Analytic Standards (2015).pdf#page=2|ICD 203, §D.4]]).
+- Stephen Marrin argues that because all analysis carries some bias, spotting politicization has to turn on intent rather than distortion; see [[Analytic Objectivity]] ([[SRC - Analytic Objectivity and Science|Marrin, "Analytic objectivity is not attainable"]]).

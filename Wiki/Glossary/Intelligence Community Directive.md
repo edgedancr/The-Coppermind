@@ -19,6 +19,6 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Intelligence Community Directive (ICD):** a directive issued by the Director of National Intelligence that sets policy for the Intelligence Community (Lowenthal, L: 33, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 2]]).
+> **Intelligence Community Directive (ICD):** a directive issued by the Director of National Intelligence that sets policy for the Intelligence Community (Lowenthal, L: 33, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 2]]). ICD 203, for example, sets the IC's analytic standards; see [[ICD 203 Analytic Standards]] ([[ODNI - ICD 203, Analytic Standards (2015).pdf#page=1|ICD 203, §B.1]]).
 
-**Used in:** none yet; compare [[United States Intelligence Community]]
+**Used in:** [[ICD 203 Analytic Standards]]; compare [[United States Intelligence Community]]

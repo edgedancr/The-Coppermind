@@ -1,14 +1,14 @@
 ---
 type: index
-updated: 2026-11-18
+updated: 2026-11-19
 ---
 # Index
 
 A map of every page in the Coppermind, grouped by type. The AI agent updates this after every operation; I check it during health checks. Within each type, pages are listed alphabetically, each with a one-line summary.
 
-**Total:** 367 pages
+**Total:** 429 pages
 
-## Concepts (82)
+## Concepts (94)
 
 - [[Agentic AI]] — AI with tools, and the added risk
 - [[AI Alignment]] — Systems doing what we intend, even under pressure
@@ -20,9 +20,13 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Al-Qaeda]] — Its founding, structure, Sudan and Afghanistan years, and the "far enemy"
 - [[Al-Qaeda Financing]] — About $30 million a year from donations, moved by hawala; the 9/11 plot cost $400,000–500,000
 - [[Algorithmic Bias]] — Five types of bias in AI, the HireMe! example, and proposed fixes
+- [[Analytic Culture]] — Johnston's findings on the norms and rewards that shape analysis
+- [[Analytic Objectivity]] — Marrin's case that ICD 203's objectivity standard cannot be met
+- [[Analytic Title]] — Titles that state a judgment, not just a topic
 - [[Artificial Intelligence]] — What "artificial" and "intelligent" mean, and AI's progression
 - [[Automation Bias]] — Over-trusting confident AI output
 - [[Bitter Lesson]] — Sutton: methods built on human knowledge lose to experience and computation
+- [[Bottom Line Up Front]] — BLUF: lead every product and paragraph with the main point
 - [[Capability vs. Reliability]] — Fluent output is not verified output
 - [[Centaur Analyst]] — Five capabilities and the changing role of the analyst
 - [[China's AI Industrial Policy]] — RAND: Beijing's state support across the AI stack, and whether it will work
@@ -37,15 +41,19 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Custom GPT]] — OpenAI's specialized ChatGPTs: instructions, knowledge files, capabilities, actions
 - [[Data and Model Poisoning]] — OWASP LLM05: corrupting what a model learns; backdoors and sleeper agents
 - [[Deep Learning]] — Progressive abstraction; ImageNet and AlphaGo
+- [[Detailed Outline]] — Outlining to the paragraph level as part of the analysis
 - [[Director of National Intelligence]] — The DCI's three jobs, and the Commission's recommended National Intelligence Director
 - [[Domestic Intelligence and the FBI]] — Why the Commission rejected an American MI-5, and its FBI recommendations
+- [[Economizing on Words]] — Four ways to cut, and the 113-to-34-word example
 - [[Emergent Behavior]] — Behavior developers didn't design and can't fully predict
 - [[Enframing]] — Heidegger's account of modern technology, via the Then & Now video
+- [[Estimative Language]] — ICD 203's likelihood terms, and keeping confidence and likelihood apart
 - [[Ethical and Moral Issues in Intelligence]] — Lowenthal's seven ethical issues, from the costs of secrecy to the Helms dilemma
 - [[Excessive Agency]] — OWASP LLM03: too much functionality, permission, or autonomy
 - [[FBI Counterterrorism Before September 11]] — Field-office priorities, weak analysis, and the failed 1998 plan
 - [[Fine-Tuning]] — Further specialized training that adjusts a model's weights; strengths and costs
 - [[Foreign Intelligence Surveillance Act]] — The 1978 law, its "primary purpose" test, and how the wall grew from it
+- [[Future of Intelligence Analysis]] — Gartin's five drivers of change and his 2030 scenario
 - [[Future Strategic Threats]] — Three massive challenges, and cognitive information threats
 - [[Generative AI]] — AI that generates new content; foundation models and deepfakes
 - [[Generative vs. Agentic AI]] — IBM: reactive generation vs. proactive, goal-pursuing agents
@@ -63,6 +71,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Intelligence Writing Style]] — Clear, concise, informative, timely, tailored; lead with the point
 - [[Intelligence-Led Policing]] — Intelligence inside the police operational cycle; prosecution vs. prevention
 - [[Large Language Model]] — A function that predicts the next word; training, scale, and emergence
+- [[Limits of Prediction]] — Why forecasts miss discontinuities, and the analyst as question answerer
 - [[LLM Wiki]] — What an LLM wiki is, and how SAIL's version differs from Karpathy's
 - [[Machine Learning]] — Classification vs. regression, learning methods, and scaling
 - [[Narrow AI]] — Task-specific AI and its negative outlooks
@@ -81,8 +90,10 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Reinforcement Learning]] — Learning a policy from reward; SAIL's account and Sutton's four parts of an agent
 - [[Security Classification]] — Classification levels, control systems, releasability, and need to know
 - [[Self-Attention]] — The transformer's core mechanism: queries, keys, values, and heads
+- [[Self-Editing and Final Review]] — Reading the draft as the reader, and the final checks
 - [[Semiconductor Export Controls]] — U.S. controls on AI chips for China: effects, workarounds, and limits
 - [[Semiconductors and National Security]] — Chip Wars: why chips are the oil of the 21st century
+- [[Speaking Truth to Power]] — Lowenthal's and Marrin's critiques of the slogan
 - [[Struggle of Ideas]] — Helping defeat an ideology, not just a group of people
 - [[System 1 and System 2 Thinking]] — Fast and slow thinking, and the "lazy controller"
 - [[Terrorist Sanctuary]] — Why a 9/11-scale plot needs a haven, and where havens form
@@ -90,17 +101,23 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Time Compression Trap]] — Faster early stages create pressure to skip analysis
 - [[Tokenization]] — Tokens, and the "tokenization of everything"
 - [[Topic Sentence]] — Types, faults, and the four patterns that make causation explicit
+- [[Tradecraft vs. Science in Intelligence Analysis]] — Johnston's case that analysis is a scientific process, not a craft
 - [[Transformer]] — The architecture behind LLMs
 - [[United States Intelligence Community]] — The 18 IC organizations and how they're grouped
 
-## Glossary (164)
+## Glossary (183)
 
 - [[Actionable Intelligence]] — Intelligence specific enough to act on
+- [[Active Voice]] — Make the cause the subject; use the passive only on purpose
 - [[AI Supply Chain Compromise]] — OWASP LLM04 and an ATLAS technique; includes slopsquatting
 - [[AI Technology Stack]] — The layers AI depends on, from chips to applications
 - [[Algorithmic Transparency]] — Examining inputs and outputs to see why an algorithm recommends what it does
 - [[All-Source Intelligence]] — Drawing on every type of collection the topic needs
+- [[Analytic Assumption]] — Suppositions that frame an argument, as distinct from judgments
 - [[Analytic Confidence]] — How strongly a conclusion is supported
+- [[Analytic Mission Statement]] — A precise statement of a paper's analytic bottom line
+- [[Analytic Ombuds]] — The ODNI official who hears analysts' concerns about the standards
+- [[Anticipatory Socialization]] — What recruits learn before entering on duty, and why it matters
 - [[Article 3 of the Geneva Conventions]] — The Commission's proposed basis for detainee standards
 - [[Artificial General Intelligence]] — SAIL's and RAND's definitions of AGI, which disagree
 - [[Attention Head]] — What a token is compared against in a transformer
@@ -115,12 +132,15 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Catastrophic Forgetting]] — A fine-tuned model losing general capabilities
 - [[Chain-of-Thought Reasoning]] — Breaking a task into smaller logical steps before answering or acting
 - [[Church and Pike Committees]] — The 1970s investigations that led to the intelligence committees
+- [[Cognitive Load]] — Cognitive tasks weighed against available processing power
 - [[Collection Swarm Ball]] — Everyone chasing one high-priority problem
+- [[Community of Practice]] — Networks of practitioners for methods, expertise, and mentoring
 - [[Competitive Analysis]] — Several agencies working the same issue to weed out bias
 - [[Computer Network Attack]] — Attacking networks (definition needs checking)
 - [[Computer Network Exploitation]] — Exploiting networks to gather data
 - [[Confirmation Bias]] — Starting from a conclusion and gathering support
 - [[Containment]] — Kennan's strategy of keeping the Soviet Union within its limits
+- [[Corporate Judgment]] — An agency's official line, and the taboo against reversing it
 - [[Correlated Feature]] — How a protected class re-enters data that never collected it
 - [[Counterterrorism Security Group]] — Richard Clarke's interagency counterterrorism committee at the NSC
 - [[Counterterrorist Center (CIA)]] — The CIA's counterterrorism fusion center before and after 9/11
@@ -158,13 +178,18 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Imagery Resolution]] — The level of detail imagery can show
 - [[Improper Output Handling]] — OWASP LLM10: model output passed downstream without validation
 - [[Incident Command System]] — The emergency-response management structure the Commission urged nationwide
+- [[Indications and Warning]] — Warning intelligence, and why current reporting crowds it out
+- [[Indicators and Signposts]] — Developments to watch to tell whether a projected future is coming
 - [[Indicators of Compromise]] — Signs an operation has been compromised
 - [[Insider Threat]] — Homegrown spies, and the 2011 Insider Threat Program
+- [[Intelligence Analysis]] — Johnston's working definition, and its social side
 - [[Intelligence Community Directive]] — A DNI directive setting IC policy
 - [[Intelligence Cycle]] — Collection, processing, analysis and production, dissemination
+- [[Intelligence Error and Intelligence Failure]] — Factual inaccuracy vs. systemic organizational surprise
 - [[Intelligence Oversight Committees]] — HPSCI and SSCI
 - [[Intelligence Reform and Terrorism Prevention Act]] — The 2004 law that created the DNI
 - [[Interagency Process]] — Executive agencies bargaining to consensus on policy
+- [[Inverted Triangle]] — Kaiser and Pherson's message-driven vs. data-driven paper
 - [[Iran-Contra Affair]] — Arms for hostages and money for the Contras; an abuse of covert action
 - [[Jailbreak]] — Prompt injection aimed at breaking a model's safety protocols
 - [[Jemaah Islamiyah]] — The Southeast Asian group allied with al-Qaeda
@@ -193,6 +218,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[National Security Letter]] — An administrative subpoena for records, with a gag order
 - [[National Technical Means]] — A nation's technical collection tools, such as satellites
 - [[No-Fly List]] — The no-fly and automatic selectee lists, before and after 9/11
+- [[No-Kidding Rule]] — Delete sentences that state the obvious
 - [[North American Aerospace Defense Command]] — NORAD, which defended U.S. airspace facing outward
 - [[Northern Alliance]] — Massoud's anti-Taliban forces, assassinated leader on September 9, 2001
 - [[Office of Origin]] — The FBI system that put one field office in charge of a case
@@ -206,6 +232,8 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Positive Feedback Loop]] — An algorithm amplifying what happened in the past
 - [[Pre-Training]] — Training a language model to autocomplete internet text
 - [[Predator Drone]] — The unmanned aircraft, and the 2001 debate over arming it
+- [[Prediction Market]] — A structured forecasting tool, as in the IC Prediction Market
+- [[Prejudice Toward Continuity]] — Casey's 1983 panel on single-outcome forecasts
 - [[President's Daily Brief]] — The CIA's daily brief for the President, and the broader SEIB
 - [[Principals Committee]] — The NSC's senior policy coordinating body
 - [[Priority Creep]] — Analysts pushing up their own tasks' priority
@@ -224,6 +252,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Risk-Based Homeland Security Assistance]] — Homeland security aid allocated by risk, not revenue sharing
 - [[Scaling Laws]] — Model performance scaling with compute
 - [[Scientist AI]] — Bengio's non-agentic AI, proposed as a guardrail on AI agents
+- [[Secrecy vs. Efficacy]] — The tradeoff between secrecy and analytic effectiveness
 - [[SEE-It Framework]] — State, elaborate, exemplify, illustrate
 - [[Sensitive Information Disclosure]] — OWASP LLM02: protected data leaking through any channel
 - [[Sheep Dipping]] — Definition needs checking
@@ -235,6 +264,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Stovepipe]] — Agencies organized by source, with little sharing across lanes
 - [[Structured Analytic Technique]] — Named but not yet defined in my notes; ACH is one
 - [[Sunni]] — The majority branch of Islam
+- [[Superforecaster]] — Mellers and Tetlock's best forecasters, and their traits
 - [[Supplementals]] — One-year appropriations above the general budget
 - [[Tearline]] — Reports with shareable information separated from the rest
 - [[Technological Singularity]] — AGI outpacing human tracking or control
@@ -245,6 +275,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[The Wall (FBI)]] — FBI rules that blocked sharing between law enforcement and counterterrorism
 - [[TIPOFF Watchlist]] — The State Department's terrorist watchlist
 - [[Traffic Analysis]] — Finding the sender from communication patterns, not content
+- [[Two-Degrees-of-Separation Rule]] — No more than one sentence of context per bullet
 - [[Tyranny of the Ad Hocs]] — Surprise issues displacing work already under way
 - [[Unbounded Consumption]] — OWASP LLM06: uncontrolled inference; denial of wallet
 - [[Unconventional Warfare]] — Training locals to defend themselves
@@ -260,10 +291,11 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Zero-Day Vulnerability]] — An exploitable fault not yet known, fixed, or exploited
 - [[Zone Defense and Man-to-Man]] — The CIA watched "where," the FBI followed "who"
 
-## Frameworks (29)
+## Frameworks (38)
 
 - [[Ages of U.S. Intelligence]] — Four ages since 1944, and a possible AI Age
 - [[Analysis of Competing Hypotheses]] — Disprove hypotheses instead of confirming one; rules for doing it with AI
+- [[Analytic Line of March]] — The five focal questions: what, why now, impact so far, outlook, implications
 - [[Architecture of Worldview]] — Eight layers of worldview, from theology to culture
 - [[Cascade of Unintended Consequences]] — Four paths from AI side effects to catastrophe
 - [[Elements and Standards of Critical Thinking]] — Nosich's elements of reasoning and the standards for testing it
@@ -273,21 +305,29 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Five Hard National Security Problems of Artificial General Intelligence]] — RAND's five AGI problems as a rubric for judging strategy
 - [[Four Levels of Prompt Engineering]] — NPC, Mid, Boss, Legendary
 - [[Global Strategy Against Islamist Terrorism]] — The Commission's three-part strategy: attack, prevent, protect and prepare
+- [[ICD 203 Analytic Standards]] — The IC's five analytic standards and nine tradecraft standards
 - [[Information Model]] — Signal, data, information, knowledge, intelligence; context moves it up
 - [[Institutionalizing Imagination]] — The four-step warning method against surprise attack, and how it went untried before 9/11
 - [[Intelligence-to-Action Convergence Matrix]] — ISR pipeline, intelligence cycle, OODA loop, and kill chain lined up stage by stage
+- [[Johnston's Analytic Culture Recommendations]] — Five recommendations for the IC's analytic culture
 - [[Just War Theory]] — Jus ad bellum and jus in bello
 - [[Levels of Intelligence]] — Strategic, operational, tactical, and technical, with their questions
 - [[MITRE ATLAS]] — 16 tactics and 111 techniques for attacking AI systems
 - [[ODNI AI Ethics Framework]] — The IC's AI ethics framework and the misconceptions it corrects (principles not yet recorded)
 - [[OWASP Top 10 for Large Language Model Applications]] — The ten top security risks for LLM applications, 2026 edition
+- [[Performance Improvement Infrastructure]] — Johnston's measure-compare-intervene cycle for analytic performance
 - [[Puzzles and Mysteries]] — Answerable questions vs. ones that must be inferred
 - [[Requirements for a Complex Terrorist Operation]] — The Commission's six capabilities al-Qaeda needed, and had by 2000
 - [[Retrieval-Augmented Generation vs. Fine-Tuning vs. Prompt Engineering]] — IBM's three ways to improve LLM answers, with trade-offs
 - [[Seven Tribes of Intelligence]] — IC culture read from where each tribe locates power
 - [[Seven-Point Definition of Intelligence]] — The course's definition of intelligence in seven points
+- [[Six Qualities of an Analytic Topic Sentence]] — Precise, clear, accurate, consistent, complete, digestible
+- [[Six Roles of the Future Intelligence Analyst]] — Connector, Curator, Collaborator, Creator, Critic, Content-expert
+- [[Six-Step Paragraph Review]] — Checking that each topic sentence and its support match
 - [[Strengths and Weaknesses of the Collection Disciplines]] — What each INT is good and bad at
+- [[Systems Model of the Intelligence Cycle]] — Why the traditional cycle misleads, and a feedback-loop model
 - [[Tasking, Collection, Processing, Exploitation, and Dissemination]] — TCPED: from requirement to actionable intelligence
+- [[Taxonomy of Intelligence Analysis Variables]] — Johnston's four groups of variables that affect analysis
 - [[Themes in U.S. Intelligence]] — Thirteen persistent themes: organization, people, process, technology
 - [[Think-Calculate-Verify Loop]] — Human thinks, AI calculates, human verifies
 - [[Three-Ps Risk Framework]] — Assess AI risk at the program, person, and population levels
@@ -312,23 +352,28 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Tarnak Farms Capture Plan (1998)]] — The CIA's most detailed pre-9/11 plan to capture Bin Ladin, called off in May 1998
 - [[USS Cole Bombing (2000)]] — The October 2000 attack, and why attribution never became a response
 
-## People (7)
+## People (9)
 
 - [[C. S. Lewis]] — Author of "On Living in an Atomic Age" (1948)
 - [[Khalid Sheikh Mohammed]] — Principal architect of the 9/11 attacks
 - [[Martin Heidegger]] — German philosopher; "The Question Concerning Technology" (1954)
 - [[Richard Sutton]] — Founder of reinforcement learning; "The Bitter Lesson"; 2024 Turing Award
 - [[Richards Heuer]] — Developed ACH at the CIA
+- [[Rob Johnston]] — Anthropologist; author of Analytic Culture in the US Intelligence Community (2005)
+- [[Sherman Kent]] — Founding father of U.S. intelligence analysis
 - [[Usama Bin Ladin]] — Founder and leader of al-Qaeda
 - [[Yoshua Bengio]] — Deep learning pioneer warning of AI agency and deception; Scientist AI
 
-## Summaries (27)
+## Summaries (35)
 
 - [[Summary - A Disneyland Without Children]] — Neutral summary of L Rudolf L's short story
 - [[Summary - About Us (Arena)]] — Neutral summary of Arena's About Us page
 - [[Summary - ACH GenAI Workflow]] — Neutral summary of the SAIL ACH-with-AI prompt sequence
 - [[Summary - AI, Machine Learning, Deep Learning, and Generative AI Explained]] — Neutral summary of IBM Technology's explainer video
 - [[Summary - Algorithmic Bias and Fairness (Crash Course AI 18)]] — Neutral summary of the Crash Course AI episode on algorithmic bias
+- [[Summary - Analytic Culture in the US Intelligence Community]] — Neutral summary of Johnston's front matter, ch. 1–4, and ch. 8–9
+- [[Summary - Analytic Objectivity and Science]] — Neutral summary of Marrin's article on analytic objectivity
+- [[Summary - Analytic Writing Guide (Excerpts)]] — Neutral summary of the Kaiser and Pherson excerpts
 - [[Summary - Artificial General Intelligence's Five Hard National Security Problems]] — Neutral summary of Mitre and Predd's RAND paper
 - [[Summary - Attention Is All You Need]] — Neutral summary of the 2017 transformer paper
 - [[Summary - But What Is a Neural Network]] — Neutral summary of 3Blue1Brown's neural network video
@@ -338,7 +383,10 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Summary - Grammar Summaries, Weeks 2-7]] — Summary of the course's week-by-week glossary of Lowenthal and 9/11 Commission terms
 - [[Summary - How to Create Custom GPT]] — Neutral summary of Kevin Stratvert's custom GPT tutorial
 - [[Summary - How to Make a Music Video with AI]] — Neutral summary of Tao Prompts' AI music video tutorial
+- [[Summary - How to Write an Intelligence Product in BLUF Format]] — Neutral summary of the BLUF format handout
+- [[Summary - ICD 203, Analytic Standards]] — Neutral summary of ICD 203, the IC's analytic standards
 - [[Summary - Intelligence in National Security, Definition in 7 Points]] — Neutral summary of the course's seven-point handout
+- [[Summary - Intelligence Is NOT About Telling Truth to Power]] — Neutral summary of Lowenthal's "Intelligence Is NOT About 'Telling Truth to Power'"
 - [[Summary - Large Language Models Explained Briefly]] — Neutral summary of 3Blue1Brown's LLM video
 - [[Summary - MITRE ATLAS Matrix]] — Neutral summary of the ATLAS matrix page
 - [[Summary - On Living in an Atomic Age]] — Neutral summary of C. S. Lewis's 1948 essay
@@ -348,6 +396,8 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Summary - SEE-IT Checklist for Critical Thinking]] — Neutral summary of the SEE-IT and critical-thinking handout
 - [[Summary - The 9-11 Commission Report]] — Neutral summary of the whole 9/11 Commission Report
 - [[Summary - The Catastrophic Risks of AI and a Safer Path]] — Neutral summary of Yoshua Bengio's TED talk
+- [[Summary - The Future of Analysis]] — Neutral summary of Gartin's "The Future of Analysis"
+- [[Summary - The Limits of Prediction]] — Neutral summary of Bobby W.'s "The Limits of Prediction"
 - [[Summary - The Question Concerning Technology (Then and Now)]] — Neutral summary of the Then & Now video on Heidegger
 - [[Summary - Themes in US Intelligence, Summary of Texts]] — Neutral summary of the course's theme spreadsheet
 - [[Summary - What Is Human-Centered AI]] — Neutral summary of IBM Research's HCAI explainer
@@ -374,26 +424,35 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 - [[My Worldview]] — The foundational convictions behind my perspectives, by layer of worldview
 
-## Source Cards (33)
+## Source Cards (45)
 
 - [[SRC - A Disneyland Without Children]] — L Rudolf L, LessWrong, 2023; fiction (rating proposed F-6)
 - [[SRC - About Us (Arena)]] — Arena's About Us page, saved 2026-11-17 (rating proposed B-2)
 - [[SRC - ACH GenAI Workflow]] — The SAIL ACH-with-AI course documents, eight files (rating proposed B-2)
 - [[SRC - AI, Machine Learning, Deep Learning, and Generative AI Explained]] — IBM Technology video transcript (rating proposed B-2)
 - [[SRC - Algorithmic Bias and Fairness (Crash Course AI 18)]] — Crash Course AI episode 18 transcript (rating proposed C-2)
+- [[SRC - Analytic Culture in the US Intelligence Community (Johnston)]] — Johnston's 2005 ethnography of analytic culture (rating proposed B-2)
+- [[SRC - Analytic Objectivity and Science]] — Marrin's 2020 article in Intelligence and National Security (rating proposed B-2)
+- [[SRC - Analytic Writing Guide (Kaiser and Pherson)]] — Kaiser and Pherson's Analytic Writing Guide, ch. 3–7 and 9–11 (rating proposed B-2)
 - [[SRC - Artificial General Intelligence's Five Hard National Security Problems]] — Mitre and Predd, RAND, 2025 (rating proposed B-3)
 - [[SRC - Attention Is All You Need]] — Vaswani et al., 2017 (rating proposed A-1)
 - [[SRC - But What Is a Neural Network]] — 3Blue1Brown video transcript (rating proposed B-2)
 - [[SRC - Collection Discipline Overview]] — Intro to Intelligence table of INT strengths and weaknesses (rating proposed B-2)
 - [[SRC - Current AI Models Have 3 Unfixable Problems]] — Sabine Hossenfelder video transcript (rating proposed C-3)
+- [[SRC - Developing Analytic Titles]] — Course handout on analytic titles (rating proposed B-3)
 - [[SRC - Full Stack, China's Evolving Industrial Policy for AI]] — Chan et al., RAND, 2025 (rating proposed B-2)
 - [[SRC - Generative vs Agentic AI]] — IBM Technology video transcript (rating proposed B-2)
 - [[SRC - Grammar Summaries, Weeks 2-7]] — Intro to Intelligence glossary of Lowenthal and 9/11 Commission terms, weeks 2–7 (rating proposed B-3)
 - [[SRC - How to Create Custom GPT]] — Kevin Stratvert tutorial transcript (rating proposed C-2)
 - [[SRC - How to Make a Music Video with AI]] — Tao Prompts tutorial transcript (rating proposed C-3)
+- [[SRC - How to Write an Intelligence Product in BLUF Format]] — Henley-Putnam handout on the BLUF format (rating proposed B-3)
 - [[SRC - IC Organizations, Leadership, Missions, and Functions]] — Intro to Intelligence handout on IC members, Sep 2026 (rating proposed B-2)
+- [[SRC - ICD 203, Analytic Standards]] — ICD 203, Analytic Standards, 2015 (rating proposed A-1)
 - [[SRC - Intelligence in National Security, Definition in 7 Points]] — Col. Middleton's seven-point handout, Oct 2026 (rating proposed B-2)
+- [[SRC - Intelligence Is NOT About Telling Truth to Power]] — Lowenthal's 2021 perspective article (rating proposed B-2)
+- [[SRC - Intelligence Writing (Williams and Molzon Slides)]] — Williams and Molzon's course slides on intelligence writing (rating proposed B-3)
 - [[SRC - Intro to Intelligence Class Notes (Fall 2026)]] — My Intro to Intelligence lecture notes, Fall 2026 (rating proposed B-2)
+- [[SRC - Johnston Recommendations Summary]] — Course handout summarizing Johnston's recommendations (rating proposed B-2)
 - [[SRC - Large Language Models Explained Briefly]] — 3Blue1Brown video transcript (rating proposed B-2)
 - [[SRC - MITRE ATLAS Matrix]] — The MITRE ATLAS matrix page (rating proposed B-2)
 - [[SRC - On Living in an Atomic Age]] — C. S. Lewis, 1948 (rating proposed B-6)
@@ -406,6 +465,9 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[SRC - SI Themes and Pearl Harbor Context]] — Intro to Intelligence theme list (rating proposed B-6)
 - [[SRC - The 9-11 Commission Report]] — National Commission on Terrorist Attacks Upon the United States, 2004 (rating proposed B-2)
 - [[SRC - The Catastrophic Risks of AI and a Safer Path]] — Yoshua Bengio TED talk transcript (rating proposed B-3)
+- [[SRC - The Future Intelligence Analyst (Slides)]] — Course slide on six analyst roles, after Hershkovitz (rating proposed B-3)
+- [[SRC - The Future of Analysis]] — Gartin, Studies in Intelligence, 2019 (rating proposed B-2)
+- [[SRC - The Limits of Prediction]] — Bobby W., Studies in Intelligence, 2019 (rating proposed B-2)
 - [[SRC - The Question Concerning Technology (Then and Now)]] — Then & Now video transcript on Heidegger (rating proposed C-3)
 - [[SRC - Themes in US Intelligence, Summary of Texts]] — Intro to Intelligence spreadsheet quoting Lowenthal and Treverton (rating proposed B-2)
 - [[SRC - What Is Human-Centered AI]] — Geyer et al., IBM Research, 2022 (rating proposed C-2)

@@ -22,9 +22,28 @@ The files Col. Middleton supplied for Intro to Intelligence, triaged on 2026-11-
 	- 1 - IC Org Leadership, Missions, Functions Sep2026 → [[SRC - IC Organizations, Leadership, Missions, and Functions]]
 - `[~]` **1b. Grammar Summaries, weeks 2–6** (ingested 2026-11-18)
 	- I2I Week 2-7 Grammar Fall2026 → [[SRC - Grammar Summaries, Weeks 2-7]]. Week 7 (cyber, IoT, AI) waits for Sections 6, 9, and 10.
-- `[ ]` **1c. Analytic standards and the profession**: 5 - ICD 203 Analytic Standards (scan; needs OCR), Lowenthal - Intelligence is NOT About Telling Truth to Power, 14 - Marrin - Analytic Rigor and Epistemology, 12 - Limits of Prediction, 15 - Gartin - Future of Analysis, 13 - Hershcovitz - Future Intelligence Analyst, 14 - Johnson Recommendations Summary
-- `[ ]` **1d. Intelligence writing**: 3 - Pherson I–IV (scans; need OCR), 3 - BLUF Writing Format, 3 - Intelligence Writing2 PP (Williams and Molzon), 1 - Analytic Titles. Also the Grammar Summaries' Kaiser and Pherson terms (analytic titles, key judgments, topic sentences).
-- `[ ]` **1e. Books, a few chapters at a time**: 14 - Johnson - Analytic Culture in the US IC (173 pp.), 14 - Bodnar - Warning Analysis for the Information Age (208 pp.)
+- `[~]` **1c. Analytic standards and the profession** (ingested 2026-11-19)
+	- 5 - ICD 203 Analytic Standards (scan; OCR'd) → [[SRC - ICD 203, Analytic Standards]]
+	- Lowenthal - Intelligence is NOT About Telling Truth to Power → [[SRC - Intelligence Is NOT About Telling Truth to Power]]
+	- 14 - Marrin - Analytic Rigor and Epistemology → [[SRC - Analytic Objectivity and Science]]
+	- 12 - Limits of Prediction → [[SRC - The Limits of Prediction]]
+	- 15 - Gartin - Future of Analysis → [[SRC - The Future of Analysis]]
+	- 13 - Hershcovitz - Future Intelligence Analyst → [[SRC - The Future Intelligence Analyst (Slides)]]
+	- 14 - Johnson Recommendations Summary → [[SRC - Johnston Recommendations Summary]]
+- `[~]` **1d. Intelligence writing** (ingested 2026-11-19)
+	- 3 - Pherson I–IV (scans; OCR'd) → [[SRC - Analytic Writing Guide (Kaiser and Pherson)]]
+	- 3 - BLUF Writing Format → [[SRC - How to Write an Intelligence Product in BLUF Format]]
+	- 3 - Intelligence Writing2 PP (Williams and Molzon) → [[SRC - Intelligence Writing (Williams and Molzon Slides)]]
+	- 1 - Analytic Titles → [[SRC - Developing Analytic Titles]]
+	- The Grammar Summaries' Kaiser and Pherson terms, folded into [[Analytic Title]] and [[Topic Sentence]]; the key judgments entry is proposed for [[Key Judgments]] (verified).
+- `[ ]` **1e. Books, a few chapters at a time**: 14 - Johnson - Analytic Culture in the US IC (173 pp.), 14 - Bodnar - Warning Analysis for the Information Age (208 pp.). Split into seven sub-batches (approved 2026-11-19):
+	- `[~]` 1e-1: Johnston, Foreword, Introduction, ch. 1–2, ch. 8–9, Afterword (ingested 2026-11-19) → [[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]
+	- `[~]` 1e-2: Johnston ch. 3–4 (taxonomy; systems model of the intelligence cycle) (ingested 2026-11-19) → [[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]
+	- `[ ]` 1e-3: Johnston ch. 5–7 (methodologists, ethnocentrism, instructional technology). Skip ch. 10–12 (methodology), the appendix, and the bibliography.
+	- `[ ]` 1e-4: Bodnar, commentaries and ch. 1–4
+	- `[ ]` 1e-5: Bodnar ch. 5–7
+	- `[ ]` 1e-6: Bodnar ch. 8–11
+	- `[ ]` 1e-7: Bodnar ch. 12–14. Skip the bibliography.
 
 ### Section 2: Surprise, warning, and reform
 - `[ ]` 10 - Wohlstetter: Magic, Noise, Surprise, Wash Intel (scans; need OCR), 14 - Pearl Harbor Effects on mil and intel, 4 - WMD Commission Report Mar2005, 15 - Zegart - Spying Blind (5) and (8), 13 - Travers - Waking Up on Another September 12th, 15 - Schreier - Reinventing Intel, 14 - Tucker - Cultural Revolution in Intelligence, 12 - Habeck - Reforming Intel sum brief, 14 - Schwartz - The Mess in the US Intelligence Community
