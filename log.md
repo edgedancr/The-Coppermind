@@ -2289,3 +2289,21 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Analytic Line of March]]
 - **Commit:** `verify: Analytic Line of March`
+
+### [2026-11-19] schema | Nicrosil 2.4.6 livelier relations map
+
+- **Think:** The relations map in the side panel looked barebones next to the rest of the page, so I asked for it to feel more alive, with animation or glow and more vibrance.
+- **Calculate:** Nothing to compute.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.4.5 to 2.4.6): relations map arrows glow in their relationship color with small dots flowing along them; the center page has a copper gradient and a slow pulsing halo; verified and draft pages glow teal and copper; the backdrop is a faint dotted grid with a copper glow; nodes and arrows fade in one after another; hovering or focusing a page lights its arrows and dims the others; legend swatches glow; motion stops under reduced-motion settings
+  - [[Nicrosil]]: relations panel section, version 2.4.6 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil and open the relations panel (`Alt+L`)
+- **Commit:** `schema: Nicrosil 2.4.6 livelier relations map`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`

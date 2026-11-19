@@ -12,14 +12,14 @@ courses:
 sources: []
 related:
   - "[[SCHEMA]]"
-drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5)
+drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow by claude-sonnet-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-19
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.4.5**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.4.6**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -94,7 +94,7 @@ The search box on the [[Dashboard]] shows suggestion cards as I type, over wiki 
 
 ## The relations panel
 Open it with `Alt+L` or the branching-arrows button in the ribbon. It follows whichever page is open and shows how that page connects to the rest of the wiki through the typed links in its properties:[^3]
-- **A map.** The page sits in the middle. Pages that point at it are on the left; pages it points at are on the right. Each arrow is colored by relationship type, and the legend under the map names the colors. Some types are also dashed (`related` is dashed, `contradicts` is dotted), so color is never the only cue. A solid teal outline means the other page is verified, a copper outline a draft, and a dashed grey outline no status. Click a page to open it, or `Ctrl+click` for a new tab. The map shows up to ten pages on each side; the lists below show them all.
+- **A map.** The page sits in the middle. Pages that point at it are on the left; pages it points at are on the right. Each arrow is colored by relationship type, and the legend under the map names the colors. Some types are also dashed (`related` is dashed, `contradicts` is dotted), so color is never the only cue. A solid teal outline means the other page is verified, a copper outline a draft, and a dashed grey outline no status. The map glows and moves: small dots flow along each arrow in its direction, the center page has a slow pulsing halo, and pointing at a page lights up its arrows and dims the rest (the motion stops if your system asks for reduced motion). Click a page to open it, or `Ctrl+click` for a new tab. The map shows up to ten pages on each side; the lists below show them all.
 - **Two lists.** "This page…" groups the outgoing links by type ("Is part of", "Supports", and so on). "Pointing at this page…" groups the incoming links ("Parts of this", "Examples of this", "Supported by"). Incoming links are worked out from the other pages' properties, since each relationship is stored only once.[^3]
 - **Not shown:** plain links in the page text. They are "see also" links, not relationships.
 
@@ -181,6 +181,7 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it.[^1]
 
 ### Version history
+- **2.4.6:** The relations map is livelier: glowing arrows with dots flowing along them, a pulsing center page, a dotted copper-lit backdrop, nodes that fade in, and a hover highlight that lights a page's arrows and dims the rest.
 - **2.4.5:** Search snippets and review-card summaries leave out footnote markers (`[^1]`) and the Footnotes section, after citations moved to footnotes (Schema §6).
 - **2.4.4:** The verify animation's check is a copper-to-teal gradient, with no orb behind it.
 - **2.4.3:** Made some small visual improvements to the review queue panel.

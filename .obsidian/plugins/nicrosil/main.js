@@ -785,7 +785,14 @@ class RelationsView extends ItemView {
     const cy = H / 2;
     const wrap = root.createDiv({ cls: "cm-rel-map" });
     const svg = svgEl(wrap, "svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img", "aria-label": `Relations map for ${file.basename}` });
+    svg.classList.add("cm-rel-svg");
     const defs = svgEl(svg, "defs");
+    const cg = svgEl(defs, "linearGradient", { id: "cm-rel-cg", x1: 0, y1: 0, x2: 0, y2: 1 });
+    svgEl(cg, "stop", { offset: "0%", style: "stop-color: var(--cm-copper); stop-opacity: .42" });
+    svgEl(cg, "stop", { offset: "100%", style: "stop-color: var(--cm-copper); stop-opacity: .12" });
+    const ng = svgEl(defs, "linearGradient", { id: "cm-rel-ng", x1: 0, y1: 0, x2: 0, y2: 1 });
+    svgEl(ng, "stop", { offset: "0%", style: "stop-color: var(--background-secondary); stop-opacity: 1" });
+    svgEl(ng, "stop", { offset: "100%", style: "stop-color: var(--background-primary); stop-opacity: 1" });
     for (const [t, info] of Object.entries(REL_TYPES)) {
       const m = svgEl(defs, "marker", { id: `cm-arrow-${t}`, viewBox: "0 0 8 8", refX: 7, refY: 4, markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse" });
       svgEl(m, "path", { d: "M0,0 L8,4 L0,8 z", fill: info.color });
@@ -793,6 +800,8 @@ class RelationsView extends ItemView {
     const yFor = (i, n) => GAP + i * (NH + GAP) + ((rows - n - ((L.length > MAX || R.length > MAX) ? 1 : 0)) * (NH + GAP)) / 2;
 
     const edgePath = (x1, y1, x2, y2) => `M${x1},${y1} C${(x1 + x2) / 2},${y1} ${(x1 + x2) / 2},${y2} ${x2},${y2}`;
+    const edgeEls = {};
+    let ei = 0;
     const drawEdges = (side, nodes, n) => {
       nodes.forEach((nd, i) => {
         const y = yFor(i, n) + NH / 2;
@@ -801,16 +810,29 @@ class RelationsView extends ItemView {
           const off = (k - (nd.types.length - 1) / 2) * 4;
           const attrs = { fill: "none", stroke: info.color, "stroke-width": 1.6, "stroke-opacity": 0.9, "marker-end": `url(#cm-arrow-${t})` };
           if (info.dash) attrs["stroke-dasharray"] = info.dash;
-          if (side === "out") svgEl(svg, "path", { ...attrs, d: edgePath(X2 + CW, cy + off, X3 - 1, y + off) });
-          else svgEl(svg, "path", { ...attrs, d: edgePath(X1 + NW, y + off, X2 - 1, cy + off) });
+          const d = side === "out" ? edgePath(X2 + CW, cy + off, X3 - 1, y + off) : edgePath(X1 + NW, y + off, X2 - 1, cy + off);
+          const p = svgEl(svg, "path", { ...attrs, d, class: "cm-rel-edge" });
+          p.style.setProperty("--c", info.color); p.style.setProperty("--i", ei);
+          const f = svgEl(svg, "path", { d, fill: "none", stroke: info.color, class: "cm-rel-flow" });
+          f.style.setProperty("--c", info.color); f.style.setProperty("--i", ei);
+          (edgeEls[side + i] = edgeEls[side + i] || []).push(p, f);
+          ei++;
         });
       });
     };
     drawEdges("inn", Ls, Ls.length);
     drawEdges("out", Rs, Rs.length);
 
-    const node = (x, y, w, nd, center) => {
+    let ni = 0;
+    const node = (x, y, w, nd, center, key) => {
       const g = svgEl(svg, "g", { class: "cm-rel-node" + (center ? " is-center" : "") + (nd.path ? "" : " is-missing"), tabindex: 0, role: "button" });
+      g.style.setProperty("--i", ni++);
+      const hot = (on) => {
+        svg.classList.toggle("is-hovering", on); g.classList.toggle("is-hl", on);
+        (edgeEls[key] || []).forEach((el) => el.classList.toggle("is-hl", on));
+      };
+      g.addEventListener("mouseenter", () => hot(true)); g.addEventListener("mouseleave", () => hot(false));
+      g.addEventListener("focus", () => hot(true)); g.addEventListener("blur", () => hot(false));
       const st = nd.path ? this.statusOf(nd.path) : "";
       svgEl(g, "rect", { x, y, width: w, height: NH, rx: 5, class: `cm-rel-box ${st ? "cm-rel-box-" + st : ""}` });
       svgEl(g, "text", { x: x + w / 2, y: y + NH / 2 + 4, "text-anchor": "middle", class: "cm-rel-label" }, clip(nd.name, center ? 15 : 16));
@@ -820,10 +842,12 @@ class RelationsView extends ItemView {
         g.addEventListener("keydown", (e) => { if (e.key === "Enter") this.go(nd.path, e.ctrlKey || e.metaKey); });
       }
     };
-    Ls.forEach((nd, i) => node(X1, yFor(i, Ls.length), NW, nd, false));
-    Rs.forEach((nd, i) => node(X3, yFor(i, Rs.length), NW, nd, false));
+    Ls.forEach((nd, i) => node(X1, yFor(i, Ls.length), NW, nd, false, "inn" + i));
+    Rs.forEach((nd, i) => node(X3, yFor(i, Rs.length), NW, nd, false, "out" + i));
     const ch = Math.min(H - 2 * GAP, 56);
     const g = svgEl(svg, "g", { class: "cm-rel-node is-center" });
+    g.style.setProperty("--i", ni++);
+    svgEl(g, "rect", { x: X2 - 3, y: cy - ch / 2 - 3, width: CW + 6, height: ch + 10 - 4, rx: 10, class: "cm-rel-halo" });
     svgEl(g, "rect", { x: X2, y: cy - ch / 2, width: CW, height: ch, rx: 7, class: "cm-rel-box cm-rel-box-center" });
     const words = file.basename.split(" "); const lines = []; let cur = "";
     for (const w of words) { if ((cur + " " + w).trim().length > 15 && cur) { lines.push(cur); cur = w; } else cur = (cur + " " + w).trim(); }
@@ -842,7 +866,7 @@ class RelationsView extends ItemView {
     present.forEach((t) => {
       const chip = lg.createSpan({ cls: "cm-rel-chip" });
       const sw = chip.createSpan({ cls: "cm-rel-swatch" });
-      sw.style.background = REL_TYPES[t].color;
+      sw.style.background = REL_TYPES[t].color; sw.style.setProperty("--c", REL_TYPES[t].color);
       if (REL_TYPES[t].dash) sw.addClass("is-dashed");
       chip.appendText(t.replace("_", " "));
     });
@@ -857,7 +881,7 @@ class RelationsView extends ItemView {
       const grp = root.createDiv({ cls: "cm-rel-group" });
       const h = grp.createDiv({ cls: "cm-rel-grouphead" });
       const sw = h.createSpan({ cls: "cm-rel-swatch" });
-      sw.style.background = REL_TYPES[t].color;
+      sw.style.background = REL_TYPES[t].color; sw.style.setProperty("--c", REL_TYPES[t].color);
       if (REL_TYPES[t].dash) sw.addClass("is-dashed");
       h.appendText(REL_TYPES[t][dir]);
       h.createSpan({ cls: "cm-rel-count", text: String(items.length) });
@@ -1097,7 +1121,7 @@ class WikiMapView extends ItemView {
     const legend = el.createDiv({ cls: "cm-wm-legend" });
     for (const t of Object.keys(HIER)) {
       const c = legend.createSpan({ cls: "cm-rel-chip" });
-      const sw = c.createSpan({ cls: "cm-rel-swatch" }); sw.style.background = REL_TYPES[t].color; if (REL_TYPES[t].dash) sw.addClass("is-dashed");
+      const sw = c.createSpan({ cls: "cm-rel-swatch" }); sw.style.background = REL_TYPES[t].color; sw.style.setProperty("--c", REL_TYPES[t].color); if (REL_TYPES[t].dash) sw.addClass("is-dashed");
       c.appendText(`${HIER[t]} (line to the page above)`);
     }
     [...new Set([...inTree].map((p) => (g.nodes.get(p) || {}).type))].filter(Boolean).sort().forEach((t) => {
@@ -1251,7 +1275,7 @@ class WikiMapView extends ItemView {
     const chipEls = {};
     present.forEach((t) => {
       const c = chips.createSpan({ cls: "cm-rel-chip cm-wm-chip" + (st.hidden.has(t) ? " is-off" : ""), attr: { role: "button", tabindex: "0" } });
-      const sw = c.createSpan({ cls: "cm-rel-swatch" }); sw.style.background = REL_TYPES[t].color; if (REL_TYPES[t].dash) sw.addClass("is-dashed");
+      const sw = c.createSpan({ cls: "cm-rel-swatch" }); sw.style.background = REL_TYPES[t].color; sw.style.setProperty("--c", REL_TYPES[t].color); if (REL_TYPES[t].dash) sw.addClass("is-dashed");
       c.appendText(t.replace("_", " "));
       const tog = () => { if (st.hidden.has(t)) st.hidden.delete(t); else st.hidden.add(t); c.toggleClass("is-off", st.hidden.has(t)); apply(); };
       c.addEventListener("click", tog);
