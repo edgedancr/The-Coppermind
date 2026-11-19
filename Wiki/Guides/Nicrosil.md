@@ -12,14 +12,14 @@ courses:
 sources: []
 related:
   - "[[SCHEMA]]"
-drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow by claude-sonnet-5-5)
+drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow and Reading view on open by claude-sonnet-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-19
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.4.6**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.4.7**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -154,6 +154,7 @@ In **Settings → Nicrosil**:
 - **Play an animation when I verify a page** (on by default): the check, sparks, and page lift described in [[#A review session]]. It is skipped if the computer is set to reduce motion.
 - **Close the extra sidebar panels on startup** (on by default): closes Backlinks, Outgoing links, Tags, All properties and Outline each time Obsidian starts, so they stop coming back. They can still be opened from the command palette.
 - **Ambient animations** (on by default): the glows, sparkles and fades described in [[#Ambience]].
+- **Open pages in Reading view:** "Verified pages only" (the default), "Every page", or "Off". When a page is opened from a link, the file list, search or the Dashboard, it opens in Reading view instead of editing. If I switch a page to editing myself, it stays that way until that tab opens a different page. "Every page" also covers drafts, but a new empty note always opens ready to type.
 - **Queue order:** clean pages first (default), flagged pages first, by page type, or A to Z. The same menu is at the top of the sidebar.
 
 ## What it will not do
@@ -181,6 +182,7 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it.[^1]
 
 ### Version history
+- **2.4.7:** New setting **Open pages in Reading view**: verified pages (or every page, or none) open in Reading view instead of editing, and stay in editing if I switch them there myself.
 - **2.4.6:** The relations map is livelier: glowing arrows with dots flowing along them, a pulsing center page, a dotted copper-lit backdrop, nodes that fade in, and a hover highlight that lights a page's arrows and dims the rest.
 - **2.4.5:** Search snippets and review-card summaries leave out footnote markers (`[^1]`) and the Footnotes section, after citations moved to footnotes (Schema §6).
 - **2.4.4:** The verify animation's check is a copper-to-teal gradient, with no orb behind it.

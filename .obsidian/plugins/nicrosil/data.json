@@ -5,6 +5,7 @@
     "celebrate": true,
     "ambient": true,
     "hidePanels": true,
+    "readMode": "verified",
     "mapTab": "map",
     "mapFlow": true,
     "milestone": 0

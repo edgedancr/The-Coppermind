@@ -58,7 +58,8 @@ const FLAG_KINDS = {
   warning: { label: "Warning", plural: "Warnings (unsourced)", short: "W" },
 };
 const STALE_DAYS = 14;
-const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, ambient: true, hidePanels: true };
+const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, ambient: true, hidePanels: true, readMode: "verified" };
+const READ_MODES = { verified: "Verified pages only", all: "Every page", off: "Off" };
 const SORTS = { clean: "Clean pages first", flagged: "Flagged pages first", type: "By page type", az: "A to Z" };
 
 /* ---------- pure helpers (tested outside Obsidian) ---------- */
@@ -1563,6 +1564,12 @@ class ReviewSettings extends PluginSettingTab {
         this.plugin.settings.ambient = v; await this.plugin.persist();
         document.body.classList.toggle("cm-calm", !v);
       }));
+    new Setting(el).setName("Open pages in Reading view")
+      .setDesc("When a page is opened (from a link, the file list, search or the Dashboard), it opens in Reading view instead of editing. Switching to editing yourself sticks until you open a different page in that tab. \"Every page\" also covers drafts; empty new notes always open ready to type.")
+      .addDropdown((d) => {
+        Object.entries(READ_MODES).forEach(([k, v]) => d.addOption(k, v));
+        d.setValue(this.plugin.settings.readMode || "verified").onChange(async (v) => { this.plugin.settings.readMode = v; await this.plugin.persist(); });
+      });
     new Setting(el).setName("Queue order")
       .setDesc("Clean pages first gives quick wins; flagged first tackles the hard ones while you're fresh.")
       .addDropdown((d) => {
@@ -2223,6 +2230,7 @@ module.exports = class Nicrosil extends Plugin {
     this.currentPath = null;
     this.dashOpen = {};
     this.foldedViews = new WeakMap();
+    this.readHandled = new WeakMap(); // leaf -> path already considered for Reading view
     this.stripPaths = new WeakMap();
     this.stripObservers = new Set();
 
@@ -2279,6 +2287,7 @@ module.exports = class Nicrosil extends Plugin {
 
     this.scheduleRefresh = debounce(() => this.refresh(), 400, true);
     this.registerEvent(this.app.workspace.on("file-open", (file) => {
+      this.readOnOpen(file);
       this.syncSchemaButtons();
       if (file) this.currentPath = file.path;
       if (file && this.isDashboard(file)) this.startDashIntro();
@@ -2905,6 +2914,30 @@ module.exports = class Nicrosil extends Plugin {
     if (!(view instanceof MarkdownView) || !this.isDashboard(view.file) || view.getMode() !== "source") return;
     const state = leaf.getViewState();
     await leaf.setViewState({ ...state, state: { ...state.state, mode: "preview" } });
+  }
+
+  /**
+   * Opening a page puts it in Reading view (verified pages by default; see the "Open pages in Reading view" setting).
+   * Each tab is looked at once per page it shows, so switching a page to editing yourself is left alone until that tab opens another page.
+   */
+  async readOnOpen(file) {
+    try {
+      const mode = this.settings.readMode || "verified";
+      if (mode === "off" || !(file instanceof TFile) || file.extension !== "md") return;
+      const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+      if (!view || !view.file || view.file.path !== file.path) return;
+      const leaf = view.leaf;
+      if (this.readHandled.get(leaf) === file.path) return;
+      this.readHandled.set(leaf, file.path);
+      if (view.getMode() !== "source") return;
+      const status = ((this.app.metadataCache.getFileCache(file) || {}).frontmatter || {}).status;
+      const wanted = mode === "all" ? file.stat.size > 0 : status === "verified";
+      if (!wanted) return;
+      const state = leaf.getViewState();
+      await leaf.setViewState({ ...state, state: { ...state.state, mode: "preview" } });
+    } catch (e) {
+      console.error("Nicrosil: couldn't open the page in Reading view", e);
+    }
   }
 
   async openDashboard(newTab) {

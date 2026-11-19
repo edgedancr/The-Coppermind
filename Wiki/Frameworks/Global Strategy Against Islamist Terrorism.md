@@ -1,14 +1,19 @@
 ---
 type: framework
-status: draft
-aliases: ["Attack, Prevent, Protect", "9/11 Commission Strategy"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+status: verified
+aliases:
+  - Attack, Prevent, Protect
+  - 9/11 Commission Strategy
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
 causes: []
-counters: ["[[Al-Qaeda]]"]
+counters:
+  - "[[Al-Qaeda]]"
 applies_to: []
 supports: []
 contradicts: []
@@ -16,7 +21,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-19
 ---
 > [!summary]
 > The 9/11 Commission named the enemy as twofold: al-Qaeda, "a stateless network of terrorists," and "a radical ideological movement in the Islamic world" that will menace Americans long after Bin Ladin is gone.[^1] Its recommended strategy rests on ==a "tripod" of policies: attack terrorists and their organizations; prevent the continued growth of Islamist terrorism; and protect against and prepare for terrorist attacks==.[^1]

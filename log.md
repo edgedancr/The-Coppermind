@@ -2307,3 +2307,27 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Nicrosil]]
 - **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] verify | Global Strategy Against Islamist Terrorism
+
+- **Verify:**
+  - Approved: [[Global Strategy Against Islamist Terrorism]]
+- **Commit:** `verify: Global Strategy Against Islamist Terrorism`
+
+### [2026-11-19] schema | Nicrosil 2.4.7 verified pages open in Reading view
+
+- **Think:** I never want to be in editing mode unless I choose it, so I asked for verified pages to open in Reading view whenever I open or click them.
+- **Calculate:** Nothing to compute.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `manifest.json` (2.4.6 to 2.4.7): when a page is opened it is switched to Reading view if it is verified; a new setting (**Open pages in Reading view**: verified pages only, every page, or off) controls this; each tab is checked once per page it shows, so switching to editing myself is left alone; empty new notes are never switched
+  - [[Nicrosil]]: Settings section, version 2.4.7 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil, then open a verified page from the file list and from a link
+- **Commit:** `schema: Nicrosil 2.4.7 open verified pages in Reading view`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
