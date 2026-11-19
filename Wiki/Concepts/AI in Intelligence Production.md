@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - AI in Government
 courses:
@@ -14,9 +14,7 @@ related:
   - "[[Intelligence-to-Action Convergence Matrix]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: added Gartin's 2030 scenario and Bobby W.'s caution; added Intro to Intelligence to courses (batch 1c proposal, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > SAIL taught that AI fundamentally reshapes the intelligence production process in three ways: how intelligence is collected, how threats are predicted, and how policy is made ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).

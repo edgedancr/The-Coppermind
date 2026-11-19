@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - Politicization
 courses:
@@ -13,9 +13,7 @@ sources:
   - "[[SRC - Analytic Objectivity and Science]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: added ICD 203's independence standard and the Analytic Ombuds, and Marrin on intent (batch 1c proposal, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > Politicized intelligence is giving the intelligence you think the client wants, instead of what the information actually supports ([[Intro to Intelligence Class Notes (Fall 2026)#10/13/26|Intro notes, 10/13/26]]). Intro to Intelligence taught that it happens when strong preferences about a topic shape the analysis, and that ==any and all of these preferences may influence and bias the analysis== ([[Intro to Intelligence Class Notes (Fall 2026)#9/1/26|Intro notes, 9/1/26]]).

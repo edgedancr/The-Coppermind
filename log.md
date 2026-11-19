@@ -1833,3 +1833,27 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[SCHEMA]]
 - **Commit:** `verify: SCHEMA`
+
+### [2026-11-19] verify | AI in Intelligence Production
+
+- **Verify:**
+  - Approved: [[AI in Intelligence Production]]
+- **Commit:** `verify: AI in Intelligence Production`
+
+### [2026-11-19] verify | Intelligence Writing Style
+
+- **Verify:**
+  - Approved: [[Intelligence Writing Style]]
+- **Commit:** `verify: Intelligence Writing Style`
+
+### [2026-11-19] verify | Politicized Intelligence
+
+- **Verify:**
+  - Approved: [[Politicized Intelligence]]
+- **Commit:** `verify: Politicized Intelligence`
+
+### [2026-11-19] verify | Analytic Confidence
+
+- **Verify:**
+  - Approved: [[Analytic Confidence]]
+- **Commit:** `verify: Analytic Confidence`
