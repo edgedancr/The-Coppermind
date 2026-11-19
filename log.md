@@ -1572,3 +1572,9 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Executive Order 12333]]
 - **Commit:** `verify: Executive Order 12333`
+
+### [2026-11-18] verify | Levels of Intelligence
+
+- **Verify:**
+  - Approved: [[Levels of Intelligence]]
+- **Commit:** `verify: Levels of Intelligence`
