@@ -2344,3 +2344,15 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - Guide needs verifying again
   - Reload Nicrosil and open the Dashboard
 - **Commit:** `schema: Nicrosil 2.4.8 Dashboard health check card`
+
+### [2026-11-19] schema | Health check rhythm and SCHEMA change notes (6.1)
+
+- **Think:** I asked for the 14-day health check rhythm to be written into the SCHEMA, and for edits to the SCHEMA to show up in the changed-since-verified list the way wiki page edits do, because they had not been.
+- **Calculate:**
+  - Cause: the review queue, the review card and the Dashboard already show a draft's `changes_since_verified` lines for any file with a status, SCHEMA.md included. The agent's last two SCHEMA edits (5.3 and 6.0) set it back to `draft` without adding the note, and only 5.2 did, so there was nothing to show. I can't rebuild the missing 5.3 and 6.0 lines, because I verified the SCHEMA after each.
+  - [[SCHEMA]] 6.1 (set to `draft`, with its own `changes_since_verified` lines): §2 Health Checks gets a rhythm line (one every 14 days, from the newest report; the Dashboard card turns red when overdue); §10 opens with the same rule; §7 rule 8 now says it covers `SCHEMA.md` and explains the note against the changelog; the §10 check on changed-since-verified pages names `SCHEMA.md`; changelog line 6.1 and `version: 6.1`.
+  - `AGENTS.md`: the change-note instruction now says it applies to the SCHEMA too, in the same edit as the changelog line.
+  - Not changed: Nicrosil. It already reads the note from any reviewable file, so nothing in the plugin was missing.
+- **Verify:**
+  - Pending my review: SCHEMA 6.1 (the review card should list its two lines with an R badge)
+- **Commit:** `schema: 6.1 health check rhythm, SCHEMA change notes`

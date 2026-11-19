@@ -10,4 +10,4 @@ Key rules, in case of doubt: draft only, never mark a page verified without Harr
 
 `Health Checks/` holds one short report for each health check, written from `_templates/Health Check Report.md`. Save a new report at the end of every health check and record Harrison's decisions in it. It is an archive, not part of the wiki: no status, not in the index. See `SCHEMA.md` §2 and §10.
 
-When Harrison tells you to change a verified page, set it back to `draft`, keep its `verified_on`, and add one line per change to its `changes_since_verified` property in the same edit (`YYYY-MM-DD: what changed (why)`). Never put that note in the page text. See `SCHEMA.md` §7 rule 8.
+When Harrison tells you to change a verified page, set it back to `draft`, keep its `verified_on`, and add one line per change to its `changes_since_verified` property in the same edit (`YYYY-MM-DD: what changed (why)`). Never put that note in the page text. This applies to `SCHEMA.md` too: when you edit the schema, set it to `draft` and add its `changes_since_verified` lines in the same edit, as well as the changelog line. See `SCHEMA.md` §7 rule 8.

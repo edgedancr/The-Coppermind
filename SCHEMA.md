@@ -1,10 +1,13 @@
 ---
 type: schema
-version: 6
-status: verified
+version: 6.1
+status: draft
 owner: Harrison Nickles
 updated: 2026-11-19
 verified_on: 2026-11-19
+changes_since_verified:
+  - "2026-11-19: new health check rhythm, one every 14 days, counted by the Dashboard's health check card (§2 Health Checks, §10)"
+  - "2026-11-19: §7 rule 8 and the §10 health check now say the change note applies to SCHEMA.md as well, and what the note and the changelog are each for"
 ---
 # The Coppermind — Schema
 
@@ -100,6 +103,7 @@ A **guide** explains how to set up, run, review, or get the most out of the Copp
 `Health Checks/` holds one report for each health check (§10), so I can go back and see how the wiki's health has changed. Like the Ingest Queue, it is not one of the six parts and not a wiki page: reports have no `status`, are not in `index.md`, and I don't verify them. **The agent writes the reports; I decide each flag in them.**
 
 - **Reports are short.** About one screen, written from the `Health Check Report` template in `_templates/`: a summary callout, a table with one row per check (the same rows every time, so reports can be compared), the flags that need my decision, the mechanical fixes for batch approval, and what changed since the last check.
+- **Rhythm:** one health check every 14 days, counted from the date of the newest report in this folder. The health check card on the Dashboard ([[Nicrosil]]) shows the days since the last one and turns red when the next is overdue. I can ask for one sooner at any time.
 - **Naming:** `Health Check YYYY-MM-DD`, with ` (2)` added for a second report on the same day. The date is in the name because a report is a record, not a wiki page (§3).
 - **Each report links to the one before it** in its `previous` property.
 - **A saved report is a record.** As I decide, the agent fills in its Decision lines and its `flags_open` count. It doesn't change the findings afterward; a new health check makes a new report.
@@ -273,6 +277,8 @@ Each source card rates the source with the Admiralty Code. The agent may propose
 7. **Drafts don't sit forever.** A health check flags any draft older than 14 days.
 8. **A verified page the agent changed carries a note of what changed.** The agent only changes a verified page when I tell it to. In that same edit it sets `status: draft`, keeps the old `verified_on`, and adds one line per change to `changes_since_verified`, written as `YYYY-MM-DD: what changed (why)`. A later edit adds another line. The field lives in the properties, never in the page text. When I verify the page, the field is deleted; the log keeps the history. A draft with `verified_on` and this field is a re-review: I check only the listed changes. A draft without the field is new. The **Verify** button in [[Nicrosil]] deletes the field, lists re-reviews first in the queue with an **R** badge, and shows the lines on the review card. `Review Queue.base` has a separate view for them.
 
+   **This covers `SCHEMA.md` too.** When the agent edits the schema at my request, then in the same edit it sets the SCHEMA to `draft`, keeps `verified_on`, and adds one line per rule it changed to the SCHEMA's own `changes_since_verified`. The note and the changelog (§13) do different jobs: the changelog is the permanent history of every version, and the note is the short list I re-review, deleted when I verify the SCHEMA. The agent writes both, and a changelog line never stands in for the note.
+
 ### Review size
 
 - **Default: item by item.** I review each page and each proposed link.
@@ -339,6 +345,8 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 
 ### Health check: reviewing the whole wiki
 
+A health check is due every 14 days (§2, Health Checks: the report archive). The Dashboard's health check card counts the days and turns red once one is overdue.
+
 1. **Think (me).** I start a review of the whole wiki or one folder.
 2. **Calculate (agent).** The agent checks for each of the following and saves the results as a report in `Health Checks/` (§2), written from the Health Check Report template: a short summary, one row per check in a table, and the flags as a numbered list with a suggested fix for each. Mechanical fixes are listed separately so I can approve them as a batch (§7). The checks:
    - claims without citations, or citations that don't support the claim; footnote markers with no definition, definitions no marker uses, and citations still in the old parenthetical form
@@ -348,7 +356,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
    - broken links, orphan pages, and duplicate pages for the same idea
    - "Whose view?" callouts and unsourced-background callouts still open
    - drafts older than 14 days
-   - verified pages changed since they were verified, and drafts that have `verified_on` but no `changes_since_verified` note, or verified pages that still carry one
+   - verified pages changed since they were verified, and drafts that have `verified_on` but no `changes_since_verified` note, or verified pages that still carry one (`SCHEMA.md` is checked like any other page)
    - gaps in the sources themselves (unfinished notes, "?" placeholders, empty definitions)
    - pages missing from `index.md`, or index entries for pages that no longer exist
    - `Ingest Queue.md` out of date: a batch still marked waiting whose sources already have source cards, or a batch marked done whose sources don't
@@ -451,3 +459,4 @@ The Coppermind must outlive any one tool or agent.
 - **5.2 (2026-11-17):** Verified pages the agent changes now say what changed. §4: new `changes_since_verified` property, a list of one-line notes. §7: new rule 8 and a longer rule 5; the agent adds the note in the same edit that sets the page back to `draft`, and verifying the page deletes it. §10: the health check flags re-reviews without a note. `Review Queue.base` has a "Changed since verified" view, and Nicrosil v0.8.11 deletes the field on Verify, lists these pages first with an R badge, and shows the notes on the card and the Dashboard. Status returns to `draft` until I verify it again (§7).
 - **5.3 (2026-11-19):** Guides are now only about the Coppermind itself. §2: the `Guides/` folder is described as how-to pages about the vault, a new "Guides: about the Coppermind itself" subsection says that a how-to about anything else (a course process or guest-lecture advice) is a workflow, and `Workflows/` is described as holding processes from my courses as well as from running the wiki. §6: the URL-citation exception now refers to guides about the Coppermind's own tools. The `Guide` template summary placeholder was updated to match. Status returns to `draft` until I verify it again (§7).
 - **6.0 (2026-11-19):** Citations are now footnotes instead of parentheses. §6: rule 1 rewritten with each example shown as a footnote definition; new rule 2 on how footnotes are written (numbered IDs, a `## Footnotes` section at the end of the page, one footnote per source and location, markers after punctuation, markers allowed in callouts and tables, sources that are part of the sentence stay inline links); later rules renumbered; the attribution table and the "Whose view is this?" example put dates in the footnote. §10: the health check also looks for markers without definitions, unused definitions, and parenthetical citations left over. Every wiki page and the two source cards with citations were converted, with wording unchanged; the 62 verified pages went back to `draft` with a `changes_since_verified` note. The page templates, the Health Check Report template, [[Dissect and Ingest a Source]], and Nicrosil 2.4.5 (search snippets skip footnotes) were updated to match. Status returns to `draft` until I verify it again (§7).
+- **6.1 (2026-11-19):** Health checks now have a rhythm: one every 14 days, counted from the newest report in `Health Checks/` (§2 and §10), and the Dashboard's health check card in Nicrosil 2.4.8 shows the days since the last one and turns red when one is overdue. §7 rule 8 now says in so many words that it covers `SCHEMA.md` and what the change note and the changelog each do; the agent had been setting the SCHEMA back to `draft` without a note, so its changes did not show in the changed-since-verified list. The §10 health check names `SCHEMA.md` in that check. Status returns to `draft` until I verify it again (§7).
