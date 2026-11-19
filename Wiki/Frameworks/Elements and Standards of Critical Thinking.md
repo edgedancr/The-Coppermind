@@ -1,6 +1,6 @@
 ---
 type: framework
-status: draft
+status: verified
 aliases:
   - Critical Thinking
   - Nosich's Elements of Critical Thinking
@@ -11,7 +11,7 @@ sources:
   - "[[SRC - SEE-IT Checklist for Critical Thinking]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
-verified_on:
+verified_on: 2026-11-18
 ---
 > [!summary]
 > Intro to Intelligence's SEE-IT handout defines critical thinking, quoting CriticalThinking.org, as ==thought that is "disciplined, comprehensive, based on intellectual standards, and, as a result, well-reasoned"== ([[SRC - SEE-IT Checklist for Critical Thinking|SEE-IT Checklist, 'SEE-IT Example']]). It then gives two checklists: the **elements** of reasoning, after Gerald Nosich, and the **standards** for judging it, each with questions to ask ([[SRC - SEE-IT Checklist for Critical Thinking|SEE-IT Checklist, 'Functions of Critical Thinking' and 'Standards for Critical Thinking']]). Use the elements to take an argument apart and the standards to test it.

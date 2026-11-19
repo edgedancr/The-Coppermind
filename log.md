@@ -1578,3 +1578,125 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Levels of Intelligence]]
 - **Commit:** `verify: Levels of Intelligence`
+
+### [2026-11-18] verify | Politicized Intelligence
+
+- **Verify:**
+  - Approved: [[Politicized Intelligence]]
+- **Commit:** `verify: Politicized Intelligence`
+
+### [2026-11-18] verify | Security Classification
+
+- **Verify:**
+  - Approved: [[Security Classification]]
+- **Commit:** `verify: Security Classification`
+
+### [2026-11-18] verify | Pearl Harbor (1941)
+
+- **Verify:**
+  - Approved: [[Pearl Harbor (1941)]]
+- **Commit:** `verify: Pearl Harbor (1941)`
+
+### [2026-11-18] verify | All-Source Intelligence
+
+- **Verify:**
+  - Approved: [[All-Source Intelligence]]
+- **Commit:** `verify: All-Source Intelligence`
+
+### [2026-11-18] verify | Analytic Confidence
+
+- **Verify:**
+  - Approved: [[Analytic Confidence]]
+- **Commit:** `verify: Analytic Confidence`
+
+### [2026-11-18] verify | Computer Network Exploitation
+
+- **Verify:**
+  - Approved: [[Computer Network Exploitation]]
+- **Commit:** `verify: Computer Network Exploitation`
+
+### [2026-11-18] verify | Covert Action
+
+- **Verify:**
+  - Approved: [[Covert Action]]
+- **Commit:** `verify: Covert Action`
+
+### [2026-11-18] verify | Denial and Deception
+
+- **Verify:**
+  - Approved: [[Denial and Deception]]
+- **Commit:** `verify: Denial and Deception`
+
+### [2026-11-18] verify | Intelligence Cycle
+
+- **Verify:**
+  - Approved: [[Intelligence Cycle]]
+- **Commit:** `verify: Intelligence Cycle`
+
+### [2026-11-18] verify | Key Judgments
+
+- **Verify:**
+  - Approved: [[Key Judgments]]
+- **Commit:** `verify: Key Judgments`
+
+### [2026-11-18] verify | Mirror Imaging
+
+- **Verify:**
+  - Approved: [[Mirror Imaging]]
+- **Commit:** `verify: Mirror Imaging`
+
+### [2026-11-18] verify | Priority Creep
+
+- **Verify:**
+  - Approved: [[Priority Creep]]
+- **Commit:** `verify: Priority Creep`
+
+### [2026-11-18] verify | Revolution in Military Affairs
+
+- **Verify:**
+  - Approved: [[Revolution in Military Affairs]]
+- **Commit:** `verify: Revolution in Military Affairs`
+
+### [2026-11-18] verify | SEE-It Framework
+
+- **Verify:**
+  - Approved: [[SEE-It Framework]]
+- **Commit:** `verify: SEE-It Framework`
+
+### [2026-11-18] verify | Traffic Analysis
+
+- **Verify:**
+  - Approved: [[Traffic Analysis]]
+- **Commit:** `verify: Traffic Analysis`
+
+### [2026-11-18] verify | Zero-Day Vulnerability
+
+- **Verify:**
+  - Approved: [[Zero-Day Vulnerability]]
+- **Commit:** `verify: Zero-Day Vulnerability`
+
+### [2026-11-18] verify | Polygraph Examination
+
+- **Verify:**
+  - Approved: [[Polygraph Examination]]
+  - Flags I resolved before approving (1):
+    - Accuracy check (Sources disagree) — This is okay
+- **Commit:** `verify: Polygraph Examination`
+
+### [2026-11-18] verify | Elements and Standards of Critical Thinking
+
+- **Verify:**
+  - Approved: [[Elements and Standards of Critical Thinking]]
+- **Commit:** `verify: Elements and Standards of Critical Thinking`
+
+### [2026-11-18] verify | Failures of Imagination, Policy, Capabilities, and Management
+
+- **Verify:**
+  - Approved: [[Failures of Imagination, Policy, Capabilities, and Management]]
+- **Commit:** `verify: Failures of Imagination, Policy, Capabilities, and Management`
+
+### [2026-11-18] verify | Five Hard National Security Problems of Artificial General Intelligence
+
+- **Verify:**
+  - Approved: [[Five Hard National Security Problems of Artificial General Intelligence]]
+- **Commit:** `verify: Five Hard National Security Problems of Artificial General Intelligence`

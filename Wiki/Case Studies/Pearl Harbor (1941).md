@@ -1,6 +1,6 @@
 ---
 type: case-study
-status: draft
+status: verified
 aliases: []
 courses:
   - Intro to Intelligence
@@ -10,9 +10,7 @@ sources:
 year: 1941
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
-changes_since_verified:
-  - "2026-11-18: added the 9/11 Commission Report (batch 9/11-A, approved by Harrison)"
+verified_on: 2026-11-18
 ---
 > [!summary]
 > Intro to Intelligence used the Japanese attack on Pearl Harbor on December 7, 1941, as a case study in flawed intelligence assumptions ([[Intro to Intelligence Class Notes (Fall 2026)#9/24/26|Intro notes, 9/24/26]]). U.S. intelligence concluded from tests of captured Japanese munitions that their torpedoes could not work in the harbor's shallow water, and ==assumed Japan could not innovate to solve the problem== ([[Intro to Intelligence Class Notes (Fall 2026)#9/24/26|Intro notes, 9/24/26]]).

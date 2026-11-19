@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - Politicization
 courses:
@@ -11,10 +11,7 @@ sources:
   - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
-changes_since_verified:
-  - "2026-11-17: added Lowenthal's three ways policymakers politicize, and analysts' own bias, from the Themes summary (batch 1a ingest, edits approved by Harrison)"
-  - "2026-11-18: added Lowenthal on analysts' policy preferences and on recommendations 'crossing a line,' from the Grammar Summaries (batch 1b ingest)"
+verified_on: 2026-11-18
 ---
 > [!summary]
 > Politicized intelligence is giving the intelligence you think the client wants, instead of what the information actually supports ([[Intro to Intelligence Class Notes (Fall 2026)#10/13/26|Intro notes, 10/13/26]]). Intro to Intelligence taught that it happens when strong preferences about a topic shape the analysis, and that ==any and all of these preferences may influence and bias the analysis== ([[Intro to Intelligence Class Notes (Fall 2026)#9/1/26|Intro notes, 9/1/26]]).

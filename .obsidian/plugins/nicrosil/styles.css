@@ -877,3 +877,13 @@ body.cm-quiet .cm-qbar-fill {
 .cm-queue .cm-card-title { font-size: 0.95em; margin-bottom: 4px; }
 .cm-queue .cm-card-buttons { margin-top: 6px; }
 .cm-queue .cm-card-buttons button { border-radius: 3px; padding: 3px 8px; height: auto; box-shadow: none; }
+
+/* ---------- Verify animation: just a gradient check, no orb (2.4.4) ---------- */
+/* The badge itself is the gradient, cut into the shape of a check mark, with a soft glow around it. */
+.cm-vf-badge {
+  background: linear-gradient(135deg, #f0b27a 0%, #d98a4a 35%, #86d2c1 100%) !important;
+  box-shadow: none !important; border-radius: 0 !important;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center / 62% no-repeat; mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center / 62% no-repeat;
+  filter: drop-shadow(0 0 10px rgba(224, 150, 80, 0.55)) drop-shadow(0 0 18px rgba(95, 174, 158, 0.4));
+}
+.cm-vf-badge svg { display: none; }

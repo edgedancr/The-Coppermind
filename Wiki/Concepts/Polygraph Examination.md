@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - Polygraph
 courses:
@@ -12,15 +12,10 @@ related:
   - "[[Security Classification]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
-changes_since_verified:
-  - "2026-11-18: added Lowenthal's account from the Grammar Summaries, with a 'Sources disagree' callout on whether it detects deception (batch 1b proposal, approved by Harrison)"
+verified_on: 2026-11-18
 ---
 > [!summary]
 > Intro to Intelligence taught that ==the polygraph does not grant clearances==: it is a data-collection tool that helps adjudicators resolve each case fairly and consistently ([[Intro to Intelligence Class Notes (Fall 2026)#9/29/26|Intro notes, 9/29/26]]). The instrument does not detect lies; it detects arousal of the sympathetic nervous system ([[Intro to Intelligence Class Notes (Fall 2026)#9/29/26|Intro notes, 9/29/26]]).
-
-> [!caution] Sources disagree
-> The instrument "does not detect lies," only arousal (Intro notes, 9/29/26) vs. changes in physical responses "typically indicate deception or falsehood," though the polygraph is imperfect and controversial (Lowenthal, L: 203–204, as summarized in Grammar, wk 6).
 
 ## Key Points
 All from ([[Intro to Intelligence Class Notes (Fall 2026)#9/29/26|Intro notes, 9/29/26]]).
