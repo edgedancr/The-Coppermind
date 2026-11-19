@@ -855,3 +855,25 @@ body.cm-quiet .cm-qbar-fill {
   border-radius: 4px; background: linear-gradient(90deg, var(--cm-copper), var(--cm-patina));
   box-shadow: 0 0 10px rgba(184, 115, 51, 0.45), 0 0 14px rgba(95, 174, 158, 0.35);
 }
+
+/* ---------- Review queue, plainer and smaller (2.4.3) ---------- */
+/* Rows are flat and compact: no inner highlight line, no hover glow, small corners. The progress bar and
+   the title gradient are unchanged. */
+.cm-queue .cm-row {
+  margin-bottom: 3px; padding: 4px 8px 4px 10px; border-radius: 3px; border: 1px solid rgba(184, 115, 51, 0.12);
+  background: linear-gradient(90deg, rgba(184, 115, 51, 0.07), rgba(95, 174, 158, 0.03)); box-shadow: none;
+}
+.cm-queue .cm-row::before { top: 4px; bottom: 4px; width: 2px; border-radius: 0; }
+.cm-queue .cm-row:hover { background: linear-gradient(90deg, rgba(184, 115, 51, 0.14), rgba(95, 174, 158, 0.06)); border-color: rgba(184, 115, 51, 0.35); box-shadow: none; }
+.cm-queue .cm-row.is-current { background: linear-gradient(90deg, rgba(184, 115, 51, 0.24), rgba(95, 174, 158, 0.09)); border-color: rgba(184, 115, 51, 0.6); box-shadow: none; }
+.cm-queue .cm-row.is-current::before { background: #86d2c1; box-shadow: none; }
+.cm-queue .cm-row-name { font-size: 0.92em; font-weight: 400; }
+.cm-queue .cm-row-group { font-size: 9px; letter-spacing: 0.06em; }
+.cm-queue .cm-group { margin: 9px 0 4px; }
+.cm-queue .cm-badge { font-size: 9px; padding: 2px 4px; }
+
+/* The "Reviewing" card */
+.cm-queue .cm-card { border-radius: 3px; padding: 8px 10px; margin-bottom: 8px; border-color: rgba(184, 115, 51, 0.45); background: linear-gradient(90deg, rgba(184, 115, 51, 0.1), rgba(95, 174, 158, 0.04)); box-shadow: none; }
+.cm-queue .cm-card-title { font-size: 0.95em; margin-bottom: 4px; }
+.cm-queue .cm-card-buttons { margin-top: 6px; }
+.cm-queue .cm-card-buttons button { border-radius: 3px; padding: 3px 8px; height: auto; box-shadow: none; }

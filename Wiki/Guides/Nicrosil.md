@@ -19,7 +19,7 @@ verified_on: 2026-11-18
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
-This guide describes Nicrosil **v2.4.2**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.4.3**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -181,6 +181,7 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
 
 ### Version history
+- **2.4.3:** Made some small visual improvements to the review queue panel.
 - **2.4.2:** The Dashboard always uses the quiet style; the Classic/Quiet setting is gone. The open file in the file list has a soft copper-to-teal highlight and a teal-to-pale-copper name instead of flat orange and teal.
 - **2.4.1:** The Dashboard's six links are small, sharp-cornered cards again, and Review progress is a card with larger text and a glowing copper-to-teal bar.
 - **2.4.0:** A quieter Dashboard: plain header without a panel or sparks, links without icons or per-card colors, the stat tiles and ring replaced by one line of stats, and small serif capitals for headings. Also since 2.3.0: the verify animation lifts the page up and the next one rises from the bottom, both sidebars share the background glow, and the open file's name in the file list is teal.
