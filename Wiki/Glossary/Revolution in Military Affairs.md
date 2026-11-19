@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - RMA
 courses:
@@ -11,9 +11,7 @@ sources:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > **Revolution in military affairs (RMA):** the ongoing debate about how evolving technology will change future warfare.[^1] Lowenthal frames it as the evolution of military technology, doctrine, strategy, and tactics as planners prepare for continued changes in warfare.[^2]

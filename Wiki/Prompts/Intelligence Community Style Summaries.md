@@ -1,6 +1,6 @@
 ---
 type: prompt
-status: draft
+status: verified
 aliases:
   - SAIL IC Style Summaries
   - IC Style Summaries
@@ -10,10 +10,7 @@ related:
   - "[[SCHEMA]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
-  - "2026-11-19: the 'In the Coppermind' locator rule now says to write locators as footnotes (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > My prompt for summarizing a single source as a neutral, attributed intelligence-style product of under 250 words, in four parts: Executive Summary, Main Points, Themes, and Key Takeaways. It works on its own in any chat. When the summary becomes a page in `Wiki/Summaries/`, the "In the Coppermind" section at the end applies too.

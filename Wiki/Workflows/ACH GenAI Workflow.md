@@ -1,6 +1,6 @@
 ---
 type: workflow
-status: draft
+status: verified
 aliases:
   - ACH Workflow
   - ACH with AI
@@ -16,9 +16,7 @@ counters:
   - "[[Hallucination]]"
 drafted_by: Claude (claude-sonnet-5-5)
 drafted_on: 2026-11-12
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > The ACH GenAI Workflow is a seven-step prompt sequence (Steps 0–6) from the SAIL ACH module for running [[Analysis of Competing Hypotheses]] with a generative AI assistant as a structured reasoning partner, not a replacement for analytic judgment.[^1] Each step has a prompt, guardrails for the AI, and a checkpoint where the analyst reviews and approves before moving on. ==The AI drafts; the analyst decides==.[^1]

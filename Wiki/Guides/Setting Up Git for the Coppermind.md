@@ -1,6 +1,6 @@
 ---
 type: guide
-status: draft
+status: verified
 aliases:
   - Git Setup
 courses:
@@ -10,9 +10,7 @@ related:
   - "[[SCHEMA]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-10
-verified_on: 2026-11-11
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > Git keeps a full history of the Coppermind, so every approved change is recorded and any mistake can be undone. In this wiki, ==a git commit is the "save as final" step==: it happens right after I verify the agent's drafts.[^1] This guide sets git up once and then explains the habit for each review session.

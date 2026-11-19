@@ -1,6 +1,6 @@
 ---
 type: workflow
-status: draft
+status: verified
 aliases:
   - Internship Workflow
 courses:
@@ -12,8 +12,6 @@ related:
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-19
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
 ---
 > [!summary]
 > Advice from Detective Mennen's Intro to Intelligence guest lecture on getting a law enforcement intelligence internship that leads to full-time work: start early, build a clean record and an intel-style writing sample, and pick internships that produce real work near operators.[^1] It is written for Strategic Intelligence students looking in Northern Virginia.

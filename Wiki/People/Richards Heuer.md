@@ -1,6 +1,6 @@
 ---
 type: person
-status: draft
+status: verified
 aliases:
   - Heuer
 courses:
@@ -13,10 +13,7 @@ sources:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: added Psychology of Intelligence Analysis from Gartin; added Intro to Intelligence to courses (batch 1c proposal, approved by Harrison)"
-  - "2026-11-19: added Johnston's citation of Heuer; added the Johnston card to sources and Appears In (batch 1e-1 proposal, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > Richards Heuer developed [[Analysis of Competing Hypotheses]] (ACH) at the CIA in 1999 to counteract confirmation bias.[^1]

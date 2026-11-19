@@ -1,6 +1,6 @@
 ---
 type: guide
-status: draft
+status: verified
 aliases:
   - Model Guide
   - Which Model to Use
@@ -20,9 +20,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
-verified_on: 2026-11-17
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > Which Claude model to pick for each kind of Coppermind work: ingesting sources, health checks, queries, editing pages, and building tools. ==Opus is the default for anything that needs judgment about sources, attribution, or links; Sonnet handles routine and tool-building work; Haiku handles mechanical chores; Fable is the escalation for the largest, longest jobs.== No model replaces my verify step.[^1]

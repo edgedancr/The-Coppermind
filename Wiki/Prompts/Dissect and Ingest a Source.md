@@ -1,6 +1,6 @@
 ---
 type: prompt
-status: draft
+status: verified
 aliases:
   - Ingest Prompt
 courses:
@@ -12,10 +12,7 @@ related:
   - "[[Nicrosil]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
-  - "2026-11-19: step 3 (APPEND) now says to cite new material with footnotes that continue the page's numbering (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > The prompt I paste when I want the agent to break a source into its ideas and either create new wiki pages from it or add the new information to pages that already exist. It holds only the inputs for each run and the steps [[SCHEMA]] doesn't spell out; everything else (naming, properties, citations, attribution, review, index, log) comes from the schema itself.

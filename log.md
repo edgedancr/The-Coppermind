@@ -2173,3 +2173,113 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Meaningful Absence]]
 - **Commit:** `verify: Meaningful Absence`
+
+### [2026-11-19] verify | Mirror Imaging
+
+- **Verify:**
+  - Approved: [[Mirror Imaging]]
+- **Commit:** `verify: Mirror Imaging`
+
+### [2026-11-19] verify | OODA Loop
+
+- **Verify:**
+  - Approved: [[OODA Loop]]
+- **Commit:** `verify: OODA Loop`
+
+### [2026-11-19] verify | Priority Creep
+
+- **Verify:**
+  - Approved: [[Priority Creep]]
+- **Commit:** `verify: Priority Creep`
+
+### [2026-11-19] verify | Revolution in Military Affairs
+
+- **Verify:**
+  - Approved: [[Revolution in Military Affairs]]
+- **Commit:** `verify: Revolution in Military Affairs`
+
+### [2026-11-19] verify | SEE-It Framework
+
+- **Verify:**
+  - Approved: [[SEE-It Framework]]
+- **Commit:** `verify: SEE-It Framework`
+
+### [2026-11-19] verify | Traffic Analysis
+
+- **Verify:**
+  - Approved: [[Traffic Analysis]]
+- **Commit:** `verify: Traffic Analysis`
+
+### [2026-11-19] verify | Unconventional Warfare
+
+- **Verify:**
+  - Approved: [[Unconventional Warfare]]
+- **Commit:** `verify: Unconventional Warfare`
+
+### [2026-11-19] verify | Zero-Day Vulnerability
+
+- **Verify:**
+  - Approved: [[Zero-Day Vulnerability]]
+- **Commit:** `verify: Zero-Day Vulnerability`
+
+### [2026-11-19] verify | Richards Heuer
+
+- **Verify:**
+  - Approved: [[Richards Heuer]]
+- **Commit:** `verify: Richards Heuer`
+
+### [2026-11-19] verify | Summary - ACH GenAI Workflow
+
+- **Verify:**
+  - Approved: [[Summary - ACH GenAI Workflow]]
+- **Commit:** `verify: Summary - ACH GenAI Workflow`
+
+### [2026-11-19] verify | Dissect and Ingest a Source
+
+- **Verify:**
+  - Approved: [[Dissect and Ingest a Source]]
+- **Commit:** `verify: Dissect and Ingest a Source`
+
+### [2026-11-19] verify | Intelligence Community Style Summaries
+
+- **Verify:**
+  - Approved: [[Intelligence Community Style Summaries]]
+- **Commit:** `verify: Intelligence Community Style Summaries`
+
+### [2026-11-19] verify | ACH GenAI Workflow
+
+- **Verify:**
+  - Approved: [[ACH GenAI Workflow]]
+- **Commit:** `verify: ACH GenAI Workflow`
+
+### [2026-11-19] verify | Law Enforcement Intelligence Internships
+
+- **Verify:**
+  - Approved: [[Law Enforcement Intelligence Internships]]
+- **Commit:** `verify: Law Enforcement Intelligence Internships`
+
+### [2026-11-19] verify | Choosing a Claude Model for Coppermind Work
+
+- **Verify:**
+  - Approved: [[Choosing a Claude Model for Coppermind Work]]
+- **Commit:** `verify: Choosing a Claude Model for Coppermind Work`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] verify | Setting Up Git for the Coppermind
+
+- **Verify:**
+  - Approved: [[Setting Up Git for the Coppermind]]
+- **Commit:** `verify: Setting Up Git for the Coppermind`
+
+### [2026-11-19] verify | Intelligence Cycle
+
+- **Verify:**
+  - Approved: [[Intelligence Cycle]]
+  - Flags I resolved before approving (1):
+    - Accuracy check (Sources disagree) — This is okay, there are multiple different definitions but they all carry similar meanings in spirit.
+- **Commit:** `verify: Intelligence Cycle`

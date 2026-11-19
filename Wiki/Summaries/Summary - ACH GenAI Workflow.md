@@ -1,6 +1,6 @@
 ---
 type: summary
-status: draft
+status: verified
 courses:
   - SAIL
 sources:
@@ -9,9 +9,7 @@ related:
   - "[[ACH GenAI Workflow]]"
 drafted_by: Claude (claude-sonnet-5-5)
 drafted_on: 2026-11-12
-verified_on: 2026-11-12
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 ## Executive Summary
 The SAIL ACH GenAI Workflow presents a prompt sequence for running [[Analysis of Competing Hypotheses]] with a generative AI assistant.[^1] It says the AI should be a structured reasoning partner, not a replacement for analytic judgment.[^1] The sequence has seven steps, 0 to 6, each with a prompt, guardrails for the AI, and an analyst checkpoint.[^1] The document says the analyst owns the product and must verify every factual claim.[^1] It says the Devil's Advocate step must never be skipped.[^1]
