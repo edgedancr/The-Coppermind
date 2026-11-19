@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - Pi-Shaped Man
   - Pi-Shaped Professional
@@ -12,9 +12,7 @@ related:
   - "[[Centaur Analyst]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > A pi-shaped person knows a little about a lot of things, which lets them connect across many contexts, and also knows a lot about something.[^1] SAIL quoted the definition: "A pi-shaped human is a high agency generalist who has a curiosity driven research mindset with a fearless entrepreneurial attitude."[^1]

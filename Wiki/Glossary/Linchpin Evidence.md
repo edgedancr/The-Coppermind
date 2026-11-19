@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - Linchpin
 courses:
@@ -11,9 +11,7 @@ part_of:
   - "[[ACH GenAI Workflow]]"
 drafted_by: Claude (claude-sonnet-5-5)
 drafted_on: 2026-11-12
-verified_on: 2026-11-12
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > **Linchpin evidence:** an evidence item whose rating, if changed, would change the relative ranking of the top hypotheses.[^1] For each top-two hypothesis, Step 4 asks for the item's current rating, what it would need to change to, how confident we are in it, whether it is single-source or corroborated, and what further collection could strengthen or weaken it.[^1] Step 5 then tests each linchpin by changing its rating and re-ranking.[^2] ICD 203 asks products to state an [[Analytic Assumption|assumption]] explicitly when it serves as the linchpin of an argument.[^3]

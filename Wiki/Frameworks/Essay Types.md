@@ -1,6 +1,6 @@
 ---
 type: framework
-status: draft
+status: verified
 aliases:
   - Types of Essays
 courses:
@@ -9,9 +9,7 @@ sources:
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > SAIL distinguishes six kinds of essay by purpose, and identifies the ==analytical essay as the most common type in Strategic Intelligence (SI)==.[^1]

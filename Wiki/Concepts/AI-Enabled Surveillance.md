@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - Big Brother Meets Big Data
   - Surveillance Capitalism
@@ -13,9 +13,7 @@ related:
   - "[[Liar's Dividend]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > Under the heading "Big Brother meets Big Data," SAIL contrasted two uses of data: surveillance capitalism uses it to predict and influence, while state surveillance uses it to control.[^1]

@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases: []
 courses:
   - SAIL
@@ -11,9 +11,7 @@ related:
   - "[[Law of Armed Conflict]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > SAIL taught that AI compresses the lethal engagement cycle, in three main ways.[^1]

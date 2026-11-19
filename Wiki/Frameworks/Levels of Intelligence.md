@@ -1,6 +1,6 @@
 ---
 type: framework
-status: draft
+status: verified
 aliases:
   - Strategic, Operational, and Tactical Intelligence
   - Types of Intelligence
@@ -12,9 +12,7 @@ sources:
   - "[[SRC - Themes in US Intelligence, Summary of Texts]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > Intro to Intelligence sorted intelligence analysis and reporting into three levels, strategic, operational, and tactical, and by the time horizon and questions each answers.[^1] The course later added technical intelligence as a fourth type,[^2] and a guest lecture showed the same three levels at work in police intelligence.[^3]

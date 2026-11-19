@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - Politicization
 courses:
@@ -14,8 +14,6 @@ sources:
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-19
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
 ---
 > [!summary]
 > Politicized intelligence is giving the intelligence you think the client wants, instead of what the information actually supports.[^1] Intro to Intelligence taught that it happens when strong preferences about a topic shape the analysis, and that ==any and all of these preferences may influence and bias the analysis==.[^2]

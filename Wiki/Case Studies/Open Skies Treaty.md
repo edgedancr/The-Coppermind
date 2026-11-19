@@ -1,6 +1,6 @@
 ---
 type: case-study
-status: draft
+status: verified
 aliases:
   - Open Skies
   - Operation Spiderweb
@@ -11,9 +11,7 @@ sources:
 year: 2025
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > In an Intro to Intelligence guest lecture, CDR Blocker used the Open Skies approach to transparency as a case study in "rebuilding credibility and norms after Operation Spiderweb".[^1] He framed ==the collapse of a norm, not a treaty,== as the central issue: for seventy years the U.S. and Russia had kept a norm of transparency that helped prevent miscalculation and catastrophic escalation.[^1]

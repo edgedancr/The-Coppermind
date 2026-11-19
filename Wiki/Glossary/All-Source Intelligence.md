@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
 courses:
   - Intro to Intelligence
@@ -10,9 +10,7 @@ sources:
   - "[[SRC - The 9-11 Commission Report]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > **All-source intelligence:** intelligence that draws on all types of collection, as appropriate to the topic.[^1] Lowenthal: combining sources compensates for each discipline's shortcomings and profits from their combined strengths. The 2004 Intelligence Reform and Terrorism Prevention Act made the DNI responsible for finished intelligence "based upon all sources of available intelligence".[^2] The 9/11 Commission: "The importance of integrated, all-source analysis cannot be overstated";[^3] the biggest impediment to it is resistance to sharing information.[^4] See [[Need to Share]].

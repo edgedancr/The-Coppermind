@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - Absent Evidence
 courses:
@@ -11,9 +11,7 @@ part_of:
   - "[[ACH GenAI Workflow]]"
 drafted_by: Claude (claude-sonnet-5-5)
 drafted_on: 2026-11-12
-verified_on: 2026-11-12
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > **Meaningful absence:** evidence that was looked for and not found ("we looked and it wasn't there"), as distinct from an information gap, where nobody has looked.[^1] Step 2 labels these `[Absent — meaningful]` and `[Absent — gap]`, and Step 3 says absent items should be rated Inconsistent with hypotheses that would predict their presence.[^2] Step 4 asks whether a hypothesis is being kept alive only by missing evidence, which is not evidence in its favor.[^3]

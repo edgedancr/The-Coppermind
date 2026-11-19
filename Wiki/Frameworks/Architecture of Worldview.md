@@ -1,6 +1,6 @@
 ---
 type: framework
-status: draft
+status: verified
 aliases:
   - Worldview Architecture
 courses:
@@ -13,9 +13,7 @@ related:
   - "[[Imago Dei]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > The Architecture of Worldview is a layered model of the questions every worldview answers, from theology at the core out to culture.[^1] SAIL called theology "the invisible core around which all existence is ordered and animated",[^1] and later applied the model to AI: ==when creating a worldview for an AI, start with the theology, then the pillars of philosophy, then society and culture==.[^2]

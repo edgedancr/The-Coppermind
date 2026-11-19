@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases: []
 courses:
   - SAIL
@@ -10,9 +10,7 @@ related:
   - "[[Artificial Intelligence]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > Narrow AI is AI that does a specific task, or set of tasks, really well.[^1] SAIL noted it is already everywhere (spam filters, recommendations, navigation, medical image screening), with drug and protein design, self-driving logistics, and AI agents at work on the near horizon.[^1]

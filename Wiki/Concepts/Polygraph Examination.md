@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - Polygraph
 courses:
@@ -12,9 +12,7 @@ related:
   - "[[Security Classification]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > Intro to Intelligence taught that ==the polygraph does not grant clearances==: it is a data-collection tool that helps adjudicators resolve each case fairly and consistently.[^1] The instrument does not detect lies; it detects arousal of the sympathetic nervous system.[^1]

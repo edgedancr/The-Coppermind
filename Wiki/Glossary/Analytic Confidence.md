@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
 courses:
   - Intro to Intelligence
@@ -11,8 +11,6 @@ sources:
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-19
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
 ---
 > [!summary]
 > **Analytic confidence:** how strongly an analytic conclusion is supported.[^1] Lowenthal ties it to the scope and quality of the information behind a judgment: **high** when the information is high quality or the issue allows a solid judgment; **moderate** when the information can be read several ways, there are alternative views, or it is credible but not corroborated; **low** when it is scant, questionable, or fragmented, or rests on problematic sources.[^2] ICD 203 says confidence may rest on the logic and evidence behind a judgment, including the quantity and quality of sources and the analyst's understanding of the topic, and it bars stating a confidence level and a degree of likelihood in the same sentence; see [[Estimative Language]].[^3]

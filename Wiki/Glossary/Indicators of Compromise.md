@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
 courses:
   - Intro to Intelligence
@@ -8,9 +8,7 @@ sources:
   - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > **Indicators of compromise:** signs that an intelligence operation has been compromised: sources disappear, the enemy changes its patterns, and operations are botched or meetings fail.[^1]

@@ -1,6 +1,6 @@
 ---
 type: framework
-status: draft
+status: verified
 aliases:
   - EO 12333
 courses:
@@ -11,9 +11,7 @@ sources:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > Executive Order 12333, signed by President Reagan in 1981, defines the powers, restraints, and structure of the modern U.S. Intelligence Community.[^1] Intro to Intelligence taught it in two parts: definitions and roles, and the parameters that restrain intelligence activity.[^1]

@@ -1,6 +1,6 @@
 ---
 type: framework
-status: draft
+status: verified
 aliases:
   - NPC, Mid, Boss, Legendary
 courses:
@@ -12,9 +12,7 @@ part_of:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > SAIL ranks how people work with AI in four levels, from asking a single question to fully steering the AI with the think-calculate-verify loop.[^1] What separates the levels is how much the person reads, challenges, and refines the AI's *content*, not how polished the output looks.[^1]

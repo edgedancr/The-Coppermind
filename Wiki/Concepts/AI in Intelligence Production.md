@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - AI in Government
 courses:
@@ -15,8 +15,6 @@ related:
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-19
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
 ---
 > [!summary]
 > SAIL taught that AI fundamentally reshapes the intelligence production process in three ways: how intelligence is collected, how threats are predicted, and how policy is made.[^1]

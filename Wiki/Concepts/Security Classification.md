@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - Classification Levels
   - Need to Know
@@ -12,9 +12,7 @@ sources:
   - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > Intro to Intelligence taught the U.S. classification levels by how much damage public release could cause, along with control systems and releasability markings that further limit who may see information.[^1] Access within those limits follows the principle of need to know.[^2]

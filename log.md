@@ -1873,3 +1873,303 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Pending my review: SCHEMA 6.0; the 62 re-reviews (footnotes only); the two prompts and the Nicrosil guide
 - **Commit:** `schema: 6.0 citations as footnotes`
+
+### [2026-11-19] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`
+
+### [2026-11-19] verify | Ages of U.S. Intelligence
+
+- **Verify:**
+  - Approved: [[Ages of U.S. Intelligence]]
+- **Commit:** `verify: Ages of U.S. Intelligence`
+
+### [2026-11-19] verify | Analysis of Competing Hypotheses
+
+- **Verify:**
+  - Approved: [[Analysis of Competing Hypotheses]]
+- **Commit:** `verify: Analysis of Competing Hypotheses`
+
+### [2026-11-19] verify | Architecture of Worldview
+
+- **Verify:**
+  - Approved: [[Architecture of Worldview]]
+- **Commit:** `verify: Architecture of Worldview`
+
+### [2026-11-19] verify | Cascade of Unintended Consequences
+
+- **Verify:**
+  - Approved: [[Cascade of Unintended Consequences]]
+- **Commit:** `verify: Cascade of Unintended Consequences`
+
+### [2026-11-19] verify | Elements and Standards of Critical Thinking
+
+- **Verify:**
+  - Approved: [[Elements and Standards of Critical Thinking]]
+- **Commit:** `verify: Elements and Standards of Critical Thinking`
+
+### [2026-11-19] verify | Essay Types
+
+- **Verify:**
+  - Approved: [[Essay Types]]
+- **Commit:** `verify: Essay Types`
+
+### [2026-11-19] verify | Executive Order 12333
+
+- **Verify:**
+  - Approved: [[Executive Order 12333]]
+- **Commit:** `verify: Executive Order 12333`
+
+### [2026-11-19] verify | Failures of Imagination, Policy, Capabilities, and Management
+
+- **Verify:**
+  - Approved: [[Failures of Imagination, Policy, Capabilities, and Management]]
+- **Commit:** `verify: Failures of Imagination, Policy, Capabilities, and Management`
+
+### [2026-11-19] verify | Five Hard National Security Problems of Artificial General Intelligence
+
+- **Verify:**
+  - Approved: [[Five Hard National Security Problems of Artificial General Intelligence]]
+- **Commit:** `verify: Five Hard National Security Problems of Artificial General Intelligence`
+
+### [2026-11-19] verify | Four Levels of Prompt Engineering
+
+- **Verify:**
+  - Approved: [[Four Levels of Prompt Engineering]]
+- **Commit:** `verify: Four Levels of Prompt Engineering`
+
+### [2026-11-19] verify | Information Model
+
+- **Verify:**
+  - Approved: [[Information Model]]
+- **Commit:** `verify: Information Model`
+
+### [2026-11-19] verify | Levels of Intelligence
+
+- **Verify:**
+  - Approved: [[Levels of Intelligence]]
+- **Commit:** `verify: Levels of Intelligence`
+
+### [2026-11-19] verify | Tasking, Collection, Processing, Exploitation, and Dissemination
+
+- **Verify:**
+  - Approved: [[Tasking, Collection, Processing, Exploitation, and Dissemination]]
+- **Commit:** `verify: Tasking, Collection, Processing, Exploitation, and Dissemination`
+
+### [2026-11-19] verify | Agentic AI
+
+- **Verify:**
+  - Approved: [[Agentic AI]]
+- **Commit:** `verify: Agentic AI`
+
+### [2026-11-19] verify | AI Alignment
+
+- **Verify:**
+  - Approved: [[AI Alignment]]
+- **Commit:** `verify: AI Alignment`
+
+### [2026-11-19] verify | AI in Intelligence Production
+
+- **Verify:**
+  - Approved: [[AI in Intelligence Production]]
+- **Commit:** `verify: AI in Intelligence Production`
+
+### [2026-11-19] verify | AI in Warfighting
+
+- **Verify:**
+  - Approved: [[AI in Warfighting]]
+- **Commit:** `verify: AI in Warfighting`
+
+### [2026-11-19] verify | AI-Enabled Surveillance
+
+- **Verify:**
+  - Approved: [[AI-Enabled Surveillance]]
+- **Commit:** `verify: AI-Enabled Surveillance`
+
+### [2026-11-19] verify | Curiosity, Character, and Competence
+
+- **Verify:**
+  - Approved: [[Curiosity, Character, and Competence]]
+- **Commit:** `verify: Curiosity, Character, and Competence`
+
+### [2026-11-19] verify | Human Decision Point
+
+- **Verify:**
+  - Approved: [[Human Decision Point]]
+- **Commit:** `verify: Human Decision Point`
+
+### [2026-11-19] verify | Intelligence as Attentive Understanding
+
+- **Verify:**
+  - Approved: [[Intelligence as Attentive Understanding]]
+- **Commit:** `verify: Intelligence as Attentive Understanding`
+
+### [2026-11-19] verify | Intelligence Writing Style
+
+- **Verify:**
+  - Approved: [[Intelligence Writing Style]]
+- **Commit:** `verify: Intelligence Writing Style`
+
+### [2026-11-19] verify | Intelligence-Led Policing
+
+- **Verify:**
+  - Approved: [[Intelligence-Led Policing]]
+- **Commit:** `verify: Intelligence-Led Policing`
+
+### [2026-11-19] verify | LLM Wiki
+
+- **Verify:**
+  - Approved: [[LLM Wiki]]
+- **Commit:** `verify: LLM Wiki`
+
+### [2026-11-19] verify | Narrow AI
+
+- **Verify:**
+  - Approved: [[Narrow AI]]
+- **Commit:** `verify: Narrow AI`
+
+### [2026-11-19] verify | Pi-Shaped Person
+
+- **Verify:**
+  - Approved: [[Pi-Shaped Person]]
+- **Commit:** `verify: Pi-Shaped Person`
+
+### [2026-11-19] verify | Politicized Intelligence
+
+- **Verify:**
+  - Approved: [[Politicized Intelligence]]
+- **Commit:** `verify: Politicized Intelligence`
+
+### [2026-11-19] verify | Polygraph Examination
+
+- **Verify:**
+  - Approved: [[Polygraph Examination]]
+- **Commit:** `verify: Polygraph Examination`
+
+### [2026-11-19] verify | Security Classification
+
+- **Verify:**
+  - Approved: [[Security Classification]]
+- **Commit:** `verify: Security Classification`
+
+### [2026-11-19] verify | Time Compression Trap
+
+- **Verify:**
+  - Approved: [[Time Compression Trap]]
+- **Commit:** `verify: Time Compression Trap`
+
+### [2026-11-19] verify | Mata v. Avianca (2023)
+
+- **Verify:**
+  - Approved: [[Mata v. Avianca (2023)]]
+- **Commit:** `verify: Mata v. Avianca (2023)`
+
+### [2026-11-19] verify | Open Skies Treaty
+
+- **Verify:**
+  - Approved: [[Open Skies Treaty]]
+- **Commit:** `verify: Open Skies Treaty`
+
+### [2026-11-19] verify | Pearl Harbor (1941)
+
+- **Verify:**
+  - Approved: [[Pearl Harbor (1941)]]
+- **Commit:** `verify: Pearl Harbor (1941)`
+
+### [2026-11-19] verify | All-Source Intelligence
+
+- **Verify:**
+  - Approved: [[All-Source Intelligence]]
+- **Commit:** `verify: All-Source Intelligence`
+
+### [2026-11-19] verify | Analytic Confidence
+
+- **Verify:**
+  - Approved: [[Analytic Confidence]]
+- **Commit:** `verify: Analytic Confidence`
+
+### [2026-11-19] verify | Bach Faucet
+
+- **Verify:**
+  - Approved: [[Bach Faucet]]
+- **Commit:** `verify: Bach Faucet`
+
+### [2026-11-19] verify | Computer Network Exploitation
+
+- **Verify:**
+  - Approved: [[Computer Network Exploitation]]
+- **Commit:** `verify: Computer Network Exploitation`
+
+### [2026-11-19] verify | Confirmation Bias
+
+- **Verify:**
+  - Approved: [[Confirmation Bias]]
+- **Commit:** `verify: Confirmation Bias`
+
+### [2026-11-19] verify | Covert Action
+
+- **Verify:**
+  - Approved: [[Covert Action]]
+- **Commit:** `verify: Covert Action`
+
+### [2026-11-19] verify | Denial and Deception
+
+- **Verify:**
+  - Approved: [[Denial and Deception]]
+- **Commit:** `verify: Denial and Deception`
+
+### [2026-11-19] verify | Diagnostic Evidence
+
+- **Verify:**
+  - Approved: [[Diagnostic Evidence]]
+- **Commit:** `verify: Diagnostic Evidence`
+
+### [2026-11-19] verify | Diplomatic, Information, Military, and Economic Options
+
+- **Verify:**
+  - Approved: [[Diplomatic, Information, Military, and Economic Options]]
+- **Commit:** `verify: Diplomatic, Information, Military, and Economic Options`
+
+### [2026-11-19] verify | Existential Risk
+
+- **Verify:**
+  - Approved: [[Existential Risk]]
+- **Commit:** `verify: Existential Risk`
+
+### [2026-11-19] verify | Indicators of Compromise
+
+- **Verify:**
+  - Approved: [[Indicators of Compromise]]
+- **Commit:** `verify: Indicators of Compromise`
+
+### [2026-11-19] verify | Key Judgments
+
+- **Verify:**
+  - Approved: [[Key Judgments]]
+- **Commit:** `verify: Key Judgments`
+
+### [2026-11-19] verify | Kill Chain
+
+- **Verify:**
+  - Approved: [[Kill Chain]]
+- **Commit:** `verify: Kill Chain`
+
+### [2026-11-19] verify | Law of Armed Conflict
+
+- **Verify:**
+  - Approved: [[Law of Armed Conflict]]
+- **Commit:** `verify: Law of Armed Conflict`
+
+### [2026-11-19] verify | Linchpin Evidence
+
+- **Verify:**
+  - Approved: [[Linchpin Evidence]]
+- **Commit:** `verify: Linchpin Evidence`
+
+### [2026-11-19] verify | Meaningful Absence
+
+- **Verify:**
+  - Approved: [[Meaningful Absence]]
+- **Commit:** `verify: Meaningful Absence`

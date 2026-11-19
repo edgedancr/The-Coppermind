@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
 courses:
   - SAIL
@@ -10,9 +10,7 @@ part_of:
   - "[[Intelligence-to-Action Convergence Matrix]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > **Kill chain:** the stages of a lethal engagement: find, fix, track, target, engage, assess. SAIL placed AI in finding through targeting and in assessment, and the human at the engage decision.[^1]

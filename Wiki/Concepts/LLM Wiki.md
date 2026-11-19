@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - SAIL Portfolio
   - Second Brain
@@ -12,9 +12,7 @@ sources:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > An LLM wiki is a growing, interlinked knowledge base that a person develops and maintains with an AI agent. Instead of asking an AI the same questions over and over, the AI compiles what you learn into linked pages that compound over time.[^1] The Coppermind is one.

@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
 courses:
   - SAIL
@@ -11,9 +11,7 @@ sources:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: added Johnston's definition and his corporate-judgment finding; added Intro to Intelligence to courses; Used in updated (batch 1e-1 proposal, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > **Confirmation bias:** the bias [[Analysis of Competing Hypotheses]] was developed to counteract. SAIL described it as "normal analysis": intuition → conclusion → gather evidence to support it. LLMs default to it because they pattern-match to the most plausible, fluent narrative.[^1] Rob Johnston defines it as "the tendency of individuals to select evidence that supports rather than refutes a given hypothesis" and found it the bias most often seen among analysts, driven mainly by the norm of keeping an agency's [[Corporate Judgment|corporate judgment]].[^2]

@@ -1,6 +1,6 @@
 ---
 type: framework
-status: draft
+status: verified
 aliases:
   - ACH
 courses:
@@ -16,9 +16,7 @@ related:
   - "[[Capability vs. Reliability]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > Analysis of Competing Hypotheses (ACH) is a structured analytic technique that reverses the usual order of analysis: instead of starting from a conclusion and gathering support for it, the analyst lists every plausible hypothesis and uses the evidence to disprove them.[^1] SAIL taught that it was developed by [[Richards Heuer]] at the CIA in 1999 to counteract [[Confirmation Bias]].[^1]

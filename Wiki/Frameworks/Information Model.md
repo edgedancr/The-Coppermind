@@ -1,6 +1,6 @@
 ---
 type: framework
-status: draft
+status: verified
 aliases: []
 courses:
   - Intro to Intelligence
@@ -9,9 +9,7 @@ sources:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > Intro to Intelligence's Information Model describes five levels that raw signals pass through on the way to becoming intelligence: signal, data, information, knowledge, and wisdom or intelligence.[^1] The course taught that context is what moves information up the levels.[^2]

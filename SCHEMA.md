@@ -1,7 +1,7 @@
 ---
 type: schema
-version: 6.0
-status: draft
+version: 6
+status: verified
 owner: Harrison Nickles
 updated: 2026-11-19
 verified_on: 2026-11-19

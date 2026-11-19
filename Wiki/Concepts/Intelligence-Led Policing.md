@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - Intel-Led Policing
   - Prosecution vs. Prevention
@@ -13,9 +13,7 @@ related:
   - "[[Seven Tribes of Intelligence]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > In an Intro to Intelligence guest lecture, Detective Mennen, an NYPD intelligence detective, described intelligence-led policing, in which ==intelligence is part of the operational cycle, "not a packet handed off after the fact"==.[^1] A later lecture contrasted the two cultures involved: law enforcement, built around prosecution, and the IC, built around prevention.[^2]

@@ -1,6 +1,6 @@
 ---
 type: framework
-status: draft
+status: verified
 aliases: []
 courses:
   - Intro to Intelligence
@@ -9,9 +9,7 @@ sources:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > Intro to Intelligence divided the history of U.S. intelligence into four ages since 1944, plus a possible fifth "AI Age" from 2025, each defined by its main threats, tools, analytic focus, structure, and objective.[^1] Read across the table, the objective moves from *understanding* in the First Age to *control* in the AI Age.

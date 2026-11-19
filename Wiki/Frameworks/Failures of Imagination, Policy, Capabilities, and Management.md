@@ -1,6 +1,6 @@
 ---
 type: framework
-status: draft
+status: verified
 aliases:
   - Four Failures
   - Failure of Imagination
@@ -20,9 +20,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > The 9/11 Commission concluded that ==the 9/11 attacks "revealed four kinds of failures: in imagination, policy, capabilities, and management"==.[^1] It reached that judgment with a caution about hindsight, quoting Roberta Wohlstetter on Pearl Harbor: after the event a signal "is always crystal clear," but before it, it is "obscure and pregnant with conflicting meanings".[^1]

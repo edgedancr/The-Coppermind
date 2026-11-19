@@ -1,6 +1,6 @@
 ---
 type: framework
-status: draft
+status: verified
 aliases:
   - AGI Five Hard Problems
   - Five Hard Problems
@@ -14,9 +14,7 @@ related:
   - "[[Semiconductor Export Controls]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > RAND researchers Jim Mitre and Joel B. Predd propose five hard problems that the possible emergence of [[Artificial General Intelligence|artificial general intelligence]] (AGI) poses for U.S. national security.[^1] They offer them as ==a common language for debating AGI's risks and opportunities, and a rubric for evaluating strategies==, because proposals that advance one problem can undermine or ignore another.[^1] Reach for it when judging whether an AI strategy is built for only one possible future.

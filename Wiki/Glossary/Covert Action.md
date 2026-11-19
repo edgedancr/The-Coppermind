@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
 courses:
   - Intro to Intelligence
@@ -11,9 +11,7 @@ sources:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > **Covert action:** James Diehl taught that covert action requires a presidential finding.[^1] Executive Order 12333 bars any covert action intended to influence U.S. political processes, public opinion, policies, or media (Sec. 2.13).[^2] The 9/11 Commission distinguishes acting "clandestinely (secretly)" from acting "covertly (with their connection to the United States hidden)".[^3] It recommended moving lead responsibility for paramilitary operations, clandestine or covert, to the Defense Department, with the CIA keeping other clandestine and covert operations.[^4] Lowenthal calls covert actions "interventions by one state in the affairs of another," whose basic ethical issue is their legitimacy;[^5] see [[Ethical and Moral Issues in Intelligence]].

@@ -1,6 +1,6 @@
 ---
 type: case-study
-status: draft
+status: verified
 aliases:
   - Mata v. Avianca
 courses:
@@ -15,9 +15,7 @@ example_of:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-18
-changes_since_verified:
-  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+verified_on: 2026-11-19
 ---
 > [!summary]
 > In *Mata v. Avianca*, a lawyer used ChatGPT to help write a legal brief that cited prior cases, including *Varghese v. China Southern Airlines*, a case that did not exist.[^1] SAIL used it to teach that ==capability is not reliability==.[^1]
