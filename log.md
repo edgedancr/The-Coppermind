@@ -2356,3 +2356,29 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Pending my review: SCHEMA 6.1 (the review card should list its two lines with an R badge)
 - **Commit:** `schema: 6.1 health check rhythm, SCHEMA change notes`
+
+### [2026-11-19] schema | Nicrosil 2.4.9 clickable change lines (SCHEMA 6.2)
+
+- **Think:** I asked for a line in the Changed since verified list to take me to that spot in the page when I click it.
+- **Calculate:** A change note is free text, so it has no position of its own. I chose a small convention: the line may end with a link to the section it changed, `[[#Heading]]`. Existing notes have no link, and most of them (the citation move on 62 pages) touch the whole page, so they still just open the page.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.4.8 to 2.4.9): a change line with a `[[#Heading]]` (or `[[#^block]]`) becomes a link, with a small copper "→ Heading" tag, on the review card and on the Dashboard's Changed since verified list; clicking goes to that heading in the page (the open tab if there is one), `Ctrl+click` opens a new tab; if the heading no longer exists the page opens with a notice; a line with no link behaves as before
+  - [[SCHEMA]] 6.2 (still `draft`, one more `changes_since_verified` line): §7 rule 8 describes the `[[#Heading]]` ending and says to keep the line in quotes; changelog line 6.2; `version: 6.2`. The two lines already in its note now carry links, so they work as a first test.
+  - `AGENTS.md`: the change-note instruction asks for the `[[#Heading]]` ending when the change is in one section.
+  - [[Nicrosil]]: the review queue bullet, version 2.4.9 and history line; the guide was a re-review draft already, so it gained one more `changes_since_verified` line
+- **Verify:**
+  - Pending my review: SCHEMA 6.2 and the Nicrosil guide
+  - Reload Nicrosil, then click a line on the SCHEMA's card (it should go to its section)
+- **Commit:** `schema: Nicrosil 2.4.9 clickable change lines, SCHEMA 6.2`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`

@@ -281,6 +281,10 @@ body.cm-on-dashboard .workspace-leaf-content[data-type="file-properties"] .view-
 .cm-dash-change:hover { background: var(--background-modifier-hover); }
 .cm-dash-change-name { font-weight: 600; }
 .cm-dash-change-line { font-size: var(--font-ui-small); color: var(--text-muted); }
+.cm-chg-link { cursor: pointer; border-radius: 3px; }
+.cm-chg-link:hover, .cm-chg-link:focus-visible { background: var(--cm-copper-soft); outline: none; }
+.cm-chg-loc { margin-left: 6px; color: var(--cm-copper); white-space: nowrap; font-size: .92em; }
+.cm-chg-link:hover .cm-chg-loc, .cm-chg-link:focus-visible .cm-chg-loc { text-decoration: underline; }
 
 /* relations panel */
 .cm-rel { padding: 8px 10px 20px; }

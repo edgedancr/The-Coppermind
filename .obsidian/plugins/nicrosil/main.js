@@ -138,6 +138,46 @@ function changeLines(v) {
   return (Array.isArray(v) ? v : [v]).map((x) => String(x).trim()).filter(Boolean);
 }
 
+/** Splits a change note into its words and an optional location: a "[[#Heading]]" (or "[[#^block]]") anywhere in the line. */
+function parseChange(line) {
+  const m = /\[\[#([^\]|]+?)(?:\|([^\]]*))?\]\]/.exec(String(line));
+  if (!m) return { text: String(line), target: "", label: "" };
+  const target = m[1].trim();
+  const label = (m[2] || (target.startsWith("^") ? "marked passage" : target.split("#").pop())).trim();
+  const text = String(line).replace(m[0], "").replace(/\s{2,}/g, " ").replace(/\s+([.,;:)])/g, "$1").trim();
+  return { text, target, label };
+}
+
+const normHeading = (s) => String(s).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+
+/** The line number a change note's location points to, read from the page's metadata, or null if it can't be found. */
+function locateInCache(cache, target) {
+  if (!cache || !target) return null;
+  if (target.startsWith("^")) {
+    const id = target.slice(1).toLowerCase();
+    const b = Object.entries(cache.blocks || {}).find(([k]) => k.toLowerCase() === id);
+    return b ? b[1].position.start.line : null;
+  }
+  const want = normHeading(target.split("#").pop());
+  const h = (cache.headings || []).find((x) => normHeading(x.heading) === want);
+  return h ? h.position.start.line : null;
+}
+
+/** Writes one change line into `el`. A line that names a location becomes a link that goes there. */
+function drawChangeLine(el, plugin, path, change) {
+  const { text, target, label } = parseChange(change);
+  el.appendText(text);
+  if (!target) return false;
+  el.addClass("cm-chg-link");
+  el.setAttr("role", "button"); el.setAttr("tabindex", "0");
+  el.setAttr("aria-label", `Go to “${label}” in this page`);
+  el.createSpan({ cls: "cm-chg-loc", text: `→ ${label}` });
+  const go = (e) => { e.stopPropagation(); plugin.openChange(path, change, e.ctrlKey || e.metaKey); };
+  el.addEventListener("click", go);
+  el.addEventListener("keydown", (e) => { if (e.key === "Enter") go(e); });
+  return true;
+}
+
 function sortQueue(drafts, mode, skipped) {
   const byType = (a, b) => groupRank(a.group) - groupRank(b.group) || a.name.localeCompare(b.name);
   const base = {
@@ -571,7 +611,7 @@ class QueueView extends ItemView {
         const box = card.createDiv({ cls: "cm-changes" });
         box.createDiv({ cls: "cm-changes-head", text: "Changed since verified" });
         const cl = box.createEl("ul");
-        curItem.changes.forEach((c) => cl.createEl("li", { text: c }));
+        curItem.changes.forEach((c) => drawChangeLine(cl.createEl("li"), p, curItem.path, c));
       }
       if (curItem.flags.length) {
         const ul = card.createEl("ul", { cls: "cm-card-flags" });
@@ -2675,7 +2715,7 @@ module.exports = class Nicrosil extends Plugin {
         rechecks.sort((a, b) => a.name.localeCompare(b.name)).forEach((i) => {
           const row = d.createDiv({ cls: "cm-dash-change" });
           row.createDiv({ cls: "cm-dash-change-name", text: i.name });
-          i.changes.forEach((c) => row.createDiv({ cls: "cm-dash-change-line", text: c }));
+          i.changes.forEach((c) => drawChangeLine(row.createDiv({ cls: "cm-dash-change-line" }), this, i.path, c));
           row.setAttr("role", "button");
           row.setAttr("tabindex", "0");
           row.addEventListener("click", () => this.openFile(i.path));
@@ -3007,6 +3047,22 @@ module.exports = class Nicrosil extends Plugin {
       card.addEventListener("keydown", (e) => { if (e.key === "Enter") go(e); });
     }
     card.createDiv({ cls: "cm-hc-sub", text: sub });
+  }
+
+  /** Goes to the part of a page a change note points to (its [[#Heading]]); with no location, just opens the page. */
+  async openChange(path, change, newTab) {
+    const file = this.app.vault.getAbstractFileByPath(path);
+    if (!(file instanceof TFile)) return;
+    const { target } = parseChange(change);
+    const line = target ? locateInCache(this.app.metadataCache.getFileCache(file), target) : null;
+    if (target && line === null) new Notice(`Couldn't find “${target.split("#").pop()}” in ${file.basename}, so I opened the page.`);
+    const leaf = this.app.workspace.getLeavesOfType("markdown").find((l) => l.view.file && l.view.file.path === path);
+    if (leaf && !newTab) {
+      this.app.workspace.setActiveLeaf(leaf, { focus: true });
+      if (line !== null) leaf.view.setEphemeralState({ line });
+      return;
+    }
+    await this.app.workspace.getLeaf(newTab ? "tab" : false).openFile(file, line !== null ? { eState: { line } } : undefined);
   }
 
   async openDashboard(newTab) {

@@ -6,6 +6,7 @@
     "ambient": true,
     "hidePanels": true,
     "readMode": "verified",
+    "healthDays": 14,
     "mapTab": "map",
     "mapFlow": true,
     "milestone": 0

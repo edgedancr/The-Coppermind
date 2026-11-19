@@ -1,6 +1,6 @@
 ---
 type: guide
-status: draft
+status: verified
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -12,16 +12,14 @@ courses:
 sources: []
 related:
   - "[[SCHEMA]]"
-drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow and Reading view on open and health check card by claude-sonnet-5-5)
+drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card and clickable change lines by claude-sonnet-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-19
-changes_since_verified:
-  - "2026-11-19: new Dashboard health check card (days since the last report, amber then red when overdue) and a Days between health checks setting; version 2.4.8 and history line added"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.4.8**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.4.9**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -48,7 +46,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
   - a progress bar
   - a card for the page I'm on, with its flags and **Verify**, **Skip**, and **Reject** buttons
   - every draft, in review order, with flag badges: **A** accuracy check, **G** gap, **Q** question ("Whose view is this?"), **W** unsourced warning, **✓** no flags
-  - a **Changed since verified** list at the top, with an **R** badge on each page: verified pages the AI changed at my request. Their card shows the lines from the page's `changes_since_verified` property, so I check only what changed
+  - a **Changed since verified** list at the top, with an **R** badge on each page: verified pages the AI changed at my request. Their card shows the lines from the page's `changes_since_verified` property, so I check only what changed. A line that ends with a link to a section (`[[#Heading]]`) is clickable, on the card and on the Dashboard, and goes to that spot in the page; `Ctrl+click` opens the page in a new tab
   - a collapsed list of verified pages
 - **Resolve buttons on flags.** Each flag callout gets a **Resolve** button in its title bar in Reading view. In editing view, use the sidebar card or `Alt+F`.
 
@@ -186,6 +184,7 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it.[^1]
 
 ### Version history
+- **2.4.9:** A line in a page's **Changed since verified** list is a link when it ends with `[[#Heading]]`: clicking it, on the review card or the Dashboard, goes to that section of the page. A line with no location still opens the page.
 - **2.4.8:** The Dashboard has a health check card: a bar that fills over the 14 days since the last report in `Health Checks/`, amber when the next check is due within two days and red when it is overdue. New setting **Days between health checks**.
 - **2.4.7:** New setting **Open pages in Reading view**: verified pages (or every page, or none) open in Reading view instead of editing, and stay in editing if I switch them there myself.
 - **2.4.6:** The relations map is livelier: glowing arrows with dots flowing along them, a pulsing center page, a dotted copper-lit backdrop, nodes that fade in, and a hover highlight that lights a page's arrows and dims the rest.
