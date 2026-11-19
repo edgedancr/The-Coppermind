@@ -19,6 +19,9 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Attribution:** the ability to determine which actor carried out a particular cyberattack. The ambiguous nature of cyber warfare makes it difficult, especially for the actions of non-state actors (Lowenthal, L: 353, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]).
+> **Attribution:** the ability to determine which actor carried out a particular cyberattack. The ambiguous nature of cyber warfare makes it difficult, especially for the actions of non-state actors.[^1]
 
 **Used in:** [[Computer Network Attack]]; compare [[Computer Network Exploitation]]
+
+## Footnotes
+[^1]: Lowenthal, L: 353, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]

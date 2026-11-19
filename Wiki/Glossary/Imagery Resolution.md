@@ -19,6 +19,9 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Resolution:** the level of detail imagery technology can offer (Lowenthal, L: 104/84, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 4]]).
+> **Resolution:** the level of detail imagery technology can offer.[^1]
 
 **Used in:** [[Intelligence Satellite Orbits]]; compare [[Intelligence Collection Disciplines]] (GEOINT)
+
+## Footnotes
+[^1]: Lowenthal, L: 104/84, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 4]]

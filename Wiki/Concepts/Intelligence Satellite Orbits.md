@@ -9,25 +9,25 @@ drafted_on: 2026-11-11
 verified_on:
 ---
 > [!summary]
-> Intro to Intelligence taught that a satellite's orbit decides what it is good for: low orbits give high-resolution imagery, while higher orbits give navigation, communication, or constant coverage of one area ([[Intro to Intelligence Class Notes (Fall 2026)#8/25/26|Intro notes, 8/25/26]], [[Intro to Intelligence Class Notes (Fall 2026)#9/17/26|Intro notes, 9/17/26]]). The course also covered the Sun–Earth Lagrange points, where spacecraft can "park" indefinitely ([[Intro to Intelligence Class Notes (Fall 2026)#9/17/26|Intro notes, 9/17/26]]).
+> Intro to Intelligence taught that a satellite's orbit decides what it is good for: low orbits give high-resolution imagery, while higher orbits give navigation, communication, or constant coverage of one area.[^1] The course also covered the Sun–Earth Lagrange points, where spacecraft can "park" indefinitely.[^2]
 
 ## Key Points
 **Orbits**
-- **LEO (low Earth orbit):** 160 to 2,000 km ([[Intro to Intelligence Class Notes (Fall 2026)#9/17/26|Intro notes, 9/17/26]]). ==For high-resolution imagery== ([[Intro to Intelligence Class Notes (Fall 2026)#8/25/26|Intro notes, 8/25/26]]); the 9/17 notes list imagery and GPS ([[Intro to Intelligence Class Notes (Fall 2026)#9/17/26|Intro notes, 9/17/26]]).
-- **MEO (medium Earth orbit):** navigation and communication ([[Intro to Intelligence Class Notes (Fall 2026)#8/25/26|Intro notes, 8/25/26]]).
-- **HEO (highly elliptical orbit):** elongated orbits reaching above 35,768 km; imagery over a specific place ([[Intro to Intelligence Class Notes (Fall 2026)#9/17/26|Intro notes, 9/17/26]]).
-- **GEO (geosynchronous orbit):** about 22,000 miles ([[Intro to Intelligence Class Notes (Fall 2026)#8/25/26|Intro notes, 8/25/26]]), or 36,000 km ([[Intro to Intelligence Class Notes (Fall 2026)#9/17/26|Intro notes, 9/17/26]]); constant coverage of one area ([[Intro to Intelligence Class Notes (Fall 2026)#8/25/26|Intro notes, 8/25/26]]); equatorial or inclined ([[Intro to Intelligence Class Notes (Fall 2026)#9/17/26|Intro notes, 9/17/26]]).
+- **LEO (low Earth orbit):** 160 to 2,000 km.[^2] ==For high-resolution imagery==;[^3] the 9/17 notes list imagery and GPS.[^2]
+- **MEO (medium Earth orbit):** navigation and communication.[^3]
+- **HEO (highly elliptical orbit):** elongated orbits reaching above 35,768 km; imagery over a specific place.[^2]
+- **GEO (geosynchronous orbit):** about 22,000 miles,[^3] or 36,000 km;[^2] constant coverage of one area;[^3] equatorial or inclined.[^2]
 
-- **Lowenthal's figures** (Lowenthal, L: 93/80, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 4]]): LEO roughly 200–1,000 miles; MEO the space between LEO and GEO; HEO very low over the southern hemisphere (300 miles) and very high over the northern (25,000 miles); GEO 22,000 miles.
+- **Lowenthal's figures**:[^4] LEO roughly 200–1,000 miles; MEO the space between LEO and GEO; HEO very low over the southern hemisphere (300 miles) and very high over the northern (25,000 miles); GEO 22,000 miles.
 
 > [!caution] Accuracy check
 > My 9/17 notes list GPS under LEO, but my 8/25 notes put navigation in MEO. GPS satellites orbit in medium Earth orbit, about 20,000 km up. Check the slide.
 
-**Sun–Earth Lagrange points** ([[Intro to Intelligence Class Notes (Fall 2026)#9/17/26|Intro notes, 9/17/26]])
+**Sun–Earth Lagrange points**[^2]
 - Points of stable gravity in the Sun–Earth system, where objects stay stable relative to the gravity wells of the Sun and Earth.
 - **L1,** between Earth and the Sun: ACE (solar wind and the interplanetary medium), Wind (solar wind and Earth's magnetosphere), SOHO (solar activity and space weather), DSCOVR (space weather and Earth's climate), and communication relays.
 - **L2,** on the far side of Earth: Gaia (a 3D map of the Milky Way), the James Webb Space Telescope, and scientific platforms.
-- The course's grammar summaries add that Lagrange points are natural gravitational "sweet spots" that need little fuel to keep a spacecraft in position, suiting long-term scientific missions ([[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 4]]).
+- The course's grammar summaries add that Lagrange points are natural gravitational "sweet spots" that need little fuel to keep a spacecraft in position, suiting long-term scientific missions.[^5]
 - **L3,** on the opposite side of the Sun from Earth: limited use, possibly for space observation.
 
 > [!todo] Gap in my notes
@@ -36,3 +36,10 @@ verified_on:
 ## Why It Matters
 - For the level of detail imagery can show, see [[Imagery Resolution]].
 - Orbit drives what GEOINT and other overhead collection can see; see [[Intelligence Collection Disciplines]].
+
+## Footnotes
+[^1]: [[Intro to Intelligence Class Notes (Fall 2026)#8/25/26|Intro notes, 8/25/26]], [[Intro to Intelligence Class Notes (Fall 2026)#9/17/26|Intro notes, 9/17/26]]
+[^2]: [[Intro to Intelligence Class Notes (Fall 2026)#9/17/26|Intro notes, 9/17/26]]
+[^3]: [[Intro to Intelligence Class Notes (Fall 2026)#8/25/26|Intro notes, 8/25/26]]
+[^4]: Lowenthal, L: 93/80, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 4]]
+[^5]: [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 4]]

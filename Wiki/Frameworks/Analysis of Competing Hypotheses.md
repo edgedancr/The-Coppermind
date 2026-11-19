@@ -1,6 +1,6 @@
 ---
 type: framework
-status: verified
+status: draft
 aliases:
   - ACH
 courses:
@@ -17,13 +17,15 @@ related:
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-18
+changes_since_verified:
+  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
 ---
 > [!summary]
-> Analysis of Competing Hypotheses (ACH) is a structured analytic technique that reverses the usual order of analysis: instead of starting from a conclusion and gathering support for it, the analyst lists every plausible hypothesis and uses the evidence to disprove them ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]). SAIL taught that it was developed by [[Richards Heuer]] at the CIA in 1999 to counteract [[Confirmation Bias]] ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).
+> Analysis of Competing Hypotheses (ACH) is a structured analytic technique that reverses the usual order of analysis: instead of starting from a conclusion and gathering support for it, the analyst lists every plausible hypothesis and uses the evidence to disprove them.[^1] SAIL taught that it was developed by [[Richards Heuer]] at the CIA in 1999 to counteract [[Confirmation Bias]].[^1]
 
 ## The Great Inversion
-- **Normal analysis (advocacy):** intuition → conclusion → gather evidence to support it ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).
-- **ACH (rigor):** generate *all* plausible hypotheses → use evidence to *disprove* each → ==the survivor is the answer== ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).
+- **Normal analysis (advocacy):** intuition → conclusion → gather evidence to support it.[^1]
+- **ACH (rigor):** generate *all* plausible hypotheses → use evidence to *disprove* each → ==the survivor is the answer==.[^1]
 
 ## Components: The Six Stages
 1. **Hypotheses:** generate all plausible explanations, at least four, including deeply uncomfortable ones.
@@ -33,18 +35,18 @@ verified_on: 2026-11-18
 5. **Conclude.**
 6. **Sensitivity check:** identify the critical point of failure.
 
-Source for the stages: ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]])
+Source for the stages:[^1]
 
 ## How to Use It With AI
-LLMs pattern-match to the most plausible, fluent narrative, so by default they do normal analysis (confirmation bias), not ACH's elimination logic ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]).
+LLMs pattern-match to the most plausible, fluent narrative, so by default they do normal analysis (confirmation bias), not ACH's elimination logic.[^1]
 
-**Do** ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]])
+**Do**[^1]
 - Force at least four hypotheses, explicitly including political or internal adversarial motives.
 - Prompt the AI strictly step by step: hypotheses, then evidence, then the matrix.
 - Demand honest contradiction marks. ==If the matrix has no contradictions, the AI is hallucinating agreement.==
 - Run the stage 6 sensitivity check to find the critical point of failure.
 
-**Don't** ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]])
+**Don't**[^1]
 - Ask the AI for a conclusion first. It will instantly generate a plausible narrative and skip the analysis.
 - Trust a matrix filled entirely with S or N marks. That is confirmation bias rendered in table form.
 - Mistake the AI's formatting fluency for analytic rigor.
@@ -52,3 +54,6 @@ LLMs pattern-match to the most plausible, fluent narrative, so by default they d
 
 ## Limits and Cautions
 - The Coppermind's own link types (`supports`, `contradicts`, `related`) are modeled on ACH's S/C/N marks; see [[SCHEMA#5. Linking rules and ontology|Schema §5]].
+
+## Footnotes
+[^1]: [[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]

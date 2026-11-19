@@ -1,6 +1,6 @@
 ---
 type: framework
-status: verified
+status: draft
 aliases:
   - NPC, Mid, Boss, Legendary
 courses:
@@ -13,9 +13,11 @@ related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-18
+changes_since_verified:
+  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
 ---
 > [!summary]
-> SAIL ranks how people work with AI in four levels, from asking a single question to fully steering the AI with the think-calculate-verify loop ([[SAIL Class Notes (Fall 2026)#9/3/26|SAIL notes, 9/3/26]]). What separates the levels is how much the person reads, challenges, and refines the AI's *content*, not how polished the output looks ([[SAIL Class Notes (Fall 2026)#9/3/26|SAIL notes, 9/3/26]]).
+> SAIL ranks how people work with AI in four levels, from asking a single question to fully steering the AI with the think-calculate-verify loop.[^1] What separates the levels is how much the person reads, challenges, and refines the AI's *content*, not how polished the output looks.[^1]
 
 ## Components
 1. **NPC:** "Ask a simple question, get a simple answer."
@@ -23,7 +25,10 @@ verified_on: 2026-11-18
 3. **Boss:** back and forth with the AI on ideas: reading, comprehending, challenging, analyzing, refining.
 4. **Legendary:** back and forth on context, approach, and ideas: reading, comprehending, challenging, organizing, analyzing, optimizing, and refining, ==fully using the [[Think-Calculate-Verify Loop|TCV loop]]==.
 
-Source for the levels: ([[SAIL Class Notes (Fall 2026)#9/3/26|SAIL notes, 9/3/26]])
+Source for the levels:[^1]
 
 ## How to Use It
 - As a self-check: iterating only on format and style is Mid-level work, however polished the result.
+
+## Footnotes
+[^1]: [[SAIL Class Notes (Fall 2026)#9/3/26|SAIL notes, 9/3/26]]

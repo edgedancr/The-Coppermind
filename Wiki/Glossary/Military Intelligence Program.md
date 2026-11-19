@@ -19,6 +19,10 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Military Intelligence Program (MIP):** the budget program that funds Department of Defense intelligence programs supporting tactical military operations (Lowenthal, L: 39, 61, 63/33, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 2]]). In the course's answer on congressional oversight, the House Armed Services Committee oversees the MIP agencies ([[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 5]]).
+> **Military Intelligence Program (MIP):** the budget program that funds Department of Defense intelligence programs supporting tactical military operations.[^1] In the course's answer on congressional oversight, the House Armed Services Committee oversees the MIP agencies.[^2]
 
 **Used in:** [[National Intelligence Program]], [[Intelligence Oversight Committees]], [[Under Secretary of Defense for Intelligence]]
+
+## Footnotes
+[^1]: Lowenthal, L: 39, 61, 63/33, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 2]]
+[^2]: [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 5]]

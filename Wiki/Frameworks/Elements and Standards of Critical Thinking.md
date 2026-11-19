@@ -1,6 +1,6 @@
 ---
 type: framework
-status: verified
+status: draft
 aliases:
   - Critical Thinking
   - Nosich's Elements of Critical Thinking
@@ -12,12 +12,14 @@ sources:
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on: 2026-11-18
+changes_since_verified:
+  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
 ---
 > [!summary]
-> Intro to Intelligence's SEE-IT handout defines critical thinking, quoting CriticalThinking.org, as ==thought that is "disciplined, comprehensive, based on intellectual standards, and, as a result, well-reasoned"== ([[SRC - SEE-IT Checklist for Critical Thinking|SEE-IT Checklist, 'SEE-IT Example']]). It then gives two checklists: the **elements** of reasoning, after Gerald Nosich, and the **standards** for judging it, each with questions to ask ([[SRC - SEE-IT Checklist for Critical Thinking|SEE-IT Checklist, 'Functions of Critical Thinking' and 'Standards for Critical Thinking']]). Use the elements to take an argument apart and the standards to test it.
+> Intro to Intelligence's SEE-IT handout defines critical thinking, quoting CriticalThinking.org, as ==thought that is "disciplined, comprehensive, based on intellectual standards, and, as a result, well-reasoned"==.[^1] It then gives two checklists: the **elements** of reasoning, after Gerald Nosich, and the **standards** for judging it, each with questions to ask.[^2] Use the elements to take an argument apart and the standards to test it.
 
 ## Components
-**The elements** ([[SRC - SEE-IT Checklist for Critical Thinking|SEE-IT Checklist, 'Functions of Critical Thinking']])
+**The elements**[^3]
 - **Purpose:** state it clearly, distinguish it from related purposes, and check that you're still on target.
 - **Question at issue:** state it precisely, express it several ways, break it into sub-questions, and separate questions with definite answers from matters of opinion.
 - **Assumptions:** what are the main assumptions, and what theory lies behind the topic?
@@ -27,7 +29,7 @@ verified_on: 2026-11-18
 - **Conclusions and interpretations:** state them, compare them with other views, and identify trends and schools of thought.
 - **Point of view:** define the author's and alternative points of view, and compare and evaluate them.
 
-**The standards and their questions** ([[SRC - SEE-IT Checklist for Critical Thinking|SEE-IT Checklist, 'Standards for Critical Thinking']])
+**The standards and their questions**[^4]
 - **Clarity:** "Could you elaborate further? Could you give me an example?"
 - **Accuracy:** "How could we find out if that is true?"
 - **Precision:** "Could you give me more details? Could you be more exact?"
@@ -38,9 +40,15 @@ verified_on: 2026-11-18
 - **Fairness:** "Am I sympathetically representing the viewpoints of others?"
 
 ## How to Use It
-- The handout rests critical thinking on two assumptions: ==the quality of our thinking affects the quality of our lives, and everyone can learn to improve it== ([[SRC - SEE-IT Checklist for Critical Thinking|SEE-IT Checklist, 'SEE-IT Example']]).
+- The handout rests critical thinking on two assumptions: ==the quality of our thinking affects the quality of our lives, and everyone can learn to improve it==.[^1]
 - Pair it with the [[SEE-It Framework]] to make each idea clear before testing it.
 
 ## Limits and Cautions
-- The handout credits the elements to Nosich without naming the work ([[SRC - SEE-IT Checklist for Critical Thinking|SEE-IT Checklist, 'SEE-IT Example']]).
-- In the handout's table, the questions sit one row off from the standard names, so pairing each question with its standard is a reading of the table ([[SRC - SEE-IT Checklist for Critical Thinking|SEE-IT Checklist, 'Standards for Critical Thinking']]).
+- The handout credits the elements to Nosich without naming the work.[^1]
+- In the handout's table, the questions sit one row off from the standard names, so pairing each question with its standard is a reading of the table.[^4]
+
+## Footnotes
+[^1]: [[SRC - SEE-IT Checklist for Critical Thinking|SEE-IT Checklist, 'SEE-IT Example']]
+[^2]: [[SRC - SEE-IT Checklist for Critical Thinking|SEE-IT Checklist, 'Functions of Critical Thinking' and 'Standards for Critical Thinking']]
+[^3]: [[SRC - SEE-IT Checklist for Critical Thinking|SEE-IT Checklist, 'Functions of Critical Thinking']]
+[^4]: [[SRC - SEE-IT Checklist for Critical Thinking|SEE-IT Checklist, 'Standards for Critical Thinking']]

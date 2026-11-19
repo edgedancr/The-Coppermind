@@ -16,6 +16,10 @@ changes_since_verified:
   - "2026-11-19: added Johnston's definition and his corporate-judgment finding; added Intro to Intelligence to courses; Used in updated (batch 1e-1 proposal, approved by Harrison)"
 ---
 > [!summary]
-> **Confirmation bias:** the bias [[Analysis of Competing Hypotheses]] was developed to counteract. SAIL described it as "normal analysis": intuition → conclusion → gather evidence to support it. LLMs default to it because they pattern-match to the most plausible, fluent narrative ([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]). Rob Johnston defines it as "the tendency of individuals to select evidence that supports rather than refutes a given hypothesis" and found it the bias most often seen among analysts, driven mainly by the norm of keeping an agency's [[Corporate Judgment|corporate judgment]] ([[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=41|Johnston, pp. 21, 23]]).
+> **Confirmation bias:** the bias [[Analysis of Competing Hypotheses]] was developed to counteract. SAIL described it as "normal analysis": intuition → conclusion → gather evidence to support it. LLMs default to it because they pattern-match to the most plausible, fluent narrative.[^1] Rob Johnston defines it as "the tendency of individuals to select evidence that supports rather than refutes a given hypothesis" and found it the bias most often seen among analysts, driven mainly by the norm of keeping an agency's [[Corporate Judgment|corporate judgment]].[^2]
 
 **Used in:** [[Analysis of Competing Hypotheses]], [[Analytic Culture]], [[Corporate Judgment]]
+
+## Footnotes
+[^1]: [[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]
+[^2]: [[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=41|Johnston, pp. 21, 23]]

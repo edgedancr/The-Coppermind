@@ -19,6 +19,9 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Maskirovka:** Russia's tradition of hiding its realities to confuse or mislead outside observers (Lowenthal, L: 322/254, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]).
+> **Maskirovka:** Russia's tradition of hiding its realities to confuse or mislead outside observers.[^1]
 
 **Used in:** none yet; compare [[Denial and Deception]]
+
+## Footnotes
+[^1]: Lowenthal, L: 322/254, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]

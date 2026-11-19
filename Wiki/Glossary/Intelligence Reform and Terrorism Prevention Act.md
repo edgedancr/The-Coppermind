@@ -19,6 +19,9 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Intelligence Reform and Terrorism Prevention Act (IRTPA), 2004:** the first major revision of the [[National Security Act of 1947]]. It created a Director of National Intelligence (DNI) separate from any intelligence agency, and renamed the director of the CIA the Director of the Central Intelligence Agency (DCIA) (Lowenthal, L: 33/31, 38, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 2]]).
+> **Intelligence Reform and Terrorism Prevention Act (IRTPA), 2004:** the first major revision of the [[National Security Act of 1947]]. It created a Director of National Intelligence (DNI) separate from any intelligence agency, and renamed the director of the CIA the Director of the Central Intelligence Agency (DCIA).[^1]
 
 **Used in:** [[Director of National Intelligence]]; compare [[Executive Order 12333]], [[All-Source Intelligence]], [[United States Intelligence Community]]
+
+## Footnotes
+[^1]: Lowenthal, L: 33/31, 38, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 2]]

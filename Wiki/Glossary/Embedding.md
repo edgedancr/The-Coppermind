@@ -16,6 +16,11 @@ drafted_on: 2026-11-11
 verified_on: 2026-11-11
 ---
 > [!summary]
-> **Embedding:** taking a token and making a vector out of it. The example in class used 12,288 dimensions ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]). 3Blue1Brown explains why: training works only with continuous values, so each word is encoded as a long list of numbers that may capture its meaning ([[3Blue1Brown - Large Language Models Explained Briefly (transcript)|3Blue1Brown, LLMs, ch. 8]]). The original transformer used learned embeddings of 512 dimensions ([[Vaswani et al. - Attention Is All You Need (2017).pdf#page=5|Vaswani et al., p. 5]]).
+> **Embedding:** taking a token and making a vector out of it. The example in class used 12,288 dimensions.[^1] 3Blue1Brown explains why: training works only with continuous values, so each word is encoded as a long list of numbers that may capture its meaning.[^2] The original transformer used learned embeddings of 512 dimensions.[^3]
 
 **Used in:** [[Transformer]], [[Tokenization]], [[Retrieval-Augmented Generation]], [[Vector and Embedding Weaknesses]]
+
+## Footnotes
+[^1]: [[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]
+[^2]: [[3Blue1Brown - Large Language Models Explained Briefly (transcript)|3Blue1Brown, LLMs, ch. 8]]
+[^3]: [[Vaswani et al. - Attention Is All You Need (2017).pdf#page=5|Vaswani et al., p. 5]]

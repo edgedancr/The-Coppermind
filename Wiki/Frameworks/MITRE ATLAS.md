@@ -14,13 +14,13 @@ drafted_on: 2026-11-14
 verified_on:
 ---
 > [!summary]
-> MITRE ATLAS is the MITRE Corporation's "ATLAS Matrix for AI Systems," which arranges ==16 tactics as columns, from Reconnaissance to Impact, with 111 techniques for attacking AI systems beneath them== ([[MITRE ATLAS Matrix.pdf|MITRE ATLAS, matrix]]). Fourteen of the tactics are marked as adapted from MITRE ATT&CK ([[MITRE ATLAS Matrix.pdf|MITRE ATLAS, matrix]]). Reach for it to name and organize the specific ways an adversary can attack an AI system; the [[OWASP Top 10 for Large Language Model Applications]] maps its risks to ATLAS ([[OWASP Top 10 for LLM Applications 2026.pdf#page=4|OWASP, p. 4]]).
+> MITRE ATLAS is the MITRE Corporation's "ATLAS Matrix for AI Systems," which arranges ==16 tactics as columns, from Reconnaissance to Impact, with 111 techniques for attacking AI systems beneath them==.[^1] Fourteen of the tactics are marked as adapted from MITRE ATT&CK.[^1] Reach for it to name and organize the specific ways an adversary can attack an AI system; the [[OWASP Top 10 for Large Language Model Applications]] maps its risks to ATLAS.[^2]
 
 > [!warning] Unsourced background — verify or remove
 > ATLAS stands for "Adversarial Threat Landscape for Artificial-Intelligence Systems." The saved page doesn't spell out the acronym.
 
 ## Components
-Tactics in matrix order, with technique counts and examples ([[MITRE ATLAS Matrix.pdf|MITRE ATLAS, matrix]]):
+Tactics in matrix order, with technique counts and examples:[^1]
 
 | Tactic | Techniques | Examples |
 |---|---|---|
@@ -41,13 +41,19 @@ Tactics in matrix order, with technique counts and examples ([[MITRE ATLAS Matri
 | Exfiltration | 6 | Exfiltration via AI Inference API; Extract LLM System Prompt |
 | Impact | 9 | Cost Harvesting; Denial of AI Service; Erode AI Model Integrity |
 
-- The two tactics in bold are the only ones not marked as adapted from ATT&CK ([[MITRE ATLAS Matrix.pdf|MITRE ATLAS, matrix]]).
+- The two tactics in bold are the only ones not marked as adapted from ATT&CK.[^1]
 
 ## How to Use It
-1. Filter the matrix by platform (predictive AI, generative AI, agentic AI, and enterprise) and by maturity (feasible, demonstrated, and realized) ([[MITRE ATLAS Matrix.pdf|MITRE ATLAS, matrix]]).
-2. Read down a tactic's column to see its techniques, and expand techniques to see their subtechniques ([[MITRE ATLAS Matrix.pdf|MITRE ATLAS, matrix]]).
-3. Pair it with a defensive list. OWASP maps each of its ten LLM risks to ATLAS tactics ([[OWASP Top 10 for LLM Applications 2026.pdf#page=58|OWASP, p. 58]]), and cites ATLAS technique AML.T0010, AI Supply Chain Compromise, for its supply-chain entry ([[OWASP Top 10 for LLM Applications 2026.pdf#page=27|OWASP, p. 27]]). See [[AI Supply Chain Compromise]].
+1. Filter the matrix by platform (predictive AI, generative AI, agentic AI, and enterprise) and by maturity (feasible, demonstrated, and realized).[^1]
+2. Read down a tactic's column to see its techniques, and expand techniques to see their subtechniques.[^1]
+3. Pair it with a defensive list. OWASP maps each of its ten LLM risks to ATLAS tactics,[^3] and cites ATLAS technique AML.T0010, AI Supply Chain Compromise, for its supply-chain entry.[^4] See [[AI Supply Chain Compromise]].
 
 ## Limits and Cautions
 > [!todo] Gap in the source
 > The saved page is only the matrix: it has no definitions of the tactics or techniques, and none of ATLAS's mitigations or case studies.
+
+## Footnotes
+[^1]: [[MITRE ATLAS Matrix.pdf|MITRE ATLAS, matrix]]
+[^2]: [[OWASP Top 10 for LLM Applications 2026.pdf#page=4|OWASP, p. 4]]
+[^3]: [[OWASP Top 10 for LLM Applications 2026.pdf#page=58|OWASP, p. 58]]
+[^4]: [[OWASP Top 10 for LLM Applications 2026.pdf#page=27|OWASP, p. 27]]

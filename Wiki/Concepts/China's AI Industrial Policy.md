@@ -13,14 +13,14 @@ drafted_on: 2026-11-14
 verified_on:
 ---
 > [!summary]
-> RAND researchers describe how China, aiming to lead the world in AI by 2030, is deploying industrial policy across the full [[AI Technology Stack|AI technology stack]], from chips to applications ([[RAND - Full Stack, China's Evolving Industrial Policy for AI (2025).pdf|Chan et al., "opening"]]). They judge that ==the policy will likely accelerate China's AI progress but can't easily overcome U.S.-led export controls==, and that China will likely remain at least a close second to the United States ([[RAND - Full Stack, China's Evolving Industrial Policy for AI (2025).pdf|Chan et al., "opening"]]).
+> RAND researchers describe how China, aiming to lead the world in AI by 2030, is deploying industrial policy across the full [[AI Technology Stack|AI technology stack]], from chips to applications.[^1] They judge that ==the policy will likely accelerate China's AI progress but can't easily overcome U.S.-led export controls==, and that China will likely remain at least a close second to the United States.[^1]
 
 ## Key Points
-**Goals** ([[RAND - Full Stack, China's Evolving Industrial Policy for AI (2025).pdf|Chan et al., "Beijing's AI Policy Goals and Tools"]])
+**Goals**[^2]
 - Beijing wants AI to advance economic development and military capability. Its AI discourse focuses on economic and industrial applications, not the "race to AGI" framing sometimes used in Washington.
 - By 2030, it aims for AI to be a $100 billion industry that creates more than $1 trillion of added value in other industries, upgrading sectors such as health care, manufacturing, and agriculture, and powering robotics, autonomous vehicles, and unmanned systems.
 
-**State support at each layer** ([[RAND - Full Stack, China's Evolving Industrial Policy for AI (2025).pdf|Chan et al., "China's Layered State Support for AI"]])
+**State support at each layer**[^3]
 
 | Layer | Examples |
 |---|---|
@@ -33,7 +33,7 @@ verified_on:
 | Open source and data | The OpenI platform, the Gitee code host, data exchanges, and open datasets |
 | Applications | "AI+" action plans; a push into robotics and "embodied intelligence" |
 
-**Will it work?** ([[RAND - Full Stack, China's Evolving Industrial Policy for AI (2025).pdf|Chan et al., "Will China's AI Policies Work?"]])
+**Will it work?**[^4]
 - Three bottlenecks decide the outcome: domestic chips and a sanction-resistant supply chain; talent; and energy, which China is likely to meet.
 - It could backfire. Pushing firms onto immature domestic tools slows frontier work (iFlytek reported a three-month delay switching from Nvidia to Huawei chips); scarce chips may be misallocated; and state-backed firms attract foreign restrictions, as DeepSeek did.
 - AI differs from sectors like shipbuilding and electric vehicles: it changes quickly and depends on talent and data, which respond poorly to capital subsidies. ==Private firms such as DeepSeek, not state firms, have led== China's AI development.
@@ -41,3 +41,9 @@ verified_on:
 
 ## Why It Matters
 - For the controls China is working around, see [[Semiconductor Export Controls]]; for the chip industry's history, see [[Semiconductors and National Security]].
+
+## Footnotes
+[^1]: [[RAND - Full Stack, China's Evolving Industrial Policy for AI (2025).pdf|Chan et al., "opening"]]
+[^2]: [[RAND - Full Stack, China's Evolving Industrial Policy for AI (2025).pdf|Chan et al., "Beijing's AI Policy Goals and Tools"]]
+[^3]: [[RAND - Full Stack, China's Evolving Industrial Policy for AI (2025).pdf|Chan et al., "China's Layered State Support for AI"]]
+[^4]: [[RAND - Full Stack, China's Evolving Industrial Policy for AI (2025).pdf|Chan et al., "Will China's AI Policies Work?"]]

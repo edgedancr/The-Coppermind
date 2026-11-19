@@ -19,6 +19,10 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Verification:** the ability to find out whether treaty obligations are being met, or whether a party is cheating on the agreement (Lowenthal ch. 2, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 2]]). In the course's answer on congressional oversight, the Senate Select Committee on Intelligence assesses U.S. intelligence capabilities to monitor treaties such as arms control agreements ([[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 5]]).
+> **Verification:** the ability to find out whether treaty obligations are being met, or whether a party is cheating on the agreement.[^1] In the course's answer on congressional oversight, the Senate Select Committee on Intelligence assesses U.S. intelligence capabilities to monitor treaties such as arms control agreements.[^2]
 
 **Used in:** [[National Technical Means]], [[Intelligence Oversight Committees]]; compare [[Open Skies Treaty]]
+
+## Footnotes
+[^1]: Lowenthal ch. 2, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 2]]
+[^2]: [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 5]]

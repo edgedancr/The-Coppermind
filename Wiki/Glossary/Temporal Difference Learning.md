@@ -16,6 +16,10 @@ drafted_on: 2026-11-17
 verified_on:
 ---
 > [!summary]
-> **Temporal difference (TD) learning:** a [[Reinforcement Learning|reinforcement learning]] method, invented by [[Richard Sutton]], that lets an agent learn from short-term progress toward a long-term goal. A value function predicts the long-term outcome; when an event changes that prediction, as taking an opponent's piece raises a chess player's belief that they will win, the change immediately reinforces the move that caused it ([[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End|Sutton interview, "The Era of Experience"]]). Sutton says TD-Gammon used it to beat the world's best backgammon players, and that AlphaZero used it while AlphaGo did not ([[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End|Sutton interview, "Surprises in the AI field"]]).
+> **Temporal difference (TD) learning:** a [[Reinforcement Learning|reinforcement learning]] method, invented by [[Richard Sutton]], that lets an agent learn from short-term progress toward a long-term goal. A value function predicts the long-term outcome; when an event changes that prediction, as taking an opponent's piece raises a chess player's belief that they will win, the change immediately reinforces the move that caused it.[^1] Sutton says TD-Gammon used it to beat the world's best backgammon players, and that AlphaZero used it while AlphaGo did not.[^2]
 
 **Used in:** [[Reinforcement Learning]], [[Richard Sutton]]
+
+## Footnotes
+[^1]: [[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End|Sutton interview, "The Era of Experience"]]
+[^2]: [[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End|Sutton interview, "Surprises in the AI field"]]

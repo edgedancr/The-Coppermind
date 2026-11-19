@@ -19,6 +19,9 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Bean counting:** intelligence that counts and catalogs a target nation's physical military assets, such as missiles, army divisions, or planes; often a disparaging term (Lowenthal, L: 323/255, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]).
+> **Bean counting:** intelligence that counts and catalogs a target nation's physical military assets, such as missiles, army divisions, or planes; often a disparaging term.[^1]
 
 **Used in:** none yet; compare [[Capabilities vs. Intentions]]
+
+## Footnotes
+[^1]: Lowenthal, L: 323/255, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]

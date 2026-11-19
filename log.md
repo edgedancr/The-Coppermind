@@ -1857,3 +1857,19 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Analytic Confidence]]
 - **Commit:** `verify: Analytic Confidence`
+
+### [2026-11-19] schema | Citations move to footnotes (6.0)
+
+- **Think:** I asked for citations to move from parentheses to footnotes on every page, with inline links in sentences left alone. I chose to re-verify the verified pages, numbered IDs, and a `## Footnotes` heading, and approved linking the unlinked class-notes citations to their date headings.
+- **Calculate:**
+  - [[SCHEMA]] 6.0 (set to `draft`): §6 rule 1 rewritten for footnotes, new rule 2 on how footnotes are written, rules renumbered, attribution examples put dates in the footnote; §10 health check also looks for footnote problems; changelog line added.
+  - 383 wiki pages and 2 source cards converted: 2,353 parenthetical citations became 1,609 footnotes, each page ending in a `## Footnotes` section. A script checked every page: wording unchanged once citations are removed, every link kept, every marker defined and every definition used, frontmatter unchanged apart from the status change below, line endings unchanged.
+  - Not converted, by design: 5 citations that are part of their sentence ("All from …", "Taglines are from …") kept as inline links; "(cites Treverton, pp. 11–15)" on [[Puzzles and Mysteries]]; the "(Lowenthal)" attributions on [[Seven-Point Definition of Intelligence]]; the "(Section …)" labels on [[Executive Order 12333]]; plain "see [[…]]" cross-references.
+  - 9 unlinked class-notes citations now link to their date headings (on [[Centaur Analyst]], [[Intelligence (National Security)]], [[Intelligence Collection Disciplines]], [[Intelligence vs. Consciousness]], [[Intelligence-to-Action Convergence Matrix]], [[Three-Ps Risk Framework]], [[Artificial General Intelligence]]).
+  - The 62 verified pages set to `draft`, `verified_on` kept, each with a `changes_since_verified` line.
+  - [[Dissect and Ingest a Source]] and [[Intelligence Community Style Summaries]]: citing instructions now say footnotes (extra `changes_since_verified` line on each).
+  - Templates: page templates get a `## Footnotes` section; Glossary Term uses a marker instead of "(citation)"; Health Check Report's citation row also counts footnote problems.
+  - Nicrosil 2.4.5: search snippets and review-card summaries skip footnote markers and the Footnotes section. [[Nicrosil]] guide updated (v2.4.5, plus the missing 2.4.4 history line).
+- **Verify:**
+  - Pending my review: SCHEMA 6.0; the 62 re-reviews (footnotes only); the two prompts and the Nicrosil guide
+- **Commit:** `schema: 6.0 citations as footnotes`

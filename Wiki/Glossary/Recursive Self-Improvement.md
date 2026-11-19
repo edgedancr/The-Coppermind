@@ -13,6 +13,9 @@ drafted_on: 2026-11-14
 verified_on:
 ---
 > [!summary]
-> **Recursive self-improvement:** a model's ability to enhance its own capabilities without additional human input, which Mitre and Predd say could lead to "sort of a superhuman intelligence explosion" ([[RAND - Artificial General Intelligence's Five Hard National Security Problems (2025).pdf|Mitre & Predd, "Endemic Uncertainty"]]).
+> **Recursive self-improvement:** a model's ability to enhance its own capabilities without additional human input, which Mitre and Predd say could lead to "sort of a superhuman intelligence explosion".[^1]
 
 **Used in:** [[Five Hard National Security Problems of Artificial General Intelligence]]; compare [[Technological Singularity]]
+
+## Footnotes
+[^1]: [[RAND - Artificial General Intelligence's Five Hard National Security Problems (2025).pdf|Mitre & Predd, "Endemic Uncertainty"]]

@@ -10,10 +10,10 @@ drafted_on: 2026-11-11
 verified_on:
 ---
 > [!summary]
-> In an Intro to Intelligence guest lecture titled "Chip Wars," CDR Blocker argued that semiconductors are "the oil of the 21st century" and ==the most strategically important technology of our time==, because the Internet of Things, cyber, AI, and every advanced weapon system depend on them ([[Intro to Intelligence Class Notes (Fall 2026)#10/29/26|Intro notes, 10/29/26]]).
+> In an Intro to Intelligence guest lecture titled "Chip Wars," CDR Blocker argued that semiconductors are "the oil of the 21st century" and ==the most strategically important technology of our time==, because the Internet of Things, cyber, AI, and every advanced weapon system depend on them.[^1]
 
 ## Key Points
-All from CDR Blocker's guest lecture ([[Intro to Intelligence Class Notes (Fall 2026)#10/29/26|Intro notes, 10/29/26]]).
+All from CDR Blocker's guest lecture.[^1]
 
 **History**
 - **Origins (1940s–1970s):** the transistor (Bell Labs, 1947), the integrated circuit (Kilby and Noyce), Moore's Law, and Cold War demand.
@@ -36,5 +36,8 @@ All from CDR Blocker's guest lecture ([[Intro to Intelligence Class Notes (Fall 
 > Two lines: Moore's Law as "technology doubles every 10 years" (usually stated as transistor counts doubling about every two years), and Kilby having "founded" Texas Instruments (he worked there; he didn't found it).
 
 ## Why It Matters
-- No country controls the whole supply chain, which creates both interdependence and vulnerability. The U.S.–China rivalry over chips will shape AI, cyber power, and IoT infrastructure ([[Intro to Intelligence Class Notes (Fall 2026)#10/29/26|Intro notes, 10/29/26]]).
+- No country controls the whole supply chain, which creates both interdependence and vulnerability. The U.S.–China rivalry over chips will shape AI, cyber power, and IoT infrastructure.[^1]
 - For the export controls themselves, including RAND's assessment of their effect on China, see [[Semiconductor Export Controls]] and [[China's AI Industrial Policy]].
+
+## Footnotes
+[^1]: [[Intro to Intelligence Class Notes (Fall 2026)#10/29/26|Intro notes, 10/29/26]]

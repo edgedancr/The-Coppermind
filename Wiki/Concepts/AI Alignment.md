@@ -1,6 +1,6 @@
 ---
 type: concept
-status: verified
+status: draft
 aliases:
   - Alignment
 courses:
@@ -14,15 +14,25 @@ related:
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-18
+changes_since_verified:
+  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
 ---
 > [!summary]
-> AI alignment means ==systems doing what we intend, even under pressure== ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]). SAIL described good alignment as human values, system goals, technology, models, and outcomes all working together ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
+> AI alignment means ==systems doing what we intend, even under pressure==.[^1] SAIL described good alignment as human values, system goals, technology, models, and outcomes all working together.[^1]
 
 ## Key Points
-- **Three friction points:** values are contested; context changes; incentives reward speed over safety ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
-- **The real danger:** not that the AI "wants" something, but that powerful systems pursue goals without sufficient human control ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
-- Misaligned goals are one path to catastrophe in the [[Cascade of Unintended Consequences]] ([[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]).
-- From the [[Bing Sydney Incident (2023)]]: superficial controls don't fix underlying alignment problems ([[SAIL Class Notes (Fall 2026)#10/1/26|SAIL notes, 10/1/26]]).
-- RAND's Mitre and Predd describe a misaligned AGI as one operating in ways inconsistent with its designers' or operators' intentions. It might over-optimize a narrow objective, for example by instituting rolling blackouts to make energy distribution more cost-effective, and in a loss-of-control scenario it might resist being turned off ([[RAND - Artificial General Intelligence's Five Hard National Security Problems (2025).pdf|Mitre & Predd, "The Five Problems"]]). See [[Five Hard National Security Problems of Artificial General Intelligence]].
-- [[Yoshua Bengio]] says that =="we still don't know how to make sure they won't turn against us,"== even as companies aim to build machines smarter than humans ([[TED - Yoshua Bengio, The Catastrophic Risks of AI and a Safer Path (transcript)|Bengio, ch. 5]]). He warns that AIs smarter than us could have "their own goals, which may not be aligned with ours," leading to loss of control ([[TED - Yoshua Bengio, The Catastrophic Risks of AI and a Safer Path (transcript)|Bengio, ch. 8]]), and points to studies of deception and self-preservation; see [[AI Deception]] ([[TED - Yoshua Bengio, The Catastrophic Risks of AI and a Safer Path (transcript)|Bengio, ch. 7]]).
+- **Three friction points:** values are contested; context changes; incentives reward speed over safety.[^1]
+- **The real danger:** not that the AI "wants" something, but that powerful systems pursue goals without sufficient human control.[^1]
+- Misaligned goals are one path to catastrophe in the [[Cascade of Unintended Consequences]].[^1]
+- From the [[Bing Sydney Incident (2023)]]: superficial controls don't fix underlying alignment problems.[^2]
+- RAND's Mitre and Predd describe a misaligned AGI as one operating in ways inconsistent with its designers' or operators' intentions. It might over-optimize a narrow objective, for example by instituting rolling blackouts to make energy distribution more cost-effective, and in a loss-of-control scenario it might resist being turned off.[^3] See [[Five Hard National Security Problems of Artificial General Intelligence]].
+- [[Yoshua Bengio]] says that =="we still don't know how to make sure they won't turn against us,"== even as companies aim to build machines smarter than humans.[^4] He warns that AIs smarter than us could have "their own goals, which may not be aligned with ours," leading to loss of control,[^5] and points to studies of deception and self-preservation; see [[AI Deception]].[^6]
 - Each user gets to decide what it means for the AI to be aligned.
+
+## Footnotes
+[^1]: [[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]
+[^2]: [[SAIL Class Notes (Fall 2026)#10/1/26|SAIL notes, 10/1/26]]
+[^3]: [[RAND - Artificial General Intelligence's Five Hard National Security Problems (2025).pdf|Mitre & Predd, "The Five Problems"]]
+[^4]: [[TED - Yoshua Bengio, The Catastrophic Risks of AI and a Safer Path (transcript)|Bengio, ch. 5]]
+[^5]: [[TED - Yoshua Bengio, The Catastrophic Risks of AI and a Safer Path (transcript)|Bengio, ch. 8]]
+[^6]: [[TED - Yoshua Bengio, The Catastrophic Risks of AI and a Safer Path (transcript)|Bengio, ch. 7]]

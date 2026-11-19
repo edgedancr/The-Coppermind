@@ -32,3 +32,6 @@ verified_on:
 
 ## When Not to Use It
 - 
+
+## Footnotes
+%% One line per source and location, as [^1]: [[Source#location|Display text]]. Markers go right after the claim (SCHEMA §6). %%

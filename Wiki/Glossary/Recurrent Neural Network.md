@@ -16,6 +16,9 @@ drafted_on: 2026-11-17
 verified_on:
 ---
 > [!summary]
-> **Recurrent neural network (RNN):** a sequence model that processes input one position at a time, each step depending on the one before; with variants such as long short-term memory, RNNs were the state of the art for language modeling and translation before the transformer ([[Vaswani et al. - Attention Is All You Need (2017).pdf#page=2|Vaswani et al., p. 2]]). Their step-by-step nature prevents parallel computation within a training example, the constraint the [[Transformer|transformer]] was designed to remove ([[Vaswani et al. - Attention Is All You Need (2017).pdf#page=2|Vaswani et al., p. 2]]).
+> **Recurrent neural network (RNN):** a sequence model that processes input one position at a time, each step depending on the one before; with variants such as long short-term memory, RNNs were the state of the art for language modeling and translation before the transformer.[^1] Their step-by-step nature prevents parallel computation within a training example, the constraint the [[Transformer|transformer]] was designed to remove.[^1]
 
 **Used in:** [[Self-Attention]], [[Deep Learning]]
+
+## Footnotes
+[^1]: [[Vaswani et al. - Attention Is All You Need (2017).pdf#page=2|Vaswani et al., p. 2]]

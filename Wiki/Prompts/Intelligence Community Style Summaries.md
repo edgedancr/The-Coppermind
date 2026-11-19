@@ -1,6 +1,6 @@
 ---
 type: prompt
-status: verified
+status: draft
 aliases:
   - SAIL IC Style Summaries
   - IC Style Summaries
@@ -11,6 +11,9 @@ related:
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-18
+changes_since_verified:
+  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+  - "2026-11-19: the 'In the Coppermind' locator rule now says to write locators as footnotes (schema 6.0 citation change, approved by Harrison)"
 ---
 > [!summary]
 > My prompt for summarizing a single source as a neutral, attributed intelligence-style product of under 250 words, in four parts: Executive Summary, Main Points, Themes, and Key Takeaways. It works on its own in any chat. When the summary becomes a page in `Wiki/Summaries/`, the "In the Coppermind" section at the end applies too.
@@ -50,7 +53,7 @@ IN THE COPPERMIND
 If you are working in the Coppermind vault, SCHEMA.md also applies, and these rules replace the ones above where they differ:
 - Start from _templates/Summary.md and save the page in Wiki/Summaries/ as "Summary - <source title>", with status: draft.
 - Fill in the properties: courses, sources (the source's SRC card), drafted_by, and drafted_on. They record who generated the page, so leave the attribution line off.
-- Write each locator as a wikilink citation in the schema's format (§6), for example ([[Source File.pdf#page=4|Author, p. 4]]) or the source card plus a timestamp.
+- Write each locator as a footnote in the schema's format (§6): a marker after the claim, for example `…the claim.[^1]`, and a definition such as `[^1]: [[Source File.pdf#page=4|Author, p. 4]]` (or the source card plus a timestamp) in a `## Footnotes` section at the end of the page.
 - Keep [inferred] and [transcript unclear] marks inline. If there are any [transcript unclear] marks, also put one callout under the Executive Summary that lists them:
   > [!todo] Gap in the source
 - The first time you mention an idea that already has a wiki page, link to it. Don't link to pages that don't exist.
@@ -58,7 +61,7 @@ If you are working in the Coppermind vault, SCHEMA.md also applies, and these ru
 ```
 
 ## Why It Works
-- **It keeps the summary in the source's voice.** Attribution on every claim, neutral wording, and marked inferences match the Coppermind's attribution rules ([[SCHEMA#6. Citation and attribution|Schema §6]]), so a summary page doesn't turn a source's argument into a statement of fact.
+- **It keeps the summary in the source's voice.** Attribution on every claim, neutral wording, and marked inferences match the Coppermind's attribution rules,[^1] so a summary page doesn't turn a source's argument into a statement of fact.
 - **Locators make it checkable.** A claim with a page or timestamp after it can be checked against the source in one click, which is what verifying a page means.
 - **One prompt works in two places.** Used in any chat, it ends with an attribution line. Used in the vault, the page's properties carry the same information, so the line would only repeat them.
 - **The four headings match the Summary template**, so the output drops into the page unchanged.
@@ -67,3 +70,6 @@ If you are working in the Coppermind vault, SCHEMA.md also applies, and these ru
 - **Class notes:** they get concept, framework, and glossary pages through [[Dissect and Ingest a Source]], not one summary.
 - **Evaluating or arguing with a source:** this prompt only represents it. My views go in Perspectives.
 - **Very long sources** (a whole book, say): summarize one chapter or part per run, or the 250-word limit will force out essential context.
+
+## Footnotes
+[^1]: [[SCHEMA#6. Citation and attribution|Schema §6]]

@@ -19,14 +19,24 @@ drafted_on: 2026-11-19
 verified_on:
 ---
 > [!summary]
-> Rob Johnston is an ethnographer who specializes in the cultural anthropology of work. He was a research staff member at the Institute for Defense Analyses and a Director of Central Intelligence postdoctoral research fellow at the CIA's Center for the Study of Intelligence, where he joined the staff ([[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=173|Johnston, p. 161]]). His 2005 study, *Analytic Culture in the US Intelligence Community*, is an ethnography of intelligence analysts; Gregory Treverton's foreword calls it both an indictment of how American intelligence does analysis and a guide for doing better ([[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=11|Treverton, foreword, p. xi]]).
+> Rob Johnston is an ethnographer who specializes in the cultural anthropology of work. He was a research staff member at the Institute for Defense Analyses and a Director of Central Intelligence postdoctoral research fellow at the CIA's Center for the Study of Intelligence, where he joined the staff.[^1] His 2005 study, *Analytic Culture in the US Intelligence Community*, is an ethnography of intelligence analysts; Gregory Treverton's foreword calls it both an indictment of how American intelligence does analysis and a guide for doing better.[^2]
 
 ## Key Ideas and Contributions
-- **Background:** earlier studies of team and individual error in laparoscopic surgery and of NASA astronaut teams, both sponsored by the Defense Advanced Research Projects Agency (DARPA), led him to this work ([[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=14|Johnston, pp. xiv–xv]]). In both, junior members were unwilling to confront a senior member about to make an error ([[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=14|Johnston, pp. xiv–xv]]).
-- **Working definitions:** of [[Intelligence (National Security)|intelligence]], [[Intelligence Analysis|intelligence analysis]], and [[Intelligence Error and Intelligence Failure|error and failure]] ([[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=23|Johnston, pp. 3–8]]).
-- **Findings on [[Analytic Culture]]**, including [[Secrecy vs. Efficacy]] and the taboo against changing a [[Corporate Judgment]] ([[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=29|Johnston, pp. 9–29]]).
-- **[[Tradecraft vs. Science in Intelligence Analysis]]:** analysis is part of a scientific process ([[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=37|Johnston, p. 17]]).
-- **[[Johnston's Analytic Culture Recommendations]]**, centered on a [[Performance Improvement Infrastructure]] ([[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=123|Johnston, pp. 107–116]]). His closing line: an organization must "manage its institutional culture or to be managed by it" ([[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=132|Johnston, p. 116]]).
+- **Background:** earlier studies of team and individual error in laparoscopic surgery and of NASA astronaut teams, both sponsored by the Defense Advanced Research Projects Agency (DARPA), led him to this work.[^3] In both, junior members were unwilling to confront a senior member about to make an error.[^3]
+- **Working definitions:** of [[Intelligence (National Security)|intelligence]], [[Intelligence Analysis|intelligence analysis]], and [[Intelligence Error and Intelligence Failure|error and failure]].[^4]
+- **Findings on [[Analytic Culture]]**, including [[Secrecy vs. Efficacy]] and the taboo against changing a [[Corporate Judgment]].[^5]
+- **[[Tradecraft vs. Science in Intelligence Analysis]]:** analysis is part of a scientific process.[^6]
+- **[[Johnston's Analytic Culture Recommendations]]**, centered on a [[Performance Improvement Infrastructure]].[^7] His closing line: an organization must "manage its institutional culture or to be managed by it".[^8]
 
 ## Appears In
 - [[SRC - Analytic Culture in the US Intelligence Community (Johnston)]], [[SRC - Johnston Recommendations Summary]], [[SRC - The Future of Analysis]]
+
+## Footnotes
+[^1]: [[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=173|Johnston, p. 161]]
+[^2]: [[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=11|Treverton, foreword, p. xi]]
+[^3]: [[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=14|Johnston, pp. xiv–xv]]
+[^4]: [[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=23|Johnston, pp. 3–8]]
+[^5]: [[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=29|Johnston, pp. 9–29]]
+[^6]: [[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=37|Johnston, p. 17]]
+[^7]: [[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=123|Johnston, pp. 107–116]]
+[^8]: [[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=132|Johnston, p. 116]]

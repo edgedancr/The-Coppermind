@@ -11,14 +11,14 @@ drafted_on: 2026-11-11
 verified_on:
 ---
 > [!summary]
-> Machine learning (ML) is the step in SAIL's progression of AI that comes after statistics and before deep learning ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]]). SAIL described early approaches, such as Markov chains and the McCulloch & Pitts artificial neuron, as trying every path until one happens to be correct, then replicating it ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]]).
+> Machine learning (ML) is the step in SAIL's progression of AI that comes after statistics and before deep learning.[^1] SAIL described early approaches, such as Markov chains and the McCulloch & Pitts artificial neuron, as trying every path until one happens to be correct, then replicating it.[^1]
 
 ## Key Points
-**Two types of problems** ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]])
+**Two types of problems**[^1]
 - **Classification** (*What is it? What are its qualities and categories?*): decision trees, ChatGPT, email spam detection, fraud detection. Old-fashioned AI needed far more hand-written rules than is practical to replicate what modern LLMs can do.
 - **Regression** (*How much? What are its quantities and measurements?*): linear regression, neural networks, price forecasting, weather forecasting.
 
-**Learning methods** ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]]) ([[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]])
+**Learning methods**[^1][^2]
 
 | Method | Key idea | Typical tasks |
 |---|---|---|
@@ -27,17 +27,22 @@ verified_on:
 | [[Reinforcement Learning\|Reinforcement]] | Learn a policy π(a \| s) that maximizes long-term reward, from feedback on actions | Sequential decision making, control problems |
 | Deep learning | Learns implicitly | See [[Deep Learning]] |
 
-**Scaling** ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]])
+**Scaling**[^1]
 - *Multiplicity (space-bound):* more examples (rows of data) and more diversity (ensembles of models).
 - *Complexity (time-bound):* more breadth (features, or columns of data) and more depth ("bigger brains").
 - ==The fundamental limit for most ML techniques is good data.== With the data, a lot of value can already be extracted.
 - Effective systems match how much of the world they see with how richly they can describe it.
 - Training minimizes a cost function; gradient descent points in the fastest direction to reduce local error.
 
-**Other points** ([[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]])
-- IBM's explainer: with machine learning, "I don't have to program it"; the machine is given lots of information and discovers patterns in it. More training data makes its predictions more confident, and it is especially good at prediction and at spotting outliers, which makes it useful in cybersecurity. It became popular in the 2010s ([[IBM Technology - AI, Machine Learning, Deep Learning, and Generative AI Explained (transcript)|IBM Technology video, ch. 3]]).
+**Other points**[^1]
+- IBM's explainer: with machine learning, "I don't have to program it"; the machine is given lots of information and discovers patterns in it. More training data makes its predictions more confident, and it is especially good at prediction and at spotting outliers, which makes it useful in cybersecurity. It became popular in the 2010s.[^3]
 - LLMs are ML with a very large number of parameters.
 - AI uses both example and enthymeme (inductive and deductive) reasoning.
 
 > [!todo] Gap in my notes
 > The typical tasks for supervised learning are blank in my 9/10 notes.
+
+## Footnotes
+[^1]: [[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]]
+[^2]: [[SAIL Class Notes (Fall 2026)#9/10/26|SAIL notes, 9/10/26]]
+[^3]: [[IBM Technology - AI, Machine Learning, Deep Learning, and Generative AI Explained (transcript)|IBM Technology video, ch. 3]]

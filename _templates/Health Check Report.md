@@ -21,7 +21,7 @@ flags_open = flags I haven't decided yet. The agent updates flags_open and each 
 
 | Check | Flags | Since last check |
 |---|---|---|
-| Claims without citations, or citations that don't support them | | |
+| Claims without citations, citations that don't support them, or footnote problems | | |
 | Contradictions between pages | | |
 | Typed links that don't hold up, or links that are missing | | |
 | Typed-link mix: share that are `related`, relationships stored twice | | |
@@ -36,6 +36,7 @@ flags_open = flags I haven't decided yet. The agent updates flags_open and each 
 | **Total** | | |
 
 %% Flags = the number of numbered flags below for that check. One flag can cover many pages; say how many in its text. Since last check: "+2", "−1", "same", or "new" on the first report.
+Footnote problems = markers with no definition, definitions no marker uses, or citations still in the old parenthetical form (SCHEMA §6).
 For the typed-link mix, give the counts in the flag's text: links of each type, the share that are `related`, and how many relationships are stored twice. %%
 
 ## Needs my decision

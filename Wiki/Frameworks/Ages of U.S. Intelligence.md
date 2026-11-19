@@ -1,6 +1,6 @@
 ---
 type: framework
-status: verified
+status: draft
 aliases: []
 courses:
   - Intro to Intelligence
@@ -10,9 +10,11 @@ related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-18
+changes_since_verified:
+  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
 ---
 > [!summary]
-> Intro to Intelligence divided the history of U.S. intelligence into four ages since 1944, plus a possible fifth "AI Age" from 2025, each defined by its main threats, tools, analytic focus, structure, and objective ([[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]]). Read across the table, the objective moves from *understanding* in the First Age to *control* in the AI Age.
+> Intro to Intelligence divided the history of U.S. intelligence into four ages since 1944, plus a possible fifth "AI Age" from 2025, each defined by its main threats, tools, analytic focus, structure, and objective.[^1] Read across the table, the objective moves from *understanding* in the First Age to *control* in the AI Age.
 
 ## Components
 |                        | First Age                 | Second Age              | Third Age                    | Fourth Age                            | AI Age?                                             |
@@ -24,9 +26,12 @@ verified_on: 2026-11-18
 | **Structural outcome** | Professional intelligence | Stovepiped intelligence | Distributed intelligence     | Integrated intelligence               | Global integrated government / Cmcl / NG            |
 | **Objectives**         | Understanding             | Single-INT data         | Model behavior               | Discover and anticipate               | Control                                             |
 
-Source for the table: ([[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]])
+Source for the table:[^1]
 
 ## How to Use It
 - Read down a column to see one age as a whole, or across a row to see how one dimension changed over time.
-- The last column was titled with a question mark ("AI Age?") ([[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]]).
+- The last column was titled with a question mark ("AI Age?").[^1]
 - For the collection tools named here, see [[Intelligence Collection Disciplines]].
+
+## Footnotes
+[^1]: [[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]]

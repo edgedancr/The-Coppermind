@@ -19,6 +19,10 @@ drafted_on: 2026-11-19
 verified_on:
 ---
 > [!summary]
-> **Cognitive load:** "the amount/number of cognitive tasks weighed against available cognitive processing power," which Rob Johnston lists among the idiosyncratic variables that affect an analyst's performance ([[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=60|Johnston, p. 41]]). He also calls for research on cognitive-load thresholds and multitasking in analysis ([[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=129|Johnston, p. 113]]).
+> **Cognitive load:** "the amount/number of cognitive tasks weighed against available cognitive processing power," which Rob Johnston lists among the idiosyncratic variables that affect an analyst's performance.[^1] He also calls for research on cognitive-load thresholds and multitasking in analysis.[^2]
 
 **Used in:** [[Taxonomy of Intelligence Analysis Variables]]; compare [[System 1 and System 2 Thinking]]
+
+## Footnotes
+[^1]: [[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=60|Johnston, p. 41]]
+[^2]: [[Johnston - Analytic Culture in the US Intelligence Community (2005).pdf#page=129|Johnston, p. 113]]

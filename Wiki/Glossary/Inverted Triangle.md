@@ -19,6 +19,9 @@ drafted_on: 2026-11-19
 verified_on:
 ---
 > [!summary]
-> **Inverted triangle:** Kaiser and Pherson's figure contrasting a data-driven paper, common in academia (research question, literature review, data and hypotheses, testing, findings, conclusion), with the message-driven paper used in the Intelligence Community, which opens with key judgments and moves through the "what," "why now," and impact to the outlook and implications ([[Kaiser and Pherson - Analytic Writing Guide, ch. 4 (scan).pdf#page=5|Kaiser & Pherson, p. 23]]). They offer it as a possible replacement for the "inverted pyramid," which some find confusing because supporting evidence seems to belong at a pyramid's base ([[Kaiser and Pherson - Analytic Writing Guide, ch. 4 (scan).pdf#page=5|Kaiser & Pherson, p. 23]]).
+> **Inverted triangle:** Kaiser and Pherson's figure contrasting a data-driven paper, common in academia (research question, literature review, data and hypotheses, testing, findings, conclusion), with the message-driven paper used in the Intelligence Community, which opens with key judgments and moves through the "what," "why now," and impact to the outlook and implications.[^1] They offer it as a possible replacement for the "inverted pyramid," which some find confusing because supporting evidence seems to belong at a pyramid's base.[^1]
 
 **Used in:** [[Bottom Line Up Front]], [[Analytic Line of March]]; compare [[Essay Types]]
+
+## Footnotes
+[^1]: [[Kaiser and Pherson - Analytic Writing Guide, ch. 4 (scan).pdf#page=5|Kaiser & Pherson, p. 23]]

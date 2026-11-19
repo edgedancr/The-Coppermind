@@ -19,6 +19,9 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Principals Committee:** the senior policy coordinating body in the [[National Security Council]], where top officials, including the secretaries of defense and state, meet to discuss intelligence issues (Lowenthal, L: 51/43, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 2]]).
+> **Principals Committee:** the senior policy coordinating body in the [[National Security Council]], where top officials, including the secretaries of defense and state, meet to discuss intelligence issues.[^1]
 
 **Used in:** [[National Security Council]], [[Interagency Process]]
+
+## Footnotes
+[^1]: Lowenthal, L: 51/43, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 2]]

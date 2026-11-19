@@ -10,7 +10,7 @@ drafted_on: 2026-11-11
 verified_on:
 ---
 > [!summary]
-> The Three-Ps Risk Framework assesses the risks of an AI system at three levels: the **Program** (the technical system), the **Person** (the individual affected), and the **Population** (society as a whole) ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]). SAIL presented it as a multi-level assessment because AI technology scales very quickly ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]).
+> The Three-Ps Risk Framework assesses the risks of an AI system at three levels: the **Program** (the technical system), the **Person** (the individual affected), and the **Population** (society as a whole).[^1] SAIL presented it as a multi-level assessment because AI technology scales very quickly.[^1]
 
 ## Components
 
@@ -20,17 +20,20 @@ verified_on:
 | **Person:** the human experience | How individuals are affected by AI interactions, especially their autonomy and privacy | Low AI literacy or lack of consent | Discrimination and privacy loss |
 | **Population:** the societal scale | How broad deployment affects groups, institutions, and existing social inequalities | Regulatory gaps or concentrated power | Systemic bias and economic disruption |
 
-Source for the table: ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]])
+Source for the table:[^1]
 
-- Examples from class: hallucinations are a program-level risk, and large numbers of people using AI as a therapist or romantic partner is a population-level risk ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]).
+- Examples from class: hallucinations are a program-level risk, and large numbers of people using AI as a therapist or romantic partner is a population-level risk.[^1]
 
 ## How to Use It
-1. At each level, ask about both intended and unintended consequences: ==if it works, what will happen? If it doesn't work, what will happen?== ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]])
+1. At each level, ask about both intended and unintended consequences: ==if it works, what will happen? If it doesn't work, what will happen?==[^1]
 2. Identify the vulnerability (the cause) and the risk (the outcome) at each level, using the table above.
-3. Pair it with a multi-dimensional framework such as the [[ODNI AI Ethics Framework]], which SAIL described as complementing it ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]).
+3. Pair it with a multi-dimensional framework such as the [[ODNI AI Ethics Framework]], which SAIL described as complementing it.[^1]
 
 ## Limits and Cautions
-- SAIL stressed that morality, ethics, and values and biases are inherent in any assessment made with this framework ([[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]).
+- SAIL stressed that morality, ethics, and values and biases are inherent in any assessment made with this framework.[^1]
 
 > [!question] Whose view is this?
-> "Everyone has biases. As Christians, we know that our biases are rooted in reality and truth, since they come from God." (SAIL notes, 8/27/26)
+> "Everyone has biases. As Christians, we know that our biases are rooted in reality and truth, since they come from God."[^1]
+
+## Footnotes
+[^1]: [[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]

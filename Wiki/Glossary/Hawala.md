@@ -19,6 +19,9 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Hawala:** an informal, trust-based way of moving money outside the banking system. The 9/11 Commission calls it "an informal and ancient trust-based system for transferring funds" and describes al-Qaeda relying on hawala networks in Pakistan, Dubai, and the Middle East to move money raised largely from donations, including diverted zakat, because Afghanistan's banks were antiquated and formal banking was risky after 1998 ([[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=187|9/11 Report, pp. 170–171]]).
+> **Hawala:** an informal, trust-based way of moving money outside the banking system. The 9/11 Commission calls it "an informal and ancient trust-based system for transferring funds" and describes al-Qaeda relying on hawala networks in Pakistan, Dubai, and the Middle East to move money raised largely from donations, including diverted zakat, because Afghanistan's banks were antiquated and formal banking was risky after 1998.[^1]
 
 **Used in:** [[September 11 Attacks (2001)]], [[Al-Qaeda Financing]]; compare [[Economic Intelligence]]
+
+## Footnotes
+[^1]: [[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=187|9/11 Report, pp. 170–171]]

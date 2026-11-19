@@ -18,6 +18,10 @@ drafted_on: 2026-11-17
 verified_on:
 ---
 > [!summary]
-> **Feed-forward neural network:** the second core operation in a [[Transformer|transformer]] layer, alongside attention, which 3Blue1Brown says gives the model extra capacity to store patterns about language learned in training ([[3Blue1Brown - Large Language Models Explained Briefly (transcript)|3Blue1Brown, LLMs, ch. 8]]). In the original paper, it is applied to each position separately and identically: two linear transformations with a ReLU between them ([[Vaswani et al. - Attention Is All You Need (2017).pdf#page=5|Vaswani et al., p. 5]]).
+> **Feed-forward neural network:** the second core operation in a [[Transformer|transformer]] layer, alongside attention, which 3Blue1Brown says gives the model extra capacity to store patterns about language learned in training.[^1] In the original paper, it is applied to each position separately and identically: two linear transformations with a ReLU between them.[^2]
 
 **Used in:** [[Transformer]]
+
+## Footnotes
+[^1]: [[3Blue1Brown - Large Language Models Explained Briefly (transcript)|3Blue1Brown, LLMs, ch. 8]]
+[^2]: [[Vaswani et al. - Attention Is All You Need (2017).pdf#page=5|Vaswani et al., p. 5]]

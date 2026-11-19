@@ -1,7 +1,7 @@
 ---
 type: schema
-version: 5.3
-status: verified
+version: 6.0
+status: draft
 owner: Harrison Nickles
 updated: 2026-11-19
 verified_on: 2026-11-19
@@ -201,21 +201,28 @@ Read each one as a sentence: "this page ___ the target." The types are listed in
 
 ### Citations
 
-1. **Every factual claim (or group of claims that originate from the same source) in a wiki page is cited inline, right after the claim**, with a link to the original source and a location. The display text should be readable:
-   - Class notes, by date heading: `([[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]])`
-   - Classical texts, by Stephanus or Bekker number, plus where I took the note: `(Republic 425, via [[Freedom's Foundations 1 Class Notes (Fall 2026)#9/9/26|FF1 notes, 9/9/26]])`
-   - PDFs, by page: `([[ODNI Principles of AI Ethics.pdf#page=2|ODNI, p. 2]])`
+1. **Every factual claim (or group of claims that originate from the same source) in a wiki page is cited with a footnote, right after the claim**, linking to the original source and a location. The marker goes in the text (`…four flights.[^1]`) and the definition goes at the bottom of the page. The display text in the definition should be readable:
+   - Class notes, by date heading: `[^1]: [[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]`
+   - Classical texts, by Stephanus or Bekker number, plus where I took the note: `[^2]: Republic 425, via [[Freedom's Foundations 1 Class Notes (Fall 2026)#9/9/26|FF1 notes, 9/9/26]]`
+   - PDFs, by page: `[^3]: [[ODNI Principles of AI Ethics.pdf#page=2|ODNI, p. 2]]`
    - Other sources: a link to the source card plus a page, section, or timestamp.
    - **Keep the class-notes display text in the form `<Course> notes, M/D/YY`** (`SAIL notes, 10/20/26`, `Intro notes, 10/20/26`) so citations read the same everywhere.
-   - Web pages used only for a guide about the Coppermind's own tools (not course content) may be cited by URL directly, without a source card.
-2. **Every source a page cites is also listed in its `sources` property.**
-3. **No unsourced claims.** If the agent thinks background knowledge is needed that no source in the vault provides, it goes in a callout that I must either source or delete before verifying:
+   - Web pages used only for a guide about the Coppermind's own tools (not course content) may be cited by URL directly in the footnote, without a source card.
+2. **How footnotes are written.**
+   - **IDs are numbers** (`[^1]`, `[^2]`, …), in order of first use when a page is drafted. When adding to an existing page, use the next unused number; Obsidian shows them in order anyway, so existing footnotes are never renumbered.
+   - **Definitions go in a `## Footnotes` section, the last section of the page**, one per line: `[^1]: <citation>`.
+   - **One footnote per source and location.** A second claim from the same place reuses its number. A claim with two sources gets two markers side by side: `[^2][^3]`.
+   - **The marker goes after punctuation** (`.`, `,`, `;`, `:`, a closing quote), but before a dash.
+   - **Markers can go in callouts and tables; definitions never do.** In a table, write the link in the definition with a plain `|`, not the table's `\|`.
+   - **A source that is part of the sentence stays an inline link**, with no footnote: `All from [[Intro to Intelligence Class Notes (Fall 2026)#9/29/26|Intro notes, 9/29/26]] unless noted.` A plain link to another wiki page (`see [[Mirror Imaging]]`) is a link, not a citation, and stays in the text.
+3. **Every source a page cites is also listed in its `sources` property.**
+4. **No unsourced claims.** If the agent thinks background knowledge is needed that no source in the vault provides, it goes in a callout that I must either source or delete before verifying:
    ```
    > [!warning] Unsourced background — verify or remove
    > ...
    ```
    A verified page never contains one of these callouts.
-4. **Direct quotes** use quotation marks or a blockquote and name the speaker.
+5. **Direct quotes** use quotation marks or a blockquote and name the speaker; the footnote gives the location.
 
 ### Attribution: whose voice is this?
 
@@ -224,8 +231,8 @@ My class notes mix four voices, and the wiki keeps them separate:
 | Voice | How to write it |
 |---|---|
 | **A source or author** (a book, article, quoted person) | Name them: "Heuer developed ACH to counter confirmation bias…" |
-| **The instructor / course** | Name the course and date: "SAIL presented the Three-Ps framework as… (9/1/26)" |
-| **A guest lecturer** | Name them, by the title and name my notes give, with the course and date: "In an Intro to Intelligence guest lecture, CDR Blocker argued… (8/27/26)" |
+| **The instructor / course** | Name the course in the text; the footnote gives the date: `SAIL presented the Three-Ps framework as…[^1]` |
+| **A guest lecturer** | Name them, by the title and name my notes give, with the course in the text and the date in the footnote: `In an Intro to Intelligence guest lecture, CDR Blocker argued…[^2]` |
 | **Me** | Never in a wiki page as fact. My views go in `Perspectives/`, or in a `## My Take` section that only I write |
 
 Rules:
@@ -234,7 +241,7 @@ Rules:
 - **If a line in my notes sounds like an opinion or a judgment** and it isn't clear whether it was the instructor's or mine, the agent does not guess. It flags it:
   ```
   > [!question] Whose view is this?
-  > "<the line from my notes>" (source, date)
+  > "<the line from my notes>"[^n]
   ```
   I resolve it before verifying: attribute it, move it to Perspectives, or cut it.
 - **The agent never turns a line from my notes into a neutral statement of fact** about the world. "SAIL taught X" is not the same as "X is true."
@@ -334,7 +341,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 
 1. **Think (me).** I start a review of the whole wiki or one folder.
 2. **Calculate (agent).** The agent checks for each of the following and saves the results as a report in `Health Checks/` (§2), written from the Health Check Report template: a short summary, one row per check in a table, and the flags as a numbered list with a suggested fix for each. Mechanical fixes are listed separately so I can approve them as a batch (§7). The checks:
-   - claims without citations, or citations that don't support the claim
+   - claims without citations, or citations that don't support the claim; footnote markers with no definition, definitions no marker uses, and citations still in the old parenthetical form
    - contradictions between pages
    - typed links that don't hold up, and missing links that should exist
    - the typed-link mix: how many links of each type, the share that are `related`, and any relationship stored twice (on both pages, or as `related` on one page and a stronger type on the other)
@@ -443,3 +450,4 @@ The Coppermind must outlive any one tool or agent.
 - **5.1 (2026-11-17):** The index no longer splits each type into Verified and Drafts (§11). Each type is one alphabetical list with a single total, and a change of status no longer changes the index. Nicrosil v0.8.6 was updated to match. Status returns to `draft` until I verify it again (§7).
 - **5.2 (2026-11-17):** Verified pages the agent changes now say what changed. §4: new `changes_since_verified` property, a list of one-line notes. §7: new rule 8 and a longer rule 5; the agent adds the note in the same edit that sets the page back to `draft`, and verifying the page deletes it. §10: the health check flags re-reviews without a note. `Review Queue.base` has a "Changed since verified" view, and Nicrosil v0.8.11 deletes the field on Verify, lists these pages first with an R badge, and shows the notes on the card and the Dashboard. Status returns to `draft` until I verify it again (§7).
 - **5.3 (2026-11-19):** Guides are now only about the Coppermind itself. §2: the `Guides/` folder is described as how-to pages about the vault, a new "Guides: about the Coppermind itself" subsection says that a how-to about anything else (a course process or guest-lecture advice) is a workflow, and `Workflows/` is described as holding processes from my courses as well as from running the wiki. §6: the URL-citation exception now refers to guides about the Coppermind's own tools. The `Guide` template summary placeholder was updated to match. Status returns to `draft` until I verify it again (§7).
+- **6.0 (2026-11-19):** Citations are now footnotes instead of parentheses. §6: rule 1 rewritten with each example shown as a footnote definition; new rule 2 on how footnotes are written (numbered IDs, a `## Footnotes` section at the end of the page, one footnote per source and location, markers after punctuation, markers allowed in callouts and tables, sources that are part of the sentence stay inline links); later rules renumbered; the attribution table and the "Whose view is this?" example put dates in the footnote. §10: the health check also looks for markers without definitions, unused definitions, and parenthetical citations left over. Every wiki page and the two source cards with citations were converted, with wording unchanged; the 62 verified pages went back to `draft` with a `changes_since_verified` note. The page templates, the Health Check Report template, [[Dissect and Ingest a Source]], and Nicrosil 2.4.5 (search snippets skip footnotes) were updated to match. Status returns to `draft` until I verify it again (§7).

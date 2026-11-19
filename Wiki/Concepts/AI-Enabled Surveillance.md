@@ -1,6 +1,6 @@
 ---
 type: concept
-status: verified
+status: draft
 aliases:
   - Big Brother Meets Big Data
   - Surveillance Capitalism
@@ -14,11 +14,16 @@ related:
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-11
+changes_since_verified:
+  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
 ---
 > [!summary]
-> Under the heading "Big Brother meets Big Data," SAIL contrasted two uses of data: surveillance capitalism uses it to predict and influence, while state surveillance uses it to control ([[SAIL Class Notes (Fall 2026)#10/15/26|SAIL notes, 10/15/26]]).
+> Under the heading "Big Brother meets Big Data," SAIL contrasted two uses of data: surveillance capitalism uses it to predict and influence, while state surveillance uses it to control.[^1]
 
 ## Key Points
-- ==Privacy is a condition of autonomy, not a minor consumer preference.== ([[SAIL Class Notes (Fall 2026)#10/15/26|SAIL notes, 10/15/26]])
-- The West is not immune: data brokers and facial recognition are building similar tools ([[SAIL Class Notes (Fall 2026)#10/15/26|SAIL notes, 10/15/26]]).
-- Deepfakes: when video and audio can be forged, what still counts as evidence? ([[SAIL Class Notes (Fall 2026)#10/15/26|SAIL notes, 10/15/26]])
+- ==Privacy is a condition of autonomy, not a minor consumer preference.==[^1]
+- The West is not immune: data brokers and facial recognition are building similar tools.[^1]
+- Deepfakes: when video and audio can be forged, what still counts as evidence?[^1]
+
+## Footnotes
+[^1]: [[SAIL Class Notes (Fall 2026)#10/15/26|SAIL notes, 10/15/26]]

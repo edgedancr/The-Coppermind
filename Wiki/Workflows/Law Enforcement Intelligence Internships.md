@@ -1,6 +1,6 @@
 ---
 type: workflow
-status: verified
+status: draft
 aliases:
   - Internship Workflow
 courses:
@@ -12,12 +12,14 @@ related:
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-19
+changes_since_verified:
+  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
 ---
 > [!summary]
-> Advice from Detective Mennen's Intro to Intelligence guest lecture on getting a law enforcement intelligence internship that leads to full-time work: start early, build a clean record and an intel-style writing sample, and pick internships that produce real work near operators ([[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]). It is written for Strategic Intelligence students looking in Northern Virginia.
+> Advice from Detective Mennen's Intro to Intelligence guest lecture on getting a law enforcement intelligence internship that leads to full-time work: start early, build a clean record and an intel-style writing sample, and pick internships that produce real work near operators.[^1] It is written for Strategic Intelligence students looking in Northern Virginia.
 
 ## Steps
-All from Detective Mennen's guest lecture ([[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]).
+All from Detective Mennen's guest lecture.[^1]
 1. **Start early,** freshman or sophomore year. FBI paperwork can take a year.
 2. **Use your networks:** faculty, SI alumni, and older students who recently finished.
 3. **Target clearance sponsors.** A first tour that only *starts* the background investigation is a win.
@@ -48,6 +50,9 @@ What makes a good internship for full-time hiring:
 6. A second-tour path: agencies prefer people they have already trained and tested. "Paid is nice. Trust is better."
 
 ## Common Mistakes
-- **Choosing between the FBI and local on name alone.** Get the clearance and the product; the hiring path follows the work ([[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]).
-- **Waiting for a title.** A clearance plus a work sample beats a title ([[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]).
-- **Networking through public profiles.** Network through people, not public profiles, and make the first impression count ([[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]).
+- **Choosing between the FBI and local on name alone.** Get the clearance and the product; the hiring path follows the work.[^1]
+- **Waiting for a title.** A clearance plus a work sample beats a title.[^1]
+- **Networking through public profiles.** Network through people, not public profiles, and make the first impression count.[^1]
+
+## Footnotes
+[^1]: [[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]

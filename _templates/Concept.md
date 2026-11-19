@@ -19,10 +19,13 @@ drafted_on: "{{date:YYYY-MM-DD}}"
 verified_on: 
 ---
 > [!summary]
-> %% 2–3 sentences of plain prose: what this idea is, for a smart reader who wasn't in class. Cite each claim. %%
+> %% 2–3 sentences of plain prose: what this idea is, for a smart reader who wasn't in class. Cite each claim with a footnote. %%
 
 ## Key Points
 - 
 
 ## Why It Matters
 - 
+
+## Footnotes
+%% One line per source and location, as [^1]: [[Source#location|Display text]]. Markers go right after the claim (SCHEMA §6). %%

@@ -19,10 +19,10 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> Intro to Intelligence taught the national intelligence strategy as the ***supporting*** strategy, there to help and support the national security strategy, which is the ***supported*** strategy that others are supposed to align with ([[Intro to Intelligence Class Notes (Fall 2026)#9/1/26|Intro notes, 9/1/26]]). The course's grammar summaries, answering a discussion question, list the national intelligence strategy's seven mission objectives ([[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 2]]).
+> Intro to Intelligence taught the national intelligence strategy as the ***supporting*** strategy, there to help and support the national security strategy, which is the ***supported*** strategy that others are supposed to align with.[^1] The course's grammar summaries, answering a discussion question, list the national intelligence strategy's seven mission objectives.[^2]
 
 ## Key Points
-**The seven mission objectives** (all from [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 2]])
+**The seven mission objectives**[^3]
 - **Strategic intelligence:** products meant to give a deep understanding of a policymaking topic.
 - **Anticipatory intelligence:** warning of changing conditions and possible future threats to national security before they materialize.
 - **Current operations:** timely intelligence that responds to, and can assist, operations and objectives already in progress.
@@ -34,3 +34,8 @@ verified_on:
 ## Why It Matters
 - For who intelligence serves, see [[Intelligence (National Security)]].
 - For the course's levels and time horizons of intelligence, see [[Levels of Intelligence]] and [[Current vs. Long-Term Intelligence]].
+
+## Footnotes
+[^1]: [[Intro to Intelligence Class Notes (Fall 2026)#9/1/26|Intro notes, 9/1/26]]
+[^2]: [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 2]]
+[^3]: all from [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 2]]

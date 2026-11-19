@@ -19,6 +19,9 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Foreign Intelligence Surveillance Court (FISC):** eleven federal judges who manage court orders for surveillance, created by the Foreign Intelligence Surveillance Act (FISA) of 1978. It has no investigative powers and depends on intelligence agencies to report noncompliance with its orders (Lowenthal, L: 281, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 6]]).
+> **Foreign Intelligence Surveillance Court (FISC):** eleven federal judges who manage court orders for surveillance, created by the Foreign Intelligence Surveillance Act (FISA) of 1978. It has no investigative powers and depends on intelligence agencies to report noncompliance with its orders.[^1]
 
 **Used in:** [[The Wall (FBI)]], [[Foreign Intelligence Surveillance Act]]; compare [[Intelligence Oversight Committees]]
+
+## Footnotes
+[^1]: Lowenthal, L: 281, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 6]]

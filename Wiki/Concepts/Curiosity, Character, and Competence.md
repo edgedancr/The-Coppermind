@@ -1,6 +1,6 @@
 ---
 type: concept
-status: verified
+status: draft
 aliases: []
 courses:
   - Intro to Intelligence
@@ -10,12 +10,14 @@ related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-18
+changes_since_verified:
+  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
 ---
 > [!summary]
-> In an Intro to Intelligence guest lecture, CDR Blocker named three things everyone in intelligence needs: curiosity, character, and competence. He argued that ==only at the intersection of all three do we find professionals worthy of carrying the weight of real responsibility== ([[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]]).
+> In an Intro to Intelligence guest lecture, CDR Blocker named three things everyone in intelligence needs: curiosity, character, and competence. He argued that ==only at the intersection of all three do we find professionals worthy of carrying the weight of real responsibility==.[^1]
 
 ## Key Points
-All from CDR Blocker's guest lecture ([[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]]).
+All from CDR Blocker's guest lecture.[^1]
 - **Curiosity: seek truth with humility.**
 	- Never stop learning, ask better questions, and challenge assumptions.
 	- Admit what you don't know, and admit that you don't know what you don't know.
@@ -30,7 +32,10 @@ All from CDR Blocker's guest lecture ([[Intro to Intelligence Class Notes (Fall 
 - He cited Colossians 3:23–24 and 1 Chronicles 12:32.
 
 ## Why It Matters
-- Blocker argued that the IC is very broad and largely carried by a small number of people with a moral backbone, and that a good intelligence officer needs a strong moral conscience ([[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]]).
-- Intelligence seeks to see the world as it truly is; for Christian intelligence officers, he said, there is another layer to that ([[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]]).
-- New officers start by delivering information to decision makers, and should learn from those above them how to make good decisions, because one day they may be the ones deciding ([[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]]).
+- Blocker argued that the IC is very broad and largely carried by a small number of people with a moral backbone, and that a good intelligence officer needs a strong moral conscience.[^1]
+- Intelligence seeks to see the world as it truly is; for Christian intelligence officers, he said, there is another layer to that.[^1]
+- New officers start by delivering information to decision makers, and should learn from those above them how to make good decisions, because one day they may be the ones deciding.[^1]
 - Compare SAIL's five capabilities of a [[Centaur Analyst]] and the "faithful analyst" in [[Intelligence as Attentive Understanding]].
+
+## Footnotes
+[^1]: [[Intro to Intelligence Class Notes (Fall 2026)#8/27/26|Intro notes, 8/27/26]]

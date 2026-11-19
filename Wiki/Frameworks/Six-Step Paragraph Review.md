@@ -19,16 +19,16 @@ drafted_on: 2026-11-19
 verified_on:
 ---
 > [!summary]
-> Kaiser and Pherson's procedure for refining a draft checks that each paragraph's topic sentence and supporting information match. When the two are compared, four outcomes are possible, and ==only one is good: everything matches== ([[Kaiser and Pherson - Analytic Writing Guide, ch. 9-11 (scan).pdf#page=3|Kaiser & Pherson, p. 63]]).
+> Kaiser and Pherson's procedure for refining a draft checks that each paragraph's topic sentence and supporting information match. When the two are compared, four outcomes are possible, and ==only one is good: everything matches==.[^1]
 
 ## Key Points
-**Four outcomes** ([[Kaiser and Pherson - Analytic Writing Guide, ch. 9-11 (scan).pdf#page=3|Kaiser & Pherson, p. 63]])
+**Four outcomes**[^1]
 - Everything matches (the good one).
 - Main ideas in the topic sentence are missing from the supporting information.
 - Supporting information is missing from the topic sentence.
 - Irrelevant information sits in the paragraph.
 
-**Six steps** ([[Kaiser and Pherson - Analytic Writing Guide, ch. 9-11 (scan).pdf#page=3|Kaiser & Pherson, p. 63]])
+**Six steps**[^1]
 1. Read the whole paragraph. Does any material belong elsewhere?
 2. Check the topic sentence: is it analytic, precise, and clear?
 3. Take each supporting sentence separately: does it support the topic sentence's main idea, or elaborate on a main piece of evidence?
@@ -37,8 +37,13 @@ verified_on:
 6. Review it once more, adding language that tightens the link.
 
 **Related rules from the first draft**
-- **Answer the reader's likely questions:** readers are lost by gaps between judgments and evidence, by wrong assumptions about what they know, and by confusing references or missing transitions ([[Kaiser and Pherson - Analytic Writing Guide, ch. 5-7 (scan).pdf#page=14|Kaiser & Pherson, p. 41]]).
-- **Order the support:** two to four bullets per paragraph, each a stand-alone example of the main idea; two will usually do ([[Kaiser and Pherson - Analytic Writing Guide, ch. 5-7 (scan).pdf#page=22|Kaiser & Pherson, p. 49]]). See [[Two-Degrees-of-Separation Rule]].
+- **Answer the reader's likely questions:** readers are lost by gaps between judgments and evidence, by wrong assumptions about what they know, and by confusing references or missing transitions.[^2]
+- **Order the support:** two to four bullets per paragraph, each a stand-alone example of the main idea; two will usually do.[^3] See [[Two-Degrees-of-Separation Rule]].
 
 ## Why It Matters
-- The procedure feels tedious at first but becomes habit ([[Kaiser and Pherson - Analytic Writing Guide, ch. 9-11 (scan).pdf#page=3|Kaiser & Pherson, p. 63]]). It checks the qualities in [[Six Qualities of an Analytic Topic Sentence]].
+- The procedure feels tedious at first but becomes habit.[^1] It checks the qualities in [[Six Qualities of an Analytic Topic Sentence]].
+
+## Footnotes
+[^1]: [[Kaiser and Pherson - Analytic Writing Guide, ch. 9-11 (scan).pdf#page=3|Kaiser & Pherson, p. 63]]
+[^2]: [[Kaiser and Pherson - Analytic Writing Guide, ch. 5-7 (scan).pdf#page=14|Kaiser & Pherson, p. 41]]
+[^3]: [[Kaiser and Pherson - Analytic Writing Guide, ch. 5-7 (scan).pdf#page=22|Kaiser & Pherson, p. 49]]

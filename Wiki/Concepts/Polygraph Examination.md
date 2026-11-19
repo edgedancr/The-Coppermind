@@ -1,6 +1,6 @@
 ---
 type: concept
-status: verified
+status: draft
 aliases:
   - Polygraph
 courses:
@@ -13,12 +13,14 @@ related:
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-18
+changes_since_verified:
+  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
 ---
 > [!summary]
-> Intro to Intelligence taught that ==the polygraph does not grant clearances==: it is a data-collection tool that helps adjudicators resolve each case fairly and consistently ([[Intro to Intelligence Class Notes (Fall 2026)#9/29/26|Intro notes, 9/29/26]]). The instrument does not detect lies; it detects arousal of the sympathetic nervous system ([[Intro to Intelligence Class Notes (Fall 2026)#9/29/26|Intro notes, 9/29/26]]).
+> Intro to Intelligence taught that ==the polygraph does not grant clearances==: it is a data-collection tool that helps adjudicators resolve each case fairly and consistently.[^1] The instrument does not detect lies; it detects arousal of the sympathetic nervous system.[^1]
 
 ## Key Points
-All from ([[Intro to Intelligence Class Notes (Fall 2026)#9/29/26|Intro notes, 9/29/26]]).
+All from [[Intro to Intelligence Class Notes (Fall 2026)#9/29/26|Intro notes, 9/29/26]].
 
 **Its place in the clearance process:** the polygraph elicits unrecorded historical and behavioral data, and the background investigation verifies documented historical data. Both feed adjudication, which leads to access to the trusted workforce.
 
@@ -37,7 +39,12 @@ All from ([[Intro to Intelligence Class Notes (Fall 2026)#9/29/26|Intro notes, 9
 4. *Testing phase:* sensors attached; data collection begins.
 5. *Diagnostic and resolution:* clarifying any irregular responses.
 
-**Lowenthal's account:** a required part of vetting applicants to an Intelligence Community agency; the machine monitors physical responses, such as breathing rate and pulse, to a series of questions (Lowenthal, L: 203–204, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 6]]).
+**Lowenthal's account:** a required part of vetting applicants to an Intelligence Community agency; the machine monitors physical responses, such as breathing rate and pulse, to a series of questions.[^2]
 
 ## Why It Matters
-- Detective Mennen's advice on clearances was the same in spirit: tell the truth about drugs, social media, foreign contacts, and finances ([[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]). See [[Law Enforcement Intelligence Internships]].
+- Detective Mennen's advice on clearances was the same in spirit: tell the truth about drugs, social media, foreign contacts, and finances.[^3] See [[Law Enforcement Intelligence Internships]].
+
+## Footnotes
+[^1]: [[Intro to Intelligence Class Notes (Fall 2026)#9/29/26|Intro notes, 9/29/26]]
+[^2]: Lowenthal, L: 203–204, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 6]]
+[^3]: [[Intro to Intelligence Class Notes (Fall 2026)#10/1/26|Intro notes, 10/1/26]]

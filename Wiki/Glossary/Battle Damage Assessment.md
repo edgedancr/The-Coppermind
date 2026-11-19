@@ -19,6 +19,10 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Battle damage assessment (BDA):** a measure of how successful an attack was, made by assessing its effects on the target with all available sources (Lowenthal, L: 351/276, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]). It usually concerns damage from bombs or missiles and is most often, but not always, made with imagery (Lowenthal, L: 71–72, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 5]]).
+> **Battle damage assessment (BDA):** a measure of how successful an attack was, made by assessing its effects on the target with all available sources.[^1] It usually concerns damage from bombs or missiles and is most often, but not always, made with imagery.[^2]
 
 **Used in:** none yet; compare [[Damage Assessment (Counterintelligence)]]
+
+## Footnotes
+[^1]: Lowenthal, L: 351/276, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]
+[^2]: Lowenthal, L: 71–72, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 5]]

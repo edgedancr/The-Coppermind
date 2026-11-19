@@ -19,6 +19,9 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Worst-case analysis:** an assessment that assumes the worst possible situation is likely to arise, and so should be the basis for defense planning (Lowenthal, L: 325/257, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]).
+> **Worst-case analysis:** an assessment that assumes the worst possible situation is likely to arise, and so should be the basis for defense planning.[^1]
 
 **Used in:** none yet; compare [[Capabilities vs. Intentions]]
+
+## Footnotes
+[^1]: Lowenthal, L: 325/257, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]

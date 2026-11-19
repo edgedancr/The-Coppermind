@@ -1574,6 +1574,10 @@ function inSearchScope(path) {
 function plainBody(text) {
   let t = text.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, "");
   t = t
+    // Footnotes (Schema §6): drop the Footnotes section, any stray definitions, and the [^n] markers.
+    .replace(/(^|\r?\n)#{1,6}[ \t]+Footnotes[ \t]*(\r?\n[\s\S]*)?$/i, "\n")
+    .replace(/^\[\^[^\]\s]+\]:.*$/gm, "")
+    .replace(/\[\^[^\]\s]+\]/g, "")
     .replace(/```[^\n]*\n?/g, " ")
     .replace(/\[\[([^\]|]*)\|([^\]]*)\]\]/g, "$2")
     .replace(/\[\[([^\]#]*)#?([^\]]*)\]\]/g, (m, a, b) => a || b)
@@ -1602,7 +1606,7 @@ function leadLine(text) {
     const line = raw.trim();
     if (line.startsWith("```")) { inFence = !inFence; continue; }
     if (inFence || !line) continue;
-    if (/^(#|>|\||---|!\[\[|%%)/.test(line)) continue;
+    if (/^(#|>|\||---|!\[\[|%%|\[\^)/.test(line)) continue;
     const p = plainBody(line);
     if (p.length < 12) continue;
     return clip(p, 150);

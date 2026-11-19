@@ -17,25 +17,36 @@ drafted_on: 2026-11-17
 verified_on:
 ---
 > [!summary]
-> Consumer-producer relations is the question of how close intelligence producers should be to the policymakers who use their work. Intro to Intelligence teaches it as one of its themes in U.S. intelligence, quoting Mark Lowenthal: because U.S. intelligence draws a strict line between intelligence and policy, ==the issue is "the degree of proximity that is desirable"== (L: 15) ([[SRC - Themes in US Intelligence, Summary of Texts|Themes summary, theme 7]]).
+> Consumer-producer relations is the question of how close intelligence producers should be to the policymakers who use their work. Intro to Intelligence teaches it as one of its themes in U.S. intelligence, quoting Mark Lowenthal: because U.S. intelligence draws a strict line between intelligence and policy, ==the issue is "the degree of proximity that is desirable"==.[^1]
 
 ## Key Points
-**Two schools** (L: 15) ([[SRC - Themes in US Intelligence, Summary of Texts|Themes summary, theme 7]])
+**Two schools**[^1]
 - **The distance school:** intelligence should keep itself separate from policymakers, because too close a relationship risks intelligence that favors or opposes one policy choice, which is [[Politicized Intelligence|politicized intelligence]].
 - **The proximate school:** too much distance makes intelligence less aware of policymakers' needs, and so less useful; proper training and internal reviews can prevent politicization.
 
-**Why the two sides pull apart** ([[SRC - Themes in US Intelligence, Summary of Texts|Themes summary, theme 5]])
-- **Action vs. sources:** policymakers want to act on intelligence; intelligence officers worry about protecting sources and methods and keeping the ability to collect. Lowenthal says this happens so often that both sides accept it as normal (L: 213–214). The course's grammar summaries give the same tension (Lowenthal, L: 273–74, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]).
+**Why the two sides pull apart**[^2]
+- **Action vs. sources:** policymakers want to act on intelligence; intelligence officers worry about protecting sources and methods and keeping the ability to collect. Lowenthal says this happens so often that both sides accept it as normal.[^3] The course's grammar summaries give the same tension.[^4]
 - **In law enforcement:** intelligence officers want to keep collecting, while prosecutors may need the intelligence for an indictment, which can end the chance to collect more (L).
-- **The media:** outside intrusions such as media coverage can add tension when policymakers mistake the coverage for the same thing as the IC's reporting (Lowenthal, L: 273–74, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]).
-- **Different tribes:** Treverton calls analysts and policy officials "members of different tribes," different in almost every way: short vs. long time horizons, how much U.S. actions can change, domestic vs. overseas context, written vs. oral, "good enough" vs. high confidence, and less vs. highly classified (T: 180–183). Compare the agency cultures in [[Seven Tribes of Intelligence]].
+- **The media:** outside intrusions such as media coverage can add tension when policymakers mistake the coverage for the same thing as the IC's reporting.[^4]
+- **Different tribes:** Treverton calls analysts and policy officials "members of different tribes," different in almost every way: short vs. long time horizons, how much U.S. actions can change, domestic vs. overseas context, written vs. oral, "good enough" vs. high confidence, and less vs. highly classified.[^5] Compare the agency cultures in [[Seven Tribes of Intelligence]].
 
-**How policymakers take intelligence** (Lowenthal, L: 270–73, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]])
+**How policymakers take intelligence**[^6]
 - Some prefer to read and others to be briefed; they are best served if they say which, instead of leaving the IC to guess.
-- Policymakers generally prefer to read current intelligence, while analysts prefer to produce long-term reports (Lowenthal, L: 154/122, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]). See [[Current vs. Long-Term Intelligence]].
+- Policymakers generally prefer to read current intelligence, while analysts prefer to produce long-term reports.[^7] See [[Current vs. Long-Term Intelligence]].
 
-**What consumers expect** ([[Bobby W. - The Limits of Prediction (2019).pdf#page=1|Bobby W., p. 7]])
+**What consumers expect**[^8]
 - Bobby W. borrows Douglas MacEachin's analogy: analysts are best at scouting reports on opposing teams, but policymakers want to hear the score of the game. See [[Limits of Prediction]].
 
 ## Why It Matters
-- The course pairs it with politicization: Lowenthal notes policymakers can politicize intelligence overtly, covertly, or inadvertently ([[SRC - Themes in US Intelligence, Summary of Texts|Themes summary, theme 6]]). See [[Politicized Intelligence]] and [[Themes in U.S. Intelligence]].
+- The course pairs it with politicization: Lowenthal notes policymakers can politicize intelligence overtly, covertly, or inadvertently.[^9] See [[Politicized Intelligence]] and [[Themes in U.S. Intelligence]].
+
+## Footnotes
+[^1]: L: 15; [[SRC - Themes in US Intelligence, Summary of Texts|Themes summary, theme 7]]
+[^2]: [[SRC - Themes in US Intelligence, Summary of Texts|Themes summary, theme 5]]
+[^3]: L: 213–214
+[^4]: Lowenthal, L: 273–74, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]
+[^5]: T: 180–183
+[^6]: Lowenthal, L: 270–73, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]
+[^7]: Lowenthal, L: 154/122, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 3]]
+[^8]: [[Bobby W. - The Limits of Prediction (2019).pdf#page=1|Bobby W., p. 7]]
+[^9]: [[SRC - Themes in US Intelligence, Summary of Texts|Themes summary, theme 6]]

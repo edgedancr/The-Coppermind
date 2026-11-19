@@ -19,6 +19,9 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Sunni:** the branch of Islam whose followers argued, after the Prophet Mohammed's death, that a leader of the Muslim community (the Ummah) did not need to be his descendant if he met other standards of faith and knowledge; after bloody struggles, the Sunni became and remain the majority sect ([[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=67|9/11 Report, p. 50]]). The 9/11 Commission writes that Bin Ladin offers a view of Islamic history "designed to appeal mainly to Arabs and Sunnis" ([[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=67|9/11 Report, p. 50]]). Compare [[Shia]]; the [[Caliphate]] was a Sunni institution ([[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=67|9/11 Report, p. 50]]).
+> **Sunni:** the branch of Islam whose followers argued, after the Prophet Mohammed's death, that a leader of the Muslim community (the Ummah) did not need to be his descendant if he met other standards of faith and knowledge; after bloody struggles, the Sunni became and remain the majority sect.[^1] The 9/11 Commission writes that Bin Ladin offers a view of Islamic history "designed to appeal mainly to Arabs and Sunnis".[^1] Compare [[Shia]]; the [[Caliphate]] was a Sunni institution.[^1]
 
 **Used in:** [[Shia]], [[Caliphate]], [[Usama Bin Ladin]]
+
+## Footnotes
+[^1]: [[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=67|9/11 Report, p. 50]]

@@ -19,9 +19,12 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Quantum cryptography:** described in the course's summary as encryption using light (photons) rather than radio waves, in which the sender knows if an interception has been attempted (Lowenthal, L: 118, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 4]]).
+> **Quantum cryptography:** described in the course's summary as encryption using light (photons) rather than radio waves, in which the sender knows if an interception has been attempted.[^1]
 
 > [!caution] Accuracy check
 > The summary adds that the message "cannot be hacked because it self-destructs upon being intercepted." Quantum key distribution is usually described as revealing interception because measuring photons disturbs them, not as self-destructing. Check Lowenthal's wording.
 
 **Used in:** none yet; compare [[Intelligence Collection Disciplines]] (SIGINT)
+
+## Footnotes
+[^1]: Lowenthal, L: 118, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 4]]

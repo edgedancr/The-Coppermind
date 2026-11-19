@@ -1,6 +1,6 @@
 ---
 type: guide
-status: verified
+status: draft
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -15,11 +15,14 @@ related:
 drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-18
+changes_since_verified:
+  - "2026-11-19: citations moved from parentheses to footnotes; wording unchanged (schema 6.0 citation change, approved by Harrison)"
+  - "2026-11-19: updated for Nicrosil 2.4.5 (snippets skip footnotes) and added the missing 2.4.4 history line (approved by Harrison)"
 ---
 > [!summary]
-> **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
+> **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.4.3**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.4.5**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -57,9 +60,9 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 4. **Resolve each flag.** If a claim needs correcting, edit the page text first. Then click **Resolve** and write what I decided. The callout is removed from the page, and my decision is saved and written into the log when I verify (or reject) the page.
 5. **Decide:**
    - **Verify** (`Alt+V`): optionally note what I changed and why, then `Ctrl+Enter`. The page gets `status: verified` and `verified_on`, and [[log]] gets an entry listing any flags I resolved. Then a check stamps the page, a burst of copper and teal sparks plays, the page lifts up and fades out, and the next one rises in from the bottom with a small "Next: … · N left" note (see [[#Settings]] to turn it off). If flags are still open, I have to tick a box to verify anyway, and the log records them.
-     - If the page has a `changes_since_verified` property, Verify deletes it, and the log keeps the record ([[SCHEMA#7. Draft vs. verified|Schema §7]], rule 8).
+     - If the page has a `changes_since_verified` property, Verify deletes it, and the log keeps the record.[^2]
    - **Skip** (`Alt+S`): moves the page to the end of the queue for this session and opens the next one.
-   - **Reject** (`Alt+R`): write the reason (required), then `Ctrl+Enter`. The reason is logged, the page is removed from the index, and the page is deleted ([[SCHEMA#7. Draft vs. verified|Schema §7]]). The dialog lists pages that link to it, so I can fix those links afterward.
+   - **Reject** (`Alt+R`): write the reason (required), then `Ctrl+Enter`. The reason is logged, the page is removed from the index, and the page is deleted.[^1] The dialog lists pages that link to it, so I can fix those links afterward.
 6. After Verify or Reject, the next draft opens automatically. Turn this off with the checkbox in the sidebar or in the plugin's settings.
 7. When finished, commit and push. A page is only "saved as final" once it is verified **and** committed.
 
@@ -83,7 +86,7 @@ The Dashboard keeps its design quiet on purpose: color only where it means somet
 The search box on the [[Dashboard]] shows suggestion cards as I type, over wiki pages, source cards, and perspectives. It does not search the raw class notes or readings, and it only reads: it never changes a page.
 - **Open a result:** click it, or use the arrow keys and `Enter`. `Ctrl+Enter` opens it in a new tab.
 - **Every match is reachable.** The list shows the best matches first, and more cards appear as I scroll it (or press the down arrow past the last card). A line at the bottom of the list says how many pages matched, for example "20 of 143 matches · scroll for more", and stays in view while scrolling.
-- **Each card shows** the page's title, its type and status, any alias that matched, and a snippet of the text that matched.
+- **Each card shows** the page's title, its type and status, any alias that matched, and a snippet of the text that matched. Snippets and review cards leave out footnote markers and the Footnotes section, so citations don't crowd the text.
 - **Esc** closes the list, and pressing it again clears the box.
 - It stays up to date on its own as pages are created, edited, renamed, or deleted.
 
@@ -93,13 +96,13 @@ The search box on the [[Dashboard]] shows suggestion cards as I type, over wiki 
 - **Properties:** [[index]], [[log]], and the Dashboard hide their properties entirely.
 
 ## The relations panel
-Open it with `Alt+L` or the branching-arrows button in the ribbon. It follows whichever page is open and shows how that page connects to the rest of the wiki through the typed links in its properties ([[SCHEMA#5. Linking rules and ontology|Schema §5]]):
+Open it with `Alt+L` or the branching-arrows button in the ribbon. It follows whichever page is open and shows how that page connects to the rest of the wiki through the typed links in its properties:[^3]
 - **A map.** The page sits in the middle. Pages that point at it are on the left; pages it points at are on the right. Each arrow is colored by relationship type, and the legend under the map names the colors. Some types are also dashed (`related` is dashed, `contradicts` is dotted), so color is never the only cue. A solid teal outline means the other page is verified, a copper outline a draft, and a dashed grey outline no status. Click a page to open it, or `Ctrl+click` for a new tab. The map shows up to ten pages on each side; the lists below show them all.
-- **Two lists.** "This page…" groups the outgoing links by type ("Is part of", "Supports", and so on). "Pointing at this page…" groups the incoming links ("Parts of this", "Examples of this", "Supported by"). Incoming links are worked out from the other pages' properties, since each relationship is stored only once ([[SCHEMA#5. Linking rules and ontology|Schema §5]]).
+- **Two lists.** "This page…" groups the outgoing links by type ("Is part of", "Supports", and so on). "Pointing at this page…" groups the incoming links ("Parts of this", "Examples of this", "Supported by"). Incoming links are worked out from the other pages' properties, since each relationship is stored only once.[^3]
 - **Not shown:** plain links in the page text. They are "see also" links, not relationships.
 
 ## The wiki map
-Open it with `Alt+M` or the Wiki map card on the Dashboard. It opens in its own tab, on the Map view, and has two views, chosen at the top. Both read only the typed links in the properties ([[SCHEMA#5. Linking rules and ontology|Schema §5]]), never the plain links in the text, and neither changes a file.
+Open it with `Alt+M` or the Wiki map card on the Dashboard. It opens in its own tab, on the Map view, and has two views, chosen at the top. Both read only the typed links in the properties,[^3] never the plain links in the text, and neither changes a file.
 - **Hierarchy.** A branching diagram built from `type_of`, `part_of`, and `example_of`. Each page is a rounded card, and a curved line, colored by the relationship, joins it to the page it is a kind of, a part of, or an example of, so Artificial Intelligence → Machine Learning → Deep Learning reads left to right as a branch. A card has a dot in its page-type color, a teal ring if verified or a dashed copper ring if draft, and the number of pages below it. Click a card to open the page (`Ctrl+click` for a new tab). The circle at its right edge opens or closes the branch. Pointing at a card lights up the path to its top page and everything below it. The box filters the diagram by page name and outlines the matches, **Expand all** and **Collapse all** do what they say, and **Show examples** adds or removes the `example_of` pages. Drag the background to pan. A page that is part of two things appears under both. Wiki pages with none of these links are listed at the bottom, in a folded list.
 - **Map.** Every page that has a typed link is a dot, and every typed link is an arrow from the page that states it to the page it points at.
   - **Colors:** arrows are curved and colored by relationship type, with `related` dashed and `contradicts` dotted. Dots are colored by page type. A teal ring means verified, and a dashed copper ring means draft. Bigger dots have more links.
@@ -124,12 +127,12 @@ Small animations make the vault feel alive. None of them change how anything wor
 Turn them all off with **Ambient animations** in the settings. They are also off if the computer is set to reduce motion.
 
 ## Logging a schema change
-Every change to [[SCHEMA]] needs a line in its Changelog ([[SCHEMA#14. Changing this schema|Schema §14]]). Nicrosil adds it for me:
+Every change to [[SCHEMA]] needs a line in its Changelog.[^4] Nicrosil adds it for me:
 1. On the SCHEMA page, click the pen button in the page header, or run **Log a schema change** from the command palette.
 2. Enter the new version number in the form `4.2` and a description of what changed. The version must be newer than the latest one and not already in the changelog.
 3. Nicrosil adds the dated line at the end of the Changelog and updates the `version` and `updated` properties.
 
-It does not touch `status`, `verified_on`, or [[log]]. After a schema change, the schema goes back to `draft` ([[SCHEMA#7. Draft vs. verified|Schema §7]]), and the log entry is still mine to add.
+It does not touch `status`, `verified_on`, or [[log]]. After a schema change, the schema goes back to `draft`,[^1] and the log entry is still mine to add.
 
 ## Hotkeys and buttons
 | Key | Action |
@@ -159,7 +162,7 @@ In **Settings → Nicrosil**:
 ## What it will not do
 - **It never verifies on its own.** Every change starts with my click or keypress.
 - **It does not commit to git.**
-- **It will not verify a source card with a blank `reliability` rating.** Ratings are always item by item ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
+- **It will not verify a source card with a blank `reliability` rating.** Ratings are always item by item.[^1]
 - **It does not touch verified pages.** If a verified page's content changes, it goes back to `draft` and needs checking again.
 - **It cannot undo a verify or a resolved flag.** To undo a verify, set `status: draft` by hand, change the index line back, and add a correction to the log (the log is append-only). To undo a resolved flag, restore the callout from git (the last commit still has it) before verifying.
 - **Skips last only until Obsidian restarts.**
@@ -178,9 +181,11 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 1. Change the version number near the top of the page.
 2. Update the table in [[#What Nicrosil does]], the matching section, and the hotkey table if anything was added, removed, or renamed.
 3. Add a line to the version history below.
-4. The change makes this page a changed page, so it goes back to `draft` until I verify it ([[SCHEMA#7. Draft vs. verified|Schema §7]]).
+4. The change makes this page a changed page, so it goes back to `draft` until I verify it.[^1]
 
 ### Version history
+- **2.4.5:** Search snippets and review-card summaries leave out footnote markers (`[^1]`) and the Footnotes section, after citations moved to footnotes (Schema §6).
+- **2.4.4:** The verify animation's check is a copper-to-teal gradient, with no orb behind it.
 - **2.4.3:** Made some small visual improvements to the review queue panel.
 - **2.4.2:** The Dashboard always uses the quiet style; the Classic/Quiet setting is gone. The open file in the file list has a soft copper-to-teal highlight and a teal-to-pale-copper name instead of flat orange and teal.
 - **2.4.1:** The Dashboard's six links are small, sharp-cornered cards again, and Review progress is a card with larger text and a glowing copper-to-teal bar.
@@ -214,3 +219,9 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 - **0.8.6:** The index no longer splits each type into Verified and Drafts. It is one alphabetical list per type with a single total, and verifying a page no longer changes the index. A page's status is shown by the review queue, the Dashboard, and the page's own properties strip.
 - **0.8.5:** The Dashboard's six navigation cards open in a new tab on `Ctrl+click` or middle-click. The plugin's id and folder changed from `coppermind-review` to `nicrosil`. The guide became a guide to the whole plugin, not only the review buttons.
 - **0.8.4 and earlier:** Review queue, flags, hotkeys, Dashboard blocks, search, the properties strip, log folding, and the schema-change button. See the dated entries in [[log]] for each step.
+
+## Footnotes
+[^1]: [[SCHEMA#7. Draft vs. verified|Schema §7]]
+[^2]: [[SCHEMA#7. Draft vs. verified|Schema §7]], rule 8
+[^3]: [[SCHEMA#5. Linking rules and ontology|Schema §5]]
+[^4]: [[SCHEMA#14. Changing this schema|Schema §14]]

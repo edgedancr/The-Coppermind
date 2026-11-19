@@ -19,6 +19,9 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Helms dilemma:** Director of Central Intelligence Richard Helms was "caught between" the obligation to keep secret the CIA's involvement in the government of Chile and "his obligation to testify fully and honestly before Congress" (Lowenthal, L: 322–23, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 4]]).
+> **Helms dilemma:** Director of Central Intelligence Richard Helms was "caught between" the obligation to keep secret the CIA's involvement in the government of Chile and "his obligation to testify fully and honestly before Congress".[^1]
 
 **Used in:** [[Ethical and Moral Issues in Intelligence]]
+
+## Footnotes
+[^1]: Lowenthal, L: 322–23, as summarized in [[SRC - Grammar Summaries, Weeks 2-7|Grammar, wk 4]]

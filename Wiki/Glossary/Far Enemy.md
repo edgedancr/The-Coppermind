@@ -19,6 +19,10 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Far enemy:** the 9/11 Commission's term for the United States as Bin Ladin saw it: while his allied Islamist groups were focused on local battles, in Egypt, Algeria, Bosnia, or Chechnya, Bin Ladin concentrated on attacking the "far enemy" ([[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=76|9/11 Report, p. 59]]). He called it "the head of the snake" ([[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=71|9/11 Report, p. 54]]).
+> **Far enemy:** the 9/11 Commission's term for the United States as Bin Ladin saw it: while his allied Islamist groups were focused on local battles, in Egypt, Algeria, Bosnia, or Chechnya, Bin Ladin concentrated on attacking the "far enemy".[^1] He called it "the head of the snake".[^2]
 
 **Used in:** [[Al-Qaeda]], [[Usama Bin Ladin]]
+
+## Footnotes
+[^1]: [[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=76|9/11 Report, p. 59]]
+[^2]: [[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=71|9/11 Report, p. 54]]

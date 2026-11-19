@@ -19,6 +19,10 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Church and Pike committees:** the 1970s Senate (Frank Church) and House (Otis Pike) investigations of intelligence. They disclosed FBI domestic intelligence programs against domestic organizations and dissidents, and evidence that the CIA had planned to assassinate Fidel Castro and other foreign leaders ([[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=92|9/11 Report, pp. 75, 89–90]]). In response, the House and Senate created select committees on intelligence in 1977 ([[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=120|9/11 Report, p. 103]]).
+> **Church and Pike committees:** the 1970s Senate (Frank Church) and House (Otis Pike) investigations of intelligence. They disclosed FBI domestic intelligence programs against domestic organizations and dissidents, and evidence that the CIA had planned to assassinate Fidel Castro and other foreign leaders.[^1] In response, the House and Senate created select committees on intelligence in 1977.[^2]
 
 **Used in:** [[Domestic Intelligence and the FBI]], [[Congressional Oversight of Intelligence]]; compare [[Executive Order 12333]] (the assassination ban)
+
+## Footnotes
+[^1]: [[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=92|9/11 Report, pp. 75, 89–90]]
+[^2]: [[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=120|9/11 Report, p. 103]]
