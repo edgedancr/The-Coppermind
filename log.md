@@ -1798,3 +1798,38 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Pending my review (including re-reviews of the two verified pages, listed changes only)
 - **Commit:** `ingest: Intro to Intelligence batch 1e-2 (Johnston ch. 3-4) — 3 drafted, 7 updated`
+
+### [2026-11-19] schema | Guides are about the Coppermind itself (5.3)
+
+- **Think:** The Law Enforcement Intelligence Internships page, made from Detective Mennen's guest lecture, is in `Guides/`. I want guides to be about the Coppermind itself, not any how-to, and I asked where that page would belong instead.
+- **Calculate:**
+  - [[SCHEMA]] 5.3: `Guides/` is now described as how-to pages about the Coppermind itself; new "Guides: about the Coppermind itself" subsection in section 2 (a how-to about anything else is a workflow, or a concept, framework, or summary); `Workflows/` now says it holds processes from my courses as well as from running the wiki; the URL-citation exception in section 6 refers to guides about the Coppermind's own tools. Status set to `draft` until I verify it again.
+  - `_templates/Guide.md`: the summary placeholder now says the guide is about the Coppermind itself.
+  - Checked and left alone: the Nicrosil Dashboard "Guides" card (its description is already "How the vault works" and it opens the Guides section of the index), [[Dashboard]], and the other three guides, which are all about the Coppermind.
+  - Proposed, not applied: move [[Law Enforcement Intelligence Internships]] to `Wiki/Workflows/` as `type: workflow`. It is verified, so it would go back to `draft` with a `changes_since_verified` note, and the index would change.
+- **Verify:**
+  - Pending my review
+- **Commit:** `schema: 5.3 guides are about the Coppermind itself`
+
+### [2026-11-19] schema | Law Enforcement Intelligence Internships moved to Workflows
+
+- **Think:** I approved the plan to reclassify the internship page as a workflow, since guides are now only about the Coppermind itself (SCHEMA 5.3).
+- **Calculate:**
+  - [[Law Enforcement Intelligence Internships]] (verified): `type` changed from guide to workflow; headings now Steps, Checks, Common Mistakes (the three troubleshooting items rephrased as mistakes, same cited claims); alias "Internship Guide" renamed "Internship Workflow". Set to `status: draft` with `verified_on` kept and a `changes_since_verified` line.
+  - `index.md`: the page moved from Guides (now 3) to Workflows (now 2). Total unchanged.
+  - The file still has to be dragged from `Wiki/Guides/` to `Wiki/Workflows/` in Obsidian; the agent cannot move files.
+- **Verify:**
+  - Pending my review: re-review, listed changes only
+- **Commit:** `edit: reclassify Law Enforcement Intelligence Internships as a workflow`
+
+### [2026-11-19] verify | Law Enforcement Intelligence Internships
+
+- **Verify:**
+  - Approved: [[Law Enforcement Intelligence Internships]]
+- **Commit:** `verify: Law Enforcement Intelligence Internships`
+
+### [2026-11-19] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`

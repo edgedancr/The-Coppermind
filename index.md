@@ -407,14 +407,14 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Dissect and Ingest a Source]] — The prompt for breaking a source into ideas and creating or appending wiki pages
 - [[Intelligence Community Style Summaries]] — Neutral, attributed 250-word summaries of a single source
 
-## Workflows (1)
+## Workflows (2)
 
 - [[ACH GenAI Workflow]] — Seven steps for running ACH with an AI assistant, with analyst checkpoints
+- [[Law Enforcement Intelligence Internships]] — Detective Mennen's advice on getting a law enforcement intelligence internship that leads to a job
 
-## Guides (4)
+## Guides (3)
 
 - [[Choosing a Claude Model for Coppermind Work]] — Which Claude model to use for ingests, health checks, queries, page edits, and building tools
-- [[Law Enforcement Intelligence Internships]] — Detective Mennen's advice on getting an internship that leads to a job
 - [[Nicrosil]] — How to run a review session: the queue, the buttons, resolving flags, hotkeys, and the Dashboard
 - [[Setting Up Git for the Coppermind]] — How to put the vault under version control, sync two computers, and commit after each review
 

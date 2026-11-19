@@ -1,10 +1,10 @@
 ---
 type: schema
-version: 5.2
+version: 5.3
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-17
-verified_on: 2026-11-17
+updated: 2026-11-19
+verified_on: 2026-11-19
 ---
 # The Coppermind — Schema
 
@@ -68,8 +68,8 @@ The Coppermind/
 │   ├── People/             Thinkers, authors, historical figures
 │   ├── Summaries/          Summaries of individual sources
 │   ├── Prompts/            My most effective prompts
-│   ├── Workflows/          Step-by-step processes, including the ones that run this wiki
-│   ├── Guides/             How-to pages for me or someone else
+│   ├── Workflows/          Step-by-step processes, from my courses and from running this wiki
+│   ├── Guides/             How-to pages about the Coppermind itself (its tools, setup, and use)
 │   └── Analyses/           Answers to questions, filed back from queries
 ├── Perspectives/           My views, organized by the Architecture of Worldview
 ├── Health Checks/          One report per health check, plus a table of past reports
@@ -77,6 +77,14 @@ The Coppermind/
 ├── _templates/             One template per page type
 └── _attachments/           Images and diagrams used on wiki pages
 ```
+
+### Guides: about the Coppermind itself
+
+A **guide** explains how to set up, run, review, or get the most out of the Coppermind: its plugin, its git setup, which Claude model to use for which job. Guides are about the vault, not about the subjects in it.
+
+- **A how-to about anything else is not a guide.** A process taken from a course, a guest lecture, or a reading (for example, getting a law enforcement intelligence internship) is a **workflow** if it is a sequence of steps, and otherwise a concept, framework, or summary.
+- **Test:** if the page would still be useful with the Coppermind deleted, it is not a guide.
+- **The Dashboard's "Guides" card** opens this section of the index, and its description is "How the vault works."
 
 ### Ingest Queue: sources waiting their turn
 
@@ -199,7 +207,7 @@ Read each one as a sentence: "this page ___ the target." The types are listed in
    - PDFs, by page: `([[ODNI Principles of AI Ethics.pdf#page=2|ODNI, p. 2]])`
    - Other sources: a link to the source card plus a page, section, or timestamp.
    - **Keep the class-notes display text in the form `<Course> notes, M/D/YY`** (`SAIL notes, 10/20/26`, `Intro notes, 10/20/26`) so citations read the same everywhere.
-   - Web pages used only for a how-to guide about tools (not course content) may be cited by URL directly, without a source card.
+   - Web pages used only for a guide about the Coppermind's own tools (not course content) may be cited by URL directly, without a source card.
 2. **Every source a page cites is also listed in its `sources` property.**
 3. **No unsourced claims.** If the agent thinks background knowledge is needed that no source in the vault provides, it goes in a callout that I must either source or delete before verifying:
    ```
@@ -434,3 +442,4 @@ The Coppermind must outlive any one tool or agent.
 - **5.0 (2026-11-17):** Typed links reworked after the first health check found 82% of them were `related`, about half of those stored on both pages. §5: three new types (`type_of`, `causes`, `developed_by`), `applies_to` widened to rules that govern something, `supports` and `contradicts` defined for concept pages, and the types listed in the order the agent tries them. New linking rules: store a relationship on the page the sentence starts with and never store the reverse; propose links to verified pages instead of falling back to `related`; "see also" links stay in the page text; every `related` link says why no stronger type fits; links rest on what a source says; "Sources disagree" across two pages becomes a `contradicts` proposal; glossary and concept pages link to each other in the text, not in both pages' properties. §4: the new property names. §10: the health check now reports the typed-link mix. The page templates, the Health Check Report template, and [[Dissect and Ingest a Source]] were updated to match. Status returns to `draft` until I verify it again (§7).
 - **5.1 (2026-11-17):** The index no longer splits each type into Verified and Drafts (§11). Each type is one alphabetical list with a single total, and a change of status no longer changes the index. Nicrosil v0.8.6 was updated to match. Status returns to `draft` until I verify it again (§7).
 - **5.2 (2026-11-17):** Verified pages the agent changes now say what changed. §4: new `changes_since_verified` property, a list of one-line notes. §7: new rule 8 and a longer rule 5; the agent adds the note in the same edit that sets the page back to `draft`, and verifying the page deletes it. §10: the health check flags re-reviews without a note. `Review Queue.base` has a "Changed since verified" view, and Nicrosil v0.8.11 deletes the field on Verify, lists these pages first with an R badge, and shows the notes on the card and the Dashboard. Status returns to `draft` until I verify it again (§7).
+- **5.3 (2026-11-19):** Guides are now only about the Coppermind itself. §2: the `Guides/` folder is described as how-to pages about the vault, a new "Guides: about the Coppermind itself" subsection says that a how-to about anything else (a course process or guest-lecture advice) is a workflow, and `Workflows/` is described as holding processes from my courses as well as from running the wiki. §6: the URL-citation exception now refers to guides about the Coppermind's own tools. The `Guide` template summary placeholder was updated to match. Status returns to `draft` until I verify it again (§7).

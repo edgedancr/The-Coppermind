@@ -19,7 +19,7 @@ drafted_on: "{{date:YYYY-MM-DD}}"
 verified_on: 
 ---
 > [!summary]
-> %% 2–3 sentences: what this guide helps the reader do, and who it's for. %%
+> %% 2–3 sentences: what this guide helps the reader do with the Coppermind itself (set it up, run it, or use one of its tools), and who it's for. If the page would still be useful without the Coppermind, it is a workflow, not a guide (SCHEMA §2). %%
 
 ## Steps
 1. 
