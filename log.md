@@ -2411,3 +2411,21 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - Guide needs verifying again
   - Reload Nicrosil and open the wiki map (`Alt+M`)
 - **Commit:** `schema: Nicrosil 2.5.1 quieter wiki map, fix dropdown arrows`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] verify | ICD 203 Analytic Standards
+
+- **Verify:**
+  - Approved: [[ICD 203 Analytic Standards]]
+- **Commit:** `verify: ICD 203 Analytic Standards`
+
+### [2026-11-19] verify | Institutionalizing Imagination
+
+- **Verify:**
+  - Approved: [[Institutionalizing Imagination]]
+- **Commit:** `verify: Institutionalizing Imagination`

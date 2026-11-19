@@ -1,14 +1,18 @@
 ---
 type: framework
-status: draft
-aliases: ["Surprise Attack Warning"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+status: verified
+aliases:
+  - Surprise Attack Warning
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
 causes: []
-counters: ["[[Failures of Imagination, Policy, Capabilities, and Management]]"]
+counters:
+  - "[[Failures of Imagination, Policy, Capabilities, and Management]]"
 applies_to: []
 supports: []
 contradicts: []
@@ -16,7 +20,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-19
 ---
 > [!summary]
 > The 9/11 Commission argued that because "imagination is not a gift usually associated with bureaucracies," government must find a way of "routinizing, even bureaucratizing, the exercise of imagination".[^1] It found that the warning methods the Intelligence Community had developed since Pearl Harbor ==did not fail against al-Qaeda: "they were not really tried"==.[^2]

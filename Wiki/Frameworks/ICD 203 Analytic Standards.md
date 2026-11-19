@@ -1,10 +1,18 @@
 ---
 type: framework
-status: draft
-aliases: ["Intelligence Community Directive 203", "IC Analytic Standards", "Analytic Tradecraft Standards"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - ICD 203, Analytic Standards]]", "[[SRC - Intelligence Is NOT About Telling Truth to Power]]", "[[SRC - Analytic Objectivity and Science]]"]
-type_of: ["[[Intelligence Community Directive]]"]
+status: verified
+aliases:
+  - Intelligence Community Directive 203
+  - IC Analytic Standards
+  - Analytic Tradecraft Standards
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - ICD 203, Analytic Standards]]"
+  - "[[SRC - Intelligence Is NOT About Telling Truth to Power]]"
+  - "[[SRC - Analytic Objectivity and Science]]"
+type_of:
+  - "[[Intelligence Community Directive]]"
 part_of: []
 example_of: []
 causes: []
@@ -16,7 +24,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on:
+verified_on: 2026-11-19
 ---
 > [!summary]
 > ICD 203 is the [[Intelligence Community Directive]] that sets the IC Analytic Standards, which "govern the production and evaluation of analytic products".[^1] DNI James Clapper signed the current version in January 2015.[^2] ==All IC analytic products "shall be consistent with" five analytic standards, the fifth of which contains nine analytic tradecraft standards==.[^3]
