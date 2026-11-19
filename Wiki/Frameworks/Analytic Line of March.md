@@ -1,9 +1,13 @@
 ---
 type: framework
-status: draft
-aliases: ["Five Focal Questions", "Line of March"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Analytic Writing Guide (Kaiser and Pherson)]]"]
+status: verified
+aliases:
+  - Five Focal Questions
+  - Line of March
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Analytic Writing Guide (Kaiser and Pherson)]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +20,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on:
+verified_on: 2026-11-19
 ---
 > [!summary]
 > Before outlining, Kaiser and Pherson set a paper's analytic direction with five focal questions: "what?", "why now?", impact so far, outlook, and implications. ==Writers should keep that order in most cases==, because it builds the knowledge readers need to take in the later sections.[^1] A paper need not answer all five.[^2]
