@@ -17,7 +17,7 @@
  *  - Dashboard page blocks (```coppermind-hero```, -dashboard, -nav, -activity), a ribbon
  *    logo button and Alt+D to go back to the Dashboard, and a one-time Home to Dashboard rename
  *  - "Log a schema change" (a pen button in the header of any page in SCHEMAS/, or the command palette): asks for the new
- *    version number and what I changed, then adds the line to SCHEMAS/Schema Changelog.md and keeps the `version` and
+ *    version number and what I changed, then adds the line to _changelogs/Schema Changelog.md and keeps the `version` and
  *    `updated` properties of SCHEMAS/SCHEMA.md in step. It does not touch status, verified_on, or the log.
  *  - Monthly log: log.md holds the current month. When Obsidian opens in a new month (and before an entry is added in
  *    a new month), the earlier months' entries move, word for word, to Logs/Log YYYY-MM.md.
@@ -46,7 +46,7 @@ const LOG_PATH = "log.md";
 const DASHBOARD_PATH = "Dashboard.md";
 const SCHEMA_DIR = "SCHEMAS/";
 const SCHEMA_PATH = "SCHEMAS/SCHEMA.md";           // the rules overview; holds the rulebook's version
-const CHANGELOG_PATH = "SCHEMAS/Schema Changelog.md";
+const CHANGELOG_PATH = "_changelogs/Schema Changelog.md";
 const LOG_ARCHIVE_DIR = "Logs";                     // Logs/Log YYYY-MM.md, one per past month
 const OLD_HOME_PATH = "Home.md";
 const VIEW_TYPE = "nicrosil-queue";
@@ -2452,6 +2452,8 @@ module.exports = class Nicrosil extends Plugin {
       if (file && !this.isDashboard(file)) this.pageIn();
       this.renderViews();
     }));
+    // folders whose names start with "_" are hidden in the file list every time Obsidian opens; the eye button in its toolbar shows them until Obsidian closes
+    document.body.classList.add("cm-hide-underscore");
     this.registerEvent(this.app.workspace.on("active-leaf-change", (leaf) => {
       this.syncDashboardLeaves(false);
       this.enforceReading(leaf);
@@ -2495,7 +2497,8 @@ module.exports = class Nicrosil extends Plugin {
     clearTimeout(this.dashIntroTimer);
     document.querySelectorAll(".cm-schema-log-btn").forEach((e) => e.remove());
     this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view) l.view.__cmSchemaBtn = null; });
-    document.querySelectorAll(".cm-resolve-btn, .cm-home-btn").forEach((e) => e.remove());
+    document.querySelectorAll(".cm-resolve-btn, .cm-home-btn, .cm-underscore-btn").forEach((e) => e.remove());
+    document.body.classList.remove("cm-hide-underscore");
     document.body.classList.remove("cm-on-dashboard");
     document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"));
     document.body.classList.remove("cm-calm", "cm-quiet");
@@ -2541,6 +2544,15 @@ module.exports = class Nicrosil extends Plugin {
       // The file list keeps its header buttons (.nav-header) and the files directly in the leaf, with no .view-content around them.
       const header = leafEl.querySelector(".nav-header");
       const holder = header ? header.parentElement : (leafEl.querySelector(".view-content") || leafEl);
+      // the eye button in the file list's toolbar (next to new note, new folder, sort, and the rest)
+      const bar = leafEl.querySelector(".nav-header .nav-buttons-container");
+      if (bar && !bar.querySelector(":scope > .cm-underscore-btn")) {
+        const eye = createDiv({ cls: "clickable-icon nav-action-button cm-underscore-btn" });
+        eye.setAttr("role", "button");
+        eye.addEventListener("click", () => this.toggleUnderscoreFolders());
+        bar.appendChild(eye);
+      }
+      this.paintUnderscoreButtons();
       if (holder.querySelector(":scope > .cm-home-btn")) return;
       const btn = createDiv({ cls: "cm-home-btn" });
       btn.setAttr("role", "button"); btn.setAttr("tabindex", "0");
@@ -2552,6 +2564,22 @@ module.exports = class Nicrosil extends Plugin {
       btn.addEventListener("auxclick", (e) => { if (e.button === 1) { e.preventDefault(); this.openDashboard(true); } });
       btn.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); this.openDashboard(e.ctrlKey || e.metaKey); } });
       if (header) header.after(btn); else holder.prepend(btn);
+    });
+  }
+
+  /** Shows or hides the folders whose names start with "_" in the file list. It is not remembered: they start hidden each time Obsidian opens. */
+  toggleUnderscoreFolders() {
+    document.body.classList.toggle("cm-hide-underscore");
+    this.paintUnderscoreButtons();
+  }
+
+  paintUnderscoreButtons() {
+    const hidden = document.body.classList.contains("cm-hide-underscore");
+    document.querySelectorAll(".cm-underscore-btn").forEach((b) => {
+      b.empty();
+      setIcon(b, hidden ? "eye-off" : "eye");
+      b.setAttr("aria-label", hidden ? "Show folders that start with _" : "Hide folders that start with _");
+      b.toggleClass("is-active", !hidden);
     });
   }
 

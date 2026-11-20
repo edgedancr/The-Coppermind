@@ -1,10 +1,13 @@
 ---
 type: schema
-version: 7.2
-status: verified
+version: 7.4
+status: draft
 owner: Harrison Nickles
 updated: 2026-11-20
 verified_on: 2026-11-20
+changes_since_verified:
+  - "2026-11-20: AGENTS.md: a permissions row and a read rule for `_changelogs/`, and the Nicrosil rule now says its changelog line goes in that folder (versions 7.3 and 7.4)"
+  - "2026-11-20: the folder layout lists `_changelogs/`, and the Schema Changelog moved there from `SCHEMAS/` [[#Folder layout]]"
 ---
 This is the overview of the Coppermind's rules: what the wiki is for, how it is laid out, and which rule file covers what. It is the rulebook for my personal LLM wiki (SAIL portfolio). The Coppermind follows the SAIL version of the LLM-wiki pattern, not Karpathy's original: **I design, the AI drafts, I verify.** Nothing becomes part of the wiki as final until I have reviewed and approved it.
 
@@ -23,7 +26,7 @@ An agent starts at `AGENTS.md`, which holds the rules for every task and points 
 | [[SCHEMA - Index and Log]] | The index, the log and its monthly archive, and git |
 | [[SCHEMA - Changes]] | Changing these rules, the templates, the tools, and Nicrosil |
 | [[SCHEMA - Export]] | Keeping the vault portable and moving it to another tool |
-| [[Schema Changelog]] | The history of every version of the rules |
+| [[Schema Changelog]] (in `_changelogs/`) | The history of every version of the rules |
 
 All of them, `AGENTS.md` included, are one rulebook with one version number, kept in this file's `version` property.
 
@@ -59,7 +62,7 @@ The Coppermind/
 ├── log.md                  This month's record of every operation
 ├── Ingest Queue.md         Sources I've collected that are waiting to be ingested, in batches
 ├── Review Queue.base       Live list of pages waiting for review, with a view for verified pages that changed
-├── SCHEMAS/                This rulebook: this overview, one file per area, and the changelog
+├── SCHEMAS/                This rulebook: this overview and one file per area
 ├── Logs/                   The log for each past month ("Log 2026-11")
 ├── Sources/
 │   ├── Class Notes/        Copies of my course notes (one file per course)
@@ -81,13 +84,14 @@ The Coppermind/
 ├── Perspectives/           My views, organized by the Architecture of Worldview
 ├── Health Checks/          One report per health check, plus a table of past reports
 ├── Tools/                  Tools I use and have built (browser extensions, scripts, the health check script)
+├── _changelogs/            The changelog of the rules and of each tool (Nicrosil's), kept out of the files agents read
 ├── _templates/             One template per page type
 └── _attachments/           Images and diagrams used on wiki pages
 ```
 
 ## Files that are not wiki pages
 
-`index.md`, the log, `Ingest Queue.md`, the reports in `Health Checks/`, and everything in `Tools/` are not wiki pages: they have no `status`, are not in `index.md`, and I don't verify them. The rule files in `SCHEMAS/` do have a `status`, and I verify them like pages, but they are not listed in the index either.
+`index.md`, the log, `Ingest Queue.md`, the reports in `Health Checks/`, everything in `Tools/`, and the files in `_changelogs/` are not wiki pages: they have no `status`, are not in `index.md`, and I don't verify them. The rule files in `SCHEMAS/` do have a `status`, and I verify them like pages, but they are not listed in the index either.
 
 ### Guides: about the Coppermind itself
 
@@ -102,4 +106,5 @@ A **guide** explains how to set up, run, review, or get the most out of the Copp
 - **Ingest Queue:** sources waiting to be ingested, in batches. See [[SCHEMA - Ingest#The Ingest Queue]].
 - **Health Checks:** one report per health check. See [[SCHEMA - Health Check#The report archive]].
 - **Tools:** my working equipment, not sources or knowledge. See [[SCHEMA - Changes#Tools]].
+- **Changelogs:** `_changelogs/` holds the [[Schema Changelog]] and one file per tool (for now, [[Nicrosil Changelog]]), so the guides and rule files stay short. See [[SCHEMA - Changes#Nicrosil and other tools]].
 - **The log and its archive:** see [[SCHEMA - Index and Log#The log]].

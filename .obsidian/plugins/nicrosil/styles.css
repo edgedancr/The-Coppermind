@@ -1018,8 +1018,8 @@ body.cm-calm .cm-wt-flow, body.cm-calm .cm-wt-svg.is-new .cm-wt-card, body.cm-ca
 .cm-wt-tog:hover .cm-wt-tog-bg, .cm-wt-tog:focus-visible .cm-wt-tog-bg { fill: #2a221b; transform: none; }
 
 /* ---- Relations panel: crisp and flat (2.7.3). Same look as the wiki map: sharp 2px corners, no glows, no flowing dots, no halo, no dotted backdrop. ---- */
-/* same serif and copper-to-teal text as the Review queue header (still, without the shimmer) */
-.cm-rel-title { font-family: Georgia, serif; font-size: 1.3em; line-height: 1.15; letter-spacing: 0.02em; background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 36%, #d99a62 56%, #86d2c1 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+/* same serif as the Review queue header; the gradient and glow are shared with it, see the end of this file */
+.cm-rel-title { font-family: Georgia, serif; font-size: 1.3em; line-height: 1.15; letter-spacing: 0.02em; }
 .cm-rel-status { border-radius: 2px; }
 .cm-rel-map { border: 1px solid rgba(184, 115, 51, .35); border-radius: 2px; background: #171310; box-shadow: none; }
 .cm-rel-box { fill: #1f1a16; rx: 2px; ry: 2px; filter: none; transition: fill .15s, stroke-width .15s; }
@@ -1037,3 +1037,17 @@ body.cm-calm .cm-wt-flow, body.cm-calm .cm-wt-svg.is-new .cm-wt-card, body.cm-ca
 .cm-rel-swatch { border-radius: 0; box-shadow: none; }
 .cm-rel-item { border-radius: 2px; }
 .cm-rel-dot { border-radius: 1px; }
+
+/* ---- Review queue and relations panel headers: still, glowing gradient like the Dashboard name (2.7.3). No shimmer. ---- */
+.cm-queue h4, .cm-rel-title {
+  width: fit-content; max-width: 100%;
+  background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 40%, #d99a62 62%, #86d2c1 100%); background-size: 100% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  animation: none !important;
+  filter: drop-shadow(0 0 7px rgba(217, 138, 74, 0.4)) drop-shadow(0 0 16px rgba(95, 174, 158, 0.25));
+}
+
+/* ---- File list: folders whose names start with "_" are hidden unless the eye button in its toolbar is on (2.7.5). The plugin adds cm-hide-underscore to the page on load. ---- */
+body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-folder:has(> .nav-folder-title[data-path^="_"]),
+body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-folder:has(> .nav-folder-title[data-path*="/_"]) { display: none; }
+.cm-underscore-btn.is-active { color: var(--text-accent); }

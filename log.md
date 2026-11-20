@@ -2863,3 +2863,38 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Calculate:** `styles.css`: the map's boxes, frame and tag get 2px corners and flat fills, and the dotted backdrop, flowing dots, halo and animations are removed, matching the wiki map from 2.7.0. `main.js`: adds the `cm-rel-og` gradient the open page's outline uses. Arrows are still curved. Guide updated.
 - **Verify:** Pending: Harrison to look at the panel in Obsidian.
 - **Commit:** `tool: Nicrosil 2.7.3 — flat relations map, gradient outline on the open page`
+
+### [2026-11-20] schema | Version histories moved out of the guides (version 7.3)
+
+- **Think:** Harrison wanted agents to read less when they open the Nicrosil guide and the rule files, so the version history should live in its own file that an agent reads only when it has to. He created `_version_histories/`.
+- **Calculate:** The Nicrosil guide's version history (about a third of the guide) moved to `_version_histories/Nicrosil Version History.md`, and the guide links to it. The rules that said to add the line to the guide now point to the new file: `AGENTS.md` (read rule, permissions row, Nicrosil rule), `SCHEMA - Changes`, `SCHEMA - Index and Log`, and `SCHEMA` (layout). `Schema Changelog.md` was already a separate file that agents are told not to read, so it stays where it is, because Nicrosil's schema button writes to that path.
+- **Verify:** Pending: Harrison to re-review the changed lines in the four rule files and the guide.
+- **Commit:** `schema: 7.3 — version histories move to _version_histories/`
+
+### [2026-11-20] tool | Health check script: _version_histories/ counts as records
+
+- **Think:** The new folder holds history, not pages.
+- **Calculate:** `coppermind_check.py` adds `_version_histories/` to `RECORD_PREFIXES`, so links in those files are not checked, like `Logs/`. No other change.
+- **Verify:** Pending: run the script once.
+- **Commit:** `tool: health check skips links in _version_histories/`
+
+### [2026-11-20] schema | Changelogs folder renamed to `_changelogs/` (version 7.4)
+
+- **Think:** Harrison renamed the folder to `_changelogs/`, moved the Schema Changelog into it, and renamed the Nicrosil history file to `Nicrosil Changelog.md`. The rules had to say so.
+- **Calculate:** Updated `AGENTS.md` (read rule, permissions row, Nicrosil rule), `SCHEMA - Changes`, `SCHEMA - Index and Log`, and `SCHEMA` (rule file table, layout, files that are not wiki pages, the other files); fixed a stale link in the Nicrosil guide; added a 7.4 line to the Schema Changelog. Past log entries keep the old names, since they are never rewritten.
+- **Verify:** Pending: Harrison to re-review the changed lines.
+- **Commit:** `schema: 7.4 — changelogs live in _changelogs/`
+
+### [2026-11-20] tool | Nicrosil 2.7.4: schema button finds the moved changelog
+
+- **Think:** The Schema Changelog moved out of `SCHEMAS/`, so the **Log a schema change** button would have said it could not find it.
+- **Calculate:** `main.js`: `CHANGELOG_PATH` is now `_changelogs/Schema Changelog.md`. The health check script's `RECORD_PREFIXES` now names `_changelogs/`. Guide and Nicrosil Changelog updated.
+- **Verify:** Pending: reload Obsidian, then try **Log a schema change** on a SCHEMAS page.
+- **Commit:** `tool: Nicrosil 2.7.4 — find the Schema Changelog in _changelogs/`
+
+### [2026-11-20] tool | Nicrosil 2.7.5: eye button to show or hide `_` folders
+
+- **Think:** Harrison wanted the folders that start with an underscore out of the file list by default, with a small button in the toolbar to show them.
+- **Calculate:** `main.js` adds a `cm-hide-underscore` class to the page when the plugin loads (so they are hidden every time Obsidian opens) and puts an eye button in the file list's toolbar that toggles it; the choice is not saved. `styles.css` hides the folders while the class is on. The button's tooltip says what a click will do. Guide and Nicrosil Changelog updated.
+- **Verify:** Pending: reload Obsidian and check that `_attachments`, `_changelogs`, and `_templates` are gone and that the eye button brings them back.
+- **Commit:** `tool: Nicrosil 2.7.5 — eye button to show or hide _ folders`

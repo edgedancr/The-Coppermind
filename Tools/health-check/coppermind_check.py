@@ -30,7 +30,7 @@ PAGE_TYPES = {"concept", "glossary", "framework", "case-study", "person", "summa
 FLAG_KINDS = {"question": "Whose view?", "warning": "Unsourced background",
               "caution": "Accuracy check / sources disagree", "todo": "Gap"}
 SKIP_DIRS = {".git", ".obsidian", ".trash", "node_modules"}
-RECORD_PREFIXES = ("log.md", "Logs/", "Health Checks/")   # records: links in them are history, not checked
+RECORD_PREFIXES = ("log.md", "Logs/", "Health Checks/", "_changelogs/")   # records: links in them are history, not checked
 STALE_DAYS = 14
 SAMPLE_SIZE = 20
 

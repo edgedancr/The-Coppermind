@@ -18,7 +18,7 @@ This folder is the Coppermind, Harrison Nickles's LLM wiki (his SAIL portfolio):
 | Moving the vault to another tool, or testing an export | `SCHEMA - Export.md` |
 | Understanding the vault's layout and what each folder is for | `SCHEMA.md` |
 
-More than one row can apply. Don't read `Schema Changelog.md` unless you are adding a line to it or are asked about the rules' history.
+More than one row can apply. Don't read anything in `_changelogs/` (the rules' changelog and Nicrosil's) unless you are adding a line to one or are asked about the history.
 
 ## Rules for every task
 
@@ -39,6 +39,7 @@ More than one row can apply. Don't read `Schema Changelog.md` unless you are add
 | `Ingest Queue.md` | Maintain and keep current | Reorder, drop, or skip batches, unless he asks |
 | `Health Checks/` | Create a report for each health check; record his decisions in it | Change a saved report's findings, or delete a report |
 | `Tools/` | Read; build or revise a tool when he asks | Edit, rename, or delete otherwise |
+| `_changelogs/` | Add a line for each change | Rewrite or delete past lines |
 | `_templates/`, `.obsidian/` | Use | Change, unless he asks |
 
 The agent never deletes anything except a draft it created that Harrison rejected.
@@ -67,7 +68,7 @@ The agent never deletes anything except a draft it created that Harrison rejecte
   Operations: `setup`, `ingest`, `query`, `health-check`, `verify`, `schema`, `tool`. If Harrison revises or rejects something without saying why, ask him for a one-sentence reason and record it.
 - **Commit:** suggest a message in the form `ingest: SAIL notes 8/27/26 — 4 approved, 1 revised, 1 rejected`. Harrison makes the commit.
 
-**Nicrosil.** Any edit to a file in `.obsidian/plugins/nicrosil/`, even a one-line style tweak, is a tool change. Read `SCHEMA - Changes.md` before you start. In the same edit, without being asked, bump the version in `manifest.json` and the Nicrosil guide, update the guide and its version history, and log it as `tool`.
+**Nicrosil.** Any edit to a file in `.obsidian/plugins/nicrosil/`, even a one-line style tweak, is a tool change. Read `SCHEMA - Changes.md` before you start. In the same edit, without being asked, bump the version in `manifest.json` and the Nicrosil guide, update the guide, add a line at the top of `_changelogs/Nicrosil Changelog.md` (not in the guide), and log it as `tool`.
 
 ## Saving tokens
 
