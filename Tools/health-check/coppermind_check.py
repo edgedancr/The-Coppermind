@@ -30,7 +30,7 @@ PAGE_TYPES = {"concept", "glossary", "framework", "case-study", "person", "summa
 FLAG_KINDS = {"question": "Whose view?", "warning": "Unsourced background",
               "caution": "Accuracy check / sources disagree", "todo": "Gap"}
 SKIP_DIRS = {".git", ".obsidian", ".trash", "node_modules"}
-RECORD_PREFIXES = ("log.md", "Logs/", "Health Checks/", "_changelogs/")   # records: links in them are history, not checked
+RECORD_PREFIXES = ("_logs/", "_log.md", "Health Checks/", "_changelogs/")   # records: links in them are history, not checked
 STALE_DAYS = 14
 SAMPLE_SIZE = 20
 
@@ -305,7 +305,7 @@ def run(root, today, full):
                     want = norm_heading(head.split("#")[-1])
                     if want not in v.headings(tgt):
                         R["broken"].append(f"[[{name(p)}]] (line {line_no}): `[[{m.group(2)[:70]}]]`: no heading \"{head}\" in [[{name(tgt)}]]")
-    not_inbound_sources = {"index.md", "_dashboard.md", "Dashboard.md", "Ingest Queue.md"}
+    not_inbound_sources = {"_index.md", "_dashboard.md", "Dashboard.md", "Ingest Queue.md"}
     for p in pages:
         if not {q for q in inbound.get(p, set()) if q not in not_inbound_sources}:
             R["orphan"].append(f"[[{name(p)}]]: no other page links to it")
@@ -415,7 +415,7 @@ def run(root, today, full):
                 R["gaps"].append(f"[[{name(p)}]]: heading \"{l.strip('# ').strip()}\" has no notes under it")
 
     # Index
-    idx = v.pages.get("index.md")
+    idx = v.pages.get("_index.md") or v.pages.get("index.md")
     if idx:
         sections, cur, listed_total = {}, None, None
         m = re.search(r"\*\*Total:\*\*\s*(\d+)", idx["body"])
@@ -432,24 +432,24 @@ def run(root, today, full):
         indexed = {}
         for sec, d in sections.items():
             if d["count"] != len(d["entries"]):
-                R["index"].append(f"index.md: \"{sec}\" says {d['count']} but lists {len(d['entries'])}")
+                R["index"].append(f"_index.md: \"{sec}\" says {d['count']} but lists {len(d['entries'])}")
             for e in d["entries"]:
                 tgt = v.resolve(e)
                 if not tgt or not is_wiki_page(tgt):
-                    R["index"].append(f"index.md: \"{sec}\" lists [[{e}]], which isn't a page in Wiki/, Perspectives/, or Source Cards/")
+                    R["index"].append(f"_index.md: \"{sec}\" lists [[{e}]], which isn't a page in Wiki/, Perspectives/, or Source Cards/")
                 elif tgt in indexed:
-                    R["index"].append(f"index.md: [[{e}]] is listed twice")
+                    R["index"].append(f"_index.md: [[{e}]] is listed twice")
                 else:
                     indexed[tgt] = sec
                     want = section_for(tgt)
                     if want and want != sec:
-                        R["index"].append(f"index.md: [[{e}]] is under \"{sec}\" but its folder is \"{want}\"")
+                        R["index"].append(f"_index.md: [[{e}]] is under \"{sec}\" but its folder is \"{want}\"")
         for p in pages:
             if p not in indexed:
-                R["index"].append(f"index.md: [[{name(p)}]] is missing")
+                R["index"].append(f"_index.md: [[{name(p)}]] is missing")
         n_entries = sum(len(d["entries"]) for d in sections.values())
         if listed_total is not None and listed_total != len(pages):
-            R["index"].append(f"index.md: the total says {listed_total}, but there are {len(pages)} pages ({n_entries} listed)")
+            R["index"].append(f"_index.md: the total says {listed_total}, but there are {len(pages)} pages ({n_entries} listed)")
 
     # Ingest Queue
     q = v.pages.get("Ingest Queue.md")

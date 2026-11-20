@@ -1,11 +1,14 @@
 ---
 type: schema
-version: 7.7
+version: 7.10
 status: draft
 owner: Harrison Nickles
 updated: 2026-11-20
 verified_on: 2026-11-20
 changes_since_verified:
+  - "2026-11-20: `Review Queue.base` is gone from the folder layout [[#Folder layout]]"
+  - "2026-11-20: the log is one file per month in `_logs/`, named `_log MM-YY` [[#Folder layout]]"
+  - "2026-11-20: the index and the log are `_index.md` and `_log.md` [[#Folder layout]]"
   - "2026-11-20: the Dashboard is `_dashboard.md` [[#Folder layout]]"
   - "2026-11-20: AGENTS.md: a permissions row and a read rule for `_changelogs/`, and the Nicrosil rule now says its changelog line goes in that folder (versions 7.3 and 7.4)"
   - "2026-11-20: the folder layout lists `_changelogs/`, and the Schema Changelog moved there from `SCHEMAS/` [[#Folder layout]]"
@@ -24,7 +27,7 @@ An agent starts at `AGENTS.md`, which holds the rules for every task and points 
 | [[SCHEMA - Ingest]] | The ingest operation, step by step, and the Ingest Queue |
 | [[SCHEMA - Query]] | Answering questions from the wiki and filing answers back |
 | [[SCHEMA - Health Check]] | What a health check covers, the check script, and the report archive |
-| [[SCHEMA - Index and Log]] | The index, the log and its monthly archive, and git |
+| [[SCHEMA - Index and Log]] | The index, the log (one file per month), and git |
 | [[SCHEMA - Changes]] | Changing these rules, the templates, the tools, and Nicrosil |
 | [[SCHEMA - Export]] | Keeping the vault portable and moving it to another tool |
 | [[Schema Changelog]] (in `_changelogs/`) | The history of every version of the rules |
@@ -48,8 +51,8 @@ What is in and out of scope is in `AGENTS.md`, because every task needs it.
 | Sources      | `Sources/`      | My notes, assignments, readings, and scans in their original form, plus a source card for each         | I collect; the agent drafts source cards |
 | Wiki pages   | `Wiki/`         | Concept, glossary, framework, case study, person, summary, prompt, workflow, guide, and analysis pages | The agent drafts; I verify               |
 | Schema       | `SCHEMAS/` and `AGENTS.md` | This rulebook                                                                               | I direct                                 |
-| Index        | `index.md`      | A map of every page                                                                                    | The agent maintains; I check             |
-| Log          | `log.md` and `Logs/` | A dated record of every operation and my decisions                                                | The agent maintains; I check             |
+| Index        | `_index.md`      | A map of every page                                                                                    | The agent maintains; I check             |
+| Log          | `_logs/`              | A dated record of every operation and my decisions                                                | The agent maintains; I check             |
 | Perspectives | `Perspectives/` | My reflections, opinions, and conclusions                                                              | I write                                  |
 
 ## Folder layout
@@ -59,12 +62,10 @@ The Coppermind/
 ├── AGENTS.md               Start here: the rules for every task, and which rule file to read
 ├── CLAUDE.md               Loads AGENTS.md for Claude Code
 ├── _dashboard.md           Front door and review dashboard (hidden in the file list unless the eye button is on)
-├── index.md                Map of every page
-├── log.md                  This month's record of every operation
+├── _index.md               Map of every page
+├── _logs/                  The log: one file per month ("_log 11-26" is November 2026)
 ├── Ingest Queue.md         Sources I've collected that are waiting to be ingested, in batches
-├── Review Queue.base       Live list of pages waiting for review, with a view for verified pages that changed
 ├── SCHEMAS/                This rulebook: this overview and one file per area
-├── Logs/                   The log for each past month ("Log 2026-11")
 ├── Sources/
 │   ├── Class Notes/        Copies of my course notes (one file per course)
 │   ├── My Work/            My assignments, papers, analyses
@@ -92,7 +93,7 @@ The Coppermind/
 
 ## Files that are not wiki pages
 
-`index.md`, the log, `Ingest Queue.md`, the reports in `Health Checks/`, everything in `Tools/`, and the files in `_changelogs/` are not wiki pages: they have no `status`, are not in `index.md`, and I don't verify them. The rule files in `SCHEMAS/` do have a `status`, and I verify them like pages, but they are not listed in the index either.
+`_index.md`, the log, `Ingest Queue.md`, the reports in `Health Checks/`, everything in `Tools/`, and the files in `_changelogs/` are not wiki pages: they have no `status`, are not in `_index.md`, and I don't verify them. The rule files in `SCHEMAS/` do have a `status`, and I verify them like pages, but they are not listed in the index either.
 
 ### Guides: about the Coppermind itself
 
@@ -108,4 +109,4 @@ A **guide** explains how to set up, run, review, or get the most out of the Copp
 - **Health Checks:** one report per health check. See [[SCHEMA - Health Check#The report archive]].
 - **Tools:** my working equipment, not sources or knowledge. See [[SCHEMA - Changes#Tools]].
 - **Changelogs:** `_changelogs/` holds the [[Schema Changelog]] and one file per tool (for now, [[Nicrosil Changelog]]), so the guides and rule files stay short. See [[SCHEMA - Changes#Nicrosil and other tools]].
-- **The log and its archive:** see [[SCHEMA - Index and Log#The log]].
+- **The log:** see [[SCHEMA - Index and Log#The log]].

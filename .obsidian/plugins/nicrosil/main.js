@@ -19,8 +19,8 @@
  *  - "Log a schema change" (a pen button in the header of any page in SCHEMAS/, or the command palette): asks for the new
  *    version number and what I changed, then adds the line to _changelogs/Schema Changelog.md and keeps the `version` and
  *    `updated` properties of SCHEMAS/SCHEMA.md in step. It does not touch status, verified_on, or the log.
- *  - Monthly log: log.md holds the current month. When Obsidian opens in a new month (and before an entry is added in
- *    a new month), the earlier months' entries move, word for word, to Logs/Log YYYY-MM.md.
+ *  - Monthly log: one file per month, _logs/_log MM-YY.md. When Obsidian opens in a new month (and before an entry is
+ *    added in a new month), the new month's file is created with its header. Earlier months are left as they are.
  *
  * Relations panel (Alt+L): for the open page, a map and grouped lists of its typed links (SCHEMA - Writing Pages),
  *         outgoing and incoming, colored by type. The incoming side is worked out from the other pages.
@@ -29,10 +29,10 @@
  *         type_of, part_of and example_of; Map is a zoomable network of every typed link, with filters.
  *
  * Verify: sets status: verified and verified_on, deletes `changes_since_verified` if the page has it,
- *         checks the page is listed in index.md, and adds an entry at the top of log.md.
+ *         checks the page is listed in _index.md, and adds an entry at the top of the current month's log file.
  * Re-reviews: a draft that has a `changes_since_verified` list is a verified page the AI edited at my
  *         request. The queue lists these first, with an R badge, and the card shows what changed.
- * Reject: asks for a reason, logs it, removes the page from index.md, and deletes the page
+ * Reject: asks for a reason, logs it, removes the page from _index.md, and deletes the page
  *         (SCHEMA - Review: a rejected draft is deleted, never kept).
  * Nothing is committed to git; do that yourself afterward.
  */
@@ -41,14 +41,13 @@ const {
   PluginSettingTab, Setting, MarkdownRenderChild, setIcon, addIcon, debounce, parseYaml,
 } = require("obsidian");
 
-const INDEX_PATH = "index.md";
-const LOG_PATH = "log.md";
+const INDEX_PATH = "_index.md";
+const LOG_DIR = "_logs";                            // _logs/_log MM-YY.md, one file per month
 const DASHBOARD_PATH = "_dashboard.md";          // the underscore keeps it out of the file list unless the eye button is on
 const LEGACY_DASHBOARD_PATHS = ["Dashboard.md", "Home.md"]; // old names, still recognised if a vault has one
 const SCHEMA_DIR = "SCHEMAS/";
 const SCHEMA_PATH = "SCHEMAS/SCHEMA.md";           // the rules overview; holds the rulebook's version
 const CHANGELOG_PATH = "_changelogs/Schema Changelog.md";
-const LOG_ARCHIVE_DIR = "Logs";                     // Logs/Log YYYY-MM.md, one per past month
 const OLD_HOME_PATH = "Home.md";
 const VIEW_TYPE = "nicrosil-queue";
 // The rule files in SCHEMAS/ and root-level .md files are reviewable too, but only count once they carry a status property.
@@ -227,7 +226,7 @@ function daysBetween(fromIso, toIso) {
 }
 
 /**
- * index.md model. Each "## Type (n)" section holds its entries in one alphabetical list, with no
+ * _index.md model. Each "## Type (n)" section holds its entries in one alphabetical list, with no
  * split by status. Concepts and Glossary (INDEX_LETTERED) are split under "### A" ... "### 0–9" letter
  * headings; those are dropped when reading and rebuilt when writing, and the "**Jump to:**" line under
  * the total is rebuilt from the sections. The older formats are still read, and rewritten in this one: entries under
@@ -404,47 +403,31 @@ function addToLog(text, entry) {
   return lines.join(eol);
 }
 
-/** True for log.md and the month files in Logs/. */
+/** The log file for a date "YYYY-MM-DD": _logs/_log 11-26.md for November 2026. */
+function logPathFor(date) {
+  const [y, m] = date.split("-");
+  return `${LOG_DIR}/_log ${m}-${y.slice(2)}.md`;
+}
+
+/** True for a month's log file, _logs/_log MM-YY.md. */
 function isLogPath(path) {
-  return path === LOG_PATH || new RegExp(`^${LOG_ARCHIVE_DIR}/Log \\d{4}-\\d{2}\\.md$`).test(path);
+  return /^_logs\/_log \d{2}-\d{2}\.md$/.test(path);
 }
 
-/**
- * Splits the log into the part that stays (its header and the current month's entries) and the entries of
- * earlier months, grouped by month. Entries are moved whole and word for word; nothing is reworded.
- * Returns { keep, moved: { "YYYY-MM": "entries text" } }, or null if nothing needs to move.
- */
-function splitLogByMonth(text, month) {
-  const eol = text.includes("\r\n") ? "\r\n" : "\n";
-  const lines = text.split(/\r?\n/);
-  const heads = [];
-  lines.forEach((l, i) => { const m = /^#{2,4} \[(\d{4}-\d{2})-\d{2}\] /.exec(l); if (m) heads.push({ i, month: m[1] }); });
-  if (!heads.some((h) => h.month < month)) return null;
-  const keepLines = lines.slice(0, heads[0].i);
-  const moved = {};
-  heads.forEach((h, k) => {
-    const end = k + 1 < heads.length ? heads[k + 1].i : lines.length;
-    const chunk = lines.slice(h.i, end);
-    if (h.month < month) {
-      while (chunk.length && chunk[chunk.length - 1].trim() === "") chunk.pop();
-      (moved[h.month] = moved[h.month] || []).push(chunk.join(eol));
-    } else {
-      keepLines.push(...chunk);
-    }
-  });
-  const out = {};
-  for (const [m, chunks] of Object.entries(moved)) out[m] = chunks.join(eol + eol);
-  const keep = keepLines.join(eol).replace(/\s*$/, "") + eol;
-  return { keep, moved: out };
+/** Sort key of a month's log file (year, then month); -1 for any other path. */
+function logOrder(path) {
+  const m = /^_logs\/_log (\d{2})-(\d{2})\.md$/.exec(path);
+  return m ? Number(m[2]) * 100 + Number(m[1]) : -1;
 }
 
-/** The first lines of a new month file. */
-function logArchiveHeader(month) {
-  const [y, m] = month.split("-").map(Number);
+/** The first lines of a new month's log file, for the month of a date "YYYY-MM-DD". */
+function logFileHeader(date) {
+  const [y, m] = date.split("-").map(Number);
   const name = new Date(y, m - 1, 1).toLocaleString("en-US", { month: "long", year: "numeric" });
   return [
-    "---", "type: log", `month: ${month}`, "---",
-    `The log's entries for ${name}, moved here word for word from [[log]] when the month ended. Newest at the top. Format and rules: [[SCHEMA - Index and Log#The log]].`,
+    "---", "type: log", "---", "# Log", "",
+    `A dated record of every ingest, query, health check, verification, schema change, and tool change, and what I approved, revised, or rejected. Newest entries are at the top, so a new entry goes just under the line below, above the newest one. Past entries are never rewritten. This file holds ${name}; each month has its own file in \`${LOG_DIR}/\`. Format and rules: \`AGENTS.md\` and [[SCHEMA - Index and Log#The log]]. Agents: don't read this file whole; read only the first 15 or so lines to add an entry, and search the headings.`,
+    "", "---",
   ].join("\n");
 }
 
@@ -720,10 +703,10 @@ class QueueView extends ItemView {
     } else {
       const start = root.createDiv({ cls: "cm-card" });
       start.createDiv({ cls: "cm-card-label", text: curItem ? `“${curItem.name}” is verified` : "Not reviewing a draft" });
-      const b = start.createEl("button", { cls: "mod-cta", text: drafts.length ? "Open next draft" : "Queue is empty" });
+      const b = start.createEl("button", { cls: "mod-cta cm-gbtn", text: drafts.length ? "Open next draft" : "Queue is empty" });
       b.disabled = !drafts.length;
       b.setAttr("aria-label", "Alt+N");
-      b.addEventListener("click", () => p.openNext(cur ? cur.path : null));
+      b.addEventListener("click", (e) => p.openNext(cur ? cur.path : null, undefined, e.ctrlKey || e.metaKey));
     }
 
     // the queue
@@ -749,7 +732,7 @@ class QueueView extends ItemView {
         changeBadge(row, item.changes);
         flagBadges(row, item.flags, item.path);
         row.setAttr("data-path", item.path);
-        row.addEventListener("click", () => p.openFile(item.path));
+        row.addEventListener("click", (e) => p.openFile(item.path, e.ctrlKey || e.metaKey));
       });
     };
     if (rechecks.length) drawRows("Changed since verified", rechecks);
@@ -761,7 +744,7 @@ class QueueView extends ItemView {
       verified.sort((a, b) => a.name.localeCompare(b.name)).forEach((item) => {
         const row = det.createDiv({ cls: "cm-row" });
         row.createDiv({ cls: "cm-row-name", text: item.name });
-        row.addEventListener("click", () => p.openFile(item.path));
+        row.addEventListener("click", (e) => p.openFile(item.path, e.ctrlKey || e.metaKey));
       });
     }
     BADGE_STATE.primed = true;
@@ -2488,7 +2471,10 @@ module.exports = class Nicrosil extends Plugin {
       await this.migrateHome();
       if (this.app.vault.getAbstractFileByPath(DASHBOARD_PATH)) await this.fixHomepageSetting(); // the startup page follows the Dashboard's name
       await this.migrateSchemaStub();
-      try { await this.rotateLog(); } catch (e) { console.error("Nicrosil: could not archive last month's log", e); new Notice(`Could not move last month's log entries: ${e.message}`, 10000); }
+      try {
+        const r = await this.ensureLog(today());
+        if (r.created) new Notice(`Started this month's log: ${r.file.basename}.`, 6000);
+      } catch (e) { console.error("Nicrosil: could not start this month's log", e); new Notice(`Could not start this month's log: ${e.message}`, 10000); }
       this.syncDashboardLeaves(true);
       const f = this.app.workspace.getActiveFile();
       if (f) this.currentPath = f.path;
@@ -2504,6 +2490,7 @@ module.exports = class Nicrosil extends Plugin {
     document.body.classList.remove("cm-hide-underscore");
     document.body.classList.remove("cm-on-dashboard");
     document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"));
+    document.querySelectorAll(".cm-dashboard-tab").forEach((e) => e.classList.remove("cm-dashboard-tab"));
     document.body.classList.remove("cm-quiet");
     document.querySelectorAll(".cm-propstrip").forEach((e) => e.remove());
     this.stripObservers.forEach((o) => o.disconnect());
@@ -2778,6 +2765,10 @@ module.exports = class Nicrosil extends Plugin {
         .filter(([, n]) => n > 0).map(([info, n]) => `${n} ${(n === 1 ? info.label : info.plural.replace(/ \(.*\)$/, "")).toLowerCase()}`).join(", ");
       const subBits = [bdQ ? `Open flags: ${bdQ}` : "", stale.length ? `${stale.length} draft${stale.length === 1 ? "" : "s"} older than ${STALE_DAYS} days` : ""].filter(Boolean);
       if (subBits.length) box.createDiv({ cls: "cm-qstats-sub", text: subBits.join(". ") + "." });
+      // opens the next draft in the queue (and shows the review queue); Ctrl+click opens it in a new tab
+      const nextBtn = box.createEl("button", { cls: "mod-cta cm-gbtn cm-qnext", text: drafts.length ? "Open next draft" : "All verified" });
+      nextBtn.disabled = !drafts.length;
+      nextBtn.addEventListener("click", async (e) => { const tab = e.ctrlKey || e.metaKey; await this.activateView(); this.openNext(null, undefined, tab); });
       // keep the milestone up to date, so switching back to Classic doesn't replay old bursts
       if (all.length) {
         const ms = verified >= all.length ? 100 : Math.floor((pctQ * 100) / 25) * 25;
@@ -2851,9 +2842,9 @@ module.exports = class Nicrosil extends Plugin {
     const rside = rbody.createDiv({ cls: "cm-ring-side" });
     rside.createDiv({ cls: "cm-ring-big", text: `${verified} of ${all.length}` });
     rside.createDiv({ cls: "cm-sub", text: "pages verified" });
-    const btn = rside.createEl("button", { cls: "mod-cta", text: drafts.length ? "Start reviewing" : "All verified" });
+    const btn = rside.createEl("button", { cls: "mod-cta", text: drafts.length ? "Open next draft" : "All verified" });
     btn.disabled = !drafts.length;
-    btn.addEventListener("click", async () => { await this.activateView(); this.openNext(null); });
+    btn.addEventListener("click", async (e) => { const tab = e.ctrlKey || e.metaKey; await this.activateView(); this.openNext(null, undefined, tab); });
 
         const tc = gcard("Pages by type", "cm-wide");
     const groups = [...new Set(all.map((i) => i.group))].sort((a, b) => groupRank(a) - groupRank(b));
@@ -2895,7 +2886,7 @@ module.exports = class Nicrosil extends Plugin {
           i.changes.forEach((c) => drawChangeLine(row.createDiv({ cls: "cm-dash-change-line" }), this, i.path, c));
           row.setAttr("role", "button");
           row.setAttr("tabindex", "0");
-          row.addEventListener("click", () => this.openFile(i.path));
+          row.addEventListener("click", (e) => this.openFile(i.path, e.ctrlKey || e.metaKey));
         });
       }, false);
     }
@@ -2924,29 +2915,17 @@ module.exports = class Nicrosil extends Plugin {
     });
   }
 
-  /** Draws the last 14 days of log activity as small stacked bars: verifications and other changes. */
-  guidesLink() {
-    const f = this.app.vault.getAbstractFileByPath(INDEX_PATH);
-    const cache = f instanceof TFile ? this.app.metadataCache.getFileCache(f) : null;
-    const h = cache && (cache.headings || []).find((x) => /^Guides\b/.test(x.heading));
-    return h ? `index#${h.heading}` : "index";
-  }
-
   renderNav(el) {
     el.empty();
     el.addClass("cm-nav");
     el.toggleClass("is-quiet", this.isQuiet());
     el.toggleClass("is-intro", !!this.dashIntro && !prefersReduced());
-    const drafts = this.items.filter((i) => i.status === "draft").length;
-    const rechecks = this.items.filter((i) => i.status === "draft" && i.changes.length).length;
     const open = (link) => (newTab) => this.app.workspace.openLinkText(link, "", !!newTab);
     const cards = [
-      { icon: "list", title: "Index", sub: "Every page, by type", go: open("index") },
-      { icon: "badge-check", title: "Review queue", sub: drafts ? `${drafts} drafts waiting${rechecks ? `, ${rechecks} changed since verified` : ""}` : "Nothing waiting", go: () => this.activateView() },
+      { icon: "list", title: "Index", sub: "Every page, by type", go: open("_index") },
+      { icon: "scroll-text", title: "Log", sub: "Every change and decision", go: (newTab) => { const f = this.latestLogFile(); if (f) this.app.workspace.getLeaf(newTab ? "tab" : false).openFile(f); else new Notice("There is no log file yet."); } },
       { icon: "network", title: "Wiki map", sub: "Every typed link, as a tree and a map", go: () => this.activateWikiMap() },
-      { icon: "scroll-text", title: "Log", sub: "Every change and decision", go: open("log") },
       { icon: "book-open", title: "Schema", sub: "The rulebook", go: open("SCHEMA") },
-      { icon: "life-buoy", title: "Guides", sub: "How the vault works", go: open(this.guidesLink()) },
     ];
     cards.forEach((c, idx) => {
       const card = el.createDiv({ cls: "cm-navcard" });
@@ -2965,15 +2944,14 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   async renderActivity(el) {
-    const f = this.app.vault.getAbstractFileByPath(LOG_PATH);
-    let all = f instanceof TFile ? parseLog(await this.app.vault.cachedRead(f)) : [];
-    if (all.length < 6) {
-      // Early in a month, fill the list from the newest month file in Logs/.
-      const months = this.app.vault.getMarkdownFiles().filter((x) => isLogPath(x.path) && x.path !== LOG_PATH).sort((a, b) => a.path.localeCompare(b.path));
-      const last = months[months.length - 1];
-      if (last) all = all.concat(parseLog(await this.app.vault.cachedRead(last)));
+    // Each month's file is newest first, and the files go from the newest month to the oldest.
+    const files = this.app.vault.getMarkdownFiles().filter((x) => isLogPath(x.path)).sort((p, q) => logOrder(q.path) - logOrder(p.path));
+    const all = [];
+    for (const f of files) {
+      for (const e of parseLog(await this.app.vault.cachedRead(f))) all.push({ ...e, file: f });
+      if (all.length >= 6) break;
     }
-    const entries = all.slice(0, 6); // the log is newest first
+    const entries = all.slice(0, 6);
     el.empty();
     el.addClass("cm-activity");
     el.toggleClass("is-intro", !!this.dashIntro && !prefersReduced());
@@ -2990,7 +2968,7 @@ module.exports = class Nicrosil extends Plugin {
       row.createSpan({ cls: "cm-act-date", text: e.date });
       const go = () => {
         const target = e.op === "verify" && !e.rejected ? this.app.metadataCache.getFirstLinkpathDest(e.subject, "") : null;
-        this.app.workspace.openLinkText(target ? target.path : "log", "", false);
+        this.app.workspace.openLinkText(target ? target.path : e.file.path, "", false);
       };
       row.addEventListener("click", go);
       row.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); go(); } });
@@ -3000,7 +2978,7 @@ module.exports = class Nicrosil extends Plugin {
   linkTo(parent, item) {
     const a = parent.createEl("a", { cls: "internal-link", text: item.name, href: item.name });
     a.setAttr("data-href", item.name);
-    a.addEventListener("click", (e) => { e.preventDefault(); this.openFile(item.path); });
+    a.addEventListener("click", (e) => { e.preventDefault(); this.openFile(item.path, e.ctrlKey || e.metaKey); });
   }
 
   /* --- dashboard --- */
@@ -3030,6 +3008,7 @@ module.exports = class Nicrosil extends Plugin {
       const isDash = this.isDashboard(view.file);
       const isLog = isLogPath(path);
       view.containerEl.classList.toggle("cm-dashboard-leaf", isDash);
+      if (leaf.tabHeaderEl) leaf.tabHeaderEl.classList.toggle("cm-dashboard-tab", isDash); // the Dashboard's tab shows the logo, not the file name
       view.containerEl.classList.toggle("cm-log-leaf", isLog);
       view.containerEl.classList.toggle("cm-noprops-leaf", isDash || isLog || path === INDEX_PATH);
       const pageStatus = view.file ? ((this.app.metadataCache.getFileCache(view.file) || {}).frontmatter || {}).status : "";
@@ -3349,18 +3328,18 @@ module.exports = class Nicrosil extends Plugin {
     this.app.workspace.revealLeaf(leaf);
   }
 
-  async openFile(path) {
+  async openFile(path, newTab) {
     const f = this.app.vault.getAbstractFileByPath(path);
     if (!(f instanceof TFile)) return;
-    const leaf = this.mainLeaf();
+    const leaf = newTab ? this.app.workspace.getLeaf("tab") : this.mainLeaf();
     await leaf.openFile(f);
     this.app.workspace.setActiveLeaf(leaf, { focus: true });
   }
 
-  async openNext(fromPath, order) {
+  async openNext(fromPath, order, newTab) {
     const next = nextAfter(order || this.queue(), fromPath);
     if (!next) { new Notice("The review queue is empty."); return; }
-    await this.openFile(next.path);
+    await this.openFile(next.path, newTab);
   }
 
   async skip(file) {
@@ -3416,7 +3395,7 @@ module.exports = class Nicrosil extends Plugin {
           await this.appendLog(verifyLogEntry({ name: file.basename, date, note, openFlags: flags, resolved }));
           delete this.resolved[file.path];
           await this.persist();
-          new Notice(`Verified “${file.basename}”.` + (indexed || !file.path.includes("/") || file.path.startsWith(SCHEMA_DIR) ? "" : " It wasn't in index.md; add it by hand."), 5000);
+          new Notice(`Verified “${file.basename}”.` + (indexed || !file.path.includes("/") || file.path.startsWith(SCHEMA_DIR) ? "" : " It wasn't in _index.md; add it by hand."), 5000);
           const nxt = nextAfter(order, file.path);
           const fx = this.settings.celebrate !== false && !prefersReduced() ? await this.playVerifyOut(file, order.length > 1 ? "Verified" : "All drafts verified") : null;
           if (this.settings.autoAdvance) await this.openNext(file.path, order);
@@ -3425,7 +3404,7 @@ module.exports = class Nicrosil extends Plugin {
           if (!this.settings.autoAdvance) setTimeout(() => this.pulseStrip(file), 600);
         } catch (e) {
           console.error("Nicrosil: verify failed", e);
-          new Notice(`Verify failed: ${e.message}. Check status, index.md and log.md.`, 10000);
+          new Notice(`Verify failed: ${e.message}. Check status, _index.md and the log.`, 10000);
         }
         this.scheduleRefresh();
       },
@@ -3572,10 +3551,10 @@ module.exports = class Nicrosil extends Plugin {
           await this.app.fileManager.trashFile(file);
           delete this.resolved[path];
           await this.persist();
-          new Notice(`Rejected and deleted “${file.basename}”.` + (indexed ? "" : " It wasn't in index.md."), 5000);
+          new Notice(`Rejected and deleted “${file.basename}”.` + (indexed ? "" : " It wasn't in _index.md."), 5000);
         } catch (e) {
           console.error("Nicrosil: reject failed", e);
-          new Notice(`Reject failed: ${e.message}. Check log.md, index.md and the page.`, 10000);
+          new Notice(`Reject failed: ${e.message}. Check the log, _index.md and the page.`, 10000);
         }
         this.scheduleRefresh();
       },
@@ -3658,7 +3637,7 @@ module.exports = class Nicrosil extends Plugin {
 
   async updateIndex(name, mode, date) {
     const f = this.app.vault.getAbstractFileByPath(INDEX_PATH);
-    if (!(f instanceof TFile)) { new Notice("index.md not found; update it by hand."); return false; }
+    if (!(f instanceof TFile)) { new Notice("_index.md not found; update it by hand."); return false; }
     let found = false;
     await this.app.vault.process(f, (text) => {
       const r = editIndex(text, name, mode, date);
@@ -3668,41 +3647,31 @@ module.exports = class Nicrosil extends Plugin {
     return found;
   }
 
-  async appendLog(entry) {
-    await this.rotateLog();
-    const f = this.app.vault.getAbstractFileByPath(LOG_PATH);
-    if (!(f instanceof TFile)) throw new Error("log.md not found");
-    await this.app.vault.process(f, (text) => addToLog(text, entry));
+  /** The newest month's log file in _logs/ (by year, then month), or null. */
+  latestLogFile() {
+    let best = null;
+    for (const f of this.app.vault.getMarkdownFiles()) if (isLogPath(f.path) && (!best || logOrder(f.path) > logOrder(best.path))) best = f;
+    return best;
   }
 
-  /**
-   * Moves the entries of earlier months from log.md to Logs/Log YYYY-MM.md, word for word and in order.
-   * The month file is written first, so if anything fails, nothing has been removed from log.md.
-   */
-  async rotateLog() {
-    const f = this.app.vault.getAbstractFileByPath(LOG_PATH);
-    if (!(f instanceof TFile)) return;
-    const month = today().slice(0, 7);
-    const split = splitLogByMonth(await this.app.vault.read(f), month);
-    if (!split) return;
-    if (!this.app.vault.getAbstractFileByPath(LOG_ARCHIVE_DIR)) await this.app.vault.createFolder(LOG_ARCHIVE_DIR);
-    for (const m of Object.keys(split.moved).sort()) {
-      const path = `${LOG_ARCHIVE_DIR}/Log ${m}.md`;
-      const existing = this.app.vault.getAbstractFileByPath(path);
-      if (existing instanceof TFile) {
-        await this.app.vault.process(existing, (text) => addToLog(text, split.moved[m]));
-      } else {
-        await this.app.vault.create(path, logArchiveHeader(m) + "\n\n" + split.moved[m] + "\n");
-      }
-    }
-    // Re-split against log.md as it is now, so an entry added in the meantime is not lost.
-    await this.app.vault.process(f, (text) => { const again = splitLogByMonth(text, month); return again ? again.keep : text; });
-    new Notice(`Moved last month's log entries to ${LOG_ARCHIVE_DIR}/.`, 6000);
+  /** The log file for the month of `date` ("YYYY-MM-DD"), created with its header if it isn't there yet. */
+  async ensureLog(date) {
+    const path = logPathFor(date);
+    const have = this.app.vault.getAbstractFileByPath(path);
+    if (have instanceof TFile) return { file: have, created: false };
+    if (!this.app.vault.getAbstractFileByPath(LOG_DIR)) await this.app.vault.createFolder(LOG_DIR);
+    const file = await this.app.vault.create(path, logFileHeader(date) + "\n");
+    return { file, created: true };
+  }
+
+  async appendLog(entry) {
+    const { file } = await this.ensureLog(today());
+    await this.app.vault.process(file, (text) => addToLog(text, entry));
   }
 };
 
 module.exports.__test = {
   parseFlags, removeLines, sortQueue, nextAfter, groupOf, editIndex,
   verifyLogEntry, rejectLogEntry, addToLog, daysBetween, today, parseLog, describeEntry, renameLogEntry, parseIndex, renderIndex,
-  splitLogByMonth, logArchiveHeader, isLogPath, setFrontmatterProps, schemaInfo, checkVersion, addChangelogEntry, findChangelog,
+  logPathFor, logOrder, logFileHeader, isLogPath, setFrontmatterProps, schemaInfo, checkVersion, addChangelogEntry, findChangelog,
 };

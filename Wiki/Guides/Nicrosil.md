@@ -16,14 +16,18 @@ drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboar
 drafted_on: 2026-11-11
 verified_on: 2026-11-20
 changes_since_verified:
+  - "2026-11-20: the Dashboard has four link cards, and the first review progress card has an Open next draft button [[#The Dashboard]]"
+  - "2026-11-20: the log is one file per month in `_logs/`, and the Dashboard's Log card opens the newest one [[#The index and the log]]"
+  - "2026-11-20: the index and log are `_index.md` and `_log.md`, and the Dashboard's Log card comes before the Wiki map card [[#The Dashboard]]"
+  - "2026-11-20: Ctrl+click opens review queue pages and Open next draft in a new tab [[#Hotkeys and buttons]]"
   - "2026-11-20: the Dashboard is the file `_dashboard.md`, and Nicrosil finds it by that name [[#The Dashboard]]"
   - "2026-11-20: Verify and Reject add their log entry at the top of the log, which is now newest first [[#The index and the log]]"
   - "2026-11-20: Log a schema change adds its line at the top of the changelog, which is now newest first [[#Logging a schema change]]"
 ---
 > [!summary]
-> **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
+> **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.8.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.11.1**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -33,7 +37,7 @@ This guide describes Nicrosil **v2.8.0**. Its folder is `.obsidian/plugins/nicro
 | **Wiki map** | Two views of the whole wiki's typed links: a collapsible hierarchy tree and a zoomable map | [[#The wiki map]] |
 | **Dashboard** | The front page: progress, search box, six navigation cards, recent activity | [[#The Dashboard]] |
 | **Search** | A live search box over wiki pages, source cards, and perspectives | [[#Search]] |
-| **Index and log** | Checks [[index]] and writes to [[log]] after each verify or reject, folds the log's entries, and moves each finished month to `Logs/` | [[#The index and the log]] |
+| **Index and log** | Checks [[_index|index]] and writes to log after each verify or reject, folds the log's entries, and starts each month's log file in `_logs/` | [[#The index and the log]] |
 | **Page tidying** | Replaces each page's properties block with a one-line strip | [[#The properties strip]] |
 | **Schema changes** | A button that adds a line to [[Schema Changelog]] and updates the version in [[SCHEMA]] | [[#Logging a schema change]] |
 | **Shortcuts** | Hotkeys, a Coppermind button above the file list, and a status-bar counter | [[#Hotkeys and buttons]] |
@@ -56,11 +60,11 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 
 ### A review session
 1. Pull first (see [[Setting Up Git for the Coppermind]]).
-2. On [[_dashboard|Dashboard]], click **Start reviewing**, or press `Alt+N`.
+2. On [[_dashboard|Dashboard]], click **Open next draft**, or press `Alt+N`.
 3. Read the page and check it against the sources it cites.
 4. **Resolve each flag.** If a claim needs correcting, edit the page text first. Then click **Resolve** and write what I decided. The callout is removed from the page, and my decision is saved and written into the log when I verify (or reject) the page.
 5. **Decide:**
-   - **Verify** (`Alt+V`): optionally note what I changed and why, then `Ctrl+Enter`. The page gets `status: verified` and `verified_on`, and [[log]] gets an entry listing any flags I resolved. A short animation plays (see [[#Settings]] to turn it off). If flags are still open, I have to tick a box to verify anyway, and the log records them.
+   - **Verify** (`Alt+V`): optionally note what I changed and why, then `Ctrl+Enter`. The page gets `status: verified` and `verified_on`, and log gets an entry listing any flags I resolved. A short animation plays (see [[#Settings]] to turn it off). If flags are still open, I have to tick a box to verify anyway, and the log records them.
      - If the page has a `changes_since_verified` property, Verify deletes it, and the log keeps the record.[^2]
    - **Skip** (`Alt+S`): moves the page to the end of the queue for this session and opens the next one.
    - **Reject** (`Alt+R`): write the reason (required), then `Ctrl+Enter`. The reason is logged, the page is removed from the index, and the page is deleted.[^1] The dialog lists pages that link to it, so I can fix those links afterward.
@@ -70,10 +74,10 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 ## The Dashboard
 [[_dashboard|Dashboard]] is the page the vault opens on. It is the file `_dashboard.md`; the underscore keeps it out of the file list unless the eye button is on, and the Coppermind button and `Alt+D` open it. Each section is a block in the page's text, so a section can be moved or deleted by editing the note. From top to bottom it has:
 - **Header** (`coppermind-hero`): the Coppermind logo, name, and tagline, with the search box (see [[#Search]]) right under them.
-- **Six link cards** (`coppermind-nav`): Index, Review queue, Wiki map, Log, Schema, and Guides, each a name and a one-line description. A click opens the page in the current tab. ==`Ctrl+click` (or middle-click) opens it in a new tab.== The Review queue and Wiki map cards open a sidebar or their own tab instead, so they have no new-tab version.
-- **Review progress** (`coppermind-dashboard`): one line of stats (pages verified, with the share, drafts, and open flags), a progress bar showing how much is verified, and a small line counting the open flags by kind and the drafts older than 14 days. Under it is a bar for each page type showing its verified and draft pages. A **Changed since verified** section lists each re-review with its change lines. Below that are folded lists naming the pages with open flags, by kind, and the drafts older than 14 days. To start a review session from the Dashboard, use the Review queue card.
+- **Four link cards** (`coppermind-nav`): Index, Log, Wiki map, and Schema, each a name and a one-line description. The **Log** card opens the newest month's log file. A click opens the page in the current tab. ==`Ctrl+click` (or middle-click) opens it in a new tab.== The Wiki map card opens its own tab instead, so it has no new-tab version.
+- **Review progress** (`coppermind-dashboard`): one line of stats (pages verified, with the share, drafts, and open flags), a progress bar showing how much is verified, and a small line counting the open flags by kind and the drafts older than 14 days. Under it is a bar for each page type showing its verified and draft pages. A **Changed since verified** section lists each re-review with its change lines. Below that are folded lists naming the pages with open flags, by kind, and the drafts older than 14 days. To start a review session from the Dashboard, use the **Open next draft** button on the first card (`Ctrl+click` opens the draft in a new tab). It also shows the review queue on the right.
 - **Health check card:** inside the review progress section, showing how long it has been since the last health check. A bar fills over the 14 days between checks, and it changes color for the last two days and again once the check is overdue (or if none has been saved yet). It reads the dates from the report names in `Health Checks/`, so it updates itself when a new report is saved, and clicking it opens the latest report.
-- **Recent activity** (`coppermind-activity`): the last six log entries (early in a month, the rest come from last month's file in `Logs/`). Click one to open the page it names, or the log.
+- **Recent activity** (`coppermind-activity`): the last six log entries (early in a month, the rest come from last month's file in `_logs/`). Click one to open the page it names, or the log file it came from.
 - **Reference:** folded sections on what the Coppermind is, how to read it, what it covers, and its six parts. These are ordinary text in the note.
 
 **Reading and editing.** The Dashboard always opens in Reading view, and every other note keeps the mode it was in. Its properties are hidden, and so is the Properties side pane while the Dashboard is the active note. To edit it, press `Ctrl+E`; it stays in editing until I click into the Dashboard again from another tab or note.
@@ -91,10 +95,10 @@ The search box on the [[_dashboard|Dashboard]] shows suggestion cards as I type,
 - It stays up to date on its own as pages are created, edited, renamed, or deleted.
 
 ## The index and the log
-- **Index:** [[index]] lists every page under its type, in alphabetical order, with a count per type and a total at the top. Concepts and Glossary are split under A–Z letter headings, and a **Jump to** line under the total links to each type. It does not show whether a page is verified; the review queue and the Dashboard do that. When I verify a page, Nicrosil only checks that the page is listed. When I reject one, its line is removed and Nicrosil rebuilds the counts, letter headings and jump links.
-- **Log:** Nicrosil adds the entry for each verify and reject to the top of [[log]] (newest first, never rewriting old entries). The log opens with every entry folded, so it reads as a short list; this needs Obsidian's **Fold heading** option (Settings → Editor) to be on.
-- **One log file per month:** [[log]] holds the current month. The first time Obsidian opens in a new month (and before Nicrosil adds an entry in a new month), it moves every earlier month's entries, word for word and in order, to `Logs/Log YYYY-MM.md`. It writes the month file before trimming the log, so a failure never loses entries. Month files open folded, like the log.[^5]
-- **Properties:** [[index]], [[log]], the month files, and the Dashboard hide their properties entirely.
+- **Index:** [[_index|index]] lists every page under its type, in alphabetical order, with a count per type and a total at the top. Concepts and Glossary are split under A–Z letter headings, and a **Jump to** line under the total links to each type. It does not show whether a page is verified; the review queue and the Dashboard do that. When I verify a page, Nicrosil only checks that the page is listed. When I reject one, its line is removed and Nicrosil rebuilds the counts, letter headings and jump links.
+- **Log:** Nicrosil adds the entry for each verify and reject to the top of the current month's log file (newest first, never rewriting old entries). The log opens with every entry folded, so it reads as a short list; this needs Obsidian's **Fold heading** option (Settings → Editor) to be on.
+- **One log file per month:** the log lives in `_logs/`, one file per month, named `_log MM-YY` (`_log 11-26` is November 2026). The first time Obsidian opens in a new month (and before Nicrosil adds an entry in one), it creates that month's file with its header. Earlier months' files are left as they are, and every month's file opens folded, like the log.[^5]
+- **Properties:** [[_index|index]], every month's log file, and the Dashboard hide their properties entirely.
 
 ## The relations panel
 Open it with `Alt+L` or the branching-arrows button in the ribbon. It follows whichever page is open and shows how that page connects to the rest of the wiki through the typed links in its properties:[^3]
@@ -126,7 +130,7 @@ Every change to the rules (`AGENTS.md` or a file in `SCHEMAS/`) needs a line in 
 2. Enter the new version number in the form `4.2` and a description of what changed. The version must be newer than the current one and not already in the changelog.
 3. Nicrosil adds the dated line at the top of the changelog and updates its `updated` property, then sets `version` and `updated` on [[SCHEMA]], which holds the rulebook's version.
 
-It does not touch `status`, `verified_on`, or [[log]]. After a schema change, each changed rule file goes back to `draft` with a change note,[^1] and the log entry is still mine to add.
+It does not touch `status`, `verified_on`, or log. After a schema change, each changed rule file goes back to `draft` with a change note,[^1] and the log entry is still mine to add.
 
 ## Hotkeys and buttons
 | Key | Action |
@@ -141,7 +145,7 @@ It does not touch `status`, `verified_on`, or [[log]]. After a schema change, ea
 | `Alt+M` | Open the wiki map |
 | `Alt+D` | Go to the Dashboard |
 | `Ctrl+Enter` | Confirm a dialog |
-| `Ctrl+click` or middle-click | Open a Dashboard card or the Coppermind button in a new tab (search results: `Ctrl+click` or `Ctrl+Enter`) |
+| `Ctrl+click` or middle-click | Open a Dashboard card or the Coppermind button in a new tab (search results: `Ctrl+click` or `Ctrl+Enter`). `Ctrl+click` also opens a page from the review queue, **Open next draft**, and the Dashboard's page lists in a new tab |
 
 Change any of them in **Settings → Hotkeys** (search "Nicrosil"). Nicrosil also adds a large **The Coppermind** button above the files in the file list (it opens the Dashboard), two **ribbon** buttons (branching arrows for the relations panel and a check badge for the review queue; the wiki map has a Dashboard card instead), and a **status-bar counter** showing how many pages are verified (for example, `12/60 verified`). **Log a schema change** has no default hotkey. The file list's toolbar also has an **eye button** that shows or hides folders whose names start with an underscore (`_templates`, `_changelogs`, and so on). They are hidden every time Obsidian opens, and showing them lasts only until Obsidian closes.
 
@@ -166,9 +170,9 @@ In **Settings → Nicrosil**:
 - **No buttons or sidebar:** the plugin is off, or the page is outside the folders above.
 - **No Resolve button on a callout:** switch to Reading view, or use the sidebar card or `Alt+F`.
 - **Resolved flags waiting to be logged:** they are stored in the plugin's `data.json`, which git syncs. If I resolve flags on one computer, push before verifying that page on the other.
-- **"It wasn't in index.md":** the page's entry is missing or renamed. Fix its line in [[index]] by hand.
+- **"It wasn't in _index.md":** the page's entry is missing or renamed. Fix its line in [[_index|index]] by hand.
 - **Properties look reformatted after verifying:** Obsidian rewrites a page's properties when a plugin edits them. The content is the same.
-- **Merge conflict in `index.md` or `log.md`:** two computers verified pages before syncing. Pull before a review session and push after.
+- **Merge conflict in `_index.md` or `_log.md`:** two computers verified pages before syncing. Pull before a review session and push after.
 - **A hotkey does nothing after an update:** switch Nicrosil off and on again, then check **Settings → Hotkeys**.
 
 ## Keeping this guide current

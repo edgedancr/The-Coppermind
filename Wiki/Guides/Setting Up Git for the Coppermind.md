@@ -69,7 +69,7 @@ The rule: **pull when I sit down, commit and push when I leave.** Never walk awa
 3. **Finish:** commit with a message (see the habit below), then run **Git: Push**.
 4. **Check:** the Source Control panel should show nothing waiting to be committed or pushed.
 
-If I forget to push on one computer, go back to it and push, then pull on the other. If a pull reports a conflict, stop. A conflict means the same lines were changed on both computers. Don't resolve it by deleting files; ask for help first and record what happened in the [[log]]. To avoid conflicts, only work on one computer at a time, and run Claude on only one computer at a time.
+If I forget to push on one computer, go back to it and push, then pull on the other. If a pull reports a conflict, stop. A conflict means the same lines were changed on both computers. Don't resolve it by deleting files; ask for help first and record what happened in the [[_log 11-26]]. To avoid conflicts, only work on one computer at a time, and run Claude on only one computer at a time.
 
 ## The habit: every session
 1. **Pull** when I start, if I use more than one computer.
@@ -80,7 +80,7 @@ If I forget to push on one computer, go back to it and push, then pull on the ot
 
 ## Troubleshooting
 - **"Not a git repository":** the repository was created in a different folder. Check that a hidden `.git` folder is inside the Coppermind folder itself.
-- **A commit I regret:** git can revert any commit without losing the history of what happened, which is itself worth noting in the [[log]].
+- **A commit I regret:** git can revert any commit without losing the history of what happened, which is itself worth noting in the [[_log 11-26]].
 - **"Password authentication is not supported" or "Authentication failed" on push:** GitHub rejected the password. Use a personal access token as the password, with the `repo` scope. If the box never reappears, remove old `git:https://github.com` entries in Windows Credential Manager and push again.
 - **A prompt about the remote branch:** type the name of the local branch and select that row.
 - **A commit fails with "Please tell me who you are":** run the two `git config --global` commands from the second-computer setup.

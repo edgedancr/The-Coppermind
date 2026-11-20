@@ -127,6 +127,10 @@ body.cm-on-dashboard .cm-home-btn { box-shadow: inset 0 0 10px rgba(184, 115, 51
 .cm-dashboard-leaf .inline-title,
 .cm-dashboard-leaf .metadata-container,
 .cm-dashboard-leaf .frontmatter-container { display: none !important; }
+/* The Dashboard's file name (_dashboard) is not shown: the path above the page is hidden, and its tab says "Dashboard" instead (2.8.4). */
+.cm-dashboard-leaf .view-header-title-container { visibility: hidden; }
+.cm-dashboard-tab .workspace-tab-header-inner-title { font-size: 0; }
+.cm-dashboard-tab .workspace-tab-header-inner-title::before { content: "Dashboard"; font-size: var(--tab-font-size, var(--font-ui-small)); }
 /* the Properties side pane stays empty while the Dashboard is the active note */
 body.cm-on-dashboard .workspace-leaf-content[data-type="file-properties"] .view-content { display: none !important; }
 .coppermind-dashboard h2 {
@@ -866,6 +870,7 @@ body.cm-quiet .cm-qstats {
   background: rgba(20, 15, 12, 0.5); border: 1px solid var(--background-modifier-border);
 }
 body.cm-quiet .cm-qstats-line { font-size: 1.15em; line-height: 1.5; }
+body.cm-quiet .cm-qstats .cm-qnext { margin-top: 14px; }
 body.cm-quiet .cm-q-verified { font-family: Georgia, serif; font-size: 1.9em; line-height: 1; margin-right: 4px; }
 body.cm-quiet .cm-qbar { height: 8px; margin: 14px 0 10px; border-radius: 4px; background: rgba(184, 115, 51, 0.16); overflow: visible; }
 body.cm-quiet .cm-qbar-fill {
@@ -1042,3 +1047,31 @@ body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-
 body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-file:has(> .nav-file-title[data-path^="_"]),
 body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-file:has(> .nav-file-title[data-path*="/_"]) { display: none; }
 .cm-underscore-btn.is-active { color: var(--text-accent); }
+
+/* Open next draft buttons (2.11.1): sharp corners, copper-to-teal gradient outline, glow (same as the index jump chips) */
+button.cm-gbtn.mod-cta {
+  border: 1px solid transparent !important;
+  border-radius: 2px !important;
+  background: linear-gradient(#221c17, #221c17) padding-box, linear-gradient(135deg, #d98a4a, #5fae9e) border-box !important;
+  box-shadow: 0 0 5px rgba(217,138,74,.3), 0 0 8px rgba(95,174,158,.22) !important;
+  color: #f1d3ae !important;
+  font-weight: 600;
+  letter-spacing: .02em;
+  padding: 7px 18px;
+  height: auto;
+  cursor: pointer;
+  transition: background .15s, box-shadow .15s, color .15s;
+}
+button.cm-gbtn.mod-cta:hover:not(:disabled) {
+  background: linear-gradient(#2a221b, #2a221b) padding-box, linear-gradient(135deg, #e89a5a, #78d2c0) border-box !important;
+  box-shadow: 0 0 7px rgba(232,154,90,.5), 0 0 12px rgba(120,210,192,.38) !important;
+  color: #fff0dc !important;
+}
+button.cm-gbtn.mod-cta:active:not(:disabled) { transform: translateY(1px); }
+button.cm-gbtn.mod-cta:disabled {
+  background: linear-gradient(#1c1815, #1c1815) padding-box, linear-gradient(135deg, #6b5340, #4a6b64) border-box !important;
+  box-shadow: none !important;
+  color: #7d7266 !important;
+  cursor: default;
+  opacity: .8;
+}

@@ -1,6 +1,6 @@
 # Ingest Queue
 
-Sources I've collected that are waiting to be ingested, in the batches we plan to take them in. This is a plan, not a record: the [[log]] says what was done, and each source card's Ingest Progress says what has been ingested from that source. The agent keeps this page current (see [[SCHEMA - Ingest#The Ingest Queue]]); I decide the order and the skips. Agents: read only the batch you are working on.
+Sources I've collected that are waiting to be ingested, in the batches we plan to take them in. This is a plan, not a record: the log says what was done, and each source card's Ingest Progress says what has been ingested from that source. The agent keeps this page current (see [[SCHEMA - Ingest#The Ingest Queue]]); I decide the order and the skips. Agents: read only the batch you are working on.
 
 Status marks: `[ ]` waiting · `[~]` drafted, pending my review · `[x]` done (verified). Done batches move to [[#Done]] at the bottom, one line each.
 

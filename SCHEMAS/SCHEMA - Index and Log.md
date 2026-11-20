@@ -5,6 +5,8 @@ owner: Harrison Nickles
 updated: 2026-11-20
 verified_on: 2026-11-20
 changes_since_verified:
+  - "2026-11-20: the log is one file per month in `_logs/`, named `_log MM-YY` [[#One file per month]]"
+  - "2026-11-20: the index and the log are `_index.md` and `_log.md` [[#The log]]"
   - "2026-11-20: the log is newest first, and a new entry goes at the top [[#The log]]"
   - "2026-11-20: tool entries point to the Nicrosil Changelog for details [[#The log]]"
 ---
@@ -12,11 +14,11 @@ How the index, the log, and git work. The everyday parts (the index line, the lo
 
 ## The index
 
-- `index.md` lists **every page** in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`, grouped by type, with a count per group and a total at the top.
+- `_index.md` lists **every page** in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`, grouped by type, with a count per group and a total at the top.
 - Under each type, pages are listed alphabetically in one list, with no split by status. Each entry is one line: `- [[Page Name]] — one-line summary`. The index does not show whether a page is draft or verified; the review queue and the page's own `status` do.
 - **Concepts and Glossary, the two long types, are split by first letter** under `### A`, `### B` ... headings (`### 0–9` for names that start with a digit). Pages stay alphabetical, and there is a heading only for a letter that has pages: add one when a page brings a new letter, remove one that empties. Other types stay one plain list.
 - **A Jump to line** under the total links to each type's heading, as `**Jump to:** [[#Concepts (94)|Concepts]] ...`. A link has to match its heading's count, so update it whenever a count changes. A stale one shows in a health check as a broken heading link.
-- **Looks:** `index.md` has `cssclasses: coppermind-index`, which the `coppermind.css` snippet styles (columns, bold names, quieter summaries, letter tabs, jump chips). It changes only how the page looks; the line format above stays exactly as is. Nicrosil keeps the letter headings and the Jump to line right when I reject a page.
+- **Looks:** `_index.md` has `cssclasses: coppermind-index`, which the `coppermind.css` snippet styles (columns, bold names, quieter summaries, letter tabs, jump chips). It changes only how the page looks; the line format above stays exactly as is. Nicrosil keeps the letter headings and the Jump to line right when I reject a page.
 - The agent updates the index **at the end of every operation** that adds, removes, or renames a page. A change of status does not change the index.
 - Not in the index: the rule files in `SCHEMAS/`, the Ingest Queue (a plan), the log and the reports in `Health Checks/` (records), and `Tools/`.
 - **Read only the section you are changing.** To find whether a page exists, search file names and aliases instead.
@@ -35,13 +37,13 @@ How the index, the log, and git work. The everyday parts (the index line, the lo
 
 ### One file per month
 
-- `log.md` holds the **current month's** entries. Each earlier month is in `Logs/Log YYYY-MM.md` (for example `Logs/Log 2026-11.md`), with its entries in their original order and wording. Moving a month there is not rewriting it.
-- **Nicrosil moves a finished month** out of `log.md` the first time Obsidian opens in a new month, and before it adds an entry in a new month. If an agent adds an entry to `log.md` in a new month before that has happened, that's fine: the move sorts it out.
-- The month files are records, like health check reports: no `status`, not in the index.
+- The log is in `_logs/`, **one file per month**, named `_log MM-YY` (for example `_logs/_log 11-26.md` for November 2026). New entries go in the current month's file, at the top.
+- **Nicrosil starts each month's file** the first time Obsidian opens in a new month, and before it adds an entry in one, with the same header as the others. If an agent needs to add an entry and there is no file for the current month yet, it creates one by copying the header of the latest file.
+- Earlier months' files are left as they are. They are records, like health check reports: no `status`, not in the index.
 
 ### Reading the log
 
-- **Never read `log.md` or a month file whole.** To add an entry, read only the first 15 or so lines and insert it under the header's closing `---` line. To look something up, search the `### [YYYY-MM-DD] operation | Subject` headings for the date, operation, or page you need, then read only those entries.
+- **Never read a log file whole.** To add an entry, read only the first 15 or so lines of the current month's file and insert it under the header's closing `---` line. To look something up, search the `### [YYYY-MM-DD] operation | Subject` headings across `_logs/` for the date, operation, or page you need, then read only those entries.
 
 ## Version control (git)
 

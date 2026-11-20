@@ -1,9 +1,11 @@
 ---
 type: schema
-status: verified
+status: draft
 owner: Harrison Nickles
-updated: 2026-11-19
+updated: 2026-11-20
 verified_on: 2026-11-19
+changes_since_verified:
+  - "2026-11-20: the log's month files are named like `_log 11-26` [[#Naming]]"
 ---
 How to write a page in `Wiki/`, a source card, or (for me) a perspective: what to name it, what goes in its properties, how it links, how it cites, whose voice it is in, and how it reads. Any agent drafting or editing a page reads the sections the edit touches.
 
@@ -20,7 +22,7 @@ How to write a page in `Wiki/`, a source card, or (for me) a perspective: what t
 - **Source cards:** `SRC - ` plus the source title: `SRC - SAIL Class Notes (Fall 2026)`.
 - **Original source files** keep a descriptive name: `SAIL Class Notes (Fall 2026).md`. My own assignments keep the course's submission name (e.g., `Nickles_HW1_Unverified_GenAI_Information`).
 - **No dates in wiki page names.** Dates belong in sources, properties, and the log.
-- **Records are the exception**, because they are not wiki pages: health check reports (`Health Check 2026-11-17`) and the log's month files (`Log 2026-11`).
+- **Records are the exception**, because they are not wiki pages: health check reports (`Health Check 2026-11-17`) and the log's month files (`_log 11-26`).
 
 ## Page properties
 

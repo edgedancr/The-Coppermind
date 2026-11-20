@@ -101,9 +101,9 @@ verified_on: 2026-11-19
 [^1]: [[SCHEMA - Review|Schema: Review]]
 [^2]: [Models overview](https://platform.claude.com/docs/en/about-claude/models.md)
 [^3]: [Choosing a model](https://platform.claude.com/docs/en/about-claude/models/choosing-a-model)
-[^4]: [[log]]
+[^4]: [[_log 11-26]]
 [^5]: [[Health Check 2026-11-17]]
-[^6]: [[log]], 2026-11-17 schema entry
+[^6]: [[_log 11-26]], 2026-11-17 schema entry
 [^7]: [[Dissect and Ingest a Source]]
 [^8]: [[SCHEMA - Export|Schema: Export]]
 [^9]: [[SCHEMA - Writing Pages#Citations|Schema: Citations]]

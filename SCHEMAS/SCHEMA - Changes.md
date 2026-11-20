@@ -5,6 +5,7 @@ owner: Harrison Nickles
 updated: 2026-11-20
 verified_on: 2026-11-19
 changes_since_verified:
+  - "2026-11-20: the index and the log are `_index.md` and `_log.md` [[#Nicrosil and other tools]]"
   - "2026-11-20: the Schema Changelog is newest first, and a new line goes at the top [[#Nicrosil and other tools]]"
   - "2026-11-20: the changelogs of the rules and of Nicrosil live in `_changelogs/`, and look-and-feel detail goes in Nicrosil's changelog, not in the guide [[#Nicrosil and other tools]]"
 ---
@@ -28,7 +29,7 @@ The rules are `AGENTS.md` and the files in `SCHEMAS/`. Together they are one rul
 
 ## Tools
 
-`Tools/` is where I keep the tools I use: browser extensions, scripts, and similar things, each as a single file, folder, or zip. It is not one of the six parts and not a wiki page folder: files there have no `status`, are not in `index.md`, and I don't verify them. They are my own working equipment, not sources or knowledge.
+`Tools/` is where I keep the tools I use: browser extensions, scripts, and similar things, each as a single file, folder, or zip. It is not one of the six parts and not a wiki page folder: files there have no `status`, are not in `_index.md`, and I don't verify them. They are my own working equipment, not sources or knowledge.
 
 - **I add and update the tools.** The agent may read them, and may build or revise one only when I ask.
 - **A tool that helps feed the wiki** (such as the YouTube transcript extension) does not change the rules for sources: whatever it produces still goes through Ingest like any other source.
