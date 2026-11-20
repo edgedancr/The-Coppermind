@@ -1,9 +1,11 @@
 ---
 type: schema
-status: verified
+status: draft
 owner: Harrison Nickles
 updated: 2026-11-19
 verified_on: 2026-11-19
+changes_since_verified:
+  - "2026-11-19: Any change to a Nicrosil file, even a one-line style tweak, needs the version bump, guide update and tool log entry, done in the same edit without being asked (the agent skipped them on a style tweak) [[#Nicrosil and other tools]]"
 ---
 How the rules, templates, and tools change, and how each change is recorded.
 
@@ -36,5 +38,6 @@ The rules are `AGENTS.md` and the files in `SCHEMAS/`. Together they are one rul
 ## Nicrosil and other tools
 
 - **Nicrosil** lives in `.obsidian/plugins/nicrosil/`. The agent changes it only when I ask.
+- **Every change counts, even a one-line style tweak in `styles.css`.** Asking for the change is asking for everything below, and the agent does it all in the same edit without being asked. Starting a Nicrosil edit means reading this section first.
 - **Each change bumps its version** in `manifest.json` and the [[Nicrosil]] guide, adds a line to the guide's version history, and updates the sections of the guide it affects. The guide is a verified page, so that edit sets it to `draft` with a change note ([[SCHEMA - Review#Changing a verified page]]).
 - **Log it as `tool`**, briefly: the details are in the guide's version history ([[SCHEMA - Index and Log#The log]]). A small fix to a version not yet checked in Obsidian can share that version's entry rather than adding a new one.

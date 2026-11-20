@@ -1,6 +1,6 @@
 ---
 type: guide
-status: verified
+status: draft
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -15,11 +15,15 @@ related:
 drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-19
+changes_since_verified:
+  - "2026-11-19: Version 2.6.2. The Dashboard name and the file-list button are set in Almendra SC, and the Dashboard name has a copper-to-teal gradient with a soft glow [[#The Dashboard]]"
+  - "2026-11-19: Version 2.6.1. The Dashboard button now has a copper-to-teal gradient and sharper corners, and the guide describes it (Harrison asked for the restyle) [[#The Dashboard]]"
+  - "2026-11-19: The update checklist now also names the manifest version and the tool log entry, and says they apply to every change, even a style tweak (the agent skipped them on a style tweak) [[#Keeping this guide current]]"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.6.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.6.2**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -65,7 +69,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 
 ## The Dashboard
 [[Dashboard]] is the page the vault opens on. Each section is a block in the page's text, so a section can be moved or deleted by editing the note. From top to bottom it has:
-- **Header** (`coppermind-hero`): the Coppermind logo, name, and tagline, left-aligned with no panel around them, and the search box (see [[#Search]]) right under them.
+- **Header** (`coppermind-hero`): the Coppermind logo, name, and tagline, left-aligned with no panel around them (the name is set in Almendra SC, a copper-to-teal gradient with a soft glow), and the search box (see [[#Search]]) right under them.
 - **Six link cards** (`coppermind-nav`), in two columns: small, sharp-cornered cards with a copper edge, each a name and a one-line description, with no icons. They are Index, Review queue, Wiki map, Log, Schema, and Guides. A click opens the page in the current tab. ==`Ctrl+click` (or middle-click) opens it in a new tab.== The Review queue and Wiki map cards open a sidebar or their own tab instead, so they have no new-tab version.
 - **Review progress** (`coppermind-dashboard`): a card with one line of stats (pages verified, with the share, drafts, and open flags), a glowing copper-to-teal bar showing how much is verified, and a small line counting the open flags by kind and the drafts older than 14 days. Under it is a bar for each page type showing its verified and draft pages. A **Changed since verified** section lists each re-review with its change lines. Below that are folded lists naming the pages with open flags, by kind, and the drafts older than 14 days. To start a review session from the Dashboard, use the Review queue card.
 - **Health check card:** a small card inside the review progress section showing how long it has been since the last health check. A bar fills over the 14 days between checks. It is teal while there is time, amber for the last two days, and red with a gentle pulse once the check is overdue (or if none has been saved yet). It reads the dates from the report names in `Health Checks/`, so it updates itself when a new report is saved, and clicking it opens the latest report.
@@ -74,7 +78,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 
 **Reading and editing.** The Dashboard always opens in Reading view, whether I open it from the ribbon, a link, a tab, or at startup, and every other note keeps the mode it was in. Its properties are hidden, and so is the Properties side pane while the Dashboard is the active note. To edit it, press `Ctrl+E`. It stays in editing until I click into the Dashboard again from another tab or note, which puts it back in Reading view.
 
-**Getting back to it from anywhere:** click the large **The Coppermind** button at the top of the file list, or press `Alt+D`. If the Dashboard is already open in a tab, this switches to that tab; otherwise it opens in the current tab. `Ctrl+click` or middle-click on the button always opens it in a new tab, even if the Dashboard is already open in another one. The button has the copper logo and the name, and it is outlined more brightly while the Dashboard is the open page.
+**Getting back to it from anywhere:** click the large **The Coppermind** button at the top of the file list, or press `Alt+D`. If the Dashboard is already open in a tab, this switches to that tab; otherwise it opens in the current tab. `Ctrl+click` or middle-click on the button always opens it in a new tab, even if the Dashboard is already open in another one. The button has the copper logo and the name (in Almendra SC) on a copper-to-teal gradient, with a gradient border and sharp corners (a 2px radius). It glows on hover, and it has a soft inner glow while the Dashboard is the open page.
 
 **Look and motion.** Every note, the Dashboard included, sits on the vault's brown blended into a copper glow at the top left and a teal glow at the top right. The background is a single CSS variable, `--cm-bg-gradient`, defined in the plugin's `styles.css`; change it there to change every page at once. Both sidebars carry a fainter version of the same glow (copper at the top of the left one, teal at the top of the right one), so they match the page between them. In the file list, the open file has a copper highlight that fades toward teal, and its name shades from teal to pale copper. All of this only applies while Nicrosil is enabled, and the sidebar and file-list colors only in dark mode.
 
@@ -179,12 +183,17 @@ In **Settings → Nicrosil**:
 
 ## Keeping this guide current
 This guide describes what the plugin does today. Whenever Nicrosil is updated:
-1. Change the version number near the top of the page.
+1. Change the version number near the top of the page and in the plugin's `manifest.json`.
 2. Update the table in [[#What Nicrosil does]], the matching section, and the hotkey table if anything was added, removed, or renamed.
 3. Add a line to the version history below.
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it.[^1]
+5. Log it as a `tool` entry ([[SCHEMA - Changes#Nicrosil and other tools]]).
+
+These steps apply to **every** change to a file in the plugin's folder, even a one-line style tweak. Asking for the change is asking for the steps, and they are done in the same edit without being asked.
 
 ### Version history
+- **2.6.2:** The Coppermind name on the Dashboard and on the file-list button is set in **Almendra SC**. The Dashboard name has a copper-to-teal gradient and a soft glow. The font loads from Google Fonts, so it needs an internet connection; offline it falls back to Georgia.
+- **2.6.1:** The **The Coppermind** button at the top of the file list has a copper-to-teal gradient fill and border, the name fades from copper to teal, and its corners are sharp (2px). Hover glows in both colors.
 - **2.6.0:** The rules moved to `SCHEMAS/`: the rule files are reviewable (grouped as **Schemas** in the queue), the pen button shows on every page there, and **Log a schema change** writes to [[Schema Changelog]] and keeps the version in [[SCHEMA]]. The log is split by month: finished months move to `Logs/Log YYYY-MM.md`, month files open folded, and Recent activity fills from last month early in a month. Log entries with the new `tool` operation get a hammer icon. Once, at startup, the old root `SCHEMA.md` (left as a "moved" stub) goes to the trash.
 - **2.5.3:** The Dashboard button moved from the left ribbon to a large **The Coppermind** button, with the logo, at the top of the file list. Click opens the Dashboard; `Ctrl+click` or middle-click opens it in a new tab. The ribbon logo is gone.
 - **2.5.2:** The pop-up preview of a linked page shows the one-line properties strip (type, status, date) instead of the full Properties block, like an open page. Click the strip in the preview to open the real block.

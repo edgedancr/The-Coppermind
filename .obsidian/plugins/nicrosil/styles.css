@@ -1,4 +1,5 @@
 /* Nicrosil — copper and patina, matching the coppermind.css snippet */
+@import url('https://fonts.googleapis.com/css2?family=Almendra+SC&display=swap');
 body {
   --cm-logo-mask: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 402.09796 500%22%3E%3Cpath transform=%22translate(283.29507 359.37144)%22 d=%22M -161.19707,-1.8874443 V -79.964444 c 22.166,18.637 46.922,37.621 46.922,37.621 l 22.132996,-22.167 c 0,0 -40.038996,-25.523 -69.054996,-46.888996 v -143.076 l 279.99996,395.104 -10.77,-47.203004 -307.69096,-452.796996 v 212.379 c -21.332,-25.804 -50.807,-66.68 -53.221,-69.965 1.504,3.705 25.49,61.466 53.221,98.776 v 82.970996 l -83.637,-72.412996 v 33.812996 l 83.637,73.28499966 V 140.62856 H 3.4179256 L -43.020074,100.41856 -161.19707,-1.8874443 z m 0,102.3070043 V 33.147556 l 76.743996,67.272004 h -76.743996 z%22/%3E%3C/svg%3E");
   --cm-copper: #b87333;
@@ -112,11 +113,11 @@ button.cm-danger { background: var(--cm-rust); color: #fff; }
   mask: var(--cm-logo-mask) center / contain no-repeat;
 }
 /* the button at the top of the file list that opens the Dashboard */
-.cm-home-btn { display: flex; align-items: center; justify-content: center; gap: 10px; box-sizing: border-box; min-width: 0; overflow: hidden; container-type: inline-size; height: 46px; margin: 4px 10px 10px; padding: 0 12px; border: 1px solid rgba(184, 115, 51, 0.4); border-radius: 8px; background: linear-gradient(180deg, rgba(184, 115, 51, 0.16), rgba(184, 115, 51, 0.06)); cursor: pointer; user-select: none; transition: border-color .2s, box-shadow .2s, background .2s; }
-.cm-home-btn:hover, .cm-home-btn:focus-visible { border-color: var(--cm-copper); background: linear-gradient(180deg, rgba(184, 115, 51, 0.26), rgba(184, 115, 51, 0.1)); box-shadow: 0 0 12px rgba(184, 115, 51, 0.35); outline: none; }
+.cm-home-btn { display: flex; align-items: center; justify-content: center; gap: 10px; box-sizing: border-box; min-width: 0; overflow: hidden; container-type: inline-size; height: 46px; margin: 4px 10px 10px; padding: 0 12px; border: 1px solid transparent; border-radius: 2px; background: linear-gradient(135deg, rgba(184, 115, 51, 0.30), rgba(95, 174, 158, 0.22)) padding-box, linear-gradient(160deg, #2a2420, #1e1915) padding-box, linear-gradient(135deg, rgba(217, 138, 74, 0.9), rgba(95, 174, 158, 0.75)) border-box; cursor: pointer; user-select: none; transition: box-shadow .2s, filter .2s; }
+.cm-home-btn:hover, .cm-home-btn:focus-visible { background: linear-gradient(135deg, rgba(184, 115, 51, 0.44), rgba(95, 174, 158, 0.36)) padding-box, linear-gradient(160deg, #2a2420, #1e1915) padding-box, linear-gradient(135deg, #e89a5a, #86d2c1) border-box; box-shadow: 0 0 12px rgba(184, 115, 51, 0.3), 0 0 14px rgba(95, 174, 158, 0.22); outline: none; }
 .cm-home-logo { flex: none; width: 21px; height: 26px; filter: drop-shadow(0 1px 3px rgba(184, 115, 51, 0.4)); }
-.cm-home-name { font-family: Georgia, serif; font-size: 1.08em; font-size: clamp(0.7em, calc((100cqw - 31px) / 9.4), 1.08em); font-weight: 600; letter-spacing: 0; flex: none; background: linear-gradient(160deg, #f0c48c, #d98a4a); -webkit-background-clip: text; background-clip: text; color: transparent; white-space: nowrap; }
-body.cm-on-dashboard .cm-home-btn { border-color: var(--cm-copper); box-shadow: inset 0 0 10px rgba(184, 115, 51, 0.2); }
+.cm-home-name { font-family: 'Almendra SC', Georgia, serif; font-size: 1.3em; font-size: clamp(0.7em, calc((100cqw - 31px) / 11), 1.3em); font-weight: 600; letter-spacing: 0; flex: none; background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 40%, #d99a62 62%, #86d2c1 100%); -webkit-background-clip: text; background-clip: text; color: transparent; white-space: nowrap; }
+body.cm-on-dashboard .cm-home-btn { box-shadow: inset 0 0 10px rgba(184, 115, 51, 0.25), inset 0 0 14px rgba(95, 174, 158, 0.18); }
 @media (prefers-reduced-motion: reduce) { .cm-home-btn { transition: none; } }
 
 /* ---------- Dashboard page ---------- */
@@ -142,7 +143,7 @@ body.cm-on-dashboard .workspace-leaf-content[data-type="file-properties"] .view-
 /* hero */
 .cm-hero { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 22px; padding: 18px 4px 8px; }
 .cm-logo-hero { height: 84px; filter: drop-shadow(0 2px 6px rgba(184, 115, 51, 0.35)); }
-.cm-hero-title { font-family: Georgia, serif; font-size: 2.5em; line-height: 1.1; letter-spacing: 0.02em; color: var(--h1-color, #e8b27d); }
+.cm-hero-title { font-family: 'Almendra SC', Georgia, serif; font-size: 2.5em; line-height: 1.1; letter-spacing: 0.02em; color: var(--h1-color, #e8b27d); }
 .cm-hero-tagline { margin-top: 6px; color: var(--text-muted); font-style: italic; }
 .cm-hero-rule { grid-column: 1 / -1; height: 2px; margin-top: 16px; border-radius: 2px; background: linear-gradient(90deg, var(--cm-copper), var(--cm-patina) 60%, transparent); }
 
@@ -808,7 +809,7 @@ body.cm-quiet .coppermind-dashboard h2 {
 /* hero: no box, no sparks, no shimmer; smaller and left-aligned */
 body.cm-quiet .cm-hero { background: none; border: none; box-shadow: none; border-radius: 0; padding: 14px 0 4px; margin: 0 0 6px; column-gap: 16px; }
 body.cm-quiet .cm-hero-bg { display: none; }
-body.cm-quiet .cm-hero-title { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: var(--h1-color, #e8b27d); animation: none; font-size: 2.1em; letter-spacing: 0.01em; }
+body.cm-quiet .cm-hero-title { font-family: 'Almendra SC', Georgia, serif; background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 36%, #d99a62 62%, #86d2c1 100%); -webkit-background-clip: text; background-clip: text; color: transparent; animation: none; font-size: 2.4em; letter-spacing: 0.03em; filter: drop-shadow(0 0 7px rgba(217, 138, 74, 0.4)) drop-shadow(0 0 16px rgba(95, 174, 158, 0.25)); }
 body.cm-quiet .cm-hero-tagline { font-size: 0.95em; }
 body.cm-quiet .cm-logo-hero { animation: none; filter: none; transform: scale(0.8); transform-origin: left center; }
 body.cm-quiet .cm-hero.is-intro { animation: none; }

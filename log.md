@@ -2596,3 +2596,25 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[SCHEMA - Writing Pages]]
 - **Commit:** `verify: SCHEMA - Writing Pages`
+
+### [2026-11-19] tool | Nicrosil 2.6.1: Coppermind button restyle
+
+- **Changed:** Nicrosil 2.6.1: the **The Coppermind** button at the top of the file list has the copper-to-teal gradient (fill, border and name) and sharp 2px corners. Details: [[Nicrosil#Version history]].
+- **Verify:** Reload Obsidian (Ctrl+R) and look at the button: gradient, sharp corners, glow on hover, inner glow while on the Dashboard. Then review the change notes on [[Nicrosil]].
+- **Commit:** `tool: Nicrosil 2.6.1 Coppermind button gradient and sharp corners`
+
+### [2026-11-19] schema | Nicrosil changes always get their bookkeeping (7.1)
+
+- **Think:** I asked for the Coppermind button restyle. The agent edited `styles.css` without reading `SCHEMA - Changes`, so it skipped the version bump, guide update and `tool` log entry. I asked it to do them and to make sure the rules make this automatic.
+- **Calculate:** Claude (claude-sonnet-5-5):
+  - `AGENTS.md`: new **Nicrosil** rule (any edit in the plugin's folder, even a style tweak, is a tool change: read `SCHEMA - Changes`, then bump the version, update the guide and log it, in the same edit, unprompted); the table row for `SCHEMA - Changes` names style tweaks.
+  - [[SCHEMA - Changes]]: the Nicrosil section says every change counts and the steps are done without being asked.
+  - [[Nicrosil]]: update checklist adds the `manifest.json` version and the `tool` log entry. Version is now 7.1 in [[SCHEMA]], with a line in [[Schema Changelog]].
+- **Verify:** Pending: [[SCHEMA]], [[SCHEMA - Changes]] and [[Nicrosil]] are drafts with change notes for me to re-review.
+- **Commit:** `schema: Nicrosil changes always get their bookkeeping (7.1)`
+
+### [2026-11-19] tool | Nicrosil 2.6.2: Almendra SC title
+
+- **Changed:** Nicrosil 2.6.2: the name on the file-list button and the Dashboard header is set in Almendra SC (loaded from Google Fonts, Georgia as the fallback); the Dashboard name has a copper-to-teal gradient and a soft glow. Details: [[Nicrosil#Version history]].
+- **Verify:** Reload Obsidian (Ctrl+R) while online: check the button and the Dashboard title, and that the long name still fits in a narrow sidebar. Then review the change notes on [[Nicrosil]].
+- **Commit:** `tool: Nicrosil 2.6.2 Almendra SC title with gradient and glow`
