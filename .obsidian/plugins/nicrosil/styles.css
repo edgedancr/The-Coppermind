@@ -1018,20 +1018,22 @@ body.cm-calm .cm-wt-flow, body.cm-calm .cm-wt-svg.is-new .cm-wt-card, body.cm-ca
 .cm-wt-tog:hover .cm-wt-tog-bg, .cm-wt-tog:focus-visible .cm-wt-tog-bg { fill: #2a221b; transform: none; }
 
 /* ---- Relations panel: crisp and flat (2.7.3). Same look as the wiki map: sharp 2px corners, no glows, no flowing dots, no halo, no dotted backdrop. ---- */
-.cm-rel-title { font-family: 'Almendra SC', Georgia, serif; font-size: 1.25em; font-weight: 600; color: #f0c48c; }
+/* same serif and copper-to-teal text as the Review queue header (still, without the shimmer) */
+.cm-rel-title { font-family: Georgia, serif; font-size: 1.3em; line-height: 1.15; letter-spacing: 0.02em; background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 36%, #d99a62 56%, #86d2c1 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
 .cm-rel-status { border-radius: 2px; }
 .cm-rel-map { border: 1px solid rgba(184, 115, 51, .35); border-radius: 2px; background: #171310; box-shadow: none; }
 .cm-rel-box { fill: #1f1a16; rx: 2px; ry: 2px; filter: none; transition: fill .15s, stroke-width .15s; }
 .cm-rel-box-verified { stroke-width: 1.2; filter: none; }
 .cm-rel-box-draft { stroke-width: 1.2; filter: none; }
-.cm-rel-box-center { fill: #2a221b; rx: 2px; ry: 2px; stroke-width: 1.6; filter: none; }
+/* the open page: a thin copper-to-teal gradient outline with a faint glow in both colors (gradient #cm-rel-og is defined in main.js; plain copper if it is missing) */
+.cm-rel-box-center { fill: #221c17; rx: 2px; ry: 2px; stroke: url(#cm-rel-og) var(--cm-copper); stroke-dasharray: none; stroke-width: 1; filter: drop-shadow(0 0 3px rgba(217, 138, 74, .35)) drop-shadow(0 0 4px rgba(95, 174, 158, .28)); }
 .cm-rel-node:not(.is-center):hover .cm-rel-box, .cm-rel-node:focus .cm-rel-box { fill: #2a221b; stroke-width: 1.7; filter: none; }
 .cm-rel-node, .cm-rel-edge { animation: none; }
 .cm-rel-node:not(.is-center):hover { transform: none; }
 .cm-rel-edge { stroke-width: 1.2; filter: none; }
 .cm-rel-edge.is-hl { stroke-width: 1.8; }
 .cm-rel-flow, .cm-rel-halo { display: none; }
-.cm-rel-center-label { filter: none; }
+.cm-rel-center-label { fill: #f6d3a8; filter: none; }
 .cm-rel-swatch { border-radius: 0; box-shadow: none; }
 .cm-rel-item { border-radius: 2px; }
 .cm-rel-dot { border-radius: 1px; }

@@ -920,6 +920,10 @@ class RelationsView extends ItemView {
     const ng = svgEl(defs, "linearGradient", { id: "cm-rel-ng", x1: 0, y1: 0, x2: 0, y2: 1 });
     svgEl(ng, "stop", { offset: "0%", style: "stop-color: var(--background-secondary); stop-opacity: 1" });
     svgEl(ng, "stop", { offset: "100%", style: "stop-color: var(--background-primary); stop-opacity: 1" });
+    // the open page's outline: the copper-to-teal gradient used on the file-list button
+    const og = svgEl(defs, "linearGradient", { id: "cm-rel-og", x1: 0, y1: 0, x2: 1, y2: 1 });
+    svgEl(og, "stop", { offset: "0%", style: "stop-color: #e89a5a" });
+    svgEl(og, "stop", { offset: "100%", style: "stop-color: #86d2c1" });
     for (const [t, info] of Object.entries(REL_TYPES)) {
       const m = svgEl(defs, "marker", { id: `cm-arrow-${t}`, viewBox: "0 0 8 8", refX: 7, refY: 4, markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse" });
       svgEl(m, "path", { d: "M0,0 L8,4 L0,8 z", fill: info.color });
