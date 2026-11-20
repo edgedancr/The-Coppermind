@@ -22,7 +22,7 @@ A nine-slide Intro to Intelligence deck that builds one comparison table of puzz
 **Proposed B-2** (usually reliable; probably true). It is the instructor's slide, crediting the two textbooks the course uses, and it matches what Harrison's notes recorded on 9/8/26. Harrison sets the final rating.
 
 ## Ingest Progress
-- **Slides 1–6:** ingested 2026-11-17. Skipped: slide 8, "Best Jobs for Personality Types" (personality typing is out of scope, Schema §1), and slides 7 and 9, which have no text. No summary page, by agreement (2026-11-17): it would repeat [[Puzzles and Mysteries]].
+- **Slides 1–6:** ingested 2026-11-17. Skipped: slide 8, "Best Jobs for Personality Types" (personality typing is out of scope, see `AGENTS.md`), and slides 7 and 9, which have no text. No summary page, by agreement (2026-11-17): it would repeat [[Puzzles and Mysteries]].
 
 > [!todo] Gap in the source
 > The slide's "Sources" row is hard to read from the extracted text: "Open Source" appears in it, but it isn't clear which column it belongs to.

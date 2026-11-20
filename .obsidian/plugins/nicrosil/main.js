@@ -16,11 +16,13 @@
  *    over wiki pages, source cards, and perspectives (not raw class notes); it only reads
  *  - Dashboard page blocks (```coppermind-hero```, -dashboard, -nav, -activity), a ribbon
  *    logo button and Alt+D to go back to the Dashboard, and a one-time Home to Dashboard rename
- *  - "Log a schema change" (a pen button in the header of the SCHEMA page, or the command palette): asks for the new version number
- *    and what I changed, then adds the line to the Changelog at the bottom of SCHEMA.md and keeps its
- *    `version` and `updated` properties in step. It does not touch status, verified_on, or log.md.
+ *  - "Log a schema change" (a pen button in the header of any page in SCHEMAS/, or the command palette): asks for the new
+ *    version number and what I changed, then adds the line to SCHEMAS/Schema Changelog.md and keeps the `version` and
+ *    `updated` properties of SCHEMAS/SCHEMA.md in step. It does not touch status, verified_on, or the log.
+ *  - Monthly log: log.md holds the current month. When Obsidian opens in a new month (and before an entry is added in
+ *    a new month), the earlier months' entries move, word for word, to Logs/Log YYYY-MM.md.
  *
- * Relations panel (Alt+L): for the open page, a map and grouped lists of its typed links (SCHEMA §5),
+ * Relations panel (Alt+L): for the open page, a map and grouped lists of its typed links (SCHEMA - Writing Pages),
  *         outgoing and incoming, colored by type. The incoming side is worked out from the other pages.
  *
  * Wiki map (Alt+M): two views of the whole wiki's typed links. Hierarchy is a collapsible tree built from
@@ -31,7 +33,7 @@
  * Re-reviews: a draft that has a `changes_since_verified` list is a verified page the AI edited at my
  *         request. The queue lists these first, with an R badge, and the card shows what changed.
  * Reject: asks for a reason, logs it, removes the page from index.md, and deletes the page
- *         (SCHEMA §7: a rejected draft is deleted, never kept).
+ *         (SCHEMA - Review: a rejected draft is deleted, never kept).
  * Nothing is committed to git; do that yourself afterward.
  */
 const {
@@ -42,13 +44,16 @@ const {
 const INDEX_PATH = "index.md";
 const LOG_PATH = "log.md";
 const DASHBOARD_PATH = "Dashboard.md";
-const SCHEMA_PATH = "SCHEMA.md";
+const SCHEMA_DIR = "SCHEMAS/";
+const SCHEMA_PATH = "SCHEMAS/SCHEMA.md";           // the rules overview; holds the rulebook's version
+const CHANGELOG_PATH = "SCHEMAS/Schema Changelog.md";
+const LOG_ARCHIVE_DIR = "Logs";                     // Logs/Log YYYY-MM.md, one per past month
 const OLD_HOME_PATH = "Home.md";
 const VIEW_TYPE = "nicrosil-queue";
-// Root-level .md files (e.g. SCHEMA.md) are reviewable too, but only count once they carry a status property.
-const REVIEWABLE = [/^Wiki\//, /^Perspectives\//, /^Sources\/Source Cards\//, /^[^/]+\.md$/];
+// The rule files in SCHEMAS/ and root-level .md files are reviewable too, but only count once they carry a status property.
+const REVIEWABLE = [/^Wiki\//, /^Perspectives\//, /^Sources\/Source Cards\//, /^SCHEMAS\//, /^[^/]+\.md$/];
 const GROUP_ORDER = ["Frameworks", "Concepts", "Case Studies", "Glossary", "People", "Summaries",
-  "Prompts", "Workflows", "Guides", "Analyses", "Perspectives", "Source Cards", "Vault files"];
+  "Prompts", "Workflows", "Guides", "Analyses", "Perspectives", "Source Cards", "Schemas", "Vault files"];
 const FLAG_KINDS = {
   caution: { label: "Accuracy check", plural: "Accuracy checks", short: "A" },
   todo: { label: "Gap", plural: "Gaps", short: "G" },
@@ -119,6 +124,7 @@ function removeLines(text, start, end) {
 function groupOf(path) {
   if (path.startsWith("Perspectives/")) return "Perspectives";
   if (path.startsWith("Sources/Source Cards/")) return "Source Cards";
+  if (path.startsWith(SCHEMA_DIR)) return "Schemas";
   if (!path.includes("/")) return "Vault files";
   const m = path.match(/^Wiki\/([^/]+)\//);
   return m ? m[1] : "Other";
@@ -364,6 +370,50 @@ function appendToLog(text, entry) {
   return text.replace(/\s*$/, "") + eol + eol + entry.replace(/\n/g, eol) + eol;
 }
 
+/** True for log.md and the month files in Logs/. */
+function isLogPath(path) {
+  return path === LOG_PATH || new RegExp(`^${LOG_ARCHIVE_DIR}/Log \\d{4}-\\d{2}\\.md$`).test(path);
+}
+
+/**
+ * Splits the log into the part that stays (its header and the current month's entries) and the entries of
+ * earlier months, grouped by month. Entries are moved whole and word for word; nothing is reworded.
+ * Returns { keep, moved: { "YYYY-MM": "entries text" } }, or null if nothing needs to move.
+ */
+function splitLogByMonth(text, month) {
+  const eol = text.includes("\r\n") ? "\r\n" : "\n";
+  const lines = text.split(/\r?\n/);
+  const heads = [];
+  lines.forEach((l, i) => { const m = /^#{2,4} \[(\d{4}-\d{2})-\d{2}\] /.exec(l); if (m) heads.push({ i, month: m[1] }); });
+  if (!heads.some((h) => h.month < month)) return null;
+  const keepLines = lines.slice(0, heads[0].i);
+  const moved = {};
+  heads.forEach((h, k) => {
+    const end = k + 1 < heads.length ? heads[k + 1].i : lines.length;
+    const chunk = lines.slice(h.i, end);
+    if (h.month < month) {
+      while (chunk.length && chunk[chunk.length - 1].trim() === "") chunk.pop();
+      (moved[h.month] = moved[h.month] || []).push(chunk.join(eol));
+    } else {
+      keepLines.push(...chunk);
+    }
+  });
+  const out = {};
+  for (const [m, chunks] of Object.entries(moved)) out[m] = chunks.join(eol + eol);
+  const keep = keepLines.join(eol).replace(/\s*$/, "") + eol;
+  return { keep, moved: out };
+}
+
+/** The first lines of a new month file. */
+function logArchiveHeader(month) {
+  const [y, m] = month.split("-").map(Number);
+  const name = new Date(y, m - 1, 1).toLocaleString("en-US", { month: "long", year: "numeric" });
+  return [
+    "---", "type: log", `month: ${month}`, "---",
+    `The log's entries for ${name}, moved here word for word from [[log]] when the month ended. Newest at the bottom. Format and rules: [[SCHEMA - Index and Log#The log]].`,
+  ].join("\n");
+}
+
 /* ---------- small DOM helpers ---------- */
 
 const prefersReduced = () => !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -451,7 +501,7 @@ class ReviewModal extends Modal {
     } else {
       el.createDiv({
         cls: "cm-sub",
-        text: "A rejected draft is deleted (SCHEMA §7). The reason is saved in the log. Obsidian's trash setting decides where the file goes, and git also keeps its history.",
+        text: "A rejected draft is deleted (SCHEMA - Review). The reason is saved in the log. Obsidian's trash setting decides where the file goes, and git also keeps its history.",
       });
       if (backlinks.length) {
         el.createDiv({ text: `${backlinks.length} page${backlinks.length === 1 ? "" : "s"} link to this page and will have a broken link:` });
@@ -2172,10 +2222,23 @@ function frontmatterValue(text, key) {
   return k ? k[1] : null;
 }
 
-/** Current version, the latest changelog version, and the changelog as seen by the modal. */
-function schemaInfo(text) {
+/** Sets simple `key: value` properties in place (only keys that already exist), keeping everything else as it is. */
+function setFrontmatterProps(text, props) {
+  const eol = text.includes("\r\n") ? "\r\n" : "\n";
+  const lines = text.split(/\r?\n/);
+  if (lines[0] !== "---") return text;
+  const close = lines.indexOf("---", 1);
+  for (let i = 1; i < close; i++) {
+    for (const [k, v] of Object.entries(props)) if (new RegExp(`^${escapeRegExp(k)}:`).test(lines[i])) lines[i] = `${k}: ${v}`;
+  }
+  return lines.join(eol);
+}
+
+/** Current version, the latest changelog version, and the changelog as seen by the modal.
+ *  The version lives in SCHEMAS/SCHEMA.md, so it can be passed in; otherwise it is read from the text. */
+function schemaInfo(text, fmOverride) {
   const cl = findChangelog(text);
-  const fmVersion = frontmatterValue(text, "version");
+  const fmVersion = fmOverride !== undefined ? fmOverride : frontmatterValue(text, "version");
   const latest = cl && cl.versions.length
     ? cl.versions.reduce((a, b) => (compareVersions(a, b) >= 0 ? a : b))
     : null;
@@ -2183,10 +2246,10 @@ function schemaInfo(text) {
 }
 
 /** Returns an error message for a bad version, or "" if it is fine. */
-function checkVersion(text, version) {
+function checkVersion(text, version, fmOverride) {
   if (!/^\d+\.\d+$/.test(version)) return "Use the form 4.2 (a whole number, a dot, and a number).";
-  const info = schemaInfo(text);
-  if (!info.hasChangelog) return "SCHEMA.md has no “Changelog” heading to add to.";
+  const info = schemaInfo(text, fmOverride);
+  if (!info.hasChangelog) return "Schema Changelog has no “Changelog” heading to add to.";
   if (info.versions.includes(version)) return `Version ${version} is already in the changelog.`;
   const newest = [info.latest, info.fmVersion && /^\d+\.\d+$/.test(info.fmVersion) ? info.fmVersion : null]
     .filter(Boolean)
@@ -2201,7 +2264,7 @@ function checkVersion(text, version) {
  */
 function addChangelogEntry(text, version, date, desc) {
   const cl = findChangelog(text);
-  if (!cl) throw new Error("No Changelog heading in SCHEMA.md");
+  if (!cl) throw new Error("No Changelog heading in Schema Changelog");
   const { eol, lines } = cl;
   const line = entryLine(version, date, desc);
   if (cl.lastBulletIdx !== -1) {
@@ -2227,10 +2290,11 @@ function addChangelogEntry(text, version, date, desc) {
 /* ---------- schema changelog dialog ---------- */
 
 class SchemaLogModal extends Modal {
-  constructor(app, plugin, text) {
+  constructor(app, plugin, text, fmVersion) {
     super(app);
     this.plugin = plugin;
     this.text = text;
+    this.fmVersion = fmVersion;
     this.version = "";
     this.desc = "";
   }
@@ -2241,7 +2305,7 @@ class SchemaLogModal extends Modal {
     contentEl.addClass("cm-schemalog");
     this.titleEl.setText("Log a schema change");
 
-    const info = schemaInfo(this.text);
+    const info = schemaInfo(this.text, this.fmVersion);
     const current = info.latest || info.fmVersion || "none yet";
     const date = today();
 
@@ -2260,7 +2324,7 @@ class SchemaLogModal extends Modal {
     const descWrap = contentEl.createDiv({ cls: "cm-schemalog-desc" });
     descWrap.createDiv({ cls: "setting-item-name", text: "What I changed" });
     descWrap.createDiv({ cls: "setting-item-description", text: "A sentence or two, in the same style as the changelog entries. Name the sections you touched." });
-    this.descInput = descWrap.createEl("textarea", { attr: { rows: "5", placeholder: "Reworded §7 so a rejected draft is deleted, never kept." } });
+    this.descInput = descWrap.createEl("textarea", { attr: { rows: "5", placeholder: "SCHEMA - Review: reworded rule 6 so a rejected draft is deleted, never kept." } });
     this.descInput.addEventListener("input", () => { this.desc = this.descInput.value; this.refresh(); });
     this.descInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); this.submit(); }
@@ -2282,7 +2346,7 @@ class SchemaLogModal extends Modal {
     this.previewEl.setText(`- ${v} (${today()}): ${d}`);
     const ready = !!this.version && !!this.desc.trim();
     // Only complain about the version once something has been typed in that field.
-    this.error = this.version ? checkVersion(this.text, this.version) : "";
+    this.error = this.version ? checkVersion(this.text, this.version, this.fmVersion) : "";
     this.errorEl.setText(this.error);
     if (this.addBtn) this.addBtn.setDisabled(!ready || !!this.error);
   }
@@ -2387,6 +2451,8 @@ module.exports = class Nicrosil extends Plugin {
       this.searchIndex.start();
       this.syncSchemaButtons(); this.syncHomeButtons();
       await this.migrateHome();
+      await this.migrateSchemaStub();
+      try { await this.rotateLog(); } catch (e) { console.error("Nicrosil: could not archive last month's log", e); new Notice(`Could not move last month's log entries: ${e.message}`, 10000); }
       this.syncDashboardLeaves(true);
       const f = this.app.workspace.getActiveFile();
       if (f) this.currentPath = f.path;
@@ -2460,12 +2526,12 @@ module.exports = class Nicrosil extends Plugin {
 
   /* --- schema changelog --- */
 
-  /** Shows a pen button in the header of any open SCHEMA.md tab, and removes it from every other tab. It is drawn on screen only; nothing is written to the page. */
+  /** Shows a pen button in the header of any open tab in SCHEMAS/, and removes it from every other tab. It is drawn on screen only; nothing is written to the page. */
   syncSchemaButtons() {
     this.app.workspace.getLeavesOfType("markdown").forEach((leaf) => {
       const view = leaf.view;
       if (!view || typeof view.addAction !== "function") return;
-      const onSchema = !!(view.file && view.file.path === SCHEMA_PATH);
+      const onSchema = !!(view.file && view.file.path.startsWith(SCHEMA_DIR));
       const has = view.__cmSchemaBtn && view.__cmSchemaBtn.isConnected;
       if (onSchema && !has) {
         const btn = view.addAction("file-pen", "Log a schema change", () => this.openSchemaLog());
@@ -2483,25 +2549,35 @@ module.exports = class Nicrosil extends Plugin {
     return f instanceof TFile ? f : null;
   }
 
+  changelogFile() {
+    const f = this.app.vault.getAbstractFileByPath(CHANGELOG_PATH);
+    return f instanceof TFile ? f : null;
+  }
+
   async openSchemaLog() {
-    const file = this.schemaFile();
-    if (!file) { new Notice(`Could not find ${SCHEMA_PATH} at the top of the vault.`); return; }
+    const file = this.changelogFile();
+    if (!file) { new Notice(`Could not find ${CHANGELOG_PATH}.`); return; }
     const text = await this.app.vault.read(file);
-    if (!findChangelog(text)) { new Notice("SCHEMA.md has no “Changelog” heading, so there is nowhere to add the entry."); return; }
-    new SchemaLogModal(this.app, this, text).open();
+    if (!findChangelog(text)) { new Notice("Schema Changelog has no “Changelog” heading, so there is nowhere to add the entry."); return; }
+    const schema = this.schemaFile();
+    const fmVersion = schema ? frontmatterValue(await this.app.vault.read(schema), "version") : null;
+    new SchemaLogModal(this.app, this, text, fmVersion).open();
   }
 
   async addSchemaEntry(version, desc) {
-    const file = this.schemaFile();
-    if (!file) throw new Error(`Could not find ${SCHEMA_PATH}.`);
+    const file = this.changelogFile();
+    if (!file) throw new Error(`Could not find ${CHANGELOG_PATH}.`);
+    const schema = this.schemaFile();
     const date = today();
+    const fmVersion = schema ? frontmatterValue(await this.app.vault.read(schema), "version") : null;
     await this.app.vault.process(file, (text) => {
       // Re-check against the file as it is right now (it may have changed since the dialog opened).
-      const err = checkVersion(text, version);
+      const err = checkVersion(text, version, fmVersion);
       if (err) throw new Error(err);
       return addChangelogEntry(text, version, date, desc);
     });
-    new Notice(`Added ${version} to the SCHEMA changelog.`);
+    if (schema) await this.app.vault.process(schema, (text) => setFrontmatterProps(text, { version, updated: date }));
+    new Notice(`Added ${version} to the Schema Changelog.`);
   }
 
   /* --- state --- */
@@ -2828,12 +2904,19 @@ module.exports = class Nicrosil extends Plugin {
 
   async renderActivity(el) {
     const f = this.app.vault.getAbstractFileByPath(LOG_PATH);
-    const entries = f instanceof TFile ? parseLog(await this.app.vault.cachedRead(f)).slice(-6).reverse() : [];
+    let all = f instanceof TFile ? parseLog(await this.app.vault.cachedRead(f)) : [];
+    if (all.length < 6) {
+      // Early in a month, fill the list from the newest month file in Logs/.
+      const months = this.app.vault.getMarkdownFiles().filter((x) => isLogPath(x.path) && x.path !== LOG_PATH).sort((a, b) => a.path.localeCompare(b.path));
+      const last = months[months.length - 1];
+      if (last) all = parseLog(await this.app.vault.cachedRead(last)).concat(all);
+    }
+    const entries = all.slice(-6).reverse();
     el.empty();
     el.addClass("cm-activity");
     el.toggleClass("is-intro", !!this.dashIntro && !prefersReduced());
     if (!entries.length) { el.createDiv({ cls: "cm-sub", text: "Nothing in the log yet." }); return; }
-    const icons = { verify: "check", ingest: "download", setup: "wrench", schema: "file-pen", query: "search", "health-check": "stethoscope" };
+    const icons = { verify: "check", ingest: "download", setup: "wrench", schema: "file-pen", tool: "hammer", query: "search", "health-check": "stethoscope" };
     entries.forEach((e, ei) => {
       const row = el.createDiv({ cls: "cm-act-row" });
       row.style.setProperty("--i", String(12 + ei));
@@ -2883,7 +2966,7 @@ module.exports = class Nicrosil extends Plugin {
       if (!(view instanceof MarkdownView)) return;
       const path = view.file ? view.file.path : "";
       const isDash = this.isDashboard(view.file);
-      const isLog = path === LOG_PATH;
+      const isLog = isLogPath(path);
       view.containerEl.classList.toggle("cm-dashboard-leaf", isDash);
       view.containerEl.classList.toggle("cm-log-leaf", isLog);
       view.containerEl.classList.toggle("cm-noprops-leaf", isDash || isLog || path === INDEX_PATH);
@@ -2930,7 +3013,7 @@ module.exports = class Nicrosil extends Plugin {
     const hv = this.lastHover;
     if (!hv || Date.now() - hv.t > 4000) return;
     const file = hv.file;
-    if ([DASHBOARD_PATH, OLD_HOME_PATH, LOG_PATH, INDEX_PATH].includes(file.path) || !this.stripInfo(file)) return;
+    if ([DASHBOARD_PATH, OLD_HOME_PATH, INDEX_PATH].includes(file.path) || isLogPath(file.path) || !this.stripInfo(file)) return;
     el.classList.add("cm-strip-leaf");
     this.ensureStripsIn(el, file);
     let timer = null;
@@ -3014,7 +3097,7 @@ module.exports = class Nicrosil extends Plugin {
   /** Fold every log entry heading (and nothing else) so the log opens as a short list. Editing view only. */
   foldLogEntries(view) {
     const ed = view.editor;
-    if (!ed || !view.file || view.file.path !== LOG_PATH || view.getMode() !== "source") return;
+    if (!ed || !view.file || !isLogPath(view.file.path) || view.getMode() !== "source") return;
     try {
       ed.exec("unfoldAll");
       for (let i = 0, n = ed.lineCount(); i < n; i++) {
@@ -3146,6 +3229,22 @@ module.exports = class Nicrosil extends Plugin {
     }
   }
 
+  /** One time, after the rules moved to SCHEMAS/ (rules 7.0): the old SCHEMA.md at the top of the vault is a
+   *  "moved" stub, so it goes to the trash, leaving one page named SCHEMA for links to find. Only a file that
+   *  carries the stub's `moved_to` property is touched. */
+  async migrateSchemaStub() {
+    const old = this.app.vault.getAbstractFileByPath("SCHEMA.md");
+    if (!(old instanceof TFile) || !(this.app.vault.getAbstractFileByPath(SCHEMA_PATH) instanceof TFile)) return;
+    if (frontmatterValue(await this.app.vault.read(old), "moved_to") !== SCHEMA_PATH) return;
+    try {
+      await this.app.fileManager.trashFile(old);
+      new Notice("The rules now live in SCHEMAS/, so the old SCHEMA.md at the top of the vault was moved to the trash.", 10000);
+    } catch (e) {
+      console.error("Nicrosil: couldn't remove the old SCHEMA.md", e);
+      new Notice(`Couldn't remove the old SCHEMA.md: ${e.message}. Delete it by hand; the rules are in SCHEMAS/.`, 10000);
+    }
+  }
+
   async fixHomepageSetting() {
     const path = `${this.app.vault.configDir}/plugins/homepage/data.json`;
     try {
@@ -3222,7 +3321,7 @@ module.exports = class Nicrosil extends Plugin {
 
   precheck(file) {
     if (!this.isReviewable(file)) {
-      new Notice("Nicrosil only works on pages in Wiki/, Perspectives/, Sources/Source Cards/, or root-level files like SCHEMA.md.");
+      new Notice("Nicrosil only works on pages in Wiki/, Perspectives/, Sources/Source Cards/, SCHEMAS/, or root-level files.");
       return null;
     }
     const fm = this.fm(file);
@@ -3235,7 +3334,7 @@ module.exports = class Nicrosil extends Plugin {
     const fm = this.precheck(file);
     if (!fm) return;
     if (fm.type === "source" && !String(fm.reliability || "").trim()) {
-      new Notice("Fill in this source card's reliability rating first (SCHEMA §7: ratings are item by item).", 8000);
+      new Notice("Fill in this source card's reliability rating first (SCHEMA - Review: ratings are item by item).", 8000);
       return;
     }
     const flags = parseFlags(await this.app.vault.read(file));
@@ -3255,7 +3354,7 @@ module.exports = class Nicrosil extends Plugin {
           await this.appendLog(verifyLogEntry({ name: file.basename, date, note, openFlags: flags, resolved }));
           delete this.resolved[file.path];
           await this.persist();
-          new Notice(`Verified “${file.basename}”.` + (indexed || !file.path.includes("/") ? "" : " It wasn't in index.md; add it by hand."), 5000);
+          new Notice(`Verified “${file.basename}”.` + (indexed || !file.path.includes("/") || file.path.startsWith(SCHEMA_DIR) ? "" : " It wasn't in index.md; add it by hand."), 5000);
           const nxt = nextAfter(order, file.path);
           const fx = this.settings.celebrate !== false && !prefersReduced() ? await this.playVerifyOut(file, order.length > 1 ? "Verified" : "All drafts verified") : null;
           if (this.settings.autoAdvance) await this.openNext(file.path, order);
@@ -3481,13 +3580,40 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   async appendLog(entry) {
+    await this.rotateLog();
     const f = this.app.vault.getAbstractFileByPath(LOG_PATH);
     if (!(f instanceof TFile)) throw new Error("log.md not found");
     await this.app.vault.process(f, (text) => appendToLog(text, entry));
+  }
+
+  /**
+   * Moves the entries of earlier months from log.md to Logs/Log YYYY-MM.md, word for word and in order.
+   * The month file is written first, so if anything fails, nothing has been removed from log.md.
+   */
+  async rotateLog() {
+    const f = this.app.vault.getAbstractFileByPath(LOG_PATH);
+    if (!(f instanceof TFile)) return;
+    const month = today().slice(0, 7);
+    const split = splitLogByMonth(await this.app.vault.read(f), month);
+    if (!split) return;
+    if (!this.app.vault.getAbstractFileByPath(LOG_ARCHIVE_DIR)) await this.app.vault.createFolder(LOG_ARCHIVE_DIR);
+    for (const m of Object.keys(split.moved).sort()) {
+      const path = `${LOG_ARCHIVE_DIR}/Log ${m}.md`;
+      const existing = this.app.vault.getAbstractFileByPath(path);
+      if (existing instanceof TFile) {
+        await this.app.vault.process(existing, (text) => appendToLog(text, split.moved[m]));
+      } else {
+        await this.app.vault.create(path, logArchiveHeader(m) + "\n\n" + split.moved[m] + "\n");
+      }
+    }
+    // Re-split against log.md as it is now, so an entry added in the meantime is not lost.
+    await this.app.vault.process(f, (text) => { const again = splitLogByMonth(text, month); return again ? again.keep : text; });
+    new Notice(`Moved last month's log entries to ${LOG_ARCHIVE_DIR}/.`, 6000);
   }
 };
 
 module.exports.__test = {
   parseFlags, removeLines, sortQueue, nextAfter, groupOf, editIndex,
   verifyLogEntry, rejectLogEntry, appendToLog, daysBetween, today, parseLog, describeEntry, renameLogEntry, parseIndex, renderIndex,
+  splitLogByMonth, logArchiveHeader, isLogPath, setFrontmatterProps, schemaInfo, checkVersion, addChangelogEntry, findChangelog,
 };

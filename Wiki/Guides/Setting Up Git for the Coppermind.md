@@ -86,7 +86,7 @@ If I forget to push on one computer, go back to it and push, then pull on the ot
 - **A commit fails with "Please tell me who you are":** run the two `git config --global` commands from the second-computer setup.
 
 ## Footnotes
-[^1]: [[SCHEMA#12. Version control (git)|Schema §12]]
+[^1]: [[SCHEMA - Index and Log#Version control (git)|Schema: Version control]]
 [^2]: [Obsidian Git docs](https://publish.obsidian.md/git-doc/Getting%20Started)
 [^3]: [Obsidian Git docs](https://publish.obsidian.md/git-doc/Authentication)
 [^4]: [GitHub Docs](https://docs.github.com/en/enterprise-server@3.17/desktop/adding-and-cloning-repositories/adding-a-repository-from-your-local-computer-to-github-desktop)

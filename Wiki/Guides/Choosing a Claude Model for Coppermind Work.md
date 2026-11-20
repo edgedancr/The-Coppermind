@@ -72,7 +72,7 @@ verified_on: 2026-11-19
 
 ### Queries
 - **Quick lookups** ("which page covers PredPol?", "what did SAIL say on 10/20/26?"): Sonnet, or Haiku for pure "where is it" questions.
-- **Synthesis** across several pages, especially an answer I might file back to `Wiki/Analyses/`: Opus. It has to keep verified and draft pages apart, quote my Perspectives only as my view, and say what's missing instead of filling gaps.[^11]
+- **Synthesis** across several pages, especially an answer I might file back to `Wiki/Analyses/`: Opus. It has to keep verified and draft pages apart, quote my Perspectives only as my view, and say what's missing instead of filling gaps.[^14]
 
 ### Improving pages
 - **Mechanical fixes** (typos, formatting, index lines, a renamed link): Haiku, or Sonnet if the fix spans many files.
@@ -98,16 +98,17 @@ verified_on: 2026-11-19
 - **The model names here are out of date:** newer models replace these, and each has a published retirement date.[^2] Check the [Models overview](https://platform.claude.com/docs/en/about-claude/models.md) and update the four model descriptions; the tiers' roles change less often than the version numbers.
 
 ## Footnotes
-[^1]: [[SCHEMA#7. Draft vs. verified|Schema §7]]
+[^1]: [[SCHEMA - Review|Schema: Review]]
 [^2]: [Models overview](https://platform.claude.com/docs/en/about-claude/models.md)
 [^3]: [Choosing a model](https://platform.claude.com/docs/en/about-claude/models/choosing-a-model)
 [^4]: [[log]]
 [^5]: [[Health Check 2026-11-17]]
 [^6]: [[log]], 2026-11-17 schema entry
 [^7]: [[Dissect and Ingest a Source]]
-[^8]: [[SCHEMA#13. Export protocol (keeping it portable)|Schema §13]]
-[^9]: [[SCHEMA#6. Citation and attribution|Schema §6]]
-[^10]: [[SCHEMA#5. Linking rules and ontology|Schema §5]]
-[^11]: [[SCHEMA#10. The three operations|Schema §10]]
+[^8]: [[SCHEMA - Export|Schema: Export]]
+[^9]: [[SCHEMA - Writing Pages#Citations|Schema: Citations]]
+[^10]: [[SCHEMA - Writing Pages#Typed links|Schema: Typed links]]
+[^11]: [[SCHEMA - Health Check|Schema: Health Check]]
 [^12]: [[Nicrosil]]
-[^13]: [[SCHEMA#4. Page properties (frontmatter)|Schema §4]]
+[^13]: [[SCHEMA - Writing Pages#Page properties|Schema: Page properties]]
+[^14]: [[SCHEMA - Query|Schema: Query]]

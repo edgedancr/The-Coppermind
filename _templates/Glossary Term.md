@@ -24,4 +24,4 @@ verified_on:
 **Used in:** %% links to the concept and framework pages where this term matters %%
 
 ## Footnotes
-[^1]: %% source and location, e.g. [[Source#location|Display text]] (SCHEMA §6) %%
+[^1]: %% source and location, e.g. [[Source#location|Display text]] (SCHEMA - Writing Pages, Citations) %%

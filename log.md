@@ -3,7 +3,7 @@ type: log
 ---
 # Log
 
-A dated, append-only record of every ingest, query, health check, verification, and schema change, and what I approved, revised, or rejected. Newest entries are at the bottom. Format and rules: [[SCHEMA#11. Index and log]].
+A dated, append-only record of every ingest, query, health check, verification, schema change, and tool change, and what I approved, revised, or rejected. Newest entries are at the bottom. This file holds the current month; earlier months are in `Logs/`. Format and rules: `AGENTS.md` and [[SCHEMA - Index and Log#The log]]. Agents: don't read this file whole; append to the end, and search the headings.
 
 ---
 
@@ -2507,3 +2507,92 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Nicrosil]]
 - **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] schema | Rules split into AGENTS.md and SCHEMAS/ (7.0)
+
+- **Think:** Every agent had to read the whole SCHEMA (about 11,600 tokens) before any task, and ingests also read all of `index.md` (about 10,500) and sometimes the log (about 45,000). I asked for the efficiency plan in full: split the rules into files in a new `SCHEMAS/` folder, make `AGENTS.md` the only file read every time and use it as a directory, split the log by month, and the rest.
+- **Calculate:** Claude (claude-opus-5-5):
+  - `AGENTS.md` rewritten as the start page: scope, drafts only, permissions, voices, no unsourced claims, the index line, the log entry format (with the new `tool` operation), the commit format, token-saving rules, and a table of which rule file each task needs. `CLAUDE.md` added; it loads `AGENTS.md` for Claude Code.
+  - `SCHEMA.md` moved to `SCHEMAS/` as the overview. The rules moved, wording kept, to [[SCHEMA - Writing Pages]], [[SCHEMA - Review]], [[SCHEMA - Ingest]] (which now holds the steps that were in [[Dissect and Ingest a Source]]), [[SCHEMA - Query]], [[SCHEMA - Health Check]], [[SCHEMA - Index and Log]], [[SCHEMA - Changes]], and [[SCHEMA - Export]]; the changelog is [[Schema Changelog]], with a 7.0 line. Each rule file is `draft` with `changes_since_verified` lines: the moves, plus every real rule change.
+  - New rules: never read the whole log; find pages by searching names and aliases; read only your batch of the Ingest Queue; the log is one file per month (`Logs/Log YYYY-MM.md`); `tool` operation for `Tools/` and Nicrosil; health checks run the new script and by default read only pages changed since the last report plus a sample of 20; finished queue batches collapse into a Done section.
+  - The old root `SCHEMA.md` is now a short "moved" stub; Nicrosil 2.6.0 moves it to the trash at its next start.
+  - [[Dissect and Ingest a Source]] cut to its five inputs (verified page, so back to `draft` with a note). [[Ingest Queue]] header updated and a Done section added. `log.md` header (not an entry) updated. Templates and the Health Check Report template point to the new files.
+  - Mechanical link fixes (status unchanged): links to the old SCHEMA sections in [[Setting Up Git for the Coppermind]], [[Choosing a Claude Model for Coppermind Work]] (its footnote 11 covered both health checks and queries, so queries now cite a new footnote 14), [[Analysis of Competing Hypotheses]], [[Intelligence Community Style Summaries]], and [[SRC - Puzzles and Mysteries (Slides)]]. Older log entries and health check reports keep their old section links, since they are records.
+  - Estimated rules read per task: a query about 12,000 → 2,000 tokens; an ingest about 24,400 → 8,300 (68,600 → 8,300 when the log was read).
+- **Verify:**
+  - Re-review: [[SCHEMA]], [[SCHEMA - Writing Pages]], [[SCHEMA - Review]], [[SCHEMA - Ingest]], [[SCHEMA - Query]], [[SCHEMA - Health Check]], [[SCHEMA - Index and Log]], [[SCHEMA - Changes]], [[SCHEMA - Export]], [[Dissect and Ingest a Source]]
+  - Read `AGENTS.md` as a whole (it has no properties; its changes are noted on [[SCHEMA]])
+  - Change this project's instruction in claude.ai from "read the SCHEMA file first" to "read AGENTS.md first"
+- **Commit:** `schema: 7.0 split rules into AGENTS.md and SCHEMAS/, monthly log, health check script`
+
+### [2026-11-19] tool | Nicrosil 2.6.0 and the health check script
+
+- **Changed:** Nicrosil 2.6.0: the rule files in `SCHEMAS/` are reviewable; **Log a schema change** writes to [[Schema Changelog]] and keeps the version in [[SCHEMA]]; the log moves each finished month to `Logs/`; a `tool` icon; the old root `SCHEMA.md` stub goes to the trash once. Details: [[Nicrosil#Version history]] (guide back to `draft` with a note). New `Tools/health-check/coppermind_check.py` runs the mechanical health checks and changes nothing; tested on a copy of the vault (0 broken links, and a broken heading link, a missing footnote, and a relationship stored twice were each caught when planted).
+- **Verify:** Restart Obsidian: the stub `SCHEMA.md` should go to the trash with a notice, and the review queue should list the rule files under Schemas. Then open a rule file and click the pen button to see the current version (7.0). Run the script once from the vault folder.
+- **Commit:** `tool: Nicrosil 2.6.0 and health check script`
+
+### [2026-11-19] verify | Dissect and Ingest a Source
+
+- **Verify:**
+  - Approved: [[Dissect and Ingest a Source]]
+- **Commit:** `verify: Dissect and Ingest a Source`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`
+
+### [2026-11-19] verify | SCHEMA - Changes
+
+- **Verify:**
+  - Approved: [[SCHEMA - Changes]]
+- **Commit:** `verify: SCHEMA - Changes`
+
+### [2026-11-19] verify | SCHEMA - Export
+
+- **Verify:**
+  - Approved: [[SCHEMA - Export]]
+- **Commit:** `verify: SCHEMA - Export`
+
+### [2026-11-19] verify | SCHEMA - Health Check
+
+- **Verify:**
+  - Approved: [[SCHEMA - Health Check]]
+- **Commit:** `verify: SCHEMA - Health Check`
+
+### [2026-11-19] verify | SCHEMA - Index and Log
+
+- **Verify:**
+  - Approved: [[SCHEMA - Index and Log]]
+- **Commit:** `verify: SCHEMA - Index and Log`
+
+### [2026-11-19] verify | SCHEMA - Ingest
+
+- **Verify:**
+  - Approved: [[SCHEMA - Ingest]]
+- **Commit:** `verify: SCHEMA - Ingest`
+
+### [2026-11-19] verify | SCHEMA - Query
+
+- **Verify:**
+  - Approved: [[SCHEMA - Query]]
+- **Commit:** `verify: SCHEMA - Query`
+
+### [2026-11-19] verify | SCHEMA - Review
+
+- **Verify:**
+  - Approved: [[SCHEMA - Review]]
+- **Commit:** `verify: SCHEMA - Review`
+
+### [2026-11-19] verify | SCHEMA - Writing Pages
+
+- **Verify:**
+  - Approved: [[SCHEMA - Writing Pages]]
+- **Commit:** `verify: SCHEMA - Writing Pages`

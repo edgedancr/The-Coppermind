@@ -12,14 +12,14 @@ courses:
 sources: []
 related:
   - "[[SCHEMA]]"
-drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5)
+drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-19
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.5.3**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.6.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -29,9 +29,9 @@ This guide describes Nicrosil **v2.5.3**. Its folder is `.obsidian/plugins/nicro
 | **Wiki map** | Two views of the whole wiki's typed links: a collapsible hierarchy tree and a zoomable map | [[#The wiki map]] |
 | **Dashboard** | The front page: progress, search box, six navigation cards, recent activity | [[#The Dashboard]] |
 | **Search** | A live search box over wiki pages, source cards, and perspectives | [[#Search]] |
-| **Index and log** | Checks [[index]] and writes to [[log]] after each verify or reject, and folds the log's entries | [[#The index and the log]] |
+| **Index and log** | Checks [[index]] and writes to [[log]] after each verify or reject, folds the log's entries, and moves each finished month to `Logs/` | [[#The index and the log]] |
 | **Page tidying** | Replaces each page's properties block with a one-line strip | [[#The properties strip]] |
-| **Schema changes** | A button that adds a line to the Changelog in [[SCHEMA]] | [[#Logging a schema change]] |
+| **Schema changes** | A button that adds a line to [[Schema Changelog]] and updates the version in [[SCHEMA]] | [[#Logging a schema change]] |
 | **Shortcuts** | Hotkeys, a Coppermind button above the file list, and a status-bar counter | [[#Hotkeys and buttons]] |
 
 ## Turn it on (once per computer)
@@ -40,7 +40,7 @@ This guide describes Nicrosil **v2.5.3**. Its folder is `.obsidian/plugins/nicro
 3. The plugin files are tracked in git, so a second computer gets them with a pull. Switch it on there too, since the on/off setting is local.
 
 ## Review tools
-Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`, plus root-level files like `SCHEMA.md`, that have a `status` property.
+Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`, the rule files in `SCHEMAS/`, and root-level files, that have a `status` property. The rule files appear in the queue under **Schemas**.
 
 - **Review queue (right sidebar).** Open it with `Alt+Q`, the ribbon button, or by clicking the "verified" counter in the status bar. It shows:
   - a progress bar
@@ -69,7 +69,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 - **Six link cards** (`coppermind-nav`), in two columns: small, sharp-cornered cards with a copper edge, each a name and a one-line description, with no icons. They are Index, Review queue, Wiki map, Log, Schema, and Guides. A click opens the page in the current tab. ==`Ctrl+click` (or middle-click) opens it in a new tab.== The Review queue and Wiki map cards open a sidebar or their own tab instead, so they have no new-tab version.
 - **Review progress** (`coppermind-dashboard`): a card with one line of stats (pages verified, with the share, drafts, and open flags), a glowing copper-to-teal bar showing how much is verified, and a small line counting the open flags by kind and the drafts older than 14 days. Under it is a bar for each page type showing its verified and draft pages. A **Changed since verified** section lists each re-review with its change lines. Below that are folded lists naming the pages with open flags, by kind, and the drafts older than 14 days. To start a review session from the Dashboard, use the Review queue card.
 - **Health check card:** a small card inside the review progress section showing how long it has been since the last health check. A bar fills over the 14 days between checks. It is teal while there is time, amber for the last two days, and red with a gentle pulse once the check is overdue (or if none has been saved yet). It reads the dates from the report names in `Health Checks/`, so it updates itself when a new report is saved, and clicking it opens the latest report.
-- **Recent activity** (`coppermind-activity`): the last six log entries. Click one to open the page it names, or the log.
+- **Recent activity** (`coppermind-activity`): the last six log entries. Early in a month, when [[log]] has fewer than six, the rest come from last month's file in `Logs/`. Click one to open the page it names, or the log.
 - **Reference:** folded sections on what the Coppermind is, how to read it, what it covers, and its six parts. These are ordinary text in the note.
 
 **Reading and editing.** The Dashboard always opens in Reading view, whether I open it from the ribbon, a link, a tab, or at startup, and every other note keeps the mode it was in. Its properties are hidden, and so is the Properties side pane while the Dashboard is the active note. To edit it, press `Ctrl+E`. It stays in editing until I click into the Dashboard again from another tab or note, which puts it back in Reading view.
@@ -91,7 +91,8 @@ The search box on the [[Dashboard]] shows suggestion cards as I type, over wiki 
 ## The index and the log
 - **Index:** [[index]] lists every page under its type, in alphabetical order, with a count per type and a total at the top. It does not show whether a page is verified; the review queue and the Dashboard do that. When I verify a page, Nicrosil only checks that the page is listed. When I reject one, its line is removed and the counts are updated.
 - **Log:** Nicrosil appends the entry for each verify and reject to [[log]] (newest at the bottom, never rewriting old entries). The log opens with every entry folded, so it reads as a short list. Click an entry's heading (or its arrow) to open it. This happens when the log opens in editing view, once per opening, so switching tabs doesn't re-fold it. It needs Obsidian's **Fold heading** option (Settings → Editor) to be on.
-- **Properties:** [[index]], [[log]], and the Dashboard hide their properties entirely.
+- **One log file per month:** [[log]] holds the current month. The first time Obsidian opens in a new month (and before Nicrosil adds an entry in a new month), it moves every earlier month's entries, word for word and in order, to `Logs/Log YYYY-MM.md`, creating the folder and the file if needed, and shows a notice. It writes the month file before trimming the log, so a failure never loses entries. Month files open folded, like the log.[^5]
+- **Properties:** [[index]], [[log]], the month files, and the Dashboard hide their properties entirely.
 
 ## The relations panel
 Open it with `Alt+L` or the branching-arrows button in the ribbon. It follows whichever page is open and shows how that page connects to the rest of the wiki through the typed links in its properties:[^3]
@@ -125,12 +126,12 @@ Small animations make the vault feel alive. None of them change how anything wor
 Turn them all off with **Ambient animations** in the settings. They are also off if the computer is set to reduce motion.
 
 ## Logging a schema change
-Every change to [[SCHEMA]] needs a line in its Changelog.[^4] Nicrosil adds it for me:
-1. On the SCHEMA page, click the pen button in the page header, or run **Log a schema change** from the command palette.
-2. Enter the new version number in the form `4.2` and a description of what changed. The version must be newer than the latest one and not already in the changelog.
-3. Nicrosil adds the dated line at the end of the Changelog and updates the `version` and `updated` properties.
+Every change to the rules (`AGENTS.md` or a file in `SCHEMAS/`) needs a line in [[Schema Changelog]].[^4] Nicrosil adds it for me:
+1. On any page in `SCHEMAS/`, click the pen button in the page header, or run **Log a schema change** from the command palette.
+2. Enter the new version number in the form `4.2` and a description of what changed. The version must be newer than the current one and not already in the changelog.
+3. Nicrosil adds the dated line at the end of the changelog and updates its `updated` property, then sets `version` and `updated` on [[SCHEMA]], which holds the rulebook's version.
 
-It does not touch `status`, `verified_on`, or [[log]]. After a schema change, the schema goes back to `draft`,[^1] and the log entry is still mine to add.
+It does not touch `status`, `verified_on`, or [[log]]. After a schema change, each changed rule file goes back to `draft` with a change note,[^1] and the log entry is still mine to add.
 
 ## Hotkeys and buttons
 | Key | Action |
@@ -184,6 +185,7 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 4. The change makes this page a changed page, so it goes back to `draft` until I verify it.[^1]
 
 ### Version history
+- **2.6.0:** The rules moved to `SCHEMAS/`: the rule files are reviewable (grouped as **Schemas** in the queue), the pen button shows on every page there, and **Log a schema change** writes to [[Schema Changelog]] and keeps the version in [[SCHEMA]]. The log is split by month: finished months move to `Logs/Log YYYY-MM.md`, month files open folded, and Recent activity fills from last month early in a month. Log entries with the new `tool` operation get a hammer icon. Once, at startup, the old root `SCHEMA.md` (left as a "moved" stub) goes to the trash.
 - **2.5.3:** The Dashboard button moved from the left ribbon to a large **The Coppermind** button, with the logo, at the top of the file list. Click opens the Dashboard; `Ctrl+click` or middle-click opens it in a new tab. The ribbon logo is gone.
 - **2.5.2:** The pop-up preview of a linked page shows the one-line properties strip (type, status, date) instead of the full Properties block, like an open page. Click the strip in the preview to open the real block.
 - **2.5.1:** The wiki map is plain again: no halos around the dots, no breathing, no fade-in, and no dotted backdrop, only a soft copper edge and glow on the frame. The dropdown menus keep their arrows. The hierarchy keeps its glow.
@@ -229,7 +231,8 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 - **0.8.4 and earlier:** Review queue, flags, hotkeys, Dashboard blocks, search, the properties strip, log folding, and the schema-change button. See the dated entries in [[log]] for each step.
 
 ## Footnotes
-[^1]: [[SCHEMA#7. Draft vs. verified|Schema §7]]
-[^2]: [[SCHEMA#7. Draft vs. verified|Schema §7]], rule 8
-[^3]: [[SCHEMA#5. Linking rules and ontology|Schema §5]]
-[^4]: [[SCHEMA#14. Changing this schema|Schema §14]]
+[^1]: [[SCHEMA - Review|Schema: Review]]
+[^2]: [[SCHEMA - Review|Schema: Review]], rule 8
+[^3]: [[SCHEMA - Writing Pages#Typed links|Schema: Typed links]]
+[^4]: [[SCHEMA - Changes#Changing the rules|Schema: Changing the rules]]
+[^5]: [[SCHEMA - Index and Log#One file per month|Schema: One file per month]]

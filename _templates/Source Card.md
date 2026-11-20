@@ -14,7 +14,7 @@ drafted_on: "{{date:YYYY-MM-DD}}"
 verified_on: 
 ---
 %% source_type = class-notes | assignment | reading | course-document | media | scan
-reliability = A–F, credibility = 1–6 (Admiralty Code; see SCHEMA section 6). The agent may propose a rating; Harrison sets it. %%
+reliability = A–F, credibility = 1–6 (Admiralty Code; see SCHEMA - Writing Pages, Source reliability). The agent may propose a rating; Harrison sets it. %%
 
 ## What It Is
 %% 1–2 sentences: what this source is and where it came from. %%

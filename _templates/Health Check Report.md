@@ -12,7 +12,8 @@ previous:
 Not a wiki page: no status, not in index.md, not verified. The agent writes it; Harrison decides each flag.
 Keep it to about one screen. Write for a reader who has 60 seconds. Delete nothing from the At a glance table, so reports stay comparable over time.
 scope = "whole vault" or the folder checked. previous = link to the last report in quotes, e.g. "[[Health Check 2026-11-10]]". Leave empty on the first report.
-flags_open = flags I haven't decided yet. The agent updates flags_open and each Decision line after I decide. %%
+flags_open = flags I haven't decided yet. The agent updates flags_open and each Decision line after I decide.
+Run `python Tools/health-check/coppermind_check.py` first: it fills the mechanical rows and lists the pages to read for the judgment rows (SCHEMA - Health Check). %%
 
 > [!summary]
 > %% 2–3 sentences, bottom line first: how healthy the wiki is right now, and the one to three things that most need my decision. %%
@@ -36,7 +37,7 @@ flags_open = flags I haven't decided yet. The agent updates flags_open and each 
 | **Total** | | |
 
 %% Flags = the number of numbered flags below for that check. One flag can cover many pages; say how many in its text. Since last check: "+2", "−1", "same", or "new" on the first report.
-Footnote problems = markers with no definition, definitions no marker uses, or citations still in the old parenthetical form (SCHEMA §6).
+Footnote problems = markers with no definition, definitions no marker uses, or citations still in the old parenthetical form (SCHEMA - Writing Pages, Citations).
 For the typed-link mix, give the counts in the flag's text: links of each type, the share that are `related`, and how many relationships are stored twice. %%
 
 ## Needs my decision
@@ -47,7 +48,7 @@ For the typed-link mix, give the counts in the flag's text: links of each type, 
    - **Decision:** 
 
 ## Mechanical fixes
-%% Index updates, broken-link fixes, formatting, and typos. One line each. I can approve these as a single batch after reading them (SCHEMA §7). %%
+%% Index updates, broken-link fixes, formatting, and typos. One line each. I can approve these as a single batch after reading them (SCHEMA - Review). %%
 
 **Batch decision:** 
 
@@ -57,5 +58,6 @@ For the typed-link mix, give the counts in the flag's text: links of each type, 
 %% New: n · Carried over: n · Resolved: n. One line on anything that got better or worse. On the first report, write "First health check; nothing to compare." %%
 
 ## Scope and limits
-- **Checked:** %% whole vault or folder, and how many pages %%
+- **Checked:** %% whole vault or folder, and how many pages the script read %%
+- **Read for the judgment checks:** %% the pages changed since the last report, and the random sample the script picked (or the whole wiki or folder, if I asked) %%
 - **Not checked, or couldn't check:** %% anything skipped, and why %%

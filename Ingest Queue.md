@@ -1,8 +1,8 @@
 # Ingest Queue
 
-Sources I've collected that are waiting to be ingested, in the batches we plan to take them in. This is a plan, not a record: the [[log]] says what was done, and each source card's Ingest Progress says what has been ingested from that source. The agent keeps this page current (see [[SCHEMA]] §2); I decide the order and the skips.
+Sources I've collected that are waiting to be ingested, in the batches we plan to take them in. This is a plan, not a record: the [[log]] says what was done, and each source card's Ingest Progress says what has been ingested from that source. The agent keeps this page current (see [[SCHEMA - Ingest#The Ingest Queue]]); I decide the order and the skips. Agents: read only the batch you are working on.
 
-Status marks: `[ ]` waiting · `[~]` drafted, pending my review · `[x]` done (verified)
+Status marks: `[ ]` waiting · `[~]` drafted, pending my review · `[x]` done (verified). Done batches move to [[#Done]] at the bottom, one line each.
 
 ---
 
@@ -111,3 +111,10 @@ Attached by me on 2026-11-18 → [[SRC - The 9-11 Commission Report]]. Intro to 
 - `[~]` **9/11-D. U.S. responses** (ingested 2026-11-18): ch. 4, 6, 10
 - `[~]` **9/11-E. Emergency response and strategy** (ingested 2026-11-18): ch. 9, 12, and the summary page
 
+---
+
+## Done
+
+Batches whose pages I've verified, one line each: the batch, the date it was ingested, and its source cards.
+
+- (none yet)

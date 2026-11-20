@@ -51,7 +51,7 @@ LLMs pattern-match to the most plausible, fluent narrative, so by default they d
 - Confuse "would I sign this polished memo?" with "is this conclusion actually correct?"
 
 ## Limits and Cautions
-- The Coppermind's own link types (`supports`, `contradicts`, `related`) are modeled on ACH's S/C/N marks; see [[SCHEMA#5. Linking rules and ontology|Schema §5]].
+- The Coppermind's own link types (`supports`, `contradicts`, `related`) are modeled on ACH's S/C/N marks; see [[SCHEMA - Writing Pages#Typed links|Schema: Typed links]].
 
 ## Footnotes
 [^1]: [[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]
