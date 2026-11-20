@@ -116,7 +116,7 @@ button.cm-danger { background: var(--cm-rust); color: #fff; }
 .cm-home-btn { display: flex; align-items: center; justify-content: center; gap: 10px; box-sizing: border-box; min-width: 0; overflow: hidden; container-type: inline-size; height: 46px; margin: 4px 10px 10px; padding: 0 12px; border: 1px solid transparent; border-radius: 2px; background: linear-gradient(135deg, rgba(184, 115, 51, 0.30), rgba(95, 174, 158, 0.22)) padding-box, linear-gradient(160deg, #2a2420, #1e1915) padding-box, linear-gradient(135deg, rgba(217, 138, 74, 0.9), rgba(95, 174, 158, 0.75)) border-box; cursor: pointer; user-select: none; transition: box-shadow .2s, filter .2s; }
 .cm-home-btn:hover, .cm-home-btn:focus-visible { background: linear-gradient(135deg, rgba(184, 115, 51, 0.44), rgba(95, 174, 158, 0.36)) padding-box, linear-gradient(160deg, #2a2420, #1e1915) padding-box, linear-gradient(135deg, #e89a5a, #86d2c1) border-box; box-shadow: 0 0 12px rgba(184, 115, 51, 0.3), 0 0 14px rgba(95, 174, 158, 0.22); outline: none; }
 .cm-home-logo { flex: none; width: 21px; height: 26px; filter: drop-shadow(0 1px 3px rgba(184, 115, 51, 0.4)); }
-.cm-home-name { font-family: 'Almendra SC', Georgia, serif; font-size: 1.3em; font-size: clamp(0.7em, calc((100cqw - 31px) / 11), 1.3em); font-weight: 600; letter-spacing: 0; flex: none; background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 40%, #d99a62 62%, #86d2c1 100%); -webkit-background-clip: text; background-clip: text; color: transparent; white-space: nowrap; }
+.cm-home-name { font-family: 'Almendra SC', Georgia, serif; font-size: 1.5em; font-size: clamp(0.7em, calc((100cqw - 31px) / 8), 1.7em); font-weight: 600; letter-spacing: 0; flex: none; background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 40%, #d99a62 62%, #86d2c1 100%); -webkit-background-clip: text; background-clip: text; color: transparent; white-space: nowrap; }
 body.cm-on-dashboard .cm-home-btn { box-shadow: inset 0 0 10px rgba(184, 115, 51, 0.25), inset 0 0 14px rgba(95, 174, 158, 0.18); }
 @media (prefers-reduced-motion: reduce) { .cm-home-btn { transition: none; } }
 
@@ -1016,3 +1016,22 @@ body.cm-calm .cm-wt-flow, body.cm-calm .cm-wt-svg.is-new .cm-wt-card, body.cm-ca
 .cm-wt-flow { display: none; }
 .cm-wt-tog-bg { fill: #1f1a16; stroke-width: 1.2; filter: none; }
 .cm-wt-tog:hover .cm-wt-tog-bg, .cm-wt-tog:focus-visible .cm-wt-tog-bg { fill: #2a221b; transform: none; }
+
+/* ---- Relations panel: crisp and flat (2.7.3). Same look as the wiki map: sharp 2px corners, no glows, no flowing dots, no halo, no dotted backdrop. ---- */
+.cm-rel-title { font-family: 'Almendra SC', Georgia, serif; font-size: 1.25em; font-weight: 600; color: #f0c48c; }
+.cm-rel-status { border-radius: 2px; }
+.cm-rel-map { border: 1px solid rgba(184, 115, 51, .35); border-radius: 2px; background: #171310; box-shadow: none; }
+.cm-rel-box { fill: #1f1a16; rx: 2px; ry: 2px; filter: none; transition: fill .15s, stroke-width .15s; }
+.cm-rel-box-verified { stroke-width: 1.2; filter: none; }
+.cm-rel-box-draft { stroke-width: 1.2; filter: none; }
+.cm-rel-box-center { fill: #2a221b; rx: 2px; ry: 2px; stroke-width: 1.6; filter: none; }
+.cm-rel-node:not(.is-center):hover .cm-rel-box, .cm-rel-node:focus .cm-rel-box { fill: #2a221b; stroke-width: 1.7; filter: none; }
+.cm-rel-node, .cm-rel-edge { animation: none; }
+.cm-rel-node:not(.is-center):hover { transform: none; }
+.cm-rel-edge { stroke-width: 1.2; filter: none; }
+.cm-rel-edge.is-hl { stroke-width: 1.8; }
+.cm-rel-flow, .cm-rel-halo { display: none; }
+.cm-rel-center-label { filter: none; }
+.cm-rel-swatch { border-radius: 0; box-shadow: none; }
+.cm-rel-item { border-radius: 2px; }
+.cm-rel-dot { border-radius: 1px; }

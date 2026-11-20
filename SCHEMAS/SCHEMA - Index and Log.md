@@ -2,8 +2,8 @@
 type: schema
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-19
-verified_on: 2026-11-19
+updated: 2026-11-20
+verified_on: 2026-11-20
 ---
 How the index, the log, and git work. The everyday parts (the index line, the log entry format, the commit message) are in `AGENTS.md`; this file has the rest.
 
@@ -11,6 +11,9 @@ How the index, the log, and git work. The everyday parts (the index line, the lo
 
 - `index.md` lists **every page** in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`, grouped by type, with a count per group and a total at the top.
 - Under each type, pages are listed alphabetically in one list, with no split by status. Each entry is one line: `- [[Page Name]] — one-line summary`. The index does not show whether a page is draft or verified; the review queue and the page's own `status` do.
+- **Concepts and Glossary, the two long types, are split by first letter** under `### A`, `### B` ... headings (`### 0–9` for names that start with a digit). Pages stay alphabetical, and there is a heading only for a letter that has pages: add one when a page brings a new letter, remove one that empties. Other types stay one plain list.
+- **A Jump to line** under the total links to each type's heading, as `**Jump to:** [[#Concepts (94)|Concepts]] ...`. A link has to match its heading's count, so update it whenever a count changes. A stale one shows in a health check as a broken heading link.
+- **Looks:** `index.md` has `cssclasses: coppermind-index`, which the `coppermind.css` snippet styles (columns, bold names, quieter summaries, letter tabs, jump chips). It changes only how the page looks; the line format above stays exactly as is. Nicrosil keeps the letter headings and the Jump to line right when I reject a page.
 - The agent updates the index **at the end of every operation** that adds, removes, or renames a page. A change of status does not change the index.
 - Not in the index: the rule files in `SCHEMAS/`, the Ingest Queue (a plan), the log and the reports in `Health Checks/` (records), and `Tools/`.
 - **Read only the section you are changing.** To find whether a page exists, search file names and aliases instead.

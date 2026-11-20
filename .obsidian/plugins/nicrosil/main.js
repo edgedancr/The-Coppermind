@@ -227,9 +227,19 @@ function daysBetween(fromIso, toIso) {
 
 /**
  * index.md model. Each "## Type (n)" section holds its entries in one alphabetical list, with no
- * split by status. The older formats are still read, and rewritten in this one: entries under
+ * split by status. Concepts and Glossary (INDEX_LETTERED) are split under "### A" ... "### 0–9" letter
+ * headings; those are dropped when reading and rebuilt when writing, and the "**Jump to:**" line under
+ * the total is rebuilt from the sections. The older formats are still read, and rewritten in this one: entries under
  * "### Verified (n)" and "### Drafts (n)" headings, or with the status in brackets at the end of each line.
  */
+const INDEX_LETTERED = new Set(["Concepts", "Glossary"]);
+
+function indexLetter(name) {
+  const m = String(name || "").normalize("NFD").match(/[A-Za-z0-9]/);
+  const c = m ? m[0].toUpperCase() : "";
+  return /[A-Z]/.test(c) ? c : "0–9";
+}
+
 function entryName(line) {
   const m = line.match(/^- \[\[([^\]|#]+)/);
   return m ? m[1].trim() : null;
@@ -249,6 +259,8 @@ function parseIndex(text) {
       head.push(line);
     } else if (/^### (Verified|Drafts)\b/i.test(line)) {
       // an old status heading: dropped
+    } else if (/^### (?:[A-Z]|0–9)\s*$/.test(line)) {
+      // a letter heading: dropped, rebuilt by renderIndex
     } else if (/^- \[\[/.test(line)) {
       cur.entries.push({ name: entryName(line), text: line.replace(/\s\((draft|verified)\)\s*$/, "").replace(/\s+$/, "") });
     } else if (line.trim() !== "") {
@@ -263,15 +275,30 @@ function renderIndex(model, date) {
   const byName = (a, b) => (a.name || "").localeCompare(b.name || "", "en", { sensitivity: "base" });
   let total = 0;
   const body = [];
+  const jump = [];
   for (const sec of model.sections) {
     const all = sec.entries.slice().sort(byName);
     total += all.length;
     body.push(`## ${sec.title} (${all.length})`, "");
-    if (all.length) body.push(...all.map((e) => e.text), "");
+    jump.push(`[[#${sec.title} (${all.length})|${sec.title}]]`);
+    if (all.length && INDEX_LETTERED.has(sec.title)) {
+      let last = null;
+      for (const e of all) {
+        const L = indexLetter(e.name);
+        if (L !== last) {
+          if (last !== null) body.push("");
+          body.push(`### ${L}`, "");
+          last = L;
+        }
+        body.push(e.text);
+      }
+      body.push("");
+    } else if (all.length) body.push(...all.map((e) => e.text), "");
     if (sec.extra.length) body.push(...sec.extra, "");
   }
   let head = model.head.join("\n");
   head = head.replace(/^\*\*Totals?:\*\*.*$/m, `**Total:** ${total} pages`);
+  head = head.replace(/^\*\*Jump to:\*\*.*$/m, () => `**Jump to:** ${jump.join(" ")}`);
   head = head.replace(/^updated:.*$/m, `updated: ${date}`);
   return head + "\n\n" + body.join("\n").replace(/\n+$/, "") + "\n";
 }

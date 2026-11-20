@@ -1,6 +1,6 @@
 ---
 type: guide
-status: verified
+status: draft
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -12,14 +12,18 @@ courses:
 sources: []
 related:
   - "[[SCHEMA]]"
-drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5)
+drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5; larger file-list button name and index letter headings and jump bar, and the flat relations map, by claude-sonnet-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-19
+changes_since_verified:
+  - "2026-11-20: v2.7.1, the name on the file-list button is larger and scales to fill the button (the button was leaving unused space) [[#The Dashboard]]"
+  - "2026-11-20: v2.7.2, rejecting a page now keeps the index's A–Z letter headings and Jump to line right [[#The index and the log]]"
+  - "2026-11-20: v2.7.3, the relations panel's map is flat and sharp-cornered like the wiki map, and the open page has a thin copper-to-teal gradient outline instead of the pulsing orange halo [[#The relations panel]]"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.7.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.7.3**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -74,7 +78,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 
 **Reading and editing.** The Dashboard always opens in Reading view, whether I open it from the ribbon, a link, a tab, or at startup, and every other note keeps the mode it was in. Its properties are hidden, and so is the Properties side pane while the Dashboard is the active note. To edit it, press `Ctrl+E`. It stays in editing until I click into the Dashboard again from another tab or note, which puts it back in Reading view.
 
-**Getting back to it from anywhere:** click the large **The Coppermind** button at the top of the file list, or press `Alt+D`. If the Dashboard is already open in a tab, this switches to that tab; otherwise it opens in the current tab. `Ctrl+click` or middle-click on the button always opens it in a new tab, even if the Dashboard is already open in another one. The button has the copper logo and the name (in Almendra SC) on a copper-to-teal gradient, with a gradient border and sharp corners (a 2px radius). It glows on hover, and it has a soft inner glow while the Dashboard is the open page.
+**Getting back to it from anywhere:** click the large **The Coppermind** button at the top of the file list, or press `Alt+D`. If the Dashboard is already open in a tab, this switches to that tab; otherwise it opens in the current tab. `Ctrl+click` or middle-click on the button always opens it in a new tab, even if the Dashboard is already open in another one. The button has the copper logo and the name (in Almendra SC) on a copper-to-teal gradient, with a gradient border and sharp corners (a 2px radius). The name scales with the width of the file list so it fills the button: it gets larger when the file list is widened and smaller when it is narrowed, within limits. It glows on hover, and it has a soft inner glow while the Dashboard is the open page.
 
 **Look and motion.** Every note, the Dashboard included, sits on the vault's brown blended into a copper glow at the top left and a teal glow at the top right. The background is a single CSS variable, `--cm-bg-gradient`, defined in the plugin's `styles.css`; change it there to change every page at once. Both sidebars carry a fainter version of the same glow (copper at the top of the left one, teal at the top of the right one), so they match the page between them. In the file list, the open file has a copper highlight that fades toward teal, and its name shades from teal to pale copper. All of this only applies while Nicrosil is enabled, and the sidebar and file-list colors only in dark mode.
 
@@ -89,14 +93,14 @@ The search box on the [[Dashboard]] shows suggestion cards as I type, over wiki 
 - It stays up to date on its own as pages are created, edited, renamed, or deleted.
 
 ## The index and the log
-- **Index:** [[index]] lists every page under its type, in alphabetical order, with a count per type and a total at the top. It does not show whether a page is verified; the review queue and the Dashboard do that. When I verify a page, Nicrosil only checks that the page is listed. When I reject one, its line is removed and the counts are updated.
+- **Index:** [[index]] lists every page under its type, in alphabetical order, with a count per type and a total at the top. It does not show whether a page is verified; the review queue and the Dashboard do that. When I verify a page, Nicrosil only checks that the page is listed. When I reject one, its line is removed and the counts are updated. Concepts and Glossary are split under A–Z letter headings and the index has a **Jump to** line under the total; when a page is rejected, Nicrosil rebuilds both (a letter with no pages loses its heading, and the jump links get the new counts).
 - **Log:** Nicrosil appends the entry for each verify and reject to [[log]] (newest at the bottom, never rewriting old entries). The log opens with every entry folded, so it reads as a short list. Click an entry's heading (or its arrow) to open it. This happens when the log opens in editing view, once per opening, so switching tabs doesn't re-fold it. It needs Obsidian's **Fold heading** option (Settings → Editor) to be on.
 - **One log file per month:** [[log]] holds the current month. The first time Obsidian opens in a new month (and before Nicrosil adds an entry in a new month), it moves every earlier month's entries, word for word and in order, to `Logs/Log YYYY-MM.md`, creating the folder and the file if needed, and shows a notice. It writes the month file before trimming the log, so a failure never loses entries. Month files open folded, like the log.[^5]
 - **Properties:** [[index]], [[log]], the month files, and the Dashboard hide their properties entirely.
 
 ## The relations panel
 Open it with `Alt+L` or the branching-arrows button in the ribbon. It follows whichever page is open and shows how that page connects to the rest of the wiki through the typed links in its properties:[^3]
-- **A map.** The page sits in the middle. Pages that point at it are on the left; pages it points at are on the right. Each arrow is colored by relationship type, and the legend under the map names the colors. Some types are also dashed (`related` is dashed, `contradicts` is dotted), so color is never the only cue. A solid teal outline means the other page is verified, a copper outline a draft, and a dashed grey outline no status. The map glows and moves: small dots flow along each arrow in its direction, the center page has a slow pulsing halo, and pointing at a page lights up its arrows and dims the rest (the motion stops if your system asks for reduced motion). Click a page to open it, or `Ctrl+click` for a new tab. The map shows up to ten pages on each side; the lists below show them all.
+- **A map.** The page sits in the middle. Pages that point at it are on the left; pages it points at are on the right. Each arrow is colored by relationship type, and the legend under the map names the colors. Some types are also dashed (`related` is dashed, `contradicts` is dotted), so color is never the only cue. A solid teal outline means the other page is verified, a copper outline a draft, and a dashed grey outline no status. The map is flat and crisp, like the wiki map: sharp 2px corners, thin lines, and no moving dots or pulsing halo. The open page in the middle has a thin outline in the copper-to-teal gradient with a faint glow in both colors. Pointing at a page thickens its arrows and dims the rest. Click a page to open it, or `Ctrl+click` for a new tab. The map shows up to ten pages on each side; the lists below show them all.
 - **Two lists.** "This page…" groups the outgoing links by type ("Is part of", "Supports", and so on). "Pointing at this page…" groups the incoming links ("Parts of this", "Examples of this", "Supported by"). Incoming links are worked out from the other pages' properties, since each relationship is stored only once.[^3]
 - **Not shown:** plain links in the page text. They are "see also" links, not relationships.
 
@@ -188,6 +192,9 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 These steps apply to **every** change to a file in the plugin's folder, even a one-line style tweak. Asking for the change is asking for the steps, and they are done in the same edit without being asked.
 
 ### Version history
+- **2.7.3:** The relations panel's map matches the wiki map: sharp 2px corners on the boxes, the map frame and the status tag; flat dark fills; no dotted backdrop, flowing dots, pulsing halo, entrance animation or hover growth; thinner arrows; the page title is in Almendra SC. The open page in the middle has a thin copper-to-teal gradient outline with a faint glow, like the file-list button. Only the look changed, not what the map shows.
+- **2.7.2:** Rejecting a page rewrites [[index]] and now keeps its new layout: the A–Z letter headings in Concepts and Glossary are rebuilt in place, and the **Jump to** line gets the new counts. Without this, the letter headings would have been pushed to the bottom of their section.
+- **2.7.1:** The name on the file-list button is larger. It was capped by a conservative width estimate and left empty space; it now scales to fill the button (up to about 1.7em, down to 0.7em in a very narrow file list).
 - **2.7.0:** The wiki map and the hierarchy look less glossy: sharp 2px corners on cards, buttons, menus, chips, the info card and the frames; no glows or hover growth; thinner lines; no dotted backdrop or lights running along the hierarchy's branches; the map's drifting sparks are gone; the active tab uses the copper-to-teal gradient; the info card's name is in Almendra SC.
 - **2.6.3:** The Dashboard name's copper-to-teal gradient now spans the width of the name itself instead of the whole header, so the teal end shows and it matches the file-list button.
 - **2.6.2:** The Coppermind name on the Dashboard and on the file-list button is set in **Almendra SC**. The Dashboard name has a copper-to-teal gradient and a soft glow. The font loads from Google Fonts, so it needs an internet connection; offline it falls back to Georgia.

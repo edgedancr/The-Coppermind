@@ -1,10 +1,10 @@
 ---
 type: schema
-version: 7.1
+version: 7.2
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-19
-verified_on: 2026-11-19
+updated: 2026-11-20
+verified_on: 2026-11-20
 ---
 This is the overview of the Coppermind's rules: what the wiki is for, how it is laid out, and which rule file covers what. It is the rulebook for my personal LLM wiki (SAIL portfolio). The Coppermind follows the SAIL version of the LLM-wiki pattern, not Karpathy's original: **I design, the AI drafts, I verify.** Nothing becomes part of the wiki as final until I have reviewed and approved it.
 

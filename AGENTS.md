@@ -48,7 +48,7 @@ The agent never deletes anything except a draft it created that Harrison rejecte
 **No unsourced claims.** Every factual claim is cited. Background no source in the vault provides goes in a `> [!warning] Unsourced background — verify or remove` callout.
 
 **Bookkeeping at the end of every operation.**
-- **Index:** when an operation adds, removes, or renames a page in `Wiki/`, `Perspectives/`, or `Sources/Source Cards/`, update `index.md`: one line per page, `- [[Page Name]] — one-line summary`, alphabetical under its type, with the type's count and the total at the top kept right. A change of status doesn't change the index.
+- **Index:** when an operation adds, removes, or renames a page in `Wiki/`, `Perspectives/`, or `Sources/Source Cards/`, update `index.md`: one line per page, `- [[Page Name]] — one-line summary`, alphabetical under its type (in Concepts and Glossary, under the page's first-letter heading, `### A`, or `### 0–9` for a name that starts with a digit; add a heading for a new letter and remove one that empties), with the type's count, the total, and the **Jump to** line's links at the top kept right (a link reads `[[#Concepts (94)|Concepts]]`, so it changes when the count does). A change of status doesn't change the index.
 - **Log:** append one entry to the end of `log.md` for every ingest, query, health check, verification, schema change, and tool change. Past entries are never rewritten; corrections go in a new entry. Format:
 
   ```

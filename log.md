@@ -2835,3 +2835,31 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[Containment]]
 - **Commit:** `verify: Containment`
+
+### [2026-11-20] tool | Nicrosil 2.7.1: larger file-list button name
+
+- **Think:** The Coppermind button at the top of the file list wasn't using all its space; Harrison asked for bigger text.
+- **Calculate:** In `styles.css`, `.cm-home-name` was sized by a width formula (divisor 11) that overestimated the text's width, and capped at 1.3em. Changed to divisor 8 with a 1.7em cap so the name fills the button and still shrinks in a narrow file list. Bumped to 2.7.1; guide updated (version, button description, version history) and set to draft with a change note.
+- **Verify:** Pending: Harrison to check the button in Obsidian and re-review [[Nicrosil]].
+- **Commit:** `tool: Nicrosil 2.7.1 — larger name on the file-list button`
+
+### [2026-11-20] schema | Index: letter headings, Jump to line, look (version 7.2)
+
+- **Think:** Harrison wanted the index to be nicer to look through without being harder for an agent to read. He chose a CSS-only restyle plus a jump bar and A–Z breaks.
+- **Calculate:** `index.md`: Concepts and Glossary split under `### A` ... headings, a **Jump to** line under the total, `cssclasses: coppermind-index`; the styling is in the `coppermind.css` snippet. The line format is unchanged. `AGENTS.md` index rule and `SCHEMA - Index and Log` (The index) updated, changelog line 7.2 added, change notes on `SCHEMA` and `SCHEMA - Index and Log`. The health check already catches a stale jump link as a broken heading link, so the script is unchanged.
+- **Verify:** Pending: Harrison to look at the index in Reading view and re-review the changed lines.
+- **Commit:** `schema: 7.2 — index letter headings, Jump to line, and look`
+
+### [2026-11-20] tool | Nicrosil 2.7.2: index letter headings and Jump to line
+
+- **Think:** Nicrosil rewrites `index.md` when a page is rejected, and it would have moved the new letter headings to the bottom of their section and left the jump counts stale.
+- **Calculate:** `parseIndex` drops letter headings and `renderIndex` rebuilds them for Concepts and Glossary and rebuilds the Jump to line. Checked that reading and re-writing the index leaves it byte-for-byte unchanged and that removing a page fixes the counts and the jump link. Guide updated.
+- **Verify:** Pending: reload Obsidian, then reject a test draft or just check the index opens correctly.
+- **Commit:** `tool: Nicrosil 2.7.2 — keep index letter headings and jump bar`
+
+### [2026-11-20] tool | Nicrosil 2.7.3: flat, sharp relations map with a gradient outline
+
+- **Think:** The relations panel's map looked out of place; Harrison asked for sharper edges, and for the open page to have a thin, sharp, lightly glowing outline in the copper-to-teal gradient instead of the pulsing orange.
+- **Calculate:** `styles.css`: the map's boxes, frame and tag get 2px corners and flat fills, and the dotted backdrop, flowing dots, halo and animations are removed, matching the wiki map from 2.7.0. `main.js`: adds the `cm-rel-og` gradient the open page's outline uses. Arrows are still curved. Guide updated.
+- **Verify:** Pending: Harrison to look at the panel in Obsidian.
+- **Commit:** `tool: Nicrosil 2.7.3 — flat relations map, gradient outline on the open page`

@@ -1,6 +1,8 @@
 ---
 type: index
-updated: 2026-11-19
+cssclasses:
+  - coppermind-index
+updated: 2026-11-20
 ---
 # Index
 
@@ -8,7 +10,11 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 **Total:** 429 pages
 
+**Jump to:** [[#Concepts (94)|Concepts]] [[#Glossary (183)|Glossary]] [[#Frameworks (38)|Frameworks]] [[#Case Studies (17)|Case Studies]] [[#People (9)|People]] [[#Summaries (35)|Summaries]] [[#Prompts (2)|Prompts]] [[#Workflows (2)|Workflows]] [[#Guides (3)|Guides]] [[#Analyses (0)|Analyses]] [[#Perspectives (1)|Perspectives]] [[#Source Cards (45)|Source Cards]]
+
 ## Concepts (94)
+
+### A
 
 - [[Agentic AI]] — AI with tools, and the added risk
 - [[AI Alignment]] — Systems doing what we intend, even under pressure
@@ -25,8 +31,14 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Analytic Title]] — Titles that state a judgment, not just a topic
 - [[Artificial Intelligence]] — What "artificial" and "intelligent" mean, and AI's progression
 - [[Automation Bias]] — Over-trusting confident AI output
+
+### B
+
 - [[Bitter Lesson]] — Sutton: methods built on human knowledge lose to experience and computation
 - [[Bottom Line Up Front]] — BLUF: lead every product and paragraph with the main point
+
+### C
+
 - [[Capability vs. Reliability]] — Fluent output is not verified output
 - [[Centaur Analyst]] — Five capabilities and the changing role of the analyst
 - [[China's AI Industrial Policy]] — RAND: Beijing's state support across the AI stack, and whether it will work
@@ -39,28 +51,46 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Critiques of Large Language Models]] — Hossenfelder and Sutton on why LLMs won't reach AGI, with Patel's rebuttals
 - [[Curiosity, Character, and Competence]] — CDR Blocker's three things every intelligence professional needs
 - [[Custom GPT]] — OpenAI's specialized ChatGPTs: instructions, knowledge files, capabilities, actions
+
+### D
+
 - [[Data and Model Poisoning]] — OWASP LLM05: corrupting what a model learns; backdoors and sleeper agents
 - [[Deep Learning]] — Progressive abstraction; ImageNet and AlphaGo
 - [[Detailed Outline]] — Outlining to the paragraph level as part of the analysis
 - [[Director of National Intelligence]] — The DCI's three jobs, and the Commission's recommended National Intelligence Director
 - [[Domestic Intelligence and the FBI]] — Why the Commission rejected an American MI-5, and its FBI recommendations
+
+### E
+
 - [[Economizing on Words]] — Four ways to cut, and the 113-to-34-word example
 - [[Emergent Behavior]] — Behavior developers didn't design and can't fully predict
 - [[Enframing]] — Heidegger's account of modern technology, via the Then & Now video
 - [[Estimative Language]] — ICD 203's likelihood terms, and keeping confidence and likelihood apart
 - [[Ethical and Moral Issues in Intelligence]] — Lowenthal's seven ethical issues, from the costs of secrecy to the Helms dilemma
 - [[Excessive Agency]] — OWASP LLM03: too much functionality, permission, or autonomy
+
+### F
+
 - [[FBI Counterterrorism Before September 11]] — Field-office priorities, weak analysis, and the failed 1998 plan
 - [[Fine-Tuning]] — Further specialized training that adjusts a model's weights; strengths and costs
 - [[Foreign Intelligence Surveillance Act]] — The 1978 law, its "primary purpose" test, and how the wall grew from it
 - [[Future of Intelligence Analysis]] — Gartin's five drivers of change and his 2030 scenario
 - [[Future Strategic Threats]] — Three massive challenges, and cognitive information threats
+
+### G
+
 - [[Generative AI]] — AI that generates new content; foundation models and deepfakes
 - [[Generative vs. Agentic AI]] — IBM: reactive generation vs. proactive, goal-pursuing agents
 - [[Gradual Loss of Control]] — A slow AI catastrophe through local incentives, from "A Disneyland Without Children"
+
+### H
+
 - [[Hallucination]] — Confident, false AI output
 - [[Human Decision Point]] — Where AI belongs and where humans must stay
 - [[Human-Centered AI]] — Augmentation, not abdication
+
+### I
+
 - [[Imago Dei]] — Humans made in God's image, as the foundation for AI ethics
 - [[Intelligence (National Security)]] — What intelligence is, why agencies exist, and why it's "proximate reality," not truth
 - [[Intelligence as Attentive Understanding]] — Why liberal arts matter in SI; the analyst as sub-creator
@@ -70,24 +100,45 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Intelligence vs. Consciousness]] — AI acts like a human but does not think or feel like one
 - [[Intelligence Writing Style]] — Clear, concise, informative, timely, tailored; lead with the point
 - [[Intelligence-Led Policing]] — Intelligence inside the police operational cycle; prosecution vs. prevention
+
+### L
+
 - [[Large Language Model]] — A function that predicts the next word; training, scale, and emergence
 - [[Limits of Prediction]] — Why forecasts miss discontinuities, and the analyst as question answerer
 - [[LLM Wiki]] — What an LLM wiki is, and how SAIL's version differs from Karpathy's
+
+### M
+
 - [[Machine Learning]] — Classification vs. regression, learning methods, and scaling
+
+### N
+
 - [[Narrow AI]] — Task-specific AI and its negative outlooks
 - [[National Counterterrorism Center]] — The 9/11 Commission's proposed center for joint counterterrorism intelligence and planning
 - [[National Intelligence Strategy]] — The supporting strategy, and its seven mission objectives
 - [[Naturalism]] — Lewis: the view that Nature is all that exists, and why he thinks it refutes itself
 - [[Need to Share]] — The 9/11 Commission's case for replacing need to know with need to share
 - [[Neural Network]] — Neurons, layers, weights, and biases: a network is just a function
+
+### O
+
 - [[Out-of-Distribution Generalization]] — "They interpolate, they don't extrapolate": Hossenfelder and Sutton
+
+### P
+
 - [[Pi-Shaped Person]] — Broad generalist with deep expertise: scan wide, dig deep, build out
 - [[Planes Operation]] — KSM's 9/11 plot from proposal to final preparations, and dissent at the top
 - [[Politicized Intelligence]] — Telling the customer what they want to hear, and where the pressure comes from
 - [[Polygraph Examination]] — What the polygraph does and doesn't do, and how the appointment runs
 - [[Prompt Engineering]] — Fundamentals and advanced techniques for instructing AI
 - [[Prompt Injection]] — OWASP LLM01: inputs that hijack a model; why defense must be architectural
+
+### R
+
 - [[Reinforcement Learning]] — Learning a policy from reward; SAIL's account and Sutton's four parts of an agent
+
+### S
+
 - [[Security Classification]] — Classification levels, control systems, releasability, and need to know
 - [[Self-Attention]] — The transformer's core mechanism: queries, keys, values, and heads
 - [[Self-Editing and Final Review]] — Reading the draft as the reader, and the final checks
@@ -96,6 +147,9 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Speaking Truth to Power]] — Lowenthal's and Marrin's critiques of the slogan
 - [[Struggle of Ideas]] — Helping defeat an ideology, not just a group of people
 - [[System 1 and System 2 Thinking]] — Fast and slow thinking, and the "lazy controller"
+
+### T
+
 - [[Terrorist Sanctuary]] — Why a 9/11-scale plot needs a haven, and where havens form
 - [[Terrorist Travel]] — Travel documents as weapons, and the border recommendations
 - [[Time Compression Trap]] — Faster early stages create pressure to skip analysis
@@ -103,9 +157,14 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Topic Sentence]] — Types, faults, and the four patterns that make causation explicit
 - [[Tradecraft vs. Science in Intelligence Analysis]] — Johnston's case that analysis is a scientific process, not a craft
 - [[Transformer]] — The architecture behind LLMs
+
+### U
+
 - [[United States Intelligence Community]] — The 18 IC organizations and how they're grouped
 
 ## Glossary (183)
+
+### A
 
 - [[Actionable Intelligence]] — Intelligence specific enough to act on
 - [[Active Voice]] — Make the cause the subject; use the passive only on purpose
@@ -122,11 +181,17 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Artificial General Intelligence]] — SAIL's and RAND's definitions of AGI, which disagree
 - [[Attention Head]] — What a token is compared against in a transformer
 - [[Attribution (Cyber)]] — Determining who carried out a cyberattack
+
+### B
+
 - [[Bach Faucet]] — Derogatory term for on-demand generative art
 - [[Backpropagation]] — The algorithm that nudges every parameter toward the right answer
 - [[Battle Damage Assessment]] — Measuring an attack's effects on its target
 - [[Bean Counting]] — Cataloging a target's military assets; often disparaging
 - [[Blue Sky Memo]] — The CIA's unconstrained late-2000 ideas for Afghanistan
+
+### C
+
 - [[Caliphate]] — The institutionalized leadership of the Ummah, ended in 1924
 - [[Capabilities vs. Intentions]] — Whether to focus on what a power can do or what it means to do
 - [[Catastrophic Forgetting]] — A fine-tuned model losing general capabilities
@@ -147,17 +212,26 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Covert Action]] — Requires a presidential finding; barred at home by EO 12333
 - [[Crosswalks]] — Coordinating programs' resources under budget constraints
 - [[Current vs. Long-Term Intelligence]] — Short-lived current reporting vs. deeper long-term reports
+
+### D
+
 - [[Damage Assessment (Counterintelligence)]] — Working out what a spy compromised
 - [[Deepfake]] — Generated audio or video that makes someone seem to say what they never said
 - [[Delenda Plan]] — Clarke's 1998 plan to eliminate the Bin Ladin network's threat
 - [[Denial and Deception]] — Hiding what's there; conveying less than the whole truth
 - [[Diagnostic Evidence]] — Evidence whose ratings differ across hypotheses
 - [[Diplomatic, Information, Military, and Economic Options]] — DIME: the options for defeating an adversary
+
+### E
+
 - [[Economic Intelligence]] — IC support in the economic domain, including FININT
 - [[Embedding]] — Turning a token into a vector
 - [[Encoder-Decoder Architecture]] — Encode the input, then generate the output one symbol at a time
 - [[Existential Risk]] — The x-risk scenario, and the real danger behind it
 - [[Explainable AI]] — XAI: explaining AI outputs so people can understand and trust them
+
+### F
+
 - [[Failed State]] — A state that can't keep order or control its territory
 - [[Far Enemy]] — The United States, as Bin Ladin's main target
 - [[Feed-Forward Neural Network]] — The transformer's second core operation, storing learned patterns
@@ -165,16 +239,25 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Foreign Intelligence Surveillance Court]] — The FISA court of eleven judges that approves surveillance orders
 - [[Foundation Model]] — IBM's term for the models behind generative AI
 - [[Four Causes]] — Aristotle's material, form, end, and maker, applied to social media
+
+### G
+
 - [[Gang of Eight]] — The congressional leaders and intelligence committee heads who may be briefed
 - [[Golden Chain]] — The Gulf financiers' network behind the Afghan jihad
 - [[Goldwater-Nichols Act]] — The 1986 law that made the military joint; the Commission's model
 - [[Groupthink]] — Valuing conformity over objective analysis; premature unanimity
+
+### H
+
 - [[Hamburg Cell]] — Atta, Binalshibh, Shehhi, and Jarrah
 - [[Hawala]] — Informal, trust-based money transfer used by al-Qaeda
 - [[Helms Dilemma]] — Secrecy about Chile vs. testifying honestly to Congress
 - [[Hidden Context Exposure]] — OWASP LLM08: extracting a model's hidden instructions (formerly System Prompt Leakage)
 - [[Hidden Layer]] — The layers between a neural network's input and output
 - [[Hughes-Ryan Amendment]] — The law requiring presidential approval and reporting of covert action
+
+### I
+
 - [[Imagery Resolution]] — The level of detail imagery can show
 - [[Improper Output Handling]] — OWASP LLM10: model output passed downstream without validation
 - [[Incident Command System]] — The emergency-response management structure the Commission urged nationwide
@@ -191,17 +274,29 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Interagency Process]] — Executive agencies bargaining to consensus on policy
 - [[Inverted Triangle]] — Kaiser and Pherson's message-driven vs. data-driven paper
 - [[Iran-Contra Affair]] — Arms for hostages and money for the Contras; an abuse of covert action
+
+### J
+
 - [[Jailbreak]] — Prompt injection aimed at breaking a model's safety protocols
 - [[Jemaah Islamiyah]] — The Southeast Asian group allied with al-Qaeda
 - [[Joint Terrorism Task Force]] — Local police and the FBI working counterterrorism together
+
+### K
+
 - [[Key Judgments]] — The 30-second "so what" of a report
 - [[Kill Chain]] — Find, fix, track, target, engage, assess
+
+### L
+
 - [[Law of Armed Conflict]] — Distinction and proportionality; can't be delegated to an algorithm
 - [[Layered Aviation Security]] — The FAA's layers of defense, all flawed before 9/11
 - [[Lethal Trifecta]] — Private data + untrusted content + external communication; and the Rule of Two
 - [[Liar's Dividend]] — Information quality collapse (definition needs checking)
 - [[Linchpin Evidence]] — An item whose re-rating would change the ranking of the top hypotheses
 - [[LMSYS Chatbot Arena]] — Crowdsourced chatbot comparison; now called Arena
+
+### M
+
 - [[Maskirovka]] — Russia's tradition of hiding its realities from observers
 - [[Meaningful Absence]] — Looked for and not found, as opposed to not yet looked for
 - [[Memorandum of Notification]] — The legal document authorizing a covert action
@@ -210,6 +305,9 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Mirror Imaging]] — Assuming the enemy thinks like you
 - [[Moral Injury]] — Its two causes: an overwhelming event, and betrayal of trust
 - [[Muscle Hijackers]] — The 13 operatives who stormed the cockpits and controlled passengers
+
+### N
+
 - [[National Intelligence Estimate]] — The IC's estimates, and the missing terrorism estimate before 9/11
 - [[National Intelligence Priorities Framework]] — The NSC's and DNI's five-tier system for IC priorities
 - [[National Intelligence Program]] — The budget program for civilian agencies under the DNI
@@ -221,10 +319,16 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[No-Kidding Rule]] — Delete sentences that state the obvious
 - [[North American Aerospace Defense Command]] — NORAD, which defended U.S. airspace facing outward
 - [[Northern Alliance]] — Massoud's anti-Taliban forces, assassinated leader on September 9, 2001
+
+### O
+
 - [[Office of Origin]] — The FBI system that put one field office in charge of a case
 - [[Office of Strategic Services]] — The CIA's World War II predecessor, and its Research and Analysis Branch
 - [[OODA Loop]] — Observe, orient, decide, act
 - [[Originator Controlled]] — ORCON: the originating agency must approve further sharing
+
+### P
+
 - [[Parameter]] — The weights and biases that set a model's behavior
 - [[Phoenix Memo]] — A July 2001 FBI warning about flight students that headquarters never read
 - [[Plausible Deniability]] — Shielding the President from responsibility for covert plots
@@ -240,7 +344,13 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Private-Sector Preparedness]] — Civilians as the "first" first responders, and the national preparedness standard
 - [[Processing and Exploitation Imbalance]] — Collecting more than can be processed and exploited
 - [[Protected Class]] — Groups the law protects from discrimination, such as gender, race, and age
+
+### Q
+
 - [[Quantum Cryptography]] — Encryption that reveals interception attempts; definition flagged
+
+### R
+
 - [[Reagan Doctrine]] — Aid to guerrillas fighting the Soviet Union and its allies
 - [[Recurrent Neural Network]] — RNN: the step-by-step sequence model the transformer replaced
 - [[Recursive Self-Improvement]] — A model enhancing its own capabilities without human input
@@ -250,6 +360,9 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Retrieval-Augmented Generation]] — RAG: retrieve, augment, generate; similarity search deciding what the model sees
 - [[Revolution in Military Affairs]] — The debate over technology and future warfare
 - [[Risk-Based Homeland Security Assistance]] — Homeland security aid allocated by risk, not revenue sharing
+
+### S
+
 - [[Scaling Laws]] — Model performance scaling with compute
 - [[Scientist AI]] — Bengio's non-agentic AI, proposed as a guardrail on AI agents
 - [[Secrecy vs. Efficacy]] — The tradeoff between secrecy and analytic effectiveness
@@ -266,6 +379,9 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Sunni]] — The majority branch of Islam
 - [[Superforecaster]] — Mellers and Tetlock's best forecasters, and their traits
 - [[Supplementals]] — One-year appropriations above the general budget
+
+### T
+
 - [[Tearline]] — Reports with shareable information separated from the rest
 - [[Technological Singularity]] — AGI outpacing human tracking or control
 - [[Temporal Difference Learning]] — TD learning: a value function that rewards progress toward a long-term goal
@@ -277,17 +393,29 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Traffic Analysis]] — Finding the sender from communication patterns, not content
 - [[Two-Degrees-of-Separation Rule]] — No more than one sentence of context per bullet
 - [[Tyranny of the Ad Hocs]] — Surprise issues displacing work already under way
+
+### U
+
 - [[Unbounded Consumption]] — OWASP LLM06: uncontrolled inference; denial of wallet
 - [[Unconventional Warfare]] — Training locals to defend themselves
 - [[Under Secretary of Defense for Intelligence]] — The DoD official for day-to-day intelligence
 - [[Unified Command]] — One command for all agencies at a multi-agency incident
+
+### V
+
 - [[Vector and Embedding Weaknesses]] — OWASP LLM09: attacks on embeddings and similarity search
 - [[Verification (Arms Control)]] — Determining whether treaty obligations are being met
+
+### W
+
 - [[Weapons Free]] — A rule of engagement leaving the decision to shoot to the pilot
 - [[Wheat vs. Chaff]] — Sorting what collection's vacuum cleaner takes in
 - [[World Islamic Front Fatwa]] — Bin Ladin's 1998 call to kill Americans anywhere
 - [[World Model]] — Predicting what will happen; Sutton and Patel disagree on whether LLMs have one
 - [[Worst-Case Analysis]] — Planning on the assumption that the worst will happen
+
+### Z
+
 - [[Zero-Day Vulnerability]] — An exploitable fault not yet known, fixed, or exploited
 - [[Zone Defense and Man-to-Man]] — The CIA watched "where," the FBI followed "who"
 
