@@ -1,9 +1,12 @@
 ---
 type: glossary
-status: draft
-aliases: ["Communities of Practice"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"]
+status: verified
+aliases:
+  - Communities of Practice
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +19,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **Community of practice:** a network of professionals who exchange methods, post and answer case studies, form ad hoc teams of experts, and mentor novices; Rob Johnston recommends linking such networks to a central lessons-learned repository.[^1] Gregory Treverton's foreword lists communities of practice, with mentoring and online forums on methods, among the book's key proposals.[^2]

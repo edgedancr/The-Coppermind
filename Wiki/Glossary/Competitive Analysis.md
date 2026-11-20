@@ -1,9 +1,11 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]"]
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +18,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **Competitive analysis:** having several agencies work on the same issue, to bring in different perspectives, weed out bias, and make it more likely the product reflects reality.[^1] It can include Red Teams, teams with deliberately different viewpoints (Teams A and B), and other approaches designed to survive bureaucratic processes that emphasize consensus.[^2]

@@ -1,9 +1,11 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +18,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **Blue Sky memo:** a late-2000 CIA Counterterrorist Center paper, sent to Clarke on December 29, 2000, setting out its best ideas free of policy or budget constraints: major support to the Northern Alliance, more support to the Uzbeks, and aid to anti-Taliban groups; it noted there was "no single 'silver bullet'".[^1] No action was taken on it before the Clinton administration ended.[^2]

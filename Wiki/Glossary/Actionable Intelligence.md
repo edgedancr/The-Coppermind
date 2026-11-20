@@ -1,9 +1,11 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +18,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **Actionable intelligence:** intelligence specific enough to act on. Before 9/11, JCS Chairman Shelton made clear his doubts about any military action that risked U.S. lives "unless the intelligence was 'actionable'";[^1] one Special Operations commander's view was "give me the action, I will give you the intelligence".[^2]

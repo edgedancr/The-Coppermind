@@ -1,9 +1,11 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]"]
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +18,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **Capabilities vs. intentions:** the question of whether intelligence, and defense and resource planning, should focus on a foreign power's military capabilities or on its intentions.[^1]

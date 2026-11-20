@@ -1,9 +1,12 @@
 ---
 type: glossary
-status: draft
-aliases: ["Cognitive Loads"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"]
+status: verified
+aliases:
+  - Cognitive Loads
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +19,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **Cognitive load:** "the amount/number of cognitive tasks weighed against available cognitive processing power," which Rob Johnston lists among the idiosyncratic variables that affect an analyst's performance.[^1] He also calls for research on cognitive-load thresholds and multitasking in analysis.[^2]

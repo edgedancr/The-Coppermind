@@ -1,9 +1,11 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]"]
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +18,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **Containment:** the strategy, first set out by George Kennan, that the Soviet Union should be contained within its geographic limits. Its premise was that the Soviet system had to expand to survive, so containing it geographically could force it to adapt or collapse.[^1]

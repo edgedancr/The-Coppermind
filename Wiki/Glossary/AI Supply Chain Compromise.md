@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - LLM04
   - Slopsquatting
@@ -16,7 +16,7 @@ related:
   - "[[Data and Model Poisoning]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **AI supply chain compromise:** tampering with, poisoning, or replacing the third-party parts an AI system is built from, such as pre-trained models, datasets, adapters, conversion pipelines, and deployment platforms, causing biased outputs, security breaches, or failures.[^1] It is OWASP's LLM04 (Supply Chain)[^1] and an Initial Access technique in [[MITRE ATLAS]].[^2] One newer variant, "slopsquatting": coding assistants invent plausible package names, and attackers register them in advance so the AI's suggestions install malicious code.[^3]

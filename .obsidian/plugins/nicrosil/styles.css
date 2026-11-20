@@ -986,3 +986,33 @@ body.cm-calm .cm-hc-fill { animation: none; }
 .cm-wt-out-row:hover { background: var(--cm-copper-soft); }
 body.cm-calm .cm-wt-flow, body.cm-calm .cm-wt-svg.is-new .cm-wt-card, body.cm-calm .cm-wt-svg.is-new .cm-wt-edge { animation: none; }
 @media (prefers-reduced-motion: reduce) { .cm-wt-flow { display: none; } .cm-wt-svg.is-new .cm-wt-card, .cm-wt-svg.is-new .cm-wt-edge { animation: none !important; } .cm-wt-box, .cm-wt-tog-bg { transition: none; } }
+
+/* ---- Wiki map and hierarchy: crisp and flat (2.7.0). Sharp 2px corners, no glows, no flowing lights, no dotted backdrop. ---- */
+.cm-wm-tabs button, .cm-wt-bar button, .cm-wm-bar button, .cm-wt-bar input[type="text"], .cm-wm-bar input[type="text"], .cm-wm-bar select, .cm-wm-chip, .cm-wm-info-link, .cm-wt-tag { border-radius: 2px; }
+.cm-wm-tabs button, .cm-wt-bar button, .cm-wm-bar button, .cm-wt-bar input[type="text"], .cm-wm-bar input[type="text"] { background: var(--background-primary-alt); box-shadow: none; }
+.cm-wm-tabs button:hover, .cm-wt-bar button:hover, .cm-wm-bar button:hover, .cm-wm-chip:hover, .cm-wm-info-link:hover { box-shadow: none; background: var(--cm-copper-soft); border-color: var(--cm-copper); }
+.cm-wt-bar input[type="text"]:focus, .cm-wm-bar input[type="text"]:focus, .cm-wm-bar select:focus { box-shadow: none; border-color: var(--cm-copper); }
+.cm-wm-tabs button.is-active, .cm-wm-bar button.is-active { border: 1px solid transparent; color: #f0c48c; box-shadow: none; background: linear-gradient(135deg, rgba(184, 115, 51, 0.30), rgba(95, 174, 158, 0.22)) padding-box, linear-gradient(160deg, #2a2420, #1e1915) padding-box, linear-gradient(135deg, rgba(217, 138, 74, 0.9), rgba(95, 174, 158, 0.75)) border-box; }
+.cm-wm-chip { background: transparent; }
+.cm-wm-chip.is-off { box-shadow: none; }
+.cm-wm-stage, .cm-wt-rows { border: 1px solid rgba(184, 115, 51, .35); border-radius: 2px; background: #171310; box-shadow: none; }
+.cm-wm-info { border: 1px solid rgba(184, 115, 51, .35); border-left: 3px solid var(--cm-copper); border-radius: 2px; background: #1d1814; box-shadow: none; }
+.cm-wm-info-name { font-family: 'Almendra SC', Georgia, serif; font-size: 1.25em; color: #f0c48c; }
+.cm-wm-legdot { box-shadow: none; }
+.cm-wm-edge.is-hl { filter: none; }
+.cm-wm-dot-verified { filter: none; }
+.cm-wm-spark { display: none; }
+.cm-wt-box { fill: #1f1a16; rx: 2px; ry: 2px; filter: none; transition: fill .15s, stroke-width .15s; }
+.cm-wt-box-verified { stroke: var(--cm-patina); stroke-width: 1.2; filter: none; }
+.cm-wt-box-draft { stroke: var(--cm-copper); stroke-width: 1.2; filter: none; }
+.cm-wt-card:hover .cm-wt-box, .cm-wt-card.is-hl .cm-wt-box { fill: #2a221b; stroke-width: 1.7; transform: none; filter: none; }
+.cm-wt-card:hover .cm-wt-box-verified, .cm-wt-card.is-hl .cm-wt-box-verified { filter: none; }
+.cm-wt-card.is-match .cm-wt-box { fill: #2a221b; stroke: var(--cm-amber); stroke-width: 1.7; filter: none; }
+.cm-wt-card.is-changed .cm-wt-box { filter: none; }
+.cm-wt-label { fill: #e8dfd3; }
+.cm-wt-pdot { filter: none; }
+.cm-wt-edge { stroke-opacity: .6; stroke-width: 1.2; filter: none; }
+.cm-wt-edge.is-hl { stroke-opacity: 1; stroke-width: 1.8; }
+.cm-wt-flow { display: none; }
+.cm-wt-tog-bg { fill: #1f1a16; stroke-width: 1.2; filter: none; }
+.cm-wt-tog:hover .cm-wt-tog-bg, .cm-wt-tog:focus-visible .cm-wt-tog-bg { fill: #2a221b; transform: none; }

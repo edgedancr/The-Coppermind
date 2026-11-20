@@ -1,9 +1,13 @@
 ---
 type: glossary
-status: draft
-aliases: ["Assumption (Analytic)", "Assumptions vs. Judgments"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - ICD 203, Analytic Standards]]"]
+status: verified
+aliases:
+  - Assumption (Analytic)
+  - Assumptions vs. Judgments
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - ICD 203, Analytic Standards]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +20,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **Analytic assumption:** in ICD 203, "suppositions used to frame or support an argument," as distinct from judgments, which are "conclusions based on underlying intelligence information, analysis, and assumptions".[^1] Products should state assumptions explicitly when they are the linchpin of an argument or bridge key information gaps, and explain what follows for the judgments if they prove wrong.[^1]

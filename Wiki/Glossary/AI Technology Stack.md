@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - AI Tech Stack
 courses:
@@ -10,7 +10,7 @@ sources:
   - "[[SRC - Artificial General Intelligence's Five Hard National Security Problems]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **AI technology stack:** the layers AI development depends on, which Chan et al. trace "from chips to applications".[^1] Their survey of China's policy covers energy, chips, computing infrastructure, research and talent, data, and applications,[^2] along with software such as AI frameworks.[^3] Mitre and Predd describe U.S. strategy as seeking to keep its lead over China in core components of the AI tech stack.[^4]

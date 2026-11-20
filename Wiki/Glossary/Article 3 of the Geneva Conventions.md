@@ -1,9 +1,12 @@
 ---
 type: glossary
-status: draft
-aliases: ["Common Article 3"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+status: verified
+aliases:
+  - Common Article 3
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +19,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **Article 3 of the Geneva Conventions:** in the 9/11 Commission's words, an article "specifically designed for those cases in which the usual laws of war did not apply," whose minimum standards are "generally accepted throughout the world as customary international law".[^1] The Commission proposed it as a basis for a common coalition approach to the detention and humane treatment of captured terrorists.[^1]

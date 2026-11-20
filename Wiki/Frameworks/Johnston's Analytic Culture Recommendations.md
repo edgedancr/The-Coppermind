@@ -32,10 +32,6 @@ verified_on:
 - **Research programs:** analytic performance metrics, lessons-learned centers for institutional memory, research on analysts' cognition, and testing analytic methods against each other.[^9] See [[Tradecraft vs. Science in Intelligence Analysis]].
 - **Access:** research needs regular, open access between researchers and the community, and "access equals trust".[^3]
 
-> [!caution] Accuracy check
-> The handout spells the author "Rob Johnson"; Gartin's citation of the same 2005 CIA book gives "Rob Johnston." This wiki uses Johnston, which the book's title page confirms.
-> Possibly resolved by [[SRC - Analytic Culture in the US Intelligence Community (Johnston)]], title page
-
 ## Why It Matters
 - The recommendations answer the findings in [[Analytic Culture]].
 - Gartin quotes Johnston's view that analysis is "art, tradecraft, and science";[^10] the phrase is on p. 43 of the book.[^11]

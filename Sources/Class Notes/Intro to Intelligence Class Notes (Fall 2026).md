@@ -109,7 +109,7 @@
 	- GEO (Geosynchronous) is at 22,000 miles and is for constant coverage of one area.
 - Cyber and AI
 	- CNE (Computer Network Exploitation) exploits networks to gather data.
-	- CNA (Computer Network Attack) attacks networks to gather data.
+	- CNA (Computer Network Attack) attacks networks to bring them down or otherwise cause disruption.
 
 #### 8/27/26
 - Context, context, context. Every bit of information can mean something.

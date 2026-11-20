@@ -2642,3 +2642,196 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Verify:**
   - Approved: [[SCHEMA - Changes]]
 - **Commit:** `verify: SCHEMA - Changes`
+
+### [2026-11-19] tool | Nicrosil 2.7.0: flatter wiki map and hierarchy
+
+- **Changed:** Nicrosil 2.7.0: the wiki map and hierarchy have sharp 2px corners, no glows or hover growth, thinner lines, no dotted backdrop, no lights running along the hierarchy, and a copper-to-teal active tab. Details: [[Nicrosil#Version history]].
+- **Verify:** Reload Obsidian (Ctrl+R), open the wiki map (Alt+M), and look at both tabs: square cards, flat frame, no glow. Tell me what still looks too polished.
+- **Commit:** `tool: Nicrosil 2.7.0 flatter, sharper wiki map and hierarchy`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-20] verify | Intelligence-to-Action Convergence Matrix
+
+- **Verify:**
+  - Approved: [[Intelligence-to-Action Convergence Matrix]]
+  - Flags I resolved before approving (2):
+    - Gap (Check the table) — I believe these were blank on the slides
+    - Accuracy check (Sources disagree) — this is okay
+- **Commit:** `verify: Intelligence-to-Action Convergence Matrix`
+
+### [2026-11-20] verify | Actionable Intelligence
+
+- **Verify:**
+  - Approved: [[Actionable Intelligence]]
+- **Commit:** `verify: Actionable Intelligence`
+
+### [2026-11-20] verify | Active Voice
+
+- **Verify:**
+  - Approved: [[Active Voice]]
+- **Commit:** `verify: Active Voice`
+
+### [2026-11-20] verify | AI Supply Chain Compromise
+
+- **Verify:**
+  - Approved: [[AI Supply Chain Compromise]]
+- **Commit:** `verify: AI Supply Chain Compromise`
+
+### [2026-11-20] verify | AI Technology Stack
+
+- **Verify:**
+  - Approved: [[AI Technology Stack]]
+- **Commit:** `verify: AI Technology Stack`
+
+### [2026-11-20] verify | Algorithmic Transparency
+
+- **Verify:**
+  - Approved: [[Algorithmic Transparency]]
+- **Commit:** `verify: Algorithmic Transparency`
+
+### [2026-11-20] verify | Analytic Assumption
+
+- **Verify:**
+  - Approved: [[Analytic Assumption]]
+- **Commit:** `verify: Analytic Assumption`
+
+### [2026-11-20] verify | Analytic Mission Statement
+
+- **Verify:**
+  - Approved: [[Analytic Mission Statement]]
+- **Commit:** `verify: Analytic Mission Statement`
+
+### [2026-11-20] verify | Analytic Ombuds
+
+- **Verify:**
+  - Approved: [[Analytic Ombuds]]
+- **Commit:** `verify: Analytic Ombuds`
+
+### [2026-11-20] verify | Anticipatory Socialization
+
+- **Verify:**
+  - Approved: [[Anticipatory Socialization]]
+- **Commit:** `verify: Anticipatory Socialization`
+
+### [2026-11-20] verify | Article 3 of the Geneva Conventions
+
+- **Verify:**
+  - Approved: [[Article 3 of the Geneva Conventions]]
+- **Commit:** `verify: Article 3 of the Geneva Conventions`
+
+### [2026-11-20] verify | Artificial General Intelligence
+
+- **Verify:**
+  - Approved: [[Artificial General Intelligence]]
+  - Flags I resolved before approving (1):
+    - Accuracy check (Sources disagree) — this is okay
+- **Commit:** `verify: Artificial General Intelligence`
+
+### [2026-11-20] verify | Attention Head
+
+- **Verify:**
+  - Approved: [[Attention Head]]
+- **Commit:** `verify: Attention Head`
+
+### [2026-11-20] verify | Attribution (Cyber)
+
+- **Verify:**
+  - Approved: [[Attribution (Cyber)]]
+- **Commit:** `verify: Attribution (Cyber)`
+
+### [2026-11-20] verify | Backpropagation
+
+- **Verify:**
+  - Approved: [[Backpropagation]]
+- **Commit:** `verify: Backpropagation`
+
+### [2026-11-20] verify | Battle Damage Assessment
+
+- **Verify:**
+  - Approved: [[Battle Damage Assessment]]
+- **Commit:** `verify: Battle Damage Assessment`
+
+### [2026-11-20] verify | Bean Counting
+
+- **Verify:**
+  - Approved: [[Bean Counting]]
+- **Commit:** `verify: Bean Counting`
+
+### [2026-11-20] verify | Blue Sky Memo
+
+- **Verify:**
+  - Approved: [[Blue Sky Memo]]
+- **Commit:** `verify: Blue Sky Memo`
+
+### [2026-11-20] verify | Caliphate
+
+- **Verify:**
+  - Approved: [[Caliphate]]
+- **Commit:** `verify: Caliphate`
+
+### [2026-11-20] verify | Capabilities vs. Intentions
+
+- **Verify:**
+  - Approved: [[Capabilities vs. Intentions]]
+- **Commit:** `verify: Capabilities vs. Intentions`
+
+### [2026-11-20] verify | Catastrophic Forgetting
+
+- **Verify:**
+  - Approved: [[Catastrophic Forgetting]]
+- **Commit:** `verify: Catastrophic Forgetting`
+
+### [2026-11-20] verify | Chain-of-Thought Reasoning
+
+- **Verify:**
+  - Approved: [[Chain-of-Thought Reasoning]]
+- **Commit:** `verify: Chain-of-Thought Reasoning`
+
+### [2026-11-20] verify | Church and Pike Committees
+
+- **Verify:**
+  - Approved: [[Church and Pike Committees]]
+- **Commit:** `verify: Church and Pike Committees`
+
+### [2026-11-20] verify | Cognitive Load
+
+- **Verify:**
+  - Approved: [[Cognitive Load]]
+- **Commit:** `verify: Cognitive Load`
+
+### [2026-11-20] verify | Collection Swarm Ball
+
+- **Verify:**
+  - Approved: [[Collection Swarm Ball]]
+- **Commit:** `verify: Collection Swarm Ball`
+
+### [2026-11-20] verify | Community of Practice
+
+- **Verify:**
+  - Approved: [[Community of Practice]]
+- **Commit:** `verify: Community of Practice`
+
+### [2026-11-20] verify | Competitive Analysis
+
+- **Verify:**
+  - Approved: [[Competitive Analysis]]
+- **Commit:** `verify: Competitive Analysis`
+
+### [2026-11-20] verify | Computer Network Attack
+
+- **Verify:**
+  - Approved: [[Computer Network Attack]]
+  - Flags I resolved before approving (1):
+    - Accuracy check — My notes were wrong, fixed now
+- **Commit:** `verify: Computer Network Attack`
+
+### [2026-11-20] verify | Containment
+
+- **Verify:**
+  - Approved: [[Containment]]
+- **Commit:** `verify: Containment`

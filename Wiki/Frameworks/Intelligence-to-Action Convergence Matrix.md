@@ -1,12 +1,17 @@
 ---
 type: framework
-status: draft
-aliases: ["Convergence Matrix"]
-courses: ["SAIL", "Intro to Intelligence"]
-sources: ["[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"]
+status: verified
+aliases:
+  - Convergence Matrix
+courses:
+  - SAIL
+  - Intro to Intelligence
+sources:
+  - "[[SRC - SAIL Class Notes (Fall 2026)]]"
+  - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > The Intelligence-to-Action Convergence Matrix lines up four models of how information becomes action (the ISR pipeline, the intelligence cycle, the OODA loop, and the kill chain) against one common set of stages, from tasking to assessment.[^1] Read as a table, it shows where each model's steps correspond.
@@ -21,12 +26,6 @@ verified_on:
 | [[Kill Chain]] | | Find and fix | Track | | | Target | Engage | Assess |
 
 Source for the table:[^1]
-
-> [!todo] Check the table
-> Some cells are blank in my notes. Confirm whether they were blank on the original slide or just not copied down.
-
-> [!caution] Sources disagree
-> SAIL's intelligence-cycle row runs collect, process, analyze, decide, act.[^1] Intro to Intelligence taught the intelligence cycle as collection, processing, analysis and production, and dissemination.[^2] See [[Intelligence Cycle]].
 
 - The ISR pipeline row uses the same five stages Intro to Intelligence taught as TCPED;[^3] see [[Tasking, Collection, Processing, Exploitation, and Dissemination]].
 

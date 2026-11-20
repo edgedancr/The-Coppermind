@@ -7,9 +7,19 @@
     "hidePanels": true,
     "readMode": "verified",
     "healthDays": 14,
-    "mapTab": "map",
+    "mapTab": "tree",
     "mapFlow": true,
-    "milestone": 0
+    "milestone": 25
   },
-  "resolved": {}
+  "resolved": {
+    "Wiki/Frameworks/Johnston's Analytic Culture Recommendations.md": [
+      {
+        "kind": "caution",
+        "label": "Accuracy check",
+        "title": "",
+        "decision": "we'll use Johnston",
+        "date": "2026-11-20"
+      }
+    ]
+  }
 }

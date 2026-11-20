@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - Transparency (AI)
 courses:
@@ -13,7 +13,7 @@ related:
   - "[[Deep Learning]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **Algorithmic transparency:** the ability to examine an algorithm's inputs and outputs to understand why it gives certain recommendations.[^1] Crash Course AI notes that this is easier said than done for deep-learning methods, whose hidden layers can be hard to interpret.[^1]

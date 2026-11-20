@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - AGI
 courses:
@@ -13,13 +13,10 @@ related:
   - "[[Technological Singularity]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **Artificial general intelligence (AGI):** an AI that can do every human task better than every human can do it.[^1] RAND's Mitre and Predd describe AGI as producing human-level, or even superhuman-level, intelligence across a wide variety of cognitive tasks.[^2] Sabine Hossenfelder defines it as "intelligence comparable to that of humans or above".[^3]
-
-> [!caution] Sources disagree
-> SAIL: an AI that does every human task better than every human[^1] vs. Mitre and Predd: human-level or even superhuman intelligence across a wide variety of cognitive tasks (RAND, opening). Sabine Hossenfelder: "intelligence comparable to that of humans or above" (Hossenfelder, intro), close to RAND's.
 
 **Used in:** [[Artificial Intelligence]], [[AI Alignment]], [[Five Hard National Security Problems of Artificial General Intelligence]], [[Scaling Laws]], [[Critiques of Large Language Models]], [[AI Succession]]
 

@@ -1,13 +1,18 @@
 ---
 type: glossary
-status: draft
-aliases: ["Church Committee", "Pike Committee"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+status: verified
+aliases:
+  - Church Committee
+  - Pike Committee
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
-causes: ["[[Intelligence Oversight Committees]]"]
+causes:
+  - "[[Intelligence Oversight Committees]]"
 counters: []
 applies_to: []
 supports: []
@@ -16,7 +21,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **Church and Pike committees:** the 1970s Senate (Frank Church) and House (Otis Pike) investigations of intelligence. They disclosed FBI domestic intelligence programs against domestic organizations and dissidents, and evidence that the CIA had planned to assassinate Fidel Castro and other foreign leaders.[^1] In response, the House and Senate created select committees on intelligence in 1977.[^2]

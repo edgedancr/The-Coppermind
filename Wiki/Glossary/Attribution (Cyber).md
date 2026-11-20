@@ -1,9 +1,12 @@
 ---
 type: glossary
-status: draft
-aliases: ["Cyber Attribution"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]"]
+status: verified
+aliases:
+  - Cyber Attribution
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +19,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **Attribution:** the ability to determine which actor carried out a particular cyberattack. The ambiguous nature of cyber warfare makes it difficult, especially for the actions of non-state actors.[^1]
