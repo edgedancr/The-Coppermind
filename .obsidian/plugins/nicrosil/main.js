@@ -29,7 +29,7 @@
  *         type_of, part_of and example_of; Map is a zoomable network of every typed link, with filters.
  *
  * Verify: sets status: verified and verified_on, deletes `changes_since_verified` if the page has it,
- *         checks the page is listed in index.md, and appends to log.md.
+ *         checks the page is listed in index.md, and adds an entry at the top of log.md.
  * Re-reviews: a draft that has a `changes_since_verified` list is a verified page the AI edited at my
  *         request. The queue lists these first, with an R badge, and the card shows what changed.
  * Reject: asks for a reason, logs it, removes the page from index.md, and deletes the page
@@ -43,7 +43,8 @@ const {
 
 const INDEX_PATH = "index.md";
 const LOG_PATH = "log.md";
-const DASHBOARD_PATH = "Dashboard.md";
+const DASHBOARD_PATH = "_dashboard.md";          // the underscore keeps it out of the file list unless the eye button is on
+const LEGACY_DASHBOARD_PATHS = ["Dashboard.md", "Home.md"]; // old names, still recognised if a vault has one
 const SCHEMA_DIR = "SCHEMAS/";
 const SCHEMA_PATH = "SCHEMAS/SCHEMA.md";           // the rules overview; holds the rulebook's version
 const CHANGELOG_PATH = "_changelogs/Schema Changelog.md";
@@ -392,9 +393,15 @@ function renameLogEntry(date) {
   ].join("\n");
 }
 
-function appendToLog(text, entry) {
+function addToLog(text, entry) {
+  // The log is newest first: the entry goes just above the first existing entry, under the header.
   const eol = text.includes("\r\n") ? "\r\n" : "\n";
-  return text.replace(/\s*$/, "") + eol + eol + entry.replace(/\n/g, eol) + eol;
+  const lines = text.split(/\r?\n/);
+  const at = lines.findIndex((l) => /^#{2,4} \[\d{4}-\d{2}-\d{2}\] /.test(l));
+  const added = entry.split(/\r?\n/);
+  if (at === -1) return text.replace(/\s*$/, "") + eol + eol + added.join(eol) + eol; // no entries yet
+  lines.splice(at, 0, ...added, "");
+  return lines.join(eol);
 }
 
 /** True for log.md and the month files in Logs/. */
@@ -437,7 +444,7 @@ function logArchiveHeader(month) {
   const name = new Date(y, m - 1, 1).toLocaleString("en-US", { month: "long", year: "numeric" });
   return [
     "---", "type: log", `month: ${month}`, "---",
-    `The log's entries for ${name}, moved here word for word from [[log]] when the month ended. Newest at the bottom. Format and rules: [[SCHEMA - Index and Log#The log]].`,
+    `The log's entries for ${name}, moved here word for word from [[log]] when the month ended. Newest at the top. Format and rules: [[SCHEMA - Index and Log#The log]].`,
   ].join("\n");
 }
 
@@ -2356,7 +2363,7 @@ class SchemaLogModal extends Modal {
       if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); this.submit(); }
     });
 
-    contentEl.createDiv({ cls: "cm-schemalog-label", text: `Will be added to the bottom of the changelog (dated ${date}):` });
+    contentEl.createDiv({ cls: "cm-schemalog-label", text: `Will be added to the top of the changelog (dated ${date}):` });
     this.previewEl = contentEl.createDiv({ cls: "cm-schemalog-preview" });
     this.errorEl = contentEl.createDiv({ cls: "cm-schemalog-error" });
 
@@ -2446,7 +2453,7 @@ module.exports = class Nicrosil extends Plugin {
       this.syncDashboardLeaves(true);
       this.renderViews();
     }));
-    // folders whose names start with "_" are hidden in the file list every time Obsidian opens; the eye button in its toolbar shows them until Obsidian closes
+    // folders and files whose names start with "_" are hidden in the file list every time Obsidian opens; the eye button in its toolbar shows them until Obsidian closes
     document.body.classList.add("cm-hide-underscore");
     this.installPageFade();
     this.registerEvent(this.app.workspace.on("active-leaf-change", (leaf) => {
@@ -2479,6 +2486,7 @@ module.exports = class Nicrosil extends Plugin {
       this.searchIndex.start();
       this.syncSchemaButtons(); this.syncHomeButtons();
       await this.migrateHome();
+      if (this.app.vault.getAbstractFileByPath(DASHBOARD_PATH)) await this.fixHomepageSetting(); // the startup page follows the Dashboard's name
       await this.migrateSchemaStub();
       try { await this.rotateLog(); } catch (e) { console.error("Nicrosil: could not archive last month's log", e); new Notice(`Could not move last month's log entries: ${e.message}`, 10000); }
       this.syncDashboardLeaves(true);
@@ -2562,7 +2570,7 @@ module.exports = class Nicrosil extends Plugin {
     });
   }
 
-  /** Shows or hides the folders whose names start with "_" in the file list. It is not remembered: they start hidden each time Obsidian opens. */
+  /** Shows or hides the folders and files whose names start with "_" in the file list. It is not remembered: they start hidden each time Obsidian opens. */
   toggleUnderscoreFolders() {
     document.body.classList.toggle("cm-hide-underscore");
     this.paintUnderscoreButtons();
@@ -2573,7 +2581,7 @@ module.exports = class Nicrosil extends Plugin {
     document.querySelectorAll(".cm-underscore-btn").forEach((b) => {
       b.empty();
       setIcon(b, hidden ? "eye-off" : "eye");
-      b.setAttr("aria-label", hidden ? "Show folders that start with _" : "Hide folders that start with _");
+      b.setAttr("aria-label", hidden ? "Show files and folders that start with _" : "Hide files and folders that start with _");
       b.toggleClass("is-active", !hidden);
     });
   }
@@ -2963,9 +2971,9 @@ module.exports = class Nicrosil extends Plugin {
       // Early in a month, fill the list from the newest month file in Logs/.
       const months = this.app.vault.getMarkdownFiles().filter((x) => isLogPath(x.path) && x.path !== LOG_PATH).sort((a, b) => a.path.localeCompare(b.path));
       const last = months[months.length - 1];
-      if (last) all = parseLog(await this.app.vault.cachedRead(last)).concat(all);
+      if (last) all = all.concat(parseLog(await this.app.vault.cachedRead(last)));
     }
-    const entries = all.slice(-6).reverse();
+    const entries = all.slice(0, 6); // the log is newest first
     el.empty();
     el.addClass("cm-activity");
     el.toggleClass("is-intro", !!this.dashIntro && !prefersReduced());
@@ -2998,7 +3006,7 @@ module.exports = class Nicrosil extends Plugin {
   /* --- dashboard --- */
 
   dashboardFile() {
-    for (const p of [DASHBOARD_PATH, OLD_HOME_PATH]) {
+    for (const p of [DASHBOARD_PATH, ...LEGACY_DASHBOARD_PATHS]) {
       const f = this.app.vault.getAbstractFileByPath(p);
       if (f instanceof TFile) return f;
     }
@@ -3006,7 +3014,7 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   isDashboard(file) {
-    return file instanceof TFile && (file.path === DASHBOARD_PATH || file.path === OLD_HOME_PATH);
+    return file instanceof TFile && (file.path === DASHBOARD_PATH || LEGACY_DASHBOARD_PATHS.includes(file.path));
   }
 
   /**
@@ -3067,7 +3075,7 @@ module.exports = class Nicrosil extends Plugin {
     const hv = this.lastHover;
     if (!hv || Date.now() - hv.t > 4000) return;
     const file = hv.file;
-    if ([DASHBOARD_PATH, OLD_HOME_PATH, INDEX_PATH].includes(file.path) || isLogPath(file.path) || !this.stripInfo(file)) return;
+    if ([DASHBOARD_PATH, ...LEGACY_DASHBOARD_PATHS, INDEX_PATH].includes(file.path) || isLogPath(file.path) || !this.stripInfo(file)) return;
     el.classList.add("cm-strip-leaf");
     this.ensureStripsIn(el, file);
     let timer = null;
@@ -3262,7 +3270,7 @@ module.exports = class Nicrosil extends Plugin {
 
   async openDashboard(newTab) {
     const f = this.dashboardFile();
-    if (!f) { new Notice("Couldn't find Dashboard.md."); return; }
+    if (!f) { new Notice(`Couldn't find ${DASHBOARD_PATH}.`); return; }
     const already = this.app.workspace.getLeavesOfType("markdown").find((l) => l.view.file && l.view.file.path === f.path);
     if (already && !newTab) { this.app.workspace.setActiveLeaf(already, { focus: true }); return; }
     await this.app.workspace.getLeaf(newTab ? "tab" : false).openFile(f, { state: { mode: "preview" } });
@@ -3306,12 +3314,12 @@ module.exports = class Nicrosil extends Plugin {
       const data = JSON.parse(await this.app.vault.adapter.read(path));
       let changed = false;
       Object.values(data.homepages || {}).forEach((h) => {
-        if (h && (h.value === OLD_HOME_PATH || h.value === "Home")) { h.value = DASHBOARD_PATH; h.view = "Reading view"; changed = true; }
+        if (h && [OLD_HOME_PATH, "Home", "Dashboard.md", "Dashboard"].includes(h.value)) { h.value = DASHBOARD_PATH; h.view = "Reading view"; changed = true; }
       });
       if (changed) await this.app.vault.adapter.write(path, JSON.stringify(data, null, 2));
     } catch (e) {
       console.error("Nicrosil: couldn't update the startup page setting", e);
-      new Notice("Couldn't update the startup page setting. In Settings → Homepage, choose Dashboard.", 10000);
+      new Notice("Couldn't update the startup page setting. In Settings → Homepage, choose _dashboard.", 10000);
     }
   }
 
@@ -3664,7 +3672,7 @@ module.exports = class Nicrosil extends Plugin {
     await this.rotateLog();
     const f = this.app.vault.getAbstractFileByPath(LOG_PATH);
     if (!(f instanceof TFile)) throw new Error("log.md not found");
-    await this.app.vault.process(f, (text) => appendToLog(text, entry));
+    await this.app.vault.process(f, (text) => addToLog(text, entry));
   }
 
   /**
@@ -3682,7 +3690,7 @@ module.exports = class Nicrosil extends Plugin {
       const path = `${LOG_ARCHIVE_DIR}/Log ${m}.md`;
       const existing = this.app.vault.getAbstractFileByPath(path);
       if (existing instanceof TFile) {
-        await this.app.vault.process(existing, (text) => appendToLog(text, split.moved[m]));
+        await this.app.vault.process(existing, (text) => addToLog(text, split.moved[m]));
       } else {
         await this.app.vault.create(path, logArchiveHeader(m) + "\n\n" + split.moved[m] + "\n");
       }
@@ -3695,6 +3703,6 @@ module.exports = class Nicrosil extends Plugin {
 
 module.exports.__test = {
   parseFlags, removeLines, sortQueue, nextAfter, groupOf, editIndex,
-  verifyLogEntry, rejectLogEntry, appendToLog, daysBetween, today, parseLog, describeEntry, renameLogEntry, parseIndex, renderIndex,
+  verifyLogEntry, rejectLogEntry, addToLog, daysBetween, today, parseLog, describeEntry, renameLogEntry, parseIndex, renderIndex,
   splitLogByMonth, logArchiveHeader, isLogPath, setFrontmatterProps, schemaInfo, checkVersion, addChangelogEntry, findChangelog,
 };

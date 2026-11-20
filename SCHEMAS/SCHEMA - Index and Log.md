@@ -5,6 +5,7 @@ owner: Harrison Nickles
 updated: 2026-11-20
 verified_on: 2026-11-20
 changes_since_verified:
+  - "2026-11-20: the log is newest first, and a new entry goes at the top [[#The log]]"
   - "2026-11-20: tool entries point to the Nicrosil Changelog for details [[#The log]]"
 ---
 How the index, the log, and git work. The everyday parts (the index line, the log entry format, the commit message) are in `AGENTS.md`; this file has the rest.
@@ -23,7 +24,7 @@ How the index, the log, and git work. The everyday parts (the index line, the lo
 
 ## The log
 
-- **Append-only and chronological** (newest at the bottom). Past entries are never rewritten. Corrections go in a new entry.
+- **Newest first.** A new entry goes at the top, under the header's closing `---` line and above the newest entry. Past entries are never rewritten. Corrections go in a new entry.
 - **Every ingest, query, health check, verification, schema change, and tool change gets an entry**, in the format in `AGENTS.md`.
 - **Operations:** `setup`, `ingest`, `query`, `health-check`, `verify`, `schema`, `tool`.
   - `schema` is for changes to the rule files, `AGENTS.md`, and the templates.
@@ -35,12 +36,12 @@ How the index, the log, and git work. The everyday parts (the index line, the lo
 ### One file per month
 
 - `log.md` holds the **current month's** entries. Each earlier month is in `Logs/Log YYYY-MM.md` (for example `Logs/Log 2026-11.md`), with its entries in their original order and wording. Moving a month there is not rewriting it.
-- **Nicrosil moves a finished month** out of `log.md` the first time Obsidian opens in a new month, and before it adds an entry in a new month. If an agent appends to `log.md` in a new month before that has happened, that's fine: the move sorts it out.
+- **Nicrosil moves a finished month** out of `log.md` the first time Obsidian opens in a new month, and before it adds an entry in a new month. If an agent adds an entry to `log.md` in a new month before that has happened, that's fine: the move sorts it out.
 - The month files are records, like health check reports: no `status`, not in the index.
 
 ### Reading the log
 
-- **Never read `log.md` or a month file whole.** To add an entry, append to the end. To look something up, search the `### [YYYY-MM-DD] operation | Subject` headings for the date, operation, or page you need, then read only those entries.
+- **Never read `log.md` or a month file whole.** To add an entry, read only the first 15 or so lines and insert it under the header's closing `---` line. To look something up, search the `### [YYYY-MM-DD] operation | Subject` headings for the date, operation, or page you need, then read only those entries.
 
 ## Version control (git)
 

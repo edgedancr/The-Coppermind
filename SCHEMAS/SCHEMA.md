@@ -1,11 +1,12 @@
 ---
 type: schema
-version: 7.5
+version: 7.7
 status: draft
 owner: Harrison Nickles
 updated: 2026-11-20
 verified_on: 2026-11-20
 changes_since_verified:
+  - "2026-11-20: the Dashboard is `_dashboard.md` [[#Folder layout]]"
   - "2026-11-20: AGENTS.md: a permissions row and a read rule for `_changelogs/`, and the Nicrosil rule now says its changelog line goes in that folder (versions 7.3 and 7.4)"
   - "2026-11-20: the folder layout lists `_changelogs/`, and the Schema Changelog moved there from `SCHEMAS/` [[#Folder layout]]"
 ---
@@ -57,7 +58,7 @@ What is in and out of scope is in `AGENTS.md`, because every task needs it.
 The Coppermind/
 ├── AGENTS.md               Start here: the rules for every task, and which rule file to read
 ├── CLAUDE.md               Loads AGENTS.md for Claude Code
-├── Dashboard.md            Front door and review dashboard
+├── _dashboard.md           Front door and review dashboard (hidden in the file list unless the eye button is on)
 ├── index.md                Map of every page
 ├── log.md                  This month's record of every operation
 ├── Ingest Queue.md         Sources I've collected that are waiting to be ingested, in batches

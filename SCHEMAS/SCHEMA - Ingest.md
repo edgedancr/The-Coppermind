@@ -1,9 +1,11 @@
 ---
 type: schema
-status: verified
+status: draft
 owner: Harrison Nickles
-updated: 2026-11-19
+updated: 2026-11-20
 verified_on: 2026-11-19
+changes_since_verified:
+  - "2026-11-20: the agent \"adds\" the log entry (at the top, since the log is newest first) instead of appending it [[#The ingest operation]]"
 ---
 How a source becomes wiki pages. Read this with [[SCHEMA - Writing Pages]], which covers naming, properties, links, citations, attribution, and style.
 
@@ -15,7 +17,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 2. **Plan (agent).** Before drafting, the agent proposes a short plan: the pages it will create or update, and the source card if one is needed. I approve or adjust the plan. This keeps drafts focused and saves effort. If MODE is "plan first" (the default), the agent does steps 1–3 of [[#Dissect and draft]], gives me sections A–C of [[#The report]] as the plan, and stops until I approve it. If MODE is "draft directly," it skips this step.
 3. **Calculate (agent).** The agent works through [[#Dissect and draft]], drafting the pages with `status: draft`, then gives me [[#The report]].
 4. **Verify (me).** For each page, I approve it, ask for revisions (back to step 3), or reject it. I check the links the same way.
-5. **Commit.** The agent updates `index.md`, marks the batch done in `Ingest Queue.md` if it came from there, appends the log entry (operation: `ingest`), and suggests a git commit message. I commit.
+5. **Commit.** The agent updates `index.md`, marks the batch done in `Ingest Queue.md` if it came from there, adds the log entry (operation: `ingest`), and suggests a git commit message. I commit.
 
 ## Dissect and draft
 

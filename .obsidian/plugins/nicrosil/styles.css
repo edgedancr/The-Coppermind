@@ -1036,7 +1036,9 @@ body.cm-quiet .cm-qbar-fill {
   filter: drop-shadow(0 0 7px rgba(217, 138, 74, 0.4)) drop-shadow(0 0 16px rgba(95, 174, 158, 0.25));
 }
 
-/* ---- File list: folders whose names start with "_" are hidden unless the eye button in its toolbar is on (2.7.5). The plugin adds cm-hide-underscore to the page on load. ---- */
+/* ---- File list: folders and files whose names start with "_" are hidden unless the eye button in its toolbar is on (2.7.5). The plugin adds cm-hide-underscore to the page on load. ---- */
 body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-folder:has(> .nav-folder-title[data-path^="_"]),
-body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-folder:has(> .nav-folder-title[data-path*="/_"]) { display: none; }
+body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-folder:has(> .nav-folder-title[data-path*="/_"]),
+body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-file:has(> .nav-file-title[data-path^="_"]),
+body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-file:has(> .nav-file-title[data-path*="/_"]) { display: none; }
 .cm-underscore-btn.is-active { color: var(--text-accent); }

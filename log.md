@@ -3,856 +3,1921 @@ type: log
 ---
 # Log
 
-A dated, append-only record of every ingest, query, health check, verification, schema change, and tool change, and what I approved, revised, or rejected. Newest entries are at the bottom. This file holds the current month; earlier months are in `Logs/`. Format and rules: `AGENTS.md` and [[SCHEMA - Index and Log#The log]]. Agents: don't read this file whole; append to the end, and search the headings.
+A dated record of every ingest, query, health check, verification, schema change, and tool change, and what I approved, revised, or rejected. Newest entries are at the top, so a new entry goes just under the line below, above the newest one. Past entries are never rewritten. This file holds the current month; earlier months are in `Logs/`. Format and rules: `AGENTS.md` and [[SCHEMA - Index and Log#The log]]. Agents: don't read this file whole; read only the first 15 or so lines to add an entry, and search the headings.
 
 ---
 
-### [2026-11-10] setup | Vault skeleton and schema v0.1
+### [2026-11-20] tool | Nicrosil 2.8.0: the Dashboard is `_dashboard.md`
 
-- **Think:** I set the design decisions: Obsidian vault in a local folder with git; Claude desktop app as the agent; scope limited to SAIL, Intro to Intelligence, and Freedom's Foundations 1 (Fall 2026); pages written as a short prose opening plus bullets; Coppermind colors and theme for the look, but plain names for everything else so any reader can follow it.
-- **Calculate:** Claude (claude-opus-5-5) created the folder structure, [[SCHEMA]] v0.1, [[Dashboard]], [[index]], this log, [[Review Queue.base|Review Queue]], one template per page type in `_templates/`, the agent pointer files (`CLAUDE.md`, `AGENTS.md`), `.gitignore`, a [[My Worldview]] skeleton (headings only), and a draft guide, [[Setting Up Git for the Coppermind]].
-- **Verify:** pending
-  - [[SCHEMA]]: to review section by section; it is my rulebook, so I edit it into my own words
-  - [[Setting Up Git for the Coppermind]]: to verify after I follow it
-- **Commit:** `setup: Coppermind skeleton, schema v0.1`
+- **Think:** Harrison renamed `Dashboard.md` to `_dashboard.md` so the eye button hides it from the file list. Nicrosil looked for the old name.
+- **Calculate:** `main.js`: the Dashboard's path is `_dashboard.md` (the old names are still accepted), and the startup-page setting is repointed at it at launch. `Tools/health-check/coppermind_check.py`: the orphan check ignores links from `_dashboard.md` too. Guide and Nicrosil Changelog updated.
+- **Verify:** Pending: reload Obsidian, click the Coppermind button and press `Alt+D`, and check the Dashboard opens in Reading view with its styling.
+- **Commit:** `tool: Nicrosil 2.8.0 — Dashboard is _dashboard.md`
 
-### [2026-11-11] ingest | SAIL Class Notes, 8/27/26–10/29/26
+### [2026-11-20] schema | The Dashboard is `_dashboard.md` (version 7.7)
 
-- **Think:** I gave Claude my full SAIL notes and asked for as many pages as the notes support, to build a foundation: concepts, frameworks, case studies, and terms. Skip tests and assignment logistics, but keep the philosophy behind projects like the portfolio. Don't create pages needlessly. Flag anything incomplete or needing attention. I asked for the drafts directly, so the separate plan-approval step (Schema §10, step 2) was skipped for this ingest.
-- **Calculate:** Claude (claude-opus-5-5) copied the notes unchanged into `Sources/Class Notes` as [[SAIL Class Notes (Fall 2026)]], drafted [[SRC - SAIL Class Notes (Fall 2026)]] (proposed rating B-2), and drafted 50 pages: 9 frameworks, 26 concepts, 2 case studies, 12 glossary terms, and 1 person. Every claim cites the notes by class date. Flags on the pages:
-  - **Whose view? (4):** [[Three-Ps Risk Framework]] (Christian biases), [[Intelligence vs. Consciousness]] (AI will never be conscious), [[AI Alignment]] ("the user" decides), [[Centaur Analyst]] (engineer and design or be replaced).
-  - **Accuracy checks (7):** [[Liar's Dividend]] definition, [[Intelligence vs. Consciousness]] (Turing attribution), [[Deep Learning]] (reinforcement learning and ImageNet), [[Transformer]] ("database" and "140 billion pieces of data"), [[Cognitive Debt]] ("permanently"), [[Hallucination]] (word-meaning explanation), [[LMSYS Chatbot Arena]] (method and name).
-  - **Gaps in my notes (8 pages):** [[ODNI AI Ethics Framework]] (principles missing), [[Imago Dei]] (three aspects undescribed), [[Analysis of Competing Hypotheses]] (stages 4–5), [[Think-Calculate-Verify Loop]] (steps undefined), [[Prompt Engineering]] (ORTCOW only an acronym), [[Machine Learning]] (supervised learning tasks), [[AI in Warfighting]] (Adversarial Vectors empty), [[Intelligence-to-Action Convergence Matrix]] (blank cells), plus the empty "Trust but Verify Exercise" heading (9/15) and sessions 11/3, 11/5, and 11/10 with no notes.
-  - **Left out on purpose:** assignment logistics, the specifics of HW2, the grading note, and the line "The internet is stupid."
-- **Verify:** pending. Item by item.
-- **Commit:** `ingest: SAIL notes 8/27–10/29 — 50 drafts + source card, pending review`
+- **Think:** Harrison renamed the Dashboard file, so the rules' folder layout had to match.
+- **Calculate:** `SCHEMA` (folder layout) lists `_dashboard.md`. `SCHEMA` is at 7.7.
+- **Verify:** Pending: Harrison to re-review the changed line.
+- **Commit:** `schema: 7.7 — Dashboard is _dashboard.md`
 
-### [2026-11-11] setup | Verify and Reject buttons
+### [2026-11-20] tool | Nicrosil 2.7.9: the eye button hides _ files too
 
-- **Think:** I wanted a button on each wiki page that does the logistics of verifying a draft, so reviewing is easier. Verifying still means I checked the page; the button only does the bookkeeping.
-- **Calculate:** Claude (claude-sonnet-5-5) wrote a small local plugin, Coppermind Review (`.obsidian/plugins/coppermind-review/`), with a Verify button and a Reject button on every page in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`. Verify sets `status` and `verified_on`, updates [[index]], and appends to this log; it warns about open flag callouts and blocks source cards with no reliability rating. Reject requires a reason, logs it, removes the index entry, and deletes the page. Neither button commits to git. Drafted the guide [[Nicrosil]]. Also added one sentence to [[SCHEMA#7. Draft vs. verified|Schema §7]] (items 3 and 6) saying the buttons count as me marking a page verified or rejecting it.
-  - Tested on copies of the real [[index]] and this log (text changes only). Not yet tried inside Obsidian.
-- **Verify:** pending
-  - [[Nicrosil]]: to verify after I follow it
-  - Plugin: to try on one page and check that the page, [[index]], and this log all change correctly
-  - [[SCHEMA]]: the §7 wording is mine to approve or rewrite
-- **Commit:** `setup: Verify and Reject buttons (Coppermind Review plugin)`
+- **Think:** Harrison wanted files that start with an underscore hidden along with the folders when the eye button is off.
+- **Calculate:** `styles.css`: the hiding rule now also covers files (`.nav-file`) whose path starts with `_` or has a `/_` in it. `main.js`: the button's tooltip says "files and folders". Guide and Nicrosil Changelog updated.
+- **Verify:** Pending: reload Obsidian, rename a test file to start with `_`, and check it disappears from the file list until the eye button is clicked.
+- **Commit:** `tool: Nicrosil 2.7.9 — hide _ files as well as folders`
 
-### [2026-11-11] verify | Agentic AI
+### [2026-11-20] tool | Nicrosil 2.7.8: the log is newest first
 
-- **Verify:**
-  - Approved: [[Agentic AI]]
-- **Commit:** `verify: Agentic AI`
+- **Think:** Harrison wanted the log newest first, like the changelogs. Nicrosil added entries at the end, split months in the order it found them, and read the Dashboard's recent activity from the end.
+- **Calculate:** `main.js`: new entries (verify, reject, rename) go at the top of the log, under the header; a month moved to `Logs/` keeps its order and joins an existing month file at the top; the Dashboard's activity list reads from the top; the archive header says newest at the top; the Log a schema change dialog now says the line is added to the top of the changelog (it still said bottom). Guide and Nicrosil Changelog updated.
+- **Verify:** Pending: reload Obsidian, verify or reject a draft and check its entry lands at the top of the log, and that the Dashboard's recent activity still lists the newest first.
+- **Commit:** `tool: Nicrosil 2.7.8 — log is newest first`
 
-### [2026-11-11] setup | Review queue, flag resolving, hotkeys, and Home dashboard
+### [2026-11-20] schema | The log is newest first (version 7.6)
 
-- **Think:** The Verify button worked, but reviewing still meant going back to a long list after every page. I asked for: verify-and-next with a skip option, a review sidebar that stays open, a Resolve button on flags, hotkeys and a status-bar counter, and a dashboard on Home. I asked to be told which design choices need my input.
-- **Calculate:** Claude (claude-opus-5-5) updated the Coppermind Review plugin to v0.2:
-  - **Verify and next:** after Verify or Reject, the next draft in the queue opens (setting, on by default). **Skip** moves a draft to the end of the queue until Obsidian restarts.
-  - **Review queue sidebar:** progress bar, a card for the current page with its flags and Verify / Skip / Reject buttons, every draft with flag badges, a queue-order menu (default: clean pages first), and a collapsed list of verified pages.
-  - **Resolve flags:** a Resolve button on accuracy-check, gap, question, and warning callouts (Reading view), in the sidebar card, and on `Alt+F`. It asks what I decided, removes the callout, and saves the decision; the decision is written into this log when I verify or reject the page.
-  - **Hotkeys and status bar:** `Alt+V` verify, `Alt+R` reject, `Alt+S` skip, `Alt+N` next, `Alt+F` resolve, `Alt+Q` queue, `Ctrl+Enter` to confirm; "X/Y verified" in the status bar opens the queue.
-  - **Home dashboard:** a live `coppermind-dashboard` block added to [[Dashboard]] under "Review progress": progress, a table by page type, open flags by kind with links, and drafts older than 14 days ([[SCHEMA#7. Draft vs. verified|Schema §7]], item 7).
-  - Rewrote [[Nicrosil]] to cover all of it.
-  - Tested outside Obsidian against copies of the SAIL drafts, [[index]], and this log (flag parsing and removal on every draft, queue order, skip, verify, reject, and log entries). Not yet tried inside Obsidian.
-- **Verify:** pending
-  - Plugin v0.2: to try a short review session and check the page, [[index]], and this log after each action
-  - [[Nicrosil]]: to verify after I follow it
-  - [[Dashboard]]: whether I want the dashboard there
-- **Commit:** `setup: review queue, flag resolving, hotkeys, Home dashboard (Coppermind Review v0.2)`
+- **Think:** Harrison wanted the log newest first. Past entries stay word for word; only their order changed.
+- **Calculate:** Reversed the 390 entries of `log.md` (no entry reworded) and changed its header. `AGENTS.md` (the Log rule and the never-read-whole rule), `SCHEMA - Index and Log` (the log and reading-the-log rules, and the month-file rule), and `SCHEMA - Ingest` (one word) now say a new entry goes at the top. `SCHEMA` is at 7.6.
+- **Verify:** Pending: Harrison to re-review the changed lines.
+- **Commit:** `schema: 7.6 — the log is newest first`
 
-### [2026-11-11] verify | Architecture of Worldview
+### [2026-11-20] tool | Nicrosil 2.7.7: schema button adds its line at the top
+
+- **Think:** The Schema Changelog is now newest first, so the Log a schema change button had to insert at the top, not the end.
+- **Calculate:** `main.js`: the changelog helper finds the first bullet and inserts above it; the latest version is still the highest, so nothing else changed. Guide and Nicrosil Changelog updated.
+- **Verify:** Pending: reload Obsidian, log a test schema change, and check the line lands at the top (then undo it).
+- **Commit:** `tool: Nicrosil 2.7.7 — schema changelog line goes at the top`
+
+### [2026-11-20] schema | Schema Changelog is newest first (version 7.5)
+
+- **Think:** Harrison wanted the Schema Changelog newest first, like Nicrosil's.
+- **Calculate:** Reordered the lines of `_changelogs/Schema Changelog.md` (none rewritten) and added the 7.5 line at the top. `SCHEMA - Changes` now says new lines go at the top. `SCHEMA` is at 7.5.
+- **Verify:** Pending: Harrison to re-review the changed lines.
+- **Commit:** `schema: 7.5 — Schema Changelog is newest first`
+
+### [2026-11-20] verify | Nicrosil
 
 - **Verify:**
-  - Approved: [[Architecture of Worldview]]
-- **Commit:** `verify: Architecture of Worldview`
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
 
-### [2026-11-11] verify | Setting Up Git for the Coppermind
+### [2026-11-20] tool | Nicrosil 2.7.6: no Ambient animations setting, faster page fade-in
 
-- **Verify:**
-  - Approved: [[Setting Up Git for the Coppermind]]
-  - Flags I resolved before approving (2):
-    - Warning (Unsourced background — verify or remove) — This is correct
-    - Warning (Unsourced background — verify or remove) — This is correct
-- **Commit:** `verify: Setting Up Git for the Coppermind`
+- **Think:** Harrison didn't want a switch for the ambient animations (they should just be on), and the page fade-in looked laggy because it started after the page had loaded.
+- **Calculate:** `main.js`: removed the setting, its `cm-calm` class, and every check of it (the reduced-motion checks stay); the page fade now wraps `MarkdownView.onLoadFile` so the text is hidden while the file loads and fades in once it is ready, instead of starting from `file-open`. `styles.css`: removed the `cm-calm` rules, and the fade is now 0.2 s with no movement on the page's contents instead of the whole panel. Guide and Nicrosil Changelog updated.
+- **Verify:** Pending: reload Obsidian, open a few pages, and check the Settings list no longer has Ambient animations.
+- **Commit:** `tool: Nicrosil 2.7.6 — remove the Ambient animations setting, fix the page fade-in`
 
-### [2026-11-11] setup | Sidebar-only review controls
+### [2026-11-20] tool | Nicrosil 2.7.5: eye button to show or hide `_` folders
 
-- **Think:** The Verify and Reject icons at the top of each page are redundant now that the review sidebar does the same job. I want to review from the sidebar only.
-- **Calculate:** Claude (claude-sonnet-5-5) removed the page-header Verify and Reject icons from the Coppermind Review plugin, and their styles. Verify, Skip, and Reject are now in the sidebar card and on the hotkeys (`Alt+V`, `Alt+S`, `Alt+R`). Updated [[Nicrosil]] to match. Nothing else changed. Re-ran the outside-Obsidian tests; they still pass.
-- **Verify:** pending. To check that no icons show on a page after reloading the plugin.
-- **Commit:** `setup: remove page-header review buttons, sidebar only`
+- **Think:** Harrison wanted the folders that start with an underscore out of the file list by default, with a small button in the toolbar to show them.
+- **Calculate:** `main.js` adds a `cm-hide-underscore` class to the page when the plugin loads (so they are hidden every time Obsidian opens) and puts an eye button in the file list's toolbar that toggles it; the choice is not saved. `styles.css` hides the folders while the class is on. The button's tooltip says what a click will do. Guide and Nicrosil Changelog updated.
+- **Verify:** Pending: reload Obsidian and check that `_attachments`, `_changelogs`, and `_templates` are gone and that the eye button brings them back.
+- **Commit:** `tool: Nicrosil 2.7.5 — eye button to show or hide _ folders`
 
-### [2026-11-11] setup | Dashboard page and home button
+### [2026-11-20] tool | Nicrosil 2.7.4: schema button finds the moved changelog
 
-- **Think:** I open the front page every time I open the wiki, so it should look good and help me work. I asked for the changes below, to rename Home to Dashboard, and for a logo button that always takes me back to it, using the feruchemical copper symbol.
-- **Calculate:** Claude (claude-sonnet-5-5) rebuilt the front page and extended the Coppermind Review plugin to v0.3:
-  - **Page:** a header with the logo, stat tiles (verified, drafts, open flags), the progress bar and Start reviewing, six navigation cards, a Recent activity list read from this log, and the old explanatory text folded under Reference. The title and properties are hidden on this page, and the Homepage plugin is set to open it in Reading view.
-  - **Home button:** the copper logo in the left ribbon, and `Alt+H`. It switches to the Dashboard if it's already open.
-  - **Rename:** when the plugin loads, it renames `Home.md` to `Dashboard.md` through Obsidian (which updates links) and points the Homepage plugin at the new name; it adds its own log entry when it does.
-  - Saved the logo as `_attachments/coppermind-logo.svg` and updated [[SCHEMA]]'s folder tree and [[Nicrosil]].
-  - Left out of the Dashboard: the link to [[Review Queue.base|Review Queue]] (the sidebar replaces it; the file is still there).
-  - **Restored this log:** two of my earlier writes to this file were reverted on disk, so the entries for [[Architecture of Worldview]], [[Setting Up Git for the Coppermind]], and the "Sidebar-only review controls" change were missing. I put them back from my copy.
-  - Tested outside Obsidian (rename, ribbon, hotkey, all four page blocks, the activity list, link clicks) and previewed the layout in a browser at desktop and phone widths. Not yet seen in Obsidian itself, where the icons will be Obsidian's own.
-- **Verify:** pending
-  - Plugin v0.3 and the Dashboard: to reload the plugin, restart Obsidian once, and check the page, the ribbon button, and `Alt+H`
-  - [[Nicrosil]]: to verify after I follow it
-- **Commit:** `setup: Dashboard page, logo home button, Home renamed (Coppermind Review v0.3)`
+- **Think:** The Schema Changelog moved out of `SCHEMAS/`, so the **Log a schema change** button would have said it could not find it.
+- **Calculate:** `main.js`: `CHANGELOG_PATH` is now `_changelogs/Schema Changelog.md`. The health check script's `RECORD_PREFIXES` now names `_changelogs/`. Guide and Nicrosil Changelog updated.
+- **Verify:** Pending: reload Obsidian, then try **Log a schema change** on a SCHEMAS page.
+- **Commit:** `tool: Nicrosil 2.7.4 — find the Schema Changelog in _changelogs/`
 
-### [2026-11-11] setup | Renamed Home to Dashboard
+### [2026-11-20] schema | Changelogs folder renamed to `_changelogs/` (version 7.4)
 
-- **Think:** The front page works as a dashboard, so it should be named like one.
-- **Calculate:** The Coppermind Review plugin renamed `Home.md` to `Dashboard.md` through Obsidian, which updated the links that pointed to it, and pointed the startup-page plugin at the new name.
-- **Verify:** pending. To check that the links to the Dashboard still work.
-- **Commit:** `setup: rename Home to Dashboard`
+- **Think:** Harrison renamed the folder to `_changelogs/`, moved the Schema Changelog into it, and renamed the Nicrosil history file to `Nicrosil Changelog.md`. The rules had to say so.
+- **Calculate:** Updated `AGENTS.md` (read rule, permissions row, Nicrosil rule), `SCHEMA - Changes`, `SCHEMA - Index and Log`, and `SCHEMA` (rule file table, layout, files that are not wiki pages, the other files); fixed a stale link in the Nicrosil guide; added a 7.4 line to the Schema Changelog. Past log entries keep the old names, since they are never rewritten.
+- **Verify:** Pending: Harrison to re-review the changed lines.
+- **Commit:** `schema: 7.4 — changelogs live in _changelogs/`
 
-### [2026-11-11] setup | Dashboard always in Reading view, properties hidden
+### [2026-11-20] tool | Health check script: _version_histories/ counts as records
 
-- **Think:** The Dashboard's properties were still showing, and I want it in Reading view every time I open it or click into it, without changing how any other note opens.
-- **Calculate:** Claude (claude-sonnet-5-5) updated the Coppermind Review plugin to v0.3.1:
-  - **Properties:** the plugin now tags every pane showing the Dashboard, and the hiding rule applies to that tag as well as to the page's `cssclasses`, with `!important` so nothing overrides it. The Properties side pane is also emptied while the Dashboard is the active note.
-  - **Reading view:** the plugin switches the Dashboard to Reading view whenever it is opened or I click into it (switching tabs counts). `Ctrl+E` still lets me edit; it holds until I leave and come back. Other notes are untouched, and the ribbon button and `Alt+H` open it in Reading view directly.
-  - Updated [[Nicrosil]]. Left the tagline I wrote on the [[Dashboard]] as it is.
-  - Tested outside Obsidian: open, click-in, already-in-Reading-view, another note staying in editing, and cleanup on unload. Not yet seen in Obsidian itself.
-- **Verify:** pending. To reload the plugin and check that the Dashboard shows no properties and opens in Reading view.
-- **Commit:** `setup: Dashboard always in Reading view, properties hidden (Coppermind Review v0.3.1)`
+- **Think:** The new folder holds history, not pages.
+- **Calculate:** `coppermind_check.py` adds `_version_histories/` to `RECORD_PREFIXES`, so links in those files are not checked, like `Logs/`. No other change.
+- **Verify:** Pending: run the script once.
+- **Commit:** `tool: health check skips links in _version_histories/`
 
-### [2026-11-11] verify | Cascade of Unintended Consequences
+### [2026-11-20] schema | Version histories moved out of the guides (version 7.3)
 
-- **Verify:**
-  - Approved: [[Cascade of Unintended Consequences]]
-- **Commit:** `verify: Cascade of Unintended Consequences`
+- **Think:** Harrison wanted agents to read less when they open the Nicrosil guide and the rule files, so the version history should live in its own file that an agent reads only when it has to. He created `_version_histories/`.
+- **Calculate:** The Nicrosil guide's version history (about a third of the guide) moved to `_version_histories/Nicrosil Version History.md`, and the guide links to it. The rules that said to add the line to the guide now point to the new file: `AGENTS.md` (read rule, permissions row, Nicrosil rule), `SCHEMA - Changes`, `SCHEMA - Index and Log`, and `SCHEMA` (layout). `Schema Changelog.md` was already a separate file that agents are told not to read, so it stays where it is, because Nicrosil's schema button writes to that path.
+- **Verify:** Pending: Harrison to re-review the changed lines in the four rule files and the guide.
+- **Commit:** `schema: 7.3 — version histories move to _version_histories/`
 
-### [2026-11-11] setup | Index split by status, folded log, properties hidden
+### [2026-11-20] tool | Nicrosil 2.7.3: flat, sharp relations map with a gradient outline
 
-- **Think:** The index and log should look like the Dashboard, with no properties at the top. The log was too long to scroll, so I wanted every entry folded by default with smaller headings. In the index, I wanted headings to split verified and draft pages instead of a status in brackets on every line.
-- **Calculate:** Claude (claude-sonnet-5-5) made these changes:
-  - **Properties:** hidden on [[index]] and [[log]] (and still on the [[Dashboard]]), by the Coppermind Review plugin (v0.4.0). The titles stay.
-  - **Log:** entry headings changed from `##` to `###` (12 existing entries, a formatting change only; the text is untouched), and the plugin appends new entries as `###`. When the log opens in editing view, the plugin folds every entry heading and nothing else. It does this once each time the log is opened, so switching tabs doesn't re-fold what I opened. Reading view doesn't fold.
-  - **Index:** under each type, pages are split under `### Verified` and `### Drafts` headings (shown only when that group has pages). The `(draft)` and `(verified)` endings are gone from the lines. The plugin moves a page from Drafts to Verified when I verify it, and keeps the counts and totals right.
-  - Updated [[SCHEMA#11. Index and log|Schema §11]] to describe the new index and log formats, and [[Nicrosil]].
-  - Tested outside Obsidian on copies of the real index and log (reading the old format, writing the new one, verify and reject moves, empty groups, folding only the entry headings). Not yet seen in Obsidian itself.
-- **Verify:** pending. To reload the plugin, open the log and the index, then verify one page to check that it moves to the Verified list.
-- **Commit:** `setup: index split by status, folded log, properties hidden (Coppermind Review v0.4.0)`
+- **Think:** The relations panel's map looked out of place; Harrison asked for sharper edges, and for the open page to have a thin, sharp, lightly glowing outline in the copper-to-teal gradient instead of the pulsing orange.
+- **Calculate:** `styles.css`: the map's boxes, frame and tag get 2px corners and flat fills, and the dotted backdrop, flowing dots, halo and animations are removed, matching the wiki map from 2.7.0. `main.js`: adds the `cm-rel-og` gradient the open page's outline uses. Arrows are still curved. Guide updated.
+- **Verify:** Pending: Harrison to look at the panel in Obsidian.
+- **Commit:** `tool: Nicrosil 2.7.3 — flat relations map, gradient outline on the open page`
 
-### [2026-11-11] verify | Essay Types
+### [2026-11-20] tool | Nicrosil 2.7.2: index letter headings and Jump to line
 
-- **Verify:**
-  - Approved: [[Essay Types]]
-- **Commit:** `verify: Essay Types`
+- **Think:** Nicrosil rewrites `index.md` when a page is rejected, and it would have moved the new letter headings to the bottom of their section and left the jump counts stale.
+- **Calculate:** `parseIndex` drops letter headings and `renderIndex` rebuilds them for Concepts and Glossary and rebuilds the Jump to line. Checked that reading and re-writing the index leaves it byte-for-byte unchanged and that removing a page fixes the counts and the jump link. Guide updated.
+- **Verify:** Pending: reload Obsidian, then reject a test draft or just check the index opens correctly.
+- **Commit:** `tool: Nicrosil 2.7.2 — keep index letter headings and jump bar`
 
-### [2026-11-11] verify | Four Levels of Prompt Engineering
+### [2026-11-20] schema | Index: letter headings, Jump to line, look (version 7.2)
+
+- **Think:** Harrison wanted the index to be nicer to look through without being harder for an agent to read. He chose a CSS-only restyle plus a jump bar and A–Z breaks.
+- **Calculate:** `index.md`: Concepts and Glossary split under `### A` ... headings, a **Jump to** line under the total, `cssclasses: coppermind-index`; the styling is in the `coppermind.css` snippet. The line format is unchanged. `AGENTS.md` index rule and `SCHEMA - Index and Log` (The index) updated, changelog line 7.2 added, change notes on `SCHEMA` and `SCHEMA - Index and Log`. The health check already catches a stale jump link as a broken heading link, so the script is unchanged.
+- **Verify:** Pending: Harrison to look at the index in Reading view and re-review the changed lines.
+- **Commit:** `schema: 7.2 — index letter headings, Jump to line, and look`
+
+### [2026-11-20] tool | Nicrosil 2.7.1: larger file-list button name
+
+- **Think:** The Coppermind button at the top of the file list wasn't using all its space; Harrison asked for bigger text.
+- **Calculate:** In `styles.css`, `.cm-home-name` was sized by a width formula (divisor 11) that overestimated the text's width, and capped at 1.3em. Changed to divisor 8 with a 1.7em cap so the name fills the button and still shrinks in a narrow file list. Bumped to 2.7.1; guide updated (version, button description, version history) and set to draft with a change note.
+- **Verify:** Pending: Harrison to check the button in Obsidian and re-review [[Nicrosil]].
+- **Commit:** `tool: Nicrosil 2.7.1 — larger name on the file-list button`
+
+### [2026-11-20] verify | Containment
 
 - **Verify:**
-  - Approved: [[Four Levels of Prompt Engineering]]
-- **Commit:** `verify: Four Levels of Prompt Engineering`
+  - Approved: [[Containment]]
+- **Commit:** `verify: Containment`
 
-### [2026-11-11] schema | Summary callout at the top of every wiki page
-
-- **Think:** The summary at the top of a wiki page needs to stand out. I picked option B from the mockups: a callout card labelled "Summary".
-- **Calculate:** Claude (claude-sonnet-5-5) made these changes:
-  - Wrapped the opening paragraph of all 52 pages in `Wiki/` in a `> [!summary]` callout. Nothing else on any page changed: I compared every page with its original, minus the wrapper, and checked that the flag callouts are unchanged. For glossary terms, the callout holds the definition and "Used in" stays below it.
-  - 6 of those pages were already verified ([[Setting Up Git for the Coppermind]], [[Agentic AI]], [[Architecture of Worldview]], [[Cascade of Unintended Consequences]], [[Essay Types]], [[Four Levels of Prompt Engineering]]). This is a formatting change only, so they stay verified ([[SCHEMA#7. Draft vs. verified|Schema §7]], item 5).
-  - Left alone: [[My Worldview]] (the agent never edits it), the source card, and the Analysis, Summary, Perspective and Source Card templates.
-  - Styled the callout in the Coppermind theme (`coppermind.css`): a patina bar, a small uppercase "Summary" label, and slightly larger text.
-  - Updated the Concept, Case Study, Framework, Guide, Person, Prompt, Workflow and Glossary Term templates, and [[SCHEMA#8. Page style|Schema §8]], so new pages start this way.
-  - Tested outside Obsidian (reversal check on every page, flag parsing before and after). Not yet seen in Obsidian itself.
-- **Verify:** pending. To open a few pages and check how the summary looks, and to decide whether the "Whose view is this?" callout (also patina) needs a different color.
-- **Commit:** `schema: summary callout at the top of every wiki page`
-
-
-### [2026-11-11] schema | Properties strip replaces the Properties block
-
-- **Think:** The Properties block at the top of every wiki page took up space I no longer need, since verifying happens from the review sidebar. I picked option 2: hide the block and show a one-line strip instead.
-- **Calculate:** Claude (claude-sonnet-5-5) updated the Coppermind Review plugin to v0.5.0:
-  - On every note except the Dashboard, index, and log (which hide properties entirely), the native Properties block is hidden and a one-line strip sits in its place: type, status (DRAFT or VERIFIED), and the drafted or verified date.
-  - Clicking the strip (or pressing Enter on it) expands the real Properties block in place. Each note opens collapsed.
-  - The strip reads the page's frontmatter, so it updates when a page is verified. No page content or property values changed.
-  - Tested outside Obsidian (jsdom and a screenshot of the styling). Not yet seen in Obsidian itself.
-- **Verify:** pending. To reload the plugin, open a wiki page in Reading view and in edit view, and check that the strip shows, expands, and survives switching modes.
-- **Commit:** `plugin: collapsible properties strip (v0.5.0)`
-
-### [2026-11-11] verify | AI in Intelligence Production
+### [2026-11-20] verify | Computer Network Attack
 
 - **Verify:**
-  - Approved: [[AI in Intelligence Production]]
-- **Commit:** `verify: AI in Intelligence Production`
+  - Approved: [[Computer Network Attack]]
+  - Flags I resolved before approving (1):
+    - Accuracy check — My notes were wrong, fixed now
+- **Commit:** `verify: Computer Network Attack`
 
-### [2026-11-11] verify | AI-Enabled Surveillance
-
-- **Verify:**
-  - Approved: [[AI-Enabled Surveillance]]
-- **Commit:** `verify: AI-Enabled Surveillance`
-
-### [2026-11-11] verify | My Worldview
+### [2026-11-20] verify | Competitive Analysis
 
 - **Verify:**
-  - Approved: [[My Worldview]]
-  - Revised: [[My Worldview]] — Added in my worldview. It could use some more detail, but it will suffice for the time being.
-- **Commit:** `verify: My Worldview`
+  - Approved: [[Competitive Analysis]]
+- **Commit:** `verify: Competitive Analysis`
 
-### [2026-11-11] setup | Ingest prompt
-
-- **Think:** I asked for a prompt to use whenever I want a source dissected and turned into new wiki pages or additions to existing ones, and asked how much of that framework already exists in the Coppermind and how much belongs in the prompt.
-- **Calculate:** Claude (claude-opus-5-5) drafted [[Dissect and Ingest a Source]] in `Wiki/Prompts/`. The prompt points to [[SCHEMA]] for everything the schema already covers and adds only: per-run inputs with defaults, a dissect-first step, a create / append / skip rule, how to handle sources that disagree and flags a new source may resolve, a default of proposing (not making) changes to verified pages, and the report format.
-  - Proposed typed link: [[Dissect and Ingest a Source]] → applies_to → [[LLM Wiki]] — the prompt is a tool used on this wiki.
-  - Suggested in chat, not made: schema additions for the create-or-append rule, the two flag callouts the review plugin reads but §6 doesn't list (`[!caution]` accuracy check, `[!todo]` gap), handling sources that disagree, and how to treat my own work as a source.
-- **Verify:** pending. To try the prompt on the next source and verify the page after.
-- **Commit:** `setup: ingest prompt (draft)`
-
-### [2026-11-11] setup | Summary prompt
-
-- **Think:** I gave Claude my summary prompt (the one the Summary template calls "SAIL IC Style Summaries") and asked whether it should change to work better with the Coppermind.
-- **Calculate:** Claude (claude-opus-5-5) drafted [[Intelligence Community Style Summaries]] in `Wiki/Prompts/`, with my old name as an alias. Changes from my version:
-  - Fixed "the text I paste between" (it now says the text below the prompt, or a file I attach or name) and dropped "that is provided in your context" for ICD 203, which isn't in the vault.
-  - Added a locator after every claim. The length rule already excluded locators, but the prompt never asked for them.
-  - The attribution line now asks for the exact model name or ID, and says "model not stated" instead of guessing.
-  - Added an "In the Coppermind" section: Summary template, `Summary - <source title>` page name, properties instead of the attribution line, the schema's wikilink citation format, a `[!todo]` callout for transcript gaps, links to existing pages, and typed links proposed in chat.
-  - Left the content rules, length budget, and the four sections as I wrote them, with small wording fixes.
-  - Pointed [[Dissect and Ingest a Source]] at the new page for summaries of readings.
-- **Verify:** pending. To compare with my original and verify after using it once.
-- **Commit:** `setup: summary prompt (draft)`
-
-### [2026-11-11] verify | Dissect and Ingest a Source
+### [2026-11-20] verify | Community of Practice
 
 - **Verify:**
-  - Approved: [[Dissect and Ingest a Source]]
-- **Commit:** `verify: Dissect and Ingest a Source`
+  - Approved: [[Community of Practice]]
+- **Commit:** `verify: Community of Practice`
 
-### [2026-11-11] verify | Intelligence Community Style Summaries
-
-- **Verify:**
-  - Approved: [[Intelligence Community Style Summaries]]
-- **Commit:** `verify: Intelligence Community Style Summaries`
-
-### [2026-11-11] schema | Guest lecturers named (v0.2)
-
-- **Think:** During the Intro to Intelligence ingest plan, I decided guest lecturers should be named in the wiki, and asked for that rule to go in the schema or the prompt.
-- **Calculate:** Claude (claude-opus-5-5) added it to [[SCHEMA#6. Citation and attribution|Schema §6]]: a fourth voice, "a guest lecturer," named by title and name with the course and date, and a rule that content under a guest-lecture heading belongs to the guest, with no contact details or other personal information and no People pages unless I ask. Version 0.1 → 0.2, with a changelog line.
-- **Verify:** pending. The wording is mine to approve or rewrite.
-- **Commit:** `schema: v0.2, guest lecturers named`
-
-### [2026-11-11] ingest | Intro to Intelligence Class Notes, 8/25/26–11/10/26
-
-- **Think:** I asked Claude to dissect and ingest my Intro to Intelligence notes using [[Dissect and Ingest a Source]] with its defaults (plan first, whole file, skip assignment logistics). I approved the plan with three changes: keep guest lecturers' names (now [[SCHEMA#6. Citation and attribution|Schema §6]]), skip the Four Tiers of AI Governance, and make the internship guide.
-- **Calculate:** Claude (claude-opus-5-5) copied the notes unchanged into `Sources/Class Notes` as [[Intro to Intelligence Class Notes (Fall 2026)]], drafted [[SRC - Intro to Intelligence Class Notes (Fall 2026)]] (proposed rating B-2), and drafted 46 pages: 8 frameworks, 14 concepts, 2 case studies, 21 glossary terms, and 1 guide. Every claim cites the notes by class date.
-  - **Added to existing drafts (6):** [[Capability vs. Reliability]] (11/10 video exercise takeaways), [[Human Decision Point]], [[Centaur Analyst]], and [[Hallucination]] (Detective Mennen on AI), [[Intelligence-to-Action Convergence Matrix]] (a "Sources disagree" flag on the intelligence cycle, and the TCPED link), and [[Analysis of Competing Hypotheses]] (example_of → [[Structured Analytic Technique]]).
-  - **Proposed for verified pages, not made:** [[Architecture of Worldview]] (the 9/1 worldview questions for biographical sketches) and [[AI in Intelligence Production]] (a "Sources disagree" flag on whether INT names mean the product or the collection).
-  - **Flags on the pages:** 13 accuracy checks, 13 gaps in my notes, 2 "Sources disagree," 1 "Whose view?" ([[Intelligence (National Security)]], 8/25), and 2 unsourced-background notes (Treverton on [[Puzzles and Mysteries]]; Kahneman on [[System 1 and System 2 Thinking]]).
-  - **Typed links proposed:** 40, listed with reasons in chat.
-  - **Left out on purpose:** listed on the source card under Ingest Progress.
-- **Verify:** pending. Item by item.
-- **Commit:** `ingest: Intro to Intelligence notes 8/25–11/10 — 46 drafts + source card, pending review`
-
-### [2026-11-11] verify | Information Model
+### [2026-11-20] verify | Collection Swarm Ball
 
 - **Verify:**
-  - Approved: [[Information Model]]
-- **Commit:** `verify: Information Model`
+  - Approved: [[Collection Swarm Ball]]
+- **Commit:** `verify: Collection Swarm Ball`
 
-### [2026-11-11] verify | Tasking, Collection, Processing, Exploitation, and Dissemination
-
-- **Verify:**
-  - Approved: [[Tasking, Collection, Processing, Exploitation, and Dissemination]]
-- **Commit:** `verify: Tasking, Collection, Processing, Exploitation, and Dissemination`
-
-### [2026-11-11] verify | Artificial Intelligence
+### [2026-11-20] verify | Cognitive Load
 
 - **Verify:**
-  - Approved: [[Artificial Intelligence]]
-- **Commit:** `verify: Artificial Intelligence`
+  - Approved: [[Cognitive Load]]
+- **Commit:** `verify: Cognitive Load`
 
-### [2026-11-11] verify | Automation Bias
-
-- **Verify:**
-  - Approved: [[Automation Bias]]
-- **Commit:** `verify: Automation Bias`
-
-### [2026-11-11] verify | Curiosity, Character, and Competence
+### [2026-11-20] verify | Church and Pike Committees
 
 - **Verify:**
-  - Approved: [[Curiosity, Character, and Competence]]
-- **Commit:** `verify: Curiosity, Character, and Competence`
+  - Approved: [[Church and Pike Committees]]
+- **Commit:** `verify: Church and Pike Committees`
 
-### [2026-11-11] verify | Emergent Behavior
-
-- **Verify:**
-  - Approved: [[Emergent Behavior]]
-- **Commit:** `verify: Emergent Behavior`
-
-### [2026-11-11] verify | Human Decision Point
+### [2026-11-20] verify | Chain-of-Thought Reasoning
 
 - **Verify:**
-  - Approved: [[Human Decision Point]]
-- **Commit:** `verify: Human Decision Point`
+  - Approved: [[Chain-of-Thought Reasoning]]
+- **Commit:** `verify: Chain-of-Thought Reasoning`
 
-### [2026-11-11] verify | Human-Centered AI
-
-- **Verify:**
-  - Approved: [[Human-Centered AI]]
-- **Commit:** `verify: Human-Centered AI`
-
-### [2026-11-11] verify | Intelligence as Attentive Understanding
+### [2026-11-20] verify | Catastrophic Forgetting
 
 - **Verify:**
-  - Approved: [[Intelligence as Attentive Understanding]]
-- **Commit:** `verify: Intelligence as Attentive Understanding`
+  - Approved: [[Catastrophic Forgetting]]
+- **Commit:** `verify: Catastrophic Forgetting`
 
-### [2026-11-11] verify | Intelligence Writing Style
-
-- **Verify:**
-  - Approved: [[Intelligence Writing Style]]
-- **Commit:** `verify: Intelligence Writing Style`
-
-### [2026-11-11] verify | Intelligence-Led Policing
+### [2026-11-20] verify | Capabilities vs. Intentions
 
 - **Verify:**
-  - Approved: [[Intelligence-Led Policing]]
-- **Commit:** `verify: Intelligence-Led Policing`
+  - Approved: [[Capabilities vs. Intentions]]
+- **Commit:** `verify: Capabilities vs. Intentions`
 
-### [2026-11-11] verify | LLM Wiki
-
-- **Verify:**
-  - Approved: [[LLM Wiki]]
-- **Commit:** `verify: LLM Wiki`
-
-### [2026-11-11] verify | Narrow AI
+### [2026-11-20] verify | Caliphate
 
 - **Verify:**
-  - Approved: [[Narrow AI]]
-- **Commit:** `verify: Narrow AI`
+  - Approved: [[Caliphate]]
+- **Commit:** `verify: Caliphate`
 
-### [2026-11-11] verify | Pi-Shaped Person
-
-- **Verify:**
-  - Approved: [[Pi-Shaped Person]]
-- **Commit:** `verify: Pi-Shaped Person`
-
-### [2026-11-11] verify | Politicized Intelligence
+### [2026-11-20] verify | Blue Sky Memo
 
 - **Verify:**
-  - Approved: [[Politicized Intelligence]]
-- **Commit:** `verify: Politicized Intelligence`
+  - Approved: [[Blue Sky Memo]]
+- **Commit:** `verify: Blue Sky Memo`
 
-### [2026-11-11] verify | Polygraph Examination
-
-- **Verify:**
-  - Approved: [[Polygraph Examination]]
-- **Commit:** `verify: Polygraph Examination`
-
-### [2026-11-11] verify | Security Classification
+### [2026-11-20] verify | Bean Counting
 
 - **Verify:**
-  - Approved: [[Security Classification]]
-- **Commit:** `verify: Security Classification`
+  - Approved: [[Bean Counting]]
+- **Commit:** `verify: Bean Counting`
 
-### [2026-11-11] verify | Time Compression Trap
-
-- **Verify:**
-  - Approved: [[Time Compression Trap]]
-- **Commit:** `verify: Time Compression Trap`
-
-### [2026-11-11] verify | Tokenization
+### [2026-11-20] verify | Battle Damage Assessment
 
 - **Verify:**
-  - Approved: [[Tokenization]]
-- **Commit:** `verify: Tokenization`
+  - Approved: [[Battle Damage Assessment]]
+- **Commit:** `verify: Battle Damage Assessment`
 
-### [2026-11-11] verify | Bing Sydney Incident (2023)
-
-- **Verify:**
-  - Approved: [[Bing Sydney Incident (2023)]]
-- **Commit:** `verify: Bing Sydney Incident (2023)`
-
-### [2026-11-11] verify | Mata v. Avianca (2023)
+### [2026-11-20] verify | Backpropagation
 
 - **Verify:**
-  - Approved: [[Mata v. Avianca (2023)]]
-- **Commit:** `verify: Mata v. Avianca (2023)`
+  - Approved: [[Backpropagation]]
+- **Commit:** `verify: Backpropagation`
 
-### [2026-11-11] verify | All-Source Intelligence
-
-- **Verify:**
-  - Approved: [[All-Source Intelligence]]
-- **Commit:** `verify: All-Source Intelligence`
-
-### [2026-11-11] verify | Analytic Confidence
+### [2026-11-20] verify | Attribution (Cyber)
 
 - **Verify:**
-  - Approved: [[Analytic Confidence]]
-- **Commit:** `verify: Analytic Confidence`
+  - Approved: [[Attribution (Cyber)]]
+- **Commit:** `verify: Attribution (Cyber)`
 
-### [2026-11-11] verify | Artificial General Intelligence
-
-- **Verify:**
-  - Approved: [[Artificial General Intelligence]]
-- **Commit:** `verify: Artificial General Intelligence`
-
-### [2026-11-11] verify | Attention Head
+### [2026-11-20] verify | Attention Head
 
 - **Verify:**
   - Approved: [[Attention Head]]
 - **Commit:** `verify: Attention Head`
 
-### [2026-11-11] verify | Bach Faucet
+### [2026-11-20] verify | Artificial General Intelligence
 
 - **Verify:**
-  - Approved: [[Bach Faucet]]
-- **Commit:** `verify: Bach Faucet`
+  - Approved: [[Artificial General Intelligence]]
+  - Flags I resolved before approving (1):
+    - Accuracy check (Sources disagree) — this is okay
+- **Commit:** `verify: Artificial General Intelligence`
 
-### [2026-11-11] setup | Properties strip stacking fix (v0.5.1)
+### [2026-11-20] verify | Article 3 of the Geneva Conventions
 
-- **Think:** Every time I switched between editing and reading view, another properties strip appeared, stacking up above or below the page title.
-- **Calculate:** Claude (claude-opus-5-5) found the cause in the Coppermind Review plugin. When Obsidian re-renders a note, it can re-create the Properties block or move the title. The plugin only checked for a strip directly in front of the Properties block, so the old strip was left stranded and a new one was added each time. The fix removes any strip that isn't directly in front of a Properties block before adding one, so each block keeps exactly one. Version 0.5.0 → 0.5.1. No page content changed.
-  - Tested outside Obsidian (jsdom) on both ways a re-render can strand a strip: 6 strips after five switches before the fix, 1 after.
-- **Verify:** pending. To reload the plugin and switch a page between editing and reading a few times.
-- **Commit:** `plugin: fix stacking properties strips (v0.5.1)`
+- **Verify:**
+  - Approved: [[Article 3 of the Geneva Conventions]]
+- **Commit:** `verify: Article 3 of the Geneva Conventions`
 
-### [2026-11-11] setup | Hide backlinks and properties counts in the status bar
+### [2026-11-20] verify | Anticipatory Socialization
 
-- **Think:** I wanted the backlinks and properties counts gone from the status bar at the bottom right, and asked Claude to add the fix.
-- **Calculate:** Claude (claude-sonnet-5-5) added a short rule to the end of `coppermind.css` that hides those two status bar items. Word count, the git branch, and the verified count are unchanged. Not yet seen in Obsidian itself.
-- **Verify:** pending. To check that both counts are gone; if one still shows, the class name needs adjusting.
-- **Commit:** `setup: hide backlinks and properties in status bar`
+- **Verify:**
+  - Approved: [[Anticipatory Socialization]]
+- **Commit:** `verify: Anticipatory Socialization`
 
-### [2026-11-11] setup | Offline search page and Library
+### [2026-11-20] verify | Analytic Ombuds
 
-- **Think:** I wanted a way to find things in the wiki without AI, including offline, either as its own page or on the Dashboard.
-- **Calculate:** Claude (claude-sonnet-5-5) added two files at the top level of the vault, using only Obsidian's built-in search and Bases (no plugin code):
-  - **[[Find]]:** how to open a page by title or alias, search all text, and filter; one-click searches by page type, course, review status, and open flag kind (accuracy checks, gaps, "Whose view?", sources disagree, unsourced background); a table of class dates that finds every page citing that day's notes; and a table of search operators.
-  - **[[Library.base|Library]]:** a table of every page with six views (all pages by type, Glossary A–Z, SAIL, Intro to Intelligence, Verified, Drafts).
-  - Neither file is in `Wiki/`, so they are not in [[index]]. The folder tree in [[SCHEMA#2. The six parts of the wiki|Schema §2]] doesn't list them yet; I haven't edited the schema.
-  - Not yet seen in Obsidian itself. The one-click links assume the vault is named "The Coppermind".
-- **Verify:** pending. To open Find, click a few links, and open each Library view.
-- **Commit:** `setup: Find page and Library base (offline search)`
+- **Verify:**
+  - Approved: [[Analytic Ombuds]]
+- **Commit:** `verify: Analytic Ombuds`
 
-### [2026-11-11] schema | Find and Library added; agents maintain them (v1.0)
+### [2026-11-20] verify | Analytic Mission Statement
 
-- **Think:** I asked for Find to be part of the schema and the other instruction files, with agents checking and updating the search page regularly.
-- **Calculate:** Claude (claude-sonnet-5-5) edited `SCHEMA.md` (0.2 → 1.0, since this changes structure and workflow), `AGENTS.md`, and `Find.md`:
-  - [[SCHEMA#2. The six parts of the wiki|Schema §2]]: both files added to the folder layout, plus a "Find and Library" subsection with a table of what triggers an update (new class date, course, page type, flag kind, rename).
-  - §6: class-notes citations must keep the form `<Course> notes, M/D/YY`, since Find's date searches match it. §9: a permissions row. §10: ingest commit step and health check now cover Find and Library; ingest steps renumbered (there were two step 4s). §11: maintenance rule. §13: Find's `obsidian://` links and `Library.base` listed as Obsidian-only. §14: changelog line. My citation wording from 0.2 is unchanged.
-  - `AGENTS.md`: one paragraph telling agents to maintain both files.
-  - `Find.md`: checked its class dates against the pages. Four SAIL dates were cited but missing (9/10, 9/17, 10/1, 10/13), so I added them. A folded note at the bottom tells agents to keep it current.
-  - The earlier entry above says the schema doesn't list Find and Library; that is now fixed. Not yet checked in Obsidian itself.
-- **Verify:** pending. To read §2 and the changelog, and open Find to check the four new SAIL links.
-- **Commit:** `schema: v1.0 — Find and Library registered, agents maintain them`
+- **Verify:**
+  - Approved: [[Analytic Mission Statement]]
+- **Commit:** `verify: Analytic Mission Statement`
 
-### [2026-11-11] setup | Find card on the Dashboard (plugin v0.5.2)
+### [2026-11-20] verify | Analytic Assumption
 
-- **Think:** I asked for a Find card on the Dashboard.
-- **Calculate:** Claude (claude-sonnet-5-5) added a seventh nav card, "Find", which opens [[Find]]. It sits last and spans the full row so the grid has no gap. Plugin version 0.5.1 → 0.5.2. The guide [[Nicrosil]] now says seven cards and mentions Find; it was still a draft, so its status didn't change.
-- **Verify:** pending. To reload the plugin and open the Dashboard.
-- **Commit:** `plugin: Find card on Dashboard (v0.5.2)`
+- **Verify:**
+  - Approved: [[Analytic Assumption]]
+- **Commit:** `verify: Analytic Assumption`
 
-### [2026-11-11] setup | Open flags folded by default on the Dashboard (plugin v0.5.3)
+### [2026-11-20] verify | Algorithmic Transparency
 
-- **Think:** I didn't want the Open flags list showing on the Dashboard unless I open it.
-- **Calculate:** Claude (claude-sonnet-5-5) changed the Dashboard's "Open flags" section to start folded, like "By page type". The counts in the tile above it still show. If I open it, it stays open until Obsidian restarts. Plugin version 0.5.2 → 0.5.3.
-- **Verify:** pending. To reload the plugin and open the Dashboard.
-- **Commit:** `plugin: fold Open flags by default (v0.5.3)`
+- **Verify:**
+  - Approved: [[Algorithmic Transparency]]
+- **Commit:** `verify: Algorithmic Transparency`
 
-### [2026-11-11] verify | Verifying Pages with the Review Buttons
+### [2026-11-20] verify | AI Technology Stack
+
+- **Verify:**
+  - Approved: [[AI Technology Stack]]
+- **Commit:** `verify: AI Technology Stack`
+
+### [2026-11-20] verify | AI Supply Chain Compromise
+
+- **Verify:**
+  - Approved: [[AI Supply Chain Compromise]]
+- **Commit:** `verify: AI Supply Chain Compromise`
+
+### [2026-11-20] verify | Active Voice
+
+- **Verify:**
+  - Approved: [[Active Voice]]
+- **Commit:** `verify: Active Voice`
+
+### [2026-11-20] verify | Actionable Intelligence
+
+- **Verify:**
+  - Approved: [[Actionable Intelligence]]
+- **Commit:** `verify: Actionable Intelligence`
+
+### [2026-11-20] verify | Intelligence-to-Action Convergence Matrix
+
+- **Verify:**
+  - Approved: [[Intelligence-to-Action Convergence Matrix]]
+  - Flags I resolved before approving (2):
+    - Gap (Check the table) — I believe these were blank on the slides
+    - Accuracy check (Sources disagree) — this is okay
+- **Commit:** `verify: Intelligence-to-Action Convergence Matrix`
+
+### [2026-11-19] verify | Nicrosil
 
 - **Verify:**
   - Approved: [[Nicrosil]]
-- **Commit:** `verify: Verifying Pages with the Review Buttons`
+- **Commit:** `verify: Nicrosil`
 
-### [2026-11-11] verify | Law Enforcement Intelligence Internships
+### [2026-11-19] tool | Nicrosil 2.7.0: flatter wiki map and hierarchy
 
-- **Verify:**
-  - Approved: [[Law Enforcement Intelligence Internships]]
-  - Flags I resolved before approving (1):
-    - Accuracy check — fixed the accuracy issues.
-- **Commit:** `verify: Law Enforcement Intelligence Internships`
+- **Changed:** Nicrosil 2.7.0: the wiki map and hierarchy have sharp 2px corners, no glows or hover growth, thinner lines, no dotted backdrop, no lights running along the hierarchy, and a copper-to-teal active tab. Details: [[Nicrosil#Version history]].
+- **Verify:** Reload Obsidian (Ctrl+R), open the wiki map (Alt+M), and look at both tabs: square cards, flat frame, no glow. Tell me what still looks too polished.
+- **Commit:** `tool: Nicrosil 2.7.0 flatter, sharper wiki map and hierarchy`
 
-### [2026-11-11] verify | Richards Heuer
+### [2026-11-19] verify | SCHEMA - Changes
 
 - **Verify:**
-  - Approved: [[Richards Heuer]]
-- **Commit:** `verify: Richards Heuer`
+  - Approved: [[SCHEMA - Changes]]
+- **Commit:** `verify: SCHEMA - Changes`
 
-### [2026-11-11] verify | SRC - Intro to Intelligence Class Notes (Fall 2026)
-
-- **Verify:**
-  - Approved: [[SRC - Intro to Intelligence Class Notes (Fall 2026)]]
-- **Commit:** `verify: SRC - Intro to Intelligence Class Notes (Fall 2026)`
-
-### [2026-11-11] verify | SRC - SAIL Class Notes (Fall 2026)
-
-- **Verify:**
-  - Approved: [[SRC - SAIL Class Notes (Fall 2026)]]
-- **Commit:** `verify: SRC - SAIL Class Notes (Fall 2026)`
-
-### [2026-11-11] verify | Open Skies Treaty
-
-- **Verify:**
-  - Approved: [[Open Skies Treaty]]
-  - Flags I resolved before approving (2):
-    - Accuracy check — appended the claim with the correct dates
-    - Gap (Gap in my notes) — These points don't need to be included
-- **Commit:** `verify: Open Skies Treaty`
-
-### [2026-11-11] verify | Pearl Harbor (1941)
-
-- **Verify:**
-  - Approved: [[Pearl Harbor (1941)]]
-  - Flags I resolved before approving (2):
-    - Accuracy check — reworded to be more clear
-    - Gap (Gap in my notes) — removed this section
-- **Commit:** `verify: Pearl Harbor (1941)`
-
-### [2026-11-11] verify | Computer Network Exploitation
-
-- **Verify:**
-  - Approved: [[Computer Network Exploitation]]
-- **Commit:** `verify: Computer Network Exploitation`
-
-### [2026-11-11] verify | Confirmation Bias
-
-- **Verify:**
-  - Approved: [[Confirmation Bias]]
-- **Commit:** `verify: Confirmation Bias`
-
-### [2026-11-11] verify | Covert Action
-
-- **Verify:**
-  - Approved: [[Covert Action]]
-- **Commit:** `verify: Covert Action`
-
-### [2026-11-11] verify | Denial and Deception
-
-- **Verify:**
-  - Approved: [[Denial and Deception]]
-- **Commit:** `verify: Denial and Deception`
-
-### [2026-11-11] verify | Diplomatic, Information, Military, and Economic Options
-
-- **Verify:**
-  - Approved: [[Diplomatic, Information, Military, and Economic Options]]
-- **Commit:** `verify: Diplomatic, Information, Military, and Economic Options`
-
-### [2026-11-11] verify | Embedding
-
-- **Verify:**
-  - Approved: [[Embedding]]
-- **Commit:** `verify: Embedding`
-
-### [2026-11-11] verify | Existential Risk
-
-- **Verify:**
-  - Approved: [[Existential Risk]]
-- **Commit:** `verify: Existential Risk`
-
-### [2026-11-11] verify | Indicators of Compromise
-
-- **Verify:**
-  - Approved: [[Indicators of Compromise]]
-- **Commit:** `verify: Indicators of Compromise`
-
-### [2026-11-11] verify | Intelligence Cycle
-
-- **Verify:**
-  - Approved: [[Intelligence Cycle]]
-- **Commit:** `verify: Intelligence Cycle`
-
-### [2026-11-11] verify | Key Judgments
-
-- **Verify:**
-  - Approved: [[Key Judgments]]
-- **Commit:** `verify: Key Judgments`
-
-### [2026-11-11] verify | Kill Chain
-
-- **Verify:**
-  - Approved: [[Kill Chain]]
-- **Commit:** `verify: Kill Chain`
-
-### [2026-11-11] verify | Law of Armed Conflict
-
-- **Verify:**
-  - Approved: [[Law of Armed Conflict]]
-- **Commit:** `verify: Law of Armed Conflict`
-
-### [2026-11-11] verify | Mirror Imaging
-
-- **Verify:**
-  - Approved: [[Mirror Imaging]]
-- **Commit:** `verify: Mirror Imaging`
-
-### [2026-11-11] verify | OODA Loop
-
-- **Verify:**
-  - Approved: [[OODA Loop]]
-- **Commit:** `verify: OODA Loop`
-
-### [2026-11-11] verify | Priority Creep
-
-- **Verify:**
-  - Approved: [[Priority Creep]]
-- **Commit:** `verify: Priority Creep`
-
-### [2026-11-11] verify | Revolution in Military Affairs
-
-- **Verify:**
-  - Approved: [[Revolution in Military Affairs]]
-- **Commit:** `verify: Revolution in Military Affairs`
-
-### [2026-11-11] verify | SEE-It Framework
-
-- **Verify:**
-  - Approved: [[SEE-It Framework]]
-- **Commit:** `verify: SEE-It Framework`
-
-### [2026-11-11] verify | Technological Singularity
-
-- **Verify:**
-  - Approved: [[Technological Singularity]]
-- **Commit:** `verify: Technological Singularity`
-
-### [2026-11-11] verify | Traffic Analysis
-
-- **Verify:**
-  - Approved: [[Traffic Analysis]]
-- **Commit:** `verify: Traffic Analysis`
-
-### [2026-11-11] verify | Unconventional Warfare
-
-- **Verify:**
-  - Approved: [[Unconventional Warfare]]
-- **Commit:** `verify: Unconventional Warfare`
-
-### [2026-11-11] verify | Zero-Day Vulnerability
-
-- **Verify:**
-  - Approved: [[Zero-Day Vulnerability]]
-- **Commit:** `verify: Zero-Day Vulnerability`
-
-### [2026-11-11] verify | Ages of U.S. Intelligence
-
-- **Verify:**
-  - Approved: [[Ages of U.S. Intelligence]]
-  - Flags I resolved before approving (1):
-    - Gap (Gap in my notes) — elabborated where I could
-- **Commit:** `verify: Ages of U.S. Intelligence`
-
-### [2026-11-11] query | Denial and deception
-
-- **Think:** I asked the wiki for everything related to denial and deception.
-- **Calculate:** Answered from the wiki first. Pages used: [[Denial and Deception]], [[Intelligence Collection Disciplines]] (draft), [[Polygraph Examination]], [[AI in Warfighting]] (draft), [[AI-Enabled Surveillance]], [[Cascade of Unintended Consequences]], [[Liar's Dividend]] (draft), [[AI Alignment]] (draft), plus [[Intro to Intelligence Class Notes (Fall 2026)#9/17/26|Intro notes, 9/17/26]]. Gap noted: the wiki has only the two-line class definition; no case study or framework on detecting or countering D&D.
-- **Verify:** Not filed back.
-- **Commit:** `query: denial and deception`
-
-### [2026-11-11] verify | SCHEMA
+### [2026-11-19] verify | SCHEMA
 
 - **Verify:**
   - Approved: [[SCHEMA]]
 - **Commit:** `verify: SCHEMA`
 
-### [2026-11-12] verify | AI Alignment
+### [2026-11-19] verify | Nicrosil
 
 - **Verify:**
-  - Approved: [[AI Alignment]]
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] tool | Nicrosil 2.6.3: Dashboard name gradient
+
+- **Changed:** Nicrosil 2.6.3: the Dashboard name's copper-to-teal gradient spans the name itself, matching the file-list button. Details: [[Nicrosil#Version history]].
+- **Verify:** Reload Obsidian (Ctrl+R): the Dashboard title should fade from copper through cream to teal at its right end.
+- **Commit:** `tool: Nicrosil 2.6.3 Dashboard name gradient`
+
+### [2026-11-19] tool | Nicrosil 2.6.2: Almendra SC title
+
+- **Changed:** Nicrosil 2.6.2: the name on the file-list button and the Dashboard header is set in Almendra SC (loaded from Google Fonts, Georgia as the fallback); the Dashboard name has a copper-to-teal gradient and a soft glow. Details: [[Nicrosil#Version history]].
+- **Verify:** Reload Obsidian (Ctrl+R) while online: check the button and the Dashboard title, and that the long name still fits in a narrow sidebar. Then review the change notes on [[Nicrosil]].
+- **Commit:** `tool: Nicrosil 2.6.2 Almendra SC title with gradient and glow`
+
+### [2026-11-19] schema | Nicrosil changes always get their bookkeeping (7.1)
+
+- **Think:** I asked for the Coppermind button restyle. The agent edited `styles.css` without reading `SCHEMA - Changes`, so it skipped the version bump, guide update and `tool` log entry. I asked it to do them and to make sure the rules make this automatic.
+- **Calculate:** Claude (claude-sonnet-5-5):
+  - `AGENTS.md`: new **Nicrosil** rule (any edit in the plugin's folder, even a style tweak, is a tool change: read `SCHEMA - Changes`, then bump the version, update the guide and log it, in the same edit, unprompted); the table row for `SCHEMA - Changes` names style tweaks.
+  - [[SCHEMA - Changes]]: the Nicrosil section says every change counts and the steps are done without being asked.
+  - [[Nicrosil]]: update checklist adds the `manifest.json` version and the `tool` log entry. Version is now 7.1 in [[SCHEMA]], with a line in [[Schema Changelog]].
+- **Verify:** Pending: [[SCHEMA]], [[SCHEMA - Changes]] and [[Nicrosil]] are drafts with change notes for me to re-review.
+- **Commit:** `schema: Nicrosil changes always get their bookkeeping (7.1)`
+
+### [2026-11-19] tool | Nicrosil 2.6.1: Coppermind button restyle
+
+- **Changed:** Nicrosil 2.6.1: the **The Coppermind** button at the top of the file list has the copper-to-teal gradient (fill, border and name) and sharp 2px corners. Details: [[Nicrosil#Version history]].
+- **Verify:** Reload Obsidian (Ctrl+R) and look at the button: gradient, sharp corners, glow on hover, inner glow while on the Dashboard. Then review the change notes on [[Nicrosil]].
+- **Commit:** `tool: Nicrosil 2.6.1 Coppermind button gradient and sharp corners`
+
+### [2026-11-19] verify | SCHEMA - Writing Pages
+
+- **Verify:**
+  - Approved: [[SCHEMA - Writing Pages]]
+- **Commit:** `verify: SCHEMA - Writing Pages`
+
+### [2026-11-19] verify | SCHEMA - Review
+
+- **Verify:**
+  - Approved: [[SCHEMA - Review]]
+- **Commit:** `verify: SCHEMA - Review`
+
+### [2026-11-19] verify | SCHEMA - Query
+
+- **Verify:**
+  - Approved: [[SCHEMA - Query]]
+- **Commit:** `verify: SCHEMA - Query`
+
+### [2026-11-19] verify | SCHEMA - Ingest
+
+- **Verify:**
+  - Approved: [[SCHEMA - Ingest]]
+- **Commit:** `verify: SCHEMA - Ingest`
+
+### [2026-11-19] verify | SCHEMA - Index and Log
+
+- **Verify:**
+  - Approved: [[SCHEMA - Index and Log]]
+- **Commit:** `verify: SCHEMA - Index and Log`
+
+### [2026-11-19] verify | SCHEMA - Health Check
+
+- **Verify:**
+  - Approved: [[SCHEMA - Health Check]]
+- **Commit:** `verify: SCHEMA - Health Check`
+
+### [2026-11-19] verify | SCHEMA - Export
+
+- **Verify:**
+  - Approved: [[SCHEMA - Export]]
+- **Commit:** `verify: SCHEMA - Export`
+
+### [2026-11-19] verify | SCHEMA - Changes
+
+- **Verify:**
+  - Approved: [[SCHEMA - Changes]]
+- **Commit:** `verify: SCHEMA - Changes`
+
+### [2026-11-19] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] verify | Dissect and Ingest a Source
+
+- **Verify:**
+  - Approved: [[Dissect and Ingest a Source]]
+- **Commit:** `verify: Dissect and Ingest a Source`
+
+### [2026-11-19] tool | Nicrosil 2.6.0 and the health check script
+
+- **Changed:** Nicrosil 2.6.0: the rule files in `SCHEMAS/` are reviewable; **Log a schema change** writes to [[Schema Changelog]] and keeps the version in [[SCHEMA]]; the log moves each finished month to `Logs/`; a `tool` icon; the old root `SCHEMA.md` stub goes to the trash once. Details: [[Nicrosil#Version history]] (guide back to `draft` with a note). New `Tools/health-check/coppermind_check.py` runs the mechanical health checks and changes nothing; tested on a copy of the vault (0 broken links, and a broken heading link, a missing footnote, and a relationship stored twice were each caught when planted).
+- **Verify:** Restart Obsidian: the stub `SCHEMA.md` should go to the trash with a notice, and the review queue should list the rule files under Schemas. Then open a rule file and click the pen button to see the current version (7.0). Run the script once from the vault folder.
+- **Commit:** `tool: Nicrosil 2.6.0 and health check script`
+
+### [2026-11-19] schema | Rules split into AGENTS.md and SCHEMAS/ (7.0)
+
+- **Think:** Every agent had to read the whole SCHEMA (about 11,600 tokens) before any task, and ingests also read all of `index.md` (about 10,500) and sometimes the log (about 45,000). I asked for the efficiency plan in full: split the rules into files in a new `SCHEMAS/` folder, make `AGENTS.md` the only file read every time and use it as a directory, split the log by month, and the rest.
+- **Calculate:** Claude (claude-opus-5-5):
+  - `AGENTS.md` rewritten as the start page: scope, drafts only, permissions, voices, no unsourced claims, the index line, the log entry format (with the new `tool` operation), the commit format, token-saving rules, and a table of which rule file each task needs. `CLAUDE.md` added; it loads `AGENTS.md` for Claude Code.
+  - `SCHEMA.md` moved to `SCHEMAS/` as the overview. The rules moved, wording kept, to [[SCHEMA - Writing Pages]], [[SCHEMA - Review]], [[SCHEMA - Ingest]] (which now holds the steps that were in [[Dissect and Ingest a Source]]), [[SCHEMA - Query]], [[SCHEMA - Health Check]], [[SCHEMA - Index and Log]], [[SCHEMA - Changes]], and [[SCHEMA - Export]]; the changelog is [[Schema Changelog]], with a 7.0 line. Each rule file is `draft` with `changes_since_verified` lines: the moves, plus every real rule change.
+  - New rules: never read the whole log; find pages by searching names and aliases; read only your batch of the Ingest Queue; the log is one file per month (`Logs/Log YYYY-MM.md`); `tool` operation for `Tools/` and Nicrosil; health checks run the new script and by default read only pages changed since the last report plus a sample of 20; finished queue batches collapse into a Done section.
+  - The old root `SCHEMA.md` is now a short "moved" stub; Nicrosil 2.6.0 moves it to the trash at its next start.
+  - [[Dissect and Ingest a Source]] cut to its five inputs (verified page, so back to `draft` with a note). [[Ingest Queue]] header updated and a Done section added. `log.md` header (not an entry) updated. Templates and the Health Check Report template point to the new files.
+  - Mechanical link fixes (status unchanged): links to the old SCHEMA sections in [[Setting Up Git for the Coppermind]], [[Choosing a Claude Model for Coppermind Work]] (its footnote 11 covered both health checks and queries, so queries now cite a new footnote 14), [[Analysis of Competing Hypotheses]], [[Intelligence Community Style Summaries]], and [[SRC - Puzzles and Mysteries (Slides)]]. Older log entries and health check reports keep their old section links, since they are records.
+  - Estimated rules read per task: a query about 12,000 → 2,000 tokens; an ingest about 24,400 → 8,300 (68,600 → 8,300 when the log was read).
+- **Verify:**
+  - Re-review: [[SCHEMA]], [[SCHEMA - Writing Pages]], [[SCHEMA - Review]], [[SCHEMA - Ingest]], [[SCHEMA - Query]], [[SCHEMA - Health Check]], [[SCHEMA - Index and Log]], [[SCHEMA - Changes]], [[SCHEMA - Export]], [[Dissect and Ingest a Source]]
+  - Read `AGENTS.md` as a whole (it has no properties; its changes are noted on [[SCHEMA]])
+  - Change this project's instruction in claude.ai from "read the SCHEMA file first" to "read AGENTS.md first"
+- **Commit:** `schema: 7.0 split rules into AGENTS.md and SCHEMAS/, monthly log, health check script`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] schema | Nicrosil 2.5.3 fix 4: Coppermind name always fully visible
+
+- **Think:** I did not want the name cut off with an ellipsis; the whole name should show on the button, even if it has to shrink.
+- **Calculate:** The name is about 9.4 times its font size wide, and the logo, gap and padding take about 57 px, so the font size is set to (button width - 31 px) / 9.4, capped at the normal size and floored at 0.7 em.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/styles.css`: the ellipsis is gone; the name's font size now scales with the button's width, so it shrinks in a narrow sidebar and stays full size in a wide one. Version stays 2.5.3.
+- **Verify:** Reload Nicrosil, then drag the sidebar narrower and wider and check the whole name stays inside the button
+- **Commit:** `schema: Nicrosil 2.5.3 Coppermind name scales to fit`
+
+### [2026-11-19] schema | Nicrosil 2.5.3 fix 3: Coppermind button spacing
+
+- **Think:** The button appeared, but in the narrow sidebar the logo was squeezed and clipped at the left and the name ran past the right edge.
+- **Calculate:** Nothing to compute. Not seen in Obsidian yet.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/styles.css`: the logo has a fixed size so it can't be squeezed; the name is slightly smaller and cuts off with an ellipsis rather than overflowing; the button clips anything that would stick out and has a little less padding. Version stays 2.5.3.
+- **Verify:** Reload Nicrosil (or toggle the CSS); the logo and name should sit inside the button
+- **Commit:** `schema: Nicrosil 2.5.3 fix Coppermind button spacing`
+
+### [2026-11-19] schema | Nicrosil 2.5.3 fix 2: attach to the file list's own header
+
+- **Think:** The button still did not appear. Running a check in the console showed the page has one file list but my code found no place in it: the file list has no `.view-content` wrapper, and I had been looking for one.
+- **Calculate:** Nothing to compute. Not seen in Obsidian yet.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`: the button is now placed right after the file list's header buttons (`.nav-header`), wherever that sits. Version stays 2.5.3.
+- **Verify:** Reload Nicrosil; the button should be at the top of the file list
+- **Commit:** `schema: Nicrosil 2.5.3 fix Coppermind button placement in the file list`
+
+### [2026-11-19] schema | Nicrosil 2.5.3 fix: Coppermind button did not appear
+
+- **Think:** The new button was not showing. The likely cause is that Obsidian can leave sidebar views unloaded at startup, so looking the file list up through the workspace found nothing to attach to, and nothing tried again.
+- **Calculate:** Nothing to compute. Not seen in Obsidian yet.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`: the button is now attached by finding the file list in the page itself, and it is re-checked every 1.5 seconds so it appears once the sidebar loads and comes back if the list is rebuilt. Version stays 2.5.3.
+- **Verify:** Reload Nicrosil; the button should be at the top of the file list
+- **Commit:** `schema: Nicrosil 2.5.3 fix Coppermind button not appearing`
+
+### [2026-11-19] schema | Nicrosil 2.5.3 Coppermind button above the file list
+
+- **Think:** The Dashboard logo in the left ribbon was too small, so I asked for a larger button at the top of the file directory that says "The Coppermind", with the logo; click opens the Dashboard and Ctrl+click opens it in a new tab. The ribbon logo goes.
+- **Calculate:** Nothing to compute. Not seen in Obsidian yet.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.5.2 to 2.5.3): the ribbon logo and its middle-click handling are removed; a 46 px **The Coppermind** button with the copper logo is added between the file list's header buttons and the files, in every file explorer; click opens the Dashboard (or switches to it if it is already open), `Ctrl+click` or middle-click opens a new tab, `Enter` works from the keyboard; it is outlined more brightly while the Dashboard is open; `Alt+D` still works
+  - [[Nicrosil]]: Dashboard, Hotkeys and buttons, and the summary table updated for the button; version 2.5.3 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil, then click the button at the top of the file list
+- **Commit:** `schema: Nicrosil 2.5.3 Coppermind button above the file list`
+
+### [2026-11-19] verify | AI Deception
+
+- **Verify:**
+  - Approved: [[AI Deception]]
+- **Commit:** `verify: AI Deception`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] schema | Nicrosil 2.5.2 properties strip in hover previews
+
+- **Think:** When I point at a link, the pop-up preview showed the full Properties block, while an open page shows the one-line strip. I asked for the preview to look like a normal page.
+- **Calculate:** Nothing to compute. The preview is not a normal tab, so the plugin notes which page the pointer last hovered a link to (Obsidian's `hover-link` event), and when a preview pop-up appears within a few seconds it treats the pop-up like a page: the full block is hidden, and the same strip is put in its place. Clicking the strip in the preview opens the real block. Not checked in Obsidian yet.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `manifest.json` (2.5.1 to 2.5.2): the strip code now works on any container, not only an open tab, and watches new hover previews; the Dashboard, index and log are left alone; the watchers are dropped when a preview closes and when the plugin unloads
+  - [[Nicrosil]]: the properties strip section, version 2.5.2 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil, then point at a link in a page (for example a term in the AI Deception summary)
+- **Commit:** `schema: Nicrosil 2.5.2 properties strip in hover previews`
+
+### [2026-11-19] verify | Institutionalizing Imagination
+
+- **Verify:**
+  - Approved: [[Institutionalizing Imagination]]
+- **Commit:** `verify: Institutionalizing Imagination`
+
+### [2026-11-19] verify | ICD 203 Analytic Standards
+
+- **Verify:**
+  - Approved: [[ICD 203 Analytic Standards]]
+- **Commit:** `verify: ICD 203 Analytic Standards`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] schema | Nicrosil 2.5.1 quieter wiki map
+
+- **Think:** The restyled wiki map felt slow and too cluttered, so I asked for the halos and the breathing to go.
+- **Calculate:** Nothing to compute. Checked by rendering both tabs in a test page; not yet seen in Obsidian.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.5.0 to 2.5.1): the map's dot halos, the breathing, the fade-in of the dots, the lit-orb dot gradient, the dotted backdrop, and the heavier arrows and labels are removed, so the map's dots, arrows and labels look as before; the frame keeps a thin copper edge and a faint glow, and a hovered arrow still glows in its color. That also drops several hundred extra shapes and animations from the map, which should make it lighter.
+  - Fixed: the dropdown menus (status, page type, course) showed repeated arrows after 2.5.0, because the new style replaced their background; they keep Obsidian's own arrow again.
+  - Kept: the buttons, filter boxes and chips, the info card, and the whole hierarchy restyle.
+  - [[Nicrosil]]: the wiki map section, version 2.5.1 and history line; one more `changes_since_verified` line (the guide was already a re-review draft)
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil and open the wiki map (`Alt+M`)
+- **Commit:** `schema: Nicrosil 2.5.1 quieter wiki map, fix dropdown arrows`
+
+### [2026-11-19] schema | Nicrosil 2.5.0 wiki map and hierarchy restyled
+
+- **Think:** The wiki map and the hierarchy looked like the older Coppermind and out of place next to the relations panel, so I asked for them to match it: more polished, with the animation and glow.
+- **Calculate:** Nothing to compute. The look was checked in a test page with sample pages before saving; I have not seen it in Obsidian yet.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.4.9 to 2.5.0): both views get the relations panel's dotted backdrop with a copper glow and glowing border; the buttons, menus, filter boxes and relationship chips are rounded and glow in copper on hover; the info card under the map has the gradient border and serif name used on the Dashboard
+  - Map: dots are lit orbs (a soft gradient per page type) with a halo, hub halos breathe slowly, dots fade in one after another when the map opens, the arrows and their traveling lights are slightly stronger, hovered arrows glow in their relationship color, labels are crisper
+  - Hierarchy: cards have a gradient fill and a teal (verified) or copper (draft) glow, the page-type dot glows, branches glow in their relationship color with lights running from parent to child, cards and branches fade in from left to right, the open/close circles glow and grow on hover, hovering a card brightens its whole path
+  - Motion is off under reduced-motion settings and when Ambient animations is off. To keep the map fast with several hundred dots, the glow on the map is drawn with halos instead of filters, and only hovered arrows get a filter glow.
+  - [[Nicrosil]]: the wiki map section, version 2.5.0 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil, then open the wiki map (`Alt+M`) and look at both tabs
+- **Commit:** `schema: Nicrosil 2.5.0 wiki map and hierarchy restyled`
+
+### [2026-11-19] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] schema | Nicrosil 2.4.9 clickable change lines (SCHEMA 6.2)
+
+- **Think:** I asked for a line in the Changed since verified list to take me to that spot in the page when I click it.
+- **Calculate:** A change note is free text, so it has no position of its own. I chose a small convention: the line may end with a link to the section it changed, `[[#Heading]]`. Existing notes have no link, and most of them (the citation move on 62 pages) touch the whole page, so they still just open the page.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.4.8 to 2.4.9): a change line with a `[[#Heading]]` (or `[[#^block]]`) becomes a link, with a small copper "→ Heading" tag, on the review card and on the Dashboard's Changed since verified list; clicking goes to that heading in the page (the open tab if there is one), `Ctrl+click` opens a new tab; if the heading no longer exists the page opens with a notice; a line with no link behaves as before
+  - [[SCHEMA]] 6.2 (still `draft`, one more `changes_since_verified` line): §7 rule 8 describes the `[[#Heading]]` ending and says to keep the line in quotes; changelog line 6.2; `version: 6.2`. The two lines already in its note now carry links, so they work as a first test.
+  - `AGENTS.md`: the change-note instruction asks for the `[[#Heading]]` ending when the change is in one section.
+  - [[Nicrosil]]: the review queue bullet, version 2.4.9 and history line; the guide was a re-review draft already, so it gained one more `changes_since_verified` line
+- **Verify:**
+  - Pending my review: SCHEMA 6.2 and the Nicrosil guide
+  - Reload Nicrosil, then click a line on the SCHEMA's card (it should go to its section)
+- **Commit:** `schema: Nicrosil 2.4.9 clickable change lines, SCHEMA 6.2`
+
+### [2026-11-19] schema | Health check rhythm and SCHEMA change notes (6.1)
+
+- **Think:** I asked for the 14-day health check rhythm to be written into the SCHEMA, and for edits to the SCHEMA to show up in the changed-since-verified list the way wiki page edits do, because they had not been.
+- **Calculate:**
+  - Cause: the review queue, the review card and the Dashboard already show a draft's `changes_since_verified` lines for any file with a status, SCHEMA.md included. The agent's last two SCHEMA edits (5.3 and 6.0) set it back to `draft` without adding the note, and only 5.2 did, so there was nothing to show. I can't rebuild the missing 5.3 and 6.0 lines, because I verified the SCHEMA after each.
+  - [[SCHEMA]] 6.1 (set to `draft`, with its own `changes_since_verified` lines): §2 Health Checks gets a rhythm line (one every 14 days, from the newest report; the Dashboard card turns red when overdue); §10 opens with the same rule; §7 rule 8 now says it covers `SCHEMA.md` and explains the note against the changelog; the §10 check on changed-since-verified pages names `SCHEMA.md`; changelog line 6.1 and `version: 6.1`.
+  - `AGENTS.md`: the change-note instruction now says it applies to the SCHEMA too, in the same edit as the changelog line.
+  - Not changed: Nicrosil. It already reads the note from any reviewable file, so nothing in the plugin was missing.
+- **Verify:**
+  - Pending my review: SCHEMA 6.1 (the review card should list its two lines with an R badge)
+- **Commit:** `schema: 6.1 health check rhythm, SCHEMA change notes`
+
+### [2026-11-19] schema | Nicrosil 2.4.8 Dashboard health check card
+
+- **Think:** I do a health check every 14 days, so I asked for a small card on the Dashboard showing how long it has been since the last one, turning red when it is overdue.
+- **Calculate:** Nothing to compute.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.4.7 to 2.4.8): a health check card in the Dashboard's review progress section, with a bar that fills over the 14 days since the newest report in `Health Checks/` (read from the report's file name), teal while on time, amber in the last two days, red and gently pulsing once overdue or if no report exists; clicking it opens the latest report; the Dashboard also refreshes hourly so the card is current if Obsidian stays open overnight; new setting **Days between health checks** (14)
+  - [[Nicrosil]]: Dashboard section, Settings section, version 2.4.8 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
+  - Not changed: [[SCHEMA]]. The 14-day rhythm for health checks is not written there (§7 rule 7 only covers drafts older than 14 days); it lives in the plugin setting.
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil and open the Dashboard
+- **Commit:** `schema: Nicrosil 2.4.8 Dashboard health check card`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] schema | Nicrosil 2.4.7 verified pages open in Reading view
+
+- **Think:** I never want to be in editing mode unless I choose it, so I asked for verified pages to open in Reading view whenever I open or click them.
+- **Calculate:** Nothing to compute.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `manifest.json` (2.4.6 to 2.4.7): when a page is opened it is switched to Reading view if it is verified; a new setting (**Open pages in Reading view**: verified pages only, every page, or off) controls this; each tab is checked once per page it shows, so switching to editing myself is left alone; empty new notes are never switched
+  - [[Nicrosil]]: Settings section, version 2.4.7 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil, then open a verified page from the file list and from a link
+- **Commit:** `schema: Nicrosil 2.4.7 open verified pages in Reading view`
+
+### [2026-11-19] verify | Global Strategy Against Islamist Terrorism
+
+- **Verify:**
+  - Approved: [[Global Strategy Against Islamist Terrorism]]
+- **Commit:** `verify: Global Strategy Against Islamist Terrorism`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] schema | Nicrosil 2.4.6 livelier relations map
+
+- **Think:** The relations map in the side panel looked barebones next to the rest of the page, so I asked for it to feel more alive, with animation or glow and more vibrance.
+- **Calculate:** Nothing to compute.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.4.5 to 2.4.6): relations map arrows glow in their relationship color with small dots flowing along them; the center page has a copper gradient and a slow pulsing halo; verified and draft pages glow teal and copper; the backdrop is a faint dotted grid with a copper glow; nodes and arrows fade in one after another; hovering or focusing a page lights its arrows and dims the others; legend swatches glow; motion stops under reduced-motion settings
+  - [[Nicrosil]]: relations panel section, version 2.4.6 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil and open the relations panel (`Alt+L`)
+- **Commit:** `schema: Nicrosil 2.4.6 livelier relations map`
+
+### [2026-11-19] verify | Analytic Line of March
+
+- **Verify:**
+  - Approved: [[Analytic Line of March]]
+- **Commit:** `verify: Analytic Line of March`
+
+### [2026-11-19] verify | Intelligence Cycle
+
+- **Verify:**
+  - Approved: [[Intelligence Cycle]]
   - Flags I resolved before approving (1):
-    - Question (Whose view is this?) — clarified
-- **Commit:** `verify: AI Alignment`
+    - Accuracy check (Sources disagree) — This is okay, there are multiple different definitions but they all carry similar meanings in spirit.
+- **Commit:** `verify: Intelligence Cycle`
 
-### [2026-11-12] verify | AI in Warfighting
-
-- **Verify:**
-  - Approved: [[AI in Warfighting]]
-  - Flags I resolved before approving (1):
-    - Gap (Gap in my notes) — don't need to include this if its not in the notes
-- **Commit:** `verify: AI in Warfighting`
-
-### [2026-11-12] verify | Analysis of Competing Hypotheses
+### [2026-11-19] verify | Setting Up Git for the Coppermind
 
 - **Verify:**
-  - Approved: [[Analysis of Competing Hypotheses]]
-  - Flags I resolved before approving (1):
-    - Gap (Gap in my notes) — thats okay
-- **Commit:** `verify: Analysis of Competing Hypotheses`
+  - Approved: [[Setting Up Git for the Coppermind]]
+- **Commit:** `verify: Setting Up Git for the Coppermind`
 
-### [2026-11-12] ingest | ACH GenAI Workflow (SAIL course documents)
-
-- **Think:** I gave Claude the eight files of the SAIL ACH GenAI Workflow (orchestrator plus Steps 0–6) and asked it to ingest them. Plan-first mode; I approved the plan as proposed: no separate Prompt pages for the step prompts, and changes to verified pages proposed only.
-- **Calculate:** Claude (claude-sonnet-5-5) copied the files unchanged into `Sources/Readings/ACH GenAI Workflow/`, drafted [[SRC - ACH GenAI Workflow]] (proposed rating B-2, left blank for me), and drafted 5 pages: [[ACH GenAI Workflow]] (workflow), [[Summary - ACH GenAI Workflow]] (summary), and the glossary terms [[Diagnostic Evidence]], [[Linchpin Evidence]] and [[Meaningful Absence]]. Appended one bullet to the draft [[Hallucination]]. Updated [[index]] and [[Find]] (added Workflows and Summaries to "By type of page"); [[Library.base|Library]] needed no change.
-  - **Proposed for verified pages, not made:** [[Analysis of Competing Hypotheses]] (pointer to the workflow and a "Sources disagree" flag), [[Automation Bias]], [[Mirror Imaging]], [[Denial and Deception]], [[Analytic Confidence]].
-  - **Typed links proposed:** [[ACH GenAI Workflow]] → applies_to → [[Analysis of Competing Hypotheses]]; → counters → [[Automation Bias]] and [[Hallucination]]; the three glossary terms → part_of → [[ACH GenAI Workflow]].
-  - **Flags:** Sources disagree (1: matrix notation, S/C/N in my notes vs. CC/C/N/I/II, where C means opposite things), accuracy check (1: "Heuer, 1999"), gap in the source (1: *ACH Student Primer* not provided; also High/Medium/Low vs. High/Moderate/Low confidence labels).
-  - **Left out on purpose:** nothing. Separate pages for the step prompts, and a "Devil's Advocate" glossary term, were considered and not created.
-- **Verify:** pending. Item by item.
-- **Commit:** `ingest: ACH GenAI Workflow — 5 drafts + source card, pending review`
-
-### [2026-11-12] verify | Diagnostic Evidence
+### [2026-11-19] verify | Nicrosil
 
 - **Verify:**
-  - Approved: [[Diagnostic Evidence]]
-- **Commit:** `verify: Diagnostic Evidence`
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
 
-### [2026-11-12] verify | Linchpin Evidence
-
-- **Verify:**
-  - Approved: [[Linchpin Evidence]]
-- **Commit:** `verify: Linchpin Evidence`
-
-### [2026-11-12] verify | Meaningful Absence
+### [2026-11-19] verify | Choosing a Claude Model for Coppermind Work
 
 - **Verify:**
-  - Approved: [[Meaningful Absence]]
-- **Commit:** `verify: Meaningful Absence`
+  - Approved: [[Choosing a Claude Model for Coppermind Work]]
+- **Commit:** `verify: Choosing a Claude Model for Coppermind Work`
 
-### [2026-11-12] verify | Summary - ACH GenAI Workflow
+### [2026-11-19] verify | Law Enforcement Intelligence Internships
+
+- **Verify:**
+  - Approved: [[Law Enforcement Intelligence Internships]]
+- **Commit:** `verify: Law Enforcement Intelligence Internships`
+
+### [2026-11-19] verify | ACH GenAI Workflow
+
+- **Verify:**
+  - Approved: [[ACH GenAI Workflow]]
+- **Commit:** `verify: ACH GenAI Workflow`
+
+### [2026-11-19] verify | Intelligence Community Style Summaries
+
+- **Verify:**
+  - Approved: [[Intelligence Community Style Summaries]]
+- **Commit:** `verify: Intelligence Community Style Summaries`
+
+### [2026-11-19] verify | Dissect and Ingest a Source
+
+- **Verify:**
+  - Approved: [[Dissect and Ingest a Source]]
+- **Commit:** `verify: Dissect and Ingest a Source`
+
+### [2026-11-19] verify | Summary - ACH GenAI Workflow
 
 - **Verify:**
   - Approved: [[Summary - ACH GenAI Workflow]]
 - **Commit:** `verify: Summary - ACH GenAI Workflow`
 
-### [2026-11-12] verify | SRC - ACH GenAI Workflow
+### [2026-11-19] verify | Richards Heuer
 
 - **Verify:**
-  - Approved: [[SRC - ACH GenAI Workflow]]
-- **Commit:** `verify: SRC - ACH GenAI Workflow`
+  - Approved: [[Richards Heuer]]
+- **Commit:** `verify: Richards Heuer`
 
-### [2026-11-12] verify | Executive Order 12333
+### [2026-11-19] verify | Zero-Day Vulnerability
 
 - **Verify:**
-  - Approved: [[Executive Order 12333]]
-  - Flags I resolved before approving (1):
-    - Accuracy check — good
-- **Commit:** `verify: Executive Order 12333`
+  - Approved: [[Zero-Day Vulnerability]]
+- **Commit:** `verify: Zero-Day Vulnerability`
 
-### [2026-11-13] verify | Levels of Intelligence
+### [2026-11-19] verify | Unconventional Warfare
+
+- **Verify:**
+  - Approved: [[Unconventional Warfare]]
+- **Commit:** `verify: Unconventional Warfare`
+
+### [2026-11-19] verify | Traffic Analysis
+
+- **Verify:**
+  - Approved: [[Traffic Analysis]]
+- **Commit:** `verify: Traffic Analysis`
+
+### [2026-11-19] verify | SEE-It Framework
+
+- **Verify:**
+  - Approved: [[SEE-It Framework]]
+- **Commit:** `verify: SEE-It Framework`
+
+### [2026-11-19] verify | Revolution in Military Affairs
+
+- **Verify:**
+  - Approved: [[Revolution in Military Affairs]]
+- **Commit:** `verify: Revolution in Military Affairs`
+
+### [2026-11-19] verify | Priority Creep
+
+- **Verify:**
+  - Approved: [[Priority Creep]]
+- **Commit:** `verify: Priority Creep`
+
+### [2026-11-19] verify | OODA Loop
+
+- **Verify:**
+  - Approved: [[OODA Loop]]
+- **Commit:** `verify: OODA Loop`
+
+### [2026-11-19] verify | Mirror Imaging
+
+- **Verify:**
+  - Approved: [[Mirror Imaging]]
+- **Commit:** `verify: Mirror Imaging`
+
+### [2026-11-19] verify | Meaningful Absence
+
+- **Verify:**
+  - Approved: [[Meaningful Absence]]
+- **Commit:** `verify: Meaningful Absence`
+
+### [2026-11-19] verify | Linchpin Evidence
+
+- **Verify:**
+  - Approved: [[Linchpin Evidence]]
+- **Commit:** `verify: Linchpin Evidence`
+
+### [2026-11-19] verify | Law of Armed Conflict
+
+- **Verify:**
+  - Approved: [[Law of Armed Conflict]]
+- **Commit:** `verify: Law of Armed Conflict`
+
+### [2026-11-19] verify | Kill Chain
+
+- **Verify:**
+  - Approved: [[Kill Chain]]
+- **Commit:** `verify: Kill Chain`
+
+### [2026-11-19] verify | Key Judgments
+
+- **Verify:**
+  - Approved: [[Key Judgments]]
+- **Commit:** `verify: Key Judgments`
+
+### [2026-11-19] verify | Indicators of Compromise
+
+- **Verify:**
+  - Approved: [[Indicators of Compromise]]
+- **Commit:** `verify: Indicators of Compromise`
+
+### [2026-11-19] verify | Existential Risk
+
+- **Verify:**
+  - Approved: [[Existential Risk]]
+- **Commit:** `verify: Existential Risk`
+
+### [2026-11-19] verify | Diplomatic, Information, Military, and Economic Options
+
+- **Verify:**
+  - Approved: [[Diplomatic, Information, Military, and Economic Options]]
+- **Commit:** `verify: Diplomatic, Information, Military, and Economic Options`
+
+### [2026-11-19] verify | Diagnostic Evidence
+
+- **Verify:**
+  - Approved: [[Diagnostic Evidence]]
+- **Commit:** `verify: Diagnostic Evidence`
+
+### [2026-11-19] verify | Denial and Deception
+
+- **Verify:**
+  - Approved: [[Denial and Deception]]
+- **Commit:** `verify: Denial and Deception`
+
+### [2026-11-19] verify | Covert Action
+
+- **Verify:**
+  - Approved: [[Covert Action]]
+- **Commit:** `verify: Covert Action`
+
+### [2026-11-19] verify | Confirmation Bias
+
+- **Verify:**
+  - Approved: [[Confirmation Bias]]
+- **Commit:** `verify: Confirmation Bias`
+
+### [2026-11-19] verify | Computer Network Exploitation
+
+- **Verify:**
+  - Approved: [[Computer Network Exploitation]]
+- **Commit:** `verify: Computer Network Exploitation`
+
+### [2026-11-19] verify | Bach Faucet
+
+- **Verify:**
+  - Approved: [[Bach Faucet]]
+- **Commit:** `verify: Bach Faucet`
+
+### [2026-11-19] verify | Analytic Confidence
+
+- **Verify:**
+  - Approved: [[Analytic Confidence]]
+- **Commit:** `verify: Analytic Confidence`
+
+### [2026-11-19] verify | All-Source Intelligence
+
+- **Verify:**
+  - Approved: [[All-Source Intelligence]]
+- **Commit:** `verify: All-Source Intelligence`
+
+### [2026-11-19] verify | Pearl Harbor (1941)
+
+- **Verify:**
+  - Approved: [[Pearl Harbor (1941)]]
+- **Commit:** `verify: Pearl Harbor (1941)`
+
+### [2026-11-19] verify | Open Skies Treaty
+
+- **Verify:**
+  - Approved: [[Open Skies Treaty]]
+- **Commit:** `verify: Open Skies Treaty`
+
+### [2026-11-19] verify | Mata v. Avianca (2023)
+
+- **Verify:**
+  - Approved: [[Mata v. Avianca (2023)]]
+- **Commit:** `verify: Mata v. Avianca (2023)`
+
+### [2026-11-19] verify | Time Compression Trap
+
+- **Verify:**
+  - Approved: [[Time Compression Trap]]
+- **Commit:** `verify: Time Compression Trap`
+
+### [2026-11-19] verify | Security Classification
+
+- **Verify:**
+  - Approved: [[Security Classification]]
+- **Commit:** `verify: Security Classification`
+
+### [2026-11-19] verify | Polygraph Examination
+
+- **Verify:**
+  - Approved: [[Polygraph Examination]]
+- **Commit:** `verify: Polygraph Examination`
+
+### [2026-11-19] verify | Politicized Intelligence
+
+- **Verify:**
+  - Approved: [[Politicized Intelligence]]
+- **Commit:** `verify: Politicized Intelligence`
+
+### [2026-11-19] verify | Pi-Shaped Person
+
+- **Verify:**
+  - Approved: [[Pi-Shaped Person]]
+- **Commit:** `verify: Pi-Shaped Person`
+
+### [2026-11-19] verify | Narrow AI
+
+- **Verify:**
+  - Approved: [[Narrow AI]]
+- **Commit:** `verify: Narrow AI`
+
+### [2026-11-19] verify | LLM Wiki
+
+- **Verify:**
+  - Approved: [[LLM Wiki]]
+- **Commit:** `verify: LLM Wiki`
+
+### [2026-11-19] verify | Intelligence-Led Policing
+
+- **Verify:**
+  - Approved: [[Intelligence-Led Policing]]
+- **Commit:** `verify: Intelligence-Led Policing`
+
+### [2026-11-19] verify | Intelligence Writing Style
+
+- **Verify:**
+  - Approved: [[Intelligence Writing Style]]
+- **Commit:** `verify: Intelligence Writing Style`
+
+### [2026-11-19] verify | Intelligence as Attentive Understanding
+
+- **Verify:**
+  - Approved: [[Intelligence as Attentive Understanding]]
+- **Commit:** `verify: Intelligence as Attentive Understanding`
+
+### [2026-11-19] verify | Human Decision Point
+
+- **Verify:**
+  - Approved: [[Human Decision Point]]
+- **Commit:** `verify: Human Decision Point`
+
+### [2026-11-19] verify | Curiosity, Character, and Competence
+
+- **Verify:**
+  - Approved: [[Curiosity, Character, and Competence]]
+- **Commit:** `verify: Curiosity, Character, and Competence`
+
+### [2026-11-19] verify | AI-Enabled Surveillance
+
+- **Verify:**
+  - Approved: [[AI-Enabled Surveillance]]
+- **Commit:** `verify: AI-Enabled Surveillance`
+
+### [2026-11-19] verify | AI in Warfighting
+
+- **Verify:**
+  - Approved: [[AI in Warfighting]]
+- **Commit:** `verify: AI in Warfighting`
+
+### [2026-11-19] verify | AI in Intelligence Production
+
+- **Verify:**
+  - Approved: [[AI in Intelligence Production]]
+- **Commit:** `verify: AI in Intelligence Production`
+
+### [2026-11-19] verify | AI Alignment
+
+- **Verify:**
+  - Approved: [[AI Alignment]]
+- **Commit:** `verify: AI Alignment`
+
+### [2026-11-19] verify | Agentic AI
+
+- **Verify:**
+  - Approved: [[Agentic AI]]
+- **Commit:** `verify: Agentic AI`
+
+### [2026-11-19] verify | Tasking, Collection, Processing, Exploitation, and Dissemination
+
+- **Verify:**
+  - Approved: [[Tasking, Collection, Processing, Exploitation, and Dissemination]]
+- **Commit:** `verify: Tasking, Collection, Processing, Exploitation, and Dissemination`
+
+### [2026-11-19] verify | Levels of Intelligence
 
 - **Verify:**
   - Approved: [[Levels of Intelligence]]
-  - Flags I resolved before approving (2):
-    - Gap (Gap in my notes) — fixed
-    - Gap (Gap in my notes) — not needed
 - **Commit:** `verify: Levels of Intelligence`
 
-### [2026-11-14] ingest | Six SAIL readings: Crash Course AI 18, OWASP LLM Top 10 2026, two RAND papers, MITRE ATLAS, IBM HCAI
+### [2026-11-19] verify | Information Model
 
-- **Think:** I gave Claude six sources to ingest: the Crash Course AI "Algorithmic Bias and Fairness" transcript (ignore its timestamps), the OWASP Top 10 for LLM Applications 2026, RAND's "Artificial General Intelligence's Five Hard National Security Problems" and "Full Stack: China's Evolving Industrial Policy for AI," the MITRE ATLAS matrix, and IBM Research's "What is human-centered AI?". Plan-first mode. I approved the plan as proposed: all six tagged SAIL; 39 pages, with the six remaining OWASP risks as glossary terms; "MITRE ATLAS" kept as a title; the OWASP pre-release status noted; the three China chip-gap figures recorded side by side without a flag; changes to verified pages proposed only.
-- **Calculate:** Claude (claude-opus-5-5) copied the six files unchanged into `Sources/Readings/` with descriptive names (the transcript saved as `.md`, text unchanged). It drafted 6 source cards (ratings proposed, left blank for me), 6 summaries, and 27 wiki pages:
-  - Concepts (6): [[Algorithmic Bias]], [[Prompt Injection]], [[Excessive Agency]], [[Data and Model Poisoning]], [[China's AI Industrial Policy]], [[Semiconductor Export Controls]]
-  - Frameworks (3): [[Five Hard National Security Problems of Artificial General Intelligence]], [[OWASP Top 10 for Large Language Model Applications]], [[MITRE ATLAS]]
-  - Case study (1): [[PredPol]]
-  - Glossary (17): [[Protected Class]], [[Correlated Feature]], [[Positive Feedback Loop]], [[Algorithmic Transparency]], [[Explainable AI]], [[Scaling Laws]], [[Recursive Self-Improvement]], [[AI Technology Stack]], [[Jailbreak]], [[Lethal Trifecta]], [[Retrieval-Augmented Generation]], [[Sensitive Information Disclosure]], [[AI Supply Chain Compromise]], [[Unbounded Consumption]], [[Hidden Context Exposure]], [[Vector and Embedding Weaknesses]], [[Improper Output Handling]]
-  - Appended to drafts: [[Capability vs. Reliability]] (OWASP LLM07 misinformation and overreliance), [[Hallucination]] (OWASP causes and slopsquatting), [[Semiconductors and National Security]] (pointer to the new export-controls page).
-  - **Proposed for verified pages, not made:** [[Human-Centered AI]], [[Artificial General Intelligence]], [[AI Alignment]], [[Agentic AI]], [[Automation Bias]], [[Bing Sydney Incident (2023)]], [[Cascade of Unintended Consequences]], [[Embedding]], [[Technological Singularity]].
-  - **Flags:** unsourced background (1: the ATLAS acronym on [[MITRE ATLAS]]); gap in the source (5: the transcript's missing date and offset chapter headings; three OWASP figures not ingested; RAND China's Figure 1 didn't print; the ATLAS page has no definitions; ATLAS acronym not spelled out on its source card).
-  - **Title changed from the plan:** the OWASP framework page is titled with "Large Language Model" spelled out (Schema §3), with "OWASP Top 10 for LLM Applications" as an alias.
-  - **Left out on purpose:** the transcript's closing promotions and its passing mention of a 2017 profile-photo paper; OWASP's license page, Appendix B figures, references, and the full incident lists in each entry; RAND notes and references; IBM's sidebars and newsletter boxes. Tay, HireMe!, SCORE, and DeepSeek stayed as bullets rather than pages.
-  - [[index]] updated. [[Find]] and [[Library.base|Library]] needed no change: no new class dates, courses, page types, or flag kinds.
-- **Verify:** pending. Item by item.
-- **Commit:** `ingest: six SAIL readings (Crash Course AI 18, OWASP LLM Top 10 2026, RAND AGI, RAND China, MITRE ATLAS, IBM HCAI) — 39 drafts + 3 draft appends, pending review`
-
-### [2026-11-14] ingest | Proposed changes to verified pages and typed links from the six-reading ingest
-
-- **Think:** I approved every proposal in sections C and D of the six-reading ingest report: the nine changes to verified pages and all proposed typed links.
-- **Calculate:** Claude (claude-opus-5-5) made the nine changes and set each page back to `status: draft` (Schema §7, item 5), leaving its old `verified_on` date as a record of the last verification:
-  - [[Human-Centered AI]]: added the IBM source card, the article's authors and date, IBM's three research themes, explainable recommendations in SCORE, and IBM's split of human and AI roles; `related` → [[Explainable AI]].
-  - [[Artificial General Intelligence]]: added RAND's definition and a **Sources disagree** flag (SAIL vs. Mitre and Predd); `related` → [[Five Hard National Security Problems of Artificial General Intelligence]].
-  - [[AI Alignment]]: added RAND's description of misalignment and loss of control.
-  - [[Agentic AI]]: added OWASP's excessive agency and the component-versus-actor boundary; `related` → [[Excessive Agency]].
-  - [[Automation Bias]]: added OWASP's "overreliance."
-  - [[Bing Sydney Incident (2023)]]: `example_of` → [[Prompt Injection]]; linked "prompt injection" in failure #4.
-  - [[Cascade of Unintended Consequences]]: linked "Bias at scale" to [[Algorithmic Bias]].
-  - [[Embedding]]: added [[Retrieval-Augmented Generation]] and [[Vector and Embedding Weaknesses]] to "Used in."
-  - [[Technological Singularity]]: added "compare [[Recursive Self-Improvement]]."
-  - The typed links on the new drafts (section D) were already in place; no change needed.
-  - [[index]] updated: the nine pages moved from Verified to Drafts. [[Find]] and [[Library.base|Library]] needed no change.
-  - **Flags added:** sources disagree (1, on [[Artificial General Intelligence]]).
-- **Verify:** pending. Item by item, since all nine were verified pages.
-- **Commit:** `ingest: apply approved changes to 9 verified pages (back to draft for review)`
-
-### [2026-11-17] ingest | SAIL Module 2 resources: IBM AI explainer, two 3Blue1Brown videos, Then & Now on Heidegger, "Attention Is All You Need"
-
-- **Think:** I gave Claude the five SAIL Module 2 resources ("How we got here: Machine learning, deep learning, GenAI"): four video transcripts (skip the timestamps) and the transformer paper. Plan-first mode. I approved the plan as proposed, including its four proposed changes to verified pages.
-- **Calculate:** Claude (claude-opus-5-5) copied the five files unchanged into `Sources/Readings/` with descriptive names (transcripts saved as `.md`, text unchanged). It drafted 5 source cards (ratings proposed, left blank for me), 5 summaries, and 20 wiki pages:
-  - Concepts (5): [[Neural Network]], [[Large Language Model]], [[Generative AI]], [[Self-Attention]], [[Enframing]]
-  - Person (1): [[Martin Heidegger]]
-  - Glossary (14): [[Four Causes]], [[Standing Reserve]], [[Foundation Model]], [[Deepfake]], [[Parameter]], [[Sigmoid Function]], [[Backpropagation]], [[Pre-Training]], [[Reinforcement Learning with Human Feedback]], [[Positional Encoding]], [[Encoder-Decoder Architecture]], [[Recurrent Neural Network]], [[Feed-Forward Neural Network]], [[Hidden Layer]]
-  - Appended to drafts: [[Transformer]] (the 2017 paper, parallel processing, original design), [[Deep Learning]] (IBM's "multiple layers"; 3Blue1Brown's edges → loops → digits), [[Machine Learning]] (IBM's patterns, prediction, outliers), [[Embedding]] (why words become numbers; 512 dimensions), [[Algorithmic Transparency]] (why deep networks are hard to interpret).
-  - Changed verified pages, now back to `status: draft` (Schema §7, item 5), old `verified_on` kept: [[Artificial Intelligence]] (IBM's definition and nested view), [[Attention Head]] (eight heads, different tasks; `part_of` → [[Self-Attention]]), [[Tokenization]] (byte-pair encoding, ~37,000 tokens), [[Emergent Behavior]] (LLM behavior as emergent).
-  - **Flags added:** sources disagree (1: next word vs. next sentence/paragraph/document, on [[Large Language Model]]); possibly resolved (1: the "140 billion pieces of data" accuracy check on [[Transformer]]); accuracy check (3: garbled caption terms on the Then & Now source card and [[Four Causes]]; the paper's 41.8 vs. 41.0 BLEU on its source card); unsourced background (1: *Gestell* on [[Enframing]]); gap in the source (2: IBM's on-screen timeline; 3Blue1Brown's visuals).
-  - **Changed from the plan:** 14 glossary terms, not 15 (the plan miscounted after dropping Graphics Processing Unit), so 30 new pages, not 31.
-  - **Left out on purpose:** a Graphics Processing Unit glossary term (no source spells out "GPU"); an Expert System glossary term (no definition given; now a bullet on [[Artificial Intelligence]]); the paper's equations, hyperparameters, parsing results, and references; the videos' channel promotions.
-  - **Perspectives material (not written):** Heidegger's "instrument" vs. "revealing" view of technology bears on the "AI is a tool" line in [[My Worldview]].
-  - [[index]] updated. [[Find]] and [[Library.base|Library]] needed no change: every cited class date was already listed, and no new course, page type, or flag kind.
-- **Verify:** pending. Item by item.
-- **Commit:** `ingest: SAIL Module 2 resources (IBM, 3Blue1Brown x2, Then & Now, Attention Is All You Need) — 30 drafts + 9 page updates, pending review`
-
-### [2026-11-17] verify | Typed links from the SAIL Module 2 ingest
-
-- **Think:** I reviewed the typed links proposed in section D of the Module 2 ingest report.
-- **Calculate:** No page changes; the links were already in the drafts' properties.
 - **Verify:**
-  - Links approved:
-    - [[Neural Network]] → part_of → [[Deep Learning]]
-    - [[Generative AI]] → part_of → [[Deep Learning]]
-    - [[Large Language Model]] → part_of → [[Generative AI]]
-    - [[Self-Attention]] → part_of → [[Transformer]]
-    - [[Attention Head]] → part_of → [[Self-Attention]]
-    - [[Standing Reserve]] → part_of → [[Enframing]]
-    - [[Sigmoid Function]] → part_of → [[Neural Network]]
-    - [[Hidden Layer]] → part_of → [[Neural Network]]
-    - [[Positional Encoding]] → part_of → [[Transformer]]
-  - Pages themselves are still drafts, pending item-by-item review.
-- **Commit:** `verify: approve 9 typed links from SAIL Module 2 ingest`
+  - Approved: [[Information Model]]
+- **Commit:** `verify: Information Model`
 
-### [2026-11-17] ingest | SAIL Module 3 resources (IBM Technology x2, Kevin Stratvert, Tao Prompts, Arena)
+### [2026-11-19] verify | Four Levels of Prompt Engineering
 
-- **Think:** I asked for the five SAIL Module 3 resources to be ingested: IBM Technology's "Generative vs Agentic AI" and "RAG vs Fine-Tuning vs Prompt Engineering" videos, Kevin Stratvert's custom GPT tutorial, Tao Prompts' AI music video tutorial, and Arena's "About Us" page. Defaults: whole sources, everything substantive, plan first, verified pages proposed only. I approved the plan as written.
+- **Verify:**
+  - Approved: [[Four Levels of Prompt Engineering]]
+- **Commit:** `verify: Four Levels of Prompt Engineering`
+
+### [2026-11-19] verify | Five Hard National Security Problems of Artificial General Intelligence
+
+- **Verify:**
+  - Approved: [[Five Hard National Security Problems of Artificial General Intelligence]]
+- **Commit:** `verify: Five Hard National Security Problems of Artificial General Intelligence`
+
+### [2026-11-19] verify | Failures of Imagination, Policy, Capabilities, and Management
+
+- **Verify:**
+  - Approved: [[Failures of Imagination, Policy, Capabilities, and Management]]
+- **Commit:** `verify: Failures of Imagination, Policy, Capabilities, and Management`
+
+### [2026-11-19] verify | Executive Order 12333
+
+- **Verify:**
+  - Approved: [[Executive Order 12333]]
+- **Commit:** `verify: Executive Order 12333`
+
+### [2026-11-19] verify | Essay Types
+
+- **Verify:**
+  - Approved: [[Essay Types]]
+- **Commit:** `verify: Essay Types`
+
+### [2026-11-19] verify | Elements and Standards of Critical Thinking
+
+- **Verify:**
+  - Approved: [[Elements and Standards of Critical Thinking]]
+- **Commit:** `verify: Elements and Standards of Critical Thinking`
+
+### [2026-11-19] verify | Cascade of Unintended Consequences
+
+- **Verify:**
+  - Approved: [[Cascade of Unintended Consequences]]
+- **Commit:** `verify: Cascade of Unintended Consequences`
+
+### [2026-11-19] verify | Architecture of Worldview
+
+- **Verify:**
+  - Approved: [[Architecture of Worldview]]
+- **Commit:** `verify: Architecture of Worldview`
+
+### [2026-11-19] verify | Analysis of Competing Hypotheses
+
+- **Verify:**
+  - Approved: [[Analysis of Competing Hypotheses]]
+- **Commit:** `verify: Analysis of Competing Hypotheses`
+
+### [2026-11-19] verify | Ages of U.S. Intelligence
+
+- **Verify:**
+  - Approved: [[Ages of U.S. Intelligence]]
+- **Commit:** `verify: Ages of U.S. Intelligence`
+
+### [2026-11-19] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`
+
+### [2026-11-19] schema | Citations move to footnotes (6.0)
+
+- **Think:** I asked for citations to move from parentheses to footnotes on every page, with inline links in sentences left alone. I chose to re-verify the verified pages, numbered IDs, and a `## Footnotes` heading, and approved linking the unlinked class-notes citations to their date headings.
 - **Calculate:**
-  - Originals copied unchanged into `Sources/Readings/`. The four .txt transcripts were saved with a .md extension (content unchanged) so Obsidian can open and link to them; the Arena page stays HTML and is cited through its source card by section heading.
-  - Source cards (5), ratings proposed: [[SRC - Generative vs Agentic AI]] (B-2), [[SRC - RAG vs Fine-Tuning vs Prompt Engineering]] (B-2), [[SRC - How to Create Custom GPT]] (C-2), [[SRC - How to Make a Music Video with AI]] (C-3), [[SRC - About Us (Arena)]] (B-2).
-  - Summaries (5): [[Summary - Generative vs Agentic AI]], [[Summary - RAG vs Fine-Tuning vs Prompt Engineering]], [[Summary - How to Create Custom GPT]], [[Summary - How to Make a Music Video with AI]], [[Summary - About Us (Arena)]].
-  - Concepts (3): [[Generative vs. Agentic AI]], [[Fine-Tuning]], [[Custom GPT]]
-  - Framework (1): [[Retrieval-Augmented Generation vs. Fine-Tuning vs. Prompt Engineering]]
-  - Glossary (2): [[Catastrophic Forgetting]], [[Chain-of-Thought Reasoning]]
-  - Appended to drafts: [[Agentic AI]] (IBM's perceive–decide–execute–learn cycle, LLMs as reasoning engine, shopping-agent example), [[Generative AI]] (reactive by design; diffusion models; the music-video workflow), [[Prompt Engineering]] (IBM's account of why prompting works; formatting by example; link to Chain-of-Thought Reasoning), [[Retrieval-Augmented Generation]] (retrieve–augment–generate definition; `part_of` the new framework), [[LMSYS Chatbot Arena]] (now called Arena; aliases Arena and LMArena; history and funding), and "Used in" links to [[Fine-Tuning]] on [[Backpropagation]], [[Pre-Training]], and [[Parameter]].
-  - No verified pages changed.
-  - **Typed links proposed (6):** [[Fine-Tuning]] → applies_to → [[Large Language Model]]; [[Retrieval-Augmented Generation]] → part_of → [[Retrieval-Augmented Generation vs. Fine-Tuning vs. Prompt Engineering]]; [[Fine-Tuning]] → part_of → [[Retrieval-Augmented Generation vs. Fine-Tuning vs. Prompt Engineering]]; [[Chain-of-Thought Reasoning]] → part_of → [[Prompt Engineering]]; [[Catastrophic Forgetting]] → related → [[Fine-Tuning]]; [[Custom GPT]] → example_of → [[Generative AI]].
-  - **Flags added:** sources disagree (1: whether a GPT "has all" the internet's knowledge vs. training cutoffs, on [[Custom GPT]]); accuracy check (4: "train" used loosely, on [[Custom GPT]]; "tension mechanisms," on [[Prompt Engineering]] and the RAG video's source card; garbled tool names and parameters, on the music video's source card); gap in the source (3: no recording date, on [[Custom GPT]] and both tutorial source cards; plus the [transcript unclear] list on [[Summary - How to Make a Music Video with AI]]); possibly resolved (1: the name-change half of the accuracy check on [[LMSYS Chatbot Arena]]; the "sentiment analysis" half stays open).
-  - **Left out on purpose:** the music video's song lyrics; click-by-click interface steps beyond the summaries; asides (the fan-fiction anecdote, the mascot detour, subscribe requests); the name of the Midjourney user credited in the music video; Arena's navigation, footer, images, and social links. A Diffusion Model glossary term was not created (the source gives only a passing mention).
-  - **Perspectives material:** none (no work of mine in this ingest).
-  - [[index]] updated. [[Find]] and [[Library.base|Library]] needed no change: every cited class date (9/8, 10/1, 10/15) was already listed, and no new course, page type, or flag kind.
-- **Verify:** pending. Item by item.
-- **Commit:** `ingest: SAIL Module 3 resources (IBM x2, Stratvert, Tao Prompts, Arena) — 16 drafts + 8 page updates, pending review`
+  - [[SCHEMA]] 6.0 (set to `draft`): §6 rule 1 rewritten for footnotes, new rule 2 on how footnotes are written, rules renumbered, attribution examples put dates in the footnote; §10 health check also looks for footnote problems; changelog line added.
+  - 383 wiki pages and 2 source cards converted: 2,353 parenthetical citations became 1,609 footnotes, each page ending in a `## Footnotes` section. A script checked every page: wording unchanged once citations are removed, every link kept, every marker defined and every definition used, frontmatter unchanged apart from the status change below, line endings unchanged.
+  - Not converted, by design: 5 citations that are part of their sentence ("All from …", "Taglines are from …") kept as inline links; "(cites Treverton, pp. 11–15)" on [[Puzzles and Mysteries]]; the "(Lowenthal)" attributions on [[Seven-Point Definition of Intelligence]]; the "(Section …)" labels on [[Executive Order 12333]]; plain "see [[…]]" cross-references.
+  - 9 unlinked class-notes citations now link to their date headings (on [[Centaur Analyst]], [[Intelligence (National Security)]], [[Intelligence Collection Disciplines]], [[Intelligence vs. Consciousness]], [[Intelligence-to-Action Convergence Matrix]], [[Three-Ps Risk Framework]], [[Artificial General Intelligence]]).
+  - The 62 verified pages set to `draft`, `verified_on` kept, each with a `changes_since_verified` line.
+  - [[Dissect and Ingest a Source]] and [[Intelligence Community Style Summaries]]: citing instructions now say footnotes (extra `changes_since_verified` line on each).
+  - Templates: page templates get a `## Footnotes` section; Glossary Term uses a marker instead of "(citation)"; Health Check Report's citation row also counts footnote problems.
+  - Nicrosil 2.4.5: search snippets and review-card summaries skip footnote markers and the Footnotes section. [[Nicrosil]] guide updated (v2.4.5, plus the missing 2.4.4 history line).
+- **Verify:**
+  - Pending my review: SCHEMA 6.0; the 62 re-reviews (footnotes only); the two prompts and the Nicrosil guide
+- **Commit:** `schema: 6.0 citations as footnotes`
 
-### [2026-11-17] ingest | SAIL Module 5 resources (Hossenfelder, Bengio TED, Sutton on Dwarkesh, "A Disneyland Without Children," Lewis)
+### [2026-11-19] verify | Analytic Confidence
 
-- **Think:** I asked for the five SAIL Module 5 resources ("How we handle an uncertain future") to be ingested: Sabine Hossenfelder's "Current AI Models have 3 Unfixable Problems" and Yoshua Bengio's TED talk "The Catastrophic Risks of AI — and a Safer Path" (transcripts), the Dwarkesh Podcast page "Richard Sutton – Father of RL thinks LLMs are a dead end," L Rudolf L's short story "A Disneyland Without Children" (LessWrong), and C. S. Lewis's essay "On Living in an Atomic Age." Defaults: whole sources, everything substantive, plan first, verified pages proposed only. I approved the plan as written.
+- **Verify:**
+  - Approved: [[Analytic Confidence]]
+- **Commit:** `verify: Analytic Confidence`
+
+### [2026-11-19] verify | Politicized Intelligence
+
+- **Verify:**
+  - Approved: [[Politicized Intelligence]]
+- **Commit:** `verify: Politicized Intelligence`
+
+### [2026-11-19] verify | Intelligence Writing Style
+
+- **Verify:**
+  - Approved: [[Intelligence Writing Style]]
+- **Commit:** `verify: Intelligence Writing Style`
+
+### [2026-11-19] verify | AI in Intelligence Production
+
+- **Verify:**
+  - Approved: [[AI in Intelligence Production]]
+- **Commit:** `verify: AI in Intelligence Production`
+
+### [2026-11-19] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`
+
+### [2026-11-19] verify | Law Enforcement Intelligence Internships
+
+- **Verify:**
+  - Approved: [[Law Enforcement Intelligence Internships]]
+- **Commit:** `verify: Law Enforcement Intelligence Internships`
+
+### [2026-11-19] schema | Law Enforcement Intelligence Internships moved to Workflows
+
+- **Think:** I approved the plan to reclassify the internship page as a workflow, since guides are now only about the Coppermind itself (SCHEMA 5.3).
 - **Calculate:**
-  - Originals copied unchanged into `Sources/Readings/`. The two .txt transcripts were saved with a .md extension (content unchanged); the Sutton and LessWrong pages stay HTML and are cited through their source cards by chapter heading or story part; the Lewis essay stays PDF, cited by PDF page.
-  - Source cards (5), ratings proposed: [[SRC - Current AI Models Have 3 Unfixable Problems]] (C-3), [[SRC - The Catastrophic Risks of AI and a Safer Path]] (B-3), [[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End]] (B-2), [[SRC - A Disneyland Without Children]] (F-6, fiction), [[SRC - On Living in an Atomic Age]] (B-6).
-  - Summaries (5): [[Summary - Current AI Models Have 3 Unfixable Problems]], [[Summary - The Catastrophic Risks of AI and a Safer Path]], [[Summary - Richard Sutton, Father of RL Thinks LLMs Are a Dead End]], [[Summary - A Disneyland Without Children]], [[Summary - On Living in an Atomic Age]].
-  - People (3): [[Yoshua Bengio]], [[Richard Sutton]], [[C. S. Lewis]]
-  - Concepts (9): [[Reinforcement Learning]], [[Continual Learning]], [[Out-of-Distribution Generalization]], [[Critiques of Large Language Models]], [[Bitter Lesson]], [[AI Deception]], [[AI Succession]], [[Gradual Loss of Control]], [[Naturalism]]
-  - Glossary (3): [[World Model]], [[Temporal Difference Learning]], [[Scientist AI]]
-  - Appended to drafts: [[Hallucination]] (Hossenfelder's account, the OpenAI uncertainty proposal and Wei Xing's critique), [[Prompt Injection]] (Hossenfelder: "basically impossible to solve"), [[Agentic AI]] (Bengio on agency, the seven-month doubling, "slow down"), [[AI Alignment]] (Bengio on loss of control), [[Artificial General Intelligence]] (Hossenfelder's definition, added to the sources-disagree callout), [[Catastrophic Forgetting]] (Sutton's "catastrophic interference," now an alias), [[Chain-of-Thought Reasoning]] (Bengio on hidden plans); link-only updates to [[Large Language Model]], [[Machine Learning]], [[Reinforcement Learning with Human Feedback]], [[Scaling Laws]], and [[Cascade of Unintended Consequences]].
-  - **Proposed for a verified page, not made:** [[Existential Risk]].
-  - **Typed links proposed (6 structural, plus `related`):** [[Reinforcement Learning]] → part_of → [[Machine Learning]]; [[Temporal Difference Learning]] → part_of → [[Reinforcement Learning]]; [[World Model]] → part_of → [[Reinforcement Learning]]; [[Out-of-Distribution Generalization]] → part_of → [[Critiques of Large Language Models]]; [[Critiques of Large Language Models]] → applies_to → [[Large Language Model]]; [[AI Deception]] → part_of → [[Cascade of Unintended Consequences]]; plus `related` links on the new pages and on [[Agentic AI]], [[AI Alignment]], [[Hallucination]], [[Artificial General Intelligence]], [[Large Language Model]], and [[Reinforcement Learning with Human Feedback]].
-  - **Flags added:** sources disagree (5: world models, on [[World Model]]; generalization, on [[Out-of-Distribution Generalization]]; LLMs as a foundation for experiential learning, on [[Continual Learning]]; Bengio's timeline vs. Hossenfelder, on [[Critiques of Large Language Models]]; MSRayne vs. the author, on [[Gradual Loss of Control]]); possibly resolved (1: the "wrong meaning of a word" accuracy check on [[Hallucination]]); accuracy check (2: "writing for the conversation," on the Hossenfelder source card; transcription typos, on the Lewis source card); gap in the source (2: undated video, unnamed OpenAI paper, and offset chapter headings, on the Hossenfelder card; undated talk and unnamed studies, on the Bengio card).
-  - **Left out on purpose:** sponsor reads (Incogni, Labelbox, Gemini Deep Research, Hudson River Trading); timestamps; Substack and LessWrong navigation; most LessWrong comments; Bengio's opening story about his son; the astronauts' banter and the third crew member's subplot. No Moravec's Paradox, Big World Hypothesis, or Pause Letter glossary terms (each is a bullet on its parent page), and no People pages for Hossenfelder, Dwarkesh Patel, Nick Bostrom, or Paul Christiano (passing mentions only).
-  - **Perspectives material (not written):** Lewis's case against naturalism and his claim that survival should never come first bear on the Ontology and Teleology layers of [[My Worldview]]; Sutton's succession argument bears on its "AI is a tool" line.
-  - New and changed files converted to the vault's CRLF line endings. [[index]] updated. [[Find]] and [[Library.base|Library]] needed no change: every cited class date (8/27, 9/1, 9/8, 9/10) was already listed, and no new course, page type, or flag kind.
-- **Verify:** pending. Item by item.
-- **Commit:** `ingest: SAIL Module 5 resources (Hossenfelder, Bengio, Sutton, Disneyland Without Children, Lewis) — 25 drafts + 12 page updates, pending review`
+  - [[Law Enforcement Intelligence Internships]] (verified): `type` changed from guide to workflow; headings now Steps, Checks, Common Mistakes (the three troubleshooting items rephrased as mistakes, same cited claims); alias "Internship Guide" renamed "Internship Workflow". Set to `status: draft` with `verified_on` kept and a `changes_since_verified` line.
+  - `index.md`: the page moved from Guides (now 3) to Workflows (now 2). Total unchanged.
+  - The file still has to be dragged from `Wiki/Guides/` to `Wiki/Workflows/` in Obsidian; the agent cannot move files.
+- **Verify:**
+  - Pending my review: re-review, listed changes only
+- **Commit:** `edit: reclassify Law Enforcement Intelligence Internships as a workflow`
 
-### [2026-11-17] schema | Add Tools folder (version 2.0)
+### [2026-11-19] schema | Guides are about the Coppermind itself (5.3)
 
-- **Think:** I asked for a new `Tools/` folder to hold the tools I use, to save the YouTube to Coppermind Chrome extension in it, and to update the vault map and any other place that lists the folders.
+- **Think:** The Law Enforcement Intelligence Internships page, made from Detective Mennen's guest lecture, is in `Guides/`. I want guides to be about the Coppermind itself, not any how-to, and I asked where that page would belong instead.
 - **Calculate:**
-  - Created `Tools/` and saved `yt-to-coppermind.zip` (v1.1: Chrome extension that downloads a video's transcript as a Markdown file in the Coppermind transcript format) in it.
-  - [[SCHEMA]] updated: folder layout (§2), new "Tools: the toolbox" subsection (§2), permissions row (§9), export note (§13), frontmatter `version: 2`, and a 2.0 changelog line. Tools are not one of the six parts and are not in the index, so the six-parts table is unchanged.
-  - `AGENTS.md` updated with a pointer to `Tools/`.
-  - Because the schema's content changed, its `status` was set back to `draft` and `verified_on` cleared, per §7.
-  - [[index]], [[Find]], [[Library.base|Library]], and the Dashboard needed no change: Tools holds no pages, page types, courses, or class dates.
-- **Verify:** pending. Schema needs re-verifying.
-- **Commit:** `schema: add Tools folder (v2.0) and YouTube transcript extension`
+  - [[SCHEMA]] 5.3: `Guides/` is now described as how-to pages about the Coppermind itself; new "Guides: about the Coppermind itself" subsection in section 2 (a how-to about anything else is a workflow, or a concept, framework, or summary); `Workflows/` now says it holds processes from my courses as well as from running the wiki; the URL-citation exception in section 6 refers to guides about the Coppermind's own tools. Status set to `draft` until I verify it again.
+  - `_templates/Guide.md`: the summary placeholder now says the guide is about the Coppermind itself.
+  - Checked and left alone: the Nicrosil Dashboard "Guides" card (its description is already "How the vault works" and it opens the Guides section of the index), [[_dashboard]], and the other three guides, which are all about the Coppermind.
+  - Proposed, not applied: move [[Law Enforcement Intelligence Internships]] to `Wiki/Workflows/` as `type: workflow`. It is verified, so it would go back to `draft` with a `changes_since_verified` note, and the index would change.
+- **Verify:**
+  - Pending my review
+- **Commit:** `schema: 5.3 guides are about the Coppermind itself`
+
+### [2026-11-19] ingest | Intro to Intelligence batch 1e-2: Johnston, Analytic Culture ch. 3–4
+
+- **Think:** I approved the 1e-2 plan, including the two verified-page edits: Johnston's taxonomy of intelligence variables (ch. 3) and Judith Meister Johnston and Rob Johnston's systems model of the intelligence cycle (ch. 4).
+- **Calculate:**
+  - Created (3, all drafts): frameworks [[Taxonomy of Intelligence Analysis Variables]] and [[Systems Model of the Intelligence Cycle]]; glossary [[Cognitive Load]].
+  - Appended to drafts: [[Intelligence Analysis]] (ch. 3's fuller definition), [[Tradecraft vs. Science in Intelligence Analysis]] (the medicine parallel), [[Sherman Kent]] (his three elements of analysis); updated [[SRC - Analytic Culture in the US Intelligence Community (Johnston)]] (ingest progress) and [[Summary - Analytic Culture in the US Intelligence Community]].
+  - Edited verified pages, as approved in the plan: [[Intelligence Cycle]] (the five-step version, the critique, and a sources-disagree flag) and [[Denial and Deception]] (deception is the rule in intelligence). Each set to `status: draft` with `verified_on` kept and a `changes_since_verified` line.
+  - Proposed 2 typed links (developed_by 1, applies_to 1; no `related`).
+  - Flags: 1 sources disagree (the number and first step of the intelligence cycle, on [[Intelligence Cycle]]); 1 whose view (the simulation is unvalidated, on [[Systems Model of the Intelligence Cycle]]).
+  - Ingest Queue: 1e-2 marked `[~]`.
+- **Verify:**
+  - Pending my review (including re-reviews of the two verified pages, listed changes only)
+- **Commit:** `ingest: Intro to Intelligence batch 1e-2 (Johnston ch. 3-4) — 3 drafted, 7 updated`
+
+### [2026-11-19] ingest | Batch 1e-1 proposals
+
+- **Think:** I approved all three batch 1e-1 proposals.
+- **Calculate:**
+  - [[Confirmation Bias]] (verified): added Johnston's definition and his corporate-judgment finding; added Intro to Intelligence to courses; Used in updated.
+  - [[Richards Heuer]] (re-review pending): added Johnston's citation of Heuer; added the Johnston card to sources and Appears In.
+  - [[SRC - Johnston Recommendations Summary]]: proposed rating raised from B-3 to B-2 after checking it against the book; the spelling flag now points to the book's title page; index line updated.
+  - Both wiki pages set to `status: draft` with `verified_on` kept and a `changes_since_verified` line added.
+- **Verify:**
+  - Pending my review: re-reviews, listed changes only
+- **Commit:** `edit: apply 3 batch-1e-1 proposals`
+
+### [2026-11-19] ingest | Intro to Intelligence batch 1e-1: Johnston, Analytic Culture (front matter, ch. 1–2, 8–9)
+
+- **Think:** I approved splitting batch 1e into seven sub-batches (three for Johnston, four for Bodnar) and the 1e-1 plan: Johnston's foreword, introduction, ch. 1–2, ch. 8–9, afterword, and author note.
+- **Calculate:**
+  - Copied the original into `Sources/Readings/` as `Johnston - Analytic Culture in the US Intelligence Community (2005).pdf`. It has a text layer; the agent matched PDF pages to printed page numbers from the page footers.
+  - Created (13, all drafts): source card [[SRC - Analytic Culture in the US Intelligence Community (Johnston)]] (proposed B-2); [[Summary - Analytic Culture in the US Intelligence Community]]; concepts [[Analytic Culture]], [[Tradecraft vs. Science in Intelligence Analysis]]; framework [[Performance Improvement Infrastructure]]; person [[Rob Johnston]]; glossary [[Intelligence Analysis]], [[Intelligence Error and Intelligence Failure]], [[Secrecy vs. Efficacy]], [[Corporate Judgment]], [[Anticipatory Socialization]], [[Community of Practice]], [[Indications and Warning]].
+  - Revised my draft [[Johnston's Analytic Culture Recommendations]] against the book (each of the handout's five points checked against ch. 8–9 and cited to the book; research programs and access added; the spelling flag now points to the title page; Gartin's quote located on p. 43).
+  - Appended to drafts: [[Current vs. Long-Term Intelligence]] (the book replaces the handout), [[Groupthink]], [[Stovepipe]], [[President's Daily Brief]], [[Structured Analytic Technique]], [[Intelligence (National Security)]] (Johnston's working definition).
+  - Proposed, not yet applied: [[Confirmation Bias]] (verified), [[Richards Heuer]] (verified, re-review pending), and a rating change on [[SRC - Johnston Recommendations Summary]] (proposed B-3 to B-2).
+  - Proposed 4 typed links (developed_by 3, part_of 1; no `related`).
+  - Flags: 2 whose view (Johnston's findings are post-9/11 perceptions he gathered while growing sympathetic to analysts, on [[Analytic Culture]]; his tradecraft-vs-science argument against his own "art, tradecraft, and science," on [[Tradecraft vs. Science in Intelligence Analysis]]); 1 accuracy check updated (the Johnson/Johnston spelling).
+  - Ingest Queue: 1e split into sub-batches 1e-1 to 1e-7; 1e-1 marked `[~]`.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: Intro to Intelligence batch 1e-1 (Johnston front matter, ch. 1-2, 8-9) — 13 drafted, 7 updated, 1 original copied`
+
+### [2026-11-19] ingest | Batch 1d proposals for verified pages
+
+- **Think:** I approved both batch 1d proposals for verified pages.
+- **Calculate:**
+  - [[Intelligence Writing Style]]: cited the Williams and Molzon slides as matching my 9/15 notes, and linked the batch 1d writing pages.
+  - [[Key Judgments]]: added Kaiser and Pherson's view (via the Grammar Summaries) and the message-driven order; Used in updated.
+  - Each set to `status: draft` with `verified_on` kept and one `changes_since_verified` line.
+- **Verify:**
+  - Pending my review: re-reviews, listed changes only
+- **Commit:** `edit: apply 2 batch-1d verified-page proposals`
+
+### [2026-11-19] ingest | Intro to Intelligence batch 1d: intelligence writing
+
+- **Think:** I approved the batch 1d plan: Kaiser and Pherson's *Analytic Writing Guide* excerpts, the BLUF format handout, the Williams and Molzon slides, the analytic titles handout, and the Grammar Summaries' Kaiser and Pherson terms.
+- **Calculate:**
+  - Copied the seven originals into `Sources/Readings/`. The four Kaiser and Pherson scans were upside down with no text layer; the agent rotated them, ran OCR, and matched each PDF page to the book's printed page.
+  - Created (19, all drafts): source cards [[SRC - Analytic Writing Guide (Kaiser and Pherson)]] (proposed B-2), [[SRC - How to Write an Intelligence Product in BLUF Format]], [[SRC - Intelligence Writing (Williams and Molzon Slides)]], and [[SRC - Developing Analytic Titles]] (each proposed B-3); summaries of the first two; concepts [[Bottom Line Up Front]], [[Analytic Title]], [[Detailed Outline]], [[Economizing on Words]], [[Self-Editing and Final Review]]; frameworks [[Analytic Line of March]], [[Six Qualities of an Analytic Topic Sentence]], [[Six-Step Paragraph Review]]; glossary [[Inverted Triangle]], [[Analytic Mission Statement]], [[Two-Degrees-of-Separation Rule]], [[Active Voice]], [[No-Kidding Rule]].
+  - Appended to drafts: [[Topic Sentence]] (Kaiser and Pherson's standard, the Grammar Summaries' definition, and a "Possibly resolved by" line on my gap note), [[Estimative Language]], [[ICD 203 Analytic Standards]]; updated the deferred-terms line on [[SRC - Grammar Summaries, Weeks 2-7]].
+  - Proposed for verified pages, not yet applied: [[Intelligence Writing Style]] and [[Key Judgments]].
+  - Proposed 2 typed links (part_of 1, applies_to 1; no `related`).
+  - Flags: 1 accuracy check (the Williams and Molzon slide cites ICD 203 §D.6.e(5) for a rule that is in (6), on [[Bottom Line Up Front]] and the slides' card); 1 gap (chapters 1, 2, and 8 not in the course scans); 1 whose view (the titles handout's academic origin).
+  - Ingest Queue: 1d marked `[~]`.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: Intro to Intelligence batch 1d (intelligence writing) — 19 drafted, 4 appended, 7 originals copied`
+
+### [2026-11-19] ingest | Batch 1c proposals for verified pages
+
+- **Think:** I approved all four batch 1c proposals for verified pages.
+- **Calculate:**
+  - [[Analytic Confidence]]: ICD 203 on the basis for confidence and keeping it apart from likelihood; Used in updated.
+  - [[Politicized Intelligence]]: ICD 203's independence standard and the [[Analytic Ombuds]], and Marrin on intent.
+  - [[Richards Heuer]]: *Psychology of Intelligence Analysis* (1999), from Gartin; Intro to Intelligence added to courses.
+  - [[AI in Intelligence Production]]: Gartin's 2030 scenario and Bobby W.'s caution; Intro to Intelligence added to courses.
+  - Mechanical: added [[Richards Heuer]] to the "Used in" line of [[Structured Analytic Technique]] (a draft).
+  - Each set to `status: draft` with `verified_on` kept and one `changes_since_verified` line.
+- **Verify:**
+  - Pending my review: re-reviews, listed changes only
+- **Commit:** `edit: apply 4 batch-1c verified-page proposals`
+
+### [2026-11-19] ingest | Intro to Intelligence batch 1c: analytic standards and the profession
+
+- **Think:** I approved the batch 1c plan: seven course readings on analytic standards, objectivity, forecasting, and the future of analysis, with the author spelled Johnston and no summaries for the slide deck or the handout.
+- **Calculate:**
+  - Copied the seven originals into `Sources/Readings/` under descriptive names. ICD 203 is a scan; the agent ran OCR and checked the headings and the likelihood table against the page images.
+  - Created (27, all drafts): source cards [[SRC - ICD 203, Analytic Standards]] (proposed A-1), [[SRC - Intelligence Is NOT About Telling Truth to Power]], [[SRC - Analytic Objectivity and Science]], [[SRC - The Limits of Prediction]], [[SRC - The Future of Analysis]] (each proposed B-2), [[SRC - The Future Intelligence Analyst (Slides)]], and [[SRC - Johnston Recommendations Summary]] (each proposed B-3); summaries of the first five; frameworks [[ICD 203 Analytic Standards]], [[Six Roles of the Future Intelligence Analyst]], [[Johnston's Analytic Culture Recommendations]]; concepts [[Estimative Language]], [[Analytic Objectivity]], [[Speaking Truth to Power]], [[Limits of Prediction]], [[Future of Intelligence Analysis]]; person [[Sherman Kent]]; glossary [[Analytic Assumption]], [[Analytic Ombuds]], [[Indicators and Signposts]], [[Superforecaster]], [[Prejudice Toward Continuity]], [[Prediction Market]].
+  - Appended to drafts: [[Intelligence Community Directive]], [[Structured Analytic Technique]] (with a "Possibly resolved by" line on my gap note), [[Intelligence (National Security)]], [[Current vs. Long-Term Intelligence]], [[Red Team Analysis]], [[Consumer-Producer Relations]], [[Centaur Analyst]], [[Linchpin Evidence]].
+  - Updated two stale lines on [[SRC - Grammar Summaries, Weeks 2-7]] (the Sunni, Shia, and Caliphate terms, and the ten proposals since applied).
+  - Proposed for verified pages, not yet applied: [[Analytic Confidence]], [[Politicized Intelligence]], [[Richards Heuer]], [[AI in Intelligence Production]].
+  - Proposed 5 typed links (type_of 1, part_of 3, developed_by 1; no `related`).
+  - Flags: 1 accuracy check (Johnson vs. Johnston, on the framework page and the handout's card); 4 whose view (Analytic Objectivity, Speaking Truth to Power, Limits of Prediction, Future of Intelligence Analysis).
+  - Ingest Queue: 1c marked `[~]`.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: Intro to Intelligence batch 1c (analytic standards) — 27 drafted, 8 appended, 7 originals copied`
+
+### [2026-11-18] verify | Five Hard National Security Problems of Artificial General Intelligence
+
+- **Verify:**
+  - Approved: [[Five Hard National Security Problems of Artificial General Intelligence]]
+- **Commit:** `verify: Five Hard National Security Problems of Artificial General Intelligence`
+
+### [2026-11-18] verify | Failures of Imagination, Policy, Capabilities, and Management
+
+- **Verify:**
+  - Approved: [[Failures of Imagination, Policy, Capabilities, and Management]]
+- **Commit:** `verify: Failures of Imagination, Policy, Capabilities, and Management`
+
+### [2026-11-18] verify | Elements and Standards of Critical Thinking
+
+- **Verify:**
+  - Approved: [[Elements and Standards of Critical Thinking]]
+- **Commit:** `verify: Elements and Standards of Critical Thinking`
+
+### [2026-11-18] verify | Polygraph Examination
+
+- **Verify:**
+  - Approved: [[Polygraph Examination]]
+  - Flags I resolved before approving (1):
+    - Accuracy check (Sources disagree) — This is okay
+- **Commit:** `verify: Polygraph Examination`
+
+### [2026-11-18] verify | Zero-Day Vulnerability
+
+- **Verify:**
+  - Approved: [[Zero-Day Vulnerability]]
+- **Commit:** `verify: Zero-Day Vulnerability`
+
+### [2026-11-18] verify | Traffic Analysis
+
+- **Verify:**
+  - Approved: [[Traffic Analysis]]
+- **Commit:** `verify: Traffic Analysis`
+
+### [2026-11-18] verify | SEE-It Framework
+
+- **Verify:**
+  - Approved: [[SEE-It Framework]]
+- **Commit:** `verify: SEE-It Framework`
+
+### [2026-11-18] verify | Revolution in Military Affairs
+
+- **Verify:**
+  - Approved: [[Revolution in Military Affairs]]
+- **Commit:** `verify: Revolution in Military Affairs`
+
+### [2026-11-18] verify | Priority Creep
+
+- **Verify:**
+  - Approved: [[Priority Creep]]
+- **Commit:** `verify: Priority Creep`
+
+### [2026-11-18] verify | Mirror Imaging
+
+- **Verify:**
+  - Approved: [[Mirror Imaging]]
+- **Commit:** `verify: Mirror Imaging`
+
+### [2026-11-18] verify | Key Judgments
+
+- **Verify:**
+  - Approved: [[Key Judgments]]
+- **Commit:** `verify: Key Judgments`
+
+### [2026-11-18] verify | Intelligence Cycle
+
+- **Verify:**
+  - Approved: [[Intelligence Cycle]]
+- **Commit:** `verify: Intelligence Cycle`
+
+### [2026-11-18] verify | Denial and Deception
+
+- **Verify:**
+  - Approved: [[Denial and Deception]]
+- **Commit:** `verify: Denial and Deception`
+
+### [2026-11-18] verify | Covert Action
+
+- **Verify:**
+  - Approved: [[Covert Action]]
+- **Commit:** `verify: Covert Action`
+
+### [2026-11-18] verify | Computer Network Exploitation
+
+- **Verify:**
+  - Approved: [[Computer Network Exploitation]]
+- **Commit:** `verify: Computer Network Exploitation`
+
+### [2026-11-18] verify | Analytic Confidence
+
+- **Verify:**
+  - Approved: [[Analytic Confidence]]
+- **Commit:** `verify: Analytic Confidence`
+
+### [2026-11-18] verify | All-Source Intelligence
+
+- **Verify:**
+  - Approved: [[All-Source Intelligence]]
+- **Commit:** `verify: All-Source Intelligence`
+
+### [2026-11-18] verify | Pearl Harbor (1941)
+
+- **Verify:**
+  - Approved: [[Pearl Harbor (1941)]]
+- **Commit:** `verify: Pearl Harbor (1941)`
+
+### [2026-11-18] verify | Security Classification
+
+- **Verify:**
+  - Approved: [[Security Classification]]
+- **Commit:** `verify: Security Classification`
+
+### [2026-11-18] verify | Politicized Intelligence
+
+- **Verify:**
+  - Approved: [[Politicized Intelligence]]
+- **Commit:** `verify: Politicized Intelligence`
+
+### [2026-11-18] verify | Levels of Intelligence
+
+- **Verify:**
+  - Approved: [[Levels of Intelligence]]
+- **Commit:** `verify: Levels of Intelligence`
+
+### [2026-11-18] verify | Executive Order 12333
+
+- **Verify:**
+  - Approved: [[Executive Order 12333]]
+- **Commit:** `verify: Executive Order 12333`
+
+### [2026-11-18] ingest | The 9/11 Commission Report, batch 9/11-E
+
+- **Think:** I approved batch 9/11-D, the Sunni, Shia, and Caliphate glossary terms, and person pages for Bin Ladin and KSM, and asked the agent to do the last batch (ch. 9, ch. 12, and a summary of the whole report), drafting directly.
+- **Calculate:**
+  - Created (17, all drafts): case study [[Emergency Response on September 11 (2001)]]; framework [[Global Strategy Against Islamist Terrorism]]; concepts [[Terrorist Sanctuary]], [[Struggle of Ideas]], [[Terrorist Travel]]; people [[Usama Bin Ladin]], [[Khalid Sheikh Mohammed]]; summary [[Summary - The 9-11 Commission Report]]; glossary [[Incident Command System]], [[Unified Command]], [[Private-Sector Preparedness]], [[No-Fly List]], [[Article 3 of the Geneva Conventions]], [[Risk-Based Homeland Security Assistance]], [[Sunni]], [[Shia]], [[Caliphate]].
+  - Appended to drafts: [[Al-Qaeda Financing]] (ch. 12 on following the money); [[Need to Share]] (privacy in sharing guidelines); [[Requirements for a Complex Terrorist Operation]] (link to sanctuaries); [[Al-Qaeda]], [[Planes Operation]], and [[Terrorist Entrepreneur]] (links to the new person pages); "Used in" lines on [[Golden Chain]], [[World Islamic Front Fatwa]], [[Far Enemy]], [[Failed State]], [[TIPOFF Watchlist]], and [[Layered Aviation Security]].
+  - Source card: chapters ingested updated, the batch 9/11-C note on the pending Islam terms resolved, and batch 9/11-E's skipped material listed.
+  - Proposed 8 typed links (part_of 4, counters 1, example_of 1, developed_by 2; no `related`).
+  - Flags: 1 "Sources disagree" on [[Polygraph Examination]] (above); 1 unsourced background on [[Usama Bin Ladin]] (his death in 2011, after the Report); 1 whose view on [[Khalid Sheikh Mohammed]] (detainee statements).
+  - Ingest Queue: 9/11-E marked `[~]`. All five 9/11 batches are now drafted.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: 9/11 Commission Report batch E (ch. 9, 12, summary) — 17 drafted, 12 appended`
+
+### [2026-11-18] ingest | Approved edits to verified pages (batches 1a and 1b)
+
+- **Think:** I approved the ten verified-page proposals from batch 1b and adding the missing `changes_since_verified` lines to five batch 1a pages.
+- **Calculate:**
+  - Batch 1b proposals applied, each citing [[SRC - Grammar Summaries, Weeks 2-7]] and adding it to `sources`: [[Analytic Confidence]] (Lowenthal's three confidence levels), [[Computer Network Exploitation]] (Lowenthal's definition and the CNE-or-CNA choice; a stray space before the callout removed), [[Covert Action]] (Lowenthal on its ethics), [[Intelligence Cycle]] (the requirements stage, "processing and exploitation"), [[Key Judgments]] (the central conclusions of an NIE), [[Priority Creep]] (within the NIPF), [[Revolution in Military Affairs]], [[Zero-Day Vulnerability]] (the NSA's use of them), [[Security Classification]] (Lowenthal's level definitions), [[Polygraph Examination]] (Lowenthal's account, with a "Sources disagree" callout).
+  - The original before/after wording of these ten proposals was not saved outside the batch 1b chat report, so the agent rebuilt each from the same Grammar Summaries entries; the wording may differ slightly from what was shown then.
+  - All ten set to `status: draft`, `verified_on` kept, one `changes_since_verified` line each.
+  - Added the missing `changes_since_verified` lines (batch 1a edits of 2026-11-17) to [[SEE-It Framework]], [[Mirror Imaging]], [[Denial and Deception]], [[Politicized Intelligence]] (plus a line for its batch 1b append), and [[Levels of Intelligence]]. No content changed.
+- **Verify:**
+  - Pending my review: re-reviews, listed changes only
+- **Commit:** `edit: apply 10 batch-1b verified-page proposals; add changes_since_verified to 5 batch-1a pages`
+
+### [2026-11-18] ingest | The 9/11 Commission Report, batch 9/11-D
+
+- **Think:** I approved batch 9/11-C and asked the agent to move on to batch D (ch. 4, 6, 10), drafting directly.
+- **Calculate:**
+  - Created (14, all drafts): concept [[Covert Action Authorities Against Bin Ladin]]; case studies [[Tarnak Farms Capture Plan (1998)]], [[August 1998 Missile Strikes]], [[USS Cole Bombing (2000)]], [[Millennium Alert (1999–2000)]], [[Responses at Home After September 11 (2001)]]; glossary [[Delenda Plan]], [[The Plan (CIA)]], [[Memorandum of Notification]], [[Actionable Intelligence]], [[Small Group]], [[Predator Drone]], [[Blue Sky Memo]], [[Northern Alliance]].
+  - Appended: [[September 11 Attacks (2001)]] (the Cole and U.S.-approaches bullets re-cited to the Report; the case study now cites the grammar summaries only in Lessons); [[Executive Order 12333]] (a draft under re-review: the Commission's account of the assassination ban, with a second `changes_since_verified` line).
+  - Repaired: the `changes_since_verified` note on [[Executive Order 12333]] reached the vault with unescaped inner quotes (invalid YAML) in the batch 9/11-B commit; rewritten with single quotes.
+  - Proposed 2 typed links (applies_to 1, supports 1).
+  - Flags: none new.
+  - Ingest Queue: 9/11-D marked `[~]`.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: 9/11 Commission Report batch D (ch. 4, 6, 10) — 14 drafted, 2 appended, 1 YAML repair`
+
+### [2026-11-18] ingest | The 9/11 Commission Report, batch 9/11-C
+
+- **Think:** I approved batch 9/11-B's proposals and asked the agent to move on to batch C (ch. 1, 2, 5, 7), drafting directly as with batch B.
+- **Calculate:**
+  - Applied the batch 9/11-B verified-page edit: [[Executive Order 12333]] (link to [[Church and Pike Committees]]); set back to `draft` with a `changes_since_verified` note.
+  - Created (16, all drafts): concepts [[Al-Qaeda]], [[Al-Qaeda Financing]], [[Planes Operation]]; framework [[Requirements for a Complex Terrorist Operation]]; case studies [[Alleged Atta-Ani Meeting in Prague (2001)]], [[East Africa Embassy Bombings (1998)]], [[Air Defense on September 11 (2001)]]; glossary [[World Islamic Front Fatwa]], [[Far Enemy]], [[Golden Chain]], [[Terrorist Entrepreneur]], [[Hamburg Cell]], [[Muscle Hijackers]], [[Jemaah Islamiyah]], [[Weapons Free]], [[North American Aerospace Defense Command]].
+  - Appended to drafts: [[September 11 Attacks (2001)]] (summary and What Happened re-cited to the Report; the shootdown bullet moved to [[Air Defense on September 11 (2001)]]; the ticket dates corrected to "between August 25 and September 5"), [[Hawala]] (re-cited directly), [[Late Leads Before September 11 (2001)]], [[Economic Intelligence]], [[Capabilities vs. Intentions]]; the source card's reliability notes now carry the Commission's caution on detainee reports.
+  - No verified-page proposals.
+  - Proposed 5 typed links (part_of 5; no `related`).
+  - Flags: 1 accuracy check on [[September 11 Attacks (2001)]] (the Report gives United 93 two destinations); 1 "Sources disagree" on [[Air Defense on September 11 (2001)]] (the basis for the shootdown order).
+  - Ingest Queue: 9/11-C marked `[~]`.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: 9/11 Commission Report batch C (ch. 1, 2, 5, 7) — 16 drafted, 6 appended, 1 verified-page edit applied`
+
+### [2026-11-18] ingest | The 9/11 Commission Report, batch 9/11-B
+
+- **Think:** I approved all the edits proposed in batch 9/11-A, and the next batch. The agent read that as approval of the four verified-page proposals and the four typed links, and as permission to draft batch 9/11-B directly (ch. 3 and ch. 8) without a separate plan.
+- **Calculate:**
+  - Applied the batch 9/11-A verified-page edits: [[Covert Action]], [[All-Source Intelligence]], [[Security Classification]], [[Pearl Harbor (1941)]]; each set back to `draft` with a `changes_since_verified` note (§7 rule 8).
+  - Created (16, all drafts): concepts [[Foreign Intelligence Surveillance Act]], [[FBI Counterterrorism Before September 11]]; case studies [[Summer of Threat (2001)]], [[Late Leads Before September 11 (2001)]]; glossary [[President's Daily Brief]], [[Office of Origin]], [[Phoenix Memo]], [[Zone Defense and Man-to-Man]], [[Layered Aviation Security]], [[TIPOFF Watchlist]], [[Church and Pike Committees]], [[Hughes-Ryan Amendment]], [[Plausible Deniability]], [[Iran-Contra Affair]], [[Counterterrorism Security Group]], [[Office of Strategic Services]].
+  - Appended to drafts: [[September 11 Attacks (2001)]] (What Went Wrong re-cited to the Report directly; the PDB title corrected to the Report's), [[The Wall (FBI)]], [[Joint Terrorism Task Force]], [[National Security Act of 1947]] (re-cited directly), [[Counterterrorist Center (CIA)]], [[Counterintelligence]], [[Director of National Intelligence]], [[United States Intelligence Community]], [[Intelligence Oversight Committees]], [[Congressional Oversight of Intelligence]], [[Domestic Intelligence and the FBI]], [[Current vs. Long-Term Intelligence]], [[Goldwater-Nichols Act]], [[Foreign Intelligence Surveillance Court]]; [[Traffic Analysis]] (a draft under re-review) also given the `changes_since_verified` lines it was missing from batch 1a.
+  - Proposed before/after for a verified page (not applied): [[Executive Order 12333]].
+  - Proposed 8 typed links (part_of 3, example_of 2, causes 1, applies_to 1, and FISC → part_of → FISA; no `related`).
+  - Flags: 1 "Sources disagree" on [[Intelligence Oversight Committees]]; "Possibly resolved" added to 2 accuracy checks ([[Intelligence Oversight Committees]], [[United States Intelligence Community]]).
+  - Ingest Queue: 9/11-B marked `[~]`.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: 9/11 Commission Report batch B (ch. 3, 8) — 16 drafted, 15 appended, 4 verified-page edits applied, 1 proposal`
+
+### [2026-11-18] ingest | The 9/11 Commission Report, batch 9/11-A
+
+- **Think:** I attached the 9/11 Commission Report and asked to ingest it. Plan first: five batches, starting with the Preface, ch. 11, and ch. 13; I approved the plan. I also approved two link fixes from batch 1b.
+- **Calculate:**
+  - Copied the original unchanged to `Sources/Readings/National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf`.
+  - Created (14, all drafts): [[SRC - The 9-11 Commission Report]] (proposed B-2); frameworks [[Failures of Imagination, Policy, Capabilities, and Management]], [[Institutionalizing Imagination]]; concepts [[National Counterterrorism Center]], [[Director of National Intelligence]], [[Need to Share]], [[Congressional Oversight of Intelligence]], [[Domestic Intelligence and the FBI]]; glossary [[National Intelligence Estimate]], [[Terrorist Threat Integration Center]], [[Counterterrorist Center (CIA)]], [[Goldwater-Nichols Act]], [[Red Team Analysis]], [[Tearline]].
+  - Appended to drafts: [[September 11 Attacks (2001)]], [[Stovepipe]], [[Metaphors for Intelligence]], [[National Intelligence Program]], [[Under Secretary of Defense for Intelligence]], [[Joint Terrorism Task Force]], [[The Wall (FBI)]], [[National Security Council]], [[United States Intelligence Community]]; links only on [[Intelligence Oversight Committees]], [[Intelligence Reform and Terrorism Prevention Act]], [[Originator Controlled]], [[Competitive Analysis]]; [[SRC - Grammar Summaries, Weeks 2-7]] updated (the Report is now in the vault).
+  - Proposed before/after for verified pages (not applied): [[Covert Action]], [[All-Source Intelligence]], [[Security Classification]], [[Pearl Harbor (1941)]].
+  - Proposed 4 typed links (part_of 2, counters 2; no `related`).
+  - Batch 1b link fixes: [[Insider Threat]] → part_of → [[Counterintelligence]] replaces Counterintelligence → counters → Insider Threat; Maskirovka → type_of → Denial and Deception removed.
+  - Ingest Queue: new section for the Report, five batches; 9/11-A marked `[~]`.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: 9/11 Commission Report batch A (preface, ch. 11, 13) — 14 drafted, 13 appended, 4 verified-page proposals`
+
+### [2026-11-18] ingest | Grammar Summaries, weeks 2–6 (batch 1b)
+
+- **Think:** Ingest Queue batch 1b: the Intro to Intelligence Grammar Summaries, weeks 2–6, plan first; I approved the plan. Week 7 waits for Sections 6, 9, and 10; the Kaiser and Pherson terms wait for batch 1d and the HPSCI Rogers terms for Section 4. Verified pages: proposals only.
+- **Calculate:**
+  - Copied the original unchanged to `Sources/Readings/Intro to Intelligence - Grammar Summaries, Weeks 2-7 (Fall 2026).docx`.
+  - Created (53, all drafts): [[SRC - Grammar Summaries, Weeks 2-7]] (proposed B-3); [[Summary - Grammar Summaries, Weeks 2-7]]; concepts [[Counterintelligence]], [[Ethical and Moral Issues in Intelligence]], [[National Intelligence Strategy]]; case study [[September 11 Attacks (2001)]]; 47 glossary terms, from [[Attribution (Cyber)]] to [[Worst-Case Analysis]] (see the index).
+  - Appended to drafts: [[Intelligence (National Security)]], [[Politicized Intelligence]], [[Consumer-Producer Relations]], [[Intelligence Oversight Committees]], [[Computer Network Attack]], [[Intelligence Satellite Orbits]], [[Strengths and Weaknesses of the Collection Disciplines]], [[Just War Theory]].
+  - Proposed before/after for verified pages (not applied): [[Analytic Confidence]], [[Computer Network Exploitation]], [[Covert Action]], [[Intelligence Cycle]], [[Key Judgments]], [[Priority Creep]], [[Revolution in Military Affairs]], [[Zero-Day Vulnerability]], [[Security Classification]], [[Polygraph Examination]] (with a "Sources disagree" callout).
+  - Proposed 9 typed links (type_of 1, part_of 4, example_of 1, counters 1, applies_to 2; no `related`).
+  - Flags: 7 accuracy checks, 1 gap in the source, 1 whose view; "Possibly resolved" added to the accuracy checks on [[Computer Network Attack]] and [[Intelligence Oversight Committees]].
+  - Ingest Queue: batch 1b marked `[~]`.
+- **Verify:**
+  - Pending my review
+- **Commit:** `ingest: Grammar Summaries wks 2–6 (batch 1b) — 53 drafted, 8 appended, 10 verified-page proposals`
+
+### [2026-11-18] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-18] schema | Nicrosil 2.4.2 quiet Dashboard and sidebar colors
+
+- **Think:** The Dashboard looked machine-made, so I asked for a quieter design, then adjusted it, kept only the quiet style, and asked for softer colors on the open file in the file list. Earlier the same day I asked for the verify animation to move up instead of left and for the sidebars to match the page's glow.
+- **Calculate:** Nothing to compute.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.4.0 to 2.4.2): quiet Dashboard (plain header, link cards without icons, one-line progress card with a glowing bar, small serif capital headings); the Classic/Quiet setting removed; verify animation moves up; both sidebars share the background glow; the open file's highlight and name use soft copper-to-teal gradients
+  - [[Nicrosil]]: Dashboard, Look and motion, Ambience, Settings wording, version 2.4.2 and history lines; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil and open the Dashboard
+- **Commit:** `schema: Nicrosil 2.4.2 quiet Dashboard, sidebar glow, open-file colors`
+
+### [2026-11-18] verify | All-Source Intelligence
+
+- **Verify:**
+  - Approved: [[All-Source Intelligence]]
+- **Commit:** `verify: All-Source Intelligence`
+
+### [2026-11-18] verify | ACH GenAI Workflow
+
+- **Verify:**
+  - Approved: [[ACH GenAI Workflow]]
+  - Flags I resolved before approving (3):
+    - Accuracy check (Sources disagree) — these are just two different systems
+    - Accuracy check — same thing for me
+    - Gap (Gap in the source) — this is fine
+- **Commit:** `verify: ACH GenAI Workflow`
+
+### [2026-11-18] verify | Cascade of Unintended Consequences
+
+- **Verify:**
+  - Approved: [[Cascade of Unintended Consequences]]
+- **Commit:** `verify: Cascade of Unintended Consequences`
+
+### [2026-11-18] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-18] schema | Nicrosil 2.3.0 Dashboard activity chart removed
+
+- **Think:** The 14-day activity chart on the Dashboard was not wanted. The Verification card should use the space instead.
+- **Calculate:** Nothing to compute.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.3.0): removed the 14-day chart; the Verification card is full width with a larger ring and larger text
+  - [[Nicrosil]]: Dashboard section, version 2.3.0 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
+- **Verify:**
+  - Guide needs verifying again
+  - Reload Nicrosil and open the Dashboard
+- **Commit:** `schema: Nicrosil 2.3.0 remove Dashboard activity chart, widen verification card`
+
+### [2026-11-18] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-18] verify | AI Alignment
+
+- **Verify:**
+  - Approved: [[AI Alignment]]
+- **Commit:** `verify: AI Alignment`
+
+### [2026-11-18] verify | Agentic AI
+
+- **Verify:**
+  - Approved: [[Agentic AI]]
+- **Commit:** `verify: Agentic AI`
+
+### [2026-11-18] verify | Zero-Day Vulnerability
+
+- **Verify:**
+  - Approved: [[Zero-Day Vulnerability]]
+- **Commit:** `verify: Zero-Day Vulnerability`
+
+### [2026-11-18] verify | Unconventional Warfare
+
+- **Verify:**
+  - Approved: [[Unconventional Warfare]]
+- **Commit:** `verify: Unconventional Warfare`
+
+### [2026-11-18] verify | Time Compression Trap
+
+- **Verify:**
+  - Approved: [[Time Compression Trap]]
+- **Commit:** `verify: Time Compression Trap`
+
+### [2026-11-18] verify | Tasking, Collection, Processing, Exploitation, and Dissemination
+
+- **Verify:**
+  - Approved: [[Tasking, Collection, Processing, Exploitation, and Dissemination]]
+- **Commit:** `verify: Tasking, Collection, Processing, Exploitation, and Dissemination`
+
+### [2026-11-18] verify | Richards Heuer
+
+- **Verify:**
+  - Approved: [[Richards Heuer]]
+- **Commit:** `verify: Richards Heuer`
+
+### [2026-11-18] verify | Revolution in Military Affairs
+
+- **Verify:**
+  - Approved: [[Revolution in Military Affairs]]
+- **Commit:** `verify: Revolution in Military Affairs`
+
+### [2026-11-18] verify | Narrow AI
+
+- **Verify:**
+  - Approved: [[Narrow AI]]
+- **Commit:** `verify: Narrow AI`
+
+### [2026-11-18] verify | Mata v. Avianca (2023)
+
+- **Verify:**
+  - Approved: [[Mata v. Avianca (2023)]]
+- **Commit:** `verify: Mata v. Avianca (2023)`
+
+### [2026-11-18] verify | LLM Wiki
+
+- **Verify:**
+  - Approved: [[LLM Wiki]]
+- **Commit:** `verify: LLM Wiki`
+
+### [2026-11-18] verify | Law of Armed Conflict
+
+- **Verify:**
+  - Approved: [[Law of Armed Conflict]]
+- **Commit:** `verify: Law of Armed Conflict`
+
+### [2026-11-18] verify | Law Enforcement Intelligence Internships
+
+- **Verify:**
+  - Approved: [[Law Enforcement Intelligence Internships]]
+- **Commit:** `verify: Law Enforcement Intelligence Internships`
+
+### [2026-11-18] verify | Intelligence-Led Policing
+
+- **Verify:**
+  - Approved: [[Intelligence-Led Policing]]
+- **Commit:** `verify: Intelligence-Led Policing`
+
+### [2026-11-18] verify | Intelligence Community Style Summaries
+
+- **Verify:**
+  - Approved: [[Intelligence Community Style Summaries]]
+- **Commit:** `verify: Intelligence Community Style Summaries`
+
+### [2026-11-18] verify | Intelligence as Attentive Understanding
+
+- **Verify:**
+  - Approved: [[Intelligence as Attentive Understanding]]
+- **Commit:** `verify: Intelligence as Attentive Understanding`
+
+### [2026-11-18] verify | Information Model
+
+- **Verify:**
+  - Approved: [[Information Model]]
+- **Commit:** `verify: Information Model`
+
+### [2026-11-18] verify | Human Decision Point
+
+- **Verify:**
+  - Approved: [[Human Decision Point]]
+- **Commit:** `verify: Human Decision Point`
+
+### [2026-11-18] verify | Four Levels of Prompt Engineering
+
+- **Verify:**
+  - Approved: [[Four Levels of Prompt Engineering]]
+- **Commit:** `verify: Four Levels of Prompt Engineering`
+
+### [2026-11-18] verify | Existential Risk
+
+- **Verify:**
+  - Approved: [[Existential Risk]]
+- **Commit:** `verify: Existential Risk`
+
+### [2026-11-18] verify | Executive Order 12333
+
+- **Verify:**
+  - Approved: [[Executive Order 12333]]
+- **Commit:** `verify: Executive Order 12333`
+
+### [2026-11-18] verify | Dissect and Ingest a Source
+
+- **Verify:**
+  - Approved: [[Dissect and Ingest a Source]]
+- **Commit:** `verify: Dissect and Ingest a Source`
+
+### [2026-11-18] verify | Curiosity, Character, and Competence
+
+- **Verify:**
+  - Approved: [[Curiosity, Character, and Competence]]
+- **Commit:** `verify: Curiosity, Character, and Competence`
+
+### [2026-11-18] schema | Nicrosil 2.2.1 verify animation fix, no page-open sparks
+
+- **Think:** The verify animation no longer moved the page away, and the sparks when opening a page were annoying.
+- **Calculate:** Nothing to compute. The cause was the slow background drift (added in 1.6.0) setting `animation` on the page area, which overrode the verify slide.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.2.1): verify slide-out and slide-in rules made more specific so they win again (also in calm mode); page-open sparks removed, leaving a short fade
+  - [[Nicrosil]]: Ambience section, version 2.2.1 and history line
+- **Verify:**
+  - Guide set back to draft until I verify it
+  - Reload Nicrosil and verify a draft to check the slide
+- **Commit:** `schema: Nicrosil 2.2.1 verify animation fix, no page-open sparks`
+
+### [2026-11-18] verify | Covert Action
+
+- **Verify:**
+  - Approved: [[Covert Action]]
+- **Commit:** `verify: Covert Action`
+
+### [2026-11-18] verify | Confirmation Bias
+
+- **Verify:**
+  - Approved: [[Confirmation Bias]]
+- **Commit:** `verify: Confirmation Bias`
+
+### [2026-11-18] schema | Nicrosil 2.2.0 review queue list and progress bar
+
+- **Think:** The review queue's progress bar should be sharper with a steady glow, not pulsing. The draft list was only file names.
+- **Calculate:** Nothing to compute.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.2.0): sharp-edged progress bar with a steady glow (pulse and sheen removed); draft rows are cards with a colored edge (amber flags, rust changed, teal current) and the page type under the name; styled section headings
+  - [[Nicrosil]]: Ambience section, version 2.2.0 and history line
+- **Verify:**
+  - Guide set back to draft until I verify it
+  - Reload Nicrosil and look at the review queue
+- **Commit:** `schema: Nicrosil 2.2.0 review queue list and progress bar`
+
+### [2026-11-18] schema | Nicrosil 2.1.0 sparks only, sidebar panels closed at startup
+
+- **Think:** The copper light sweep in the page transition was too much. The five extra sidebar panels (backlinks, outgoing links, tags, all properties, outline) kept coming back after Obsidian restarted.
+- **Calculate:** Nothing to compute.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.1.0): removed the light sweep, 28 sparks that rise higher, new setting that closes those five panels on startup
+  - [[Nicrosil]]: Ambience section, settings entry, version 2.1.0 and history line
+- **Verify:**
+  - Guide set back to draft until I verify it
+  - Restart Obsidian and check the sidebar icons
+- **Commit:** `schema: Nicrosil 2.1.0 sparks only, close sidebar panels at startup`
+
+### [2026-11-18] schema | Nicrosil 2.0.0 page transition and queue polish
+
+- **Think:** The 1.6.0 ambience had a few parts I did not want (Dashboard spotlight, amber map pulse, relations-panel animation). Opening a page felt abrupt, and the review queue header and progress bar looked plain next to the Dashboard.
+- **Calculate:** Nothing to compute.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.0.0): removed the spotlight, the amber map pulse (changed pages keep a still amber outline) and the relations line animation; added a page-open transition (copper light sweep plus rising sparks); larger glowing progress bar and a gradient title in the review queue; renamed two animation names that clashed with the Dashboard hero
+  - [[Nicrosil]]: Ambience section, version 2.0.0 and history line
+- **Verify:**
+  - Guide set back to draft until I verify it
+  - Reload Nicrosil, open a few pages, and check the review queue
+- **Commit:** `schema: Nicrosil 2.0.0 page transition and queue polish`
+
+### [2026-11-18] verify | Bach Faucet
+
+- **Verify:**
+  - Approved: [[Bach Faucet]]
+- **Commit:** `verify: Bach Faucet`
+
+### [2026-11-18] verify | Architecture of Worldview
+
+- **Verify:**
+  - Approved: [[Architecture of Worldview]]
+- **Commit:** `verify: Architecture of Worldview`
+
+### [2026-11-18] schema | Nicrosil 1.6.0 ambience
+
+- **Think:** The vault felt still outside the verify animation. I asked for glow, sparkle and motion in more places, without the streak counter or time-of-day tint.
+- **Calculate:** Nothing to compute. All animations are CSS or short script timers, and a setting plus reduced-motion turns them off.
+- **Changed:**
+  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (1.6.0): title auras, flag callout glow, link glow, page fade-in, map sparks/ripple/amber pulse, hierarchy amber outline, relations draw-in, Dashboard spotlight and milestone burst, queue sheen/slide/badge pop, search stagger, status-bar glow, Ambient animations setting
+  - [[Nicrosil]]: new Ambience section, settings entry, version 1.6.0 and history line
+- **Verify:**
+  - Guide set back to draft until I verify it
+  - Reload Nicrosil, then try a verify, the map, and the Dashboard
+- **Commit:** `schema: Nicrosil 1.6.0 ambience`
+
+### [2026-11-18] verify | Analysis of Competing Hypotheses
+
+- **Verify:**
+  - Approved: [[Analysis of Competing Hypotheses]]
+- **Commit:** `verify: Analysis of Competing Hypotheses`
+
+### [2026-11-18] verify | AI in Warfighting
+
+- **Verify:**
+  - Approved: [[AI in Warfighting]]
+- **Commit:** `verify: AI in Warfighting`
+
+### [2026-11-18] verify | AI in Intelligence Production
+
+- **Verify:**
+  - Approved: [[AI in Intelligence Production]]
+- **Commit:** `verify: AI in Intelligence Production`
+
+### [2026-11-18] schema | Verify animation
+- **Think:** You asked for a little animation when verifying a page: the page going away with the Dashboard's sparks, then a transition to the next page.
+- **Calculate:** Nicrosil v1.5.0 plays a check stamp with a ring and a burst of copper and teal sparks over the verified page while it slides up and away, then slides the next page in from the right with a short "Next: name · N left" note. It runs after the verify has been saved, so it never delays or changes what is written, and a new setting (on by default) turns it off. It is skipped under reduced motion. Tested the look in a real browser outside Obsidian; it has not run inside Obsidian.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `styles.css`, `manifest.json`); [[Nicrosil]] guide (review session, settings, version 1.5.0, history).
+- **Verify:** pending. Reload Nicrosil, verify a draft, and watch the animation.
+- **Commit:** `nicrosil 1.5.0: animation when verifying a page`
+
+### [2026-11-18] verify | Ages of U.S. Intelligence
+
+- **Verify:**
+  - Approved: [[Ages of U.S. Intelligence]]
+- **Commit:** `verify: Ages of U.S. Intelligence`
+
+### [2026-11-18] schema | Dashboard fixes: ring, tile glow, card outlines
+- **Think:** You reported three problems: the verification ring showed 12% with no visible fill, the three stat tiles glowed all the time, and the six navigation cards had a colored outline only at the top left.
+- **Calculate:** Nicrosil v1.4.1 draws the ring's filled part as small colored pieces running copper to green (it no longer depends on a gradient reference, which I could not confirm was drawing in Obsidian); moves the tile glow to hover only; and makes each card's outline the same colored gradient all the way around. I checked all three in a real browser outside Obsidian; the old ring did draw there, so I could not reproduce the missing fill and cannot be sure this is the cause.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `styles.css`, `manifest.json`); [[Nicrosil]] guide (ring, version 1.4.1, history).
+- **Verify:** pending. Reload Nicrosil, open the Dashboard, and check the ring, the tiles and the card outlines.
+- **Commit:** `nicrosil 1.4.1: dashboard ring, tile glow and card outlines`
+
+### [2026-11-18] schema | Gradient background on every page
+- **Think:** You liked the Dashboard background and wanted it as the default everywhere.
+- **Calculate:** Nicrosil v1.4.0 applies `--cm-bg-gradient` to every note's view (markdown notes only; sidebars, the graph and other panes are untouched). It lives in the plugin's `styles.css`, so it shows only while Nicrosil is enabled; editing the variable changes every page at once.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`styles.css`, `manifest.json`); [[Nicrosil]] guide (look paragraph, version 1.4.0, history).
+- **Verify:** pending. Reload Nicrosil and open a few different notes, in both reading and editing view.
+- **Commit:** `nicrosil 1.4.0: gradient background on every note`
+
+### [2026-11-17] schema | Dashboard background gradient
+- **Think:** You liked the gradient but wanted it stronger and less blank, with the orange and green tones, and you may want one background on every page later.
+- **Calculate:** Nicrosil v1.3.2 makes the Dashboard background a stronger copper glow (top left) and teal glow (top right, plus a faint one lower left) over the brown, drifting to a slightly green dark at the bottom right. It is stored as one variable, `--cm-bg-gradient`, so applying it to every page later is one CSS rule (given in the guide). I did not apply it to other pages.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`styles.css`, `manifest.json`); [[Nicrosil]] guide (look paragraph, version 1.3.2, history).
+- **Verify:** pending. Reload Nicrosil and open the Dashboard.
+- **Commit:** `nicrosil 1.3.2: stronger dashboard gradient as a reusable variable`
+
+### [2026-11-17] schema | Dashboard back to the brown background
+- **Think:** The slate background made the Dashboard feel different from every other page.
+- **Calculate:** Nicrosil v1.3.1 removes the Dashboard's slate color override, so it uses the vault's brown, and re-tints the cards, header and search bar to brown. The glows, graphs and motion are unchanged.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`styles.css`, `manifest.json`); [[Nicrosil]] guide (look paragraph, version 1.3.1, history).
+- **Verify:** pending. Reload Nicrosil and open the Dashboard.
+- **Commit:** `nicrosil 1.3.1: dashboard uses the vault's brown background`
+
+### [2026-11-17] schema | Dashboard redesign
+- **Think:** The Dashboard felt stale and was mostly brown. You chose cooler colors with depth, motion, progress graphics, and a hero header with the search built in, keeping copper and dark mode.
+- **Calculate:** Nicrosil v1.3.0 gives the Dashboard page its own slate-ink background with copper and teal accents (the rest of the vault keeps the brown theme), gradient-edged cards with shading, colored navigation icons, an animated header with the search box inside it, a verification ring, a 14-day activity chart, per-type bars, and entrance animations that play only when the page opens and are off under reduced motion. The old By page type table was replaced by the bars. I moved the search into the header, so `Dashboard.md` lost its separate `coppermind-search` block. Tested outside Obsidian only; the look has not been seen in Obsidian.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `styles.css`, `manifest.json`); `Dashboard.md` (search block removed); [[Nicrosil]] guide (Dashboard section, version 1.3.0, history).
+- **Verify:** pending. Reload Nicrosil and open the Dashboard; tell me what to change.
+- **Commit:** `nicrosil 1.3.0: dashboard redesign with slate theme, graphs and motion`
+
+### [2026-11-17] schema | Wiki map opens on the Map tab
+- **Think:** You wanted the wiki map to open on the Map tab, not Hierarchy.
+- **Calculate:** Nicrosil v1.2.1 makes Map the starting tab every time the wiki map opens, instead of remembering the last tab. Switching tabs still works while it is open.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`); [[Nicrosil]] guide (version 1.2.1, history).
+- **Verify:** pending. Reload Nicrosil and click the Wiki map card.
+- **Commit:** `nicrosil 1.2.1: wiki map opens on the Map tab`
+
+### [2026-11-17] schema | Hierarchy as a branching diagram
+- **Think:** The Hierarchy view read as a bulleted list. You chose a branching tree diagram.
+- **Calculate:** Nicrosil v1.2.0 draws the hierarchy as left-to-right cards joined by curved lines colored by relationship, with open/close circles, hover highlighting, and drag to pan. Filtering, expand/collapse, the examples switch, counts, click-to-open and the outside-the-hierarchy list all still work. While testing I found the filter box did not update the view as you typed (it used a stale search value); that is fixed. Tested on a copy of the wiki's links outside Obsidian, not in Obsidian itself.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `styles.css`, `manifest.json`); [[Nicrosil]] guide (Hierarchy section, version 1.2.0, history).
+- **Verify:** pending. Reload Nicrosil, open the wiki map (`Alt+M`), and try the Hierarchy tab: open a branch, point at a card, and type in the filter box.
+- **Commit:** `nicrosil 1.2.0: hierarchy as a branching diagram, fix live filter`
+
+### [2026-11-17] schema | Wiki map motion and polish
+- **Think:** The map felt like a static picture. You chose live physics, hover highlight with smooth focus, a cleaner look, and flowing links.
+- **Calculate:** Nicrosil v1.1.0 replaces the one-shot layout with a live physics simulation (dots drift out, can be dragged, then rest), adds hover highlighting and a camera glide on focus, curved arrows, a glow on verified pages, and a Flow switch for the pulsing links. I tested the physics and the page on a copy of the wiki's links outside Obsidian; the animation itself is untested in Obsidian.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `styles.css`, `manifest.json`); [[Nicrosil]] guide (map section, version 1.1.0, history).
+- **Verify:** pending. Reload Nicrosil, open the wiki map (`Alt+M`), and try dragging a dot, pointing at one, and the Flow button.
+- **Commit:** `nicrosil 1.1.0: animated wiki map with physics, hover, glide and flowing links`
+
+### [2026-11-17] schema | Wiki map chips without counts
+- **Think:** The number after each relationship name on the wiki map (for example "type of 3") was clutter.
+- **Calculate:** Nicrosil v1.0.1 removes the count from those chips. Nothing else changed.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`); [[Nicrosil]] guide (version 1.0.1, history).
+- **Verify:** pending. Reload Nicrosil and open the wiki map.
+- **Commit:** `nicrosil 1.0.1: drop counts from wiki map relationship chips`
+
+### [2026-11-17] schema | Wiki map button on the Dashboard
+- **Think:** You wanted the wiki map as a Dashboard button instead of a ribbon icon, in place of the My Worldview card.
+- **Calculate:** Nicrosil v1.0.0 removes the ribbon icon and swaps the My Worldview nav card for a Wiki map card. `Alt+M` and the command still work. My Worldview stays reachable from the Index.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`); [[Nicrosil]] guide (version 1.0.0, card list, ribbon text, history).
+- **Verify:** pending. Reload Nicrosil and click the new card.
+- **Commit:** `nicrosil 1.0.0: wiki map as a Dashboard card`
+
+### [2026-11-17] schema | Wiki map
+
+- **Think:** Obsidian's graph view draws every plain link, so it mixes "see also" with real relationships and tells you little. You asked for a whole-wiki view built on the typed links, like the page panel, and chose the hierarchy tree and the typed-link map.
+- **Calculate:** Nicrosil v0.10.0 adds a Wiki map tab (`Alt+M` or the ribbon): a hierarchy tree from `type_of`, `part_of` and `example_of`, and a zoomable map of all typed links with relationship, status, page-type and course filters, a page finder, and click-to-focus. Colors match the relations panel. It reads the metadata cache only and changes no file.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`, `styles.css`); [[Nicrosil]] guide (new section, hotkey, version 0.10.0). No schema change.
+- **Verify:** pending. Not tested in Obsidian here; I ran both views against a copy of the wiki's properties outside Obsidian. Reload Nicrosil, press `Alt+M`, and try both tabs.
+- **Commit:** `nicrosil 0.10.0: wiki map with hierarchy tree and typed-link map`
+
+### [2026-11-17] schema | Dashboard search: scroll through every match
+
+- **Think:** The search box stopped at 8 results. You wanted to keep scrolling the dropdown until you find the page.
+- **Calculate:** Nicrosil v0.9.2: the search ranks every match instead of the top 8. The popup draws 20 cards at a time and draws more as you scroll or press the down arrow past the last card, with a sticky line at the bottom showing the count ("20 of 143 matches · scroll for more") next to the class-notes search link. Snippets are worked out only for cards that are drawn, so typing stays fast.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`, `styles.css`); [[Nicrosil]] guide (Search section, version 0.9.2, version history for 0.9.1 and 0.9.2). Ranking and what is searched are unchanged.
+- **Verify:** pending. Not tested in Obsidian here. Reload Nicrosil, type a common word such as "AI", and scroll the popup to the end.
+- **Commit:** `nicrosil 0.9.2: search shows every match, loaded as you scroll`
+
+### [2026-11-17] schema | Dashboard: changes section always collapsed
+
+- **Think:** You'll rarely open the "Changed since verified" section on the Dashboard, so it shouldn't start open.
+- **Changed:** Nicrosil v0.9.1 (`main.js`, `manifest.json`): the section is collapsed whenever the Dashboard opens or refreshes, and it no longer remembers being opened. The other Dashboard sections behave as before.
+- **Verify:** pending. Reload Nicrosil and check the Dashboard.
+- **Commit:** `nicrosil 0.9.1: Dashboard changes section always collapsed`
+
+### [2026-11-17] schema | Relations panel
+
+- **Think:** The Properties dropdown shows only the links stored on the open page, and §5 stores each relationship once, so the other half of every relationship was invisible. You asked for a better way to see them and chose a panel with a local map.
+- **Calculate:** Nicrosil v0.9.0 adds a Relations panel (`Alt+L` or the ribbon button): a map of the open page's neighborhood (incoming on the left, outgoing on the right, edges colored by type, with dash patterns for `related` and `contradicts`) and grouped lists of outgoing and incoming relations. It reads the metadata cache only and changes no file.
+- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`, `styles.css`); [[Nicrosil]] guide (new section, hotkey, and version history for 0.8.11 and 0.9.0). No schema change; no page content other than the guide.
+- **Verify:** pending. Not tested in Obsidian here (I ran the panel against sample data outside Obsidian). Reload Nicrosil, press `Alt+L` on a page such as Human Decision Point, and check the map, the lists, and clicking through.
+- **Commit:** `nicrosil 0.9.0: relations panel with local map`
 
 ### [2026-11-17] verify | SCHEMA
 
@@ -860,36 +1925,24 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - Approved: [[SCHEMA]]
 - **Commit:** `verify: SCHEMA`
 
-### [2026-11-17] schema | Add Ingest Queue (version 3.0)
+### [2026-11-17] schema | Changes since verified
 
-- **Think:** After triaging the Intro to Intelligence course resources, I asked for the triage to be saved in the vault as an ingest queue, and chose option 1: a plain, agent-maintained file in the vault root, like `Find.md`.
-- **Calculate:**
-  - Created `Ingest Queue.md` with the full triage: Section 1 split into batches 1a–1e, Sections 2–13, the items left for my call, and the items not being added (logistics, personal, no content, duplicates).
-  - [[SCHEMA]] updated: folder layout and a new "Ingest Queue" subsection (§2), a permissions row (§9), the ingest commit step and the health check (§10), a new Ingest Queue subsection (§11), frontmatter `version: 3`, and a 3.0 changelog line. A new structural file bumps the whole number (§14).
-  - `AGENTS.md` updated with a pointer to the queue.
-  - Because the schema's content changed, its `status` was set back to `draft` and `verified_on` cleared (§7).
-  - [[index]], [[Find]], [[Library.base|Library]], and the Dashboard needed no change: the queue is not a page, page type, course, or class date.
-- **Verify:** pending. Schema needs re-verifying.
-- **Commit:** `schema: add Ingest Queue (v3.0)`
+- **Think:** Pages I set back to `draft` after you approved edits were mixed in with new drafts, so you couldn't tell which ones only needed a small re-check. You approved a field that lists what changed, deleted when you verify again.
+- **Calculate:** [[SCHEMA]] is now 5.2: new `changes_since_verified` property (§4), a new §7 rule 8 and a longer rule 5, a health-check item (§10), and the change to `Review Queue.base`. `AGENTS.md` carries the same rule for the agent.
+- **Changed:**
+  - `Review Queue.base`: new "Changed since verified" view; "Waiting for review" now shows only drafts without the field.
+  - Nicrosil v0.8.10 → v0.8.11 (`main.js`, `manifest.json`, `styles.css`): Verify deletes the field; the queue lists re-reviews first with an R badge; the review card and the Dashboard show the change lines; the Dashboard nav card counts them. [[Nicrosil]] guide updated to match. Not tested in Obsidian here: reload the plugin and try it on one page.
+  - 29 pages from the last round now carry a `changes_since_verified` line for each link removed. [[SCHEMA]] carries one for this edit, since it was verified earlier today.
+- **Verify:** pending. Test Nicrosil on one re-review (open it, check the card, click Verify, confirm the field is gone). [[SCHEMA]] needs re-verifying.
+- **Commit:** `schema: changes_since_verified field for re-reviews (v5.2); Nicrosil 0.8.11`
 
-### [2026-11-17] ingest | Intro to Intelligence resources, batch 1a: course framework handouts
+### [2026-11-17] schema | Apply approved verified-page link drops
 
-- **Think:** I asked for the Intro to Intelligence course resources to be ingested section by section, starting with Section 1 (analysis and writing tradecraft). The agent split Section 1 into five batches; I approved the plan for batch 1a as written, including summaries for only three of the seven handouts. Defaults otherwise: whole sources, skip logistics, plan first, verified pages proposed only.
-- **Calculate:**
-  - Originals copied unchanged into `Sources/Readings/` under descriptive names. They are Word, Excel, and PowerPoint files, which Obsidian can't open, so pages cite them through their source cards by point, theme, section, slide, or row.
-  - Source cards (7), ratings proposed: [[SRC - Intelligence in National Security, Definition in 7 Points]] (B-2), [[SRC - Themes in US Intelligence, Summary of Texts]] (B-2), [[SRC - SI Themes and Pearl Harbor Context]] (B-6), [[SRC - SEE-IT Checklist for Critical Thinking]] (B-6), [[SRC - Puzzles and Mysteries (Slides)]] (B-2), [[SRC - Collection Discipline Overview]] (B-2), [[SRC - IC Organizations, Leadership, Missions, and Functions]] (B-2).
-  - Summaries (3): [[Summary - Intelligence in National Security, Definition in 7 Points]], [[Summary - Themes in US Intelligence, Summary of Texts]], [[Summary - SEE-IT Checklist for Critical Thinking]].
-  - Frameworks (4): [[Seven-Point Definition of Intelligence]], [[Themes in U.S. Intelligence]], [[Elements and Standards of Critical Thinking]], [[Strengths and Weaknesses of the Collection Disciplines]].
-  - Concepts (2): [[Consumer-Producer Relations]], [[Intelligence Community Elements and Missions]]. Glossary (1): [[Redundant Analytic Structure]].
-  - Appended to drafts: [[Intelligence (National Security)]] (Baginski credited for the definition; pointer to the seven points), [[Puzzles and Mysteries]] (the slide's present-day examples and "Secrets" label, Treverton's "puzzle solving or mystery framing," and a "Possibly resolved by" line on the unsourced-Treverton callout), [[Intelligence Collection Disciplines]] (MASINT definition, DIA as MASINT functional manager, FININT's law-enforcement use, link to the strengths-and-weaknesses page; the FIS gap stays open), [[United States Intelligence Community]] (DIA as MASINT functional manager; pointer to the elements page; its CIA-reporting accuracy check stays open).
-  - **Proposed for verified pages, not made (7):** [[SEE-It Framework]], [[Mirror Imaging]], [[Denial and Deception]], [[Politicized Intelligence]], [[All-Source Intelligence]], [[Levels of Intelligence]], [[Traffic Analysis]].
-  - **Typed links proposed (11):** [[Seven-Point Definition of Intelligence]] → part_of → [[Intelligence (National Security)]]; [[Themes in U.S. Intelligence]] → part_of → [[Seven-Point Definition of Intelligence]]; [[Consumer-Producer Relations]] → part_of → [[Themes in U.S. Intelligence]]; [[Redundant Analytic Structure]] → part_of → [[Themes in U.S. Intelligence]]; [[Strengths and Weaknesses of the Collection Disciplines]] → part_of → [[Intelligence Collection Disciplines]]; [[Intelligence Community Elements and Missions]] → part_of → [[United States Intelligence Community]]; plus `related` links on the new pages and [[Intelligence (National Security)]].
-  - **Flags added:** gaps in the source (4: "malevolent empathy" undefined in the seven points; the SEE-IT example's missing Nosich list and blank illustrations; the SI Themes file has no Pearl Harbor material; the Puzzles slide's "Sources" row is unreadable); accuracy checks (2: typing slips in the theme spreadsheet's quotations; the IC handout's garbled title for Lowenthal's book); possibly resolved (1: the Treverton callout on [[Puzzles and Mysteries]]).
-  - **Left out on purpose:** the SEE-IT handout's worked examples about PHC courses (catalog entries, rooms, schedules); the "Best Jobs for Personality Types" slide (out of scope, Schema §1); the IC leaders' names (a September 2026 snapshot); the theme spreadsheet's further-readings column; the IC handout's web links.
-  - **Deferred:** the Grammar Summaries to batch 1b; Lowenthal's own definitions of competitive analysis and groupthink to 1b.
-  - New and changed files use the vault's CRLF line endings. [[index]] updated. `Ingest Queue.md` marks batch 1a as drafted, pending review. [[Find]] and [[Library.base|Library]] needed no change: no new class date, course, page type, or flag kind.
-- **Verify:** pending. Item by item.
-- **Commit:** `ingest: Intro to Intelligence batch 1a (course framework handouts) — 17 drafts + 4 page updates, pending review`
+- **Think:** You approved the verified-page items from the retype round. Drops are mechanical: each removed `related` link already appears as a link in the page text (§5 rules 3 and 7). Keeps need no change.
+- **Calculate:** 37 `related` links removed from 29 pages. 24 links stay `related` on verified pages, with their reasons. Resolved pairs: [[AI in Intelligence Production]] ↔ [[Time Compression Trap]], [[AI-Enabled Surveillance]] ↔ [[Narrow AI]], [[Human Decision Point]] ↔ [[Law of Armed Conflict]], [[Analysis of Competing Hypotheses]] ↔ [[Richards Heuer]], and [[Confirmation Bias]] → [[Analysis of Competing Hypotheses]].
+- **Changed:** 29 pages set back to `draft` (§7), old `verified_on` kept: [[AI in Intelligence Production]], [[AI in Warfighting]], [[Ages of U.S. Intelligence]], [[Analysis of Competing Hypotheses]], [[Architecture of Worldview]], [[Bach Faucet]], [[Confirmation Bias]], [[Covert Action]], [[Curiosity, Character, and Competence]], [[Dissect and Ingest a Source]], [[Executive Order 12333]], [[Existential Risk]], [[Four Levels of Prompt Engineering]], [[Human Decision Point]], [[Information Model]], [[Intelligence Community Style Summaries]], [[Intelligence as Attentive Understanding]], [[Intelligence-Led Policing]], [[LLM Wiki]], [[Law Enforcement Intelligence Internships]], [[Law of Armed Conflict]], [[Mata v. Avianca (2023)]], [[Narrow AI]], [[Revolution in Military Affairs]], [[Richards Heuer]], [[Tasking, Collection, Processing, Exploitation, and Dissemination]], [[Time Compression Trap]], [[Unconventional Warfare]], [[Zero-Day Vulnerability]]. [[Health Check 2026-11-17]] flags 3 and 4 updated.
+- **Verify:** pending. All 29 pages need re-verifying, plus the 23 retyped links on drafts.
+- **Commit:** `schema: drop 37 repeated related links on 29 verified pages (approved)`
 
 ### [2026-11-17] verify | SCHEMA
 
@@ -897,76 +1950,31 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - Approved: [[SCHEMA]]
 - **Commit:** `verify: SCHEMA`
 
-### [2026-11-17] ingest | Edits to verified pages from batch 1a
-
-- **Think:** I asked for the seven proposed changes to verified pages from the batch 1a ingest to be made.
-- **Calculate:**
-  - Made the before/after changes exactly as proposed in the batch 1a report, citing [[SRC - Themes in US Intelligence, Summary of Texts]], [[SRC - SEE-IT Checklist for Critical Thinking]], and [[SRC - Intelligence in National Security, Definition in 7 Points]], and added those cards to each page's `sources`:
-    - [[SEE-It Framework]]: the handout's "Illustrate It," sentence starters, and uses; `related` → [[Elements and Standards of Critical Thinking]].
-    - [[Mirror Imaging]]: Lowenthal's fuller definition, "clientism," and Treverton on intelligence failures.
-    - [[Denial and Deception]]: Lowenthal's framing, and the innocent state that looks the same as one with good D&D.
-    - [[Politicized Intelligence]]: Lowenthal's three ways policymakers politicize, and analysts' own bias.
-    - [[All-Source Intelligence]]: collection synergy, and IRTPA's all-source requirement for the DNI.
-    - [[Levels of Intelligence]]: the seven points' scope definitions, including technical intelligence, and Lowenthal on policy vs. tactical needs.
-    - [[Traffic Analysis]]: Treverton on encryption limiting SIGINT to traffic analysis.
-  - Because their content changed, all seven pages were set back to `status: draft` (Schema §7, item 5); `verified_on` was kept as the record of the earlier verification. [[index]] updated: the seven moved from Verified to Drafts. [[Find]] and [[Library.base|Library]] needed no change.
-- **Verify:** pending. Item by item.
-- **Commit:** `ingest: batch 1a edits to 7 verified pages — back to draft, pending review`
-
-### [2026-11-17] schema | Add Health Checks (version 4.0)
-
-- **Think:** I asked for health checks to produce a short, easy-to-read report that is stored so I can look back at past checks. I asked the agent to design the template and the storage place first and to wait on the schema until I'd settled how it works. After seeing the design, I said yes to the agent's proposal: a `Health Checks/` folder in the vault root, a log entry that links to the report instead of repeating each flag, and a fixed set of rows matching §10.
-- **Calculate:**
-  - Created `_templates/Health Check Report.md` (summary callout, a fixed table with one row per check, flags needing my decision, mechanical fixes for batch approval, changes since the last check, scope and limits), the `Health Checks/` folder, and `Health Checks/Health Check History.base` (all reports newest first, and the ones with open flags).
-  - [[SCHEMA]] updated: folder layout and a new "Health Checks" subsection (§2), report naming (§3), a permissions row (§9), the health check steps (§10), a new Health Checks subsection and a log-entry rule (§11), the history table listed as Obsidian-only (§13), frontmatter `version: 4`, and a 4.0 changelog line.
-  - `AGENTS.md` updated with a pointer to the reports.
-  - Because the schema's content changed, its `status` was set back to `draft` and `verified_on` cleared (§7).
-  - [[index]], [[Find]], [[Library.base|Library]], and the Dashboard needed no change: reports are not pages, and have no `status`, so Library and the Review Queue skip them. No health check has been run under the new format yet, so there are no reports.
-- **Verify:** pending. Schema needs re-verifying. The template and history table are untested until the first report is saved.
-- **Commit:** `schema: add Health Checks reports (v4.0)`
-
-### [2026-11-17] health-check | Whole vault (first report)
-
-- **Think:** I asked for a health check of the whole vault, the first one under the new report format.
-- **Calculate:** Saved [[Health Check 2026-11-17]]: 236 pages checked, 11 flags (9 for my decision, 2 mechanical). The two that matter most: [[Dissect and Ingest a Source]] was modified after it was verified, with no log entry; and 82% of typed links are `related`, with 70 pairs stored on both pages. The index, Find's class-date table, and the Ingest Queue are in sync; there are no broken links and no drafts older than 14 days. [[index]], [[Find]], and [[Library.base|Library]] needed no change.
-- **Verify:** pending. 0 of 11 flags decided.
-- **Commit:** `health-check: whole vault, first report — 11 flags, 0 decided`
-
-### [2026-11-17] verify | SCHEMA
+### [2026-11-17] verify | Choosing a Claude Model for Coppermind Work
 
 - **Verify:**
-  - Approved: [[SCHEMA]]
-- **Commit:** `verify: SCHEMA`
+  - Approved: [[Choosing a Claude Model for Coppermind Work]]
+- **Commit:** `verify: Choosing a Claude Model for Coppermind Work`
 
-### [2026-11-17] schema | Rename the review plugin to Nicrosil (version 4.3)
+### [2026-11-17] schema | Retype remaining related links
+- **Think:** After schema 5.0, 231 `related` links were left. Each was checked against the page text and its sources, trying the types in table order (§5).
+- **Calculate:** 231 links decided: 23 retyped, 93 dropped (already linked in the page text), 55 kept as `related` with a reason, 60 on verified pages left as proposals. Typed links went from 299 to 206: 115 `related`, 57 `part_of`, 8 `example_of`, 8 `applies_to`, 5 `developed_by`, 5 `counters`, 3 `supports`, 3 `type_of`, 2 `causes`.
+- **Changed:** 90 draft pages in `Wiki/`. No verified page changed; [[Dissect and Ingest a Source]] was verified meanwhile, so its one proposed change (drop `related` → [[SCHEMA]], already linked in the text) is left for you. [[Health Check 2026-11-17]] flag 4 updated.
+- **Verify:** pending. The 23 retyped links need your approval or rejection one by one. The 60 verified-page proposals need item-by-item review. [[SCHEMA]] and [[Dissect and Ingest a Source]] still need re-verifying.
+- **Commit:** `schema: retype related links — 23 typed, 93 dropped as duplicates of text links`
 
-- **Think:** I asked to combine the two Coppermind plugins (the review tools and the schema changelog button) into one, named Nicrosil, and to update every written reference to the old name.
-- **Calculate:**
-  - Plugin: the schema changelog button now lives inside Nicrosil. Its folder and id stay `coppermind-review`, so my settings, saved flag decisions, queue layout, and the Alt+D hotkey carry over. The old `coppermind-schema-log` folder is now an empty stub, to be turned off and deleted.
-  - [[SCHEMA]]: changed the three places that named the old plugin (§2, §7, §11), added a 4.3 line to the changelog, and set `status` back to `draft` and cleared `verified_on` (§7).
-  - [[Nicrosil]]: changed the three mentions of the plugin name, and set `status` back to `draft` and cleared `verified_on` (§7). The guide still says the Dashboard has seven cards including Find, which is no longer true; I did not change that.
-  - [[index]]: moved the guide from Verified to Drafts and updated the totals (55 verified, 181 drafts). Older log entries still say "Coppermind Review", since they record what was true then.
-- **Verify:** pending. [[SCHEMA]] and [[Nicrosil]] need re-verifying.
-- **Commit:** `schema: rename the review plugin to Nicrosil (v4.3)`
+### [2026-11-17] setup | Guide: choosing a Claude model
 
-### [2026-11-17] verify | SCHEMA
+- **Think:** I asked for a guide on which Claude model to use for the different kinds of Coppermind work: ingesting, health checks, queries, editing pages, and developing features.
+- **Calculate:** Claude (claude-opus-5-5) drafted [[Choosing a Claude Model for Coppermind Work]] in `Wiki/Guides/`: the four current models (Fable 5.2, Opus 5.5, Sonnet 5.5, Haiku 5.5) cited to Anthropic's model docs by URL (Schema §6, how-to guides about tools), what this log shows about which model did which work so far, a task-by-task table with a default model and when to step down or up, and steps for choosing per session. Proposed typed link: [[Choosing a Claude Model for Coppermind Work]] → applies_to → [[LLM Wiki]] (the guide is a method used on running this LLM wiki). The recommendations are the agent's advice, not claims from a course source. Updated [[index]] (Guides 4; totals 55 verified, 182 drafts).
+- **Verify:** pending.
+- **Commit:** `setup: draft guide on choosing a Claude model`
+
+### [2026-11-17] verify | Dissect and Ingest a Source
 
 - **Verify:**
-  - Approved: [[SCHEMA]]
-- **Commit:** `verify: SCHEMA`
-
-### [2026-11-17] schema | Remove Find and Library (version 4.4)
-
-- **Think:** I deleted `Find.md` and `Library.base` and asked for every mention of them to be removed from the Coppermind. The index stays as it is.
-- **Calculate:**
-  - [[SCHEMA]]: removed the two folder-layout lines, the "Find and Library" subsections in §2 and §11, the §9 permissions row, the Find/Library parts of the ingest commit step and the health check (§10), and the mentions in §6 and §13. Added a 4.4 line to the changelog, and set `status` back to `draft` and cleared `verified_on` (§7).
-  - `AGENTS.md`: removed the paragraph about maintaining the search tools.
-  - [[Nicrosil]]: replaced the Find card with the search box, and corrected the card count to six. It was already a draft.
-  - `Health Check Report` template: removed the Find/Library row, so the report has 11 check rows plus "anything else".
-  - Left alone on purpose: older log entries and the saved [[Health Check 2026-11-17]], because they record what was true then. They still name Find and Library, so those links show as unresolved. The one open flag about Find's vault name in that report no longer applies.
-  - [[index]] and the Dashboard needed no change.
-- **Verify:** pending. [[SCHEMA]] needs re-verifying.
-- **Commit:** `schema: remove Find and Library (v4.4)`
+  - Approved: [[Dissect and Ingest a Source]]
+- **Commit:** `verify: Dissect and Ingest a Source`
 
 ### [2026-11-17] verify | SCHEMA
 
@@ -993,30 +2001,18 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - Approved: [[SCHEMA]]
 - **Commit:** `verify: SCHEMA`
 
-### [2026-11-17] verify | Dissect and Ingest a Source
+### [2026-11-17] schema | Remove Find and Library (version 4.4)
 
-- **Verify:**
-  - Approved: [[Dissect and Ingest a Source]]
-- **Commit:** `verify: Dissect and Ingest a Source`
-
-### [2026-11-17] setup | Guide: choosing a Claude model
-
-- **Think:** I asked for a guide on which Claude model to use for the different kinds of Coppermind work: ingesting, health checks, queries, editing pages, and developing features.
-- **Calculate:** Claude (claude-opus-5-5) drafted [[Choosing a Claude Model for Coppermind Work]] in `Wiki/Guides/`: the four current models (Fable 5.2, Opus 5.5, Sonnet 5.5, Haiku 5.5) cited to Anthropic's model docs by URL (Schema §6, how-to guides about tools), what this log shows about which model did which work so far, a task-by-task table with a default model and when to step down or up, and steps for choosing per session. Proposed typed link: [[Choosing a Claude Model for Coppermind Work]] → applies_to → [[LLM Wiki]] (the guide is a method used on running this LLM wiki). The recommendations are the agent's advice, not claims from a course source. Updated [[index]] (Guides 4; totals 55 verified, 182 drafts).
-- **Verify:** pending.
-- **Commit:** `setup: draft guide on choosing a Claude model`
-### [2026-11-17] schema | Retype remaining related links
-- **Think:** After schema 5.0, 231 `related` links were left. Each was checked against the page text and its sources, trying the types in table order (§5).
-- **Calculate:** 231 links decided: 23 retyped, 93 dropped (already linked in the page text), 55 kept as `related` with a reason, 60 on verified pages left as proposals. Typed links went from 299 to 206: 115 `related`, 57 `part_of`, 8 `example_of`, 8 `applies_to`, 5 `developed_by`, 5 `counters`, 3 `supports`, 3 `type_of`, 2 `causes`.
-- **Changed:** 90 draft pages in `Wiki/`. No verified page changed; [[Dissect and Ingest a Source]] was verified meanwhile, so its one proposed change (drop `related` → [[SCHEMA]], already linked in the text) is left for you. [[Health Check 2026-11-17]] flag 4 updated.
-- **Verify:** pending. The 23 retyped links need your approval or rejection one by one. The 60 verified-page proposals need item-by-item review. [[SCHEMA]] and [[Dissect and Ingest a Source]] still need re-verifying.
-- **Commit:** `schema: retype related links — 23 typed, 93 dropped as duplicates of text links`
-
-### [2026-11-17] verify | Choosing a Claude Model for Coppermind Work
-
-- **Verify:**
-  - Approved: [[Choosing a Claude Model for Coppermind Work]]
-- **Commit:** `verify: Choosing a Claude Model for Coppermind Work`
+- **Think:** I deleted `Find.md` and `Library.base` and asked for every mention of them to be removed from the Coppermind. The index stays as it is.
+- **Calculate:**
+  - [[SCHEMA]]: removed the two folder-layout lines, the "Find and Library" subsections in §2 and §11, the §9 permissions row, the Find/Library parts of the ingest commit step and the health check (§10), and the mentions in §6 and §13. Added a 4.4 line to the changelog, and set `status` back to `draft` and cleared `verified_on` (§7).
+  - `AGENTS.md`: removed the paragraph about maintaining the search tools.
+  - [[Nicrosil]]: replaced the Find card with the search box, and corrected the card count to six. It was already a draft.
+  - `Health Check Report` template: removed the Find/Library row, so the report has 11 check rows plus "anything else".
+  - Left alone on purpose: older log entries and the saved [[Health Check 2026-11-17]], because they record what was true then. They still name Find and Library, so those links show as unresolved. The one open flag about Find's vault name in that report no longer applies.
+  - [[index]] and the Dashboard needed no change.
+- **Verify:** pending. [[SCHEMA]] needs re-verifying.
+- **Commit:** `schema: remove Find and Library (v4.4)`
 
 ### [2026-11-17] verify | SCHEMA
 
@@ -1024,24 +2020,16 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - Approved: [[SCHEMA]]
 - **Commit:** `verify: SCHEMA`
 
-### [2026-11-17] schema | Apply approved verified-page link drops
+### [2026-11-17] schema | Rename the review plugin to Nicrosil (version 4.3)
 
-- **Think:** You approved the verified-page items from the retype round. Drops are mechanical: each removed `related` link already appears as a link in the page text (§5 rules 3 and 7). Keeps need no change.
-- **Calculate:** 37 `related` links removed from 29 pages. 24 links stay `related` on verified pages, with their reasons. Resolved pairs: [[AI in Intelligence Production]] ↔ [[Time Compression Trap]], [[AI-Enabled Surveillance]] ↔ [[Narrow AI]], [[Human Decision Point]] ↔ [[Law of Armed Conflict]], [[Analysis of Competing Hypotheses]] ↔ [[Richards Heuer]], and [[Confirmation Bias]] → [[Analysis of Competing Hypotheses]].
-- **Changed:** 29 pages set back to `draft` (§7), old `verified_on` kept: [[AI in Intelligence Production]], [[AI in Warfighting]], [[Ages of U.S. Intelligence]], [[Analysis of Competing Hypotheses]], [[Architecture of Worldview]], [[Bach Faucet]], [[Confirmation Bias]], [[Covert Action]], [[Curiosity, Character, and Competence]], [[Dissect and Ingest a Source]], [[Executive Order 12333]], [[Existential Risk]], [[Four Levels of Prompt Engineering]], [[Human Decision Point]], [[Information Model]], [[Intelligence Community Style Summaries]], [[Intelligence as Attentive Understanding]], [[Intelligence-Led Policing]], [[LLM Wiki]], [[Law Enforcement Intelligence Internships]], [[Law of Armed Conflict]], [[Mata v. Avianca (2023)]], [[Narrow AI]], [[Revolution in Military Affairs]], [[Richards Heuer]], [[Tasking, Collection, Processing, Exploitation, and Dissemination]], [[Time Compression Trap]], [[Unconventional Warfare]], [[Zero-Day Vulnerability]]. [[Health Check 2026-11-17]] flags 3 and 4 updated.
-- **Verify:** pending. All 29 pages need re-verifying, plus the 23 retyped links on drafts.
-- **Commit:** `schema: drop 37 repeated related links on 29 verified pages (approved)`
-
-### [2026-11-17] schema | Changes since verified
-
-- **Think:** Pages I set back to `draft` after you approved edits were mixed in with new drafts, so you couldn't tell which ones only needed a small re-check. You approved a field that lists what changed, deleted when you verify again.
-- **Calculate:** [[SCHEMA]] is now 5.2: new `changes_since_verified` property (§4), a new §7 rule 8 and a longer rule 5, a health-check item (§10), and the change to `Review Queue.base`. `AGENTS.md` carries the same rule for the agent.
-- **Changed:**
-  - `Review Queue.base`: new "Changed since verified" view; "Waiting for review" now shows only drafts without the field.
-  - Nicrosil v0.8.10 → v0.8.11 (`main.js`, `manifest.json`, `styles.css`): Verify deletes the field; the queue lists re-reviews first with an R badge; the review card and the Dashboard show the change lines; the Dashboard nav card counts them. [[Nicrosil]] guide updated to match. Not tested in Obsidian here: reload the plugin and try it on one page.
-  - 29 pages from the last round now carry a `changes_since_verified` line for each link removed. [[SCHEMA]] carries one for this edit, since it was verified earlier today.
-- **Verify:** pending. Test Nicrosil on one re-review (open it, check the card, click Verify, confirm the field is gone). [[SCHEMA]] needs re-verifying.
-- **Commit:** `schema: changes_since_verified field for re-reviews (v5.2); Nicrosil 0.8.11`
+- **Think:** I asked to combine the two Coppermind plugins (the review tools and the schema changelog button) into one, named Nicrosil, and to update every written reference to the old name.
+- **Calculate:**
+  - Plugin: the schema changelog button now lives inside Nicrosil. Its folder and id stay `coppermind-review`, so my settings, saved flag decisions, queue layout, and the Alt+D hotkey carry over. The old `coppermind-schema-log` folder is now an empty stub, to be turned off and deleted.
+  - [[SCHEMA]]: changed the three places that named the old plugin (§2, §7, §11), added a 4.3 line to the changelog, and set `status` back to `draft` and cleared `verified_on` (§7).
+  - [[Nicrosil]]: changed the three mentions of the plugin name, and set `status` back to `draft` and cleared `verified_on` (§7). The guide still says the Dashboard has seven cards including Find, which is no longer true; I did not change that.
+  - [[index]]: moved the guide from Verified to Drafts and updated the totals (55 verified, 181 drafts). Older log entries still say "Coppermind Review", since they record what was true then.
+- **Verify:** pending. [[SCHEMA]] and [[Nicrosil]] need re-verifying.
+- **Commit:** `schema: rename the review plugin to Nicrosil (v4.3)`
 
 ### [2026-11-17] verify | SCHEMA
 
@@ -1049,1879 +2037,926 @@ A dated, append-only record of every ingest, query, health check, verification, 
   - Approved: [[SCHEMA]]
 - **Commit:** `verify: SCHEMA`
 
-### [2026-11-17] schema | Relations panel
+### [2026-11-17] health-check | Whole vault (first report)
 
-- **Think:** The Properties dropdown shows only the links stored on the open page, and §5 stores each relationship once, so the other half of every relationship was invisible. You asked for a better way to see them and chose a panel with a local map.
-- **Calculate:** Nicrosil v0.9.0 adds a Relations panel (`Alt+L` or the ribbon button): a map of the open page's neighborhood (incoming on the left, outgoing on the right, edges colored by type, with dash patterns for `related` and `contradicts`) and grouped lists of outgoing and incoming relations. It reads the metadata cache only and changes no file.
-- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`, `styles.css`); [[Nicrosil]] guide (new section, hotkey, and version history for 0.8.11 and 0.9.0). No schema change; no page content other than the guide.
-- **Verify:** pending. Not tested in Obsidian here (I ran the panel against sample data outside Obsidian). Reload Nicrosil, press `Alt+L` on a page such as Human Decision Point, and check the map, the lists, and clicking through.
-- **Commit:** `nicrosil 0.9.0: relations panel with local map`
+- **Think:** I asked for a health check of the whole vault, the first one under the new report format.
+- **Calculate:** Saved [[Health Check 2026-11-17]]: 236 pages checked, 11 flags (9 for my decision, 2 mechanical). The two that matter most: [[Dissect and Ingest a Source]] was modified after it was verified, with no log entry; and 82% of typed links are `related`, with 70 pairs stored on both pages. The index, Find's class-date table, and the Ingest Queue are in sync; there are no broken links and no drafts older than 14 days. [[index]], [[Find]], and [[Library.base|Library]] needed no change.
+- **Verify:** pending. 0 of 11 flags decided.
+- **Commit:** `health-check: whole vault, first report — 11 flags, 0 decided`
 
-### [2026-11-17] schema | Dashboard: changes section always collapsed
+### [2026-11-17] schema | Add Health Checks (version 4.0)
 
-- **Think:** You'll rarely open the "Changed since verified" section on the Dashboard, so it shouldn't start open.
-- **Changed:** Nicrosil v0.9.1 (`main.js`, `manifest.json`): the section is collapsed whenever the Dashboard opens or refreshes, and it no longer remembers being opened. The other Dashboard sections behave as before.
-- **Verify:** pending. Reload Nicrosil and check the Dashboard.
-- **Commit:** `nicrosil 0.9.1: Dashboard changes section always collapsed`
-
-### [2026-11-17] schema | Dashboard search: scroll through every match
-
-- **Think:** The search box stopped at 8 results. You wanted to keep scrolling the dropdown until you find the page.
-- **Calculate:** Nicrosil v0.9.2: the search ranks every match instead of the top 8. The popup draws 20 cards at a time and draws more as you scroll or press the down arrow past the last card, with a sticky line at the bottom showing the count ("20 of 143 matches · scroll for more") next to the class-notes search link. Snippets are worked out only for cards that are drawn, so typing stays fast.
-- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`, `styles.css`); [[Nicrosil]] guide (Search section, version 0.9.2, version history for 0.9.1 and 0.9.2). Ranking and what is searched are unchanged.
-- **Verify:** pending. Not tested in Obsidian here. Reload Nicrosil, type a common word such as "AI", and scroll the popup to the end.
-- **Commit:** `nicrosil 0.9.2: search shows every match, loaded as you scroll`
-
-### [2026-11-17] schema | Wiki map
-
-- **Think:** Obsidian's graph view draws every plain link, so it mixes "see also" with real relationships and tells you little. You asked for a whole-wiki view built on the typed links, like the page panel, and chose the hierarchy tree and the typed-link map.
-- **Calculate:** Nicrosil v0.10.0 adds a Wiki map tab (`Alt+M` or the ribbon): a hierarchy tree from `type_of`, `part_of` and `example_of`, and a zoomable map of all typed links with relationship, status, page-type and course filters, a page finder, and click-to-focus. Colors match the relations panel. It reads the metadata cache only and changes no file.
-- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`, `styles.css`); [[Nicrosil]] guide (new section, hotkey, version 0.10.0). No schema change.
-- **Verify:** pending. Not tested in Obsidian here; I ran both views against a copy of the wiki's properties outside Obsidian. Reload Nicrosil, press `Alt+M`, and try both tabs.
-- **Commit:** `nicrosil 0.10.0: wiki map with hierarchy tree and typed-link map`
-
-### [2026-11-17] schema | Wiki map button on the Dashboard
-- **Think:** You wanted the wiki map as a Dashboard button instead of a ribbon icon, in place of the My Worldview card.
-- **Calculate:** Nicrosil v1.0.0 removes the ribbon icon and swaps the My Worldview nav card for a Wiki map card. `Alt+M` and the command still work. My Worldview stays reachable from the Index.
-- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`); [[Nicrosil]] guide (version 1.0.0, card list, ribbon text, history).
-- **Verify:** pending. Reload Nicrosil and click the new card.
-- **Commit:** `nicrosil 1.0.0: wiki map as a Dashboard card`
-
-### [2026-11-17] schema | Wiki map chips without counts
-- **Think:** The number after each relationship name on the wiki map (for example "type of 3") was clutter.
-- **Calculate:** Nicrosil v1.0.1 removes the count from those chips. Nothing else changed.
-- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`); [[Nicrosil]] guide (version 1.0.1, history).
-- **Verify:** pending. Reload Nicrosil and open the wiki map.
-- **Commit:** `nicrosil 1.0.1: drop counts from wiki map relationship chips`
-
-### [2026-11-17] schema | Wiki map motion and polish
-- **Think:** The map felt like a static picture. You chose live physics, hover highlight with smooth focus, a cleaner look, and flowing links.
-- **Calculate:** Nicrosil v1.1.0 replaces the one-shot layout with a live physics simulation (dots drift out, can be dragged, then rest), adds hover highlighting and a camera glide on focus, curved arrows, a glow on verified pages, and a Flow switch for the pulsing links. I tested the physics and the page on a copy of the wiki's links outside Obsidian; the animation itself is untested in Obsidian.
-- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `styles.css`, `manifest.json`); [[Nicrosil]] guide (map section, version 1.1.0, history).
-- **Verify:** pending. Reload Nicrosil, open the wiki map (`Alt+M`), and try dragging a dot, pointing at one, and the Flow button.
-- **Commit:** `nicrosil 1.1.0: animated wiki map with physics, hover, glide and flowing links`
-
-### [2026-11-17] schema | Hierarchy as a branching diagram
-- **Think:** The Hierarchy view read as a bulleted list. You chose a branching tree diagram.
-- **Calculate:** Nicrosil v1.2.0 draws the hierarchy as left-to-right cards joined by curved lines colored by relationship, with open/close circles, hover highlighting, and drag to pan. Filtering, expand/collapse, the examples switch, counts, click-to-open and the outside-the-hierarchy list all still work. While testing I found the filter box did not update the view as you typed (it used a stale search value); that is fixed. Tested on a copy of the wiki's links outside Obsidian, not in Obsidian itself.
-- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `styles.css`, `manifest.json`); [[Nicrosil]] guide (Hierarchy section, version 1.2.0, history).
-- **Verify:** pending. Reload Nicrosil, open the wiki map (`Alt+M`), and try the Hierarchy tab: open a branch, point at a card, and type in the filter box.
-- **Commit:** `nicrosil 1.2.0: hierarchy as a branching diagram, fix live filter`
-
-### [2026-11-17] schema | Wiki map opens on the Map tab
-- **Think:** You wanted the wiki map to open on the Map tab, not Hierarchy.
-- **Calculate:** Nicrosil v1.2.1 makes Map the starting tab every time the wiki map opens, instead of remembering the last tab. Switching tabs still works while it is open.
-- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `manifest.json`); [[Nicrosil]] guide (version 1.2.1, history).
-- **Verify:** pending. Reload Nicrosil and click the Wiki map card.
-- **Commit:** `nicrosil 1.2.1: wiki map opens on the Map tab`
-
-### [2026-11-17] schema | Dashboard redesign
-- **Think:** The Dashboard felt stale and was mostly brown. You chose cooler colors with depth, motion, progress graphics, and a hero header with the search built in, keeping copper and dark mode.
-- **Calculate:** Nicrosil v1.3.0 gives the Dashboard page its own slate-ink background with copper and teal accents (the rest of the vault keeps the brown theme), gradient-edged cards with shading, colored navigation icons, an animated header with the search box inside it, a verification ring, a 14-day activity chart, per-type bars, and entrance animations that play only when the page opens and are off under reduced motion. The old By page type table was replaced by the bars. I moved the search into the header, so `Dashboard.md` lost its separate `coppermind-search` block. Tested outside Obsidian only; the look has not been seen in Obsidian.
-- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `styles.css`, `manifest.json`); `Dashboard.md` (search block removed); [[Nicrosil]] guide (Dashboard section, version 1.3.0, history).
-- **Verify:** pending. Reload Nicrosil and open the Dashboard; tell me what to change.
-- **Commit:** `nicrosil 1.3.0: dashboard redesign with slate theme, graphs and motion`
-
-### [2026-11-17] schema | Dashboard back to the brown background
-- **Think:** The slate background made the Dashboard feel different from every other page.
-- **Calculate:** Nicrosil v1.3.1 removes the Dashboard's slate color override, so it uses the vault's brown, and re-tints the cards, header and search bar to brown. The glows, graphs and motion are unchanged.
-- **Changed:** `.obsidian/plugins/nicrosil/` (`styles.css`, `manifest.json`); [[Nicrosil]] guide (look paragraph, version 1.3.1, history).
-- **Verify:** pending. Reload Nicrosil and open the Dashboard.
-- **Commit:** `nicrosil 1.3.1: dashboard uses the vault's brown background`
-
-### [2026-11-17] schema | Dashboard background gradient
-- **Think:** You liked the gradient but wanted it stronger and less blank, with the orange and green tones, and you may want one background on every page later.
-- **Calculate:** Nicrosil v1.3.2 makes the Dashboard background a stronger copper glow (top left) and teal glow (top right, plus a faint one lower left) over the brown, drifting to a slightly green dark at the bottom right. It is stored as one variable, `--cm-bg-gradient`, so applying it to every page later is one CSS rule (given in the guide). I did not apply it to other pages.
-- **Changed:** `.obsidian/plugins/nicrosil/` (`styles.css`, `manifest.json`); [[Nicrosil]] guide (look paragraph, version 1.3.2, history).
-- **Verify:** pending. Reload Nicrosil and open the Dashboard.
-- **Commit:** `nicrosil 1.3.2: stronger dashboard gradient as a reusable variable`
-
-### [2026-11-18] schema | Gradient background on every page
-- **Think:** You liked the Dashboard background and wanted it as the default everywhere.
-- **Calculate:** Nicrosil v1.4.0 applies `--cm-bg-gradient` to every note's view (markdown notes only; sidebars, the graph and other panes are untouched). It lives in the plugin's `styles.css`, so it shows only while Nicrosil is enabled; editing the variable changes every page at once.
-- **Changed:** `.obsidian/plugins/nicrosil/` (`styles.css`, `manifest.json`); [[Nicrosil]] guide (look paragraph, version 1.4.0, history).
-- **Verify:** pending. Reload Nicrosil and open a few different notes, in both reading and editing view.
-- **Commit:** `nicrosil 1.4.0: gradient background on every note`
-
-### [2026-11-18] schema | Dashboard fixes: ring, tile glow, card outlines
-- **Think:** You reported three problems: the verification ring showed 12% with no visible fill, the three stat tiles glowed all the time, and the six navigation cards had a colored outline only at the top left.
-- **Calculate:** Nicrosil v1.4.1 draws the ring's filled part as small colored pieces running copper to green (it no longer depends on a gradient reference, which I could not confirm was drawing in Obsidian); moves the tile glow to hover only; and makes each card's outline the same colored gradient all the way around. I checked all three in a real browser outside Obsidian; the old ring did draw there, so I could not reproduce the missing fill and cannot be sure this is the cause.
-- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `styles.css`, `manifest.json`); [[Nicrosil]] guide (ring, version 1.4.1, history).
-- **Verify:** pending. Reload Nicrosil, open the Dashboard, and check the ring, the tiles and the card outlines.
-- **Commit:** `nicrosil 1.4.1: dashboard ring, tile glow and card outlines`
-
-### [2026-11-18] verify | Ages of U.S. Intelligence
-
-- **Verify:**
-  - Approved: [[Ages of U.S. Intelligence]]
-- **Commit:** `verify: Ages of U.S. Intelligence`
-
-### [2026-11-18] schema | Verify animation
-- **Think:** You asked for a little animation when verifying a page: the page going away with the Dashboard's sparks, then a transition to the next page.
-- **Calculate:** Nicrosil v1.5.0 plays a check stamp with a ring and a burst of copper and teal sparks over the verified page while it slides up and away, then slides the next page in from the right with a short "Next: name · N left" note. It runs after the verify has been saved, so it never delays or changes what is written, and a new setting (on by default) turns it off. It is skipped under reduced motion. Tested the look in a real browser outside Obsidian; it has not run inside Obsidian.
-- **Changed:** `.obsidian/plugins/nicrosil/` (`main.js`, `styles.css`, `manifest.json`); [[Nicrosil]] guide (review session, settings, version 1.5.0, history).
-- **Verify:** pending. Reload Nicrosil, verify a draft, and watch the animation.
-- **Commit:** `nicrosil 1.5.0: animation when verifying a page`
-
-### [2026-11-18] verify | AI in Intelligence Production
-
-- **Verify:**
-  - Approved: [[AI in Intelligence Production]]
-- **Commit:** `verify: AI in Intelligence Production`
-
-### [2026-11-18] verify | AI in Warfighting
-
-- **Verify:**
-  - Approved: [[AI in Warfighting]]
-- **Commit:** `verify: AI in Warfighting`
-
-### [2026-11-18] verify | Analysis of Competing Hypotheses
-
-- **Verify:**
-  - Approved: [[Analysis of Competing Hypotheses]]
-- **Commit:** `verify: Analysis of Competing Hypotheses`
-
-### [2026-11-18] schema | Nicrosil 1.6.0 ambience
-
-- **Think:** The vault felt still outside the verify animation. I asked for glow, sparkle and motion in more places, without the streak counter or time-of-day tint.
-- **Calculate:** Nothing to compute. All animations are CSS or short script timers, and a setting plus reduced-motion turns them off.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (1.6.0): title auras, flag callout glow, link glow, page fade-in, map sparks/ripple/amber pulse, hierarchy amber outline, relations draw-in, Dashboard spotlight and milestone burst, queue sheen/slide/badge pop, search stagger, status-bar glow, Ambient animations setting
-  - [[Nicrosil]]: new Ambience section, settings entry, version 1.6.0 and history line
-- **Verify:**
-  - Guide set back to draft until I verify it
-  - Reload Nicrosil, then try a verify, the map, and the Dashboard
-- **Commit:** `schema: Nicrosil 1.6.0 ambience`
-
-### [2026-11-18] verify | Architecture of Worldview
-
-- **Verify:**
-  - Approved: [[Architecture of Worldview]]
-- **Commit:** `verify: Architecture of Worldview`
-
-### [2026-11-18] verify | Bach Faucet
-
-- **Verify:**
-  - Approved: [[Bach Faucet]]
-- **Commit:** `verify: Bach Faucet`
-
-### [2026-11-18] schema | Nicrosil 2.0.0 page transition and queue polish
-
-- **Think:** The 1.6.0 ambience had a few parts I did not want (Dashboard spotlight, amber map pulse, relations-panel animation). Opening a page felt abrupt, and the review queue header and progress bar looked plain next to the Dashboard.
-- **Calculate:** Nothing to compute.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.0.0): removed the spotlight, the amber map pulse (changed pages keep a still amber outline) and the relations line animation; added a page-open transition (copper light sweep plus rising sparks); larger glowing progress bar and a gradient title in the review queue; renamed two animation names that clashed with the Dashboard hero
-  - [[Nicrosil]]: Ambience section, version 2.0.0 and history line
-- **Verify:**
-  - Guide set back to draft until I verify it
-  - Reload Nicrosil, open a few pages, and check the review queue
-- **Commit:** `schema: Nicrosil 2.0.0 page transition and queue polish`
-
-### [2026-11-18] schema | Nicrosil 2.1.0 sparks only, sidebar panels closed at startup
-
-- **Think:** The copper light sweep in the page transition was too much. The five extra sidebar panels (backlinks, outgoing links, tags, all properties, outline) kept coming back after Obsidian restarted.
-- **Calculate:** Nothing to compute.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.1.0): removed the light sweep, 28 sparks that rise higher, new setting that closes those five panels on startup
-  - [[Nicrosil]]: Ambience section, settings entry, version 2.1.0 and history line
-- **Verify:**
-  - Guide set back to draft until I verify it
-  - Restart Obsidian and check the sidebar icons
-- **Commit:** `schema: Nicrosil 2.1.0 sparks only, close sidebar panels at startup`
-
-### [2026-11-18] schema | Nicrosil 2.2.0 review queue list and progress bar
-
-- **Think:** The review queue's progress bar should be sharper with a steady glow, not pulsing. The draft list was only file names.
-- **Calculate:** Nothing to compute.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.2.0): sharp-edged progress bar with a steady glow (pulse and sheen removed); draft rows are cards with a colored edge (amber flags, rust changed, teal current) and the page type under the name; styled section headings
-  - [[Nicrosil]]: Ambience section, version 2.2.0 and history line
-- **Verify:**
-  - Guide set back to draft until I verify it
-  - Reload Nicrosil and look at the review queue
-- **Commit:** `schema: Nicrosil 2.2.0 review queue list and progress bar`
-
-### [2026-11-18] verify | Confirmation Bias
-
-- **Verify:**
-  - Approved: [[Confirmation Bias]]
-- **Commit:** `verify: Confirmation Bias`
-
-### [2026-11-18] verify | Covert Action
-
-- **Verify:**
-  - Approved: [[Covert Action]]
-- **Commit:** `verify: Covert Action`
-
-### [2026-11-18] schema | Nicrosil 2.2.1 verify animation fix, no page-open sparks
-
-- **Think:** The verify animation no longer moved the page away, and the sparks when opening a page were annoying.
-- **Calculate:** Nothing to compute. The cause was the slow background drift (added in 1.6.0) setting `animation` on the page area, which overrode the verify slide.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.2.1): verify slide-out and slide-in rules made more specific so they win again (also in calm mode); page-open sparks removed, leaving a short fade
-  - [[Nicrosil]]: Ambience section, version 2.2.1 and history line
-- **Verify:**
-  - Guide set back to draft until I verify it
-  - Reload Nicrosil and verify a draft to check the slide
-- **Commit:** `schema: Nicrosil 2.2.1 verify animation fix, no page-open sparks`
-
-### [2026-11-18] verify | Curiosity, Character, and Competence
-
-- **Verify:**
-  - Approved: [[Curiosity, Character, and Competence]]
-- **Commit:** `verify: Curiosity, Character, and Competence`
-
-### [2026-11-18] verify | Dissect and Ingest a Source
-
-- **Verify:**
-  - Approved: [[Dissect and Ingest a Source]]
-- **Commit:** `verify: Dissect and Ingest a Source`
-
-### [2026-11-18] verify | Executive Order 12333
-
-- **Verify:**
-  - Approved: [[Executive Order 12333]]
-- **Commit:** `verify: Executive Order 12333`
-
-### [2026-11-18] verify | Existential Risk
-
-- **Verify:**
-  - Approved: [[Existential Risk]]
-- **Commit:** `verify: Existential Risk`
-
-### [2026-11-18] verify | Four Levels of Prompt Engineering
-
-- **Verify:**
-  - Approved: [[Four Levels of Prompt Engineering]]
-- **Commit:** `verify: Four Levels of Prompt Engineering`
-
-### [2026-11-18] verify | Human Decision Point
-
-- **Verify:**
-  - Approved: [[Human Decision Point]]
-- **Commit:** `verify: Human Decision Point`
-
-### [2026-11-18] verify | Information Model
-
-- **Verify:**
-  - Approved: [[Information Model]]
-- **Commit:** `verify: Information Model`
-
-### [2026-11-18] verify | Intelligence as Attentive Understanding
-
-- **Verify:**
-  - Approved: [[Intelligence as Attentive Understanding]]
-- **Commit:** `verify: Intelligence as Attentive Understanding`
-
-### [2026-11-18] verify | Intelligence Community Style Summaries
-
-- **Verify:**
-  - Approved: [[Intelligence Community Style Summaries]]
-- **Commit:** `verify: Intelligence Community Style Summaries`
-
-### [2026-11-18] verify | Intelligence-Led Policing
-
-- **Verify:**
-  - Approved: [[Intelligence-Led Policing]]
-- **Commit:** `verify: Intelligence-Led Policing`
-
-### [2026-11-18] verify | Law Enforcement Intelligence Internships
-
-- **Verify:**
-  - Approved: [[Law Enforcement Intelligence Internships]]
-- **Commit:** `verify: Law Enforcement Intelligence Internships`
-
-### [2026-11-18] verify | Law of Armed Conflict
-
-- **Verify:**
-  - Approved: [[Law of Armed Conflict]]
-- **Commit:** `verify: Law of Armed Conflict`
-
-### [2026-11-18] verify | LLM Wiki
-
-- **Verify:**
-  - Approved: [[LLM Wiki]]
-- **Commit:** `verify: LLM Wiki`
-
-### [2026-11-18] verify | Mata v. Avianca (2023)
-
-- **Verify:**
-  - Approved: [[Mata v. Avianca (2023)]]
-- **Commit:** `verify: Mata v. Avianca (2023)`
-
-### [2026-11-18] verify | Narrow AI
-
-- **Verify:**
-  - Approved: [[Narrow AI]]
-- **Commit:** `verify: Narrow AI`
-
-### [2026-11-18] verify | Revolution in Military Affairs
-
-- **Verify:**
-  - Approved: [[Revolution in Military Affairs]]
-- **Commit:** `verify: Revolution in Military Affairs`
-
-### [2026-11-18] verify | Richards Heuer
-
-- **Verify:**
-  - Approved: [[Richards Heuer]]
-- **Commit:** `verify: Richards Heuer`
-
-### [2026-11-18] verify | Tasking, Collection, Processing, Exploitation, and Dissemination
-
-- **Verify:**
-  - Approved: [[Tasking, Collection, Processing, Exploitation, and Dissemination]]
-- **Commit:** `verify: Tasking, Collection, Processing, Exploitation, and Dissemination`
-
-### [2026-11-18] verify | Time Compression Trap
-
-- **Verify:**
-  - Approved: [[Time Compression Trap]]
-- **Commit:** `verify: Time Compression Trap`
-
-### [2026-11-18] verify | Unconventional Warfare
-
-- **Verify:**
-  - Approved: [[Unconventional Warfare]]
-- **Commit:** `verify: Unconventional Warfare`
-
-### [2026-11-18] verify | Zero-Day Vulnerability
-
-- **Verify:**
-  - Approved: [[Zero-Day Vulnerability]]
-- **Commit:** `verify: Zero-Day Vulnerability`
-
-### [2026-11-18] verify | Agentic AI
-
-- **Verify:**
-  - Approved: [[Agentic AI]]
-- **Commit:** `verify: Agentic AI`
-
-### [2026-11-18] verify | AI Alignment
-
-- **Verify:**
-  - Approved: [[AI Alignment]]
-- **Commit:** `verify: AI Alignment`
-
-### [2026-11-18] verify | Nicrosil
-
-- **Verify:**
-  - Approved: [[Nicrosil]]
-- **Commit:** `verify: Nicrosil`
-
-### [2026-11-18] schema | Nicrosil 2.3.0 Dashboard activity chart removed
-
-- **Think:** The 14-day activity chart on the Dashboard was not wanted. The Verification card should use the space instead.
-- **Calculate:** Nothing to compute.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.3.0): removed the 14-day chart; the Verification card is full width with a larger ring and larger text
-  - [[Nicrosil]]: Dashboard section, version 2.3.0 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
-- **Verify:**
-  - Guide needs verifying again
-  - Reload Nicrosil and open the Dashboard
-- **Commit:** `schema: Nicrosil 2.3.0 remove Dashboard activity chart, widen verification card`
-
-### [2026-11-18] verify | Nicrosil
-
-- **Verify:**
-  - Approved: [[Nicrosil]]
-- **Commit:** `verify: Nicrosil`
-
-### [2026-11-18] verify | Cascade of Unintended Consequences
-
-- **Verify:**
-  - Approved: [[Cascade of Unintended Consequences]]
-- **Commit:** `verify: Cascade of Unintended Consequences`
-
-### [2026-11-18] verify | ACH GenAI Workflow
-
-- **Verify:**
-  - Approved: [[ACH GenAI Workflow]]
-  - Flags I resolved before approving (3):
-    - Accuracy check (Sources disagree) — these are just two different systems
-    - Accuracy check — same thing for me
-    - Gap (Gap in the source) — this is fine
-- **Commit:** `verify: ACH GenAI Workflow`
-
-### [2026-11-18] verify | All-Source Intelligence
-
-- **Verify:**
-  - Approved: [[All-Source Intelligence]]
-- **Commit:** `verify: All-Source Intelligence`
-
-### [2026-11-18] schema | Nicrosil 2.4.2 quiet Dashboard and sidebar colors
-
-- **Think:** The Dashboard looked machine-made, so I asked for a quieter design, then adjusted it, kept only the quiet style, and asked for softer colors on the open file in the file list. Earlier the same day I asked for the verify animation to move up instead of left and for the sidebars to match the page's glow.
-- **Calculate:** Nothing to compute.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.4.0 to 2.4.2): quiet Dashboard (plain header, link cards without icons, one-line progress card with a glowing bar, small serif capital headings); the Classic/Quiet setting removed; verify animation moves up; both sidebars share the background glow; the open file's highlight and name use soft copper-to-teal gradients
-  - [[Nicrosil]]: Dashboard, Look and motion, Ambience, Settings wording, version 2.4.2 and history lines; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
-- **Verify:**
-  - Guide needs verifying again
-  - Reload Nicrosil and open the Dashboard
-- **Commit:** `schema: Nicrosil 2.4.2 quiet Dashboard, sidebar glow, open-file colors`
-
-### [2026-11-18] verify | Nicrosil
-
-- **Verify:**
-  - Approved: [[Nicrosil]]
-- **Commit:** `verify: Nicrosil`
-
-### [2026-11-18] ingest | Grammar Summaries, weeks 2–6 (batch 1b)
-
-- **Think:** Ingest Queue batch 1b: the Intro to Intelligence Grammar Summaries, weeks 2–6, plan first; I approved the plan. Week 7 waits for Sections 6, 9, and 10; the Kaiser and Pherson terms wait for batch 1d and the HPSCI Rogers terms for Section 4. Verified pages: proposals only.
+- **Think:** I asked for health checks to produce a short, easy-to-read report that is stored so I can look back at past checks. I asked the agent to design the template and the storage place first and to wait on the schema until I'd settled how it works. After seeing the design, I said yes to the agent's proposal: a `Health Checks/` folder in the vault root, a log entry that links to the report instead of repeating each flag, and a fixed set of rows matching §10.
 - **Calculate:**
-  - Copied the original unchanged to `Sources/Readings/Intro to Intelligence - Grammar Summaries, Weeks 2-7 (Fall 2026).docx`.
-  - Created (53, all drafts): [[SRC - Grammar Summaries, Weeks 2-7]] (proposed B-3); [[Summary - Grammar Summaries, Weeks 2-7]]; concepts [[Counterintelligence]], [[Ethical and Moral Issues in Intelligence]], [[National Intelligence Strategy]]; case study [[September 11 Attacks (2001)]]; 47 glossary terms, from [[Attribution (Cyber)]] to [[Worst-Case Analysis]] (see the index).
-  - Appended to drafts: [[Intelligence (National Security)]], [[Politicized Intelligence]], [[Consumer-Producer Relations]], [[Intelligence Oversight Committees]], [[Computer Network Attack]], [[Intelligence Satellite Orbits]], [[Strengths and Weaknesses of the Collection Disciplines]], [[Just War Theory]].
-  - Proposed before/after for verified pages (not applied): [[Analytic Confidence]], [[Computer Network Exploitation]], [[Covert Action]], [[Intelligence Cycle]], [[Key Judgments]], [[Priority Creep]], [[Revolution in Military Affairs]], [[Zero-Day Vulnerability]], [[Security Classification]], [[Polygraph Examination]] (with a "Sources disagree" callout).
-  - Proposed 9 typed links (type_of 1, part_of 4, example_of 1, counters 1, applies_to 2; no `related`).
-  - Flags: 7 accuracy checks, 1 gap in the source, 1 whose view; "Possibly resolved" added to the accuracy checks on [[Computer Network Attack]] and [[Intelligence Oversight Committees]].
-  - Ingest Queue: batch 1b marked `[~]`.
-- **Verify:**
-  - Pending my review
-- **Commit:** `ingest: Grammar Summaries wks 2–6 (batch 1b) — 53 drafted, 8 appended, 10 verified-page proposals`
+  - Created `_templates/Health Check Report.md` (summary callout, a fixed table with one row per check, flags needing my decision, mechanical fixes for batch approval, changes since the last check, scope and limits), the `Health Checks/` folder, and `Health Checks/Health Check History.base` (all reports newest first, and the ones with open flags).
+  - [[SCHEMA]] updated: folder layout and a new "Health Checks" subsection (§2), report naming (§3), a permissions row (§9), the health check steps (§10), a new Health Checks subsection and a log-entry rule (§11), the history table listed as Obsidian-only (§13), frontmatter `version: 4`, and a 4.0 changelog line.
+  - `AGENTS.md` updated with a pointer to the reports.
+  - Because the schema's content changed, its `status` was set back to `draft` and `verified_on` cleared (§7).
+  - [[index]], [[Find]], [[Library.base|Library]], and the Dashboard needed no change: reports are not pages, and have no `status`, so Library and the Review Queue skip them. No health check has been run under the new format yet, so there are no reports.
+- **Verify:** pending. Schema needs re-verifying. The template and history table are untested until the first report is saved.
+- **Commit:** `schema: add Health Checks reports (v4.0)`
 
-### [2026-11-18] ingest | The 9/11 Commission Report, batch 9/11-A
+### [2026-11-17] ingest | Edits to verified pages from batch 1a
 
-- **Think:** I attached the 9/11 Commission Report and asked to ingest it. Plan first: five batches, starting with the Preface, ch. 11, and ch. 13; I approved the plan. I also approved two link fixes from batch 1b.
+- **Think:** I asked for the seven proposed changes to verified pages from the batch 1a ingest to be made.
 - **Calculate:**
-  - Copied the original unchanged to `Sources/Readings/National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf`.
-  - Created (14, all drafts): [[SRC - The 9-11 Commission Report]] (proposed B-2); frameworks [[Failures of Imagination, Policy, Capabilities, and Management]], [[Institutionalizing Imagination]]; concepts [[National Counterterrorism Center]], [[Director of National Intelligence]], [[Need to Share]], [[Congressional Oversight of Intelligence]], [[Domestic Intelligence and the FBI]]; glossary [[National Intelligence Estimate]], [[Terrorist Threat Integration Center]], [[Counterterrorist Center (CIA)]], [[Goldwater-Nichols Act]], [[Red Team Analysis]], [[Tearline]].
-  - Appended to drafts: [[September 11 Attacks (2001)]], [[Stovepipe]], [[Metaphors for Intelligence]], [[National Intelligence Program]], [[Under Secretary of Defense for Intelligence]], [[Joint Terrorism Task Force]], [[The Wall (FBI)]], [[National Security Council]], [[United States Intelligence Community]]; links only on [[Intelligence Oversight Committees]], [[Intelligence Reform and Terrorism Prevention Act]], [[Originator Controlled]], [[Competitive Analysis]]; [[SRC - Grammar Summaries, Weeks 2-7]] updated (the Report is now in the vault).
-  - Proposed before/after for verified pages (not applied): [[Covert Action]], [[All-Source Intelligence]], [[Security Classification]], [[Pearl Harbor (1941)]].
-  - Proposed 4 typed links (part_of 2, counters 2; no `related`).
-  - Batch 1b link fixes: [[Insider Threat]] → part_of → [[Counterintelligence]] replaces Counterintelligence → counters → Insider Threat; Maskirovka → type_of → Denial and Deception removed.
-  - Ingest Queue: new section for the Report, five batches; 9/11-A marked `[~]`.
+  - Made the before/after changes exactly as proposed in the batch 1a report, citing [[SRC - Themes in US Intelligence, Summary of Texts]], [[SRC - SEE-IT Checklist for Critical Thinking]], and [[SRC - Intelligence in National Security, Definition in 7 Points]], and added those cards to each page's `sources`:
+    - [[SEE-It Framework]]: the handout's "Illustrate It," sentence starters, and uses; `related` → [[Elements and Standards of Critical Thinking]].
+    - [[Mirror Imaging]]: Lowenthal's fuller definition, "clientism," and Treverton on intelligence failures.
+    - [[Denial and Deception]]: Lowenthal's framing, and the innocent state that looks the same as one with good D&D.
+    - [[Politicized Intelligence]]: Lowenthal's three ways policymakers politicize, and analysts' own bias.
+    - [[All-Source Intelligence]]: collection synergy, and IRTPA's all-source requirement for the DNI.
+    - [[Levels of Intelligence]]: the seven points' scope definitions, including technical intelligence, and Lowenthal on policy vs. tactical needs.
+    - [[Traffic Analysis]]: Treverton on encryption limiting SIGINT to traffic analysis.
+  - Because their content changed, all seven pages were set back to `status: draft` (Schema §7, item 5); `verified_on` was kept as the record of the earlier verification. [[index]] updated: the seven moved from Verified to Drafts. [[Find]] and [[Library.base|Library]] needed no change.
+- **Verify:** pending. Item by item.
+- **Commit:** `ingest: batch 1a edits to 7 verified pages — back to draft, pending review`
+
+### [2026-11-17] verify | SCHEMA
+
 - **Verify:**
-  - Pending my review
-- **Commit:** `ingest: 9/11 Commission Report batch A (preface, ch. 11, 13) — 14 drafted, 13 appended, 4 verified-page proposals`
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`
 
-### [2026-11-18] ingest | The 9/11 Commission Report, batch 9/11-B
+### [2026-11-17] ingest | Intro to Intelligence resources, batch 1a: course framework handouts
 
-- **Think:** I approved all the edits proposed in batch 9/11-A, and the next batch. The agent read that as approval of the four verified-page proposals and the four typed links, and as permission to draft batch 9/11-B directly (ch. 3 and ch. 8) without a separate plan.
+- **Think:** I asked for the Intro to Intelligence course resources to be ingested section by section, starting with Section 1 (analysis and writing tradecraft). The agent split Section 1 into five batches; I approved the plan for batch 1a as written, including summaries for only three of the seven handouts. Defaults otherwise: whole sources, skip logistics, plan first, verified pages proposed only.
 - **Calculate:**
-  - Applied the batch 9/11-A verified-page edits: [[Covert Action]], [[All-Source Intelligence]], [[Security Classification]], [[Pearl Harbor (1941)]]; each set back to `draft` with a `changes_since_verified` note (§7 rule 8).
-  - Created (16, all drafts): concepts [[Foreign Intelligence Surveillance Act]], [[FBI Counterterrorism Before September 11]]; case studies [[Summer of Threat (2001)]], [[Late Leads Before September 11 (2001)]]; glossary [[President's Daily Brief]], [[Office of Origin]], [[Phoenix Memo]], [[Zone Defense and Man-to-Man]], [[Layered Aviation Security]], [[TIPOFF Watchlist]], [[Church and Pike Committees]], [[Hughes-Ryan Amendment]], [[Plausible Deniability]], [[Iran-Contra Affair]], [[Counterterrorism Security Group]], [[Office of Strategic Services]].
-  - Appended to drafts: [[September 11 Attacks (2001)]] (What Went Wrong re-cited to the Report directly; the PDB title corrected to the Report's), [[The Wall (FBI)]], [[Joint Terrorism Task Force]], [[National Security Act of 1947]] (re-cited directly), [[Counterterrorist Center (CIA)]], [[Counterintelligence]], [[Director of National Intelligence]], [[United States Intelligence Community]], [[Intelligence Oversight Committees]], [[Congressional Oversight of Intelligence]], [[Domestic Intelligence and the FBI]], [[Current vs. Long-Term Intelligence]], [[Goldwater-Nichols Act]], [[Foreign Intelligence Surveillance Court]]; [[Traffic Analysis]] (a draft under re-review) also given the `changes_since_verified` lines it was missing from batch 1a.
-  - Proposed before/after for a verified page (not applied): [[Executive Order 12333]].
-  - Proposed 8 typed links (part_of 3, example_of 2, causes 1, applies_to 1, and FISC → part_of → FISA; no `related`).
-  - Flags: 1 "Sources disagree" on [[Intelligence Oversight Committees]]; "Possibly resolved" added to 2 accuracy checks ([[Intelligence Oversight Committees]], [[United States Intelligence Community]]).
-  - Ingest Queue: 9/11-B marked `[~]`.
-- **Verify:**
-  - Pending my review
-- **Commit:** `ingest: 9/11 Commission Report batch B (ch. 3, 8) — 16 drafted, 15 appended, 4 verified-page edits applied, 1 proposal`
+  - Originals copied unchanged into `Sources/Readings/` under descriptive names. They are Word, Excel, and PowerPoint files, which Obsidian can't open, so pages cite them through their source cards by point, theme, section, slide, or row.
+  - Source cards (7), ratings proposed: [[SRC - Intelligence in National Security, Definition in 7 Points]] (B-2), [[SRC - Themes in US Intelligence, Summary of Texts]] (B-2), [[SRC - SI Themes and Pearl Harbor Context]] (B-6), [[SRC - SEE-IT Checklist for Critical Thinking]] (B-6), [[SRC - Puzzles and Mysteries (Slides)]] (B-2), [[SRC - Collection Discipline Overview]] (B-2), [[SRC - IC Organizations, Leadership, Missions, and Functions]] (B-2).
+  - Summaries (3): [[Summary - Intelligence in National Security, Definition in 7 Points]], [[Summary - Themes in US Intelligence, Summary of Texts]], [[Summary - SEE-IT Checklist for Critical Thinking]].
+  - Frameworks (4): [[Seven-Point Definition of Intelligence]], [[Themes in U.S. Intelligence]], [[Elements and Standards of Critical Thinking]], [[Strengths and Weaknesses of the Collection Disciplines]].
+  - Concepts (2): [[Consumer-Producer Relations]], [[Intelligence Community Elements and Missions]]. Glossary (1): [[Redundant Analytic Structure]].
+  - Appended to drafts: [[Intelligence (National Security)]] (Baginski credited for the definition; pointer to the seven points), [[Puzzles and Mysteries]] (the slide's present-day examples and "Secrets" label, Treverton's "puzzle solving or mystery framing," and a "Possibly resolved by" line on the unsourced-Treverton callout), [[Intelligence Collection Disciplines]] (MASINT definition, DIA as MASINT functional manager, FININT's law-enforcement use, link to the strengths-and-weaknesses page; the FIS gap stays open), [[United States Intelligence Community]] (DIA as MASINT functional manager; pointer to the elements page; its CIA-reporting accuracy check stays open).
+  - **Proposed for verified pages, not made (7):** [[SEE-It Framework]], [[Mirror Imaging]], [[Denial and Deception]], [[Politicized Intelligence]], [[All-Source Intelligence]], [[Levels of Intelligence]], [[Traffic Analysis]].
+  - **Typed links proposed (11):** [[Seven-Point Definition of Intelligence]] → part_of → [[Intelligence (National Security)]]; [[Themes in U.S. Intelligence]] → part_of → [[Seven-Point Definition of Intelligence]]; [[Consumer-Producer Relations]] → part_of → [[Themes in U.S. Intelligence]]; [[Redundant Analytic Structure]] → part_of → [[Themes in U.S. Intelligence]]; [[Strengths and Weaknesses of the Collection Disciplines]] → part_of → [[Intelligence Collection Disciplines]]; [[Intelligence Community Elements and Missions]] → part_of → [[United States Intelligence Community]]; plus `related` links on the new pages and [[Intelligence (National Security)]].
+  - **Flags added:** gaps in the source (4: "malevolent empathy" undefined in the seven points; the SEE-IT example's missing Nosich list and blank illustrations; the SI Themes file has no Pearl Harbor material; the Puzzles slide's "Sources" row is unreadable); accuracy checks (2: typing slips in the theme spreadsheet's quotations; the IC handout's garbled title for Lowenthal's book); possibly resolved (1: the Treverton callout on [[Puzzles and Mysteries]]).
+  - **Left out on purpose:** the SEE-IT handout's worked examples about PHC courses (catalog entries, rooms, schedules); the "Best Jobs for Personality Types" slide (out of scope, Schema §1); the IC leaders' names (a September 2026 snapshot); the theme spreadsheet's further-readings column; the IC handout's web links.
+  - **Deferred:** the Grammar Summaries to batch 1b; Lowenthal's own definitions of competitive analysis and groupthink to 1b.
+  - New and changed files use the vault's CRLF line endings. [[index]] updated. `Ingest Queue.md` marks batch 1a as drafted, pending review. [[Find]] and [[Library.base|Library]] needed no change: no new class date, course, page type, or flag kind.
+- **Verify:** pending. Item by item.
+- **Commit:** `ingest: Intro to Intelligence batch 1a (course framework handouts) — 17 drafts + 4 page updates, pending review`
 
-### [2026-11-18] ingest | The 9/11 Commission Report, batch 9/11-C
+### [2026-11-17] schema | Add Ingest Queue (version 3.0)
 
-- **Think:** I approved batch 9/11-B's proposals and asked the agent to move on to batch C (ch. 1, 2, 5, 7), drafting directly as with batch B.
+- **Think:** After triaging the Intro to Intelligence course resources, I asked for the triage to be saved in the vault as an ingest queue, and chose option 1: a plain, agent-maintained file in the vault root, like `Find.md`.
 - **Calculate:**
-  - Applied the batch 9/11-B verified-page edit: [[Executive Order 12333]] (link to [[Church and Pike Committees]]); set back to `draft` with a `changes_since_verified` note.
-  - Created (16, all drafts): concepts [[Al-Qaeda]], [[Al-Qaeda Financing]], [[Planes Operation]]; framework [[Requirements for a Complex Terrorist Operation]]; case studies [[Alleged Atta-Ani Meeting in Prague (2001)]], [[East Africa Embassy Bombings (1998)]], [[Air Defense on September 11 (2001)]]; glossary [[World Islamic Front Fatwa]], [[Far Enemy]], [[Golden Chain]], [[Terrorist Entrepreneur]], [[Hamburg Cell]], [[Muscle Hijackers]], [[Jemaah Islamiyah]], [[Weapons Free]], [[North American Aerospace Defense Command]].
-  - Appended to drafts: [[September 11 Attacks (2001)]] (summary and What Happened re-cited to the Report; the shootdown bullet moved to [[Air Defense on September 11 (2001)]]; the ticket dates corrected to "between August 25 and September 5"), [[Hawala]] (re-cited directly), [[Late Leads Before September 11 (2001)]], [[Economic Intelligence]], [[Capabilities vs. Intentions]]; the source card's reliability notes now carry the Commission's caution on detainee reports.
-  - No verified-page proposals.
-  - Proposed 5 typed links (part_of 5; no `related`).
-  - Flags: 1 accuracy check on [[September 11 Attacks (2001)]] (the Report gives United 93 two destinations); 1 "Sources disagree" on [[Air Defense on September 11 (2001)]] (the basis for the shootdown order).
-  - Ingest Queue: 9/11-C marked `[~]`.
+  - Created `Ingest Queue.md` with the full triage: Section 1 split into batches 1a–1e, Sections 2–13, the items left for my call, and the items not being added (logistics, personal, no content, duplicates).
+  - [[SCHEMA]] updated: folder layout and a new "Ingest Queue" subsection (§2), a permissions row (§9), the ingest commit step and the health check (§10), a new Ingest Queue subsection (§11), frontmatter `version: 3`, and a 3.0 changelog line. A new structural file bumps the whole number (§14).
+  - `AGENTS.md` updated with a pointer to the queue.
+  - Because the schema's content changed, its `status` was set back to `draft` and `verified_on` cleared (§7).
+  - [[index]], [[Find]], [[Library.base|Library]], and the Dashboard needed no change: the queue is not a page, page type, course, or class date.
+- **Verify:** pending. Schema needs re-verifying.
+- **Commit:** `schema: add Ingest Queue (v3.0)`
+
+### [2026-11-17] verify | SCHEMA
+
 - **Verify:**
-  - Pending my review
-- **Commit:** `ingest: 9/11 Commission Report batch C (ch. 1, 2, 5, 7) — 16 drafted, 6 appended, 1 verified-page edit applied`
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`
 
-### [2026-11-18] ingest | The 9/11 Commission Report, batch 9/11-D
+### [2026-11-17] schema | Add Tools folder (version 2.0)
 
-- **Think:** I approved batch 9/11-C and asked the agent to move on to batch D (ch. 4, 6, 10), drafting directly.
+- **Think:** I asked for a new `Tools/` folder to hold the tools I use, to save the YouTube to Coppermind Chrome extension in it, and to update the vault map and any other place that lists the folders.
 - **Calculate:**
-  - Created (14, all drafts): concept [[Covert Action Authorities Against Bin Ladin]]; case studies [[Tarnak Farms Capture Plan (1998)]], [[August 1998 Missile Strikes]], [[USS Cole Bombing (2000)]], [[Millennium Alert (1999–2000)]], [[Responses at Home After September 11 (2001)]]; glossary [[Delenda Plan]], [[The Plan (CIA)]], [[Memorandum of Notification]], [[Actionable Intelligence]], [[Small Group]], [[Predator Drone]], [[Blue Sky Memo]], [[Northern Alliance]].
-  - Appended: [[September 11 Attacks (2001)]] (the Cole and U.S.-approaches bullets re-cited to the Report; the case study now cites the grammar summaries only in Lessons); [[Executive Order 12333]] (a draft under re-review: the Commission's account of the assassination ban, with a second `changes_since_verified` line).
-  - Repaired: the `changes_since_verified` note on [[Executive Order 12333]] reached the vault with unescaped inner quotes (invalid YAML) in the batch 9/11-B commit; rewritten with single quotes.
-  - Proposed 2 typed links (applies_to 1, supports 1).
-  - Flags: none new.
-  - Ingest Queue: 9/11-D marked `[~]`.
-- **Verify:**
-  - Pending my review
-- **Commit:** `ingest: 9/11 Commission Report batch D (ch. 4, 6, 10) — 14 drafted, 2 appended, 1 YAML repair`
+  - Created `Tools/` and saved `yt-to-coppermind.zip` (v1.1: Chrome extension that downloads a video's transcript as a Markdown file in the Coppermind transcript format) in it.
+  - [[SCHEMA]] updated: folder layout (§2), new "Tools: the toolbox" subsection (§2), permissions row (§9), export note (§13), frontmatter `version: 2`, and a 2.0 changelog line. Tools are not one of the six parts and are not in the index, so the six-parts table is unchanged.
+  - `AGENTS.md` updated with a pointer to `Tools/`.
+  - Because the schema's content changed, its `status` was set back to `draft` and `verified_on` cleared, per §7.
+  - [[index]], [[Find]], [[Library.base|Library]], and the Dashboard needed no change: Tools holds no pages, page types, courses, or class dates.
+- **Verify:** pending. Schema needs re-verifying.
+- **Commit:** `schema: add Tools folder (v2.0) and YouTube transcript extension`
 
-### [2026-11-18] ingest | Approved edits to verified pages (batches 1a and 1b)
+### [2026-11-17] ingest | SAIL Module 5 resources (Hossenfelder, Bengio TED, Sutton on Dwarkesh, "A Disneyland Without Children," Lewis)
 
-- **Think:** I approved the ten verified-page proposals from batch 1b and adding the missing `changes_since_verified` lines to five batch 1a pages.
+- **Think:** I asked for the five SAIL Module 5 resources ("How we handle an uncertain future") to be ingested: Sabine Hossenfelder's "Current AI Models have 3 Unfixable Problems" and Yoshua Bengio's TED talk "The Catastrophic Risks of AI — and a Safer Path" (transcripts), the Dwarkesh Podcast page "Richard Sutton – Father of RL thinks LLMs are a dead end," L Rudolf L's short story "A Disneyland Without Children" (LessWrong), and C. S. Lewis's essay "On Living in an Atomic Age." Defaults: whole sources, everything substantive, plan first, verified pages proposed only. I approved the plan as written.
 - **Calculate:**
-  - Batch 1b proposals applied, each citing [[SRC - Grammar Summaries, Weeks 2-7]] and adding it to `sources`: [[Analytic Confidence]] (Lowenthal's three confidence levels), [[Computer Network Exploitation]] (Lowenthal's definition and the CNE-or-CNA choice; a stray space before the callout removed), [[Covert Action]] (Lowenthal on its ethics), [[Intelligence Cycle]] (the requirements stage, "processing and exploitation"), [[Key Judgments]] (the central conclusions of an NIE), [[Priority Creep]] (within the NIPF), [[Revolution in Military Affairs]], [[Zero-Day Vulnerability]] (the NSA's use of them), [[Security Classification]] (Lowenthal's level definitions), [[Polygraph Examination]] (Lowenthal's account, with a "Sources disagree" callout).
-  - The original before/after wording of these ten proposals was not saved outside the batch 1b chat report, so the agent rebuilt each from the same Grammar Summaries entries; the wording may differ slightly from what was shown then.
-  - All ten set to `status: draft`, `verified_on` kept, one `changes_since_verified` line each.
-  - Added the missing `changes_since_verified` lines (batch 1a edits of 2026-11-17) to [[SEE-It Framework]], [[Mirror Imaging]], [[Denial and Deception]], [[Politicized Intelligence]] (plus a line for its batch 1b append), and [[Levels of Intelligence]]. No content changed.
-- **Verify:**
-  - Pending my review: re-reviews, listed changes only
-- **Commit:** `edit: apply 10 batch-1b verified-page proposals; add changes_since_verified to 5 batch-1a pages`
+  - Originals copied unchanged into `Sources/Readings/`. The two .txt transcripts were saved with a .md extension (content unchanged); the Sutton and LessWrong pages stay HTML and are cited through their source cards by chapter heading or story part; the Lewis essay stays PDF, cited by PDF page.
+  - Source cards (5), ratings proposed: [[SRC - Current AI Models Have 3 Unfixable Problems]] (C-3), [[SRC - The Catastrophic Risks of AI and a Safer Path]] (B-3), [[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End]] (B-2), [[SRC - A Disneyland Without Children]] (F-6, fiction), [[SRC - On Living in an Atomic Age]] (B-6).
+  - Summaries (5): [[Summary - Current AI Models Have 3 Unfixable Problems]], [[Summary - The Catastrophic Risks of AI and a Safer Path]], [[Summary - Richard Sutton, Father of RL Thinks LLMs Are a Dead End]], [[Summary - A Disneyland Without Children]], [[Summary - On Living in an Atomic Age]].
+  - People (3): [[Yoshua Bengio]], [[Richard Sutton]], [[C. S. Lewis]]
+  - Concepts (9): [[Reinforcement Learning]], [[Continual Learning]], [[Out-of-Distribution Generalization]], [[Critiques of Large Language Models]], [[Bitter Lesson]], [[AI Deception]], [[AI Succession]], [[Gradual Loss of Control]], [[Naturalism]]
+  - Glossary (3): [[World Model]], [[Temporal Difference Learning]], [[Scientist AI]]
+  - Appended to drafts: [[Hallucination]] (Hossenfelder's account, the OpenAI uncertainty proposal and Wei Xing's critique), [[Prompt Injection]] (Hossenfelder: "basically impossible to solve"), [[Agentic AI]] (Bengio on agency, the seven-month doubling, "slow down"), [[AI Alignment]] (Bengio on loss of control), [[Artificial General Intelligence]] (Hossenfelder's definition, added to the sources-disagree callout), [[Catastrophic Forgetting]] (Sutton's "catastrophic interference," now an alias), [[Chain-of-Thought Reasoning]] (Bengio on hidden plans); link-only updates to [[Large Language Model]], [[Machine Learning]], [[Reinforcement Learning with Human Feedback]], [[Scaling Laws]], and [[Cascade of Unintended Consequences]].
+  - **Proposed for a verified page, not made:** [[Existential Risk]].
+  - **Typed links proposed (6 structural, plus `related`):** [[Reinforcement Learning]] → part_of → [[Machine Learning]]; [[Temporal Difference Learning]] → part_of → [[Reinforcement Learning]]; [[World Model]] → part_of → [[Reinforcement Learning]]; [[Out-of-Distribution Generalization]] → part_of → [[Critiques of Large Language Models]]; [[Critiques of Large Language Models]] → applies_to → [[Large Language Model]]; [[AI Deception]] → part_of → [[Cascade of Unintended Consequences]]; plus `related` links on the new pages and on [[Agentic AI]], [[AI Alignment]], [[Hallucination]], [[Artificial General Intelligence]], [[Large Language Model]], and [[Reinforcement Learning with Human Feedback]].
+  - **Flags added:** sources disagree (5: world models, on [[World Model]]; generalization, on [[Out-of-Distribution Generalization]]; LLMs as a foundation for experiential learning, on [[Continual Learning]]; Bengio's timeline vs. Hossenfelder, on [[Critiques of Large Language Models]]; MSRayne vs. the author, on [[Gradual Loss of Control]]); possibly resolved (1: the "wrong meaning of a word" accuracy check on [[Hallucination]]); accuracy check (2: "writing for the conversation," on the Hossenfelder source card; transcription typos, on the Lewis source card); gap in the source (2: undated video, unnamed OpenAI paper, and offset chapter headings, on the Hossenfelder card; undated talk and unnamed studies, on the Bengio card).
+  - **Left out on purpose:** sponsor reads (Incogni, Labelbox, Gemini Deep Research, Hudson River Trading); timestamps; Substack and LessWrong navigation; most LessWrong comments; Bengio's opening story about his son; the astronauts' banter and the third crew member's subplot. No Moravec's Paradox, Big World Hypothesis, or Pause Letter glossary terms (each is a bullet on its parent page), and no People pages for Hossenfelder, Dwarkesh Patel, Nick Bostrom, or Paul Christiano (passing mentions only).
+  - **Perspectives material (not written):** Lewis's case against naturalism and his claim that survival should never come first bear on the Ontology and Teleology layers of [[My Worldview]]; Sutton's succession argument bears on its "AI is a tool" line.
+  - New and changed files converted to the vault's CRLF line endings. [[index]] updated. [[Find]] and [[Library.base|Library]] needed no change: every cited class date (8/27, 9/1, 9/8, 9/10) was already listed, and no new course, page type, or flag kind.
+- **Verify:** pending. Item by item.
+- **Commit:** `ingest: SAIL Module 5 resources (Hossenfelder, Bengio, Sutton, Disneyland Without Children, Lewis) — 25 drafts + 12 page updates, pending review`
 
-### [2026-11-18] ingest | The 9/11 Commission Report, batch 9/11-E
+### [2026-11-17] ingest | SAIL Module 3 resources (IBM Technology x2, Kevin Stratvert, Tao Prompts, Arena)
 
-- **Think:** I approved batch 9/11-D, the Sunni, Shia, and Caliphate glossary terms, and person pages for Bin Ladin and KSM, and asked the agent to do the last batch (ch. 9, ch. 12, and a summary of the whole report), drafting directly.
+- **Think:** I asked for the five SAIL Module 3 resources to be ingested: IBM Technology's "Generative vs Agentic AI" and "RAG vs Fine-Tuning vs Prompt Engineering" videos, Kevin Stratvert's custom GPT tutorial, Tao Prompts' AI music video tutorial, and Arena's "About Us" page. Defaults: whole sources, everything substantive, plan first, verified pages proposed only. I approved the plan as written.
 - **Calculate:**
-  - Created (17, all drafts): case study [[Emergency Response on September 11 (2001)]]; framework [[Global Strategy Against Islamist Terrorism]]; concepts [[Terrorist Sanctuary]], [[Struggle of Ideas]], [[Terrorist Travel]]; people [[Usama Bin Ladin]], [[Khalid Sheikh Mohammed]]; summary [[Summary - The 9-11 Commission Report]]; glossary [[Incident Command System]], [[Unified Command]], [[Private-Sector Preparedness]], [[No-Fly List]], [[Article 3 of the Geneva Conventions]], [[Risk-Based Homeland Security Assistance]], [[Sunni]], [[Shia]], [[Caliphate]].
-  - Appended to drafts: [[Al-Qaeda Financing]] (ch. 12 on following the money); [[Need to Share]] (privacy in sharing guidelines); [[Requirements for a Complex Terrorist Operation]] (link to sanctuaries); [[Al-Qaeda]], [[Planes Operation]], and [[Terrorist Entrepreneur]] (links to the new person pages); "Used in" lines on [[Golden Chain]], [[World Islamic Front Fatwa]], [[Far Enemy]], [[Failed State]], [[TIPOFF Watchlist]], and [[Layered Aviation Security]].
-  - Source card: chapters ingested updated, the batch 9/11-C note on the pending Islam terms resolved, and batch 9/11-E's skipped material listed.
-  - Proposed 8 typed links (part_of 4, counters 1, example_of 1, developed_by 2; no `related`).
-  - Flags: 1 "Sources disagree" on [[Polygraph Examination]] (above); 1 unsourced background on [[Usama Bin Ladin]] (his death in 2011, after the Report); 1 whose view on [[Khalid Sheikh Mohammed]] (detainee statements).
-  - Ingest Queue: 9/11-E marked `[~]`. All five 9/11 batches are now drafted.
+  - Originals copied unchanged into `Sources/Readings/`. The four .txt transcripts were saved with a .md extension (content unchanged) so Obsidian can open and link to them; the Arena page stays HTML and is cited through its source card by section heading.
+  - Source cards (5), ratings proposed: [[SRC - Generative vs Agentic AI]] (B-2), [[SRC - RAG vs Fine-Tuning vs Prompt Engineering]] (B-2), [[SRC - How to Create Custom GPT]] (C-2), [[SRC - How to Make a Music Video with AI]] (C-3), [[SRC - About Us (Arena)]] (B-2).
+  - Summaries (5): [[Summary - Generative vs Agentic AI]], [[Summary - RAG vs Fine-Tuning vs Prompt Engineering]], [[Summary - How to Create Custom GPT]], [[Summary - How to Make a Music Video with AI]], [[Summary - About Us (Arena)]].
+  - Concepts (3): [[Generative vs. Agentic AI]], [[Fine-Tuning]], [[Custom GPT]]
+  - Framework (1): [[Retrieval-Augmented Generation vs. Fine-Tuning vs. Prompt Engineering]]
+  - Glossary (2): [[Catastrophic Forgetting]], [[Chain-of-Thought Reasoning]]
+  - Appended to drafts: [[Agentic AI]] (IBM's perceive–decide–execute–learn cycle, LLMs as reasoning engine, shopping-agent example), [[Generative AI]] (reactive by design; diffusion models; the music-video workflow), [[Prompt Engineering]] (IBM's account of why prompting works; formatting by example; link to Chain-of-Thought Reasoning), [[Retrieval-Augmented Generation]] (retrieve–augment–generate definition; `part_of` the new framework), [[LMSYS Chatbot Arena]] (now called Arena; aliases Arena and LMArena; history and funding), and "Used in" links to [[Fine-Tuning]] on [[Backpropagation]], [[Pre-Training]], and [[Parameter]].
+  - No verified pages changed.
+  - **Typed links proposed (6):** [[Fine-Tuning]] → applies_to → [[Large Language Model]]; [[Retrieval-Augmented Generation]] → part_of → [[Retrieval-Augmented Generation vs. Fine-Tuning vs. Prompt Engineering]]; [[Fine-Tuning]] → part_of → [[Retrieval-Augmented Generation vs. Fine-Tuning vs. Prompt Engineering]]; [[Chain-of-Thought Reasoning]] → part_of → [[Prompt Engineering]]; [[Catastrophic Forgetting]] → related → [[Fine-Tuning]]; [[Custom GPT]] → example_of → [[Generative AI]].
+  - **Flags added:** sources disagree (1: whether a GPT "has all" the internet's knowledge vs. training cutoffs, on [[Custom GPT]]); accuracy check (4: "train" used loosely, on [[Custom GPT]]; "tension mechanisms," on [[Prompt Engineering]] and the RAG video's source card; garbled tool names and parameters, on the music video's source card); gap in the source (3: no recording date, on [[Custom GPT]] and both tutorial source cards; plus the [transcript unclear] list on [[Summary - How to Make a Music Video with AI]]); possibly resolved (1: the name-change half of the accuracy check on [[LMSYS Chatbot Arena]]; the "sentiment analysis" half stays open).
+  - **Left out on purpose:** the music video's song lyrics; click-by-click interface steps beyond the summaries; asides (the fan-fiction anecdote, the mascot detour, subscribe requests); the name of the Midjourney user credited in the music video; Arena's navigation, footer, images, and social links. A Diffusion Model glossary term was not created (the source gives only a passing mention).
+  - **Perspectives material:** none (no work of mine in this ingest).
+  - [[index]] updated. [[Find]] and [[Library.base|Library]] needed no change: every cited class date (9/8, 10/1, 10/15) was already listed, and no new course, page type, or flag kind.
+- **Verify:** pending. Item by item.
+- **Commit:** `ingest: SAIL Module 3 resources (IBM x2, Stratvert, Tao Prompts, Arena) — 16 drafts + 8 page updates, pending review`
+
+### [2026-11-17] verify | Typed links from the SAIL Module 2 ingest
+
+- **Think:** I reviewed the typed links proposed in section D of the Module 2 ingest report.
+- **Calculate:** No page changes; the links were already in the drafts' properties.
 - **Verify:**
-  - Pending my review
-- **Commit:** `ingest: 9/11 Commission Report batch E (ch. 9, 12, summary) — 17 drafted, 12 appended`
+  - Links approved:
+    - [[Neural Network]] → part_of → [[Deep Learning]]
+    - [[Generative AI]] → part_of → [[Deep Learning]]
+    - [[Large Language Model]] → part_of → [[Generative AI]]
+    - [[Self-Attention]] → part_of → [[Transformer]]
+    - [[Attention Head]] → part_of → [[Self-Attention]]
+    - [[Standing Reserve]] → part_of → [[Enframing]]
+    - [[Sigmoid Function]] → part_of → [[Neural Network]]
+    - [[Hidden Layer]] → part_of → [[Neural Network]]
+    - [[Positional Encoding]] → part_of → [[Transformer]]
+  - Pages themselves are still drafts, pending item-by-item review.
+- **Commit:** `verify: approve 9 typed links from SAIL Module 2 ingest`
 
-### [2026-11-18] verify | Executive Order 12333
+### [2026-11-17] ingest | SAIL Module 2 resources: IBM AI explainer, two 3Blue1Brown videos, Then & Now on Heidegger, "Attention Is All You Need"
 
-- **Verify:**
-  - Approved: [[Executive Order 12333]]
-- **Commit:** `verify: Executive Order 12333`
+- **Think:** I gave Claude the five SAIL Module 2 resources ("How we got here: Machine learning, deep learning, GenAI"): four video transcripts (skip the timestamps) and the transformer paper. Plan-first mode. I approved the plan as proposed, including its four proposed changes to verified pages.
+- **Calculate:** Claude (claude-opus-5-5) copied the five files unchanged into `Sources/Readings/` with descriptive names (transcripts saved as `.md`, text unchanged). It drafted 5 source cards (ratings proposed, left blank for me), 5 summaries, and 20 wiki pages:
+  - Concepts (5): [[Neural Network]], [[Large Language Model]], [[Generative AI]], [[Self-Attention]], [[Enframing]]
+  - Person (1): [[Martin Heidegger]]
+  - Glossary (14): [[Four Causes]], [[Standing Reserve]], [[Foundation Model]], [[Deepfake]], [[Parameter]], [[Sigmoid Function]], [[Backpropagation]], [[Pre-Training]], [[Reinforcement Learning with Human Feedback]], [[Positional Encoding]], [[Encoder-Decoder Architecture]], [[Recurrent Neural Network]], [[Feed-Forward Neural Network]], [[Hidden Layer]]
+  - Appended to drafts: [[Transformer]] (the 2017 paper, parallel processing, original design), [[Deep Learning]] (IBM's "multiple layers"; 3Blue1Brown's edges → loops → digits), [[Machine Learning]] (IBM's patterns, prediction, outliers), [[Embedding]] (why words become numbers; 512 dimensions), [[Algorithmic Transparency]] (why deep networks are hard to interpret).
+  - Changed verified pages, now back to `status: draft` (Schema §7, item 5), old `verified_on` kept: [[Artificial Intelligence]] (IBM's definition and nested view), [[Attention Head]] (eight heads, different tasks; `part_of` → [[Self-Attention]]), [[Tokenization]] (byte-pair encoding, ~37,000 tokens), [[Emergent Behavior]] (LLM behavior as emergent).
+  - **Flags added:** sources disagree (1: next word vs. next sentence/paragraph/document, on [[Large Language Model]]); possibly resolved (1: the "140 billion pieces of data" accuracy check on [[Transformer]]); accuracy check (3: garbled caption terms on the Then & Now source card and [[Four Causes]]; the paper's 41.8 vs. 41.0 BLEU on its source card); unsourced background (1: *Gestell* on [[Enframing]]); gap in the source (2: IBM's on-screen timeline; 3Blue1Brown's visuals).
+  - **Changed from the plan:** 14 glossary terms, not 15 (the plan miscounted after dropping Graphics Processing Unit), so 30 new pages, not 31.
+  - **Left out on purpose:** a Graphics Processing Unit glossary term (no source spells out "GPU"); an Expert System glossary term (no definition given; now a bullet on [[Artificial Intelligence]]); the paper's equations, hyperparameters, parsing results, and references; the videos' channel promotions.
+  - **Perspectives material (not written):** Heidegger's "instrument" vs. "revealing" view of technology bears on the "AI is a tool" line in [[My Worldview]].
+  - [[index]] updated. [[Find]] and [[Library.base|Library]] needed no change: every cited class date was already listed, and no new course, page type, or flag kind.
+- **Verify:** pending. Item by item.
+- **Commit:** `ingest: SAIL Module 2 resources (IBM, 3Blue1Brown x2, Then & Now, Attention Is All You Need) — 30 drafts + 9 page updates, pending review`
 
-### [2026-11-18] verify | Levels of Intelligence
+### [2026-11-14] ingest | Proposed changes to verified pages and typed links from the six-reading ingest
+
+- **Think:** I approved every proposal in sections C and D of the six-reading ingest report: the nine changes to verified pages and all proposed typed links.
+- **Calculate:** Claude (claude-opus-5-5) made the nine changes and set each page back to `status: draft` (Schema §7, item 5), leaving its old `verified_on` date as a record of the last verification:
+  - [[Human-Centered AI]]: added the IBM source card, the article's authors and date, IBM's three research themes, explainable recommendations in SCORE, and IBM's split of human and AI roles; `related` → [[Explainable AI]].
+  - [[Artificial General Intelligence]]: added RAND's definition and a **Sources disagree** flag (SAIL vs. Mitre and Predd); `related` → [[Five Hard National Security Problems of Artificial General Intelligence]].
+  - [[AI Alignment]]: added RAND's description of misalignment and loss of control.
+  - [[Agentic AI]]: added OWASP's excessive agency and the component-versus-actor boundary; `related` → [[Excessive Agency]].
+  - [[Automation Bias]]: added OWASP's "overreliance."
+  - [[Bing Sydney Incident (2023)]]: `example_of` → [[Prompt Injection]]; linked "prompt injection" in failure #4.
+  - [[Cascade of Unintended Consequences]]: linked "Bias at scale" to [[Algorithmic Bias]].
+  - [[Embedding]]: added [[Retrieval-Augmented Generation]] and [[Vector and Embedding Weaknesses]] to "Used in."
+  - [[Technological Singularity]]: added "compare [[Recursive Self-Improvement]]."
+  - The typed links on the new drafts (section D) were already in place; no change needed.
+  - [[index]] updated: the nine pages moved from Verified to Drafts. [[Find]] and [[Library.base|Library]] needed no change.
+  - **Flags added:** sources disagree (1, on [[Artificial General Intelligence]]).
+- **Verify:** pending. Item by item, since all nine were verified pages.
+- **Commit:** `ingest: apply approved changes to 9 verified pages (back to draft for review)`
+
+### [2026-11-14] ingest | Six SAIL readings: Crash Course AI 18, OWASP LLM Top 10 2026, two RAND papers, MITRE ATLAS, IBM HCAI
+
+- **Think:** I gave Claude six sources to ingest: the Crash Course AI "Algorithmic Bias and Fairness" transcript (ignore its timestamps), the OWASP Top 10 for LLM Applications 2026, RAND's "Artificial General Intelligence's Five Hard National Security Problems" and "Full Stack: China's Evolving Industrial Policy for AI," the MITRE ATLAS matrix, and IBM Research's "What is human-centered AI?". Plan-first mode. I approved the plan as proposed: all six tagged SAIL; 39 pages, with the six remaining OWASP risks as glossary terms; "MITRE ATLAS" kept as a title; the OWASP pre-release status noted; the three China chip-gap figures recorded side by side without a flag; changes to verified pages proposed only.
+- **Calculate:** Claude (claude-opus-5-5) copied the six files unchanged into `Sources/Readings/` with descriptive names (the transcript saved as `.md`, text unchanged). It drafted 6 source cards (ratings proposed, left blank for me), 6 summaries, and 27 wiki pages:
+  - Concepts (6): [[Algorithmic Bias]], [[Prompt Injection]], [[Excessive Agency]], [[Data and Model Poisoning]], [[China's AI Industrial Policy]], [[Semiconductor Export Controls]]
+  - Frameworks (3): [[Five Hard National Security Problems of Artificial General Intelligence]], [[OWASP Top 10 for Large Language Model Applications]], [[MITRE ATLAS]]
+  - Case study (1): [[PredPol]]
+  - Glossary (17): [[Protected Class]], [[Correlated Feature]], [[Positive Feedback Loop]], [[Algorithmic Transparency]], [[Explainable AI]], [[Scaling Laws]], [[Recursive Self-Improvement]], [[AI Technology Stack]], [[Jailbreak]], [[Lethal Trifecta]], [[Retrieval-Augmented Generation]], [[Sensitive Information Disclosure]], [[AI Supply Chain Compromise]], [[Unbounded Consumption]], [[Hidden Context Exposure]], [[Vector and Embedding Weaknesses]], [[Improper Output Handling]]
+  - Appended to drafts: [[Capability vs. Reliability]] (OWASP LLM07 misinformation and overreliance), [[Hallucination]] (OWASP causes and slopsquatting), [[Semiconductors and National Security]] (pointer to the new export-controls page).
+  - **Proposed for verified pages, not made:** [[Human-Centered AI]], [[Artificial General Intelligence]], [[AI Alignment]], [[Agentic AI]], [[Automation Bias]], [[Bing Sydney Incident (2023)]], [[Cascade of Unintended Consequences]], [[Embedding]], [[Technological Singularity]].
+  - **Flags:** unsourced background (1: the ATLAS acronym on [[MITRE ATLAS]]); gap in the source (5: the transcript's missing date and offset chapter headings; three OWASP figures not ingested; RAND China's Figure 1 didn't print; the ATLAS page has no definitions; ATLAS acronym not spelled out on its source card).
+  - **Title changed from the plan:** the OWASP framework page is titled with "Large Language Model" spelled out (Schema §3), with "OWASP Top 10 for LLM Applications" as an alias.
+  - **Left out on purpose:** the transcript's closing promotions and its passing mention of a 2017 profile-photo paper; OWASP's license page, Appendix B figures, references, and the full incident lists in each entry; RAND notes and references; IBM's sidebars and newsletter boxes. Tay, HireMe!, SCORE, and DeepSeek stayed as bullets rather than pages.
+  - [[index]] updated. [[Find]] and [[Library.base|Library]] needed no change: no new class dates, courses, page types, or flag kinds.
+- **Verify:** pending. Item by item.
+- **Commit:** `ingest: six SAIL readings (Crash Course AI 18, OWASP LLM Top 10 2026, RAND AGI, RAND China, MITRE ATLAS, IBM HCAI) — 39 drafts + 3 draft appends, pending review`
+
+### [2026-11-13] verify | Levels of Intelligence
 
 - **Verify:**
   - Approved: [[Levels of Intelligence]]
+  - Flags I resolved before approving (2):
+    - Gap (Gap in my notes) — fixed
+    - Gap (Gap in my notes) — not needed
 - **Commit:** `verify: Levels of Intelligence`
 
-### [2026-11-18] verify | Politicized Intelligence
+### [2026-11-12] verify | Executive Order 12333
 
 - **Verify:**
-  - Approved: [[Politicized Intelligence]]
-- **Commit:** `verify: Politicized Intelligence`
-
-### [2026-11-18] verify | Security Classification
-
-- **Verify:**
-  - Approved: [[Security Classification]]
-- **Commit:** `verify: Security Classification`
-
-### [2026-11-18] verify | Pearl Harbor (1941)
-
-- **Verify:**
-  - Approved: [[Pearl Harbor (1941)]]
-- **Commit:** `verify: Pearl Harbor (1941)`
-
-### [2026-11-18] verify | All-Source Intelligence
-
-- **Verify:**
-  - Approved: [[All-Source Intelligence]]
-- **Commit:** `verify: All-Source Intelligence`
-
-### [2026-11-18] verify | Analytic Confidence
-
-- **Verify:**
-  - Approved: [[Analytic Confidence]]
-- **Commit:** `verify: Analytic Confidence`
-
-### [2026-11-18] verify | Computer Network Exploitation
-
-- **Verify:**
-  - Approved: [[Computer Network Exploitation]]
-- **Commit:** `verify: Computer Network Exploitation`
-
-### [2026-11-18] verify | Covert Action
-
-- **Verify:**
-  - Approved: [[Covert Action]]
-- **Commit:** `verify: Covert Action`
-
-### [2026-11-18] verify | Denial and Deception
-
-- **Verify:**
-  - Approved: [[Denial and Deception]]
-- **Commit:** `verify: Denial and Deception`
-
-### [2026-11-18] verify | Intelligence Cycle
-
-- **Verify:**
-  - Approved: [[Intelligence Cycle]]
-- **Commit:** `verify: Intelligence Cycle`
-
-### [2026-11-18] verify | Key Judgments
-
-- **Verify:**
-  - Approved: [[Key Judgments]]
-- **Commit:** `verify: Key Judgments`
-
-### [2026-11-18] verify | Mirror Imaging
-
-- **Verify:**
-  - Approved: [[Mirror Imaging]]
-- **Commit:** `verify: Mirror Imaging`
-
-### [2026-11-18] verify | Priority Creep
-
-- **Verify:**
-  - Approved: [[Priority Creep]]
-- **Commit:** `verify: Priority Creep`
-
-### [2026-11-18] verify | Revolution in Military Affairs
-
-- **Verify:**
-  - Approved: [[Revolution in Military Affairs]]
-- **Commit:** `verify: Revolution in Military Affairs`
-
-### [2026-11-18] verify | SEE-It Framework
-
-- **Verify:**
-  - Approved: [[SEE-It Framework]]
-- **Commit:** `verify: SEE-It Framework`
-
-### [2026-11-18] verify | Traffic Analysis
-
-- **Verify:**
-  - Approved: [[Traffic Analysis]]
-- **Commit:** `verify: Traffic Analysis`
-
-### [2026-11-18] verify | Zero-Day Vulnerability
-
-- **Verify:**
-  - Approved: [[Zero-Day Vulnerability]]
-- **Commit:** `verify: Zero-Day Vulnerability`
-
-### [2026-11-18] verify | Polygraph Examination
-
-- **Verify:**
-  - Approved: [[Polygraph Examination]]
+  - Approved: [[Executive Order 12333]]
   - Flags I resolved before approving (1):
-    - Accuracy check (Sources disagree) — This is okay
-- **Commit:** `verify: Polygraph Examination`
-
-### [2026-11-18] verify | Elements and Standards of Critical Thinking
-
-- **Verify:**
-  - Approved: [[Elements and Standards of Critical Thinking]]
-- **Commit:** `verify: Elements and Standards of Critical Thinking`
-
-### [2026-11-18] verify | Failures of Imagination, Policy, Capabilities, and Management
-
-- **Verify:**
-  - Approved: [[Failures of Imagination, Policy, Capabilities, and Management]]
-- **Commit:** `verify: Failures of Imagination, Policy, Capabilities, and Management`
-
-### [2026-11-18] verify | Five Hard National Security Problems of Artificial General Intelligence
-
-- **Verify:**
-  - Approved: [[Five Hard National Security Problems of Artificial General Intelligence]]
-- **Commit:** `verify: Five Hard National Security Problems of Artificial General Intelligence`
-
-### [2026-11-19] ingest | Intro to Intelligence batch 1c: analytic standards and the profession
-
-- **Think:** I approved the batch 1c plan: seven course readings on analytic standards, objectivity, forecasting, and the future of analysis, with the author spelled Johnston and no summaries for the slide deck or the handout.
-- **Calculate:**
-  - Copied the seven originals into `Sources/Readings/` under descriptive names. ICD 203 is a scan; the agent ran OCR and checked the headings and the likelihood table against the page images.
-  - Created (27, all drafts): source cards [[SRC - ICD 203, Analytic Standards]] (proposed A-1), [[SRC - Intelligence Is NOT About Telling Truth to Power]], [[SRC - Analytic Objectivity and Science]], [[SRC - The Limits of Prediction]], [[SRC - The Future of Analysis]] (each proposed B-2), [[SRC - The Future Intelligence Analyst (Slides)]], and [[SRC - Johnston Recommendations Summary]] (each proposed B-3); summaries of the first five; frameworks [[ICD 203 Analytic Standards]], [[Six Roles of the Future Intelligence Analyst]], [[Johnston's Analytic Culture Recommendations]]; concepts [[Estimative Language]], [[Analytic Objectivity]], [[Speaking Truth to Power]], [[Limits of Prediction]], [[Future of Intelligence Analysis]]; person [[Sherman Kent]]; glossary [[Analytic Assumption]], [[Analytic Ombuds]], [[Indicators and Signposts]], [[Superforecaster]], [[Prejudice Toward Continuity]], [[Prediction Market]].
-  - Appended to drafts: [[Intelligence Community Directive]], [[Structured Analytic Technique]] (with a "Possibly resolved by" line on my gap note), [[Intelligence (National Security)]], [[Current vs. Long-Term Intelligence]], [[Red Team Analysis]], [[Consumer-Producer Relations]], [[Centaur Analyst]], [[Linchpin Evidence]].
-  - Updated two stale lines on [[SRC - Grammar Summaries, Weeks 2-7]] (the Sunni, Shia, and Caliphate terms, and the ten proposals since applied).
-  - Proposed for verified pages, not yet applied: [[Analytic Confidence]], [[Politicized Intelligence]], [[Richards Heuer]], [[AI in Intelligence Production]].
-  - Proposed 5 typed links (type_of 1, part_of 3, developed_by 1; no `related`).
-  - Flags: 1 accuracy check (Johnson vs. Johnston, on the framework page and the handout's card); 4 whose view (Analytic Objectivity, Speaking Truth to Power, Limits of Prediction, Future of Intelligence Analysis).
-  - Ingest Queue: 1c marked `[~]`.
-- **Verify:**
-  - Pending my review
-- **Commit:** `ingest: Intro to Intelligence batch 1c (analytic standards) — 27 drafted, 8 appended, 7 originals copied`
-
-### [2026-11-19] ingest | Batch 1c proposals for verified pages
-
-- **Think:** I approved all four batch 1c proposals for verified pages.
-- **Calculate:**
-  - [[Analytic Confidence]]: ICD 203 on the basis for confidence and keeping it apart from likelihood; Used in updated.
-  - [[Politicized Intelligence]]: ICD 203's independence standard and the [[Analytic Ombuds]], and Marrin on intent.
-  - [[Richards Heuer]]: *Psychology of Intelligence Analysis* (1999), from Gartin; Intro to Intelligence added to courses.
-  - [[AI in Intelligence Production]]: Gartin's 2030 scenario and Bobby W.'s caution; Intro to Intelligence added to courses.
-  - Mechanical: added [[Richards Heuer]] to the "Used in" line of [[Structured Analytic Technique]] (a draft).
-  - Each set to `status: draft` with `verified_on` kept and one `changes_since_verified` line.
-- **Verify:**
-  - Pending my review: re-reviews, listed changes only
-- **Commit:** `edit: apply 4 batch-1c verified-page proposals`
-
-### [2026-11-19] ingest | Intro to Intelligence batch 1d: intelligence writing
-
-- **Think:** I approved the batch 1d plan: Kaiser and Pherson's *Analytic Writing Guide* excerpts, the BLUF format handout, the Williams and Molzon slides, the analytic titles handout, and the Grammar Summaries' Kaiser and Pherson terms.
-- **Calculate:**
-  - Copied the seven originals into `Sources/Readings/`. The four Kaiser and Pherson scans were upside down with no text layer; the agent rotated them, ran OCR, and matched each PDF page to the book's printed page.
-  - Created (19, all drafts): source cards [[SRC - Analytic Writing Guide (Kaiser and Pherson)]] (proposed B-2), [[SRC - How to Write an Intelligence Product in BLUF Format]], [[SRC - Intelligence Writing (Williams and Molzon Slides)]], and [[SRC - Developing Analytic Titles]] (each proposed B-3); summaries of the first two; concepts [[Bottom Line Up Front]], [[Analytic Title]], [[Detailed Outline]], [[Economizing on Words]], [[Self-Editing and Final Review]]; frameworks [[Analytic Line of March]], [[Six Qualities of an Analytic Topic Sentence]], [[Six-Step Paragraph Review]]; glossary [[Inverted Triangle]], [[Analytic Mission Statement]], [[Two-Degrees-of-Separation Rule]], [[Active Voice]], [[No-Kidding Rule]].
-  - Appended to drafts: [[Topic Sentence]] (Kaiser and Pherson's standard, the Grammar Summaries' definition, and a "Possibly resolved by" line on my gap note), [[Estimative Language]], [[ICD 203 Analytic Standards]]; updated the deferred-terms line on [[SRC - Grammar Summaries, Weeks 2-7]].
-  - Proposed for verified pages, not yet applied: [[Intelligence Writing Style]] and [[Key Judgments]].
-  - Proposed 2 typed links (part_of 1, applies_to 1; no `related`).
-  - Flags: 1 accuracy check (the Williams and Molzon slide cites ICD 203 §D.6.e(5) for a rule that is in (6), on [[Bottom Line Up Front]] and the slides' card); 1 gap (chapters 1, 2, and 8 not in the course scans); 1 whose view (the titles handout's academic origin).
-  - Ingest Queue: 1d marked `[~]`.
-- **Verify:**
-  - Pending my review
-- **Commit:** `ingest: Intro to Intelligence batch 1d (intelligence writing) — 19 drafted, 4 appended, 7 originals copied`
-
-### [2026-11-19] ingest | Batch 1d proposals for verified pages
-
-- **Think:** I approved both batch 1d proposals for verified pages.
-- **Calculate:**
-  - [[Intelligence Writing Style]]: cited the Williams and Molzon slides as matching my 9/15 notes, and linked the batch 1d writing pages.
-  - [[Key Judgments]]: added Kaiser and Pherson's view (via the Grammar Summaries) and the message-driven order; Used in updated.
-  - Each set to `status: draft` with `verified_on` kept and one `changes_since_verified` line.
-- **Verify:**
-  - Pending my review: re-reviews, listed changes only
-- **Commit:** `edit: apply 2 batch-1d verified-page proposals`
-
-### [2026-11-19] ingest | Intro to Intelligence batch 1e-1: Johnston, Analytic Culture (front matter, ch. 1–2, 8–9)
-
-- **Think:** I approved splitting batch 1e into seven sub-batches (three for Johnston, four for Bodnar) and the 1e-1 plan: Johnston's foreword, introduction, ch. 1–2, ch. 8–9, afterword, and author note.
-- **Calculate:**
-  - Copied the original into `Sources/Readings/` as `Johnston - Analytic Culture in the US Intelligence Community (2005).pdf`. It has a text layer; the agent matched PDF pages to printed page numbers from the page footers.
-  - Created (13, all drafts): source card [[SRC - Analytic Culture in the US Intelligence Community (Johnston)]] (proposed B-2); [[Summary - Analytic Culture in the US Intelligence Community]]; concepts [[Analytic Culture]], [[Tradecraft vs. Science in Intelligence Analysis]]; framework [[Performance Improvement Infrastructure]]; person [[Rob Johnston]]; glossary [[Intelligence Analysis]], [[Intelligence Error and Intelligence Failure]], [[Secrecy vs. Efficacy]], [[Corporate Judgment]], [[Anticipatory Socialization]], [[Community of Practice]], [[Indications and Warning]].
-  - Revised my draft [[Johnston's Analytic Culture Recommendations]] against the book (each of the handout's five points checked against ch. 8–9 and cited to the book; research programs and access added; the spelling flag now points to the title page; Gartin's quote located on p. 43).
-  - Appended to drafts: [[Current vs. Long-Term Intelligence]] (the book replaces the handout), [[Groupthink]], [[Stovepipe]], [[President's Daily Brief]], [[Structured Analytic Technique]], [[Intelligence (National Security)]] (Johnston's working definition).
-  - Proposed, not yet applied: [[Confirmation Bias]] (verified), [[Richards Heuer]] (verified, re-review pending), and a rating change on [[SRC - Johnston Recommendations Summary]] (proposed B-3 to B-2).
-  - Proposed 4 typed links (developed_by 3, part_of 1; no `related`).
-  - Flags: 2 whose view (Johnston's findings are post-9/11 perceptions he gathered while growing sympathetic to analysts, on [[Analytic Culture]]; his tradecraft-vs-science argument against his own "art, tradecraft, and science," on [[Tradecraft vs. Science in Intelligence Analysis]]); 1 accuracy check updated (the Johnson/Johnston spelling).
-  - Ingest Queue: 1e split into sub-batches 1e-1 to 1e-7; 1e-1 marked `[~]`.
-- **Verify:**
-  - Pending my review
-- **Commit:** `ingest: Intro to Intelligence batch 1e-1 (Johnston front matter, ch. 1-2, 8-9) — 13 drafted, 7 updated, 1 original copied`
-
-### [2026-11-19] ingest | Batch 1e-1 proposals
-
-- **Think:** I approved all three batch 1e-1 proposals.
-- **Calculate:**
-  - [[Confirmation Bias]] (verified): added Johnston's definition and his corporate-judgment finding; added Intro to Intelligence to courses; Used in updated.
-  - [[Richards Heuer]] (re-review pending): added Johnston's citation of Heuer; added the Johnston card to sources and Appears In.
-  - [[SRC - Johnston Recommendations Summary]]: proposed rating raised from B-3 to B-2 after checking it against the book; the spelling flag now points to the book's title page; index line updated.
-  - Both wiki pages set to `status: draft` with `verified_on` kept and a `changes_since_verified` line added.
-- **Verify:**
-  - Pending my review: re-reviews, listed changes only
-- **Commit:** `edit: apply 3 batch-1e-1 proposals`
-
-### [2026-11-19] ingest | Intro to Intelligence batch 1e-2: Johnston, Analytic Culture ch. 3–4
-
-- **Think:** I approved the 1e-2 plan, including the two verified-page edits: Johnston's taxonomy of intelligence variables (ch. 3) and Judith Meister Johnston and Rob Johnston's systems model of the intelligence cycle (ch. 4).
-- **Calculate:**
-  - Created (3, all drafts): frameworks [[Taxonomy of Intelligence Analysis Variables]] and [[Systems Model of the Intelligence Cycle]]; glossary [[Cognitive Load]].
-  - Appended to drafts: [[Intelligence Analysis]] (ch. 3's fuller definition), [[Tradecraft vs. Science in Intelligence Analysis]] (the medicine parallel), [[Sherman Kent]] (his three elements of analysis); updated [[SRC - Analytic Culture in the US Intelligence Community (Johnston)]] (ingest progress) and [[Summary - Analytic Culture in the US Intelligence Community]].
-  - Edited verified pages, as approved in the plan: [[Intelligence Cycle]] (the five-step version, the critique, and a sources-disagree flag) and [[Denial and Deception]] (deception is the rule in intelligence). Each set to `status: draft` with `verified_on` kept and a `changes_since_verified` line.
-  - Proposed 2 typed links (developed_by 1, applies_to 1; no `related`).
-  - Flags: 1 sources disagree (the number and first step of the intelligence cycle, on [[Intelligence Cycle]]); 1 whose view (the simulation is unvalidated, on [[Systems Model of the Intelligence Cycle]]).
-  - Ingest Queue: 1e-2 marked `[~]`.
-- **Verify:**
-  - Pending my review (including re-reviews of the two verified pages, listed changes only)
-- **Commit:** `ingest: Intro to Intelligence batch 1e-2 (Johnston ch. 3-4) — 3 drafted, 7 updated`
-
-### [2026-11-19] schema | Guides are about the Coppermind itself (5.3)
-
-- **Think:** The Law Enforcement Intelligence Internships page, made from Detective Mennen's guest lecture, is in `Guides/`. I want guides to be about the Coppermind itself, not any how-to, and I asked where that page would belong instead.
-- **Calculate:**
-  - [[SCHEMA]] 5.3: `Guides/` is now described as how-to pages about the Coppermind itself; new "Guides: about the Coppermind itself" subsection in section 2 (a how-to about anything else is a workflow, or a concept, framework, or summary); `Workflows/` now says it holds processes from my courses as well as from running the wiki; the URL-citation exception in section 6 refers to guides about the Coppermind's own tools. Status set to `draft` until I verify it again.
-  - `_templates/Guide.md`: the summary placeholder now says the guide is about the Coppermind itself.
-  - Checked and left alone: the Nicrosil Dashboard "Guides" card (its description is already "How the vault works" and it opens the Guides section of the index), [[Dashboard]], and the other three guides, which are all about the Coppermind.
-  - Proposed, not applied: move [[Law Enforcement Intelligence Internships]] to `Wiki/Workflows/` as `type: workflow`. It is verified, so it would go back to `draft` with a `changes_since_verified` note, and the index would change.
-- **Verify:**
-  - Pending my review
-- **Commit:** `schema: 5.3 guides are about the Coppermind itself`
-
-### [2026-11-19] schema | Law Enforcement Intelligence Internships moved to Workflows
-
-- **Think:** I approved the plan to reclassify the internship page as a workflow, since guides are now only about the Coppermind itself (SCHEMA 5.3).
-- **Calculate:**
-  - [[Law Enforcement Intelligence Internships]] (verified): `type` changed from guide to workflow; headings now Steps, Checks, Common Mistakes (the three troubleshooting items rephrased as mistakes, same cited claims); alias "Internship Guide" renamed "Internship Workflow". Set to `status: draft` with `verified_on` kept and a `changes_since_verified` line.
-  - `index.md`: the page moved from Guides (now 3) to Workflows (now 2). Total unchanged.
-  - The file still has to be dragged from `Wiki/Guides/` to `Wiki/Workflows/` in Obsidian; the agent cannot move files.
-- **Verify:**
-  - Pending my review: re-review, listed changes only
-- **Commit:** `edit: reclassify Law Enforcement Intelligence Internships as a workflow`
-
-### [2026-11-19] verify | Law Enforcement Intelligence Internships
-
-- **Verify:**
-  - Approved: [[Law Enforcement Intelligence Internships]]
-- **Commit:** `verify: Law Enforcement Intelligence Internships`
-
-### [2026-11-19] verify | SCHEMA
-
-- **Verify:**
-  - Approved: [[SCHEMA]]
-- **Commit:** `verify: SCHEMA`
-
-### [2026-11-19] verify | AI in Intelligence Production
-
-- **Verify:**
-  - Approved: [[AI in Intelligence Production]]
-- **Commit:** `verify: AI in Intelligence Production`
-
-### [2026-11-19] verify | Intelligence Writing Style
-
-- **Verify:**
-  - Approved: [[Intelligence Writing Style]]
-- **Commit:** `verify: Intelligence Writing Style`
-
-### [2026-11-19] verify | Politicized Intelligence
-
-- **Verify:**
-  - Approved: [[Politicized Intelligence]]
-- **Commit:** `verify: Politicized Intelligence`
-
-### [2026-11-19] verify | Analytic Confidence
-
-- **Verify:**
-  - Approved: [[Analytic Confidence]]
-- **Commit:** `verify: Analytic Confidence`
-
-### [2026-11-19] schema | Citations move to footnotes (6.0)
-
-- **Think:** I asked for citations to move from parentheses to footnotes on every page, with inline links in sentences left alone. I chose to re-verify the verified pages, numbered IDs, and a `## Footnotes` heading, and approved linking the unlinked class-notes citations to their date headings.
-- **Calculate:**
-  - [[SCHEMA]] 6.0 (set to `draft`): §6 rule 1 rewritten for footnotes, new rule 2 on how footnotes are written, rules renumbered, attribution examples put dates in the footnote; §10 health check also looks for footnote problems; changelog line added.
-  - 383 wiki pages and 2 source cards converted: 2,353 parenthetical citations became 1,609 footnotes, each page ending in a `## Footnotes` section. A script checked every page: wording unchanged once citations are removed, every link kept, every marker defined and every definition used, frontmatter unchanged apart from the status change below, line endings unchanged.
-  - Not converted, by design: 5 citations that are part of their sentence ("All from …", "Taglines are from …") kept as inline links; "(cites Treverton, pp. 11–15)" on [[Puzzles and Mysteries]]; the "(Lowenthal)" attributions on [[Seven-Point Definition of Intelligence]]; the "(Section …)" labels on [[Executive Order 12333]]; plain "see [[…]]" cross-references.
-  - 9 unlinked class-notes citations now link to their date headings (on [[Centaur Analyst]], [[Intelligence (National Security)]], [[Intelligence Collection Disciplines]], [[Intelligence vs. Consciousness]], [[Intelligence-to-Action Convergence Matrix]], [[Three-Ps Risk Framework]], [[Artificial General Intelligence]]).
-  - The 62 verified pages set to `draft`, `verified_on` kept, each with a `changes_since_verified` line.
-  - [[Dissect and Ingest a Source]] and [[Intelligence Community Style Summaries]]: citing instructions now say footnotes (extra `changes_since_verified` line on each).
-  - Templates: page templates get a `## Footnotes` section; Glossary Term uses a marker instead of "(citation)"; Health Check Report's citation row also counts footnote problems.
-  - Nicrosil 2.4.5: search snippets and review-card summaries skip footnote markers and the Footnotes section. [[Nicrosil]] guide updated (v2.4.5, plus the missing 2.4.4 history line).
-- **Verify:**
-  - Pending my review: SCHEMA 6.0; the 62 re-reviews (footnotes only); the two prompts and the Nicrosil guide
-- **Commit:** `schema: 6.0 citations as footnotes`
-
-### [2026-11-19] verify | SCHEMA
-
-- **Verify:**
-  - Approved: [[SCHEMA]]
-- **Commit:** `verify: SCHEMA`
-
-### [2026-11-19] verify | Ages of U.S. Intelligence
-
-- **Verify:**
-  - Approved: [[Ages of U.S. Intelligence]]
-- **Commit:** `verify: Ages of U.S. Intelligence`
-
-### [2026-11-19] verify | Analysis of Competing Hypotheses
-
-- **Verify:**
-  - Approved: [[Analysis of Competing Hypotheses]]
-- **Commit:** `verify: Analysis of Competing Hypotheses`
-
-### [2026-11-19] verify | Architecture of Worldview
-
-- **Verify:**
-  - Approved: [[Architecture of Worldview]]
-- **Commit:** `verify: Architecture of Worldview`
-
-### [2026-11-19] verify | Cascade of Unintended Consequences
-
-- **Verify:**
-  - Approved: [[Cascade of Unintended Consequences]]
-- **Commit:** `verify: Cascade of Unintended Consequences`
-
-### [2026-11-19] verify | Elements and Standards of Critical Thinking
-
-- **Verify:**
-  - Approved: [[Elements and Standards of Critical Thinking]]
-- **Commit:** `verify: Elements and Standards of Critical Thinking`
-
-### [2026-11-19] verify | Essay Types
-
-- **Verify:**
-  - Approved: [[Essay Types]]
-- **Commit:** `verify: Essay Types`
-
-### [2026-11-19] verify | Executive Order 12333
-
-- **Verify:**
-  - Approved: [[Executive Order 12333]]
+    - Accuracy check — good
 - **Commit:** `verify: Executive Order 12333`
 
-### [2026-11-19] verify | Failures of Imagination, Policy, Capabilities, and Management
+### [2026-11-12] verify | SRC - ACH GenAI Workflow
 
 - **Verify:**
-  - Approved: [[Failures of Imagination, Policy, Capabilities, and Management]]
-- **Commit:** `verify: Failures of Imagination, Policy, Capabilities, and Management`
+  - Approved: [[SRC - ACH GenAI Workflow]]
+- **Commit:** `verify: SRC - ACH GenAI Workflow`
 
-### [2026-11-19] verify | Five Hard National Security Problems of Artificial General Intelligence
-
-- **Verify:**
-  - Approved: [[Five Hard National Security Problems of Artificial General Intelligence]]
-- **Commit:** `verify: Five Hard National Security Problems of Artificial General Intelligence`
-
-### [2026-11-19] verify | Four Levels of Prompt Engineering
-
-- **Verify:**
-  - Approved: [[Four Levels of Prompt Engineering]]
-- **Commit:** `verify: Four Levels of Prompt Engineering`
-
-### [2026-11-19] verify | Information Model
-
-- **Verify:**
-  - Approved: [[Information Model]]
-- **Commit:** `verify: Information Model`
-
-### [2026-11-19] verify | Levels of Intelligence
-
-- **Verify:**
-  - Approved: [[Levels of Intelligence]]
-- **Commit:** `verify: Levels of Intelligence`
-
-### [2026-11-19] verify | Tasking, Collection, Processing, Exploitation, and Dissemination
-
-- **Verify:**
-  - Approved: [[Tasking, Collection, Processing, Exploitation, and Dissemination]]
-- **Commit:** `verify: Tasking, Collection, Processing, Exploitation, and Dissemination`
-
-### [2026-11-19] verify | Agentic AI
-
-- **Verify:**
-  - Approved: [[Agentic AI]]
-- **Commit:** `verify: Agentic AI`
-
-### [2026-11-19] verify | AI Alignment
-
-- **Verify:**
-  - Approved: [[AI Alignment]]
-- **Commit:** `verify: AI Alignment`
-
-### [2026-11-19] verify | AI in Intelligence Production
-
-- **Verify:**
-  - Approved: [[AI in Intelligence Production]]
-- **Commit:** `verify: AI in Intelligence Production`
-
-### [2026-11-19] verify | AI in Warfighting
-
-- **Verify:**
-  - Approved: [[AI in Warfighting]]
-- **Commit:** `verify: AI in Warfighting`
-
-### [2026-11-19] verify | AI-Enabled Surveillance
-
-- **Verify:**
-  - Approved: [[AI-Enabled Surveillance]]
-- **Commit:** `verify: AI-Enabled Surveillance`
-
-### [2026-11-19] verify | Curiosity, Character, and Competence
-
-- **Verify:**
-  - Approved: [[Curiosity, Character, and Competence]]
-- **Commit:** `verify: Curiosity, Character, and Competence`
-
-### [2026-11-19] verify | Human Decision Point
-
-- **Verify:**
-  - Approved: [[Human Decision Point]]
-- **Commit:** `verify: Human Decision Point`
-
-### [2026-11-19] verify | Intelligence as Attentive Understanding
-
-- **Verify:**
-  - Approved: [[Intelligence as Attentive Understanding]]
-- **Commit:** `verify: Intelligence as Attentive Understanding`
-
-### [2026-11-19] verify | Intelligence Writing Style
-
-- **Verify:**
-  - Approved: [[Intelligence Writing Style]]
-- **Commit:** `verify: Intelligence Writing Style`
-
-### [2026-11-19] verify | Intelligence-Led Policing
-
-- **Verify:**
-  - Approved: [[Intelligence-Led Policing]]
-- **Commit:** `verify: Intelligence-Led Policing`
-
-### [2026-11-19] verify | LLM Wiki
-
-- **Verify:**
-  - Approved: [[LLM Wiki]]
-- **Commit:** `verify: LLM Wiki`
-
-### [2026-11-19] verify | Narrow AI
-
-- **Verify:**
-  - Approved: [[Narrow AI]]
-- **Commit:** `verify: Narrow AI`
-
-### [2026-11-19] verify | Pi-Shaped Person
-
-- **Verify:**
-  - Approved: [[Pi-Shaped Person]]
-- **Commit:** `verify: Pi-Shaped Person`
-
-### [2026-11-19] verify | Politicized Intelligence
-
-- **Verify:**
-  - Approved: [[Politicized Intelligence]]
-- **Commit:** `verify: Politicized Intelligence`
-
-### [2026-11-19] verify | Polygraph Examination
-
-- **Verify:**
-  - Approved: [[Polygraph Examination]]
-- **Commit:** `verify: Polygraph Examination`
-
-### [2026-11-19] verify | Security Classification
-
-- **Verify:**
-  - Approved: [[Security Classification]]
-- **Commit:** `verify: Security Classification`
-
-### [2026-11-19] verify | Time Compression Trap
-
-- **Verify:**
-  - Approved: [[Time Compression Trap]]
-- **Commit:** `verify: Time Compression Trap`
-
-### [2026-11-19] verify | Mata v. Avianca (2023)
-
-- **Verify:**
-  - Approved: [[Mata v. Avianca (2023)]]
-- **Commit:** `verify: Mata v. Avianca (2023)`
-
-### [2026-11-19] verify | Open Skies Treaty
-
-- **Verify:**
-  - Approved: [[Open Skies Treaty]]
-- **Commit:** `verify: Open Skies Treaty`
-
-### [2026-11-19] verify | Pearl Harbor (1941)
-
-- **Verify:**
-  - Approved: [[Pearl Harbor (1941)]]
-- **Commit:** `verify: Pearl Harbor (1941)`
-
-### [2026-11-19] verify | All-Source Intelligence
-
-- **Verify:**
-  - Approved: [[All-Source Intelligence]]
-- **Commit:** `verify: All-Source Intelligence`
-
-### [2026-11-19] verify | Analytic Confidence
-
-- **Verify:**
-  - Approved: [[Analytic Confidence]]
-- **Commit:** `verify: Analytic Confidence`
-
-### [2026-11-19] verify | Bach Faucet
-
-- **Verify:**
-  - Approved: [[Bach Faucet]]
-- **Commit:** `verify: Bach Faucet`
-
-### [2026-11-19] verify | Computer Network Exploitation
-
-- **Verify:**
-  - Approved: [[Computer Network Exploitation]]
-- **Commit:** `verify: Computer Network Exploitation`
-
-### [2026-11-19] verify | Confirmation Bias
-
-- **Verify:**
-  - Approved: [[Confirmation Bias]]
-- **Commit:** `verify: Confirmation Bias`
-
-### [2026-11-19] verify | Covert Action
-
-- **Verify:**
-  - Approved: [[Covert Action]]
-- **Commit:** `verify: Covert Action`
-
-### [2026-11-19] verify | Denial and Deception
-
-- **Verify:**
-  - Approved: [[Denial and Deception]]
-- **Commit:** `verify: Denial and Deception`
-
-### [2026-11-19] verify | Diagnostic Evidence
-
-- **Verify:**
-  - Approved: [[Diagnostic Evidence]]
-- **Commit:** `verify: Diagnostic Evidence`
-
-### [2026-11-19] verify | Diplomatic, Information, Military, and Economic Options
-
-- **Verify:**
-  - Approved: [[Diplomatic, Information, Military, and Economic Options]]
-- **Commit:** `verify: Diplomatic, Information, Military, and Economic Options`
-
-### [2026-11-19] verify | Existential Risk
-
-- **Verify:**
-  - Approved: [[Existential Risk]]
-- **Commit:** `verify: Existential Risk`
-
-### [2026-11-19] verify | Indicators of Compromise
-
-- **Verify:**
-  - Approved: [[Indicators of Compromise]]
-- **Commit:** `verify: Indicators of Compromise`
-
-### [2026-11-19] verify | Key Judgments
-
-- **Verify:**
-  - Approved: [[Key Judgments]]
-- **Commit:** `verify: Key Judgments`
-
-### [2026-11-19] verify | Kill Chain
-
-- **Verify:**
-  - Approved: [[Kill Chain]]
-- **Commit:** `verify: Kill Chain`
-
-### [2026-11-19] verify | Law of Armed Conflict
-
-- **Verify:**
-  - Approved: [[Law of Armed Conflict]]
-- **Commit:** `verify: Law of Armed Conflict`
-
-### [2026-11-19] verify | Linchpin Evidence
-
-- **Verify:**
-  - Approved: [[Linchpin Evidence]]
-- **Commit:** `verify: Linchpin Evidence`
-
-### [2026-11-19] verify | Meaningful Absence
-
-- **Verify:**
-  - Approved: [[Meaningful Absence]]
-- **Commit:** `verify: Meaningful Absence`
-
-### [2026-11-19] verify | Mirror Imaging
-
-- **Verify:**
-  - Approved: [[Mirror Imaging]]
-- **Commit:** `verify: Mirror Imaging`
-
-### [2026-11-19] verify | OODA Loop
-
-- **Verify:**
-  - Approved: [[OODA Loop]]
-- **Commit:** `verify: OODA Loop`
-
-### [2026-11-19] verify | Priority Creep
-
-- **Verify:**
-  - Approved: [[Priority Creep]]
-- **Commit:** `verify: Priority Creep`
-
-### [2026-11-19] verify | Revolution in Military Affairs
-
-- **Verify:**
-  - Approved: [[Revolution in Military Affairs]]
-- **Commit:** `verify: Revolution in Military Affairs`
-
-### [2026-11-19] verify | SEE-It Framework
-
-- **Verify:**
-  - Approved: [[SEE-It Framework]]
-- **Commit:** `verify: SEE-It Framework`
-
-### [2026-11-19] verify | Traffic Analysis
-
-- **Verify:**
-  - Approved: [[Traffic Analysis]]
-- **Commit:** `verify: Traffic Analysis`
-
-### [2026-11-19] verify | Unconventional Warfare
-
-- **Verify:**
-  - Approved: [[Unconventional Warfare]]
-- **Commit:** `verify: Unconventional Warfare`
-
-### [2026-11-19] verify | Zero-Day Vulnerability
-
-- **Verify:**
-  - Approved: [[Zero-Day Vulnerability]]
-- **Commit:** `verify: Zero-Day Vulnerability`
-
-### [2026-11-19] verify | Richards Heuer
-
-- **Verify:**
-  - Approved: [[Richards Heuer]]
-- **Commit:** `verify: Richards Heuer`
-
-### [2026-11-19] verify | Summary - ACH GenAI Workflow
+### [2026-11-12] verify | Summary - ACH GenAI Workflow
 
 - **Verify:**
   - Approved: [[Summary - ACH GenAI Workflow]]
 - **Commit:** `verify: Summary - ACH GenAI Workflow`
 
-### [2026-11-19] verify | Dissect and Ingest a Source
+### [2026-11-12] verify | Meaningful Absence
 
 - **Verify:**
-  - Approved: [[Dissect and Ingest a Source]]
-- **Commit:** `verify: Dissect and Ingest a Source`
+  - Approved: [[Meaningful Absence]]
+- **Commit:** `verify: Meaningful Absence`
 
-### [2026-11-19] verify | Intelligence Community Style Summaries
-
-- **Verify:**
-  - Approved: [[Intelligence Community Style Summaries]]
-- **Commit:** `verify: Intelligence Community Style Summaries`
-
-### [2026-11-19] verify | ACH GenAI Workflow
+### [2026-11-12] verify | Linchpin Evidence
 
 - **Verify:**
-  - Approved: [[ACH GenAI Workflow]]
-- **Commit:** `verify: ACH GenAI Workflow`
+  - Approved: [[Linchpin Evidence]]
+- **Commit:** `verify: Linchpin Evidence`
 
-### [2026-11-19] verify | Law Enforcement Intelligence Internships
-
-- **Verify:**
-  - Approved: [[Law Enforcement Intelligence Internships]]
-- **Commit:** `verify: Law Enforcement Intelligence Internships`
-
-### [2026-11-19] verify | Choosing a Claude Model for Coppermind Work
+### [2026-11-12] verify | Diagnostic Evidence
 
 - **Verify:**
-  - Approved: [[Choosing a Claude Model for Coppermind Work]]
-- **Commit:** `verify: Choosing a Claude Model for Coppermind Work`
+  - Approved: [[Diagnostic Evidence]]
+- **Commit:** `verify: Diagnostic Evidence`
 
-### [2026-11-19] verify | Nicrosil
+### [2026-11-12] ingest | ACH GenAI Workflow (SAIL course documents)
+
+- **Think:** I gave Claude the eight files of the SAIL ACH GenAI Workflow (orchestrator plus Steps 0–6) and asked it to ingest them. Plan-first mode; I approved the plan as proposed: no separate Prompt pages for the step prompts, and changes to verified pages proposed only.
+- **Calculate:** Claude (claude-sonnet-5-5) copied the files unchanged into `Sources/Readings/ACH GenAI Workflow/`, drafted [[SRC - ACH GenAI Workflow]] (proposed rating B-2, left blank for me), and drafted 5 pages: [[ACH GenAI Workflow]] (workflow), [[Summary - ACH GenAI Workflow]] (summary), and the glossary terms [[Diagnostic Evidence]], [[Linchpin Evidence]] and [[Meaningful Absence]]. Appended one bullet to the draft [[Hallucination]]. Updated [[index]] and [[Find]] (added Workflows and Summaries to "By type of page"); [[Library.base|Library]] needed no change.
+  - **Proposed for verified pages, not made:** [[Analysis of Competing Hypotheses]] (pointer to the workflow and a "Sources disagree" flag), [[Automation Bias]], [[Mirror Imaging]], [[Denial and Deception]], [[Analytic Confidence]].
+  - **Typed links proposed:** [[ACH GenAI Workflow]] → applies_to → [[Analysis of Competing Hypotheses]]; → counters → [[Automation Bias]] and [[Hallucination]]; the three glossary terms → part_of → [[ACH GenAI Workflow]].
+  - **Flags:** Sources disagree (1: matrix notation, S/C/N in my notes vs. CC/C/N/I/II, where C means opposite things), accuracy check (1: "Heuer, 1999"), gap in the source (1: *ACH Student Primer* not provided; also High/Medium/Low vs. High/Moderate/Low confidence labels).
+  - **Left out on purpose:** nothing. Separate pages for the step prompts, and a "Devil's Advocate" glossary term, were considered and not created.
+- **Verify:** pending. Item by item.
+- **Commit:** `ingest: ACH GenAI Workflow — 5 drafts + source card, pending review`
+
+### [2026-11-12] verify | Analysis of Competing Hypotheses
 
 - **Verify:**
-  - Approved: [[Nicrosil]]
-- **Commit:** `verify: Nicrosil`
+  - Approved: [[Analysis of Competing Hypotheses]]
+  - Flags I resolved before approving (1):
+    - Gap (Gap in my notes) — thats okay
+- **Commit:** `verify: Analysis of Competing Hypotheses`
 
-### [2026-11-19] verify | Setting Up Git for the Coppermind
+### [2026-11-12] verify | AI in Warfighting
 
 - **Verify:**
-  - Approved: [[Setting Up Git for the Coppermind]]
-- **Commit:** `verify: Setting Up Git for the Coppermind`
+  - Approved: [[AI in Warfighting]]
+  - Flags I resolved before approving (1):
+    - Gap (Gap in my notes) — don't need to include this if its not in the notes
+- **Commit:** `verify: AI in Warfighting`
 
-### [2026-11-19] verify | Intelligence Cycle
+### [2026-11-12] verify | AI Alignment
+
+- **Verify:**
+  - Approved: [[AI Alignment]]
+  - Flags I resolved before approving (1):
+    - Question (Whose view is this?) — clarified
+- **Commit:** `verify: AI Alignment`
+
+### [2026-11-11] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`
+
+### [2026-11-11] query | Denial and deception
+
+- **Think:** I asked the wiki for everything related to denial and deception.
+- **Calculate:** Answered from the wiki first. Pages used: [[Denial and Deception]], [[Intelligence Collection Disciplines]] (draft), [[Polygraph Examination]], [[AI in Warfighting]] (draft), [[AI-Enabled Surveillance]], [[Cascade of Unintended Consequences]], [[Liar's Dividend]] (draft), [[AI Alignment]] (draft), plus [[Intro to Intelligence Class Notes (Fall 2026)#9/17/26|Intro notes, 9/17/26]]. Gap noted: the wiki has only the two-line class definition; no case study or framework on detecting or countering D&D.
+- **Verify:** Not filed back.
+- **Commit:** `query: denial and deception`
+
+### [2026-11-11] verify | Ages of U.S. Intelligence
+
+- **Verify:**
+  - Approved: [[Ages of U.S. Intelligence]]
+  - Flags I resolved before approving (1):
+    - Gap (Gap in my notes) — elabborated where I could
+- **Commit:** `verify: Ages of U.S. Intelligence`
+
+### [2026-11-11] verify | Zero-Day Vulnerability
+
+- **Verify:**
+  - Approved: [[Zero-Day Vulnerability]]
+- **Commit:** `verify: Zero-Day Vulnerability`
+
+### [2026-11-11] verify | Unconventional Warfare
+
+- **Verify:**
+  - Approved: [[Unconventional Warfare]]
+- **Commit:** `verify: Unconventional Warfare`
+
+### [2026-11-11] verify | Traffic Analysis
+
+- **Verify:**
+  - Approved: [[Traffic Analysis]]
+- **Commit:** `verify: Traffic Analysis`
+
+### [2026-11-11] verify | Technological Singularity
+
+- **Verify:**
+  - Approved: [[Technological Singularity]]
+- **Commit:** `verify: Technological Singularity`
+
+### [2026-11-11] verify | SEE-It Framework
+
+- **Verify:**
+  - Approved: [[SEE-It Framework]]
+- **Commit:** `verify: SEE-It Framework`
+
+### [2026-11-11] verify | Revolution in Military Affairs
+
+- **Verify:**
+  - Approved: [[Revolution in Military Affairs]]
+- **Commit:** `verify: Revolution in Military Affairs`
+
+### [2026-11-11] verify | Priority Creep
+
+- **Verify:**
+  - Approved: [[Priority Creep]]
+- **Commit:** `verify: Priority Creep`
+
+### [2026-11-11] verify | OODA Loop
+
+- **Verify:**
+  - Approved: [[OODA Loop]]
+- **Commit:** `verify: OODA Loop`
+
+### [2026-11-11] verify | Mirror Imaging
+
+- **Verify:**
+  - Approved: [[Mirror Imaging]]
+- **Commit:** `verify: Mirror Imaging`
+
+### [2026-11-11] verify | Law of Armed Conflict
+
+- **Verify:**
+  - Approved: [[Law of Armed Conflict]]
+- **Commit:** `verify: Law of Armed Conflict`
+
+### [2026-11-11] verify | Kill Chain
+
+- **Verify:**
+  - Approved: [[Kill Chain]]
+- **Commit:** `verify: Kill Chain`
+
+### [2026-11-11] verify | Key Judgments
+
+- **Verify:**
+  - Approved: [[Key Judgments]]
+- **Commit:** `verify: Key Judgments`
+
+### [2026-11-11] verify | Intelligence Cycle
 
 - **Verify:**
   - Approved: [[Intelligence Cycle]]
-  - Flags I resolved before approving (1):
-    - Accuracy check (Sources disagree) — This is okay, there are multiple different definitions but they all carry similar meanings in spirit.
 - **Commit:** `verify: Intelligence Cycle`
 
-### [2026-11-19] verify | Analytic Line of March
+### [2026-11-11] verify | Indicators of Compromise
 
 - **Verify:**
-  - Approved: [[Analytic Line of March]]
-- **Commit:** `verify: Analytic Line of March`
+  - Approved: [[Indicators of Compromise]]
+- **Commit:** `verify: Indicators of Compromise`
 
-### [2026-11-19] schema | Nicrosil 2.4.6 livelier relations map
-
-- **Think:** The relations map in the side panel looked barebones next to the rest of the page, so I asked for it to feel more alive, with animation or glow and more vibrance.
-- **Calculate:** Nothing to compute.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.4.5 to 2.4.6): relations map arrows glow in their relationship color with small dots flowing along them; the center page has a copper gradient and a slow pulsing halo; verified and draft pages glow teal and copper; the backdrop is a faint dotted grid with a copper glow; nodes and arrows fade in one after another; hovering or focusing a page lights its arrows and dims the others; legend swatches glow; motion stops under reduced-motion settings
-  - [[Nicrosil]]: relations panel section, version 2.4.6 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
-- **Verify:**
-  - Guide needs verifying again
-  - Reload Nicrosil and open the relations panel (`Alt+L`)
-- **Commit:** `schema: Nicrosil 2.4.6 livelier relations map`
-
-### [2026-11-19] verify | Nicrosil
+### [2026-11-11] verify | Existential Risk
 
 - **Verify:**
-  - Approved: [[Nicrosil]]
-- **Commit:** `verify: Nicrosil`
+  - Approved: [[Existential Risk]]
+- **Commit:** `verify: Existential Risk`
 
-### [2026-11-19] verify | Global Strategy Against Islamist Terrorism
-
-- **Verify:**
-  - Approved: [[Global Strategy Against Islamist Terrorism]]
-- **Commit:** `verify: Global Strategy Against Islamist Terrorism`
-
-### [2026-11-19] schema | Nicrosil 2.4.7 verified pages open in Reading view
-
-- **Think:** I never want to be in editing mode unless I choose it, so I asked for verified pages to open in Reading view whenever I open or click them.
-- **Calculate:** Nothing to compute.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`, `manifest.json` (2.4.6 to 2.4.7): when a page is opened it is switched to Reading view if it is verified; a new setting (**Open pages in Reading view**: verified pages only, every page, or off) controls this; each tab is checked once per page it shows, so switching to editing myself is left alone; empty new notes are never switched
-  - [[Nicrosil]]: Settings section, version 2.4.7 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
-- **Verify:**
-  - Guide needs verifying again
-  - Reload Nicrosil, then open a verified page from the file list and from a link
-- **Commit:** `schema: Nicrosil 2.4.7 open verified pages in Reading view`
-
-### [2026-11-19] verify | Nicrosil
+### [2026-11-11] verify | Embedding
 
 - **Verify:**
-  - Approved: [[Nicrosil]]
-- **Commit:** `verify: Nicrosil`
+  - Approved: [[Embedding]]
+- **Commit:** `verify: Embedding`
 
-### [2026-11-19] schema | Nicrosil 2.4.8 Dashboard health check card
-
-- **Think:** I do a health check every 14 days, so I asked for a small card on the Dashboard showing how long it has been since the last one, turning red when it is overdue.
-- **Calculate:** Nothing to compute.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.4.7 to 2.4.8): a health check card in the Dashboard's review progress section, with a bar that fills over the 14 days since the newest report in `Health Checks/` (read from the report's file name), teal while on time, amber in the last two days, red and gently pulsing once overdue or if no report exists; clicking it opens the latest report; the Dashboard also refreshes hourly so the card is current if Obsidian stays open overnight; new setting **Days between health checks** (14)
-  - [[Nicrosil]]: Dashboard section, Settings section, version 2.4.8 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
-  - Not changed: [[SCHEMA]]. The 14-day rhythm for health checks is not written there (§7 rule 7 only covers drafts older than 14 days); it lives in the plugin setting.
-- **Verify:**
-  - Guide needs verifying again
-  - Reload Nicrosil and open the Dashboard
-- **Commit:** `schema: Nicrosil 2.4.8 Dashboard health check card`
-
-### [2026-11-19] schema | Health check rhythm and SCHEMA change notes (6.1)
-
-- **Think:** I asked for the 14-day health check rhythm to be written into the SCHEMA, and for edits to the SCHEMA to show up in the changed-since-verified list the way wiki page edits do, because they had not been.
-- **Calculate:**
-  - Cause: the review queue, the review card and the Dashboard already show a draft's `changes_since_verified` lines for any file with a status, SCHEMA.md included. The agent's last two SCHEMA edits (5.3 and 6.0) set it back to `draft` without adding the note, and only 5.2 did, so there was nothing to show. I can't rebuild the missing 5.3 and 6.0 lines, because I verified the SCHEMA after each.
-  - [[SCHEMA]] 6.1 (set to `draft`, with its own `changes_since_verified` lines): §2 Health Checks gets a rhythm line (one every 14 days, from the newest report; the Dashboard card turns red when overdue); §10 opens with the same rule; §7 rule 8 now says it covers `SCHEMA.md` and explains the note against the changelog; the §10 check on changed-since-verified pages names `SCHEMA.md`; changelog line 6.1 and `version: 6.1`.
-  - `AGENTS.md`: the change-note instruction now says it applies to the SCHEMA too, in the same edit as the changelog line.
-  - Not changed: Nicrosil. It already reads the note from any reviewable file, so nothing in the plugin was missing.
-- **Verify:**
-  - Pending my review: SCHEMA 6.1 (the review card should list its two lines with an R badge)
-- **Commit:** `schema: 6.1 health check rhythm, SCHEMA change notes`
-
-### [2026-11-19] schema | Nicrosil 2.4.9 clickable change lines (SCHEMA 6.2)
-
-- **Think:** I asked for a line in the Changed since verified list to take me to that spot in the page when I click it.
-- **Calculate:** A change note is free text, so it has no position of its own. I chose a small convention: the line may end with a link to the section it changed, `[[#Heading]]`. Existing notes have no link, and most of them (the citation move on 62 pages) touch the whole page, so they still just open the page.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.4.8 to 2.4.9): a change line with a `[[#Heading]]` (or `[[#^block]]`) becomes a link, with a small copper "→ Heading" tag, on the review card and on the Dashboard's Changed since verified list; clicking goes to that heading in the page (the open tab if there is one), `Ctrl+click` opens a new tab; if the heading no longer exists the page opens with a notice; a line with no link behaves as before
-  - [[SCHEMA]] 6.2 (still `draft`, one more `changes_since_verified` line): §7 rule 8 describes the `[[#Heading]]` ending and says to keep the line in quotes; changelog line 6.2; `version: 6.2`. The two lines already in its note now carry links, so they work as a first test.
-  - `AGENTS.md`: the change-note instruction asks for the `[[#Heading]]` ending when the change is in one section.
-  - [[Nicrosil]]: the review queue bullet, version 2.4.9 and history line; the guide was a re-review draft already, so it gained one more `changes_since_verified` line
-- **Verify:**
-  - Pending my review: SCHEMA 6.2 and the Nicrosil guide
-  - Reload Nicrosil, then click a line on the SCHEMA's card (it should go to its section)
-- **Commit:** `schema: Nicrosil 2.4.9 clickable change lines, SCHEMA 6.2`
-
-### [2026-11-19] verify | Nicrosil
+### [2026-11-11] verify | Diplomatic, Information, Military, and Economic Options
 
 - **Verify:**
-  - Approved: [[Nicrosil]]
-- **Commit:** `verify: Nicrosil`
+  - Approved: [[Diplomatic, Information, Military, and Economic Options]]
+- **Commit:** `verify: Diplomatic, Information, Military, and Economic Options`
 
-### [2026-11-19] verify | SCHEMA
-
-- **Verify:**
-  - Approved: [[SCHEMA]]
-- **Commit:** `verify: SCHEMA`
-
-### [2026-11-19] schema | Nicrosil 2.5.0 wiki map and hierarchy restyled
-
-- **Think:** The wiki map and the hierarchy looked like the older Coppermind and out of place next to the relations panel, so I asked for them to match it: more polished, with the animation and glow.
-- **Calculate:** Nothing to compute. The look was checked in a test page with sample pages before saving; I have not seen it in Obsidian yet.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.4.9 to 2.5.0): both views get the relations panel's dotted backdrop with a copper glow and glowing border; the buttons, menus, filter boxes and relationship chips are rounded and glow in copper on hover; the info card under the map has the gradient border and serif name used on the Dashboard
-  - Map: dots are lit orbs (a soft gradient per page type) with a halo, hub halos breathe slowly, dots fade in one after another when the map opens, the arrows and their traveling lights are slightly stronger, hovered arrows glow in their relationship color, labels are crisper
-  - Hierarchy: cards have a gradient fill and a teal (verified) or copper (draft) glow, the page-type dot glows, branches glow in their relationship color with lights running from parent to child, cards and branches fade in from left to right, the open/close circles glow and grow on hover, hovering a card brightens its whole path
-  - Motion is off under reduced-motion settings and when Ambient animations is off. To keep the map fast with several hundred dots, the glow on the map is drawn with halos instead of filters, and only hovered arrows get a filter glow.
-  - [[Nicrosil]]: the wiki map section, version 2.5.0 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
-- **Verify:**
-  - Guide needs verifying again
-  - Reload Nicrosil, then open the wiki map (`Alt+M`) and look at both tabs
-- **Commit:** `schema: Nicrosil 2.5.0 wiki map and hierarchy restyled`
-
-### [2026-11-19] schema | Nicrosil 2.5.1 quieter wiki map
-
-- **Think:** The restyled wiki map felt slow and too cluttered, so I asked for the halos and the breathing to go.
-- **Calculate:** Nothing to compute. Checked by rendering both tabs in a test page; not yet seen in Obsidian.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.5.0 to 2.5.1): the map's dot halos, the breathing, the fade-in of the dots, the lit-orb dot gradient, the dotted backdrop, and the heavier arrows and labels are removed, so the map's dots, arrows and labels look as before; the frame keeps a thin copper edge and a faint glow, and a hovered arrow still glows in its color. That also drops several hundred extra shapes and animations from the map, which should make it lighter.
-  - Fixed: the dropdown menus (status, page type, course) showed repeated arrows after 2.5.0, because the new style replaced their background; they keep Obsidian's own arrow again.
-  - Kept: the buttons, filter boxes and chips, the info card, and the whole hierarchy restyle.
-  - [[Nicrosil]]: the wiki map section, version 2.5.1 and history line; one more `changes_since_verified` line (the guide was already a re-review draft)
-- **Verify:**
-  - Guide needs verifying again
-  - Reload Nicrosil and open the wiki map (`Alt+M`)
-- **Commit:** `schema: Nicrosil 2.5.1 quieter wiki map, fix dropdown arrows`
-
-### [2026-11-19] verify | Nicrosil
+### [2026-11-11] verify | Denial and Deception
 
 - **Verify:**
-  - Approved: [[Nicrosil]]
-- **Commit:** `verify: Nicrosil`
+  - Approved: [[Denial and Deception]]
+- **Commit:** `verify: Denial and Deception`
 
-### [2026-11-19] verify | ICD 203 Analytic Standards
-
-- **Verify:**
-  - Approved: [[ICD 203 Analytic Standards]]
-- **Commit:** `verify: ICD 203 Analytic Standards`
-
-### [2026-11-19] verify | Institutionalizing Imagination
+### [2026-11-11] verify | Covert Action
 
 - **Verify:**
-  - Approved: [[Institutionalizing Imagination]]
-- **Commit:** `verify: Institutionalizing Imagination`
+  - Approved: [[Covert Action]]
+- **Commit:** `verify: Covert Action`
 
-### [2026-11-19] schema | Nicrosil 2.5.2 properties strip in hover previews
-
-- **Think:** When I point at a link, the pop-up preview showed the full Properties block, while an open page shows the one-line strip. I asked for the preview to look like a normal page.
-- **Calculate:** Nothing to compute. The preview is not a normal tab, so the plugin notes which page the pointer last hovered a link to (Obsidian's `hover-link` event), and when a preview pop-up appears within a few seconds it treats the pop-up like a page: the full block is hidden, and the same strip is put in its place. Clicking the strip in the preview opens the real block. Not checked in Obsidian yet.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`, `manifest.json` (2.5.1 to 2.5.2): the strip code now works on any container, not only an open tab, and watches new hover previews; the Dashboard, index and log are left alone; the watchers are dropped when a preview closes and when the plugin unloads
-  - [[Nicrosil]]: the properties strip section, version 2.5.2 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
-- **Verify:**
-  - Guide needs verifying again
-  - Reload Nicrosil, then point at a link in a page (for example a term in the AI Deception summary)
-- **Commit:** `schema: Nicrosil 2.5.2 properties strip in hover previews`
-
-### [2026-11-19] verify | Nicrosil
+### [2026-11-11] verify | Confirmation Bias
 
 - **Verify:**
-  - Approved: [[Nicrosil]]
-- **Commit:** `verify: Nicrosil`
+  - Approved: [[Confirmation Bias]]
+- **Commit:** `verify: Confirmation Bias`
 
-### [2026-11-19] verify | AI Deception
-
-- **Verify:**
-  - Approved: [[AI Deception]]
-- **Commit:** `verify: AI Deception`
-
-### [2026-11-19] schema | Nicrosil 2.5.3 Coppermind button above the file list
-
-- **Think:** The Dashboard logo in the left ribbon was too small, so I asked for a larger button at the top of the file directory that says "The Coppermind", with the logo; click opens the Dashboard and Ctrl+click opens it in a new tab. The ribbon logo goes.
-- **Calculate:** Nothing to compute. Not seen in Obsidian yet.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`, `styles.css`, `manifest.json` (2.5.2 to 2.5.3): the ribbon logo and its middle-click handling are removed; a 46 px **The Coppermind** button with the copper logo is added between the file list's header buttons and the files, in every file explorer; click opens the Dashboard (or switches to it if it is already open), `Ctrl+click` or middle-click opens a new tab, `Enter` works from the keyboard; it is outlined more brightly while the Dashboard is open; `Alt+D` still works
-  - [[Nicrosil]]: Dashboard, Hotkeys and buttons, and the summary table updated for the button; version 2.5.3 and history line; the guide was verified, so it is back to `draft` with a `changes_since_verified` note (§7 rule 8)
-- **Verify:**
-  - Guide needs verifying again
-  - Reload Nicrosil, then click the button at the top of the file list
-- **Commit:** `schema: Nicrosil 2.5.3 Coppermind button above the file list`
-
-### [2026-11-19] schema | Nicrosil 2.5.3 fix: Coppermind button did not appear
-
-- **Think:** The new button was not showing. The likely cause is that Obsidian can leave sidebar views unloaded at startup, so looking the file list up through the workspace found nothing to attach to, and nothing tried again.
-- **Calculate:** Nothing to compute. Not seen in Obsidian yet.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`: the button is now attached by finding the file list in the page itself, and it is re-checked every 1.5 seconds so it appears once the sidebar loads and comes back if the list is rebuilt. Version stays 2.5.3.
-- **Verify:** Reload Nicrosil; the button should be at the top of the file list
-- **Commit:** `schema: Nicrosil 2.5.3 fix Coppermind button not appearing`
-
-### [2026-11-19] schema | Nicrosil 2.5.3 fix 2: attach to the file list's own header
-
-- **Think:** The button still did not appear. Running a check in the console showed the page has one file list but my code found no place in it: the file list has no `.view-content` wrapper, and I had been looking for one.
-- **Calculate:** Nothing to compute. Not seen in Obsidian yet.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/main.js`: the button is now placed right after the file list's header buttons (`.nav-header`), wherever that sits. Version stays 2.5.3.
-- **Verify:** Reload Nicrosil; the button should be at the top of the file list
-- **Commit:** `schema: Nicrosil 2.5.3 fix Coppermind button placement in the file list`
-
-### [2026-11-19] schema | Nicrosil 2.5.3 fix 3: Coppermind button spacing
-
-- **Think:** The button appeared, but in the narrow sidebar the logo was squeezed and clipped at the left and the name ran past the right edge.
-- **Calculate:** Nothing to compute. Not seen in Obsidian yet.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/styles.css`: the logo has a fixed size so it can't be squeezed; the name is slightly smaller and cuts off with an ellipsis rather than overflowing; the button clips anything that would stick out and has a little less padding. Version stays 2.5.3.
-- **Verify:** Reload Nicrosil (or toggle the CSS); the logo and name should sit inside the button
-- **Commit:** `schema: Nicrosil 2.5.3 fix Coppermind button spacing`
-
-### [2026-11-19] schema | Nicrosil 2.5.3 fix 4: Coppermind name always fully visible
-
-- **Think:** I did not want the name cut off with an ellipsis; the whole name should show on the button, even if it has to shrink.
-- **Calculate:** The name is about 9.4 times its font size wide, and the logo, gap and padding take about 57 px, so the font size is set to (button width - 31 px) / 9.4, capped at the normal size and floored at 0.7 em.
-- **Changed:**
-  - `.obsidian/plugins/nicrosil/styles.css`: the ellipsis is gone; the name's font size now scales with the button's width, so it shrinks in a narrow sidebar and stays full size in a wide one. Version stays 2.5.3.
-- **Verify:** Reload Nicrosil, then drag the sidebar narrower and wider and check the whole name stays inside the button
-- **Commit:** `schema: Nicrosil 2.5.3 Coppermind name scales to fit`
-
-### [2026-11-19] verify | Nicrosil
+### [2026-11-11] verify | Computer Network Exploitation
 
 - **Verify:**
-  - Approved: [[Nicrosil]]
-- **Commit:** `verify: Nicrosil`
+  - Approved: [[Computer Network Exploitation]]
+- **Commit:** `verify: Computer Network Exploitation`
 
-### [2026-11-19] schema | Rules split into AGENTS.md and SCHEMAS/ (7.0)
-
-- **Think:** Every agent had to read the whole SCHEMA (about 11,600 tokens) before any task, and ingests also read all of `index.md` (about 10,500) and sometimes the log (about 45,000). I asked for the efficiency plan in full: split the rules into files in a new `SCHEMAS/` folder, make `AGENTS.md` the only file read every time and use it as a directory, split the log by month, and the rest.
-- **Calculate:** Claude (claude-opus-5-5):
-  - `AGENTS.md` rewritten as the start page: scope, drafts only, permissions, voices, no unsourced claims, the index line, the log entry format (with the new `tool` operation), the commit format, token-saving rules, and a table of which rule file each task needs. `CLAUDE.md` added; it loads `AGENTS.md` for Claude Code.
-  - `SCHEMA.md` moved to `SCHEMAS/` as the overview. The rules moved, wording kept, to [[SCHEMA - Writing Pages]], [[SCHEMA - Review]], [[SCHEMA - Ingest]] (which now holds the steps that were in [[Dissect and Ingest a Source]]), [[SCHEMA - Query]], [[SCHEMA - Health Check]], [[SCHEMA - Index and Log]], [[SCHEMA - Changes]], and [[SCHEMA - Export]]; the changelog is [[Schema Changelog]], with a 7.0 line. Each rule file is `draft` with `changes_since_verified` lines: the moves, plus every real rule change.
-  - New rules: never read the whole log; find pages by searching names and aliases; read only your batch of the Ingest Queue; the log is one file per month (`Logs/Log YYYY-MM.md`); `tool` operation for `Tools/` and Nicrosil; health checks run the new script and by default read only pages changed since the last report plus a sample of 20; finished queue batches collapse into a Done section.
-  - The old root `SCHEMA.md` is now a short "moved" stub; Nicrosil 2.6.0 moves it to the trash at its next start.
-  - [[Dissect and Ingest a Source]] cut to its five inputs (verified page, so back to `draft` with a note). [[Ingest Queue]] header updated and a Done section added. `log.md` header (not an entry) updated. Templates and the Health Check Report template point to the new files.
-  - Mechanical link fixes (status unchanged): links to the old SCHEMA sections in [[Setting Up Git for the Coppermind]], [[Choosing a Claude Model for Coppermind Work]] (its footnote 11 covered both health checks and queries, so queries now cite a new footnote 14), [[Analysis of Competing Hypotheses]], [[Intelligence Community Style Summaries]], and [[SRC - Puzzles and Mysteries (Slides)]]. Older log entries and health check reports keep their old section links, since they are records.
-  - Estimated rules read per task: a query about 12,000 → 2,000 tokens; an ingest about 24,400 → 8,300 (68,600 → 8,300 when the log was read).
-- **Verify:**
-  - Re-review: [[SCHEMA]], [[SCHEMA - Writing Pages]], [[SCHEMA - Review]], [[SCHEMA - Ingest]], [[SCHEMA - Query]], [[SCHEMA - Health Check]], [[SCHEMA - Index and Log]], [[SCHEMA - Changes]], [[SCHEMA - Export]], [[Dissect and Ingest a Source]]
-  - Read `AGENTS.md` as a whole (it has no properties; its changes are noted on [[SCHEMA]])
-  - Change this project's instruction in claude.ai from "read the SCHEMA file first" to "read AGENTS.md first"
-- **Commit:** `schema: 7.0 split rules into AGENTS.md and SCHEMAS/, monthly log, health check script`
-
-### [2026-11-19] tool | Nicrosil 2.6.0 and the health check script
-
-- **Changed:** Nicrosil 2.6.0: the rule files in `SCHEMAS/` are reviewable; **Log a schema change** writes to [[Schema Changelog]] and keeps the version in [[SCHEMA]]; the log moves each finished month to `Logs/`; a `tool` icon; the old root `SCHEMA.md` stub goes to the trash once. Details: [[Nicrosil#Version history]] (guide back to `draft` with a note). New `Tools/health-check/coppermind_check.py` runs the mechanical health checks and changes nothing; tested on a copy of the vault (0 broken links, and a broken heading link, a missing footnote, and a relationship stored twice were each caught when planted).
-- **Verify:** Restart Obsidian: the stub `SCHEMA.md` should go to the trash with a notice, and the review queue should list the rule files under Schemas. Then open a rule file and click the pen button to see the current version (7.0). Run the script once from the vault folder.
-- **Commit:** `tool: Nicrosil 2.6.0 and health check script`
-
-### [2026-11-19] verify | Dissect and Ingest a Source
+### [2026-11-11] verify | Pearl Harbor (1941)
 
 - **Verify:**
-  - Approved: [[Dissect and Ingest a Source]]
-- **Commit:** `verify: Dissect and Ingest a Source`
-
-### [2026-11-19] verify | Nicrosil
-
-- **Verify:**
-  - Approved: [[Nicrosil]]
-- **Commit:** `verify: Nicrosil`
-
-### [2026-11-19] verify | SCHEMA
-
-- **Verify:**
-  - Approved: [[SCHEMA]]
-- **Commit:** `verify: SCHEMA`
-
-### [2026-11-19] verify | SCHEMA - Changes
-
-- **Verify:**
-  - Approved: [[SCHEMA - Changes]]
-- **Commit:** `verify: SCHEMA - Changes`
-
-### [2026-11-19] verify | SCHEMA - Export
-
-- **Verify:**
-  - Approved: [[SCHEMA - Export]]
-- **Commit:** `verify: SCHEMA - Export`
-
-### [2026-11-19] verify | SCHEMA - Health Check
-
-- **Verify:**
-  - Approved: [[SCHEMA - Health Check]]
-- **Commit:** `verify: SCHEMA - Health Check`
-
-### [2026-11-19] verify | SCHEMA - Index and Log
-
-- **Verify:**
-  - Approved: [[SCHEMA - Index and Log]]
-- **Commit:** `verify: SCHEMA - Index and Log`
-
-### [2026-11-19] verify | SCHEMA - Ingest
-
-- **Verify:**
-  - Approved: [[SCHEMA - Ingest]]
-- **Commit:** `verify: SCHEMA - Ingest`
-
-### [2026-11-19] verify | SCHEMA - Query
-
-- **Verify:**
-  - Approved: [[SCHEMA - Query]]
-- **Commit:** `verify: SCHEMA - Query`
-
-### [2026-11-19] verify | SCHEMA - Review
-
-- **Verify:**
-  - Approved: [[SCHEMA - Review]]
-- **Commit:** `verify: SCHEMA - Review`
-
-### [2026-11-19] verify | SCHEMA - Writing Pages
-
-- **Verify:**
-  - Approved: [[SCHEMA - Writing Pages]]
-- **Commit:** `verify: SCHEMA - Writing Pages`
-
-### [2026-11-19] tool | Nicrosil 2.6.1: Coppermind button restyle
-
-- **Changed:** Nicrosil 2.6.1: the **The Coppermind** button at the top of the file list has the copper-to-teal gradient (fill, border and name) and sharp 2px corners. Details: [[Nicrosil#Version history]].
-- **Verify:** Reload Obsidian (Ctrl+R) and look at the button: gradient, sharp corners, glow on hover, inner glow while on the Dashboard. Then review the change notes on [[Nicrosil]].
-- **Commit:** `tool: Nicrosil 2.6.1 Coppermind button gradient and sharp corners`
-
-### [2026-11-19] schema | Nicrosil changes always get their bookkeeping (7.1)
-
-- **Think:** I asked for the Coppermind button restyle. The agent edited `styles.css` without reading `SCHEMA - Changes`, so it skipped the version bump, guide update and `tool` log entry. I asked it to do them and to make sure the rules make this automatic.
-- **Calculate:** Claude (claude-sonnet-5-5):
-  - `AGENTS.md`: new **Nicrosil** rule (any edit in the plugin's folder, even a style tweak, is a tool change: read `SCHEMA - Changes`, then bump the version, update the guide and log it, in the same edit, unprompted); the table row for `SCHEMA - Changes` names style tweaks.
-  - [[SCHEMA - Changes]]: the Nicrosil section says every change counts and the steps are done without being asked.
-  - [[Nicrosil]]: update checklist adds the `manifest.json` version and the `tool` log entry. Version is now 7.1 in [[SCHEMA]], with a line in [[Schema Changelog]].
-- **Verify:** Pending: [[SCHEMA]], [[SCHEMA - Changes]] and [[Nicrosil]] are drafts with change notes for me to re-review.
-- **Commit:** `schema: Nicrosil changes always get their bookkeeping (7.1)`
-
-### [2026-11-19] tool | Nicrosil 2.6.2: Almendra SC title
-
-- **Changed:** Nicrosil 2.6.2: the name on the file-list button and the Dashboard header is set in Almendra SC (loaded from Google Fonts, Georgia as the fallback); the Dashboard name has a copper-to-teal gradient and a soft glow. Details: [[Nicrosil#Version history]].
-- **Verify:** Reload Obsidian (Ctrl+R) while online: check the button and the Dashboard title, and that the long name still fits in a narrow sidebar. Then review the change notes on [[Nicrosil]].
-- **Commit:** `tool: Nicrosil 2.6.2 Almendra SC title with gradient and glow`
-
-### [2026-11-19] tool | Nicrosil 2.6.3: Dashboard name gradient
-
-- **Changed:** Nicrosil 2.6.3: the Dashboard name's copper-to-teal gradient spans the name itself, matching the file-list button. Details: [[Nicrosil#Version history]].
-- **Verify:** Reload Obsidian (Ctrl+R): the Dashboard title should fade from copper through cream to teal at its right end.
-- **Commit:** `tool: Nicrosil 2.6.3 Dashboard name gradient`
-
-### [2026-11-19] verify | Nicrosil
-
-- **Verify:**
-  - Approved: [[Nicrosil]]
-- **Commit:** `verify: Nicrosil`
-
-### [2026-11-19] verify | SCHEMA
-
-- **Verify:**
-  - Approved: [[SCHEMA]]
-- **Commit:** `verify: SCHEMA`
-
-### [2026-11-19] verify | SCHEMA - Changes
-
-- **Verify:**
-  - Approved: [[SCHEMA - Changes]]
-- **Commit:** `verify: SCHEMA - Changes`
-
-### [2026-11-19] tool | Nicrosil 2.7.0: flatter wiki map and hierarchy
-
-- **Changed:** Nicrosil 2.7.0: the wiki map and hierarchy have sharp 2px corners, no glows or hover growth, thinner lines, no dotted backdrop, no lights running along the hierarchy, and a copper-to-teal active tab. Details: [[Nicrosil#Version history]].
-- **Verify:** Reload Obsidian (Ctrl+R), open the wiki map (Alt+M), and look at both tabs: square cards, flat frame, no glow. Tell me what still looks too polished.
-- **Commit:** `tool: Nicrosil 2.7.0 flatter, sharper wiki map and hierarchy`
-
-### [2026-11-19] verify | Nicrosil
-
-- **Verify:**
-  - Approved: [[Nicrosil]]
-- **Commit:** `verify: Nicrosil`
-
-### [2026-11-20] verify | Intelligence-to-Action Convergence Matrix
-
-- **Verify:**
-  - Approved: [[Intelligence-to-Action Convergence Matrix]]
+  - Approved: [[Pearl Harbor (1941)]]
   - Flags I resolved before approving (2):
-    - Gap (Check the table) — I believe these were blank on the slides
-    - Accuracy check (Sources disagree) — this is okay
-- **Commit:** `verify: Intelligence-to-Action Convergence Matrix`
+    - Accuracy check — reworded to be more clear
+    - Gap (Gap in my notes) — removed this section
+- **Commit:** `verify: Pearl Harbor (1941)`
 
-### [2026-11-20] verify | Actionable Intelligence
-
-- **Verify:**
-  - Approved: [[Actionable Intelligence]]
-- **Commit:** `verify: Actionable Intelligence`
-
-### [2026-11-20] verify | Active Voice
+### [2026-11-11] verify | Open Skies Treaty
 
 - **Verify:**
-  - Approved: [[Active Voice]]
-- **Commit:** `verify: Active Voice`
+  - Approved: [[Open Skies Treaty]]
+  - Flags I resolved before approving (2):
+    - Accuracy check — appended the claim with the correct dates
+    - Gap (Gap in my notes) — These points don't need to be included
+- **Commit:** `verify: Open Skies Treaty`
 
-### [2026-11-20] verify | AI Supply Chain Compromise
-
-- **Verify:**
-  - Approved: [[AI Supply Chain Compromise]]
-- **Commit:** `verify: AI Supply Chain Compromise`
-
-### [2026-11-20] verify | AI Technology Stack
+### [2026-11-11] verify | SRC - SAIL Class Notes (Fall 2026)
 
 - **Verify:**
-  - Approved: [[AI Technology Stack]]
-- **Commit:** `verify: AI Technology Stack`
+  - Approved: [[SRC - SAIL Class Notes (Fall 2026)]]
+- **Commit:** `verify: SRC - SAIL Class Notes (Fall 2026)`
 
-### [2026-11-20] verify | Algorithmic Transparency
-
-- **Verify:**
-  - Approved: [[Algorithmic Transparency]]
-- **Commit:** `verify: Algorithmic Transparency`
-
-### [2026-11-20] verify | Analytic Assumption
+### [2026-11-11] verify | SRC - Intro to Intelligence Class Notes (Fall 2026)
 
 - **Verify:**
-  - Approved: [[Analytic Assumption]]
-- **Commit:** `verify: Analytic Assumption`
+  - Approved: [[SRC - Intro to Intelligence Class Notes (Fall 2026)]]
+- **Commit:** `verify: SRC - Intro to Intelligence Class Notes (Fall 2026)`
 
-### [2026-11-20] verify | Analytic Mission Statement
-
-- **Verify:**
-  - Approved: [[Analytic Mission Statement]]
-- **Commit:** `verify: Analytic Mission Statement`
-
-### [2026-11-20] verify | Analytic Ombuds
+### [2026-11-11] verify | Richards Heuer
 
 - **Verify:**
-  - Approved: [[Analytic Ombuds]]
-- **Commit:** `verify: Analytic Ombuds`
+  - Approved: [[Richards Heuer]]
+- **Commit:** `verify: Richards Heuer`
 
-### [2026-11-20] verify | Anticipatory Socialization
-
-- **Verify:**
-  - Approved: [[Anticipatory Socialization]]
-- **Commit:** `verify: Anticipatory Socialization`
-
-### [2026-11-20] verify | Article 3 of the Geneva Conventions
+### [2026-11-11] verify | Law Enforcement Intelligence Internships
 
 - **Verify:**
-  - Approved: [[Article 3 of the Geneva Conventions]]
-- **Commit:** `verify: Article 3 of the Geneva Conventions`
-
-### [2026-11-20] verify | Artificial General Intelligence
-
-- **Verify:**
-  - Approved: [[Artificial General Intelligence]]
+  - Approved: [[Law Enforcement Intelligence Internships]]
   - Flags I resolved before approving (1):
-    - Accuracy check (Sources disagree) — this is okay
-- **Commit:** `verify: Artificial General Intelligence`
+    - Accuracy check — fixed the accuracy issues.
+- **Commit:** `verify: Law Enforcement Intelligence Internships`
 
-### [2026-11-20] verify | Attention Head
+### [2026-11-11] verify | Verifying Pages with the Review Buttons
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Verifying Pages with the Review Buttons`
+
+### [2026-11-11] setup | Open flags folded by default on the Dashboard (plugin v0.5.3)
+
+- **Think:** I didn't want the Open flags list showing on the Dashboard unless I open it.
+- **Calculate:** Claude (claude-sonnet-5-5) changed the Dashboard's "Open flags" section to start folded, like "By page type". The counts in the tile above it still show. If I open it, it stays open until Obsidian restarts. Plugin version 0.5.2 → 0.5.3.
+- **Verify:** pending. To reload the plugin and open the Dashboard.
+- **Commit:** `plugin: fold Open flags by default (v0.5.3)`
+
+### [2026-11-11] setup | Find card on the Dashboard (plugin v0.5.2)
+
+- **Think:** I asked for a Find card on the Dashboard.
+- **Calculate:** Claude (claude-sonnet-5-5) added a seventh nav card, "Find", which opens [[Find]]. It sits last and spans the full row so the grid has no gap. Plugin version 0.5.1 → 0.5.2. The guide [[Nicrosil]] now says seven cards and mentions Find; it was still a draft, so its status didn't change.
+- **Verify:** pending. To reload the plugin and open the Dashboard.
+- **Commit:** `plugin: Find card on Dashboard (v0.5.2)`
+
+### [2026-11-11] schema | Find and Library added; agents maintain them (v1.0)
+
+- **Think:** I asked for Find to be part of the schema and the other instruction files, with agents checking and updating the search page regularly.
+- **Calculate:** Claude (claude-sonnet-5-5) edited `SCHEMA.md` (0.2 → 1.0, since this changes structure and workflow), `AGENTS.md`, and `Find.md`:
+  - [[SCHEMA#2. The six parts of the wiki|Schema §2]]: both files added to the folder layout, plus a "Find and Library" subsection with a table of what triggers an update (new class date, course, page type, flag kind, rename).
+  - §6: class-notes citations must keep the form `<Course> notes, M/D/YY`, since Find's date searches match it. §9: a permissions row. §10: ingest commit step and health check now cover Find and Library; ingest steps renumbered (there were two step 4s). §11: maintenance rule. §13: Find's `obsidian://` links and `Library.base` listed as Obsidian-only. §14: changelog line. My citation wording from 0.2 is unchanged.
+  - `AGENTS.md`: one paragraph telling agents to maintain both files.
+  - `Find.md`: checked its class dates against the pages. Four SAIL dates were cited but missing (9/10, 9/17, 10/1, 10/13), so I added them. A folded note at the bottom tells agents to keep it current.
+  - The earlier entry above says the schema doesn't list Find and Library; that is now fixed. Not yet checked in Obsidian itself.
+- **Verify:** pending. To read §2 and the changelog, and open Find to check the four new SAIL links.
+- **Commit:** `schema: v1.0 — Find and Library registered, agents maintain them`
+
+### [2026-11-11] setup | Offline search page and Library
+
+- **Think:** I wanted a way to find things in the wiki without AI, including offline, either as its own page or on the Dashboard.
+- **Calculate:** Claude (claude-sonnet-5-5) added two files at the top level of the vault, using only Obsidian's built-in search and Bases (no plugin code):
+  - **[[Find]]:** how to open a page by title or alias, search all text, and filter; one-click searches by page type, course, review status, and open flag kind (accuracy checks, gaps, "Whose view?", sources disagree, unsourced background); a table of class dates that finds every page citing that day's notes; and a table of search operators.
+  - **[[Library.base|Library]]:** a table of every page with six views (all pages by type, Glossary A–Z, SAIL, Intro to Intelligence, Verified, Drafts).
+  - Neither file is in `Wiki/`, so they are not in [[index]]. The folder tree in [[SCHEMA#2. The six parts of the wiki|Schema §2]] doesn't list them yet; I haven't edited the schema.
+  - Not yet seen in Obsidian itself. The one-click links assume the vault is named "The Coppermind".
+- **Verify:** pending. To open Find, click a few links, and open each Library view.
+- **Commit:** `setup: Find page and Library base (offline search)`
+
+### [2026-11-11] setup | Hide backlinks and properties counts in the status bar
+
+- **Think:** I wanted the backlinks and properties counts gone from the status bar at the bottom right, and asked Claude to add the fix.
+- **Calculate:** Claude (claude-sonnet-5-5) added a short rule to the end of `coppermind.css` that hides those two status bar items. Word count, the git branch, and the verified count are unchanged. Not yet seen in Obsidian itself.
+- **Verify:** pending. To check that both counts are gone; if one still shows, the class name needs adjusting.
+- **Commit:** `setup: hide backlinks and properties in status bar`
+
+### [2026-11-11] setup | Properties strip stacking fix (v0.5.1)
+
+- **Think:** Every time I switched between editing and reading view, another properties strip appeared, stacking up above or below the page title.
+- **Calculate:** Claude (claude-opus-5-5) found the cause in the Coppermind Review plugin. When Obsidian re-renders a note, it can re-create the Properties block or move the title. The plugin only checked for a strip directly in front of the Properties block, so the old strip was left stranded and a new one was added each time. The fix removes any strip that isn't directly in front of a Properties block before adding one, so each block keeps exactly one. Version 0.5.0 → 0.5.1. No page content changed.
+  - Tested outside Obsidian (jsdom) on both ways a re-render can strand a strip: 6 strips after five switches before the fix, 1 after.
+- **Verify:** pending. To reload the plugin and switch a page between editing and reading a few times.
+- **Commit:** `plugin: fix stacking properties strips (v0.5.1)`
+
+### [2026-11-11] verify | Bach Faucet
+
+- **Verify:**
+  - Approved: [[Bach Faucet]]
+- **Commit:** `verify: Bach Faucet`
+
+### [2026-11-11] verify | Attention Head
 
 - **Verify:**
   - Approved: [[Attention Head]]
 - **Commit:** `verify: Attention Head`
 
-### [2026-11-20] verify | Attribution (Cyber)
+### [2026-11-11] verify | Artificial General Intelligence
 
 - **Verify:**
-  - Approved: [[Attribution (Cyber)]]
-- **Commit:** `verify: Attribution (Cyber)`
+  - Approved: [[Artificial General Intelligence]]
+- **Commit:** `verify: Artificial General Intelligence`
 
-### [2026-11-20] verify | Backpropagation
-
-- **Verify:**
-  - Approved: [[Backpropagation]]
-- **Commit:** `verify: Backpropagation`
-
-### [2026-11-20] verify | Battle Damage Assessment
+### [2026-11-11] verify | Analytic Confidence
 
 - **Verify:**
-  - Approved: [[Battle Damage Assessment]]
-- **Commit:** `verify: Battle Damage Assessment`
+  - Approved: [[Analytic Confidence]]
+- **Commit:** `verify: Analytic Confidence`
 
-### [2026-11-20] verify | Bean Counting
-
-- **Verify:**
-  - Approved: [[Bean Counting]]
-- **Commit:** `verify: Bean Counting`
-
-### [2026-11-20] verify | Blue Sky Memo
+### [2026-11-11] verify | All-Source Intelligence
 
 - **Verify:**
-  - Approved: [[Blue Sky Memo]]
-- **Commit:** `verify: Blue Sky Memo`
+  - Approved: [[All-Source Intelligence]]
+- **Commit:** `verify: All-Source Intelligence`
 
-### [2026-11-20] verify | Caliphate
-
-- **Verify:**
-  - Approved: [[Caliphate]]
-- **Commit:** `verify: Caliphate`
-
-### [2026-11-20] verify | Capabilities vs. Intentions
+### [2026-11-11] verify | Mata v. Avianca (2023)
 
 - **Verify:**
-  - Approved: [[Capabilities vs. Intentions]]
-- **Commit:** `verify: Capabilities vs. Intentions`
+  - Approved: [[Mata v. Avianca (2023)]]
+- **Commit:** `verify: Mata v. Avianca (2023)`
 
-### [2026-11-20] verify | Catastrophic Forgetting
-
-- **Verify:**
-  - Approved: [[Catastrophic Forgetting]]
-- **Commit:** `verify: Catastrophic Forgetting`
-
-### [2026-11-20] verify | Chain-of-Thought Reasoning
+### [2026-11-11] verify | Bing Sydney Incident (2023)
 
 - **Verify:**
-  - Approved: [[Chain-of-Thought Reasoning]]
-- **Commit:** `verify: Chain-of-Thought Reasoning`
+  - Approved: [[Bing Sydney Incident (2023)]]
+- **Commit:** `verify: Bing Sydney Incident (2023)`
 
-### [2026-11-20] verify | Church and Pike Committees
-
-- **Verify:**
-  - Approved: [[Church and Pike Committees]]
-- **Commit:** `verify: Church and Pike Committees`
-
-### [2026-11-20] verify | Cognitive Load
+### [2026-11-11] verify | Tokenization
 
 - **Verify:**
-  - Approved: [[Cognitive Load]]
-- **Commit:** `verify: Cognitive Load`
+  - Approved: [[Tokenization]]
+- **Commit:** `verify: Tokenization`
 
-### [2026-11-20] verify | Collection Swarm Ball
-
-- **Verify:**
-  - Approved: [[Collection Swarm Ball]]
-- **Commit:** `verify: Collection Swarm Ball`
-
-### [2026-11-20] verify | Community of Practice
+### [2026-11-11] verify | Time Compression Trap
 
 - **Verify:**
-  - Approved: [[Community of Practice]]
-- **Commit:** `verify: Community of Practice`
+  - Approved: [[Time Compression Trap]]
+- **Commit:** `verify: Time Compression Trap`
 
-### [2026-11-20] verify | Competitive Analysis
-
-- **Verify:**
-  - Approved: [[Competitive Analysis]]
-- **Commit:** `verify: Competitive Analysis`
-
-### [2026-11-20] verify | Computer Network Attack
+### [2026-11-11] verify | Security Classification
 
 - **Verify:**
-  - Approved: [[Computer Network Attack]]
-  - Flags I resolved before approving (1):
-    - Accuracy check — My notes were wrong, fixed now
-- **Commit:** `verify: Computer Network Attack`
+  - Approved: [[Security Classification]]
+- **Commit:** `verify: Security Classification`
 
-### [2026-11-20] verify | Containment
+### [2026-11-11] verify | Polygraph Examination
 
 - **Verify:**
-  - Approved: [[Containment]]
-- **Commit:** `verify: Containment`
+  - Approved: [[Polygraph Examination]]
+- **Commit:** `verify: Polygraph Examination`
 
-### [2026-11-20] tool | Nicrosil 2.7.1: larger file-list button name
-
-- **Think:** The Coppermind button at the top of the file list wasn't using all its space; Harrison asked for bigger text.
-- **Calculate:** In `styles.css`, `.cm-home-name` was sized by a width formula (divisor 11) that overestimated the text's width, and capped at 1.3em. Changed to divisor 8 with a 1.7em cap so the name fills the button and still shrinks in a narrow file list. Bumped to 2.7.1; guide updated (version, button description, version history) and set to draft with a change note.
-- **Verify:** Pending: Harrison to check the button in Obsidian and re-review [[Nicrosil]].
-- **Commit:** `tool: Nicrosil 2.7.1 — larger name on the file-list button`
-
-### [2026-11-20] schema | Index: letter headings, Jump to line, look (version 7.2)
-
-- **Think:** Harrison wanted the index to be nicer to look through without being harder for an agent to read. He chose a CSS-only restyle plus a jump bar and A–Z breaks.
-- **Calculate:** `index.md`: Concepts and Glossary split under `### A` ... headings, a **Jump to** line under the total, `cssclasses: coppermind-index`; the styling is in the `coppermind.css` snippet. The line format is unchanged. `AGENTS.md` index rule and `SCHEMA - Index and Log` (The index) updated, changelog line 7.2 added, change notes on `SCHEMA` and `SCHEMA - Index and Log`. The health check already catches a stale jump link as a broken heading link, so the script is unchanged.
-- **Verify:** Pending: Harrison to look at the index in Reading view and re-review the changed lines.
-- **Commit:** `schema: 7.2 — index letter headings, Jump to line, and look`
-
-### [2026-11-20] tool | Nicrosil 2.7.2: index letter headings and Jump to line
-
-- **Think:** Nicrosil rewrites `index.md` when a page is rejected, and it would have moved the new letter headings to the bottom of their section and left the jump counts stale.
-- **Calculate:** `parseIndex` drops letter headings and `renderIndex` rebuilds them for Concepts and Glossary and rebuilds the Jump to line. Checked that reading and re-writing the index leaves it byte-for-byte unchanged and that removing a page fixes the counts and the jump link. Guide updated.
-- **Verify:** Pending: reload Obsidian, then reject a test draft or just check the index opens correctly.
-- **Commit:** `tool: Nicrosil 2.7.2 — keep index letter headings and jump bar`
-
-### [2026-11-20] tool | Nicrosil 2.7.3: flat, sharp relations map with a gradient outline
-
-- **Think:** The relations panel's map looked out of place; Harrison asked for sharper edges, and for the open page to have a thin, sharp, lightly glowing outline in the copper-to-teal gradient instead of the pulsing orange.
-- **Calculate:** `styles.css`: the map's boxes, frame and tag get 2px corners and flat fills, and the dotted backdrop, flowing dots, halo and animations are removed, matching the wiki map from 2.7.0. `main.js`: adds the `cm-rel-og` gradient the open page's outline uses. Arrows are still curved. Guide updated.
-- **Verify:** Pending: Harrison to look at the panel in Obsidian.
-- **Commit:** `tool: Nicrosil 2.7.3 — flat relations map, gradient outline on the open page`
-
-### [2026-11-20] schema | Version histories moved out of the guides (version 7.3)
-
-- **Think:** Harrison wanted agents to read less when they open the Nicrosil guide and the rule files, so the version history should live in its own file that an agent reads only when it has to. He created `_version_histories/`.
-- **Calculate:** The Nicrosil guide's version history (about a third of the guide) moved to `_version_histories/Nicrosil Version History.md`, and the guide links to it. The rules that said to add the line to the guide now point to the new file: `AGENTS.md` (read rule, permissions row, Nicrosil rule), `SCHEMA - Changes`, `SCHEMA - Index and Log`, and `SCHEMA` (layout). `Schema Changelog.md` was already a separate file that agents are told not to read, so it stays where it is, because Nicrosil's schema button writes to that path.
-- **Verify:** Pending: Harrison to re-review the changed lines in the four rule files and the guide.
-- **Commit:** `schema: 7.3 — version histories move to _version_histories/`
-
-### [2026-11-20] tool | Health check script: _version_histories/ counts as records
-
-- **Think:** The new folder holds history, not pages.
-- **Calculate:** `coppermind_check.py` adds `_version_histories/` to `RECORD_PREFIXES`, so links in those files are not checked, like `Logs/`. No other change.
-- **Verify:** Pending: run the script once.
-- **Commit:** `tool: health check skips links in _version_histories/`
-
-### [2026-11-20] schema | Changelogs folder renamed to `_changelogs/` (version 7.4)
-
-- **Think:** Harrison renamed the folder to `_changelogs/`, moved the Schema Changelog into it, and renamed the Nicrosil history file to `Nicrosil Changelog.md`. The rules had to say so.
-- **Calculate:** Updated `AGENTS.md` (read rule, permissions row, Nicrosil rule), `SCHEMA - Changes`, `SCHEMA - Index and Log`, and `SCHEMA` (rule file table, layout, files that are not wiki pages, the other files); fixed a stale link in the Nicrosil guide; added a 7.4 line to the Schema Changelog. Past log entries keep the old names, since they are never rewritten.
-- **Verify:** Pending: Harrison to re-review the changed lines.
-- **Commit:** `schema: 7.4 — changelogs live in _changelogs/`
-
-### [2026-11-20] tool | Nicrosil 2.7.4: schema button finds the moved changelog
-
-- **Think:** The Schema Changelog moved out of `SCHEMAS/`, so the **Log a schema change** button would have said it could not find it.
-- **Calculate:** `main.js`: `CHANGELOG_PATH` is now `_changelogs/Schema Changelog.md`. The health check script's `RECORD_PREFIXES` now names `_changelogs/`. Guide and Nicrosil Changelog updated.
-- **Verify:** Pending: reload Obsidian, then try **Log a schema change** on a SCHEMAS page.
-- **Commit:** `tool: Nicrosil 2.7.4 — find the Schema Changelog in _changelogs/`
-
-### [2026-11-20] tool | Nicrosil 2.7.5: eye button to show or hide `_` folders
-
-- **Think:** Harrison wanted the folders that start with an underscore out of the file list by default, with a small button in the toolbar to show them.
-- **Calculate:** `main.js` adds a `cm-hide-underscore` class to the page when the plugin loads (so they are hidden every time Obsidian opens) and puts an eye button in the file list's toolbar that toggles it; the choice is not saved. `styles.css` hides the folders while the class is on. The button's tooltip says what a click will do. Guide and Nicrosil Changelog updated.
-- **Verify:** Pending: reload Obsidian and check that `_attachments`, `_changelogs`, and `_templates` are gone and that the eye button brings them back.
-- **Commit:** `tool: Nicrosil 2.7.5 — eye button to show or hide _ folders`
-
-### [2026-11-20] tool | Nicrosil 2.7.6: no Ambient animations setting, faster page fade-in
-
-- **Think:** Harrison didn't want a switch for the ambient animations (they should just be on), and the page fade-in looked laggy because it started after the page had loaded.
-- **Calculate:** `main.js`: removed the setting, its `cm-calm` class, and every check of it (the reduced-motion checks stay); the page fade now wraps `MarkdownView.onLoadFile` so the text is hidden while the file loads and fades in once it is ready, instead of starting from `file-open`. `styles.css`: removed the `cm-calm` rules, and the fade is now 0.2 s with no movement on the page's contents instead of the whole panel. Guide and Nicrosil Changelog updated.
-- **Verify:** Pending: reload Obsidian, open a few pages, and check the Settings list no longer has Ambient animations.
-- **Commit:** `tool: Nicrosil 2.7.6 — remove the Ambient animations setting, fix the page fade-in`
-
-### [2026-11-20] verify | Nicrosil
+### [2026-11-11] verify | Politicized Intelligence
 
 - **Verify:**
-  - Approved: [[Nicrosil]]
-- **Commit:** `verify: Nicrosil`
+  - Approved: [[Politicized Intelligence]]
+- **Commit:** `verify: Politicized Intelligence`
 
-### [2026-11-20] schema | Schema Changelog is newest first (version 7.5)
+### [2026-11-11] verify | Pi-Shaped Person
 
-- **Think:** Harrison wanted the Schema Changelog newest first, like Nicrosil's.
-- **Calculate:** Reordered the lines of `_changelogs/Schema Changelog.md` (none rewritten) and added the 7.5 line at the top. `SCHEMA - Changes` now says new lines go at the top. `SCHEMA` is at 7.5.
-- **Verify:** Pending: Harrison to re-review the changed lines.
-- **Commit:** `schema: 7.5 — Schema Changelog is newest first`
+- **Verify:**
+  - Approved: [[Pi-Shaped Person]]
+- **Commit:** `verify: Pi-Shaped Person`
 
-### [2026-11-20] tool | Nicrosil 2.7.7: schema button adds its line at the top
+### [2026-11-11] verify | Narrow AI
 
-- **Think:** The Schema Changelog is now newest first, so the Log a schema change button had to insert at the top, not the end.
-- **Calculate:** `main.js`: the changelog helper finds the first bullet and inserts above it; the latest version is still the highest, so nothing else changed. Guide and Nicrosil Changelog updated.
-- **Verify:** Pending: reload Obsidian, log a test schema change, and check the line lands at the top (then undo it).
-- **Commit:** `tool: Nicrosil 2.7.7 — schema changelog line goes at the top`
+- **Verify:**
+  - Approved: [[Narrow AI]]
+- **Commit:** `verify: Narrow AI`
+
+### [2026-11-11] verify | LLM Wiki
+
+- **Verify:**
+  - Approved: [[LLM Wiki]]
+- **Commit:** `verify: LLM Wiki`
+
+### [2026-11-11] verify | Intelligence-Led Policing
+
+- **Verify:**
+  - Approved: [[Intelligence-Led Policing]]
+- **Commit:** `verify: Intelligence-Led Policing`
+
+### [2026-11-11] verify | Intelligence Writing Style
+
+- **Verify:**
+  - Approved: [[Intelligence Writing Style]]
+- **Commit:** `verify: Intelligence Writing Style`
+
+### [2026-11-11] verify | Intelligence as Attentive Understanding
+
+- **Verify:**
+  - Approved: [[Intelligence as Attentive Understanding]]
+- **Commit:** `verify: Intelligence as Attentive Understanding`
+
+### [2026-11-11] verify | Human-Centered AI
+
+- **Verify:**
+  - Approved: [[Human-Centered AI]]
+- **Commit:** `verify: Human-Centered AI`
+
+### [2026-11-11] verify | Human Decision Point
+
+- **Verify:**
+  - Approved: [[Human Decision Point]]
+- **Commit:** `verify: Human Decision Point`
+
+### [2026-11-11] verify | Emergent Behavior
+
+- **Verify:**
+  - Approved: [[Emergent Behavior]]
+- **Commit:** `verify: Emergent Behavior`
+
+### [2026-11-11] verify | Curiosity, Character, and Competence
+
+- **Verify:**
+  - Approved: [[Curiosity, Character, and Competence]]
+- **Commit:** `verify: Curiosity, Character, and Competence`
+
+### [2026-11-11] verify | Automation Bias
+
+- **Verify:**
+  - Approved: [[Automation Bias]]
+- **Commit:** `verify: Automation Bias`
+
+### [2026-11-11] verify | Artificial Intelligence
+
+- **Verify:**
+  - Approved: [[Artificial Intelligence]]
+- **Commit:** `verify: Artificial Intelligence`
+
+### [2026-11-11] verify | Tasking, Collection, Processing, Exploitation, and Dissemination
+
+- **Verify:**
+  - Approved: [[Tasking, Collection, Processing, Exploitation, and Dissemination]]
+- **Commit:** `verify: Tasking, Collection, Processing, Exploitation, and Dissemination`
+
+### [2026-11-11] verify | Information Model
+
+- **Verify:**
+  - Approved: [[Information Model]]
+- **Commit:** `verify: Information Model`
+
+### [2026-11-11] ingest | Intro to Intelligence Class Notes, 8/25/26–11/10/26
+
+- **Think:** I asked Claude to dissect and ingest my Intro to Intelligence notes using [[Dissect and Ingest a Source]] with its defaults (plan first, whole file, skip assignment logistics). I approved the plan with three changes: keep guest lecturers' names (now [[SCHEMA#6. Citation and attribution|Schema §6]]), skip the Four Tiers of AI Governance, and make the internship guide.
+- **Calculate:** Claude (claude-opus-5-5) copied the notes unchanged into `Sources/Class Notes` as [[Intro to Intelligence Class Notes (Fall 2026)]], drafted [[SRC - Intro to Intelligence Class Notes (Fall 2026)]] (proposed rating B-2), and drafted 46 pages: 8 frameworks, 14 concepts, 2 case studies, 21 glossary terms, and 1 guide. Every claim cites the notes by class date.
+  - **Added to existing drafts (6):** [[Capability vs. Reliability]] (11/10 video exercise takeaways), [[Human Decision Point]], [[Centaur Analyst]], and [[Hallucination]] (Detective Mennen on AI), [[Intelligence-to-Action Convergence Matrix]] (a "Sources disagree" flag on the intelligence cycle, and the TCPED link), and [[Analysis of Competing Hypotheses]] (example_of → [[Structured Analytic Technique]]).
+  - **Proposed for verified pages, not made:** [[Architecture of Worldview]] (the 9/1 worldview questions for biographical sketches) and [[AI in Intelligence Production]] (a "Sources disagree" flag on whether INT names mean the product or the collection).
+  - **Flags on the pages:** 13 accuracy checks, 13 gaps in my notes, 2 "Sources disagree," 1 "Whose view?" ([[Intelligence (National Security)]], 8/25), and 2 unsourced-background notes (Treverton on [[Puzzles and Mysteries]]; Kahneman on [[System 1 and System 2 Thinking]]).
+  - **Typed links proposed:** 40, listed with reasons in chat.
+  - **Left out on purpose:** listed on the source card under Ingest Progress.
+- **Verify:** pending. Item by item.
+- **Commit:** `ingest: Intro to Intelligence notes 8/25–11/10 — 46 drafts + source card, pending review`
+
+### [2026-11-11] schema | Guest lecturers named (v0.2)
+
+- **Think:** During the Intro to Intelligence ingest plan, I decided guest lecturers should be named in the wiki, and asked for that rule to go in the schema or the prompt.
+- **Calculate:** Claude (claude-opus-5-5) added it to [[SCHEMA#6. Citation and attribution|Schema §6]]: a fourth voice, "a guest lecturer," named by title and name with the course and date, and a rule that content under a guest-lecture heading belongs to the guest, with no contact details or other personal information and no People pages unless I ask. Version 0.1 → 0.2, with a changelog line.
+- **Verify:** pending. The wording is mine to approve or rewrite.
+- **Commit:** `schema: v0.2, guest lecturers named`
+
+### [2026-11-11] verify | Intelligence Community Style Summaries
+
+- **Verify:**
+  - Approved: [[Intelligence Community Style Summaries]]
+- **Commit:** `verify: Intelligence Community Style Summaries`
+
+### [2026-11-11] verify | Dissect and Ingest a Source
+
+- **Verify:**
+  - Approved: [[Dissect and Ingest a Source]]
+- **Commit:** `verify: Dissect and Ingest a Source`
+
+### [2026-11-11] setup | Summary prompt
+
+- **Think:** I gave Claude my summary prompt (the one the Summary template calls "SAIL IC Style Summaries") and asked whether it should change to work better with the Coppermind.
+- **Calculate:** Claude (claude-opus-5-5) drafted [[Intelligence Community Style Summaries]] in `Wiki/Prompts/`, with my old name as an alias. Changes from my version:
+  - Fixed "the text I paste between" (it now says the text below the prompt, or a file I attach or name) and dropped "that is provided in your context" for ICD 203, which isn't in the vault.
+  - Added a locator after every claim. The length rule already excluded locators, but the prompt never asked for them.
+  - The attribution line now asks for the exact model name or ID, and says "model not stated" instead of guessing.
+  - Added an "In the Coppermind" section: Summary template, `Summary - <source title>` page name, properties instead of the attribution line, the schema's wikilink citation format, a `[!todo]` callout for transcript gaps, links to existing pages, and typed links proposed in chat.
+  - Left the content rules, length budget, and the four sections as I wrote them, with small wording fixes.
+  - Pointed [[Dissect and Ingest a Source]] at the new page for summaries of readings.
+- **Verify:** pending. To compare with my original and verify after using it once.
+- **Commit:** `setup: summary prompt (draft)`
+
+### [2026-11-11] setup | Ingest prompt
+
+- **Think:** I asked for a prompt to use whenever I want a source dissected and turned into new wiki pages or additions to existing ones, and asked how much of that framework already exists in the Coppermind and how much belongs in the prompt.
+- **Calculate:** Claude (claude-opus-5-5) drafted [[Dissect and Ingest a Source]] in `Wiki/Prompts/`. The prompt points to [[SCHEMA]] for everything the schema already covers and adds only: per-run inputs with defaults, a dissect-first step, a create / append / skip rule, how to handle sources that disagree and flags a new source may resolve, a default of proposing (not making) changes to verified pages, and the report format.
+  - Proposed typed link: [[Dissect and Ingest a Source]] → applies_to → [[LLM Wiki]] — the prompt is a tool used on this wiki.
+  - Suggested in chat, not made: schema additions for the create-or-append rule, the two flag callouts the review plugin reads but §6 doesn't list (`[!caution]` accuracy check, `[!todo]` gap), handling sources that disagree, and how to treat my own work as a source.
+- **Verify:** pending. To try the prompt on the next source and verify the page after.
+- **Commit:** `setup: ingest prompt (draft)`
+
+### [2026-11-11] verify | My Worldview
+
+- **Verify:**
+  - Approved: [[My Worldview]]
+  - Revised: [[My Worldview]] — Added in my worldview. It could use some more detail, but it will suffice for the time being.
+- **Commit:** `verify: My Worldview`
+
+### [2026-11-11] verify | AI-Enabled Surveillance
+
+- **Verify:**
+  - Approved: [[AI-Enabled Surveillance]]
+- **Commit:** `verify: AI-Enabled Surveillance`
+
+### [2026-11-11] verify | AI in Intelligence Production
+
+- **Verify:**
+  - Approved: [[AI in Intelligence Production]]
+- **Commit:** `verify: AI in Intelligence Production`
+
+### [2026-11-11] schema | Properties strip replaces the Properties block
+
+- **Think:** The Properties block at the top of every wiki page took up space I no longer need, since verifying happens from the review sidebar. I picked option 2: hide the block and show a one-line strip instead.
+- **Calculate:** Claude (claude-sonnet-5-5) updated the Coppermind Review plugin to v0.5.0:
+  - On every note except the Dashboard, index, and log (which hide properties entirely), the native Properties block is hidden and a one-line strip sits in its place: type, status (DRAFT or VERIFIED), and the drafted or verified date.
+  - Clicking the strip (or pressing Enter on it) expands the real Properties block in place. Each note opens collapsed.
+  - The strip reads the page's frontmatter, so it updates when a page is verified. No page content or property values changed.
+  - Tested outside Obsidian (jsdom and a screenshot of the styling). Not yet seen in Obsidian itself.
+- **Verify:** pending. To reload the plugin, open a wiki page in Reading view and in edit view, and check that the strip shows, expands, and survives switching modes.
+- **Commit:** `plugin: collapsible properties strip (v0.5.0)`
+
+### [2026-11-11] schema | Summary callout at the top of every wiki page
+
+- **Think:** The summary at the top of a wiki page needs to stand out. I picked option B from the mockups: a callout card labelled "Summary".
+- **Calculate:** Claude (claude-sonnet-5-5) made these changes:
+  - Wrapped the opening paragraph of all 52 pages in `Wiki/` in a `> [!summary]` callout. Nothing else on any page changed: I compared every page with its original, minus the wrapper, and checked that the flag callouts are unchanged. For glossary terms, the callout holds the definition and "Used in" stays below it.
+  - 6 of those pages were already verified ([[Setting Up Git for the Coppermind]], [[Agentic AI]], [[Architecture of Worldview]], [[Cascade of Unintended Consequences]], [[Essay Types]], [[Four Levels of Prompt Engineering]]). This is a formatting change only, so they stay verified ([[SCHEMA#7. Draft vs. verified|Schema §7]], item 5).
+  - Left alone: [[My Worldview]] (the agent never edits it), the source card, and the Analysis, Summary, Perspective and Source Card templates.
+  - Styled the callout in the Coppermind theme (`coppermind.css`): a patina bar, a small uppercase "Summary" label, and slightly larger text.
+  - Updated the Concept, Case Study, Framework, Guide, Person, Prompt, Workflow and Glossary Term templates, and [[SCHEMA#8. Page style|Schema §8]], so new pages start this way.
+  - Tested outside Obsidian (reversal check on every page, flag parsing before and after). Not yet seen in Obsidian itself.
+- **Verify:** pending. To open a few pages and check how the summary looks, and to decide whether the "Whose view is this?" callout (also patina) needs a different color.
+- **Commit:** `schema: summary callout at the top of every wiki page`
+
+### [2026-11-11] verify | Four Levels of Prompt Engineering
+
+- **Verify:**
+  - Approved: [[Four Levels of Prompt Engineering]]
+- **Commit:** `verify: Four Levels of Prompt Engineering`
+
+### [2026-11-11] verify | Essay Types
+
+- **Verify:**
+  - Approved: [[Essay Types]]
+- **Commit:** `verify: Essay Types`
+
+### [2026-11-11] setup | Index split by status, folded log, properties hidden
+
+- **Think:** The index and log should look like the Dashboard, with no properties at the top. The log was too long to scroll, so I wanted every entry folded by default with smaller headings. In the index, I wanted headings to split verified and draft pages instead of a status in brackets on every line.
+- **Calculate:** Claude (claude-sonnet-5-5) made these changes:
+  - **Properties:** hidden on [[index]] and [[log]] (and still on the [[_dashboard]]), by the Coppermind Review plugin (v0.4.0). The titles stay.
+  - **Log:** entry headings changed from `##` to `###` (12 existing entries, a formatting change only; the text is untouched), and the plugin appends new entries as `###`. When the log opens in editing view, the plugin folds every entry heading and nothing else. It does this once each time the log is opened, so switching tabs doesn't re-fold what I opened. Reading view doesn't fold.
+  - **Index:** under each type, pages are split under `### Verified` and `### Drafts` headings (shown only when that group has pages). The `(draft)` and `(verified)` endings are gone from the lines. The plugin moves a page from Drafts to Verified when I verify it, and keeps the counts and totals right.
+  - Updated [[SCHEMA#11. Index and log|Schema §11]] to describe the new index and log formats, and [[Nicrosil]].
+  - Tested outside Obsidian on copies of the real index and log (reading the old format, writing the new one, verify and reject moves, empty groups, folding only the entry headings). Not yet seen in Obsidian itself.
+- **Verify:** pending. To reload the plugin, open the log and the index, then verify one page to check that it moves to the Verified list.
+- **Commit:** `setup: index split by status, folded log, properties hidden (Coppermind Review v0.4.0)`
+
+### [2026-11-11] verify | Cascade of Unintended Consequences
+
+- **Verify:**
+  - Approved: [[Cascade of Unintended Consequences]]
+- **Commit:** `verify: Cascade of Unintended Consequences`
+
+### [2026-11-11] setup | Dashboard always in Reading view, properties hidden
+
+- **Think:** The Dashboard's properties were still showing, and I want it in Reading view every time I open it or click into it, without changing how any other note opens.
+- **Calculate:** Claude (claude-sonnet-5-5) updated the Coppermind Review plugin to v0.3.1:
+  - **Properties:** the plugin now tags every pane showing the Dashboard, and the hiding rule applies to that tag as well as to the page's `cssclasses`, with `!important` so nothing overrides it. The Properties side pane is also emptied while the Dashboard is the active note.
+  - **Reading view:** the plugin switches the Dashboard to Reading view whenever it is opened or I click into it (switching tabs counts). `Ctrl+E` still lets me edit; it holds until I leave and come back. Other notes are untouched, and the ribbon button and `Alt+H` open it in Reading view directly.
+  - Updated [[Nicrosil]]. Left the tagline I wrote on the [[_dashboard]] as it is.
+  - Tested outside Obsidian: open, click-in, already-in-Reading-view, another note staying in editing, and cleanup on unload. Not yet seen in Obsidian itself.
+- **Verify:** pending. To reload the plugin and check that the Dashboard shows no properties and opens in Reading view.
+- **Commit:** `setup: Dashboard always in Reading view, properties hidden (Coppermind Review v0.3.1)`
+
+### [2026-11-11] setup | Renamed Home to Dashboard
+
+- **Think:** The front page works as a dashboard, so it should be named like one.
+- **Calculate:** The Coppermind Review plugin renamed `Home.md` to `Dashboard.md` through Obsidian, which updated the links that pointed to it, and pointed the startup-page plugin at the new name.
+- **Verify:** pending. To check that the links to the Dashboard still work.
+- **Commit:** `setup: rename Home to Dashboard`
+
+### [2026-11-11] setup | Dashboard page and home button
+
+- **Think:** I open the front page every time I open the wiki, so it should look good and help me work. I asked for the changes below, to rename Home to Dashboard, and for a logo button that always takes me back to it, using the feruchemical copper symbol.
+- **Calculate:** Claude (claude-sonnet-5-5) rebuilt the front page and extended the Coppermind Review plugin to v0.3:
+  - **Page:** a header with the logo, stat tiles (verified, drafts, open flags), the progress bar and Start reviewing, six navigation cards, a Recent activity list read from this log, and the old explanatory text folded under Reference. The title and properties are hidden on this page, and the Homepage plugin is set to open it in Reading view.
+  - **Home button:** the copper logo in the left ribbon, and `Alt+H`. It switches to the Dashboard if it's already open.
+  - **Rename:** when the plugin loads, it renames `Home.md` to `Dashboard.md` through Obsidian (which updates links) and points the Homepage plugin at the new name; it adds its own log entry when it does.
+  - Saved the logo as `_attachments/coppermind-logo.svg` and updated [[SCHEMA]]'s folder tree and [[Nicrosil]].
+  - Left out of the Dashboard: the link to [[Review Queue.base|Review Queue]] (the sidebar replaces it; the file is still there).
+  - **Restored this log:** two of my earlier writes to this file were reverted on disk, so the entries for [[Architecture of Worldview]], [[Setting Up Git for the Coppermind]], and the "Sidebar-only review controls" change were missing. I put them back from my copy.
+  - Tested outside Obsidian (rename, ribbon, hotkey, all four page blocks, the activity list, link clicks) and previewed the layout in a browser at desktop and phone widths. Not yet seen in Obsidian itself, where the icons will be Obsidian's own.
+- **Verify:** pending
+  - Plugin v0.3 and the Dashboard: to reload the plugin, restart Obsidian once, and check the page, the ribbon button, and `Alt+H`
+  - [[Nicrosil]]: to verify after I follow it
+- **Commit:** `setup: Dashboard page, logo home button, Home renamed (Coppermind Review v0.3)`
+
+### [2026-11-11] setup | Sidebar-only review controls
+
+- **Think:** The Verify and Reject icons at the top of each page are redundant now that the review sidebar does the same job. I want to review from the sidebar only.
+- **Calculate:** Claude (claude-sonnet-5-5) removed the page-header Verify and Reject icons from the Coppermind Review plugin, and their styles. Verify, Skip, and Reject are now in the sidebar card and on the hotkeys (`Alt+V`, `Alt+S`, `Alt+R`). Updated [[Nicrosil]] to match. Nothing else changed. Re-ran the outside-Obsidian tests; they still pass.
+- **Verify:** pending. To check that no icons show on a page after reloading the plugin.
+- **Commit:** `setup: remove page-header review buttons, sidebar only`
+
+### [2026-11-11] verify | Setting Up Git for the Coppermind
+
+- **Verify:**
+  - Approved: [[Setting Up Git for the Coppermind]]
+  - Flags I resolved before approving (2):
+    - Warning (Unsourced background — verify or remove) — This is correct
+    - Warning (Unsourced background — verify or remove) — This is correct
+- **Commit:** `verify: Setting Up Git for the Coppermind`
+
+### [2026-11-11] verify | Architecture of Worldview
+
+- **Verify:**
+  - Approved: [[Architecture of Worldview]]
+- **Commit:** `verify: Architecture of Worldview`
+
+### [2026-11-11] setup | Review queue, flag resolving, hotkeys, and Home dashboard
+
+- **Think:** The Verify button worked, but reviewing still meant going back to a long list after every page. I asked for: verify-and-next with a skip option, a review sidebar that stays open, a Resolve button on flags, hotkeys and a status-bar counter, and a dashboard on Home. I asked to be told which design choices need my input.
+- **Calculate:** Claude (claude-opus-5-5) updated the Coppermind Review plugin to v0.2:
+  - **Verify and next:** after Verify or Reject, the next draft in the queue opens (setting, on by default). **Skip** moves a draft to the end of the queue until Obsidian restarts.
+  - **Review queue sidebar:** progress bar, a card for the current page with its flags and Verify / Skip / Reject buttons, every draft with flag badges, a queue-order menu (default: clean pages first), and a collapsed list of verified pages.
+  - **Resolve flags:** a Resolve button on accuracy-check, gap, question, and warning callouts (Reading view), in the sidebar card, and on `Alt+F`. It asks what I decided, removes the callout, and saves the decision; the decision is written into this log when I verify or reject the page.
+  - **Hotkeys and status bar:** `Alt+V` verify, `Alt+R` reject, `Alt+S` skip, `Alt+N` next, `Alt+F` resolve, `Alt+Q` queue, `Ctrl+Enter` to confirm; "X/Y verified" in the status bar opens the queue.
+  - **Home dashboard:** a live `coppermind-dashboard` block added to [[_dashboard]] under "Review progress": progress, a table by page type, open flags by kind with links, and drafts older than 14 days ([[SCHEMA#7. Draft vs. verified|Schema §7]], item 7).
+  - Rewrote [[Nicrosil]] to cover all of it.
+  - Tested outside Obsidian against copies of the SAIL drafts, [[index]], and this log (flag parsing and removal on every draft, queue order, skip, verify, reject, and log entries). Not yet tried inside Obsidian.
+- **Verify:** pending
+  - Plugin v0.2: to try a short review session and check the page, [[index]], and this log after each action
+  - [[Nicrosil]]: to verify after I follow it
+  - [[_dashboard]]: whether I want the dashboard there
+- **Commit:** `setup: review queue, flag resolving, hotkeys, Home dashboard (Coppermind Review v0.2)`
+
+### [2026-11-11] verify | Agentic AI
+
+- **Verify:**
+  - Approved: [[Agentic AI]]
+- **Commit:** `verify: Agentic AI`
+
+### [2026-11-11] setup | Verify and Reject buttons
+
+- **Think:** I wanted a button on each wiki page that does the logistics of verifying a draft, so reviewing is easier. Verifying still means I checked the page; the button only does the bookkeeping.
+- **Calculate:** Claude (claude-sonnet-5-5) wrote a small local plugin, Coppermind Review (`.obsidian/plugins/coppermind-review/`), with a Verify button and a Reject button on every page in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`. Verify sets `status` and `verified_on`, updates [[index]], and appends to this log; it warns about open flag callouts and blocks source cards with no reliability rating. Reject requires a reason, logs it, removes the index entry, and deletes the page. Neither button commits to git. Drafted the guide [[Nicrosil]]. Also added one sentence to [[SCHEMA#7. Draft vs. verified|Schema §7]] (items 3 and 6) saying the buttons count as me marking a page verified or rejecting it.
+  - Tested on copies of the real [[index]] and this log (text changes only). Not yet tried inside Obsidian.
+- **Verify:** pending
+  - [[Nicrosil]]: to verify after I follow it
+  - Plugin: to try on one page and check that the page, [[index]], and this log all change correctly
+  - [[SCHEMA]]: the §7 wording is mine to approve or rewrite
+- **Commit:** `setup: Verify and Reject buttons (Coppermind Review plugin)`
+
+### [2026-11-11] ingest | SAIL Class Notes, 8/27/26–10/29/26
+
+- **Think:** I gave Claude my full SAIL notes and asked for as many pages as the notes support, to build a foundation: concepts, frameworks, case studies, and terms. Skip tests and assignment logistics, but keep the philosophy behind projects like the portfolio. Don't create pages needlessly. Flag anything incomplete or needing attention. I asked for the drafts directly, so the separate plan-approval step (Schema §10, step 2) was skipped for this ingest.
+- **Calculate:** Claude (claude-opus-5-5) copied the notes unchanged into `Sources/Class Notes` as [[SAIL Class Notes (Fall 2026)]], drafted [[SRC - SAIL Class Notes (Fall 2026)]] (proposed rating B-2), and drafted 50 pages: 9 frameworks, 26 concepts, 2 case studies, 12 glossary terms, and 1 person. Every claim cites the notes by class date. Flags on the pages:
+  - **Whose view? (4):** [[Three-Ps Risk Framework]] (Christian biases), [[Intelligence vs. Consciousness]] (AI will never be conscious), [[AI Alignment]] ("the user" decides), [[Centaur Analyst]] (engineer and design or be replaced).
+  - **Accuracy checks (7):** [[Liar's Dividend]] definition, [[Intelligence vs. Consciousness]] (Turing attribution), [[Deep Learning]] (reinforcement learning and ImageNet), [[Transformer]] ("database" and "140 billion pieces of data"), [[Cognitive Debt]] ("permanently"), [[Hallucination]] (word-meaning explanation), [[LMSYS Chatbot Arena]] (method and name).
+  - **Gaps in my notes (8 pages):** [[ODNI AI Ethics Framework]] (principles missing), [[Imago Dei]] (three aspects undescribed), [[Analysis of Competing Hypotheses]] (stages 4–5), [[Think-Calculate-Verify Loop]] (steps undefined), [[Prompt Engineering]] (ORTCOW only an acronym), [[Machine Learning]] (supervised learning tasks), [[AI in Warfighting]] (Adversarial Vectors empty), [[Intelligence-to-Action Convergence Matrix]] (blank cells), plus the empty "Trust but Verify Exercise" heading (9/15) and sessions 11/3, 11/5, and 11/10 with no notes.
+  - **Left out on purpose:** assignment logistics, the specifics of HW2, the grading note, and the line "The internet is stupid."
+- **Verify:** pending. Item by item.
+- **Commit:** `ingest: SAIL notes 8/27–10/29 — 50 drafts + source card, pending review`
+
+### [2026-11-10] setup | Vault skeleton and schema v0.1
+
+- **Think:** I set the design decisions: Obsidian vault in a local folder with git; Claude desktop app as the agent; scope limited to SAIL, Intro to Intelligence, and Freedom's Foundations 1 (Fall 2026); pages written as a short prose opening plus bullets; Coppermind colors and theme for the look, but plain names for everything else so any reader can follow it.
+- **Calculate:** Claude (claude-opus-5-5) created the folder structure, [[SCHEMA]] v0.1, [[_dashboard]], [[index]], this log, [[Review Queue.base|Review Queue]], one template per page type in `_templates/`, the agent pointer files (`CLAUDE.md`, `AGENTS.md`), `.gitignore`, a [[My Worldview]] skeleton (headings only), and a draft guide, [[Setting Up Git for the Coppermind]].
+- **Verify:** pending
+  - [[SCHEMA]]: to review section by section; it is my rulebook, so I edit it into my own words
+  - [[Setting Up Git for the Coppermind]]: to verify after I follow it
+- **Commit:** `setup: Coppermind skeleton, schema v0.1`

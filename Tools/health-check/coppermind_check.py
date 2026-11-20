@@ -305,7 +305,7 @@ def run(root, today, full):
                     want = norm_heading(head.split("#")[-1])
                     if want not in v.headings(tgt):
                         R["broken"].append(f"[[{name(p)}]] (line {line_no}): `[[{m.group(2)[:70]}]]`: no heading \"{head}\" in [[{name(tgt)}]]")
-    not_inbound_sources = {"index.md", "Dashboard.md", "Ingest Queue.md"}
+    not_inbound_sources = {"index.md", "_dashboard.md", "Dashboard.md", "Ingest Queue.md"}
     for p in pages:
         if not {q for q in inbound.get(p, set()) if q not in not_inbound_sources}:
             R["orphan"].append(f"[[{name(p)}]]: no other page links to it")

@@ -34,7 +34,7 @@ VERIFIED PAGES: [default: propose changes only. Or "edit" to change them directl
 - **It points at the schema instead of copying it.** The ingest steps live in [[SCHEMA - Ingest]], and naming, properties, typed links, citation formats, and attribution in [[SCHEMA - Writing Pages]], so a rule change takes effect without editing this prompt, and the agent reads only the rules an ingest needs.
 - **It dissects before it decides.** The steps list every claim with its location and voice first, so attribution is settled before any page is written, and create-or-append is decided per idea rather than per page.
 - **It keeps verified pages safe by default.** Changes to a verified page always need item-by-item review,[^1] so the default is to propose them, not make them.
-- **New flags use the four callout types the review plugin reads**, so they show up as badges in the queue and on the [[Dashboard]].
+- **New flags use the four callout types the review plugin reads**, so they show up as badges in the queue and on the [[_dashboard]].
 
 ## Footnotes
 [^1]: [[SCHEMA - Review|Schema: Review]]

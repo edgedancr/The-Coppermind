@@ -3,5 +3,6 @@
   "attachmentFolderPath": "_attachments",
   "newLinkFormat": "shortest",
   "useMarkdownLinks": false,
-  "showUnsupportedFiles": true
+  "showUnsupportedFiles": true,
+  "openBehavior": "file:_dashboard.md"
 }

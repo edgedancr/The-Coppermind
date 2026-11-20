@@ -50,7 +50,7 @@ The agent never deletes anything except a draft it created that Harrison rejecte
 
 **Bookkeeping at the end of every operation.**
 - **Index:** when an operation adds, removes, or renames a page in `Wiki/`, `Perspectives/`, or `Sources/Source Cards/`, update `index.md`: one line per page, `- [[Page Name]] — one-line summary`, alphabetical under its type (in Concepts and Glossary, under the page's first-letter heading, `### A`, or `### 0–9` for a name that starts with a digit; add a heading for a new letter and remove one that empties), with the type's count, the total, and the **Jump to** line's links at the top kept right (a link reads `[[#Concepts (94)|Concepts]]`, so it changes when the count does). A change of status doesn't change the index.
-- **Log:** append one entry to the end of `log.md` for every ingest, query, health check, verification, schema change, and tool change. Past entries are never rewritten; corrections go in a new entry. Format:
+- **Log:** add one entry at the top of `log.md`, under the header's closing `---` line and above the newest entry (the log is newest first), for every ingest, query, health check, verification, schema change, and tool change. Past entries are never rewritten; corrections go in a new entry. Format:
 
   ```
   ### [YYYY-MM-DD] operation | Subject
@@ -72,7 +72,7 @@ The agent never deletes anything except a draft it created that Harrison rejecte
 
 ## Saving tokens
 
-- **Never read `log.md` whole.** It is long. To add an entry, append to the end of the file (a shell append, or read only its last 30 or so lines first). To look something up, search its `### [date] operation | Subject` headings, or the month files in `Logs/`.
+- **Never read `log.md` whole.** It is long. To add an entry, read only its first 15 or so lines and insert the entry under the header's closing `---` line, above the newest entry (the log is newest first, so don't append to the end). To look something up, search its `### [date] operation | Subject` headings, or the month files in `Logs/`.
 - **Find existing pages by searching**, not by reading `index.md`: search file names and `aliases:` lines in `Wiki/` and `Sources/Source Cards/`. Read and edit only the section of `index.md` you are changing. Without a shell or search tool, list the folders, or read the index.
 - **In `Ingest Queue.md`, read only the batch you are working on.**
 - **Read the `Nicrosil` guide or the plugin's code only when working on Nicrosil**, and a page's template only when drafting that type of page.

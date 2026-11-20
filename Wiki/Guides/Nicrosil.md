@@ -16,12 +16,14 @@ drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboar
 drafted_on: 2026-11-11
 verified_on: 2026-11-20
 changes_since_verified:
+  - "2026-11-20: the Dashboard is the file `_dashboard.md`, and Nicrosil finds it by that name [[#The Dashboard]]"
+  - "2026-11-20: Verify and Reject add their log entry at the top of the log, which is now newest first [[#The index and the log]]"
   - "2026-11-20: Log a schema change adds its line at the top of the changelog, which is now newest first [[#Logging a schema change]]"
 ---
 > [!summary]
-> **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
+> **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.7.7**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.8.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -54,7 +56,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 
 ### A review session
 1. Pull first (see [[Setting Up Git for the Coppermind]]).
-2. On [[Dashboard]], click **Start reviewing**, or press `Alt+N`.
+2. On [[_dashboard|Dashboard]], click **Start reviewing**, or press `Alt+N`.
 3. Read the page and check it against the sources it cites.
 4. **Resolve each flag.** If a claim needs correcting, edit the page text first. Then click **Resolve** and write what I decided. The callout is removed from the page, and my decision is saved and written into the log when I verify (or reject) the page.
 5. **Decide:**
@@ -66,7 +68,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 7. When finished, commit and push. A page is only "saved as final" once it is verified **and** committed.
 
 ## The Dashboard
-[[Dashboard]] is the page the vault opens on. Each section is a block in the page's text, so a section can be moved or deleted by editing the note. From top to bottom it has:
+[[_dashboard|Dashboard]] is the page the vault opens on. It is the file `_dashboard.md`; the underscore keeps it out of the file list unless the eye button is on, and the Coppermind button and `Alt+D` open it. Each section is a block in the page's text, so a section can be moved or deleted by editing the note. From top to bottom it has:
 - **Header** (`coppermind-hero`): the Coppermind logo, name, and tagline, with the search box (see [[#Search]]) right under them.
 - **Six link cards** (`coppermind-nav`): Index, Review queue, Wiki map, Log, Schema, and Guides, each a name and a one-line description. A click opens the page in the current tab. ==`Ctrl+click` (or middle-click) opens it in a new tab.== The Review queue and Wiki map cards open a sidebar or their own tab instead, so they have no new-tab version.
 - **Review progress** (`coppermind-dashboard`): one line of stats (pages verified, with the share, drafts, and open flags), a progress bar showing how much is verified, and a small line counting the open flags by kind and the drafts older than 14 days. Under it is a bar for each page type showing its verified and draft pages. A **Changed since verified** section lists each re-review with its change lines. Below that are folded lists naming the pages with open flags, by kind, and the drafts older than 14 days. To start a review session from the Dashboard, use the Review queue card.
@@ -81,7 +83,7 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 **Look.** Every note, the Dashboard included, sits on the vault's brown with a copper and teal glow. The background is a single CSS variable, `--cm-bg-gradient`, defined in the plugin's `styles.css`; change it there to change every page at once. The sidebars and the open file in the file list carry a matching glow. All of this only applies while Nicrosil is enabled, and the sidebar and file-list colors only in dark mode.
 
 ## Search
-The search box on the [[Dashboard]] shows suggestion cards as I type, over wiki pages, source cards, and perspectives. It does not search the raw class notes or readings, and it only reads: it never changes a page.
+The search box on the [[_dashboard|Dashboard]] shows suggestion cards as I type, over wiki pages, source cards, and perspectives. It does not search the raw class notes or readings, and it only reads: it never changes a page.
 - **Open a result:** click it, or use the arrow keys and `Enter`. `Ctrl+Enter` opens it in a new tab.
 - **Every match is reachable.** The best matches come first, and more cards appear as I scroll. A line at the bottom says how many pages matched.
 - **Each card shows** the page's title, its type and status, any alias that matched, and a snippet of the matching text. Snippets and review cards leave out footnote markers and the Footnotes section.
@@ -90,7 +92,7 @@ The search box on the [[Dashboard]] shows suggestion cards as I type, over wiki 
 
 ## The index and the log
 - **Index:** [[index]] lists every page under its type, in alphabetical order, with a count per type and a total at the top. Concepts and Glossary are split under A–Z letter headings, and a **Jump to** line under the total links to each type. It does not show whether a page is verified; the review queue and the Dashboard do that. When I verify a page, Nicrosil only checks that the page is listed. When I reject one, its line is removed and Nicrosil rebuilds the counts, letter headings and jump links.
-- **Log:** Nicrosil appends the entry for each verify and reject to [[log]] (newest at the bottom, never rewriting old entries). The log opens with every entry folded, so it reads as a short list; this needs Obsidian's **Fold heading** option (Settings → Editor) to be on.
+- **Log:** Nicrosil adds the entry for each verify and reject to the top of [[log]] (newest first, never rewriting old entries). The log opens with every entry folded, so it reads as a short list; this needs Obsidian's **Fold heading** option (Settings → Editor) to be on.
 - **One log file per month:** [[log]] holds the current month. The first time Obsidian opens in a new month (and before Nicrosil adds an entry in a new month), it moves every earlier month's entries, word for word and in order, to `Logs/Log YYYY-MM.md`. It writes the month file before trimming the log, so a failure never loses entries. Month files open folded, like the log.[^5]
 - **Properties:** [[index]], [[log]], the month files, and the Dashboard hide their properties entirely.
 
@@ -157,7 +159,7 @@ In **Settings → Nicrosil**:
 - **It does not commit to git.**
 - **It will not verify a source card with a blank `reliability` rating.** Ratings are always item by item.[^1]
 - **It does not touch verified pages.** If a verified page's content changes, it goes back to `draft` and needs checking again.
-- **It cannot undo a verify or a resolved flag.** To undo a verify, set `status: draft` by hand, change the index line back, and add a correction to the log (the log is append-only). To undo a resolved flag, restore the callout from git (the last commit still has it) before verifying.
+- **It cannot undo a verify or a resolved flag.** To undo a verify, set `status: draft` by hand, change the index line back, and add a correction to the log (past log entries are never rewritten). To undo a resolved flag, restore the callout from git (the last commit still has it) before verifying.
 - **Skips last only until Obsidian restarts.**
 
 ## Troubleshooting
