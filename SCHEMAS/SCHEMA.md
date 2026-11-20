@@ -1,12 +1,10 @@
 ---
 type: schema
 version: 7.1
-status: draft
+status: verified
 owner: Harrison Nickles
 updated: 2026-11-19
 verified_on: 2026-11-19
-changes_since_verified:
-  - "2026-11-19: Version 7.1. AGENTS.md now says any edit to a Nicrosil file, even a style tweak, needs the version bump, guide update and tool log entry without being asked (the agent skipped them on a style tweak)"
 ---
 This is the overview of the Coppermind's rules: what the wiki is for, how it is laid out, and which rule file covers what. It is the rulebook for my personal LLM wiki (SAIL portfolio). The Coppermind follows the SAIL version of the LLM-wiki pattern, not Karpathy's original: **I design, the AI drafts, I verify.** Nothing becomes part of the wiki as final until I have reviewed and approved it.
 

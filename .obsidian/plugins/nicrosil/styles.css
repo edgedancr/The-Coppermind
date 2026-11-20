@@ -809,7 +809,7 @@ body.cm-quiet .coppermind-dashboard h2 {
 /* hero: no box, no sparks, no shimmer; smaller and left-aligned */
 body.cm-quiet .cm-hero { background: none; border: none; box-shadow: none; border-radius: 0; padding: 14px 0 4px; margin: 0 0 6px; column-gap: 16px; }
 body.cm-quiet .cm-hero-bg { display: none; }
-body.cm-quiet .cm-hero-title { font-family: 'Almendra SC', Georgia, serif; background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 36%, #d99a62 62%, #86d2c1 100%); -webkit-background-clip: text; background-clip: text; color: transparent; animation: none; font-size: 2.4em; letter-spacing: 0.03em; filter: drop-shadow(0 0 7px rgba(217, 138, 74, 0.4)) drop-shadow(0 0 16px rgba(95, 174, 158, 0.25)); }
+body.cm-quiet .cm-hero-title { font-family: 'Almendra SC', Georgia, serif; justify-self: start; width: fit-content; background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 40%, #d99a62 62%, #86d2c1 100%); -webkit-background-clip: text; background-clip: text; color: transparent; animation: none; font-size: 2.4em; letter-spacing: 0.03em; filter: drop-shadow(0 0 7px rgba(217, 138, 74, 0.4)) drop-shadow(0 0 16px rgba(95, 174, 158, 0.25)); }
 body.cm-quiet .cm-hero-tagline { font-size: 0.95em; }
 body.cm-quiet .cm-logo-hero { animation: none; filter: none; transform: scale(0.8); transform-origin: left center; }
 body.cm-quiet .cm-hero.is-intro { animation: none; }

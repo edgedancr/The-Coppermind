@@ -1,6 +1,6 @@
 ---
 type: guide
-status: draft
+status: verified
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -15,15 +15,11 @@ related:
 drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-19
-changes_since_verified:
-  - "2026-11-19: Version 2.6.2. The Dashboard name and the file-list button are set in Almendra SC, and the Dashboard name has a copper-to-teal gradient with a soft glow [[#The Dashboard]]"
-  - "2026-11-19: Version 2.6.1. The Dashboard button now has a copper-to-teal gradient and sharper corners, and the guide describes it (Harrison asked for the restyle) [[#The Dashboard]]"
-  - "2026-11-19: The update checklist now also names the manifest version and the tool log entry, and says they apply to every change, even a style tweak (the agent skipped them on a style tweak) [[#Keeping this guide current]]"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.6.2**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.6.3**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -192,6 +188,7 @@ This guide describes what the plugin does today. Whenever Nicrosil is updated:
 These steps apply to **every** change to a file in the plugin's folder, even a one-line style tweak. Asking for the change is asking for the steps, and they are done in the same edit without being asked.
 
 ### Version history
+- **2.6.3:** The Dashboard name's copper-to-teal gradient now spans the width of the name itself instead of the whole header, so the teal end shows and it matches the file-list button.
 - **2.6.2:** The Coppermind name on the Dashboard and on the file-list button is set in **Almendra SC**. The Dashboard name has a copper-to-teal gradient and a soft glow. The font loads from Google Fonts, so it needs an internet connection; offline it falls back to Georgia.
 - **2.6.1:** The **The Coppermind** button at the top of the file list has a copper-to-teal gradient fill and border, the name fades from copper to teal, and its corners are sharp (2px). Hover glows in both colors.
 - **2.6.0:** The rules moved to `SCHEMAS/`: the rule files are reviewable (grouped as **Schemas** in the queue), the pen button shows on every page there, and **Log a schema change** writes to [[Schema Changelog]] and keeps the version in [[SCHEMA]]. The log is split by month: finished months move to `Logs/Log YYYY-MM.md`, month files open folded, and Recent activity fills from last month early in a month. Log entries with the new `tool` operation get a hammer icon. Once, at startup, the old root `SCHEMA.md` (left as a "moved" stub) goes to the trash.

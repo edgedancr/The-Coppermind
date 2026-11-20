@@ -1,11 +1,9 @@
 ---
 type: schema
-status: draft
+status: verified
 owner: Harrison Nickles
 updated: 2026-11-19
 verified_on: 2026-11-19
-changes_since_verified:
-  - "2026-11-19: Any change to a Nicrosil file, even a one-line style tweak, needs the version bump, guide update and tool log entry, done in the same edit without being asked (the agent skipped them on a style tweak) [[#Nicrosil and other tools]]"
 ---
 How the rules, templates, and tools change, and how each change is recorded.
 

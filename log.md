@@ -2618,3 +2618,27 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Changed:** Nicrosil 2.6.2: the name on the file-list button and the Dashboard header is set in Almendra SC (loaded from Google Fonts, Georgia as the fallback); the Dashboard name has a copper-to-teal gradient and a soft glow. Details: [[Nicrosil#Version history]].
 - **Verify:** Reload Obsidian (Ctrl+R) while online: check the button and the Dashboard title, and that the long name still fits in a narrow sidebar. Then review the change notes on [[Nicrosil]].
 - **Commit:** `tool: Nicrosil 2.6.2 Almendra SC title with gradient and glow`
+
+### [2026-11-19] tool | Nicrosil 2.6.3: Dashboard name gradient
+
+- **Changed:** Nicrosil 2.6.3: the Dashboard name's copper-to-teal gradient spans the name itself, matching the file-list button. Details: [[Nicrosil#Version history]].
+- **Verify:** Reload Obsidian (Ctrl+R): the Dashboard title should fade from copper through cream to teal at its right end.
+- **Commit:** `tool: Nicrosil 2.6.3 Dashboard name gradient`
+
+### [2026-11-19] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-19] verify | SCHEMA
+
+- **Verify:**
+  - Approved: [[SCHEMA]]
+- **Commit:** `verify: SCHEMA`
+
+### [2026-11-19] verify | SCHEMA - Changes
+
+- **Verify:**
+  - Approved: [[SCHEMA - Changes]]
+- **Commit:** `verify: SCHEMA - Changes`
