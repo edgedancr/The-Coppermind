@@ -1,6 +1,6 @@
 ---
 type: schema
-version: 7.4
+version: 7.5
 status: draft
 owner: Harrison Nickles
 updated: 2026-11-20

@@ -14,20 +14,14 @@ related:
   - "[[SCHEMA]]"
 drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5; larger file-list button name and index letter headings and jump bar, the flat relations map, the trimmed guide body, and the changelog moved to its own file, by claude-sonnet-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-19
+verified_on: 2026-11-20
 changes_since_verified:
-  - "2026-11-20: v2.7.1, the name on the file-list button is larger and scales to fill the button (the button was leaving unused space) [[#The Dashboard]]"
-  - "2026-11-20: v2.7.2, rejecting a page now keeps the index's A–Z letter headings and Jump to line right [[#The index and the log]]"
-  - "2026-11-20: v2.7.3, the relations panel's map is flat and sharp-cornered like the wiki map, and the open page has a thin copper-to-teal gradient outline instead of the pulsing orange halo [[#The relations panel]]"
-  - "2026-11-20: trimmed the body to what each part does; look-and-feel detail (corners, fonts, colors, animations) is now only in the changelog"
-  - "2026-11-20: the version history moved to its own file, now [[Nicrosil Changelog]] in `_changelogs/` [[#Keeping this guide current]]"
-  - "2026-11-20: v2.7.4, the Log a schema change button finds the Schema Changelog in its new folder, `_changelogs/` [[#Logging a schema change]]"
-  - "2026-11-20: v2.7.5, an eye button in the file list's toolbar shows or hides folders that start with an underscore (hidden each time Obsidian opens) [[#Hotkeys and buttons]]"
+  - "2026-11-20: Log a schema change adds its line at the top of the changelog, which is now newest first [[#Logging a schema change]]"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[Dashboard]], searches the wiki, keeps [[index]] and [[log]] in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.7.5**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.7.7**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -112,7 +106,7 @@ Open it with `Alt+M` or the Wiki map card on the Dashboard. It opens in its own 
 - **Map.** Every page that has a typed link is a dot, and every typed link is an arrow from the page that states it to the page it points at.
   - **Colors:** arrows are colored by relationship type, with `related` dashed and `contradicts` dotted. Dots are colored by page type. A teal ring means verified, a dashed copper ring means draft, and an amber outline means the page changed since it was verified. Bigger dots have more links.
   - **Move around:** scroll to zoom, drag the background to pan, and click **Reset view** to start over. Names show for the busiest pages, for a focused page and its neighbors, and for every page once zoomed in.
-  - **Motion:** the dots settle when the map opens. Drag a dot to move it; the dots it links to follow. Pointing at a dot lights up its links and neighbors, and clicking a dot, or choosing a neighbor in the panel, glides the view to it. A pulse of light travels along each arrow in the direction of the link; the **Flow** button turns this off, and it stays off between visits. If your computer is set to reduce motion, or **Ambient animations** is off, the map skips the settling and the pulses.
+  - **Motion:** the dots settle when the map opens. Drag a dot to move it; the dots it links to follow. Pointing at a dot lights up its links and neighbors, and clicking a dot, or choosing a neighbor in the panel, glides the view to it. A pulse of light travels along each arrow in the direction of the link; the **Flow** button turns this off, and it stays off between visits. If your computer is set to reduce motion, the map skips the settling and the pulses.
   - **Filters:** click a relationship name at the top to hide or show that type. The menus filter by status, page type, and course. The box finds a page by name; press `Enter` to zoom to it.
   - **Focus:** click a dot to dim everything except that page and its neighbors. The panel under the map lists how it connects, and its neighbors are clickable. `Ctrl+click` a dot to open the page.
   - **Not shown:** pages with no typed links. The note under the map says how many there are.
@@ -122,13 +116,13 @@ On every other note, Nicrosil hides the full Properties block and puts a one-lin
 
 ## Ambience
 Small animations make the vault feel alive. None of them change how anything works. They include glows on page titles by status, a soft pulse on flag callouts, a fade when a page opens, sparks on verified dots in the wiki map, a pulse on the newest Dashboard activity row, rows sliding into place in the review queue, and a glow on the status-bar count when it goes up.
-Turn them all off with **Ambient animations** in the settings. They are also off if the computer is set to reduce motion.
+They are all off if the computer is set to reduce motion.
 
 ## Logging a schema change
 Every change to the rules (`AGENTS.md` or a file in `SCHEMAS/`) needs a line in [[Schema Changelog]].[^4] Nicrosil adds it for me:
 1. On any page in `SCHEMAS/`, click the pen button in the page header, or run **Log a schema change** from the command palette.
 2. Enter the new version number in the form `4.2` and a description of what changed. The version must be newer than the current one and not already in the changelog.
-3. Nicrosil adds the dated line at the end of the changelog and updates its `updated` property, then sets `version` and `updated` on [[SCHEMA]], which holds the rulebook's version.
+3. Nicrosil adds the dated line at the top of the changelog and updates its `updated` property, then sets `version` and `updated` on [[SCHEMA]], which holds the rulebook's version.
 
 It does not touch `status`, `verified_on`, or [[log]]. After a schema change, each changed rule file goes back to `draft` with a change note,[^1] and the log entry is still mine to add.
 
@@ -154,7 +148,6 @@ In **Settings → Nicrosil**:
 - **Open the next draft after verifying or rejecting** (on by default)
 - **Play an animation when I verify a page** (on by default): the check, sparks, and page lift described in [[#A review session]]. It is skipped if the computer is set to reduce motion.
 - **Close the extra sidebar panels on startup** (on by default): closes Backlinks, Outgoing links, Tags, All properties and Outline each time Obsidian starts, so they stop coming back. They can still be opened from the command palette.
-- **Ambient animations** (on by default): the glows, sparkles and fades described in [[#Ambience]].
 - **Open pages in Reading view:** "Verified pages only" (the default), "Every page", or "Off". When a page is opened from a link, the file list, search or the Dashboard, it opens in Reading view instead of editing. If I switch a page to editing myself, it stays that way until that tab opens a different page. "Every page" also covers drafts, but a new empty note always opens ready to type.
 - **Days between health checks** (14 by default): how long the Dashboard's health check card counts before it calls the check overdue.
 - **Queue order:** clean pages first (default), flagged pages first, by page type, or A to Z. The same menu is at the top of the sidebar.

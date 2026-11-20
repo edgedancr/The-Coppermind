@@ -5,6 +5,7 @@ owner: Harrison Nickles
 updated: 2026-11-20
 verified_on: 2026-11-19
 changes_since_verified:
+  - "2026-11-20: the Schema Changelog is newest first, and a new line goes at the top [[#Nicrosil and other tools]]"
   - "2026-11-20: the changelogs of the rules and of Nicrosil live in `_changelogs/`, and look-and-feel detail goes in Nicrosil's changelog, not in the guide [[#Nicrosil and other tools]]"
 ---
 How the rules, templates, and tools change, and how each change is recorded.
@@ -41,4 +42,4 @@ The rules are `AGENTS.md` and the files in `SCHEMAS/`. Together they are one rul
 - **Every change counts, even a one-line style tweak in `styles.css`.** Asking for the change is asking for everything below, and the agent does it all in the same edit without being asked. Starting a Nicrosil edit means reading this section first.
 - **Each change bumps its version** in `manifest.json` and the [[Nicrosil]] guide, adds a line at the top of [[Nicrosil Changelog]], and updates the sections of the guide it affects. The guide is a verified page, so that edit sets it to `draft` with a change note ([[SCHEMA - Review#Changing a verified page]]).
 - **Log it as `tool`**, briefly: the details are in [[Nicrosil Changelog]] ([[SCHEMA - Index and Log#The log]]). A small fix to a version not yet checked in Obsidian can share that version's entry rather than adding a new one.
-- **Changelogs live in `_changelogs/`:** one for the rules ([[Schema Changelog]]) and one for Nicrosil ([[Nicrosil Changelog]]). They are kept out of the guide and the rule files so those stay short, and an agent reads a changelog only to add a line or when asked. Past lines are never rewritten. How something looks (corners, fonts, colors, animations) goes in the changelog, not in the guide's body.
+- **Changelogs live in `_changelogs/`:** one for the rules ([[Schema Changelog]]) and one for Nicrosil ([[Nicrosil Changelog]]). They are kept out of the guide and the rule files so those stay short, and an agent reads a changelog only to add a line or when asked. Both are newest first: a new line goes at the top (in the Schema Changelog, directly under the `## Changelog` heading). Past lines are never rewritten. How something looks (corners, fonts, colors, animations) goes in the changelog, not in the guide's body.

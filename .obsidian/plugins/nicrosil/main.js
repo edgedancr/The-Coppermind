@@ -61,7 +61,7 @@ const FLAG_KINDS = {
   warning: { label: "Warning", plural: "Warnings (unsourced)", short: "W" },
 };
 const STALE_DAYS = 14;
-const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, ambient: true, hidePanels: true, readMode: "verified", healthDays: 14 };
+const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, hidePanels: true, readMode: "verified", healthDays: 14 };
 const READ_MODES = { verified: "Verified pages only", all: "Every page", off: "Off" };
 const SORTS = { clean: "Clean pages first", flagged: "Flagged pages first", type: "By page type", az: "A to Z" };
 
@@ -759,7 +759,7 @@ class QueueView extends ItemView {
     }
     BADGE_STATE.primed = true;
     // rows that moved slide from their old place to their new one
-    if (before.size && p.settings.ambient !== false && !prefersReduced()) {
+    if (before.size && !prefersReduced()) {
       root.querySelectorAll(".cm-row[data-path]").forEach((r) => {
         const old = before.get(r.getAttribute("data-path"));
         if (old === undefined) return;
@@ -1549,7 +1549,7 @@ class WikiMapView extends ItemView {
     };
     // a ring spreads out from a focused dot, and its neighbors flash one after another
     const ripple = (id) => {
-      if (reduce || this.plugin.settings.ambient === false) return;
+      if (reduce) return;
       const q = pos.get(id);
       const ring = svgEl(world, "circle", { cx: q.x, cy: q.y, r: 6, class: "cm-wm-ripple" });
       setTimeout(() => ring.remove(), 1100);
@@ -1710,12 +1710,6 @@ class ReviewSettings extends PluginSettingTab {
     new Setting(el).setName("Close the extra sidebar panels on startup")
       .setDesc("Closes Backlinks, Outgoing links, Tags, All properties and Outline in the sidebar each time Obsidian starts. You can still open any of them from the command palette during a session.")
       .addToggle((t) => t.setValue(this.plugin.settings.hidePanels !== false).onChange(async (v) => { this.plugin.settings.hidePanels = v; await this.plugin.persist(); }));
-    new Setting(el).setName("Ambient animations")
-      .setDesc("Glowing titles, breathing flag callouts, sparkles on the map, page fade-ins, and a slowly drifting background. Turn off for a still, quiet vault. They are also off if your computer is set to reduce motion.")
-      .addToggle((t) => t.setValue(this.plugin.settings.ambient !== false).onChange(async (v) => {
-        this.plugin.settings.ambient = v; await this.plugin.persist();
-        document.body.classList.toggle("cm-calm", !v);
-      }));
     new Setting(el).setName("Open pages in Reading view")
       .setDesc("When a page is opened (from a link, the file list, search or the Dashboard), it opens in Reading view instead of editing. Switching to editing yourself sticks until you open a different page in that tab. \"Every page\" also covers drafts; empty new notes always open ready to type.")
       .addDropdown((d) => {
@@ -2224,7 +2218,7 @@ function entryLine(version, date, desc) {
 }
 
 /**
- * Finds the Changelog section. Returns { eol, lines, headingIdx, lastBulletIdx, versions }
+ * Finds the Changelog section. Returns { eol, lines, headingIdx, firstBulletIdx, versions }
  * or null if there is no Changelog heading.
  */
 function findChangelog(text) {
@@ -2236,13 +2230,13 @@ function findChangelog(text) {
   for (let i = headingIdx + 1; i < lines.length; i++) {
     if (/^#{1,6}\s/.test(lines[i]) || /^---\s*$/.test(lines[i])) { end = i; break; }
   }
-  let lastBulletIdx = -1;
+  let firstBulletIdx = -1;
   const versions = [];
   for (let i = headingIdx + 1; i < end; i++) {
     const m = lines[i].match(/^- \*\*(\d+\.\d+)\b/);
-    if (m) { lastBulletIdx = i; versions.push(m[1]); }
+    if (m) { if (firstBulletIdx === -1) firstBulletIdx = i; versions.push(m[1]); }
   }
-  return { eol, lines, headingIdx, lastBulletIdx, versions };
+  return { eol, lines, headingIdx, firstBulletIdx, versions };
 }
 
 /** Frontmatter value of a simple `key: value` property, or null. */
@@ -2298,8 +2292,9 @@ function addChangelogEntry(text, version, date, desc) {
   if (!cl) throw new Error("No Changelog heading in Schema Changelog");
   const { eol, lines } = cl;
   const line = entryLine(version, date, desc);
-  if (cl.lastBulletIdx !== -1) {
-    lines.splice(cl.lastBulletIdx + 1, 0, line);
+  if (cl.firstBulletIdx !== -1) {
+    // Newest first: the new line goes above the existing ones.
+    lines.splice(cl.firstBulletIdx, 0, line);
   } else {
     // Empty changelog: add after the heading and a blank line.
     let at = cl.headingIdx + 1;
@@ -2418,7 +2413,7 @@ module.exports = class Nicrosil extends Plugin {
     this.addSettingTab(new ReviewSettings(this.app, this));
     this.registerCommands();
 
-    document.body.classList.toggle("cm-calm", this.settings.ambient === false);
+    delete this.settings.ambient; // the Ambient animations switch was removed in 2.7.6: everything it controlled is always on
     delete this.settings.dashStyle; // the Classic/Quiet switch was removed in 2.4.2
     document.body.classList.add("cm-quiet");
     this.statusEl = this.addStatusBarItem();
@@ -2449,11 +2444,11 @@ module.exports = class Nicrosil extends Plugin {
       if (file) this.currentPath = file.path;
       if (file && this.isDashboard(file)) this.startDashIntro();
       this.syncDashboardLeaves(true);
-      if (file && !this.isDashboard(file)) this.pageIn();
       this.renderViews();
     }));
     // folders whose names start with "_" are hidden in the file list every time Obsidian opens; the eye button in its toolbar shows them until Obsidian closes
     document.body.classList.add("cm-hide-underscore");
+    this.installPageFade();
     this.registerEvent(this.app.workspace.on("active-leaf-change", (leaf) => {
       this.syncDashboardLeaves(false);
       this.enforceReading(leaf);
@@ -2501,7 +2496,7 @@ module.exports = class Nicrosil extends Plugin {
     document.body.classList.remove("cm-hide-underscore");
     document.body.classList.remove("cm-on-dashboard");
     document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"));
-    document.body.classList.remove("cm-calm", "cm-quiet");
+    document.body.classList.remove("cm-quiet");
     document.querySelectorAll(".cm-propstrip").forEach((e) => e.remove());
     this.stripObservers.forEach((o) => o.disconnect());
     this.stripObservers.clear();
@@ -2690,7 +2685,7 @@ module.exports = class Nicrosil extends Plugin {
   renderStatus() {
     if (!this.statusEl) return;
     const done = this.items.filter((i) => i.status === "verified").length;
-    if (this.lastDone !== undefined && done > this.lastDone && this.settings.ambient !== false && !prefersReduced()) {
+    if (this.lastDone !== undefined && done > this.lastDone && !prefersReduced()) {
       this.statusEl.addClass("cm-status-up");
       clearTimeout(this.statusUpTimer);
       this.statusUpTimer = setTimeout(() => this.statusEl.removeClass("cm-status-up"), 1500);
@@ -2842,7 +2837,7 @@ module.exports = class Nicrosil extends Plugin {
       if (!quiet && (prev === undefined || ms !== prev)) {
         this.settings.milestone = ms;
         this.persist();
-        if (prev !== undefined && ms > prev && this.settings.ambient !== false && !prefersReduced()) setTimeout(() => this.sparkBurst(rwrap, ms === 100 ? 80 : 36, ms === 100 ? 210 : 130), 650);
+        if (prev !== undefined && ms > prev && !prefersReduced()) setTimeout(() => this.sparkBurst(rwrap, ms === 100 ? 80 : 36, ms === 100 ? 210 : 130), 650);
       }
     }
     const rside = rbody.createDiv({ cls: "cm-ring-side" });
@@ -3453,16 +3448,43 @@ module.exports = class Nicrosil extends Plugin {
    * The verify animation: the page is stamped with a check, bursts into copper and teal sparks, and slides
    * away. Returns what playVerifyIn needs to bring the next page in.
    */
-  /** A newly opened page fades in with a slight rise. */
-  pageIn() {
-    if (this.vfBusy || this.settings.ambient === false || prefersReduced()) return;
-    const view = this.app.workspace.getActiveViewOfType(MarkdownView);
-    const c = view && view.containerEl && view.containerEl.querySelector(".view-content");
-    if (!c) return;
-    c.removeClass("cm-page-in");
-    void c.offsetWidth;
-    c.addClass("cm-page-in");
-    setTimeout(() => c.removeClass("cm-page-in"), 450);
+  /**
+   * A newly opened page fades in. Obsidian's "file-open" event only fires after the page has loaded and been drawn, so
+   * starting the fade from there made the page show and then fade. Instead this wraps MarkdownView.onLoadFile: the
+   * page's text is held back while the file loads and fades in as soon as it has, with no movement. The background
+   * stays put. If anything goes wrong the text is shown again after 0.6 seconds.
+   */
+  installPageFade() {
+    const proto = MarkdownView && MarkdownView.prototype;
+    if (!proto || typeof proto.onLoadFile !== "function") return;
+    const plugin = this;
+    const orig = proto.onLoadFile;
+    const hadOwn = Object.prototype.hasOwnProperty.call(proto, "onLoadFile");
+    const patched = function (file) {
+      let c = null;
+      try {
+        if (file && !plugin.vfBusy && !prefersReduced() && !plugin.isDashboard(file) && this.containerEl) c = this.containerEl.querySelector(".view-content");
+      } catch (e) { c = null; }
+      if (!c) return orig.apply(this, arguments);
+      c.addClass("cm-page-pre");
+      const guard = setTimeout(() => c.removeClass("cm-page-pre"), 600);
+      const done = () => {
+        clearTimeout(guard);
+        c.removeClass("cm-page-pre");
+        c.removeClass("cm-page-in");
+        void c.offsetWidth;
+        c.addClass("cm-page-in");
+        setTimeout(() => c.removeClass("cm-page-in"), 350);
+      };
+      let r;
+      try { r = orig.apply(this, arguments); } catch (e) { done(); throw e; }
+      return Promise.resolve(r).then((v) => { done(); return v; }, (e) => { done(); throw e; });
+    };
+    proto.onLoadFile = patched;
+    this.register(() => {
+      if (proto.onLoadFile !== patched) return;
+      if (hadOwn) proto.onLoadFile = orig; else delete proto.onLoadFile;
+    });
   }
 
   /** The properties strip glows once on a page that was just verified. */

@@ -3,7 +3,6 @@
     "autoAdvance": true,
     "sort": "type",
     "celebrate": true,
-    "ambient": true,
     "hidePanels": true,
     "readMode": "verified",
     "healthDays": 14,

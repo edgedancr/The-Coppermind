@@ -2898,3 +2898,30 @@ A dated, append-only record of every ingest, query, health check, verification, 
 - **Calculate:** `main.js` adds a `cm-hide-underscore` class to the page when the plugin loads (so they are hidden every time Obsidian opens) and puts an eye button in the file list's toolbar that toggles it; the choice is not saved. `styles.css` hides the folders while the class is on. The button's tooltip says what a click will do. Guide and Nicrosil Changelog updated.
 - **Verify:** Pending: reload Obsidian and check that `_attachments`, `_changelogs`, and `_templates` are gone and that the eye button brings them back.
 - **Commit:** `tool: Nicrosil 2.7.5 — eye button to show or hide _ folders`
+
+### [2026-11-20] tool | Nicrosil 2.7.6: no Ambient animations setting, faster page fade-in
+
+- **Think:** Harrison didn't want a switch for the ambient animations (they should just be on), and the page fade-in looked laggy because it started after the page had loaded.
+- **Calculate:** `main.js`: removed the setting, its `cm-calm` class, and every check of it (the reduced-motion checks stay); the page fade now wraps `MarkdownView.onLoadFile` so the text is hidden while the file loads and fades in once it is ready, instead of starting from `file-open`. `styles.css`: removed the `cm-calm` rules, and the fade is now 0.2 s with no movement on the page's contents instead of the whole panel. Guide and Nicrosil Changelog updated.
+- **Verify:** Pending: reload Obsidian, open a few pages, and check the Settings list no longer has Ambient animations.
+- **Commit:** `tool: Nicrosil 2.7.6 — remove the Ambient animations setting, fix the page fade-in`
+
+### [2026-11-20] verify | Nicrosil
+
+- **Verify:**
+  - Approved: [[Nicrosil]]
+- **Commit:** `verify: Nicrosil`
+
+### [2026-11-20] schema | Schema Changelog is newest first (version 7.5)
+
+- **Think:** Harrison wanted the Schema Changelog newest first, like Nicrosil's.
+- **Calculate:** Reordered the lines of `_changelogs/Schema Changelog.md` (none rewritten) and added the 7.5 line at the top. `SCHEMA - Changes` now says new lines go at the top. `SCHEMA` is at 7.5.
+- **Verify:** Pending: Harrison to re-review the changed lines.
+- **Commit:** `schema: 7.5 — Schema Changelog is newest first`
+
+### [2026-11-20] tool | Nicrosil 2.7.7: schema button adds its line at the top
+
+- **Think:** The Schema Changelog is now newest first, so the Log a schema change button had to insert at the top, not the end.
+- **Calculate:** `main.js`: the changelog helper finds the first bullet and inserts above it; the latest version is still the highest, so nothing else changed. Guide and Nicrosil Changelog updated.
+- **Verify:** Pending: reload Obsidian, log a test schema change, and check the line lands at the top (then undo it).
+- **Commit:** `tool: Nicrosil 2.7.7 — schema changelog line goes at the top`

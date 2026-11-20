@@ -605,7 +605,7 @@ body {
 @keyframes cm-vf-next { 0% { opacity: 0; transform: translate(-50%, 10px); } 14%, 82% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; transform: translate(-50%, -6px); } }
 
 /* ---------- Ambience (1.6.0) ---------- */
-/* Everything here is switched off by body.cm-calm (the "Ambient animations" setting) and by reduced motion. */
+/* Everything here is switched off by reduced motion. */
 
 /* page titles: a glow for verified pages, a dim ember for drafts */
 .cm-st-verified .inline-title {
@@ -633,9 +633,10 @@ body {
 .markdown-rendered a.internal-link, .cm-s-obsidian .cm-hmd-internal-link { transition: text-shadow 0.2s; }
 .markdown-rendered a.internal-link:hover, .cm-s-obsidian .cm-hmd-internal-link:hover { text-shadow: 0 0 10px rgba(217, 138, 74, 0.7); }
 
-/* a page fades in when opened */
-.cm-page-in { animation: cm-page-in 0.35s ease-out both; }
-@keyframes cm-page-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+/* a page fades in once it has loaded (2.7.6): its text is held back while the file loads, then fades in quickly with no movement. The background stays put. */
+.view-content.cm-page-pre > * { opacity: 0; }
+.view-content.cm-page-in > * { animation: cm-page-in 0.2s ease-out both; }
+@keyframes cm-page-in { from { opacity: 0; } to { opacity: 1; } }
 
 /* the background drifts very slowly */
 .workspace-leaf-content[data-type="markdown"] .view-content, .cm-dashboard-leaf .view-content { background-size: 130% 130%; animation: cm-drift 160s steps(80) infinite alternate; }
@@ -677,11 +678,7 @@ body {
 .cm-status-up { animation: cm-status-up 1.4s ease-out 1; }
 @keyframes cm-status-up { 0% { text-shadow: 0 0 0 transparent; } 25% { text-shadow: 0 0 10px #86d2c1, 0 0 20px #5fae9e; color: #86d2c1; } 100% { text-shadow: 0 0 0 transparent; } }
 
-/* calm mode and reduced motion turn the ongoing animations off */
-body.cm-calm .inline-title, body.cm-calm .callout, body.cm-calm .view-content, body.cm-calm .cm-wm-spark,
-body.cm-calm .cm-propstrip, body.cm-calm .cm-search-card,
-body.cm-calm .cm-act-row, body.cm-calm .cm-badge, body.cm-calm .cm-status-up { animation: none !important; }
-body.cm-calm .cm-st-verified .inline-title { background: none; -webkit-text-fill-color: currentColor; color: inherit; filter: none; }
+/* reduced motion turns the ongoing animations off */
 @media (prefers-reduced-motion: reduce) {
   .inline-title, .callout, .view-content, .cm-wm-spark, .cm-propstrip, .cm-search-card,
   .cm-act-row, .cm-badge, .cm-status-up, .notice { animation: none !important; }
@@ -698,7 +695,6 @@ body.cm-calm .cm-st-verified .inline-title { background: none; -webkit-text-fill
 .cm-queue .cm-progress { height: 14px; border-radius: 2px; overflow: visible; background: rgba(184, 115, 51, 0.2); box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5); }
 .cm-queue .cm-progress-fill { border-radius: 2px; min-width: 6px; background: linear-gradient(90deg, #b87333, #d98a4a 45%, #5fae9e 100%); box-shadow: 0 0 8px 1px rgba(120, 190, 150, 0.5), 0 0 18px 2px rgba(184, 115, 51, 0.35); }
 .cm-queue .cm-progress-label { margin: 8px 0 12px; }
-body.cm-calm .cm-queue h4 { animation: none !important; }
 @media (prefers-reduced-motion: reduce) { .cm-queue h4 { animation: none !important; } }
 
 /* Review queue list (2.2.0) */
@@ -725,12 +721,7 @@ body.cm-calm .cm-queue h4 { animation: none !important; }
 /* The slow background drift sets "animation" on .view-content, so these need to be more specific to run (2.2.1) */
 .workspace-leaf-content[data-type="markdown"] .view-content.cm-vf-out { animation: cm-vf-out 0.62s cubic-bezier(0.5, 0, 0.9, 0.4) forwards; }
 .workspace-leaf-content[data-type="markdown"] .view-content.cm-vf-in { animation: cm-vf-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
-.workspace-leaf-content[data-type="markdown"] .view-content.cm-page-in { animation: cm-page-in 0.35s ease-out both; }
-body.cm-calm .workspace-leaf-content[data-type="markdown"] .view-content.cm-page-in { animation: none !important; }
-@media (prefers-reduced-motion: reduce) { .workspace-leaf-content[data-type="markdown"] .view-content.cm-page-in { animation: none !important; } }
-/* calm mode stops the ambient animations, but the verify animation has its own setting */
-body.cm-calm .workspace-leaf-content[data-type="markdown"] .view-content.cm-vf-out { animation: cm-vf-out 0.62s cubic-bezier(0.5, 0, 0.9, 0.4) forwards !important; }
-body.cm-calm .workspace-leaf-content[data-type="markdown"] .view-content.cm-vf-in { animation: cm-vf-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) backwards !important; }
+@media (prefers-reduced-motion: reduce) { .view-content.cm-page-in > * { animation: none !important; } .view-content.cm-page-pre > * { opacity: 1; } }
 
 /* Verification card fills the full width (2.3.0) */
 .cm-ring-card.cm-wide { padding: 22px 24px; }
@@ -930,7 +921,6 @@ body.cm-quiet .cm-qbar-fill {
 .cm-hc-overdue .cm-hc-verdict, .cm-hc-none .cm-hc-verdict { text-shadow: 0 0 8px rgba(229, 88, 76, 0.55); }
 .cm-hc-sub { font-size: var(--font-ui-smaller); color: var(--text-muted); }
 @keyframes cm-hc-alert { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
-body.cm-calm .cm-hc-fill { animation: none; }
 @media (prefers-reduced-motion: reduce) { .cm-hc-fill { animation: none !important; transition: none; } }
 
 /* ---- Wiki map and hierarchy: the same glow and motion as the relations panel (2.5.0) ---- */
@@ -984,7 +974,6 @@ body.cm-calm .cm-hc-fill { animation: none; }
 .cm-wt-outside { border-top-color: rgba(184, 115, 51, .3); }
 .cm-wt-outside summary:hover { color: var(--cm-copper); }
 .cm-wt-out-row:hover { background: var(--cm-copper-soft); }
-body.cm-calm .cm-wt-flow, body.cm-calm .cm-wt-svg.is-new .cm-wt-card, body.cm-calm .cm-wt-svg.is-new .cm-wt-edge { animation: none; }
 @media (prefers-reduced-motion: reduce) { .cm-wt-flow { display: none; } .cm-wt-svg.is-new .cm-wt-card, .cm-wt-svg.is-new .cm-wt-edge { animation: none !important; } .cm-wt-box, .cm-wt-tog-bg { transition: none; } }
 
 /* ---- Wiki map and hierarchy: crisp and flat (2.7.0). Sharp 2px corners, no glows, no flowing lights, no dotted backdrop. ---- */
