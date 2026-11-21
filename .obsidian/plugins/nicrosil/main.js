@@ -2429,10 +2429,7 @@ module.exports = class Nicrosil extends Plugin {
     delete this.settings.ambient; // the Ambient animations switch was removed in 2.7.6: everything it controlled is always on
     delete this.settings.dashStyle; // the Classic/Quiet switch was removed in 2.4.2
     document.body.classList.add("cm-quiet");
-    this.statusEl = this.addStatusBarItem();
-    this.statusEl.addClass("cm-status", "mod-clickable");
-    this.statusEl.setAttr("aria-label", "Open the review queue");
-    this.statusEl.addEventListener("click", () => this.activateView());
+    // no status bar counter (removed in 2.13.4): renderStatus() does nothing while statusEl is unset
 
     this.addRibbonIcon("git-fork", "Relations panel (Alt+L)", () => this.activateRelations());
     this.addRibbonIcon("badge-check", "Review queue (Alt+Q)", () => this.activateView());

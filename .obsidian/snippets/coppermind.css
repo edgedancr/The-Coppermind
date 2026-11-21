@@ -67,9 +67,9 @@
 /* ---------- Typography ---------- */
 body {
   --file-line-width: 44rem;
-  --h1-font: Georgia, "Palatino Linotype", "Book Antiqua", serif;
-  --h2-font: Georgia, "Palatino Linotype", "Book Antiqua", serif;
-  --h3-font: Georgia, "Palatino Linotype", "Book Antiqua", serif;
+  --h1-font: "Segoe UI", system-ui, sans-serif;
+  --h2-font: "Segoe UI", system-ui, sans-serif;
+  --h3-font: "Segoe UI", system-ui, sans-serif;
   --h1-weight: 700;
   --h2-weight: 600;
   --h3-weight: 600;
@@ -81,7 +81,7 @@ body {
 
 /* Page title (the large title above each note) */
 .inline-title {
-  font-family: Georgia, "Palatino Linotype", "Book Antiqua", serif;
+  font-family: "Segoe UI", system-ui, sans-serif;
   font-weight: 700;
   color: var(--h1-color);
   padding-bottom: 0.35em;
@@ -121,7 +121,7 @@ body {
   --table-header-border-color: var(--interactive-accent);
 }
 .markdown-rendered th {
-  font-family: Georgia, "Palatino Linotype", serif;
+  font-family: "Segoe UI", system-ui, sans-serif;
 }
 
 /* ---------- Blockquotes and code ---------- */
@@ -151,7 +151,7 @@ body {
   border-width: 1px;
 }
 .callout-title {
-  font-family: Georgia, "Palatino Linotype", serif;
+  font-family: "Segoe UI", system-ui, sans-serif;
 }
 
 /* Page summary: the first block of every wiki page (patina bar, small label, slightly larger text) */
@@ -211,7 +211,7 @@ hr {
 }
 .coppermind-index h2 {
   width: fit-content; max-width: 100%;
-  font-family: 'Almendra SC', Georgia, serif;
+  font-family: 'Almendra SC', "Segoe UI", system-ui, sans-serif;
   font-size: 1.35em;
   font-weight: 600;
   letter-spacing: 0.02em;

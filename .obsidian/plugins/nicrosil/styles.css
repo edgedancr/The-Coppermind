@@ -30,7 +30,7 @@ body {
 
 /* sidebar queue */
 .cm-queue { padding: 8px 12px; }
-.cm-queue h4 { margin: 4px 0 8px; color: var(--cm-copper); font-family: Georgia, serif; }
+.cm-queue h4 { margin: 4px 0 8px; color: var(--cm-copper); font-family: "Segoe UI", system-ui, sans-serif; }
 .cm-controls { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
 .cm-controls select { width: 100%; }
 .cm-auto { font-size: var(--font-ui-smaller); color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
@@ -47,7 +47,7 @@ body {
 .cm-pending { font-size: var(--font-ui-smaller); color: var(--cm-patina); margin-top: 4px; }
 button.cm-mini { font-size: 11px; padding: 2px 8px; height: auto; }
 .cm-list-head { font-size: var(--font-ui-smaller); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin: 6px 0; }
-.cm-group { font-family: Georgia, serif; color: var(--cm-copper); margin: 10px 0 2px; font-size: var(--font-ui-small); }
+.cm-group { font-family: "Segoe UI", system-ui, sans-serif; color: var(--cm-copper); margin: 10px 0 2px; font-size: var(--font-ui-small); }
 .cm-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 4px 6px; border-radius: 4px; cursor: pointer; font-size: var(--font-ui-small); }
 .cm-row:hover { background: var(--background-modifier-hover); }
 .cm-row.is-current { background: var(--cm-copper-soft); box-shadow: inset 3px 0 0 var(--cm-copper); }
@@ -73,7 +73,7 @@ button.cm-mini { font-size: 11px; padding: 2px 8px; height: auto; }
 .cm-dash-table { width: 100%; margin: 12px 0 4px; font-size: var(--font-ui-small); }
 .cm-dash-table th, .cm-dash-table td { padding: 3px 8px; }
 .cm-dash-table td:not(:first-child), .cm-dash-table th:not(:first-child) { text-align: right; }
-.cm-dashboard h4 { margin: 12px 0 4px; font-family: Georgia, serif; color: var(--cm-copper); }
+.cm-dashboard h4 { margin: 12px 0 4px; font-family: "Segoe UI", system-ui, sans-serif; color: var(--cm-copper); }
 .cm-dash-flagrow { padding: 3px 0 3px 10px; border-left: 3px solid var(--cm-amber); margin-bottom: 4px; font-size: var(--font-ui-small); }
 .cm-dash-flagrow.cm-flag-todo { border-left-color: var(--cm-copper); }
 .cm-dash-flagrow.cm-flag-question { border-left-color: var(--cm-patina); }
@@ -116,7 +116,7 @@ button.cm-danger { background: var(--cm-rust); color: #fff; }
 .cm-home-btn { display: flex; align-items: center; justify-content: center; gap: 10px; box-sizing: border-box; min-width: 0; overflow: hidden; container-type: inline-size; height: 46px; margin: 4px 10px 10px; padding: 0 12px; border: 1px solid transparent; border-radius: 2px; background: linear-gradient(135deg, rgba(184, 115, 51, 0.30), rgba(95, 174, 158, 0.22)) padding-box, linear-gradient(160deg, #2a2420, #1e1915) padding-box, linear-gradient(135deg, rgba(217, 138, 74, 0.9), rgba(95, 174, 158, 0.75)) border-box; cursor: pointer; user-select: none; transition: box-shadow .2s, filter .2s; }
 .cm-home-btn:hover, .cm-home-btn:focus-visible { background: linear-gradient(135deg, rgba(184, 115, 51, 0.44), rgba(95, 174, 158, 0.36)) padding-box, linear-gradient(160deg, #2a2420, #1e1915) padding-box, linear-gradient(135deg, #e89a5a, #86d2c1) border-box; box-shadow: 0 0 12px rgba(184, 115, 51, 0.3), 0 0 14px rgba(95, 174, 158, 0.22); outline: none; }
 .cm-home-logo { flex: none; width: 21px; height: 26px; filter: drop-shadow(0 1px 3px rgba(184, 115, 51, 0.4)); }
-.cm-home-name { font-family: 'Almendra SC', Georgia, serif; font-size: 1.5em; font-size: clamp(0.7em, calc((100cqw - 31px) / 8), 1.7em); font-weight: 600; letter-spacing: 0; flex: none; background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 40%, #d99a62 62%, #86d2c1 100%); -webkit-background-clip: text; background-clip: text; color: transparent; white-space: nowrap; }
+.cm-home-name { font-family: 'Almendra SC', "Segoe UI", system-ui, sans-serif; font-size: 1.5em; font-size: clamp(0.7em, calc((100cqw - 31px) / 8), 1.7em); font-weight: 600; letter-spacing: 0; flex: none; background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 40%, #d99a62 62%, #86d2c1 100%); -webkit-background-clip: text; background-clip: text; color: transparent; white-space: nowrap; }
 body.cm-on-dashboard .cm-home-btn { box-shadow: inset 0 0 10px rgba(184, 115, 51, 0.25), inset 0 0 14px rgba(95, 174, 158, 0.18); }
 @media (prefers-reduced-motion: reduce) { .cm-home-btn { transition: none; } }
 
@@ -134,7 +134,7 @@ body.cm-on-dashboard .cm-home-btn { box-shadow: inset 0 0 10px rgba(184, 115, 51
 /* the Properties side pane stays empty while the Dashboard is the active note */
 body.cm-on-dashboard .workspace-leaf-content[data-type="file-properties"] .view-content { display: none !important; }
 .coppermind-dashboard h2 {
-  font-family: Georgia, serif;
+  font-family: "Segoe UI", system-ui, sans-serif;
   font-size: 1.15em;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -147,7 +147,7 @@ body.cm-on-dashboard .workspace-leaf-content[data-type="file-properties"] .view-
 /* hero */
 .cm-hero { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 22px; padding: 18px 4px 8px; }
 .cm-logo-hero { height: 84px; filter: drop-shadow(0 2px 6px rgba(184, 115, 51, 0.35)); }
-.cm-hero-title { font-family: 'Almendra SC', Georgia, serif; font-size: 2.5em; line-height: 1.1; letter-spacing: 0.02em; color: var(--h1-color, #e8b27d); }
+.cm-hero-title { font-family: 'Almendra SC', "Segoe UI", system-ui, sans-serif; font-size: 2.5em; line-height: 1.1; letter-spacing: 0.02em; color: var(--h1-color, #e8b27d); }
 .cm-hero-tagline { margin-top: 6px; color: var(--text-muted); font-style: italic; }
 .cm-hero-rule { grid-column: 1 / -1; height: 2px; margin-top: 16px; border-radius: 2px; background: linear-gradient(90deg, var(--cm-copper), var(--cm-patina) 60%, transparent); }
 
@@ -156,7 +156,7 @@ body.cm-on-dashboard .workspace-leaf-content[data-type="file-properties"] .view-
 .cm-tile { border: 1px solid var(--background-modifier-border); border-top: 3px solid var(--cm-copper); background: var(--background-primary-alt); border-radius: 8px; padding: 12px 14px; }
 .cm-tile-verified { border-top-color: var(--cm-patina); }
 .cm-tile-flags { border-top-color: var(--cm-amber); }
-.cm-tile-num { font-family: Georgia, serif; font-size: 2.4em; line-height: 1; color: var(--text-normal); }
+.cm-tile-num { font-family: "Segoe UI", system-ui, sans-serif; font-size: 2.4em; line-height: 1; color: var(--text-normal); }
 .cm-tile-verified .cm-tile-num { color: var(--cm-patina); }
 .cm-tile-drafts .cm-tile-num { color: var(--cm-copper); }
 .cm-tile-flags .cm-tile-num { color: var(--cm-amber); }
@@ -175,7 +175,7 @@ body.cm-on-dashboard .workspace-leaf-content[data-type="file-properties"] .view-
 .cm-navcard:hover, .cm-navcard:focus-visible { border-color: var(--cm-copper); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(184, 115, 51, 0.18); outline: none; }
 .cm-navcard:last-child:nth-child(3n+1) { grid-column: 1 / -1; }
 .cm-navcard-icon svg { width: 22px; height: 22px; color: var(--cm-copper); }
-.cm-navcard-title { margin-top: 8px; font-family: Georgia, serif; font-size: 1.1em; color: var(--text-normal); }
+.cm-navcard-title { margin-top: 8px; font-family: "Segoe UI", system-ui, sans-serif; font-size: 1.1em; color: var(--text-normal); }
 .cm-navcard-sub { margin-top: 2px; font-size: var(--font-ui-smaller); color: var(--text-muted); }
 
 /* recent activity */
@@ -242,7 +242,7 @@ body.cm-on-dashboard .workspace-leaf-content[data-type="file-properties"] .view-
 .cm-search-card { padding: 9px 12px; border-radius: 8px; cursor: pointer; border: 1px solid transparent; }
 .cm-search-card.is-active { background: var(--cm-copper-soft); border-color: var(--cm-copper); }
 .cm-search-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.cm-search-title { font-family: Georgia, serif; font-size: 1.05em; color: var(--text-normal); }
+.cm-search-title { font-family: "Segoe UI", system-ui, sans-serif; font-size: 1.05em; color: var(--text-normal); }
 .cm-search-tag { font-size: var(--font-ui-smaller); padding: 0 7px; border-radius: 9px; background: var(--background-modifier-hover); color: var(--text-muted); }
 .cm-search-status { font-size: var(--font-ui-smaller); padding: 0 7px; border-radius: 9px; }
 .cm-search-draft { background: rgba(224, 168, 70, 0.16); color: var(--cm-amber); }
@@ -532,10 +532,10 @@ body {
 .cm-ring-seg { fill: none; stroke-width: 9; }
 .is-intro .cm-ring-seg { animation: cm-seg 0.3s ease-out backwards; animation-delay: calc(var(--k, 0) * 16ms + 200ms); }
 @keyframes cm-seg { from { opacity: 0; } to { opacity: 1; } }
-.cm-ring-pct { font-family: Georgia, serif; font-size: 25px; fill: var(--text-normal); text-anchor: middle; }
+.cm-ring-pct { font-family: "Segoe UI", system-ui, sans-serif; font-size: 25px; fill: var(--text-normal); text-anchor: middle; }
 .cm-ring-cap { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; fill: var(--text-muted); text-anchor: middle; }
 .cm-ring-side { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
-.cm-ring-big { font-family: Georgia, serif; font-size: 1.5em; line-height: 1.1; }
+.cm-ring-big { font-family: "Segoe UI", system-ui, sans-serif; font-size: 1.5em; line-height: 1.1; }
 .cm-spark-sum { margin-bottom: 6px; }
 .cm-spark { width: 100%; height: 74px; display: block; }
 .cm-sp-back { fill: rgba(255, 255, 255, 0.04); }
@@ -591,7 +591,7 @@ body {
 }
 .cm-vf-badge svg { width: 50px; height: 50px; color: #fff; stroke-width: 3; }
 @keyframes cm-vf-pop { 0% { transform: scale(0); opacity: 0; } 30% { transform: scale(1.18); opacity: 1; } 50% { transform: scale(1); } 85% { opacity: 1; } 100% { transform: scale(1); opacity: 0; } }
-.cm-vf-label { position: absolute; left: 0; right: 0; top: calc(46% + 62px); text-align: center; font-family: Georgia, serif; font-size: 1.3em; letter-spacing: 0.06em; color: #f6d3a8; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7); animation: cm-vf-fade 0.85s ease both; }
+.cm-vf-label { position: absolute; left: 0; right: 0; top: calc(46% + 62px); text-align: center; font-family: "Segoe UI", system-ui, sans-serif; font-size: 1.3em; letter-spacing: 0.06em; color: #f6d3a8; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7); animation: cm-vf-fade 0.85s ease both; }
 @keyframes cm-vf-fade { 0% { opacity: 0; transform: translateY(8px); } 30%, 78% { opacity: 1; transform: none; } 100% { opacity: 0; } }
 .cm-vf-ring { position: absolute; left: 50%; top: 46%; width: 92px; height: 92px; margin: -46px 0 0 -46px; border-radius: 50%; border: 2px solid rgba(134, 210, 193, 0.85); animation: cm-vf-ring 0.85s ease-out both; }
 @keyframes cm-vf-ring { from { transform: scale(0.4); opacity: 0.9; } to { transform: scale(3.4); opacity: 0; } }
@@ -804,7 +804,7 @@ body.cm-quiet .coppermind-dashboard h2 {
 /* hero: no box, no sparks, no shimmer; smaller and left-aligned */
 body.cm-quiet .cm-hero { background: none; border: none; box-shadow: none; border-radius: 0; padding: 14px 0 4px; margin: 0 0 6px; column-gap: 16px; }
 body.cm-quiet .cm-hero-bg { display: none; }
-body.cm-quiet .cm-hero-title { font-family: 'Almendra SC', Georgia, serif; justify-self: start; width: fit-content; background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 40%, #d99a62 62%, #86d2c1 100%); -webkit-background-clip: text; background-clip: text; color: transparent; animation: none; font-size: 2.4em; letter-spacing: 0.03em; filter: drop-shadow(0 0 7px rgba(217, 138, 74, 0.4)) drop-shadow(0 0 16px rgba(95, 174, 158, 0.25)); }
+body.cm-quiet .cm-hero-title { font-family: 'Almendra SC', "Segoe UI", system-ui, sans-serif; justify-self: start; width: fit-content; background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 40%, #d99a62 62%, #86d2c1 100%); -webkit-background-clip: text; background-clip: text; color: transparent; animation: none; font-size: 2.4em; letter-spacing: 0.03em; filter: drop-shadow(0 0 7px rgba(217, 138, 74, 0.4)) drop-shadow(0 0 16px rgba(95, 174, 158, 0.25)); }
 body.cm-quiet .cm-hero-tagline { font-size: 0.95em; }
 body.cm-quiet .cm-logo-hero { animation: none; filter: none; transform: scale(0.8); transform-origin: left center; }
 body.cm-quiet .cm-hero.is-intro { animation: none; }
@@ -839,7 +839,7 @@ body.cm-quiet .cm-qstats-sub { font-size: var(--font-ui-smaller); color: var(--t
 
 /* pages by type: no card box, thinner bars */
 body.cm-quiet .cm-gcard { background: none; border: none; border-radius: 0; box-shadow: none; padding: 2px 0; }
-body.cm-quiet .cm-gcard-title { font-family: Georgia, serif; font-variant: small-caps; text-transform: none; letter-spacing: 0.04em; font-size: 1em; color: var(--text-muted); margin-bottom: 6px; }
+body.cm-quiet .cm-gcard-title { font-family: "Segoe UI", system-ui, sans-serif; font-variant: small-caps; text-transform: none; letter-spacing: 0.04em; font-size: 1em; color: var(--text-muted); margin-bottom: 6px; }
 body.cm-quiet .cm-tbar { height: 6px; border-radius: 3px; }
 body.cm-quiet .cm-tbar-fill { border-radius: 3px; }
 
@@ -871,7 +871,7 @@ body.cm-quiet .cm-qstats {
 }
 body.cm-quiet .cm-qstats-line { font-size: 1.15em; line-height: 1.5; }
 body.cm-quiet .cm-qstats .cm-qnext { margin-top: 14px; }
-body.cm-quiet .cm-q-verified { font-family: Georgia, serif; font-size: 1.9em; line-height: 1; margin-right: 4px; }
+body.cm-quiet .cm-q-verified { font-family: "Segoe UI", system-ui, sans-serif; font-size: 1.9em; line-height: 1; margin-right: 4px; }
 body.cm-quiet .cm-qbar { height: 8px; margin: 14px 0 10px; border-radius: 4px; background: rgba(184, 115, 51, 0.16); overflow: visible; }
 body.cm-quiet .cm-qbar-fill {
   border-radius: 4px; background: linear-gradient(90deg, var(--cm-copper), var(--cm-patina));
@@ -918,7 +918,7 @@ body.cm-quiet .cm-qbar-fill {
 .cm-hc-soon { --hc: var(--cm-amber); }
 .cm-hc-overdue, .cm-hc-none { --hc: #e5584c; background: rgba(229, 88, 76, 0.08); }
 .cm-hc-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
-.cm-hc-title { font-family: Georgia, serif; font-variant: small-caps; letter-spacing: 0.04em; color: var(--text-muted); }
+.cm-hc-title { font-family: "Segoe UI", system-ui, sans-serif; font-variant: small-caps; letter-spacing: 0.04em; color: var(--text-muted); }
 .cm-hc-verdict { color: var(--hc); font-weight: 600; font-variant-numeric: tabular-nums; }
 .cm-hc-track { height: 6px; margin: 8px 0 6px; border-radius: 3px; background: rgba(184, 115, 51, 0.2); overflow: hidden; }
 .cm-hc-fill { height: 100%; border-radius: 3px; background: var(--hc); box-shadow: 0 0 8px var(--hc); transition: width .9s cubic-bezier(.2, .8, .3, 1); }
@@ -949,7 +949,7 @@ body.cm-quiet .cm-qbar-fill {
 /* map: kept plain (dots, arrows, labels as before); a hovered arrow glows in its color */
 .cm-wm-edge.is-hl { filter: drop-shadow(0 0 3px var(--c, transparent)); }
 .cm-wm-info { margin-top: 10px; padding: 10px 14px; border: 1px solid transparent; border-radius: 10px; background: linear-gradient(160deg, #2a2420, #1e1915) padding-box, linear-gradient(140deg, rgba(184, 115, 51, .55), rgba(95, 174, 158, .22) 55%, rgba(255, 255, 255, .05)) border-box; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05), 0 6px 18px rgba(0, 0, 0, .28); }
-.cm-wm-info-name { font-family: Georgia, serif; font-size: 1.15em; color: #f0c48c; }
+.cm-wm-info-name { font-family: "Segoe UI", system-ui, sans-serif; font-size: 1.15em; color: #f0c48c; }
 .cm-wm-info-link { border: 1px solid var(--background-modifier-border); background: rgba(16, 12, 9, .4); transition: border-color .2s, box-shadow .2s, background .2s; }
 .cm-wm-info-link:hover { border-color: var(--cm-copper); box-shadow: 0 0 8px rgba(184, 115, 51, .4); background: var(--cm-copper-soft); }
 .cm-wt-tag { border: 1px solid rgba(184, 115, 51, .35); background: var(--cm-copper-soft); color: #e0b07c; }
@@ -991,7 +991,7 @@ body.cm-quiet .cm-qbar-fill {
 .cm-wm-chip.is-off { box-shadow: none; }
 .cm-wm-stage, .cm-wt-rows { border: 1px solid rgba(184, 115, 51, .35); border-radius: 2px; background: #171310; box-shadow: none; }
 .cm-wm-info { border: 1px solid rgba(184, 115, 51, .35); border-left: 3px solid var(--cm-copper); border-radius: 2px; background: #1d1814; box-shadow: none; }
-.cm-wm-info-name { font-family: 'Almendra SC', Georgia, serif; font-size: 1.25em; color: #f0c48c; }
+.cm-wm-info-name { font-family: 'Almendra SC', "Segoe UI", system-ui, sans-serif; font-size: 1.25em; color: #f0c48c; }
 .cm-wm-legdot { box-shadow: none; }
 .cm-wm-edge.is-hl { filter: none; }
 .cm-wm-dot-verified { filter: none; }
@@ -1013,7 +1013,7 @@ body.cm-quiet .cm-qbar-fill {
 
 /* ---- Relations panel: crisp and flat (2.7.3). Same look as the wiki map: sharp 2px corners, no glows, no flowing dots, no halo, no dotted backdrop. ---- */
 /* same serif as the Review queue header; the gradient and glow are shared with it, see the end of this file */
-.cm-rel-title { font-family: Georgia, serif; font-size: 1.3em; line-height: 1.15; letter-spacing: 0.02em; }
+.cm-rel-title { font-family: "Segoe UI", system-ui, sans-serif; font-size: 1.3em; line-height: 1.15; letter-spacing: 0.02em; }
 .cm-rel-status { border-radius: 2px; }
 .cm-rel-map { border: 1px solid rgba(184, 115, 51, .35); border-radius: 2px; background: #171310; box-shadow: none; }
 .cm-rel-box { fill: #1f1a16; rx: 2px; ry: 2px; filter: none; transition: fill .15s, stroke-width .15s; }
@@ -1096,7 +1096,7 @@ button.cm-gbtn.mod-cta:disabled {
 .cm-rel-chip.is-hl { color: #f6d3a8; background: color-mix(in srgb, var(--c) 16%, transparent); box-shadow: 0 0 0 1px var(--c), 0 0 8px color-mix(in srgb, var(--c) 55%, transparent); }
 .cm-rel-chip.is-hl .cm-rel-swatch { box-shadow: 0 0 6px var(--c); }
 
-/* Dashboard search bar (2.13.2): the same look as the other gradient boxes (sharp 2px corners, copper-to-teal gradient outline on a dark fill, soft glow that brightens on hover and focus), and the serif used for the titles of the Dashboard's link cards. */
+/* Dashboard search bar (2.13.2): the same look as the other gradient boxes (sharp 2px corners, copper-to-teal gradient outline on a dark fill, soft glow that brightens on hover and focus), and the same font as the titles of the Dashboard's link cards. */
 .cm-hero .cm-search-bar, body.cm-quiet .cm-hero .cm-search-bar {
   border: 1px solid transparent !important;
   border-radius: 2px !important;
@@ -1110,4 +1110,4 @@ button.cm-gbtn.mod-cta:disabled {
   background: linear-gradient(#221b15, #221b15) padding-box, linear-gradient(135deg, #e89a5a, #78d2c0) border-box !important;
   box-shadow: 0 0 7px rgba(232,154,90,.5), 0 0 12px rgba(120,210,192,.38) !important;
 }
-.cm-hero .cm-search-bar .cm-search-input { font-family: Georgia, serif; font-size: 1.1em; }
+.cm-hero .cm-search-bar .cm-search-input { font-family: "Segoe UI", system-ui, sans-serif; font-size: 1.1em; }

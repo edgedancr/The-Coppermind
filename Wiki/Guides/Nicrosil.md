@@ -14,12 +14,12 @@ related:
   - "[[SCHEMA]]"
 drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5; larger file-list button name and index letter headings and jump bar, the flat relations map, the trimmed guide body, and the changelog moved to its own file, by claude-sonnet-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-20
+verified_on: 2026-11-21
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.13.2**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.13.4**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -42,7 +42,7 @@ This guide describes Nicrosil **v2.13.2**. Its folder is `.obsidian/plugins/nicr
 ## Review tools
 Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`, the rule files in `SCHEMAS/`, and root-level files, that have a `status` property. The rule files appear in the queue under **Schemas**.
 
-- **Review queue (right sidebar).** Open it with `Alt+Q`, the ribbon button, or by clicking the "verified" counter in the status bar. It shows:
+- **Review queue (right sidebar).** Open it with `Alt+Q` or the ribbon button. It shows:
   - a progress bar
   - a card for the page I'm on, with its flags and **Verify**, **Skip**, and **Reject** buttons
   - every draft, in review order, with flag badges: **A** accuracy check, **G** gap, **Q** question ("Whose view is this?"), **W** unsourced warning, **✓** no flags
