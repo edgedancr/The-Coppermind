@@ -4,5 +4,6 @@
   "enabledCssSnippets": [
     "coppermind"
   ],
-  "showRibbon": true
+  "showRibbon": true,
+  "textFontFamily": "Trebuchet MS"
 }

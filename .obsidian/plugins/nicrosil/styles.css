@@ -613,10 +613,11 @@ body {
 
 /* page titles: a glow for verified pages, a dim ember for drafts */
 .cm-st-verified .inline-title {
-  background: linear-gradient(100deg, var(--text-normal) 0%, var(--text-normal) 38%, #86d2c1 50%, var(--text-normal) 62%, var(--text-normal) 100%);
-  background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 10px rgba(95, 174, 158, 0.35));
-  animation: cm-title-shimmer 9s ease-in-out infinite;
+  background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 40%, #d99a62 62%, #86d2c1 100%);
+  background-size: var(--cm-title-w, 14em) 100%; background-repeat: no-repeat; /* --cm-title-w: the title's own text width, set by Nicrosil, so the gradient runs across the words and not the whole line */
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 7px rgba(217, 138, 74, 0.4)) drop-shadow(0 0 16px rgba(95, 174, 158, 0.25));
+  animation: none;
 }
 @keyframes cm-title-shimmer { 0%, 55% { background-position: 120% 0; } 100% { background-position: -20% 0; } }
 .cm-st-draft .inline-title { animation: cm-ember 4.5s ease-in-out infinite; }

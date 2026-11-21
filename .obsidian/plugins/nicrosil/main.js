@@ -3019,6 +3019,24 @@ module.exports = class Nicrosil extends Plugin {
    * Tag panes showing the Dashboard, index, or log so CSS can hide their properties (and the Dashboard's title),
    * tag the body when the Dashboard is the active note, and fold the log's entries the first time it opens.
    */
+  /** Record the title's text width in `--cm-title-w` so a verified title's gradient spans its words, not the whole line. */
+  fitTitle(view) {
+    const t = view.containerEl.querySelector(".inline-title");
+    if (!t) return;
+    const measure = () => {
+      try {
+        const r = document.createRange();
+        r.selectNodeContents(t);
+        const w = Math.ceil(r.getBoundingClientRect().width);
+        if (w > 0) t.style.setProperty("--cm-title-w", w + "px");
+      } catch (e) { /* ignore */ }
+    };
+    measure();
+    requestAnimationFrame(measure);
+    setTimeout(measure, 250);
+    if (!t.dataset.cmFit) { t.dataset.cmFit = "1"; t.addEventListener("input", measure); }
+  }
+
   syncDashboardLeaves(enforce) {
     const ws = this.app.workspace;
     ws.getLeavesOfType("markdown").forEach((leaf) => {
@@ -3034,6 +3052,7 @@ module.exports = class Nicrosil extends Plugin {
       const pageStatus = view.file ? ((this.app.metadataCache.getFileCache(view.file) || {}).frontmatter || {}).status : "";
       view.containerEl.classList.toggle("cm-st-verified", pageStatus === "verified");
       view.containerEl.classList.toggle("cm-st-draft", pageStatus === "draft");
+      try { this.fitTitle(view); } catch (e) { /* the title gradient is cosmetic; never let it stop the rest */ }
       const useStrip = !!view.file && !isDash && !isLog && path !== INDEX_PATH;
       view.containerEl.classList.toggle("cm-strip-leaf", useStrip);
       if (this.stripPaths.get(view) !== path) {

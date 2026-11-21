@@ -19,7 +19,7 @@ verified_on: 2026-11-21
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.13.4**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.13.5**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -113,7 +113,7 @@ Open it with `Alt+M` or the Wiki map card on the Dashboard. It opens in its own 
 On every other note, Nicrosil hides the full Properties block and puts a one-line strip in its place, showing the page's **type**, **status**, and a date (`drafted` or `verified`). Click the strip to open the real Properties block. Each note starts collapsed again when I open it. The pop-up preview that appears when I point at a link shows the same strip, so a preview looks like the page itself.
 
 ## Ambience
-Small animations make the vault feel alive. None of them change how anything works. They include glows on page titles by status, a soft pulse on flag callouts, a fade when a page opens, sparks on verified dots in the wiki map, a pulse on the newest Dashboard activity row, rows sliding into place in the review queue, and a glow on the status-bar count when it goes up.
+Small animations make the vault feel alive. None of them change how anything works. They include glows on page titles by status (a verified title is a copper-to-teal gradient, a draft title pulses like an ember), a soft pulse on flag callouts, a fade when a page opens, sparks on verified dots in the wiki map, a pulse on the newest Dashboard activity row, rows sliding into place in the review queue, and a glow on the status-bar count when it goes up.
 They are all off if the computer is set to reduce motion.
 
 ## Logging a schema change
