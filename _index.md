@@ -4,8 +4,6 @@ cssclasses:
   - coppermind-index
 updated: 2026-11-20
 ---
-# Index
-
 A map of every page in the Coppermind, grouped by type. The AI agent updates this after every operation; I check it during health checks. Within each type, pages are listed alphabetically, each with a one-line summary.
 
 **Total:** 429 pages

@@ -47,6 +47,8 @@ The agent never deletes anything except a draft it created that Harrison rejecte
 
 **Raw sources.** `Ingestion/Raw/` holds sources Harrison has collected but not yet put through ingestion. Treat it as if it isn't there: in every task (queries, health checks, triage, index work), don't open, list, search, quote, count, or mention what is in it, and keep searches out of it. The one exception is a file he names there and asks you to ingest: read that file only, and follow `SCHEMA - Ingest.md` (Raw sources).
 
+**No repeated titles.** A file that isn't a wiki page doesn't start with a `# Title` that repeats its file name (the index, the log, Triage, a health check report): Obsidian already shows the name at the top.
+
 **Voices.** A wiki page reports what sources say and attributes every claim: to the author, the course (named, with the date in the footnote), or a guest lecturer by name. Harrison's own views never appear in a wiki page as fact; they live in `Perspectives/` or a `## My Take` section only he writes. Never write his opinions for him. Never turn a line from his notes into a neutral fact about the world ("SAIL taught X" is not "X is true"). If you can't tell whose view a line is, flag it instead of guessing. Details: `SCHEMA - Writing Pages.md`.
 
 **No unsourced claims.** Every factual claim is cited. Background no source in the vault provides goes in a `> [!warning] Unsourced background — verify or remove` callout.

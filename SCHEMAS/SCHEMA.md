@@ -1,11 +1,12 @@
 ---
 type: schema
-version: 7.12
+version: 7.13
 status: draft
 owner: Harrison Nickles
 updated: 2026-11-20
 verified_on: 2026-11-20
 changes_since_verified:
+  - "2026-11-20: AGENTS.md has a No repeated titles rule: files that aren't wiki pages carry no `# Title` that repeats their file name [[#Files that are not wiki pages]]"
   - "2026-11-20: the Ingest Queue is renamed Triage, and the `Ingest/` folder is `Ingestion/` [[#Folder layout]]"
   - "2026-11-20: `Triage.md` moved into a new `Ingestion/` folder next to `Ingestion/Raw/` (sources not yet ingested), which agents never look in [[#Folder layout]]"
   - "2026-11-20: `Review Queue.base` is gone from the folder layout [[#Folder layout]]"
@@ -97,7 +98,7 @@ The Coppermind/
 
 ## Files that are not wiki pages
 
-`_index.md`, the log, `Ingestion/Triage.md`, the reports in `Health Checks/`, everything in `Tools/`, and the files in `_changelogs/` are not wiki pages: they have no `status`, are not in `_index.md`, and I don't verify them. The rule files in `SCHEMAS/` do have a `status`, and I verify them like pages, but they are not listed in the index either.
+`_index.md`, the log, `Ingestion/Triage.md`, the reports in `Health Checks/`, everything in `Tools/`, and the files in `_changelogs/` are not wiki pages: they have no `status`, are not in `_index.md`, and I don't verify them. Like every file here, they also carry no `# Title` line that repeats the file name, because Obsidian already shows the name at the top. The rule files in `SCHEMAS/` do have a `status`, and I verify them like pages, but they are not listed in the index either.
 
 ### Guides: about the Coppermind itself
 

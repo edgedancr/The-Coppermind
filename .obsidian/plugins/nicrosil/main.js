@@ -425,7 +425,7 @@ function logFileHeader(date) {
   const [y, m] = date.split("-").map(Number);
   const name = new Date(y, m - 1, 1).toLocaleString("en-US", { month: "long", year: "numeric" });
   return [
-    "---", "type: log", "---", "# Log", "",
+    "---", "type: log", "---",
     `A dated record of every ingest, query, health check, verification, schema change, and tool change, and what I approved, revised, or rejected. Newest entries are at the top, so a new entry goes just under the line below, above the newest one. Past entries are never rewritten. This file holds ${name}; each month has its own file in \`${LOG_DIR}/\`. Format and rules: \`AGENTS.md\` and [[SCHEMA - Index and Log#The log]]. Agents: don't read this file whole; read only the first 15 or so lines to add an entry, and search the headings.`,
     "", "---",
   ].join("\n");
