@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - Foundation Models
 courses:
@@ -11,7 +11,7 @@ part_of:
   - "[[Generative AI]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
-verified_on:
+verified_on: 2026-11-21
 ---
 > [!summary]
 > **Foundation model:** IBM's term for the models behind [[Generative AI|generative AI]]; a [[Large Language Model|large language model]] is one example, and audio and video models are others.[^1] IBM's explainer says foundation models are what changed AI's adoption curve.[^2]

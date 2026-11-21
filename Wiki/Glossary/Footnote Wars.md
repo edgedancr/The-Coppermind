@@ -1,9 +1,11 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]"]
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,13 +18,10 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-21
 ---
 > [!summary]
 > **Footnote wars:** described in the course's summary as citing sources solely to maintain independent points of view, whether or not they are relevant to the issue at hand.[^1]
-
-> [!caution] Accuracy check
-> The definition is hard to follow. In intelligence estimates, "footnotes" are usually how an agency records a dissenting view, so footnote wars may mean agencies fighting over dissents. Check Lowenthal's wording.
 
 **Used in:** none yet; compare [[Competitive Analysis]]
 

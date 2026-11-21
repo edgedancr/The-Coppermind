@@ -1,9 +1,15 @@
 ---
 type: glossary
-status: draft
-aliases: ["Current Intelligence", "Long-Term Intelligence"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]", "[[SRC - The 9-11 Commission Report]]", "[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"]
+status: verified
+aliases:
+  - Current Intelligence
+  - Long-Term Intelligence
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
+  - "[[SRC - The 9-11 Commission Report]]"
+  - "[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +22,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **Current vs. long-term intelligence:** current intelligence stays relevant for only a day or two, or a few weeks; long-term reports address a more distant time horizon, usually with greater depth and context. ==Policymakers generally prefer to read current intelligence, and analysts prefer to produce long-term reports==.[^1] The 9/11 Commission describes the CIA's analytic culture in the 1990s giving way from a university culture to "the culture of the newsroom," under pressure to pass fresh reports to policymakers ever faster.[^2] Analysts told Rob Johnston of a communitywide shift toward short-term products,[^3] and he argues that current reporting competes with [[Indications and Warning|indications and warning]] intelligence for time and resources;[^4] Bobby W. urges agencies to promote foundational research even over current production.[^5]

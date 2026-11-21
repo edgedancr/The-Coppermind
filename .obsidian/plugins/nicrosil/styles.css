@@ -1083,3 +1083,31 @@ button.cm-gbtn.mod-cta:disabled {
   background: linear-gradient(#171310, #171310) padding-box, linear-gradient(135deg, #d98a4a, #5fae9e) border-box;
   box-shadow: 0 0 5px rgba(217,138,74,.3), 0 0 8px rgba(95,174,158,.22);
 }
+
+/* Relations map expand button (2.12.0): reuses the gradient button style; centered under the map. */
+.cm-rel-expand { display: block; margin: 8px auto 4px; }
+
+/* Enlarged relations map (2.13.0): a wide window; the map scales up with it and the window scrolls when there are many pages. */
+.modal.cm-rel-modal { width: min(920px, 92vw); max-width: 92vw; }
+.cm-rel-modal .modal-content { max-height: 75vh; overflow-y: auto; }
+
+/* Legend chip lit while its page card is hovered (2.13.1): sharp 2px outline and glow in the relationship's own color. */
+.cm-rel-chip { padding: 1px 5px; border-radius: 2px; transition: color .15s, background .15s, box-shadow .15s; }
+.cm-rel-chip.is-hl { color: #f6d3a8; background: color-mix(in srgb, var(--c) 16%, transparent); box-shadow: 0 0 0 1px var(--c), 0 0 8px color-mix(in srgb, var(--c) 55%, transparent); }
+.cm-rel-chip.is-hl .cm-rel-swatch { box-shadow: 0 0 6px var(--c); }
+
+/* Dashboard search bar (2.13.2): the same look as the other gradient boxes (sharp 2px corners, copper-to-teal gradient outline on a dark fill, soft glow that brightens on hover and focus), and the serif used for the titles of the Dashboard's link cards. */
+.cm-hero .cm-search-bar, body.cm-quiet .cm-hero .cm-search-bar {
+  border: 1px solid transparent !important;
+  border-radius: 2px !important;
+  background: linear-gradient(#1a1511, #1a1511) padding-box, linear-gradient(135deg, #d98a4a, #5fae9e) border-box !important;
+  box-shadow: 0 0 5px rgba(217,138,74,.3), 0 0 8px rgba(95,174,158,.22) !important;
+}
+.cm-hero .cm-search-bar:hover:not(:focus-within), body.cm-quiet .cm-hero .cm-search-bar:hover:not(:focus-within) {
+  box-shadow: 0 0 7px rgba(232,154,90,.5), 0 0 12px rgba(120,210,192,.38) !important;
+}
+.cm-hero .cm-search-bar:focus-within, body.cm-quiet .cm-hero .cm-search-bar:focus-within {
+  background: linear-gradient(#221b15, #221b15) padding-box, linear-gradient(135deg, #e89a5a, #78d2c0) border-box !important;
+  box-shadow: 0 0 7px rgba(232,154,90,.5), 0 0 12px rgba(120,210,192,.38) !important;
+}
+.cm-hero .cm-search-bar .cm-search-input { font-family: Georgia, serif; font-size: 1.1em; }

@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - Correlated Features
 courses:
@@ -11,7 +11,7 @@ part_of:
   - "[[Algorithmic Bias]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **Correlated feature:** a feature that isn't explicitly in the data but may be unintentionally correlated with a specific prediction, which lets a [[Protected Class|protected class]] re-enter an algorithm that never collected it.[^1] Crash Course AI's examples: because many U.S. places are still highly segregated, zip code can be strongly correlated with race, and a record of purchases with gender.[^1]

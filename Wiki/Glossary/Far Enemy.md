@@ -1,9 +1,11 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +18,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-21
 ---
 > [!summary]
 > **Far enemy:** the 9/11 Commission's term for the United States as Bin Ladin saw it: while his allied Islamist groups were focused on local battles, in Egypt, Algeria, Bosnia, or Chechnya, Bin Ladin concentrated on attacking the "far enemy".[^1] He called it "the head of the snake".[^2]

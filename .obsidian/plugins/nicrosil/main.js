@@ -813,6 +813,19 @@ function svgEl(parent, tag, attrs, text) {
 }
 function clip(s, n) { return s.length > n ? s.slice(0, n - 1).trimEnd() + "…" : s; }
 
+/** The relations map in a large window, with every page (opened by the Enlarge button). */
+class RelationsMapModal extends Modal {
+  constructor(app, view, file, out, inn) { super(app); this.view = view; this.file = file; this.out = out; this.inn = inn; }
+  onOpen() {
+    this.modalEl.addClass("cm-rel-modal");
+    this.titleEl.setText(`Relations: ${this.file.basename}`);
+    this.view.bigModal = this;
+    this.view.drawMap(this.contentEl, this.file, this.out, this.inn, true);
+    this.view.drawLegend(this.contentEl, this.out, this.inn);
+  }
+  onClose() { if (this.view.bigModal === this) this.view.bigModal = null; this.contentEl.empty(); }
+}
+
 class RelationsView extends ItemView {
   constructor(leaf, plugin) {
     super(leaf);
@@ -840,6 +853,7 @@ class RelationsView extends ItemView {
 
   go(path, newTab) {
     if (!path) return;
+    if (this.bigModal) this.bigModal.close();
     if (!newTab) { this.plugin.openFile(path); return; }
     const f = this.app.vault.getAbstractFileByPath(path);
     if (f instanceof TFile) this.app.workspace.getLeaf(true).openFile(f);
@@ -891,8 +905,9 @@ class RelationsView extends ItemView {
     return [...map.values()];
   }
 
-  drawMap(root, file, out, inn) {
-    const MAX = 10;
+  drawMap(root, file, out, inn, big = false) {
+    const LIMIT = 6;
+    const MAX = big ? Infinity : LIMIT;
     const L = this.neighbors(inn, (e) => e.from, (e) => this.app.vault.getAbstractFileByPath(e.from)?.basename || e.from);
     const R = this.neighbors(out, (e) => e.to, (e) => e.toName);
     const Ls = L.slice(0, MAX), Rs = R.slice(0, MAX);
@@ -951,6 +966,8 @@ class RelationsView extends ItemView {
       const hot = (on) => {
         svg.classList.toggle("is-hovering", on); g.classList.toggle("is-hl", on);
         (edgeEls[key] || []).forEach((el) => el.classList.toggle("is-hl", on));
+        // light up this page's relationship names in the legend under the map
+        root.querySelectorAll(".cm-rel-chip").forEach((c) => c.classList.toggle("is-hl", on && nd.types.includes(c.getAttribute("data-type"))));
       };
       g.addEventListener("mouseenter", () => hot(true)); g.addEventListener("mouseleave", () => hot(false));
       g.addEventListener("focus", () => hot(true)); g.addEventListener("blur", () => hot(false));
@@ -977,8 +994,13 @@ class RelationsView extends ItemView {
     shown.forEach((ln, i) => svgEl(g, "text", { x: X2 + CW / 2, y: cy - ((shown.length - 1) * 6.5) + i * 13 + 4, "text-anchor": "middle", class: "cm-rel-label cm-rel-center-label" }, clip(ln, 16)));
     svgEl(g, "title", {}, file.basename);
     const more = (L.length - Ls.length) + (R.length - Rs.length);
-    if (more > 0) svgEl(svg, "text", { x: W / 2, y: H - 4, "text-anchor": "middle", class: "cm-rel-more" }, `${L.length > MAX ? L.length - MAX + " more incoming" : ""}${L.length > MAX && R.length > MAX ? " · " : ""}${R.length > MAX ? R.length - MAX + " more outgoing" : ""} (see the lists below)`);
+    if (more > 0) svgEl(svg, "text", { x: W / 2, y: H - 4, "text-anchor": "middle", class: "cm-rel-more" }, `${L.length > MAX ? L.length - MAX + " more incoming" : ""}${L.length > MAX && R.length > MAX ? " · " : ""}${R.length > MAX ? R.length - MAX + " more outgoing" : ""} (Enlarge to see all)`);
     svgEl(svg, "text", { x: X1, y: 8, class: "cm-rel-side" }, "");
+    // an Enlarge button under the inline map (always there) opens the map large, with every page
+    if (!big) {
+      const btn = root.createEl("button", { cls: "mod-cta cm-gbtn cm-rel-expand", text: "Enlarge" });
+      btn.addEventListener("click", () => new RelationsMapModal(this.app, this, file, out, inn).open());
+    }
   }
 
   drawLegend(root, out, inn) {
@@ -986,6 +1008,7 @@ class RelationsView extends ItemView {
     const lg = root.createDiv({ cls: "cm-rel-legend" });
     present.forEach((t) => {
       const chip = lg.createSpan({ cls: "cm-rel-chip" });
+      chip.setAttr("data-type", t); chip.style.setProperty("--c", REL_TYPES[t].color);
       const sw = chip.createSpan({ cls: "cm-rel-swatch" });
       sw.style.background = REL_TYPES[t].color; sw.style.setProperty("--c", REL_TYPES[t].color);
       if (REL_TYPES[t].dash) sw.addClass("is-dashed");

@@ -1,9 +1,12 @@
 ---
 type: glossary
-status: draft
-aliases: ["Gang of 8"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]"]
+status: verified
+aliases:
+  - Gang of 8
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +19,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-21
 ---
 > [!summary]
 > **Gang of Eight:** the group of congressional leaders, and chairmen and ranking members of the intelligence committees, whom intelligence officials may brief.[^1]

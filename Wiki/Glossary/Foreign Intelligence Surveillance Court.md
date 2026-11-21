@@ -1,11 +1,15 @@
 ---
 type: glossary
-status: draft
-aliases: ["FISC"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]"]
+status: verified
+aliases:
+  - FISC
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 type_of: []
-part_of: ["[[Foreign Intelligence Surveillance Act]]"]
+part_of:
+  - "[[Foreign Intelligence Surveillance Act]]"
 example_of: []
 causes: []
 counters: []
@@ -16,7 +20,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-21
 ---
 > [!summary]
 > **Foreign Intelligence Surveillance Court (FISC):** eleven federal judges who manage court orders for surveillance, created by the Foreign Intelligence Surveillance Act (FISA) of 1978. It has no investigative powers and depends on intelligence agencies to report noncompliance with its orders.[^1]

@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - Embeddings
 courses:
@@ -13,7 +13,7 @@ part_of:
   - "[[Transformer]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
+verified_on: 2026-11-21
 ---
 > [!summary]
 > **Embedding:** taking a token and making a vector out of it. The example in class used 12,288 dimensions.[^1] 3Blue1Brown explains why: training works only with continuous values, so each word is encoded as a long list of numbers that may capture its meaning.[^2] The original transformer used learned embeddings of 512 dimensions.[^3]

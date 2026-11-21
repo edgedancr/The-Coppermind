@@ -1,9 +1,15 @@
 ---
 type: framework
-status: draft
-aliases: ["Analytic Culture in the US Intelligence Community", "Johnston Recommendations"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]", "[[SRC - Johnston Recommendations Summary]]", "[[SRC - The Future of Analysis]]"]
+status: verified
+aliases:
+  - Analytic Culture in the US Intelligence Community
+  - Johnston Recommendations
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"
+  - "[[SRC - Johnston Recommendations Summary]]"
+  - "[[SRC - The Future of Analysis]]"
 type_of: []
 part_of: []
 example_of: []
@@ -12,11 +18,12 @@ counters: []
 applies_to: []
 supports: []
 contradicts: []
-developed_by: ["[[Rob Johnston]]"]
+developed_by:
+  - "[[Rob Johnston]]"
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > Rob Johnston's 2005 ethnographic study, *Analytic Culture in the US Intelligence Community*, ends with recommendations that a course handout sums up in five points.[^1] The book itself starts from one structural problem: current reporting competes with [[Indications and Warning|indications and warning]] (I&W) intelligence for time and resources.[^2] It closes with the warning that ==culture and product "are inseparable"==, so an organization must manage its culture "or to be managed by it".[^3]

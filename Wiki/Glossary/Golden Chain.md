@@ -1,9 +1,11 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +18,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-21
 ---
 > [!summary]
 > **Golden Chain:** the financial support network for the anti-Soviet jihad in Afghanistan, put together mainly by financiers in Saudi Arabia and the Persian Gulf states, with donations flowing through charities and other nongovernmental organizations.[^1] The 9/11 Commission notes that Bin Ladin later rebuilt a strong financial position in Afghanistan through financiers associated with it.[^2]

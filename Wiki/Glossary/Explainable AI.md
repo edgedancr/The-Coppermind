@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - XAI
 courses:
@@ -11,7 +11,7 @@ part_of:
   - "[[Human-Centered AI]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
-verified_on:
+verified_on: 2026-11-21
 ---
 > [!summary]
 > **Explainable AI (XAI):** explaining how AI models operate and why they make a given recommendation, so people understand and can trust them; IBM Research treats it as part of responsible, human-compatible AI and is developing XAI guidelines for practitioners.[^1] In IBM's SCORE sales tool, explainable recommendations that gave clear evidence for why a business partner was recommended were critical to users trusting the system.[^1]

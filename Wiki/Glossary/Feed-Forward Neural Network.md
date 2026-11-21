@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - Feed-Forward Network
   - Feed-Forward Layer
@@ -15,7 +15,7 @@ related:
   - "[[Neural Network]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
-verified_on:
+verified_on: 2026-11-21
 ---
 > [!summary]
 > **Feed-forward neural network:** the second core operation in a [[Transformer|transformer]] layer, alongside attention, which 3Blue1Brown says gives the model extra capacity to store patterns about language learned in training.[^1] In the original paper, it is applied to each position separately and identically: two linear transformations with a ReLU between them.[^2]

@@ -1,9 +1,13 @@
 ---
 type: glossary
-status: draft
-aliases: ["Corporate Product Line", "Analytic Line"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"]
+status: verified
+aliases:
+  - Corporate Product Line
+  - Analytic Line
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +20,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on:
+verified_on: 2026-11-20
 ---
 > [!summary]
 > **Corporate judgment:** an agency's official position on an issue. Rob Johnston found its maintenance to be "a pervasive and often-unstated norm," with a taboo against reversing it once given to policymakers, for fear of losing status, trust, or access;[^1] analysts are therefore inclined "to work the product line rather than change it".[^2] He judged this the main driver of [[Confirmation Bias|confirmation bias]] in analysis.[^1]
