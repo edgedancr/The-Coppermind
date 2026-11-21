@@ -44,7 +44,7 @@ verified_on: 2026-11-19
 | Task | Default | Step down to | Step up to |
 |---|---|---|---|
 | Ingest a source[^7] | Opus | Sonnet, for one short, clean source | Fable, for a multi-source batch or a long PDF |
-| Triage new sources into the Ingest Queue | Sonnet | Haiku | Opus |
+| Triage new sources into Triage | Sonnet | Haiku | Opus |
 | Health check, whole vault | Opus | Sonnet, for mechanical checks only | Fable |
 | Health check, one folder | Sonnet | | Opus |
 | Query, quick lookup | Sonnet | Haiku | Opus |
@@ -67,7 +67,7 @@ verified_on: 2026-11-19
 
 ### Health checks
 - **Whole vault: use Opus.** The checks that matter most need judgment: whether a citation supports its claim, whether two pages contradict each other, whether a typed link holds up.[^11]
-- **Sonnet is enough** for the mechanical rows: broken links, index sync, draft age, the Ingest Queue, and link counts. It is also enough for a check of one folder.
+- **Sonnet is enough** for the mechanical rows: broken links, index sync, draft age, Triage, and link counts. It is also enough for a check of one folder.
 - **A useful split:** run the mechanical rows with Sonnet, then ask Opus to check only the citation, contradiction, and typed-link rows.
 
 ### Queries
@@ -94,7 +94,7 @@ verified_on: 2026-11-19
 
 ## Troubleshooting
 - **A model isn't in the picker:** which models I can use depends on my plan. Use Opus at higher effort instead.
-- **I hit usage limits mid-ingest:** split the batch in the Ingest Queue, or let Sonnet draft the source cards and Opus draft the pages.
+- **I hit usage limits mid-ingest:** split the batch in Triage, or let Sonnet draft the source cards and Opus draft the pages.
 - **The model names here are out of date:** newer models replace these, and each has a published retirement date.[^2] Check the [Models overview](https://platform.claude.com/docs/en/about-claude/models.md) and update the four model descriptions; the tiers' roles change less often than the version numbers.
 
 ## Footnotes

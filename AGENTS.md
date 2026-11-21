@@ -36,13 +36,16 @@ More than one row can apply. Don't read anything in `_changelogs/` (the rules' c
 | `Perspectives/` | Read, and quote as *Harrison's* view in answers | Write or edit anything |
 | `SCHEMAS/` and `AGENTS.md` | Read, and suggest changes in chat | Edit, unless he asks for a specific change |
 | `_index.md`, `_logs/` | Maintain | Delete or rewrite past log entries |
-| `Ingest Queue.md` | Maintain and keep current | Reorder, drop, or skip batches, unless he asks |
+| `Ingestion/Triage.md` | Maintain and keep current | Reorder, drop, or skip batches, unless he asks |
+| `Ingestion/Raw/` (sources not yet ingested) | Read one file, only when he names it and asks for it to be ingested | Open, list, search, quote, or mention anything else in it; edit, rename, move, or delete anything in it |
 | `Health Checks/` | Create a report for each health check; record his decisions in it | Change a saved report's findings, or delete a report |
 | `Tools/` | Read; build or revise a tool when he asks | Edit, rename, or delete otherwise |
 | `_changelogs/` | Add a line for each change | Rewrite or delete past lines |
 | `_templates/`, `.obsidian/` | Use | Change, unless he asks |
 
 The agent never deletes anything except a draft it created that Harrison rejected.
+
+**Raw sources.** `Ingestion/Raw/` holds sources Harrison has collected but not yet put through ingestion. Treat it as if it isn't there: in every task (queries, health checks, triage, index work), don't open, list, search, quote, count, or mention what is in it, and keep searches out of it. The one exception is a file he names there and asks you to ingest: read that file only, and follow `SCHEMA - Ingest.md` (Raw sources).
 
 **Voices.** A wiki page reports what sources say and attributes every claim: to the author, the course (named, with the date in the footnote), or a guest lecturer by name. Harrison's own views never appear in a wiki page as fact; they live in `Perspectives/` or a `## My Take` section only he writes. Never write his opinions for him. Never turn a line from his notes into a neutral fact about the world ("SAIL taught X" is not "X is true"). If you can't tell whose view a line is, flag it instead of guessing. Details: `SCHEMA - Writing Pages.md`.
 
@@ -74,6 +77,6 @@ The agent never deletes anything except a draft it created that Harrison rejecte
 
 - **Never read a log file whole.** They are long. To add an entry, read only the first 15 or so lines of the current month's file and insert the entry under the header's closing `---` line, above the newest entry (don't append to the end). If there is no file for the current month yet, create it by copying the header of the latest one (Nicrosil normally does this when Obsidian opens). To look something up, search the `### [date] operation | Subject` headings across `_logs/`.
 - **Find existing pages by searching**, not by reading `_index.md`: search file names and `aliases:` lines in `Wiki/` and `Sources/Source Cards/`. Read and edit only the section of `_index.md` you are changing. Without a shell or search tool, list the folders, or read the index.
-- **In `Ingest Queue.md`, read only the batch you are working on.**
+- **In `Ingestion/Triage.md`, read only the batch you are working on.**
 - **Read the `Nicrosil` guide or the plugin's code only when working on Nicrosil**, and a page's template only when drafting that type of page.
 - **For a health check, run `Tools/health-check/coppermind_check.py` first**; it does the mechanical checks so you don't have to read every page for them.

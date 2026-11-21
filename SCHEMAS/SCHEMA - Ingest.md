@@ -5,6 +5,8 @@ owner: Harrison Nickles
 updated: 2026-11-20
 verified_on: 2026-11-19
 changes_since_verified:
+  - "2026-11-20: the Ingest Queue is renamed Triage (`Ingestion/Triage.md`), and the folder is `Ingestion/` [[#Triage]]"
+  - "2026-11-20: the Ingest Queue is `Ingestion/Triage.md`, and a new Raw sources section says the agent never looks in `Ingestion/Raw/` [[#Raw sources]]"
   - "2026-11-20: the index and the log are `_index.md` and `_log.md` [[#The ingest operation]]"
   - "2026-11-20: the agent \"adds\" the log entry (at the top, since the log is newest first) instead of appending it [[#The ingest operation]]"
 ---
@@ -18,12 +20,12 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 2. **Plan (agent).** Before drafting, the agent proposes a short plan: the pages it will create or update, and the source card if one is needed. I approve or adjust the plan. This keeps drafts focused and saves effort. If MODE is "plan first" (the default), the agent does steps 1–3 of [[#Dissect and draft]], gives me sections A–C of [[#The report]] as the plan, and stops until I approve it. If MODE is "draft directly," it skips this step.
 3. **Calculate (agent).** The agent works through [[#Dissect and draft]], drafting the pages with `status: draft`, then gives me [[#The report]].
 4. **Verify (me).** For each page, I approve it, ask for revisions (back to step 3), or reject it. I check the links the same way.
-5. **Commit.** The agent updates `_index.md`, marks the batch done in `Ingest Queue.md` if it came from there, adds the log entry (operation: `ingest`), and suggests a git commit message. I commit.
+5. **Commit.** The agent updates `_index.md`, marks the batch done in `Ingestion/Triage.md` if it came from there, adds the log entry (operation: `ingest`), and suggests a git commit message. I commit.
 
 ## Dissect and draft
 
 ### 1. Orient
-- If I attached the source and it isn't in `Sources/` yet, copy it unchanged into the right subfolder and tell me where it went.
+- If I attached the source and it isn't in `Sources/` yet, copy it unchanged into the right subfolder and tell me where it went. A source I name in `Ingestion/Raw/` is handled the same way; leave the original in `Raw/` and tell me I can delete it ([[#Raw sources]]).
 - Read the source's card in `Sources/Source Cards/` if it has one (check Ingest Progress so nothing is ingested twice), and every existing page this source is likely to touch.
 - Find those pages by searching file names and `aliases:` lines in `Wiki/`, not just exact names. Read `_index.md` whole only if you can't search.
 
@@ -69,9 +71,18 @@ Create the card if it doesn't exist, or update it: propose an Admiralty rating w
 - **E.** Flags: whose view, unsourced background, accuracy checks, sources disagree, gaps, and flags this source may resolve
 - **F.** Skipped on purpose, and Perspectives material from my own work
 
-## The Ingest Queue
+## Raw sources
 
-`Ingest Queue.md` lists sources I've collected but not yet ingested, grouped into the batches we plan to ingest them in, with each batch's status. It is not one of the six parts and not a wiki page: it has no `status`, is not in `_index.md`, and I don't verify it. **The agent maintains it, and it must stay current.**
+`Ingestion/Raw/` is where I put sources I've collected but haven't put through ingestion. It is not one of the six parts and not a wiki page folder: nothing in it has a source card, a page, or an index entry, and a source isn't part of the wiki until it is ingested.
+
+- **The agent doesn't look at it.** No task reads, lists, searches, quotes, counts, or mentions what is in `Raw/`: not queries, health checks, triage, or index work. Searches over the vault leave it out.
+- **Only I open it up.** The one exception is a source I name in `Raw/` and ask the agent to ingest. The agent reads that file only and ingests it as usual: Orient copies it unchanged into `Sources/`, and every step after is the same. It leaves the original in `Raw/` (the agent never moves or deletes my files) and tells me I can delete it.
+- **Triage is mine too.** The agent adds sources to Triage only when I hand them over or name them in chat. It never finds them by looking in `Raw/`.
+- **The health check skips it.** The script leaves `Ingestion/Raw/` out, so nothing in it is checked or flagged.
+
+## Triage
+
+`Ingestion/Triage.md` lists sources I've collected but not yet ingested, grouped into the batches we plan to ingest them in, with each batch's status. It is not one of the six parts and not a wiki page: it has no `status`, is not in `_index.md`, and I don't verify it. **The agent maintains it, and it must stay current.**
 
 - **It is a plan, not a record.** The log records what was done, and each source card's Ingest Progress records what has been ingested from that source. The queue only says what is still waiting and in what order.
 - **Read only the batch you are working on**, plus the status key at the top.

@@ -28,7 +28,7 @@ verified_on:
 **Proposed B-2** (usually reliable; probably true). It is the official, unanimous report of a bipartisan commission that reviewed more than 2.5 million pages of documents and interviewed more than 1,200 people ([[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=12|9/11 Report, p. xv]]), but its judgments, such as what officials understood and what might have worked, are the Commission's assessments, and the Commission says it did not interview everyone or find every document ([[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=14|9/11 Report, p. xvii]]). Chapters 5 and 7 rely heavily on detainee interrogation reports: the Commission could not question the detainees or their interrogators, evaluated the statements and tried to corroborate them, and says where they are the foundation of its narrative ([[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=163|9/11 Report, p. 146]]); claims resting on them may rate lower than the report as a whole. Harrison sets the final rating.
 
 ## Ingest Progress
-Planned in five batches (see [[Ingest Queue]]). The endnotes (pp. 449–567) are used only to check attributions.
+Planned in five batches (see [[Triage]]). The endnotes (pp. 449–567) are used only to check attributions.
 - **Preface, ch. 11 (Foresight and Hindsight), ch. 13 (How to Do It?):** ingested 2026-11-18 (batch 9/11-A). Skipped on purpose:
 	- Ch. 13.4's recommendations on transitions between administrations, and the DHS information-analysis directorate and Northern Command recommendations in 13.5.
 	- The organizational chart on p. 413 (an image; its content is in [[Director of National Intelligence]]).

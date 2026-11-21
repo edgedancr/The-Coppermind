@@ -1,11 +1,13 @@
 ---
 type: schema
-version: 7.10
+version: 7.12
 status: draft
 owner: Harrison Nickles
 updated: 2026-11-20
 verified_on: 2026-11-20
 changes_since_verified:
+  - "2026-11-20: the Ingest Queue is renamed Triage, and the `Ingest/` folder is `Ingestion/` [[#Folder layout]]"
+  - "2026-11-20: `Triage.md` moved into a new `Ingestion/` folder next to `Ingestion/Raw/` (sources not yet ingested), which agents never look in [[#Folder layout]]"
   - "2026-11-20: `Review Queue.base` is gone from the folder layout [[#Folder layout]]"
   - "2026-11-20: the log is one file per month in `_logs/`, named `_log MM-YY` [[#Folder layout]]"
   - "2026-11-20: the index and the log are `_index.md` and `_log.md` [[#Folder layout]]"
@@ -24,7 +26,7 @@ An agent starts at `AGENTS.md`, which holds the rules for every task and points 
 | `AGENTS.md` (vault root) | Read by every agent, every time: scope, drafts only, permissions, voices, no unsourced claims, the index line and log entry formats, and which rule files to read |
 | [[SCHEMA - Writing Pages]] | Naming, page properties, typed links, citations, attribution, source reliability, and page style |
 | [[SCHEMA - Review]] | Draft vs. verified, change notes on verified pages, and review size |
-| [[SCHEMA - Ingest]] | The ingest operation, step by step, and the Ingest Queue |
+| [[SCHEMA - Ingest]] | The ingest operation, step by step, Triage, and raw sources |
 | [[SCHEMA - Query]] | Answering questions from the wiki and filing answers back |
 | [[SCHEMA - Health Check]] | What a health check covers, the check script, and the report archive |
 | [[SCHEMA - Index and Log]] | The index, the log (one file per month), and git |
@@ -64,7 +66,9 @@ The Coppermind/
 ├── _dashboard.md           Front door and review dashboard (hidden in the file list unless the eye button is on)
 ├── _index.md               Map of every page
 ├── _logs/                  The log: one file per month ("_log 11-26" is November 2026)
-├── Ingest Queue.md         Sources I've collected that are waiting to be ingested, in batches
+├── Ingestion/              Everything before ingestion
+│   ├── Triage.md           Sources I've collected that are waiting to be ingested, in batches
+│   └── Raw/                Sources I haven't put through ingestion yet (agents never look in here)
 ├── SCHEMAS/                This rulebook: this overview and one file per area
 ├── Sources/
 │   ├── Class Notes/        Copies of my course notes (one file per course)
@@ -93,7 +97,7 @@ The Coppermind/
 
 ## Files that are not wiki pages
 
-`_index.md`, the log, `Ingest Queue.md`, the reports in `Health Checks/`, everything in `Tools/`, and the files in `_changelogs/` are not wiki pages: they have no `status`, are not in `_index.md`, and I don't verify them. The rule files in `SCHEMAS/` do have a `status`, and I verify them like pages, but they are not listed in the index either.
+`_index.md`, the log, `Ingestion/Triage.md`, the reports in `Health Checks/`, everything in `Tools/`, and the files in `_changelogs/` are not wiki pages: they have no `status`, are not in `_index.md`, and I don't verify them. The rule files in `SCHEMAS/` do have a `status`, and I verify them like pages, but they are not listed in the index either.
 
 ### Guides: about the Coppermind itself
 
@@ -105,7 +109,8 @@ A **guide** explains how to set up, run, review, or get the most out of the Copp
 
 ### The other files
 
-- **Ingest Queue:** sources waiting to be ingested, in batches. See [[SCHEMA - Ingest#The Ingest Queue]].
+- **Triage:** sources waiting to be ingested, in batches. See [[SCHEMA - Ingest#Triage]].
+- **Raw sources:** `Ingestion/Raw/` holds sources I haven't ingested yet. It isn't part of the wiki, and agents never look in it. See [[SCHEMA - Ingest#Raw sources]].
 - **Health Checks:** one report per health check. See [[SCHEMA - Health Check#The report archive]].
 - **Tools:** my working equipment, not sources or knowledge. See [[SCHEMA - Changes#Tools]].
 - **Changelogs:** `_changelogs/` holds the [[Schema Changelog]] and one file per tool (for now, [[Nicrosil Changelog]]), so the guides and rule files stay short. See [[SCHEMA - Changes#Nicrosil and other tools]].

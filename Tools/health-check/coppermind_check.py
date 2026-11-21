@@ -30,6 +30,8 @@ PAGE_TYPES = {"concept", "glossary", "framework", "case-study", "person", "summa
 FLAG_KINDS = {"question": "Whose view?", "warning": "Unsourced background",
               "caution": "Accuracy check / sources disagree", "todo": "Gap"}
 SKIP_DIRS = {".git", ".obsidian", ".trash", "node_modules"}
+# Sources I have not ingested yet. Nothing in here is read, listed, or checked.
+SKIP_PATHS = {"Ingestion/Raw"}
 RECORD_PREFIXES = ("_logs/", "_log.md", "Health Checks/", "_changelogs/")   # records: links in them are history, not checked
 STALE_DAYS = 14
 SAMPLE_SIZE = 20
@@ -141,7 +143,8 @@ class Vault:
         self.root = root
         self.files = []          # relative paths with "/" separators
         for dirpath, dirnames, filenames in os.walk(root):
-            dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
+            dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS
+                           and os.path.relpath(os.path.join(dirpath, d), root).replace(os.sep, "/") not in SKIP_PATHS]
             for fn in filenames:
                 rel = os.path.relpath(os.path.join(dirpath, fn), root).replace(os.sep, "/")
                 self.files.append(rel)
@@ -305,7 +308,7 @@ def run(root, today, full):
                     want = norm_heading(head.split("#")[-1])
                     if want not in v.headings(tgt):
                         R["broken"].append(f"[[{name(p)}]] (line {line_no}): `[[{m.group(2)[:70]}]]`: no heading \"{head}\" in [[{name(tgt)}]]")
-    not_inbound_sources = {"_index.md", "_dashboard.md", "Dashboard.md", "Ingest Queue.md"}
+    not_inbound_sources = {"_index.md", "_dashboard.md", "Dashboard.md", "Ingestion/Triage.md"}
     for p in pages:
         if not {q for q in inbound.get(p, set()) if q not in not_inbound_sources}:
             R["orphan"].append(f"[[{name(p)}]]: no other page links to it")
@@ -451,8 +454,8 @@ def run(root, today, full):
         if listed_total is not None and listed_total != len(pages):
             R["index"].append(f"_index.md: the total says {listed_total}, but there are {len(pages)} pages ({n_entries} listed)")
 
-    # Ingest Queue
-    q = v.pages.get("Ingest Queue.md")
+    # Triage
+    q = v.pages.get("Ingestion/Triage.md")
     if q:
         lines = q["clean"].split("\n")
         batch = None
@@ -464,11 +467,11 @@ def run(root, today, full):
             exist = [c for c in cards if v.resolve(parse_link(c)[0])]
             missing = [c for c in cards if not v.resolve(parse_link(c)[0])]
             for c in missing:
-                R["queue"].append(f"Ingest Queue.md (line {line_no}): \"{title}\" links [[{parse_link(c)[0]}]], which doesn't exist")
+                R["queue"].append(f"Triage.md (line {line_no}): \"{title}\" links [[{parse_link(c)[0]}]], which doesn't exist")
             if mark == " " and exist:
-                R["queue"].append(f"Ingest Queue.md (line {line_no}): \"{title}\" is marked waiting but already has source cards")
+                R["queue"].append(f"Triage.md (line {line_no}): \"{title}\" is marked waiting but already has source cards")
             if mark in ("~", "x") and not cards:
-                R["queue"].append(f"Ingest Queue.md (line {line_no}): \"{title}\" is marked {'done' if mark == 'x' else 'drafted'} but links no source card")
+                R["queue"].append(f"Triage.md (line {line_no}): \"{title}\" is marked {'done' if mark == 'x' else 'drafted'} but links no source card")
         for i, line in enumerate(lines):
             bm = re.match(r"^(\s*)-\s*`?\[([ ~x])\]`?\s*(.*)$", line)
             if bm:
@@ -547,7 +550,7 @@ ROWS = [
     ("Verified pages changed since they were verified", "changed", None),
     ("Gaps in sources (\"?\" placeholders, empty definitions)", "gaps", "the script only reads the class notes"),
     ("Pages missing from the index, or index entries with no page", "index", None),
-    ("`Ingest Queue.md` out of date", "queue", None),
+    ("`Triage.md` out of date", "queue", None),
     ("Anything else found (properties, formatting)", "props", None),
 ]
 
@@ -563,7 +566,7 @@ DETAIL = [
     ("changed", "Change notes and verified pages"),
     ("gaps", "Gaps in the class notes"),
     ("index", "Index"),
-    ("queue", "Ingest Queue"),
+    ("queue", "Triage"),
     ("props", "Properties"),
 ]
 

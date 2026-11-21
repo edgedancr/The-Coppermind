@@ -32,7 +32,7 @@ Run `python Tools/health-check/coppermind_check.py` first: it fills the mechanic
 | Verified pages changed since they were verified | | |
 | Gaps in sources ("?" placeholders, empty definitions) | | |
 | Pages missing from the index, or index entries with no page | | |
-| `Ingest Queue.md` out of date | | |
+| `Triage.md` out of date | | |
 | Anything else found (properties, formatting) | | |
 | **Total** | | |
 

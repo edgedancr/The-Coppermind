@@ -5,6 +5,8 @@ owner: Harrison Nickles
 updated: 2026-11-20
 verified_on: 2026-11-19
 changes_since_verified:
+  - "2026-11-20: the Ingest Queue check is the Triage check (`Ingestion/Triage.md`) [[#The checks]]"
+  - "2026-11-20: the Ingest Queue is `Ingestion/Triage.md`, and `Ingestion/Raw/` is outside every check [[#The checks]]"
   - "2026-11-20: the index and the log are `_index.md` and `_log.md` [[#Running a health check]]"
 ---
 A health check reviews the whole wiki (or one folder) and saves a short report I can decide from. One is due every 14 days, counted from the date of the newest report in `Health Checks/`. The Dashboard's health check card ([[Nicrosil]]) shows the days since the last one and turns red when the next is overdue. I can ask for one sooner at any time.
@@ -34,13 +36,15 @@ The report's table has one row for each of these, in this order, every time:
 - verified pages changed since they were verified, and drafts that have `verified_on` but no `changes_since_verified` note, or verified pages that still carry one (the rule files in `SCHEMAS/` are checked like any other page)
 - gaps in the sources themselves (unfinished notes, "?" placeholders, empty definitions)
 - pages missing from `_index.md`, or index entries for pages that no longer exist
-- `Ingest Queue.md` out of date: a batch still marked waiting whose sources already have source cards, or a batch marked done whose sources don't
+- `Ingestion/Triage.md` out of date: a batch still marked waiting whose sources already have source cards, or a batch marked done whose sources don't
+
+`Ingestion/Raw/` is outside every check: the script leaves it out, and the judgment checks don't open it ([[SCHEMA - Ingest#Raw sources]]).
 
 If this list changes, the agent updates the Health Check Report template and the script to match, so the table's rows stay the same in every report.
 
 ## The report archive
 
-`Health Checks/` holds one report for each health check, so I can go back and see how the wiki's health has changed. Like the Ingest Queue, it is not one of the six parts and not a wiki page: reports have no `status`, are not in `_index.md`, and I don't verify them. **The agent writes the reports; I decide each flag in them.**
+`Health Checks/` holds one report for each health check, so I can go back and see how the wiki's health has changed. Like Triage, it is not one of the six parts and not a wiki page: reports have no `status`, are not in `_index.md`, and I don't verify them. **The agent writes the reports; I decide each flag in them.**
 
 - **Reports are short.** About one screen, written from the `Health Check Report` template in `_templates/`: a summary callout, a table with one row per check (the same rows every time, so reports can be compared), the flags that need my decision, the mechanical fixes for batch approval, and what changed since the last check.
 - **Naming:** `Health Check YYYY-MM-DD`, with ` (2)` added for a second report on the same day. The date is in the name because a report is a record, not a wiki page.

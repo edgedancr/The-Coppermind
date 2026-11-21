@@ -5,6 +5,8 @@ owner: Harrison Nickles
 updated: 2026-11-20
 verified_on: 2026-11-20
 changes_since_verified:
+  - "2026-11-20: the Ingest Queue is called Triage [[#The index]]"
+  - "2026-11-20: `Ingestion/Raw/` is listed among the things not in the index [[#The index]]"
   - "2026-11-20: the log is one file per month in `_logs/`, named `_log MM-YY` [[#One file per month]]"
   - "2026-11-20: the index and the log are `_index.md` and `_log.md` [[#The log]]"
   - "2026-11-20: the log is newest first, and a new entry goes at the top [[#The log]]"
@@ -20,7 +22,7 @@ How the index, the log, and git work. The everyday parts (the index line, the lo
 - **A Jump to line** under the total links to each type's heading, as `**Jump to:** [[#Concepts (94)|Concepts]] ...`. A link has to match its heading's count, so update it whenever a count changes. A stale one shows in a health check as a broken heading link.
 - **Looks:** `_index.md` has `cssclasses: coppermind-index`, which the `coppermind.css` snippet styles (columns, bold names, quieter summaries, letter tabs, jump chips). It changes only how the page looks; the line format above stays exactly as is. Nicrosil keeps the letter headings and the Jump to line right when I reject a page.
 - The agent updates the index **at the end of every operation** that adds, removes, or renames a page. A change of status does not change the index.
-- Not in the index: the rule files in `SCHEMAS/`, the Ingest Queue (a plan), the log and the reports in `Health Checks/` (records), and `Tools/`.
+- Not in the index: the rule files in `SCHEMAS/`, Triage (a plan), `Ingestion/Raw/` (sources not yet ingested), the log and the reports in `Health Checks/` (records), and `Tools/`.
 - **Read only the section you are changing.** To find whether a page exists, search file names and aliases instead.
 - I check the index during each health check.
 
