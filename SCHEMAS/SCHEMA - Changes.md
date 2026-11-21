@@ -1,13 +1,9 @@
 ---
 type: schema
-status: draft
+status: verified
 owner: Harrison Nickles
 updated: 2026-11-20
-verified_on: 2026-11-19
-changes_since_verified:
-  - "2026-11-20: the index and the log are `_index.md` and `_log.md` [[#Nicrosil and other tools]]"
-  - "2026-11-20: the Schema Changelog is newest first, and a new line goes at the top [[#Nicrosil and other tools]]"
-  - "2026-11-20: the changelogs of the rules and of Nicrosil live in `_changelogs/`, and look-and-feel detail goes in Nicrosil's changelog, not in the guide [[#Nicrosil and other tools]]"
+verified_on: 2026-11-20
 ---
 How the rules, templates, and tools change, and how each change is recorded.
 

@@ -1075,3 +1075,11 @@ button.cm-gbtn.mod-cta:disabled {
   cursor: default;
   opacity: .8;
 }
+
+/* Relations map outline (2.11.3): the whole map box gets the same look as the Open next draft buttons: sharp 2px corners, a copper-to-teal gradient outline on the dark fill, and a soft glow in both colors, instead of the plain copper line. */
+.cm-rel-map {
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: linear-gradient(#171310, #171310) padding-box, linear-gradient(135deg, #d98a4a, #5fae9e) border-box;
+  box-shadow: 0 0 5px rgba(217,138,74,.3), 0 0 8px rgba(95,174,158,.22);
+}

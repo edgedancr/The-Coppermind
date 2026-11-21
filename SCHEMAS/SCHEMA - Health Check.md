@@ -1,13 +1,9 @@
 ---
 type: schema
-status: draft
+status: verified
 owner: Harrison Nickles
 updated: 2026-11-20
-verified_on: 2026-11-19
-changes_since_verified:
-  - "2026-11-20: the Ingest Queue check is the Triage check (`Ingestion/Triage.md`) [[#The checks]]"
-  - "2026-11-20: the Ingest Queue is `Ingestion/Triage.md`, and `Ingestion/Raw/` is outside every check [[#The checks]]"
-  - "2026-11-20: the index and the log are `_index.md` and `_log.md` [[#Running a health check]]"
+verified_on: 2026-11-20
 ---
 A health check reviews the whole wiki (or one folder) and saves a short report I can decide from. One is due every 14 days, counted from the date of the newest report in `Health Checks/`. The Dashboard's health check card ([[Nicrosil]]) shows the days since the last one and turns red when the next is overdue. I can ask for one sooner at any time.
 

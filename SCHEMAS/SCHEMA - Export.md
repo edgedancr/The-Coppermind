@@ -1,11 +1,9 @@
 ---
 type: schema
-status: draft
+status: verified
 owner: Harrison Nickles
 updated: 2026-11-20
-verified_on: 2026-11-19
-changes_since_verified:
-  - "2026-11-20: `Review Queue.base` is no longer listed among the Obsidian-only extras [[#Keeping it portable]]"
+verified_on: 2026-11-20
 ---
 The Coppermind must outlive any one tool or agent.
 

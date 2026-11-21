@@ -1,20 +1,10 @@
 ---
 type: schema
-version: 7.13
-status: draft
+version: 8.0
+status: verified
 owner: Harrison Nickles
 updated: 2026-11-20
 verified_on: 2026-11-20
-changes_since_verified:
-  - "2026-11-20: AGENTS.md has a No repeated titles rule: files that aren't wiki pages carry no `# Title` that repeats their file name [[#Files that are not wiki pages]]"
-  - "2026-11-20: the Ingest Queue is renamed Triage, and the `Ingest/` folder is `Ingestion/` [[#Folder layout]]"
-  - "2026-11-20: `Triage.md` moved into a new `Ingestion/` folder next to `Ingestion/Raw/` (sources not yet ingested), which agents never look in [[#Folder layout]]"
-  - "2026-11-20: `Review Queue.base` is gone from the folder layout [[#Folder layout]]"
-  - "2026-11-20: the log is one file per month in `_logs/`, named `_log MM-YY` [[#Folder layout]]"
-  - "2026-11-20: the index and the log are `_index.md` and `_log.md` [[#Folder layout]]"
-  - "2026-11-20: the Dashboard is `_dashboard.md` [[#Folder layout]]"
-  - "2026-11-20: AGENTS.md: a permissions row and a read rule for `_changelogs/`, and the Nicrosil rule now says its changelog line goes in that folder (versions 7.3 and 7.4)"
-  - "2026-11-20: the folder layout lists `_changelogs/`, and the Schema Changelog moved there from `SCHEMAS/` [[#Folder layout]]"
 ---
 This is the overview of the Coppermind's rules: what the wiki is for, how it is laid out, and which rule file covers what. It is the rulebook for my personal LLM wiki (SAIL portfolio). The Coppermind follows the SAIL version of the LLM-wiki pattern, not Karpathy's original: **I design, the AI drafts, I verify.** Nothing becomes part of the wiki as final until I have reviewed and approved it.
 

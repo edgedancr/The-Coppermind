@@ -1,16 +1,9 @@
 ---
 type: schema
-status: draft
+status: verified
 owner: Harrison Nickles
 updated: 2026-11-20
 verified_on: 2026-11-20
-changes_since_verified:
-  - "2026-11-20: the Ingest Queue is called Triage [[#The index]]"
-  - "2026-11-20: `Ingestion/Raw/` is listed among the things not in the index [[#The index]]"
-  - "2026-11-20: the log is one file per month in `_logs/`, named `_log MM-YY` [[#One file per month]]"
-  - "2026-11-20: the index and the log are `_index.md` and `_log.md` [[#The log]]"
-  - "2026-11-20: the log is newest first, and a new entry goes at the top [[#The log]]"
-  - "2026-11-20: tool entries point to the Nicrosil Changelog for details [[#The log]]"
 ---
 How the index, the log, and git work. The everyday parts (the index line, the log entry format, the commit message) are in `AGENTS.md`; this file has the rest.
 

@@ -1,11 +1,9 @@
 ---
 type: schema
-status: draft
+status: verified
 owner: Harrison Nickles
 updated: 2026-11-20
-verified_on: 2026-11-19
-changes_since_verified:
-  - "2026-11-20: the log's month files are named like `_log 11-26` [[#Naming]]"
+verified_on: 2026-11-20
 ---
 How to write a page in `Wiki/`, a source card, or (for me) a perspective: what to name it, what goes in its properties, how it links, how it cites, whose voice it is in, and how it reads. Any agent drafting or editing a page reads the sections the edit touches.
 

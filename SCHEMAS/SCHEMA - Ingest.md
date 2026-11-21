@@ -1,14 +1,9 @@
 ---
 type: schema
-status: draft
+status: verified
 owner: Harrison Nickles
 updated: 2026-11-20
-verified_on: 2026-11-19
-changes_since_verified:
-  - "2026-11-20: the Ingest Queue is renamed Triage (`Ingestion/Triage.md`), and the folder is `Ingestion/` [[#Triage]]"
-  - "2026-11-20: the Ingest Queue is `Ingestion/Triage.md`, and a new Raw sources section says the agent never looks in `Ingestion/Raw/` [[#Raw sources]]"
-  - "2026-11-20: the index and the log are `_index.md` and `_log.md` [[#The ingest operation]]"
-  - "2026-11-20: the agent \"adds\" the log entry (at the top, since the log is newest first) instead of appending it [[#The ingest operation]]"
+verified_on: 2026-11-20
 ---
 How a source becomes wiki pages. Read this with [[SCHEMA - Writing Pages]], which covers naming, properties, links, citations, attribution, and style.
 

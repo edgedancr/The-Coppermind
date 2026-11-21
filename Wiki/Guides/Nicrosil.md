@@ -16,18 +16,12 @@ drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboar
 drafted_on: 2026-11-11
 verified_on: 2026-11-20
 changes_since_verified:
-  - "2026-11-20: the Dashboard has four link cards, and the first review progress card has an Open next draft button [[#The Dashboard]]"
-  - "2026-11-20: the log is one file per month in `_logs/`, and the Dashboard's Log card opens the newest one [[#The index and the log]]"
-  - "2026-11-20: the index and log are `_index.md` and `_log.md`, and the Dashboard's Log card comes before the Wiki map card [[#The Dashboard]]"
-  - "2026-11-20: Ctrl+click opens review queue pages and Open next draft in a new tab [[#Hotkeys and buttons]]"
-  - "2026-11-20: the Dashboard is the file `_dashboard.md`, and Nicrosil finds it by that name [[#The Dashboard]]"
-  - "2026-11-20: Verify and Reject add their log entry at the top of the log, which is now newest first [[#The index and the log]]"
-  - "2026-11-20: Log a schema change adds its line at the top of the changelog, which is now newest first [[#Logging a schema change]]"
+  - "2026-11-20: version is now 2.11.3 (the relations map has a gradient outline; the look is in the changelog)"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.11.2**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.11.3**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
