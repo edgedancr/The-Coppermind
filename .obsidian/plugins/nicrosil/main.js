@@ -59,6 +59,7 @@ const INDEX_PATH = "_index.md";
 const NOTES_DIR = "The Tinmind/";                   // my own class notes (the Notes dashboard, one file per course, the all-notes page)
 const NOTES_DASHBOARD = "The Tinmind/Tinmind Dashboard"; // opened by the Tinmind button (named Notes Dashboard before 3.2.0)
 const OLD_NOTES_DASHBOARD = "The Tinmind/Notes Dashboard.md";
+const NOTEBOOK_PAGE = "The Tinmind/Notebook";  // the pinned Notebook (type: notebook, no semester): its card is on the Tinmind Dashboard in every semester (3.10.0)
 const ALL_NOTES_PAGE = "The Tinmind/All Class Notes";  // opened by the All Class Notes row in the Tinmind's course tree
 
 /** Sort key for a semester name such as "Fall 26" (year, then winter < spring < summer < fall); null when the name doesn't fit that shape. */
@@ -3500,6 +3501,9 @@ module.exports = class Nicrosil extends Plugin {
     }
 
     const cards = courses.map((c) => ({ icon: "book-open", title: c.name, sub: this.courseCardLine(c.file), go: open(c.file.path) }));
+    // The Notebook has no semester, so its card is here whichever semester is picked (3.10.0). It shows no count; Quick note makes a dated note in one click.
+    const nb = this.notebookFile();
+    if (nb) cards.push({ icon: "pen-line", title: "Notebook", sub: "Notes that aren't for a class", go: open(nb.path), action: { label: "Quick note", run: () => this.tinQuickNote() } });
     this.drawNavCards(el.createDiv(), cards);
     if (!semesters.length) el.createDiv({ cls: "cm-sub", text: "No courses yet. Make a semester with New semester in the Tinmind's course tree." });
   }
@@ -3538,6 +3542,18 @@ module.exports = class Nicrosil extends Plugin {
       if (!this.isQuiet()) setIcon(card.createSpan({ cls: "cm-navcard-icon" }), c.icon);
       card.createDiv({ cls: "cm-navcard-title", text: c.title });
       card.createDiv({ cls: "cm-navcard-sub", text: c.sub });
+      if (c.action) { // a small button inside the card (the Notebook's Quick note, 3.10.0)
+        const act = card.createDiv({ cls: "cm-navcard-act" });
+        act.setAttr("role", "button");
+        act.setAttr("tabindex", "0");
+        setIcon(act.createSpan({ cls: "cm-navcard-act-icon" }), "plus");
+        act.createSpan({ text: c.action.label });
+        const run = (e) => { e.preventDefault(); e.stopPropagation(); c.action.run(); };
+        act.addEventListener("click", run);
+        act.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") run(e); });
+        act.addEventListener("auxclick", (e) => e.stopPropagation());
+        act.addEventListener("mousedown", (e) => e.stopPropagation());
+      }
       card.addEventListener("click", (e) => c.go(e.ctrlKey || e.metaKey));
       card.addEventListener("auxclick", (e) => { if (e.button === 1) { e.preventDefault(); c.go(true); } });
       card.addEventListener("mousedown", (e) => { if (e.button === 1) e.preventDefault(); });
@@ -4000,7 +4016,15 @@ module.exports = class Nicrosil extends Plugin {
     if (!(file instanceof TFile) || file.extension !== "md" || !file.path.startsWith(NOTES_DIR)) return false;
     if (this.isTinDashboard(file) || file.path === ALL_NOTES_PAGE + ".md") return false; // the Tinmind's own pages are not courses
     const fm = (this.app.metadataCache.getFileCache(file) || {}).frontmatter;
-    return !!fm && fm.type === "class-notes";
+    return !!fm && (fm.type === "class-notes" || (fm.type === "notebook" && file.path === NOTEBOOK_PAGE + ".md")); // the Notebook works like a course with no semester (3.10.0)
+  }
+
+  isNotebook(file) { return file instanceof TFile && file.path === NOTEBOOK_PAGE + ".md"; }
+
+  /** The Notebook page, when it is there and its properties are indexed (3.10.0). */
+  notebookFile() {
+    const f = this.app.vault.getAbstractFileByPath(NOTEBOOK_PAGE + ".md");
+    return f instanceof TFile && this.isClassHub(f) ? f : null;
   }
 
   /** The folder that holds a course's own notes: the hub's folder plus the hub's name (a leftover " Notes" from before 3.5.0 is ignored). */
@@ -4011,7 +4035,7 @@ module.exports = class Nicrosil extends Plugin {
 
   courseCtx(hub) {
     const fm = (this.app.metadataCache.getFileCache(hub) || {}).frontmatter || {};
-    return { hub, course: String(fm.course || hub.basename.replace(/ Notes$/, "")), semester: String(fm.semester || "").trim(), folder: this.courseFolderPath(hub) };
+    return { hub, course: String(fm.course || hub.basename.replace(/ Notes$/, "")), semester: String(fm.semester || "").trim(), folder: this.courseFolderPath(hub), notebook: this.isNotebook(hub) };
   }
 
   /** The semesters and courses found in the Tinmind, and which semester is showing (the saved pick, else the current or newest). */
@@ -4051,7 +4075,8 @@ module.exports = class Nicrosil extends Plugin {
   /** Redraws the sidebar tree and every hub panel (after a change in the Tinmind folder, a click, or a switch of mode). */
   refreshTin() {
     const st = this.tinSemesterState();
-    const sideSig = [st.chosen, st.semesters.join(","), ...st.courses.map((c) => this.hubSig(c.file))].join("§");
+    const nbf = this.notebookFile();
+    const sideSig = [st.chosen, st.semesters.join(","), ...st.courses.map((c) => this.hubSig(c.file)), nbf ? this.hubSig(nbf) : ""].join("§");
     document.querySelectorAll(".cm-tin-side").forEach((el) => {
       if (el.dataset.sig === sideSig) return;
       el.dataset.sig = sideSig;
@@ -4094,6 +4119,8 @@ module.exports = class Nicrosil extends Plugin {
     const list = el.createDiv({ cls: "cm-tin-list" });
     for (const c of st.courses) this.drawTinCourse(list, c);
     if (!st.courses.length) list.createDiv({ cls: "cm-sub", text: "No courses yet." });
+    const nbf = this.notebookFile(); // pinned under the semester's courses, whichever semester is picked (3.10.0)
+    if (nbf) this.drawTinCourse(el.createDiv({ cls: "cm-tin-pin" }), { file: nbf, name: "Notebook", icon: "pen-line" });
     const foot = el.createDiv({ cls: "cm-tin-foot" });
     const all = this.tinRow(foot, { depth: 0, icon: "library", label: "All Class Notes" });
     all.addEventListener("click", (e) => this.app.workspace.openLinkText(ALL_NOTES_PAGE, "", e.ctrlKey || e.metaKey));
@@ -4156,7 +4183,7 @@ module.exports = class Nicrosil extends Plugin {
     const open = this.settings.tinOpen || (this.settings.tinOpen = {});
     const isOpen = !!open[c.file.path];
     const active = this.app.workspace.getActiveFile();
-    const row = this.tinRow(list, { depth: 0, icon: "book-open", label: c.name, chev: isOpen, cls: "cm-tin-course", active: !!active && active.path === c.file.path });
+    const row = this.tinRow(list, { depth: 0, icon: c.icon || "book-open", label: c.name, chev: isOpen, cls: "cm-tin-course", active: !!active && active.path === c.file.path });
     row.querySelector(".cm-tin-chev").addEventListener("click", (e) => { e.stopPropagation(); this.tinToggle(c.file.path); });
     row.addEventListener("click", (e) => {
       if (!isOpen) { open[c.file.path] = true; this.persist(); }
@@ -4223,7 +4250,7 @@ module.exports = class Nicrosil extends Plugin {
     menu.addItem((i) => i.setTitle("New note").setIcon("file-plus").onClick(() => this.tinNewNote(ctx.folder, ctx)));
     menu.addItem((i) => i.setTitle("New folder").setIcon("folder-plus").onClick(() => this.tinNewFolder(ctx.folder, ctx)));
     menu.addSeparator();
-    menu.addItem((i) => i.setTitle("Open the course page").setIcon("book-open").onClick(() => this.openTinFile(ctx.hub, false)));
+    menu.addItem((i) => i.setTitle(ctx.notebook ? "Open the Notebook page" : "Open the course page").setIcon("book-open").onClick(() => this.openTinFile(ctx.hub, false)));
     menu.showAtMouseEvent(e);
   }
 
@@ -4260,16 +4287,17 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   /** Asks for a name and makes a note in `folderPath` (made if it isn't there yet), with the course and semester as properties and a link back to the course page. */
-  async tinNewNote(folderPath, ctx) {
+  async tinNewNote(folderPath, ctx, quick = false) {
     // The name starts as "<course> mm-dd-yy" for today (dashes, because a file name can't hold slashes); Enter takes it, or add to it first. A second note the same day gets " 2".
     const now = new Date(), pad = (n) => String(n).padStart(2, "0");
     const stamp = `${pad(now.getMonth() + 1)}-${pad(now.getDate())}-${String(now.getFullYear()).slice(-2)}`;
-    const name = cleanName(await this.tinPrompt({ title: "New note", label: `In ${ctx.course}`, value: `${ctx.course} ${stamp}`, caret: "end", ok: "Create" }));
+    // quick (3.10.0): the Notebook's Quick note takes that name without asking.
+    const name = cleanName(quick ? `${ctx.course} ${stamp}` : await this.tinPrompt({ title: "New note", label: `In ${ctx.course}`, value: `${ctx.course} ${stamp}`, caret: "end", ok: "Create" }));
     if (!name) return;
     try {
       await this.tinEnsureFolder(folderPath);
       const path = this.tinUniquePath(folderPath, name, ".md");
-      const body = `---\ntype: course-note\ncourse: ${JSON.stringify(ctx.course)}\nsemester: ${JSON.stringify(ctx.semester)}\n---\n`;
+      const body = ctx.notebook ? `---\ntype: notebook-note\n---\n` : `---\ntype: course-note\ncourse: ${JSON.stringify(ctx.course)}\nsemester: ${JSON.stringify(ctx.semester)}\n---\n`;
       const file = await this.app.vault.create(path, body);
       this.tinExpandTo(folderPath, ctx);
       await this.app.workspace.getLeaf(false).openFile(file, { state: { mode: "source" } });
@@ -4278,6 +4306,14 @@ module.exports = class Nicrosil extends Plugin {
       new Notice("Couldn't make that note. See the console for why.");
     }
     this.refreshTin();
+  }
+
+  /** The Notebook card's Quick note (3.10.0): a note named "Notebook mm-dd-yy" in the Notebook folder, made and opened ready to type with no question asked. */
+  async tinQuickNote() {
+    const nb = this.notebookFile();
+    if (!nb) { new Notice("The Notebook page isn't there yet: The Tinmind/Notebook.md with type: notebook."); return; }
+    const ctx = this.courseCtx(nb);
+    await this.tinNewNote(ctx.folder, ctx, true);
   }
 
   async tinNewFolder(parentPath, ctx) {
@@ -4405,7 +4441,7 @@ module.exports = class Nicrosil extends Plugin {
 
   drawBackPill(pill, hub) {
     pill.empty();
-    pill.setAttribute("aria-label", "Go to the course page (Ctrl+click for a new tab)");
+    pill.setAttribute("aria-label", this.isNotebook(hub) ? "Go to the Notebook page (Ctrl+click for a new tab)" : "Go to the course page (Ctrl+click for a new tab)");
     setIcon(pill.createSpan({ cls: "cm-backpill-icon" }), "arrow-left");
     pill.createSpan({ text: this.courseCtx(hub).course });
   }
@@ -4415,7 +4451,7 @@ module.exports = class Nicrosil extends Plugin {
     panel.empty();
     const ctx = this.courseCtx(file);
     const head = panel.createDiv({ cls: "cm-hub-head" });
-    head.createSpan({ cls: "cm-hub-title", text: "Notes in this course" });
+    head.createSpan({ cls: "cm-hub-title", text: ctx.notebook ? "Notes in the Notebook" : "Notes in this course" });
     const btns = head.createDiv({ cls: "cm-hub-btns" });
     const nb = btns.createEl("button", { text: "New note", cls: "mod-cta" });
     nb.addEventListener("click", () => this.tinNewNote(ctx.folder, ctx));
