@@ -203,11 +203,13 @@ hr {
 /* ---------- Index page (index.md has cssclasses: coppermind-index) ---------- */
 /* Looks only. The page's text stays plain "- [[Page]] — summary" lines. Reading view. */
 .coppermind-index { --file-line-width: 66rem; }
-/* the page title: the file name (_index) is replaced by "Index" in the Coppermind Gradient Style. The real title is hidden (font-size 0) and not clickable, so the file can't be renamed by accident. */
-.coppermind-index .inline-title {
+/* the page title: the file name (_index, _log 11-26) is replaced by "Index" or "Log 11-26" in the Coppermind Gradient Style. The real title is hidden (font-size 0) and not clickable, so the file can't be renamed by accident. A log's words come from --cm-log-title, which Nicrosil sets on the log's pane. */
+.coppermind-index .inline-title,
+.cm-log-leaf .inline-title {
   font-size: 0; line-height: 1; pointer-events: none; user-select: none;
 }
-.coppermind-index .inline-title::before {
+.coppermind-index .inline-title::before,
+.cm-log-leaf .inline-title::before {
   content: "Index";
   display: inline-block;
   font-family: var(--cm-gradient-font);
@@ -219,6 +221,7 @@ hr {
   -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
   filter: var(--cm-gradient-glow);
 }
+.cm-log-leaf .inline-title::before { content: var(--cm-log-title, "Log"); }
 /* the section headings: the Coppermind Gradient Style (copper-to-teal gradient on the text, Almendra SC, a still glow), defined once as --cm-gradient, --cm-gradient-font and --cm-gradient-glow in Nicrosil's styles.css; the full-width rule sits under the heading's wrapper */
 .coppermind-index .el-h2 {
   margin: 1.8em 0 0.5em;

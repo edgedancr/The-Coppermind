@@ -2509,7 +2509,7 @@ module.exports = class Nicrosil extends Plugin {
     document.querySelectorAll(".cm-resolve-btn, .cm-home-btn, .cm-underscore-btn").forEach((e) => e.remove());
     document.body.classList.remove("cm-hide-underscore");
     document.body.classList.remove("cm-on-dashboard");
-    document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"));
+    document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => { e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"); e.style.removeProperty("--cm-log-title"); });
     document.querySelectorAll(".cm-dashboard-tab").forEach((e) => e.classList.remove("cm-dashboard-tab"));
     document.body.classList.remove("cm-quiet");
     document.querySelectorAll(".cm-propstrip").forEach((e) => e.remove());
@@ -3049,6 +3049,8 @@ module.exports = class Nicrosil extends Plugin {
       view.containerEl.classList.toggle("cm-dashboard-leaf", isDash);
       if (leaf.tabHeaderEl) leaf.tabHeaderEl.classList.toggle("cm-dashboard-tab", isDash); // the Dashboard's tab shows the logo, not the file name
       view.containerEl.classList.toggle("cm-log-leaf", isLog);
+      const logM = /^_logs\/_log (\d{2}-\d{2})\.md$/.exec(path); // a log's title reads "Log 11-26" (the theme draws it from --cm-log-title)
+      if (logM) view.containerEl.style.setProperty("--cm-log-title", `"Log ${logM[1]}"`); else view.containerEl.style.removeProperty("--cm-log-title");
       view.containerEl.classList.toggle("cm-noprops-leaf", isDash || isLog || path === INDEX_PATH);
       const pageStatus = view.file ? ((this.app.metadataCache.getFileCache(view.file) || {}).frontmatter || {}).status : "";
       view.containerEl.classList.toggle("cm-st-verified", pageStatus === "verified");
@@ -3126,6 +3128,8 @@ module.exports = class Nicrosil extends Plugin {
 
   ensureStripsIn(root, file) {
     if (!file) return;
+    // The Dashboard, index and logs never get a strip. A strip step queued by the note a pane showed before can run after the pane switches, so take any strip away here too.
+    if (this.isDashboard(file) || file.path === INDEX_PATH || isLogPath(file.path)) { root.querySelectorAll(".cm-propstrip").forEach((s) => s.remove()); return; }
     const info = this.stripInfo(file);
     // When Obsidian re-renders a note (for example on switching between editing and reading),
     // it can re-create the Properties block or move the title, leaving an old strip stranded
