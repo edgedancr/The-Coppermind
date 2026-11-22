@@ -3477,8 +3477,65 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   /**
+   * The semester switcher (3.11.0, one control since 3.11.1): the picked semester as a title in the Tinmind Gradient Style, with a chevron that opens
+   * a menu of every semester. The Tinmind Dashboard draws it full size; the course tree draws it small (`side`) under the Tinmind button.
+   */
+  drawSemSwitch(el, semesters, chosen, side = false) {
+    // The semester is the section's title (3.11.0): the picked semester in the Tinmind Gradient Style, with a chevron that opens a menu of every semester.
+    const wrap = el.createDiv({ cls: "cm-sem-title" + (side ? " is-side" : "") });
+    const head = wrap.createDiv({ cls: "cm-sem-head" });
+    head.setAttr("role", "button");
+    head.setAttr("tabindex", "0");
+    head.setAttr("aria-haspopup", "listbox");
+    head.setAttr("aria-expanded", "false");
+    head.setAttr("aria-label", "Semester: pick another");
+    head.createSpan({ cls: "cm-sem-value", text: chosen });
+    setIcon(head.createSpan({ cls: "cm-sem-chev" }), "chevron-down");
+    let menu = null;
+    const close = () => {
+      if (!menu) return;
+      menu.remove();
+      menu = null;
+      head.removeClass("is-open");
+      head.setAttr("aria-expanded", "false");
+      document.removeEventListener("click", outside, true);
+      document.removeEventListener("keydown", onKey, true);
+    };
+    const outside = (e) => { if (!wrap.contains(e.target)) close(); };
+    const onKey = (e) => { if (e.key === "Escape") { close(); head.focus(); } };
+    const pick = async (sem) => {
+      close();
+      if (sem === chosen) return;
+      this.settings.tinmindSemester = sem;
+      await this.persist();
+      this.dashboards.forEach((r) => r());
+      this.refreshTin();
+    };
+    const open = () => {
+      menu = wrap.createDiv({ cls: "cm-sem-menu" });
+      menu.setAttr("role", "listbox");
+      semesters.forEach((sem) => {
+        const item = menu.createDiv({ cls: "cm-sem-item" + (sem === chosen ? " is-on" : ""), text: sem });
+        item.setAttr("role", "option");
+        item.setAttr("tabindex", "0");
+        item.setAttr("aria-selected", String(sem === chosen));
+        item.addEventListener("click", () => pick(sem));
+        item.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(sem); } });
+      });
+      head.addClass("is-open");
+      head.setAttr("aria-expanded", "true");
+      document.addEventListener("click", outside, true);
+      document.addEventListener("keydown", onKey, true);
+    };
+    const toggle = () => (menu ? close() : open());
+    head.addEventListener("click", toggle);
+    head.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+  
+  }
+
+  /**
    * The Notes dashboard's switcher and cards (```coppermind-classes```). Every notes file in the Tinmind folder with `type: class-notes`
-   * has a `semester`; a box at the top picks one, and the cards are that semester's courses, then a card for the all-notes page.
+   * has a `semester`; the title at the top (3.11.0) picks one, and the cards are that semester's courses, then a card for the all-notes page.
    * The pick is saved in Nicrosil's settings, so it is still there after Obsidian closes. Until something is picked, the semester
    * of the files marked `current: true` (else the newest) is shown.
    */
@@ -3487,18 +3544,7 @@ module.exports = class Nicrosil extends Plugin {
     const open = (link) => (newTab) => this.app.workspace.openLinkText(link, "", !!newTab);
     const { semesters, chosen, courses } = this.tinSemesterState();
 
-    if (semesters.length) {
-      const bar = el.createDiv({ cls: "cm-sem-bar" });
-      bar.createSpan({ cls: "cm-sem-label", text: "Semester" });
-      const select = bar.createEl("select", { cls: "dropdown cm-sem-select" });
-      semesters.forEach((sem) => { const o = select.createEl("option", { text: sem }); o.value = sem; o.selected = sem === chosen; });
-      select.addEventListener("change", async () => {
-        this.settings.tinmindSemester = select.value;
-        await this.persist();
-        this.dashboards.forEach((r) => r());
-        this.refreshTin();
-      });
-    }
+    if (semesters.length) this.drawSemSwitch(el, semesters, chosen);
 
     const cards = courses.map((c) => ({ icon: "book-open", title: c.name, sub: this.courseCardLine(c.file), go: open(c.file.path) }));
     // The Notebook has no semester, so its card is here whichever semester is picked (3.10.0). It shows no count; Quick note makes a dated note in one click.
@@ -4104,18 +4150,7 @@ module.exports = class Nicrosil extends Plugin {
   drawTinSide(el) {
     el.empty();
     const st = this.tinSemesterState();
-    if (st.semesters.length) {
-      const bar = el.createDiv({ cls: "cm-sem-bar" });
-      bar.createSpan({ cls: "cm-sem-label", text: "Semester" });
-      const select = bar.createEl("select", { cls: "dropdown cm-sem-select" });
-      st.semesters.forEach((sem) => { const o = select.createEl("option", { text: sem }); o.value = sem; o.selected = sem === st.chosen; });
-      select.addEventListener("change", async () => {
-        this.settings.tinmindSemester = select.value;
-        await this.persist();
-        this.dashboards.forEach((r) => r());
-        this.refreshTin();
-      });
-    }
+    if (st.semesters.length) this.drawSemSwitch(el, st.semesters, st.chosen, true); // under the Tinmind button (3.11.1)
     const list = el.createDiv({ cls: "cm-tin-list" });
     for (const c of st.courses) this.drawTinCourse(list, c);
     if (!st.courses.length) list.createDiv({ cls: "cm-sub", text: "No courses yet." });

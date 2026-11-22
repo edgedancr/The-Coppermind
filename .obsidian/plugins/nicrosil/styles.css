@@ -1196,9 +1196,6 @@ body.cm-quiet .cm-nav.is-quiet .cm-navcard.cm-navcard-under { grid-column: 2; }
 .cm-mytake-draft { font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 1px 5px; border-radius: 3px; background: rgba(224, 168, 70, 0.16); color: var(--cm-amber); }
 
 /* The Tinmind dashboard: the semester switcher above the course cards */
-.cm-sem-bar { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; }
-.cm-sem-label { color: var(--text-muted); font-size: var(--font-ui-smaller); }
-.cm-sem-select { min-width: 140px; }
 
 /* ---- unlinked mentions in the relations panel ---- */
 .cm-rel-unl { margin-top: 6px; }
@@ -1346,7 +1343,6 @@ body.cm-tin-mode .side-dock-ribbon-action[aria-label^="Relations panel"] { displ
 body.cm-tin-mode .workspace-leaf-content[data-type="file-explorer"] .cm-tin-side { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 0 6px 12px; }
 body.cm-tin-mode .workspace-leaf-content[data-type="file-explorer"] .nav-header,
 body.cm-tin-mode .workspace-leaf-content[data-type="file-explorer"] .nav-files-container { display: none; }
-.cm-tin-side .cm-sem-bar { margin: 2px 4px 8px; }
 .cm-tin-list { display: flex; flex-direction: column; gap: 1px; }
 .cm-tin-foot { display: flex; flex-direction: column; gap: 1px; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--background-modifier-border); }
 .cm-tin-row { display: flex; align-items: center; gap: 4px; padding: 3px 6px; border-radius: 4px; cursor: pointer; color: var(--text-muted); font-size: var(--font-ui-small); line-height: 1.35; min-height: 26px; }
@@ -1531,3 +1527,26 @@ body.cm-quiet .cm-nav.is-quiet .cm-navcard-act { grid-column: 1; grid-row: 3; ma
 body.cm-quiet .cm-nav.is-quiet .cm-navcard-act:hover, body.cm-quiet .cm-nav.is-quiet .cm-navcard-act:focus-visible { color: var(--d-b); }
 /* The Notebook's row in the Tinmind's course tree, under the semester's courses */
 .cm-tin-pin { margin-top: 6px; }
+
+/* ---------- 3.11.0: the semester title ---------- */
+/* The Tinmind Dashboard's semester switcher is the section's title: the picked semester in the Tinmind Gradient Style (Almendra SC, 2.2em, weight 400, with the glow) and a lilac chevron that turns over when the menu is open. The menu is a row of the other semesters in Alegreya, the picked one underlined in lilac. */
+.cm-sem-title { margin: 0 0 14px; }
+.cm-sem-head { display: inline-flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; outline: none; }
+.cm-sem-value { font-family: var(--cm-gradient-font); font-weight: 400; font-size: 2.2em; line-height: 1.1; letter-spacing: 0.02em; background: var(--cm-tin-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; filter: var(--cm-tin-gradient-glow); }
+.cm-sem-chev { display: inline-flex; color: #b8a3f2; transition: transform 0.15s, color 0.15s; }
+.cm-sem-chev svg { width: 20px; height: 20px; }
+.cm-sem-head.is-open .cm-sem-chev { transform: rotate(180deg); }
+.cm-sem-head:hover .cm-sem-chev, .cm-sem-head:focus-visible .cm-sem-chev { color: #f1f0f8; }
+.cm-sem-menu { display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 8px; }
+.cm-sem-item { font-family: 'Alegreya', Georgia, serif; font-size: 1.15em; color: var(--d-mute, #b9b6c8); padding-bottom: 2px; border-bottom: 1px solid transparent; cursor: pointer; outline: none; }
+.cm-sem-item:hover, .cm-sem-item:focus-visible { color: var(--d-ink, #ebe9f3); }
+.cm-sem-item.is-on { color: var(--d-ink, #ebe9f3); border-bottom-color: #b8a3f2; }
+@media (prefers-reduced-motion: reduce) { .cm-sem-chev { transition: none; } }
+
+/* 3.11.1: the same switcher, small, at the top of the Tinmind's course tree (under the Tinmind button): the title at 1.5em, a 16px chevron, a tighter menu in the file list's size. */
+.cm-sem-title.is-side { margin: 4px 6px 10px; }
+.cm-sem-title.is-side .cm-sem-head { gap: 8px; }
+.cm-sem-title.is-side .cm-sem-value { font-size: 1.5em; }
+.cm-sem-title.is-side .cm-sem-chev svg { width: 16px; height: 16px; }
+.cm-sem-title.is-side .cm-sem-menu { gap: 4px 16px; margin-top: 6px; }
+.cm-sem-title.is-side .cm-sem-item { font-size: 1em; }

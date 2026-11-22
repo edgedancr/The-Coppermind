@@ -11,23 +11,25 @@
     "mapFlow": true,
     "milestone": 25,
     "tinmindSemester": "Fall 26",
-    "tinmindMode": true,
+    "tinmindMode": false,
     "tinOpen": {
       "The Tinmind/Spring 26/Euclidean Geometry": true,
-      "The Tinmind/Spring 26/Euclidean Geometry/Propositions": true,
+      "The Tinmind/Spring 26/Euclidean Geometry/Propositions": false,
       "The Tinmind/Fall 26/Philosophy.md": false,
       "The Tinmind/Fall 26/Intro to Intelligence.md": false,
       "The Tinmind/Fall 26/Freedom's Foundations 1.md": false,
       "The Tinmind/Spring 26/West Lit 2.md": false,
       "The Tinmind/Spring 26/Logic.md": false,
-      "The Tinmind/Spring 26/Euclidean Geometry.md": true,
+      "The Tinmind/Spring 26/Euclidean Geometry.md": false,
       "The Tinmind/Notebook.md": false,
       "The Tinmind/Notebook": true
     },
     "tinBacklinksRemoved": true,
     "tinHubsRenamed": true,
     "tinCourseLinksRemoved": true,
-    "tinRightWasOpen": true
+    "tinSemesters": [
+      "Spring 27"
+    ]
   },
   "resolved": {}
 }
