@@ -214,7 +214,7 @@ hr {
   display: inline-block;
   font-family: var(--cm-gradient-font);
   font-size: calc(var(--font-text-size, 16px) * 1.9); /* not em: the real title is font-size 0, so em would give 0 */
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.2;
   background: var(--cm-gradient);
@@ -232,7 +232,7 @@ hr {
   width: fit-content; max-width: 100%;
   font-family: var(--cm-gradient-font);
   font-size: 1.35em;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 0.02em;
   margin: 0;
   padding-bottom: 0.25em;

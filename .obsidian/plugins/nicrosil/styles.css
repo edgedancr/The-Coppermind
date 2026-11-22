@@ -22,7 +22,7 @@ body {
 /* Coppermind Gradient Style: add this class to a title in a new feature to get the whole style. */
 .cm-gradient-style {
   width: fit-content; max-width: 100%;
-  font-family: var(--cm-gradient-font); font-weight: 600; letter-spacing: 0.02em;
+  font-family: var(--cm-gradient-font); font-weight: 400; letter-spacing: 0.02em;
   background: var(--cm-gradient); background-size: 100% 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
   filter: var(--cm-gradient-glow);
@@ -30,7 +30,7 @@ body {
 /* Tinmind Gradient Style: add this class to a title to get the Tinmind's version of the same style. */
 .cm-tin-gradient-style {
   width: fit-content; max-width: 100%;
-  font-family: var(--cm-gradient-font); font-weight: 600; letter-spacing: 0.02em;
+  font-family: var(--cm-gradient-font); font-weight: 400; letter-spacing: 0.02em;
   background: var(--cm-tin-gradient); background-size: 100% 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
   filter: var(--cm-tin-gradient-glow);
@@ -328,7 +328,7 @@ body.cm-on-dashboard .workspace-leaf-content[data-type="file-properties"] .view-
 /* relations panel */
 .cm-rel { padding: 8px 10px 20px; }
 .cm-rel-head { margin-bottom: 8px; }
-.cm-rel-title { font-size: var(--font-ui-medium); font-weight: 700; line-height: 1.25; }
+.cm-rel-title { font-size: var(--font-ui-medium); font-weight: 400; line-height: 1.25; }
 .cm-rel-status { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 3px; margin: 3px 0; text-transform: uppercase; letter-spacing: .04em; }
 .cm-rel-draft { background: var(--cm-copper-soft); color: var(--cm-copper); }
 .cm-rel-verified { background: rgba(95,174,158,.15); color: var(--cm-patina); }
@@ -642,7 +642,7 @@ body {
 
 /* page titles: a glow for verified pages, a dim ember for drafts */
 .cm-st-verified .inline-title {
-  font-family: var(--cm-gradient-font); font-weight: 600; letter-spacing: 0.02em;
+  font-family: var(--cm-gradient-font); font-weight: 400; letter-spacing: 0.02em;
   background: var(--cm-gradient);
   background-size: var(--cm-title-w, 14em) 100%; background-repeat: no-repeat; /* --cm-title-w: the title's own text width, set by Nicrosil, so the gradient runs across the words and not the whole line */
   -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
@@ -651,7 +651,7 @@ body {
 }
 @keyframes cm-title-shimmer { 0%, 55% { background-position: 120% 0; } 100% { background-position: -20% 0; } }
 .cm-st-draft .inline-title {
-  font-family: var(--cm-gradient-font); font-weight: 600; letter-spacing: 0.02em;
+  font-family: var(--cm-gradient-font); font-weight: 400; letter-spacing: 0.02em;
   background: var(--cm-draft-gradient);
   filter: var(--cm-draft-glow);
   background-size: var(--cm-title-w, 14em) 100%; background-repeat: no-repeat; /* --cm-title-w: the title's own text width, set by Nicrosil, same as a verified title */
@@ -1073,7 +1073,7 @@ body.cm-quiet .cm-qbar-fill {
 /* ---- Review queue and relations panel headers: still, glowing gradient like the Dashboard name (2.7.3). No shimmer. ---- */
 .cm-queue h4, .cm-rel-title {
   width: fit-content; max-width: 100%;
-  font-family: var(--cm-gradient-font); font-weight: 600; letter-spacing: 0.02em;
+  font-family: var(--cm-gradient-font); font-weight: 400; letter-spacing: 0.02em;
   background: var(--cm-gradient); background-size: 100% 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
   animation: none !important;
@@ -1332,7 +1332,7 @@ body.cm-tin-mode .side-dock-ribbon-action[aria-label^="Relations panel"] { displ
   display: inline-block;
   font-family: var(--cm-gradient-font);
   font-size: calc(var(--font-text-size, 16px) * 1.9); /* not em: the real title is font-size 0, so em would give 0 */
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.2;
   background: var(--cm-gradient);
@@ -1370,7 +1370,7 @@ body.cm-tin-mode .workspace-leaf-content[data-type="file-explorer"] .nav-files-c
 /* the course page's panel: the same tree, under the page's properties */
 .cm-hub { margin: 14px 0 18px; padding: 12px 14px; border: 1px solid var(--background-modifier-border); border-radius: 6px; background: var(--background-secondary); }
 .cm-hub-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
-.cm-hub-title { font-weight: 600; background: var(--cm-tin-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+.cm-hub-title { font-weight: 400; background: var(--cm-tin-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
 .cm-hub-btns { display: flex; gap: 6px; }
 .cm-hub-btns button { height: var(--input-height, 30px); }
 .cm-hub .cm-tin-row { min-height: 28px; }
@@ -1379,7 +1379,7 @@ body.cm-tin-mode .workspace-leaf-content[data-type="file-explorer"] .nav-files-c
 /* ---------- Titles of the Tinmind's notes (3.3.0) ---------- */
 /* Every note in The Tinmind (course pages, the notes inside a course, new notes) has its title in the Tinmind Gradient Style, whatever its status. The Tinmind Dashboard has the hero instead. */
 .cm-tinnote-leaf .inline-title {
-  font-family: var(--cm-gradient-font); font-weight: 600; letter-spacing: 0.02em;
+  font-family: var(--cm-gradient-font); font-weight: 400; letter-spacing: 0.02em;
   background: var(--cm-tin-gradient);
   background-size: var(--cm-title-w, 14em) 100%; background-repeat: no-repeat; /* --cm-title-w: the title's own text width, set by Nicrosil, so the gradient runs across the words */
   -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
