@@ -1,0 +1,38 @@
+---
+type: course-note
+course: "Chinese I"
+semester: "Fall 26"
+---
+← [[The Tinmind/Fall 26/Chinese I]]
+
+- Chinese character stroke order website: https://forlang.fsa.mtsu.edu/hanzi/stroke/ 
+- Quiz: Character recognition test vocabulary in lesson 1 (dialogue 1). (pg22)
+- Vocab
+	- 你, 您  — You. The first is informal, the second is formal/respectful.
+	- 你 激动神么名字
+	- 怎么陈虎您
+	- 大开好
+	- 你进天好吗
+	- 我的中文很好 — My Chinese is good
+	- 我的中文不好 — My Chinese is not good
+	- 对不起 — I'm sorry 
+	- 不好意思— Excuse me
+	- 请文— Please, I would like to ask
+	- 请坐 下 — please have a seat
+	-  请帮我一个忙 — May I ask a favor
+	- 问 — To ask
+		- 有没有问提 — Do you have questions
+		- 他问： 你叫什么？
+		- 问问题 — To ask questions
+	- 贵— honorable, expensive
+		- 请问贵行？— What is your family name?
+		- 我行___ — My family name is __
+		-  这个好贵— This is expensive
+		- 贵人 — Helpful person. Someone that will bring luck to your life.
+	- 性 — Family name
+		- 性 名 — Full name
+		- 他姓 什 么  — What is your family name?
+	- 我 — I, me
+		- 我是美国人 — I am American
+		- 我的名 子是 __ — My name is
+		- 我洗 欢 ___ — I like ___

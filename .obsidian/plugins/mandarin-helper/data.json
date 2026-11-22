@@ -1,0 +1,11 @@
+{
+  "displayPinyin": true,
+  "colorizeByTone": false,
+  "dictionarySource": "https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.zip",
+  "fontIncreasePercent": "40",
+  "tone1Color": "#008000",
+  "tone2Color": "#0000ff",
+  "tone3Color": "#ff0000",
+  "tone4Color": "#000000",
+  "tone5Color": "#d2b48c"
+}

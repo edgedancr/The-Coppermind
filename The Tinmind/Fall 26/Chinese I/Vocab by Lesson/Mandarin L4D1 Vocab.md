@@ -1,0 +1,36 @@
+---
+type: course-note
+course: "Chinese I"
+semester: "Fall 26"
+---
+← [[The Tinmind/Fall 26/Chinese I]]
+
+- 周末 — weekend
+- 打球 — to play ball
+	- 打 — to hit
+	- 求 — ball
+- 看 — to watch, to look, to read
+- 电视 — television
+	- 电 — electricity
+	- 视 — vision
+- 唱歌 — to sing (a song)
+	- 唱 — to sing
+	- 歌 — song
+- 跳舞 — to dance
+	- 跳 — to jump
+	- 舞 — dance
+- 听 — to listen
+- 音乐 — music
+- 书 — book
+- 对 — right, correct
+- 有的 — some
+- 时候 — (a point in) time, moment, (a duration of) time
+- 电影 — movie
+	- 影 — shadow
+- 常常 — often
+- 那 — in that case, then
+- 去 — to go
+- 外国 — foreign country
+- 请客 — to invite someone (to dinner, coffee, etc...)
+- 昨天 — yesterday
+- 所以 — so

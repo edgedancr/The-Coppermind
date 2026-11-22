@@ -1,0 +1,63 @@
+---
+type: course-note
+course: "Chinese I"
+semester: "Fall 26"
+---
+← [[The Tinmind/Fall 26/Chinese I]]
+
+##### L2 Vocab Practice
+- 那个 —That one
+	- 那个女生是我妹妹
+- 这个 — This one
+	- 这个人是谁 ？— Who is this person?
+	- 这个是什么 — What is this?
+- 照片 — picture, photo
+	- 我有很多照片。— I have a lot of pictures.
+	- 那是谁的照片 — who's photo is that?
+	- 他很照骗。 — He doesn't look like the photo.
+- 爸爸 — Dad.
+- 妈妈 — Mom.
+	- 我爸爸和妈妈是美国人.  — My dad and mom are American.
+	- 爸爸不是老师 — Dad is not a teacher.
+- 父母 — Parent.
+- 孩子 — Child
+	- 这个女孩子是我女儿。— This girl is my daughter.
+	- 这是谁的孩子？— Who's kid is this?
+	- 那个男孩子是中国人。 — That boy is Chinese.
+- 他 — He
+	- 他是你的哥哥吗？— Is he your older brother?
+- 她 — She
+	- 她叫什么名字？— What is her name?
+	- 她的照片很好看。— Her photo looks good.
+- 儿子 — Son
+	- 王先生有一个儿子。 — Mr. Wang has one son.
+- 女儿 — Daughter 
+	- 李小姐没有女儿 。— Mrs. Li does not have a daughter.
+	- 这是我的二女儿。— This is my second daughter. 
+- 男— Male
+	- 这里友十个男生。— There are ten guys here.
+		- 这里 — Here
+- 女 — Female
+	- 班上有三个女学生。— We have three female students in the class. 
+	- 我是 男/女 生。— I am a male / female
+	- 我是男/女 人。— I am a man / woman.
+- 姐姐 — Older sister
+	- 我是大姐 — I am the oldest sister.
+- 弟弟 — younger brother
+	- 他有一个弟弟 — He has one younger brother.
+	- 我们是姐弟 — We are older sister and younger brother.
+		- 我们 — We
+	- 我们是兄妹 — We are older brother and younger sister.
+- 哥哥 — Older brother
+	-  她的哥哥是大学生 — Her older brother is a college student.
+	- 请问， 你有哥哥吗？— May I ask, do you have an older brother?
+- 大哥 — Oldest brother
+	- 我有三个哥哥。— I have three older brothers.
+- 有 — to have
+	- 有没有问提？— Do you have questions?
+	- 美国有纽约。— America has New York
+- 没有 — to not have
+- 高 — Tall, or a family name
+	- 那个男生很高 — That guy is tall.
+	- 我姓高，你呢？— My family name is Gao, what about you?
+	- 我身高五尺三寸。 — I am five feet thee inches.

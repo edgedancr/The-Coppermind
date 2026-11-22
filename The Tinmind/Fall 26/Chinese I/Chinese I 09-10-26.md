@@ -1,0 +1,71 @@
+---
+type: course-note
+course: "Chinese I"
+semester: "Fall 26"
+---
+← [[The Tinmind/Fall 26/Chinese I]]
+
+- Vocab Review
+	- 你
+	- 好
+	- 请
+	- 问
+	- 贵
+	- 性
+	- 我
+	- 呢
+	- 小姐
+	- 叫
+	- 什么
+	- 名字
+- New Vocab
+	- 呢 — Question particle, makes it gentle
+		- 你性什么呢？— What is your family name?
+		- 她是谁呢？— Who is she?
+			- 谁 — who
+		- 你呢? — how about you?
+	- 小姐 — Miss, young lady
+		- (name)  小姐 — Miss (name)
+		- 小姐， 请问贵姓？— Miss, what is your family name?
+		- 陈小姐是中国人 — Miss Chen is Chinese
+	- 叫 — To call, to be called
+		- 大家好！我叫（name) — 
+		- 请叫我 (name) — Please call me (name)
+		-   他叫什么名字 — What is her name?
+	- 什么 — what
+		- 你说什么？— What did you say?
+		- 你的肾小是什么？— What is your Chinese zodiac?
+		- 这是什么？— What is this
+			- 这 — is
+	- 名字 — name, given name, what you want to be called.
+		- 名 — name
+		- 中间名 — middle name
+		- 全名 — full name
+		- 你的名字怎么拼？— How do you spell your name
+			- 怎么— how to
+			- 拼 — spell
+		- 我的名字是 (name) — My name is (name)
+		- 他叫什么名字？— What is his name?
+	- 先生 — Sir, husband
+		- 林先生。— Sir Lin
+		- 李先生好— Hello Mr. Li
+		- 我的献身是美国人。— My husband is American
+	- 理由， 王鹏 — Names. Literal meaning of Li is fruit, wang is King.
+	- 你今天号码？— how are you doing today?
+	- 王鹏的中文很好。 — Wang's Chinese is good. 
+
+- New Grammar
+	- 你行李吗? — Is your family name Lee?
+		- 你 — You
+		- 性 — Family name
+		- 李 — Lee (family name)
+		- 吗 — Yes or no?
+	- 你姓什么 — What is your family name
+		- 你 — you
+		- 性 — family name
+		- 什么 — what
+	- 不是， 我不姓李
+		- 不是 — to deny
+	- 请问，你贵姓？— 
+	- 你叫什么名字？
+	- 你叫什么名字？What is your name? (less respectful, from an elder to young person)

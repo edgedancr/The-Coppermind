@@ -1,0 +1,41 @@
+---
+type: course-note
+course: "Chinese I"
+semester: "Fall 26"
+---
+← [[The Tinmind/Fall 26/Chinese I]]
+
+- 九月 — September
+- 月 — Month
+- 十二 — twelve
+- 号 — (measure word for position in a numerical series, day of the month)
+- 星期 — week, day of the week
+- 星期四 — Thursday
+- 星期日， 星期天 — Sunday
+- 天 — day
+- 生日 — birthday
+- 生 — to give birth to, to be born
+- 日 — day, sky (Heavens)
+- 今年 — this year
+- 年 — year
+- 多 — how many/much, to what extent
+- 大 — big, old
+- 十八 — 18
+- 岁 — year (of age)
+- 吃 — to eat
+- 饭 — meal, (cooked) rice
+- 怎么样 — is it OK? How is that? How does that sound?
+- 太了 — Too, extremely （add adjective in between)
+- 谢谢 — Thanks
+- 喜欢 — to like
+- 才 — dish, cuisine
+- 还是 — or
+- 可是 — but
+- 我们 —we, us
+- 点 — o'clock 
+- 办 — half, half an hour
+- 网上 — evening, night
+- 见 — to see
+- 再见 — goodbye, see you again
+- 在 — again
+- 英国 — Britain

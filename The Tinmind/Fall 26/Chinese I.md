@@ -5,3 +5,6 @@ semester: Fall 26
 current: true
 order: 5
 ---
+## General Notes
+- 中文名字
+	- 韩慕森

@@ -11,7 +11,7 @@
     "mapFlow": true,
     "milestone": 25,
     "tinmindSemester": "Fall 26",
-    "tinmindMode": false,
+    "tinmindMode": true,
     "tinOpen": {
       "The Tinmind/Spring 26/Euclidean Geometry": true,
       "The Tinmind/Spring 26/Euclidean Geometry/Propositions": true,
@@ -20,10 +20,16 @@
       "The Tinmind/Fall 26/Freedom's Foundations 1.md": false,
       "The Tinmind/Spring 26/West Lit 2.md": false,
       "The Tinmind/Spring 26/Logic.md": false,
-      "The Tinmind/Spring 26/Euclidean Geometry.md": true
+      "The Tinmind/Spring 26/Euclidean Geometry.md": true,
+      "The Tinmind/Fall 26/Chinese I.md": false,
+      "The Tinmind/Fall 26/Chinese I/Vocab by Lesson": false,
+      "The Tinmind/Fall 26/SAIL.md": false,
+      "The Tinmind/Fall 26/Chinese I/Study Guides": false,
+      "The Tinmind/Fall 26/Chinese I": true
     },
     "tinBacklinksRemoved": true,
-    "tinHubsRenamed": true
+    "tinHubsRenamed": true,
+    "tinRightWasOpen": true
   },
   "resolved": {}
 }
