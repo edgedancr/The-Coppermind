@@ -3466,9 +3466,28 @@ module.exports = class Nicrosil extends Plugin {
       });
     }
 
-    const cards = courses.map((c) => ({ icon: "book-open", title: c.name, sub: `${c.semester} notes`, go: open(c.file.path) }));
+    const cards = courses.map((c) => ({ icon: "book-open", title: c.name, sub: this.courseCardLine(c.file), go: open(c.file.path) }));
     this.drawNavCards(el.createDiv(), cards);
     if (!semesters.length) el.createDiv({ cls: "cm-sub", text: "No courses yet. Make a semester with New semester in the Tinmind's course tree." });
+  }
+
+  /** The line under a course's name on the Tinmind Dashboard (3.7.0): how many notes it has and the newest date in a note's name. Only names are read, never what is inside. */
+  courseCardLine(hub) {
+    const folder = this.app.vault.getAbstractFileByPath(this.courseFolderPath(hub));
+    let n = 0, last = 0;
+    const walk = (f) => {
+      for (const k of f.children) {
+        if (k instanceof TFolder) { walk(k); continue; }
+        if (!(k instanceof TFile) || k.extension !== "md") continue;
+        n++;
+        const m = /(\d{2})-(\d{2})-(\d{2})$/.exec(k.basename);
+        if (m) last = Math.max(last, Number(m[3]) * 10000 + Number(m[1]) * 100 + Number(m[2]));
+      }
+    };
+    if (folder instanceof TFolder) walk(folder);
+    if (!n) return "No notes yet";
+    const when = last ? ` \u00b7 last ${String(Math.floor(last / 100) % 100).padStart(2, "0")}-${String(last % 100).padStart(2, "0")}` : "";
+    return `${n} note${n === 1 ? "" : "s"}${when}`;
   }
 
   /** Draws a row of Dashboard-style cards into `el` from {icon, title, sub, go, under?} entries. */

@@ -1386,3 +1386,25 @@ body.cm-tin-mode .workspace-leaf-content[data-type="file-explorer"] .nav-files-c
 .cm-backpill-icon { display: inline-flex; color: #b8a3f2; }
 .cm-backpill-icon svg { width: 15px; height: 15px; }
 @media (prefers-reduced-motion: reduce) { .cm-backpill { transition: none; } }
+
+/* ---------- Dashboard cards: the spine (3.7.0) ---------- */
+/* Every card on the Coppermind Dashboard and the Tinmind Dashboard: a flat, square card with a gradient bar on its left edge. On hover the bar widens and the title takes the page's gradient (copper to teal on the Coppermind, grey to lilac on the Tinmind). */
+:root { --cm-spine: linear-gradient(180deg, #f6d3a8, #d99a62 45%, #86d2c1); --cm-spine-wash: rgba(184, 115, 51, 0.09); }
+.cm-tin-leaf { --cm-spine: linear-gradient(180deg, #f1f0f8, #b0b0bd 45%, #b8a3f2); --cm-spine-wash: rgba(184, 163, 242, 0.09); }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard {
+  position: relative; overflow: hidden; border-radius: 0; box-shadow: none; transform: none;
+  background: var(--background-primary-alt); border: 1px solid var(--background-modifier-border); border-left: 0;
+  padding: 13px 14px 12px 18px; display: block; transition: background 0.15s, border-color 0.15s;
+}
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--cm-spine); transition: width 0.15s; }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard::after { display: none; }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard:last-child:nth-child(3n+1) { grid-column: auto; }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard-icon { display: none; }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard-title { margin: 0; width: fit-content; max-width: 100%; font-size: 1.1em; font-weight: 500; color: var(--text-normal); white-space: normal; }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard-sub { margin: 3px 0 0; color: var(--text-muted); white-space: normal; }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard:hover, :is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard:focus-visible { transform: none; box-shadow: none; outline: none; background: color-mix(in srgb, var(--background-primary-alt) 100%, transparent) linear-gradient(var(--cm-spine-wash), var(--cm-spine-wash)); border-color: var(--background-modifier-border-hover); }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard:hover::before, :is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard:focus-visible::before { width: 6px; }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard:hover .cm-navcard-title, :is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard:focus-visible .cm-navcard-title {
+  background: var(--cm-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+}
+@media (prefers-reduced-motion: reduce) { .cm-navcard, .cm-navcard::before { transition: none !important; } }

@@ -11,7 +11,7 @@
     "mapFlow": true,
     "milestone": 25,
     "tinmindSemester": "Fall 26",
-    "tinmindMode": true,
+    "tinmindMode": false,
     "tinOpen": {
       "The Tinmind/Spring 26/Euclidean Geometry": true,
       "The Tinmind/Spring 26/Euclidean Geometry/Propositions": false,
@@ -31,8 +31,7 @@
     },
     "tinBacklinksRemoved": true,
     "tinHubsRenamed": true,
-    "tinCourseLinksRemoved": true,
-    "tinRightWasOpen": true
+    "tinCourseLinksRemoved": true
   },
   "resolved": {}
 }
