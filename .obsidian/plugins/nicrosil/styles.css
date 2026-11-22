@@ -1094,6 +1094,16 @@ body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-
 .cm-underscore-btn { display: none; align-self: center; flex: 0 0 auto; margin-left: 2px; }
 .workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="file-explorer"].is-active) .cm-underscore-btn { display: flex; }
 body.cm-tin-mode .cm-underscore-btn { display: none; }
+/* 3.8.0: the mode button, right after the eye. It shows while the Files tab is open, in both modes, and is drawn like the eye: the tab bar's own icon color, no gradient. */
+.cm-mode-btn { display: none; align-self: center; flex: 0 0 auto; margin-left: 2px; }
+.workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="file-explorer"].is-active) .cm-mode-btn { display: flex; }
+.cm-mode-btn .cm-mode-logo { height: calc(var(--icon-size, 18px) - 1px); width: auto; background: currentColor; }
+
+/* 3.8.1: no status bar (word count, the verified counter) while a dashboard is the open page, and the Coppermind Dashboard's first heading (Review progress) sits closer to the cards, so the Open next draft button under it fits on screen. */
+body.cm-on-dashboard .status-bar,
+body.cm-on-tin .status-bar { display: none; }
+.coppermind-dashboard .el-pre:has(.cm-nav) + .el-h2,
+.coppermind-dashboard .el-pre:has(.cm-nav) + .el-h2 > h2 { margin-top: 0; }
 
 /* Open next draft buttons (2.11.1): sharp corners, copper-to-teal gradient outline, glow (same as the index jump chips) */
 button.cm-gbtn.mod-cta {

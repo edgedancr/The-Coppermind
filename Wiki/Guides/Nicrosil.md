@@ -1,6 +1,6 @@
 ---
 type: guide
-status: verified
+status: draft
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -12,14 +12,17 @@ courses:
 sources: []
 related:
   - "[[SCHEMA]]"
-drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5; larger file-list button name and index letter headings and jump bar, the flat relations map, the trimmed guide body, and the changelog moved to its own file, by claude-sonnet-5-5; Coppermind Gradient Style section by claude-sonnet-5-5; the Tinmind (notes dashboard, semester switcher, hero, button, mode) and the Tinmind Gradient Style by claude-sonnet-5-5; trimmed to what Nicrosil does and brought to v3.0.0 by claude-sonnet-5-5; Tinmind course tree and course pages by claude-sonnet-5-5)
+drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5; larger file-list button name and index letter headings and jump bar, the flat relations map, the trimmed guide body, and the changelog moved to its own file, by claude-sonnet-5-5; Coppermind Gradient Style section by claude-sonnet-5-5; the Tinmind (notes dashboard, semester switcher, hero, button, mode) and the Tinmind Gradient Style by claude-sonnet-5-5; trimmed to what Nicrosil does and brought to v3.0.0 by claude-sonnet-5-5; Tinmind course tree and course pages by claude-sonnet-5-5; mode button and dashboard status bar by claude-sonnet-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-22
+changes_since_verified:
+  - "2026-11-22: v3.8.0 adds a mode button next to the eye in the left tab bar that switches between the Coppermind and the Tinmind without opening a page (Harrison asked for it) [[#Hotkeys and buttons]]"
+  - "2026-11-22: v3.8.1 hides the status bar while the Dashboard or the Tinmind Dashboard is open [[#The Dashboard]]"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, records schema changes, and runs the Tinmind, my own class notes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v3.7.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v3.8.1**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -135,10 +138,11 @@ It does not touch `status`, `verified_on`, or the log. After a schema change, ea
 | `Ctrl+click` or middle-click | Open a card, a button, a search result or a queue page in a new tab |
 
 Change any of them in **Settings → Hotkeys** (search "Nicrosil"). Nicrosil also adds:
+- A **mode button** right after the eye, in the same tab bar. It shows the logo of the mode you are in (the Coppermind's or the Tinmind's); clicking it switches to the other mode ([[#The Tinmind]]) and opens no page. It shows while the Files tab is open, in both modes.
 - **The Coppermind** and **The Tinmind** buttons above the files in the file list. They open the Dashboard and the Tinmind page, and switch the mode ([[#The Tinmind]]).
 - Two **ribbon** buttons, for the relations panel and the review queue.
 - A **status-bar counter** of verified pages (for example, `12/60 verified`).
-- An **eye button** in the left sidebar's tab bar, right next to the Files icon (the Search and Bookmarks icons are hidden; `Ctrl+Shift+F` still opens search) that shows or hides folders and files whose names start with an underscore. It appears while the Files tab is open. They are hidden each time Obsidian opens. The file list's own toolbar (new note, new folder, sort and the rest) is hidden; those actions are still in the command palette and the right-click menu.
+- An **eye button** in the left sidebar's tab bar, right next to the Files icon (the Search and Bookmarks icons are hidden; `Ctrl+Shift+F` still opens search) that shows or hides folders and files whose names start with an underscore. It appears while the Files tab is open (not in the Tinmind's mode, where the file list is replaced). They are hidden each time Obsidian opens. The file list's own toolbar (new note, new folder, sort and the rest) is hidden; those actions are still in the command palette and the right-click menu.
 
 **Log a schema change** has no default hotkey.
 

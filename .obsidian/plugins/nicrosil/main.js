@@ -2809,7 +2809,7 @@ module.exports = class Nicrosil extends Plugin {
     clearTimeout(this.indexTimer);
     document.querySelectorAll(".cm-schema-log-btn, .cm-respond-btn").forEach((e) => e.remove());
     this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view) { l.view.__cmSchemaBtn = null; l.view.__cmRespondBtn = null; } });
-    document.querySelectorAll(".cm-resolve-btn, .cm-home-btn, .cm-underscore-btn").forEach((e) => e.remove());
+    document.querySelectorAll(".cm-resolve-btn, .cm-home-btn, .cm-underscore-btn, .cm-mode-btn").forEach((e) => e.remove());
     document.body.classList.remove("cm-hide-underscore");
     document.body.classList.remove("cm-on-dashboard", "cm-on-tin", "cm-tin-mode");
     document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-agents-leaf, .cm-tinnote-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => { e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-agents-leaf", "cm-tinnote-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"); e.style.removeProperty("--cm-log-title"); });
@@ -2883,6 +2883,15 @@ module.exports = class Nicrosil extends Plugin {
         tabRow.appendChild(eye); // right after the Files icon (Search and Bookmarks are hidden)
       }
       this.paintUnderscoreButtons();
+      // the mode button sits right after the eye (3.8.0): it switches between the Coppermind and the Tinmind without opening a page
+      if (tabRow && !tabRow.querySelector(":scope > .cm-mode-btn")) {
+        const mode = createDiv({ cls: "clickable-icon cm-mode-btn" });
+        mode.setAttr("role", "button"); mode.setAttr("tabindex", "0");
+        mode.addEventListener("click", () => this.toggleMode());
+        mode.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); this.toggleMode(); } });
+        tabRow.appendChild(mode);
+      }
+      this.paintModeButtons();
       const homeBtn = holder.querySelector(":scope > .cm-home-btn:not(.cm-tin-btn)");
       if (homeBtn && !holder.querySelector(":scope > .cm-tin-btn")) this.makeTinButton(homeBtn); // the Tinmind button sits under it (2.17.0)
       if (homeBtn) { this.ensureTinSide(holder); return; }
@@ -2955,6 +2964,25 @@ module.exports = class Nicrosil extends Plugin {
     document.body.classList.toggle("cm-tin-mode", on);
     const rs = this.app.workspace.rightSplit;
     if (on && rs && !rs.collapsed) rs.collapse();
+    this.paintModeButtons();
+  }
+
+  /** The mode button in the left sidebar's tab bar (3.8.0): switches between the Coppermind and the Tinmind, and opens no page. */
+  toggleMode() {
+    if (this.settings.tinmindMode) this.exitTinMode(); else this.enterTinMode();
+  }
+
+  /** Draws the mode button's icon: the Coppermind's logo in the Coppermind's mode, the Tinmind's logo in the Tinmind's. Drawn in the tab bar's own icon color, not a gradient. */
+  paintModeButtons() {
+    const tin = !!this.settings.tinmindMode;
+    document.querySelectorAll(".cm-mode-btn").forEach((b) => {
+      const mode = tin ? "tin" : "copper";
+      if (b.dataset.mode === mode) return;
+      b.dataset.mode = mode;
+      b.empty();
+      b.createSpan({ cls: tin ? "cm-logo cm-logo-tin cm-mode-logo" : "cm-logo cm-mode-logo" }).setAttr("aria-hidden", "true");
+      b.setAttr("aria-label", tin ? "Switch to the Coppermind" : "Switch to the Tinmind");
+    });
   }
 
   async openTinmind(newTab) {
