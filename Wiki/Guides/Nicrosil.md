@@ -2,9 +2,10 @@
 type: guide
 status: draft
 changes_since_verified:
-  - "Nicrosil is now v3.1.0. In Tinmind mode the file list is replaced by a tree of the semester's courses, with buttons to make, rename and delete notes and folders [[#The Tinmind]]"
+  - "Nicrosil is now v3.2.0. In Tinmind mode the file list is replaced by a tree of the semester's courses, with buttons to make, rename and delete notes and folders [[#The Tinmind]]"
   - "Each course page (a class notes file) shows a panel with the course's notes and headings, a New note button and a New folder button [[#The Tinmind]]"
   - "A New course button in the tree makes a course page for the semester showing [[#The Tinmind]]"
+  - "A New semester button under it makes a semester; the Tinmind page is now named Tinmind Dashboard, and All Class Notes is only in the course tree [[#The Tinmind]]"
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -23,7 +24,7 @@ verified_on: 2026-11-22
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, records schema changes, and runs the Tinmind, my own class notes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v3.1.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v3.2.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -32,7 +33,7 @@ This guide describes Nicrosil **v3.1.0**. Its folder is `.obsidian/plugins/nicro
 | **Relations** | A side panel for the open page: its typed links, outgoing and incoming | [[#The relations panel]] |
 | **Wiki map** | Two views of the whole wiki's typed links: a hierarchy tree and a zoomable map | [[#The wiki map]] |
 | **Dashboard** | The front page: progress, search box, navigation cards, recent activity | [[#The Dashboard]] |
-| **Tinmind** | A button, a notes dashboard with a semester switcher, a mode that recolors the app, and a course tree for making and managing notes | [[#The Tinmind]] |
+| **Tinmind** | A button, a Tinmind Dashboard with a semester switcher, a mode that recolors the app, and a course tree for making and managing notes | [[#The Tinmind]] |
 | **Search** | A live search box over wiki pages, source cards, and perspectives | [[#Search]] |
 | **Index and log** | Keeps [[_index|index]] and the log in step with each verify or reject, and starts each month's log file | [[#The index and the log]] |
 | **Page tidying** | Replaces each page's properties block with a one-line strip | [[#The properties strip]] |
@@ -75,10 +76,10 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 ## The Tinmind
 The **Tinmind** is my own class notes, in the folder `The Tinmind/`, kept apart from the wiki. Nicrosil gives it four things.
 - **A button.** **The Tinmind** sits under **The Coppermind** above the file list. It opens the Tinmind page, and `Ctrl+click` or middle-click opens it in a new tab.
-- **A notes dashboard.** The page `The Tinmind/Notes Dashboard` opens with a hero (tin logo, title and a quote) and one block, `coppermind-classes`. Each class notes file has `type: class-notes`, a `course`, a `semester` (such as `Fall 26`), a `current` flag and an `order`. A **Semester** box lists every semester found, oldest first, and the cards under it are that semester's courses plus **All Class Notes**, a table of every class notes file. The pick is saved, so it is there after Obsidian closes; until one is made, the box shows the semester marked `current: true`. To add a course, make its notes file with those properties. The block only reads properties, never the notes. The page shows no properties and no file path.
+- **A dashboard.** The page `The Tinmind/Tinmind Dashboard` opens with a hero (tin logo, title and a quote) and one block, `coppermind-classes`. Each class notes file has `type: class-notes`, a `course`, a `semester` (such as `Fall 26`), a `current` flag and an `order`. A **Semester** box lists every semester found, oldest first, and the cards under it are that semester's courses. The pick is saved, so it is there after Obsidian closes; until one is made, the box shows the semester marked `current: true`. To add a course, make its notes file with those properties. The block only reads properties, never the notes. The page shows no properties and no file path.
 - **A mode.** Clicking the button switches the whole app to the Tinmind's grey-and-lilac colors and closes the right sidebar, so the review queue and relations panel are gone (`Alt+Q` and `Alt+L` only show a note). Clicking **The Coppermind**, or pressing `Alt+D`, switches back and reopens the sidebar if it was open before. The mode is saved, so Obsidian reopens in whichever mode it was in.
-- **A course tree.** While the mode is on, the file list shows the semester's courses instead of folders, under the **Semester** box. A course is its notes file plus the folder next to it with the same name minus " Notes" (`Fall 26/SAIL Notes.md` and `Fall 26/SAIL/`). Opening a course lists the folder's notes and sub-folders, then the headings on the course page, so a class split into many notes and a class in one long file both read as a list. Hover a course for **+** (new note) and **...**; right-click or **...** on a note or folder to **Rename** or **Delete** it (deletes go to the trash and ask first). **New course** makes a course page for the semester showing, with the properties above, and **All Class Notes** opens the table. A new note starts with `type: course-note`, the course and semester, and a link back to the course page, and opens in the editing view.
-- **A course page.** A class notes file also shows a panel under its properties with the same list, **New note** and **New folder**. The panel is drawn on screen; the file is not changed. Nicrosil makes folders and notes only when I ask in the tree or the panel, and reads only folder names and the page's headings, not what the notes say. Not covered: renaming or deleting a course, starting a semester, and reordering notes (they sort by name, with numbers in order).
+- **A course tree.** While the mode is on, the file list shows the semester's courses instead of folders, under the **Semester** box. A course is its notes file plus the folder next to it with the same name minus " Notes" (`Fall 26/SAIL Notes.md` and `Fall 26/SAIL/`). Opening a course lists the folder's notes and sub-folders, then the headings on the course page, so a class split into many notes and a class in one long file both read as a list. Hover a course for **+** (new note) and **...**; right-click or **...** on a note or folder to **Rename** or **Delete** it (deletes go to the trash and ask first). **New course** makes a course page for the semester showing, with the properties above. **New semester** asks for a season and a year (such as `Fall 27`; it suggests the next one), makes the semester's folder and switches to it. **All Class Notes**, a table of every class notes file, has its own row at the bottom of the tree and no other button. A new note starts with `type: course-note`, the course and semester, and a link back to the course page, and opens in the editing view.
+- **A course page.** A class notes file also shows a panel under its properties with the same list, **New note** and **New folder**. The panel is drawn on screen; the file is not changed. Nicrosil makes folders and notes only when I ask in the tree or the panel, and reads only folder names and the page's headings, not what the notes say. Not covered: renaming or deleting a course or a semester, and reordering notes (they sort by name, with numbers in order).
 
 ## Search
 The search box on the [[_dashboard|Dashboard]] shows suggestion cards as I type, over wiki pages, source cards, and perspectives. It does not search the raw class notes or readings, and it only reads: it never changes a page.

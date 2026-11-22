@@ -5,4 +5,4 @@ semester: Spring 26
 current: false
 order: 2
 ---
-← [[The Tinmind/Notes Dashboard]]
+← [[Tinmind Dashboard]]

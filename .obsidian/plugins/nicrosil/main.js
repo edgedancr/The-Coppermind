@@ -57,8 +57,9 @@ const {
 
 const INDEX_PATH = "_index.md";
 const NOTES_DIR = "The Tinmind/";                   // my own class notes (the Notes dashboard, one file per course, the all-notes page)
-const NOTES_DASHBOARD = "The Tinmind/Notes Dashboard"; // opened by the Dashboard's Tinmind card
-const ALL_NOTES_PAGE = "The Tinmind/All Class Notes";  // opened by the last card on the Notes dashboard
+const NOTES_DASHBOARD = "The Tinmind/Tinmind Dashboard"; // opened by the Tinmind button (named Notes Dashboard before 3.2.0)
+const OLD_NOTES_DASHBOARD = "The Tinmind/Notes Dashboard.md";
+const ALL_NOTES_PAGE = "The Tinmind/All Class Notes";  // opened by the All Class Notes row in the Tinmind's course tree
 
 /** Sort key for a semester name such as "Fall 26" (year, then winter < spring < summer < fall); null when the name doesn't fit that shape. */
 function semesterKey(name) {
@@ -2784,6 +2785,7 @@ module.exports = class Nicrosil extends Plugin {
       this.searchIndex.start();
       this.syncSchemaButtons(); this.syncHomeButtons();
       await this.migrateHome();
+      await this.migrateTinDashboard();
       if (this.app.vault.getAbstractFileByPath(DASHBOARD_PATH)) await this.fixHomepageSetting(); // the startup page follows the Dashboard's name
       await this.migrateSchemaStub();
       try {
@@ -2891,7 +2893,7 @@ module.exports = class Nicrosil extends Plugin {
     });
   }
 
-  /** The Tinmind button, directly under the Coppermind one: the same button in the Tinmind's colors and logo. It opens The Tinmind/Notes Dashboard; Ctrl+click or middle-click opens it in a new tab. */
+  /** The Tinmind button, directly under the Coppermind one: the same button in the Tinmind's colors and logo. It opens The Tinmind/Tinmind Dashboard; Ctrl+click or middle-click opens it in a new tab. */
   makeTinButton(after) {
     const btn = createDiv({ cls: "cm-home-btn cm-tin-btn" });
     btn.setAttr("role", "button"); btn.setAttr("tabindex", "0");
@@ -2948,6 +2950,7 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   async openTinmind(newTab) {
+    await this.migrateTinDashboard();
     const f = this.app.vault.getAbstractFileByPath(NOTES_DASHBOARD + ".md");
     if (!(f instanceof TFile)) { new Notice(`Couldn't find ${NOTES_DASHBOARD}.md.`); return; }
     this.enterTinMode();
@@ -3440,27 +3443,7 @@ module.exports = class Nicrosil extends Plugin {
   renderClassNav(el) {
     el.empty();
     const open = (link) => (newTab) => this.app.workspace.openLinkText(link, "", !!newTab);
-    const all = [];
-    for (const f of this.app.vault.getMarkdownFiles()) {
-      if (!f.path.startsWith(NOTES_DIR)) continue;
-      const fm = (this.app.metadataCache.getFileCache(f) || {}).frontmatter;
-      if (!fm || fm.type !== "class-notes" || !fm.semester) continue;
-      const order = Number(fm.order);
-      all.push({ file: f, order: Number.isFinite(order) ? order : 999, name: String(fm.course || f.basename), semester: String(fm.semester).trim(), current: fm.current === true });
-    }
-    // Oldest first, so the box reads in order of time. Names that aren't "Fall 26" style go last, alphabetically.
-    const byOldest = (p, q) => {
-      const kp = semesterKey(p), kq = semesterKey(q);
-      if (kp !== null && kq !== null) return kp - kq;
-      if (kp !== null) return -1;
-      if (kq !== null) return 1;
-      return p.localeCompare(q);
-    };
-    const newestOf = (list) => [...list].reverse().find((x) => semesterKey(x) !== null) || list[list.length - 1] || "";
-    const semesters = [...new Set(all.map((c) => c.semester))].sort(byOldest);
-    const flagged = [...new Set(all.filter((c) => c.current).map((c) => c.semester))].sort(byOldest);
-    let chosen = this.settings.tinmindSemester;
-    if (!semesters.includes(chosen)) chosen = newestOf(flagged) || newestOf(semesters);
+    const { semesters, chosen, courses } = this.tinSemesterState();
 
     if (semesters.length) {
       const bar = el.createDiv({ cls: "cm-sem-bar" });
@@ -3471,14 +3454,13 @@ module.exports = class Nicrosil extends Plugin {
         this.settings.tinmindSemester = select.value;
         await this.persist();
         this.dashboards.forEach((r) => r());
+        this.refreshTin();
       });
     }
 
-    const courses = all.filter((c) => c.semester === chosen).sort((p, q) => p.order - q.order || p.name.localeCompare(q.name));
     const cards = courses.map((c) => ({ icon: "book-open", title: c.name, sub: `${c.semester} notes`, go: open(c.file.path) }));
-    cards.push({ icon: "library", title: "All Class Notes", sub: "Every course, every semester", go: open(ALL_NOTES_PAGE) });
     this.drawNavCards(el.createDiv(), cards);
-    if (!semesters.length) el.createDiv({ cls: "cm-sub", text: "No courses yet. A notes file with type: class-notes and a semester in the Tinmind folder shows up here." });
+    if (!semesters.length) el.createDiv({ cls: "cm-sub", text: "No courses yet. Make a semester with New semester in the Tinmind's course tree." });
   }
 
   /** Draws a row of Dashboard-style cards into `el` from {icon, title, sub, go, under?} entries. */
@@ -3555,7 +3537,7 @@ module.exports = class Nicrosil extends Plugin {
     return file instanceof TFile && (file.path === DASHBOARD_PATH || LEGACY_DASHBOARD_PATHS.includes(file.path));
   }
 
-  /** The Tinmind page (The Tinmind/Notes Dashboard): like the Dashboard, it never shows properties or a strip. */
+  /** The Tinmind page (The Tinmind/Tinmind Dashboard): like the Dashboard, it never shows properties or a strip. */
   isTinDashboard(file) {
     return file instanceof TFile && file.path === NOTES_DASHBOARD + ".md";
   }
@@ -3678,7 +3660,7 @@ module.exports = class Nicrosil extends Plugin {
   ensureStripsIn(root, file) {
     if (!file) return;
     // The Dashboard, index and logs never get a strip. A strip step queued by the note a pane showed before can run after the pane switches, so take any strip away here too.
-    if (this.isDashboard(file) || this.isTinDashboard(file) || file.path === INDEX_PATH || isLogPath(file.path)) { root.querySelectorAll(".cm-propstrip").forEach((s) => s.remove()); return; }
+    if (this.isDashboard(file) || this.isTinDashboard(file) || file.path === INDEX_PATH || isLogPath(file.path)) { root.querySelectorAll(".cm-propstrip, .cm-hub").forEach((s) => s.remove()); return; }
     const info = this.stripInfo(file);
     // When Obsidian re-renders a note (for example on switching between editing and reading),
     // it can re-create the Properties block or move the title, leaving an old strip stranded
@@ -3919,6 +3901,7 @@ module.exports = class Nicrosil extends Plugin {
 
   isClassHub(file) {
     if (!(file instanceof TFile) || file.extension !== "md" || !file.path.startsWith(NOTES_DIR)) return false;
+    if (this.isTinDashboard(file) || file.path === ALL_NOTES_PAGE + ".md") return false; // the Tinmind's own pages are not courses
     const fm = (this.app.metadataCache.getFileCache(file) || {}).frontmatter;
     return !!fm && fm.type === "class-notes";
   }
@@ -3944,7 +3927,9 @@ module.exports = class Nicrosil extends Plugin {
       const order = Number(fm.order);
       all.push({ file: f, order: Number.isFinite(order) ? order : 999, name: String(fm.course || f.basename), semester: String(fm.semester).trim(), current: fm.current === true });
     }
-    const semesters = [...new Set(all.map((c) => c.semester))].sort(byOldestSemester);
+    // semesters made with New semester stay listed while their folder is there, even with no course in them yet
+    const made = (this.settings.tinSemesters || []).filter((n) => this.app.vault.getAbstractFileByPath(NOTES_DIR + n) instanceof TFolder);
+    const semesters = [...new Set([...all.map((c) => c.semester), ...made])].sort(byOldestSemester);
     const flagged = [...new Set(all.filter((c) => c.current).map((c) => c.semester))].sort(byOldestSemester);
     let chosen = this.settings.tinmindSemester;
     if (!semesters.includes(chosen)) chosen = newestSemester(flagged) || newestSemester(semesters);
@@ -4018,6 +4003,9 @@ module.exports = class Nicrosil extends Plugin {
     const add = this.tinRow(foot, { depth: 0, icon: "plus", label: "New course" });
     add.addClass("cm-tin-add");
     add.addEventListener("click", () => this.tinNewCourse(st));
+    const addSem = this.tinRow(foot, { depth: 0, icon: "calendar-plus", label: "New semester" });
+    addSem.addClass("cm-tin-add");
+    addSem.addEventListener("click", () => this.tinNewSemester(st));
   }
 
   tinToggle(path) {
@@ -4244,9 +4232,37 @@ module.exports = class Nicrosil extends Plugin {
     this.refreshTin();
   }
 
+  /** Asks for a semester name ("Fall 27", "Spring 2027"), makes its folder, and switches to it. The name is tidied to "Season YY" so the semesters sort by date. */
+  async tinNewSemester(st) {
+    let suggest = "";
+    const newest = [...st.semesters].reverse().find((x) => semesterKey(x) !== null);
+    if (newest) {
+      const k = semesterKey(newest), y = Math.floor(k / 10), season = k % 10;
+      suggest = season >= 3 ? `Spring ${String(y + 1).slice(-2)}` : season === 0 ? `Spring ${String(y).slice(-2)}` : `Fall ${String(y).slice(-2)}`;
+    }
+    const typed = cleanName(await this.tinPrompt({ title: "New semester", label: "A season and a year, such as Fall 27 or Spring 2027", value: suggest, ok: "Create" }));
+    if (!typed) return;
+    const m = /^(winter|spring|summer|fall|autumn)\s+(\d{2}|\d{4})$/i.exec(typed);
+    if (!m) { new Notice("Use a season and a year, such as Fall 27, so semesters stay in order."); return; }
+    const name = m[1][0].toUpperCase() + m[1].slice(1).toLowerCase() + " " + m[2].slice(-2);
+    try {
+      if (!st.semesters.includes(name)) {
+        await this.tinEnsureFolder(NOTES_DIR + name);
+        this.settings.tinSemesters = [...new Set([...(this.settings.tinSemesters || []), name])];
+      }
+      this.settings.tinmindSemester = name;
+      await this.persist();
+      this.dashboards.forEach((r) => r());
+    } catch (e) {
+      console.error("Nicrosil: couldn't make the semester", e);
+      new Notice("Couldn't make that semester. See the console for why.");
+    }
+    this.refreshTin();
+  }
+
   /** Makes a course page (and, on its first note, its folder) for the semester showing. */
   async tinNewCourse(st) {
-    if (!st.chosen) { new Notice("There is no semester yet. A course page needs a semester property to start one."); return; }
+    if (!st.chosen) { new Notice("There is no semester yet. Make one with New semester first."); return; }
     const name = cleanName(await this.tinPrompt({ title: "New course", label: `In ${st.chosen}`, ok: "Create" }));
     if (!name) return;
     try {
@@ -4280,6 +4296,19 @@ module.exports = class Nicrosil extends Plugin {
     fb.addEventListener("click", () => this.tinNewFolder(ctx.folder, ctx));
     const body = panel.createDiv({ cls: "cm-hub-body" });
     this.drawCourseBody(body, ctx, 0);
+  }
+
+  /** One time (3.2.0): The Tinmind/Notes Dashboard.md becomes Tinmind Dashboard.md. Obsidian's own rename, so links to it follow. */
+  async migrateTinDashboard() {
+    const old = this.app.vault.getAbstractFileByPath(OLD_NOTES_DASHBOARD);
+    if (!(old instanceof TFile) || this.app.vault.getAbstractFileByPath(NOTES_DASHBOARD + ".md")) return;
+    try {
+      await this.app.fileManager.renameFile(old, NOTES_DASHBOARD + ".md");
+      new Notice("Renamed Notes Dashboard to Tinmind Dashboard.", 6000);
+    } catch (e) {
+      console.error("Nicrosil: couldn't rename the Tinmind Dashboard", e);
+      new Notice(`Couldn't rename Notes Dashboard to Tinmind Dashboard: ${e.message}. Rename it by hand in the file list.`, 10000);
+    }
   }
 
   /** One-time: rename Home.md to Dashboard.md (Obsidian updates links) and repoint the startup-page plugin. */

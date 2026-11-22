@@ -10,8 +10,8 @@
     "mapTab": "tree",
     "mapFlow": true,
     "milestone": 25,
-    "tinmindSemester": "Spring 26",
-    "tinmindMode": true,
+    "tinmindSemester": "Fall 26",
+    "tinmindMode": false,
     "tinOpen": {
       "The Tinmind/Fall 26/Freedom's Foundations 1 Notes.md": true,
       "The Tinmind/Spring 26/West Lit 2 Notes.md": false,
@@ -19,8 +19,7 @@
       "The Tinmind/Spring 26/Euclidean Geometry Notes.md": false,
       "The Tinmind/Spring 26/Euclidean Geometry": true,
       "The Tinmind/Spring 26/Euclidean Geometry/Propositions": true
-    },
-    "tinRightWasOpen": true
+    }
   },
   "resolved": {}
 }

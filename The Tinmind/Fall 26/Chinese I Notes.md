@@ -5,4 +5,4 @@ semester: Fall 26
 current: true
 order: 5
 ---
-← [[The Tinmind/Notes Dashboard]]
+← [[Tinmind Dashboard]]
