@@ -1,6 +1,6 @@
 ---
 type: schema
-version: 8.1
+version: 9
 status: verified
 owner: Harrison Nickles
 updated: 2026-11-22
@@ -17,6 +17,7 @@ An agent starts at `_AGENTS.md`, which holds the rules for every task and points
 | `_AGENTS.md` (vault root) | Read by every agent, every time: scope, drafts only, permissions, voices, no unsourced claims, the index rule and log entry formats, and which rule files to read |
 | [[SCHEMA - Writing Pages]] | Naming, page properties, typed links, citations, attribution, source reliability, and page style |
 | [[SCHEMA - Review]] | Draft vs. verified, change notes on verified pages, and review size |
+| [[SCHEMA - Transcription]] | Turning scans of my handwritten notes into Tinmind notes, drawing flags, and the transcription review queue |
 | [[SCHEMA - Ingest]] | The ingest operation, step by step, Triage, and raw sources |
 | [[SCHEMA - Query]] | Answering questions from the wiki and filing answers back |
 | [[SCHEMA - Health Check]] | What a health check covers, the check script, and the report archive |
@@ -40,7 +41,7 @@ What is in and out of scope is in `_AGENTS.md`, because every task needs it.
 
 | Part         | Folder / file   | What it holds                                                                                          | Who writes it                            |
 | ------------ | --------------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
-| Sources      | `Sources/`      | My notes, assignments, readings, and scans in their original form, plus a source card for each         | I collect; the agent drafts source cards |
+| Sources      | `Sources/`      | My notes, assignments, and readings in their original form, plus a source card for each (scans of handwritten notes are only held until they are transcribed) | I collect; the agent drafts source cards |
 | Wiki pages   | `Wiki/`         | Concept, glossary, framework, case study, person, summary, prompt, workflow, guide, and analysis pages | The agent drafts; I verify               |
 | Schema       | `SCHEMAS/` and `_AGENTS.md` | This rulebook                                                                               | I direct                                 |
 | Index        | `_index.md`      | A map of every page                                                                                    | Nicrosil maintains; I check              |
@@ -63,7 +64,7 @@ The Coppermind/
 │   ├── Class Notes/        Copies of my course notes (one file per course)
 │   ├── My Work/            My assignments, papers, analyses
 │   ├── Readings/           Articles, books, course documents, media
-│   ├── Scans/              Photos of my handwritten notes
+│   ├── Scans/              Shrunk photos of my handwritten notes waiting to be transcribed (Git ignores it; Nicrosil deletes a scan when I verify its transcription)
 │   └── Source Cards/       One "SRC - " card per source
 ├── Wiki/
 │   ├── Concepts/           One idea per page
@@ -77,12 +78,12 @@ The Coppermind/
 │   ├── Guides/             How-to pages about the Coppermind itself (its tools, setup, and use)
 │   └── Analyses/           Answers to questions, filed back from queries
 ├── Perspectives/           My views, organized by the Architecture of Worldview
-├── The Tinmind/            My own class notes and their dashboard (agents never look in here unless I ask)
+├── The Tinmind/            My own class notes and their dashboard (agents work in here only on a task I say is about the Tinmind)
 ├── Health Checks/          One report per health check, plus a table of past reports
 ├── Tools/                  Tools I use and have built (browser extensions, scripts, the health check script)
 ├── _changelogs/            The changelog of the rules and of each tool (Nicrosil's), kept out of the files agents read
 ├── _templates/             One template per page type
-└── _attachments/           Images and diagrams used on wiki pages
+└── _attachments/           Images and diagrams used on wiki pages, and drawings I keep from transcribed notes (Tinmind/)
 ```
 
 ## Files that are not wiki pages

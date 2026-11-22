@@ -15,6 +15,7 @@ This folder is the Coppermind, Harrison Nickles's personal LLM wiki: an Obsidian
 | A health check | `SCHEMA - Health Check.md` |
 | Changing a rule file, a template, a tool in `Tools/`, or the Nicrosil plugin (any file in its folder, even a one-line style tweak) | `SCHEMA - Changes.md` |
 | Archiving the log, fixing the index, or anything about git | `SCHEMA - Index and Log.md` |
+| Any task Harrison says is about the Tinmind (transcribing scans of his handwritten notes, a class note, a course file) | `SCHEMA - Transcription.md` |
 | Moving the vault to another tool, or testing an export | `SCHEMA - Export.md` |
 | Understanding the vault's layout and what each folder is for | `SCHEMA.md` |
 
@@ -31,6 +32,7 @@ More than one row can apply. Don't read anything in `_changelogs/` (the rules' c
 | Location | The agent may | The agent may not |
 |---|---|---|
 | `Sources/` (original files) | Read | Edit, rename, move, or delete |
+| `Sources/Scans/` (shrunk photos of his handwritten notes, waiting for transcription) | Read; make shrunk copies of his originals when he asks | Edit, rename, move, or delete a scan (Nicrosil deletes one when he verifies its transcription) |
 | `Sources/Source Cards/` | Create and edit as drafts | Set the final reliability rating |
 | `Wiki/` | Create and edit drafts | Mark a page verified without Harrison's explicit instruction |
 | `Perspectives/` | Read, and quote as *Harrison's* view in answers | Write or edit anything |
@@ -39,7 +41,7 @@ More than one row can apply. Don't read anything in `_changelogs/` (the rules' c
 | `_index.md` | Read | Edit (Nicrosil keeps it up to date) |
 | `Ingestion/Triage.md` | Maintain and keep current | Reorder, drop, or skip batches, unless he asks |
 | `Ingestion/Raw/` (sources not yet ingested) | Read one file, only when he names it and asks for it to be ingested | Open, list, search, quote, or mention anything else in it; edit, rename, move, or delete anything in it |
-| `The Tinmind/` (his own class notes) | Read one file, only when he names it and asks; build the dashboard page and the empty course files when he asks | Open, list, search, quote, count, or mention anything else in it, in any task; edit, rename, move, or delete anything in it unless he asks |
+| `The Tinmind/` (his own class notes) | In a task he tells it is about the Tinmind (for example, "transcribe these scans" or "fix this class note"): read and create what that task needs, edit only what he asked for, and build the dashboard page and the empty course files when he asks. Outside such a task: read one file, only when he names it and asks | In any other task (queries, ingests, health checks, triage, index work): open, list, search, quote, count, or mention anything in it. In every task: rename, move, or delete a note, or edit a note he has already reviewed, unless he asks |
 | `Health Checks/` | Create a report for each health check; record his decisions in it | Change a saved report's findings, or delete a report |
 | `Tools/` | Read; build or revise a tool when he asks | Edit, rename, or delete otherwise |
 | `_changelogs/` | Add a line for each change | Rewrite or delete past lines |
@@ -57,7 +59,7 @@ The agent never deletes anything except a draft it created that Harrison rejecte
 
 **Bookkeeping at the end of every operation.**
 - **Index:** don't edit `_index.md`. Nicrosil adds, removes, renames and files every page in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/` by itself, using the one-line summary from the page's `> [!summary]` callout. So **give every page a good summary callout**: it is what the index shows.
-- **Log:** add one entry at the top of the current month's log file, `_logs/_log MM-YY.md` (for example `_logs/_log 11-26.md`), under the header's closing `---` line and above the newest entry (each file is newest first), for every ingest, query, health check, verification, schema change, and tool change. Past entries are never rewritten; corrections go in a new entry. Format:
+- **Log:** add one entry at the top of the current month's log file, `_logs/_log MM-YY.md` (for example `_logs/_log 11-26.md`), under the header's closing `---` line and above the newest entry (each file is newest first), for every ingest, query, health check, transcription, verification, schema change, and tool change. Past entries are never rewritten; corrections go in a new entry. Format:
 
   ```
   ### [YYYY-MM-DD] operation | Subject
@@ -71,7 +73,7 @@ The agent never deletes anything except a draft it created that Harrison rejecte
     - Links rejected: [[A]] → supports → [[B]] — why
   ```
 
-  Operations: `setup`, `ingest`, `query`, `health-check`, `verify`, `schema`, `tool`. If Harrison revises or rejects something without saying why, ask him for a one-sentence reason and record it.
+  Operations: `setup`, `ingest`, `query`, `health-check`, `transcribe`, `verify`, `schema`, `tool`. If Harrison revises or rejects something without saying why, ask him for a one-sentence reason and record it.
 
 **Nicrosil.** Any edit to a file in `.obsidian/plugins/nicrosil/`, even a one-line style tweak, is a tool change. Read `SCHEMA - Changes.md` before you start. In the same edit, without being asked, bump the version in `manifest.json` and the Nicrosil guide, update the guide, add a line at the top of `_changelogs/Nicrosil Changelog.md` (not in the guide), and log it as `tool`.
 

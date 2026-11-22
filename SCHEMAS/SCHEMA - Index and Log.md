@@ -22,8 +22,9 @@ How the index, the log, and git work. The everyday parts (the index rule and the
 ## The log
 
 - **Newest first.** A new entry goes at the top, under the header's closing `---` line and above the newest entry. Past entries are never rewritten. Corrections go in a new entry.
-- **Every ingest, query, health check, verification, schema change, and tool change gets an entry**, in the format in `_AGENTS.md`.
-- **Operations:** `setup`, `ingest`, `query`, `health-check`, `verify`, `schema`, `tool`.
+- **Every ingest, query, health check, transcription, verification, schema change, and tool change gets an entry**, in the format in `_AGENTS.md`.
+- **Operations:** `setup`, `ingest`, `query`, `health-check`, `transcribe`, `verify`, `schema`, `tool`.
+  - `transcribe` is for a batch of scans the agent turned into Tinmind notes ([[SCHEMA - Transcription]]): one entry per batch. The Verify part stays empty, because [[Nicrosil]]'s Transcription queue logs each transcription I verify (or discard) as its own `verify` entry.
   - `schema` is for changes to the rule files, `_AGENTS.md`, and the templates.
   - `tool` is for changes to anything in `Tools/` and to Nicrosil. A tool entry is short: what changed and the new version in two or three bullets, and what to check. The details belong in the tool's changelog ([[Nicrosil Changelog]]) or README, not in the log.
 - **A `health-check` entry links to its report** (`Health Check YYYY-MM-DD`) and gives the counts, instead of repeating each flag.

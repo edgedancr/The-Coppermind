@@ -34,6 +34,12 @@
  *  - Monthly log: one file per month, _logs/_log MM-YY.md. When Obsidian opens in a new month (and before an entry is
  *    added in a new month), the new month's file is created with its header. Earlier months are left as they are.
  *
+ * Transcription queue (3.16.0, Alt+T, the scan button in the Tinmind's sidebar, and a card on the Tinmind Dashboard): every note in The Tinmind
+ *         with `transcription: draft` in its properties is checked here against the scans it came from (`scan_pages`). Scan on the left,
+ *         the transcription (editable, or Preview) on the right. Drawing callouts (> [!drawing]) get three choices: keep a screenshot (a
+ *         box dragged over the scan, saved to _attachments/Tinmind/ and embedded), recreate (the scan stays until the recreated drawing is
+ *         checked) or leave out. Verify clears the draft mark, moves the scans to the trash and logs it; Discard deletes the draft and keeps the scans.
+ *
  * Relations panel (Alt+L): for the open page, a map and grouped lists of its typed links (SCHEMA - Writing Pages),
  *         outgoing and incoming, colored by type. The incoming side is worked out from the other pages.
  *
@@ -50,7 +56,7 @@
  */
 const {
   Plugin, Modal, Notice, MarkdownView, TFile, ItemView, FuzzySuggestModal,
-  PluginSettingTab, Setting, MarkdownRenderChild, setIcon, addIcon, debounce, parseYaml, Menu, TFolder,
+  PluginSettingTab, Setting, MarkdownRenderChild, MarkdownRenderer, setIcon, addIcon, debounce, parseYaml, Menu, TFolder,
 } = require("obsidian");
 
 const INDEX_PATH = "_index.md";
@@ -64,9 +70,13 @@ const GIT_BUTTONS = [ // the two git shortcuts in the left sidebar's tab bar (3.
 const PANEL_BUTTONS = [ // the review queue and relations panel buttons in the same tab bar, before the git ones (3.13.0); the far-left ribbon that held them is hidden
   { cls: "cm-queue-btn", icon: "badge-check", label: "Review queue (Alt+Q)", method: "activateView" },
   { cls: "cm-rel-btn", icon: "git-fork", label: "Relations panel (Alt+L)", method: "activateRelations" },
+  { cls: "cm-tr-btn", icon: "scan-text", label: "Transcription queue (Alt+T)", method: "activateTranscribe" }, // shows in the Tinmind's mode only (3.16.0)
 ];
 const NOTEBOOK_PAGE = "The Tinmind/Notebook";  // the pinned Notebook (type: notebook, no semester): its card is on the Tinmind Dashboard in every semester (3.10.0)
 const ALL_NOTES_PAGE = "The Tinmind/All Class Notes";  // opened by the All Class Notes row in the Tinmind's course tree
+const SCAN_DIR = "Sources/Scans/";                 // shrunk photos of my handwritten notes, waiting to be checked against their transcription (3.16.0)
+const TIN_DRAWINGS_DIR = "_attachments/Tinmind";   // drawings I keep as a screenshot from a scan (3.16.0)
+const TR_VIEW_TYPE = "nicrosil-transcribe";
 
 /** Sort key for a semester name such as "Fall 26" (year, then winter < spring < summer < fall); null when the name doesn't fit that shape. */
 function semesterKey(name) {
@@ -167,6 +177,126 @@ function removeLines(text, start, end) {
     lines.splice(start, 1);
   }
   return lines.join(eol);
+}
+
+/* ---------- transcription review helpers (3.16.0) ---------- */
+
+/** A scan's path in the vault from the name a note lists (IMG_0805.jpg), or the path itself if it has a folder in it. */
+function scanPath(name) {
+  const n = String(name || "").trim().replace(/^\[\[|\]\]$/g, "");
+  return n.includes("/") ? n : SCAN_DIR + n;
+}
+
+/** The scan names in a note's `scan_pages` property (a list or one string), without any [[ ]]. */
+function scanNames(v) {
+  if (v === undefined || v === null || v === "") return [];
+  return (Array.isArray(v) ? v : [v]).map((x) => String(x).trim().replace(/^\[\[|\]\]$/g, "")).filter(Boolean);
+}
+
+/** The key two notes share when they list the same scan, however it is written. */
+const scanKey = (name) => String(name || "").trim().replace(/^\[\[|\]\]$/g, "").split("/").pop().toLowerCase();
+
+/** A note split into its properties block (with its closing line and line break), its body, and the line break it uses. */
+function splitNote(text) {
+  const eol = text.includes("\r\n") ? "\r\n" : "\n";
+  const lines = text.split(/\r?\n/);
+  const n = frontmatterLines(lines);
+  return { head: n ? lines.slice(0, n).join(eol) + eol : "", body: lines.slice(n).join(eol), eol };
+}
+
+/**
+ * Drawing callouts in a note's body, as { kind, label, body, scan, start, end } (0-based, inclusive lines, like parseFlags).
+ * `> [!drawing]` is a drawing that still needs my decision; `> [!recreate]` is one I asked to have recreated.
+ * The "scan: IMG_0805.jpg" line inside the callout says which page it is on.
+ */
+function parseDrawings(text) {
+  const lines = text.split(/\r?\n/);
+  const out = [];
+  for (let i = frontmatterLines(lines); i < lines.length; i++) {
+    const m = lines[i].match(/^>\s*\[!(drawing|recreate)\][+-]?\s*(.*)$/i);
+    if (!m) continue;
+    let end = i;
+    const said = [];
+    let scan = "";
+    while (end + 1 < lines.length && /^>/.test(lines[end + 1])) {
+      end++;
+      const b = lines[end].replace(/^>\s?/, "");
+      const s = b.match(/^scan:\s*(.+?)\s*$/i);
+      if (s) scan = s[1].replace(/^\[\[|\]\]$/g, ""); else said.push(b);
+    }
+    out.push({ kind: m[1].toLowerCase(), label: m[2].trim(), body: said.join(" ").trim(), scan, start: i, end });
+    i = end;
+  }
+  return out;
+}
+
+/** The "%% recreated: IMG_0805.jpg | label %%" lines the agent leaves under a drawing it recreated, as { line, scan, label }. */
+function parseRechecks(text) {
+  const out = [];
+  text.split(/\r?\n/).forEach((l, i) => {
+    const m = l.match(/^\s*%%\s*recreated:\s*(.*?)\s*%%\s*$/i);
+    if (!m) return;
+    const parts = m[1].split("|");
+    out.push({ line: i, scan: (parts[0] || "").trim().replace(/^\[\[|\]\]$/g, ""), label: parts.slice(1).join("|").trim() });
+  });
+  return out;
+}
+
+/** Words I'd better look at again: [?word?] is a guess, [??] is unreadable. { index, length, text, guess }. */
+function findUnsure(text) {
+  const out = [];
+  const re = /\[\?[^\]\n]*?\?\]/g;
+  let m;
+  while ((m = re.exec(text))) out.push({ index: m.index, length: m[0].length, text: m[0], guess: m[0].slice(2, -2).trim() });
+  return out;
+}
+
+/** Puts a guess in the text in place of its [?...?] marker. */
+function acceptGuess(text, u) {
+  return text.slice(0, u.index) + u.guess + text.slice(u.index + u.length);
+}
+
+function replaceLines(text, start, end, newLines) {
+  const eol = text.includes("\r\n") ? "\r\n" : "\n";
+  const lines = text.split(/\r?\n/);
+  lines.splice(start, end - start + 1, ...newLines);
+  return lines.join(eol);
+}
+
+/** Keep screenshot: the drawing callout becomes an embedded image (the label is its alt text). */
+function keepDrawing(text, d, imageName) {
+  let alt = String(d.label || "").replace(/[|\[\]\n]/g, " ").replace(/\s+/g, " ").trim();
+  if (/^\d+(x\d+)?$/.test(alt)) alt = "Drawing " + alt; // a bare number would be read as a width
+  return replaceLines(text, d.start, d.end, [`![[${imageName}${alt ? "|" + alt : ""}]]`]);
+}
+
+/** Recreate: the callout's type changes from drawing to recreate; everything else stays, so the scan reference is kept. */
+function recreateDrawing(text, d) {
+  const eol = text.includes("\r\n") ? "\r\n" : "\n";
+  const lines = text.split(/\r?\n/);
+  lines[d.start] = lines[d.start].replace(/\[!drawing\]/i, "[!recreate]");
+  return lines.join(eol);
+}
+
+/** Leave out: the callout is removed and nothing replaces it. */
+function leaveOutDrawing(text, d) { return removeLines(text, d.start, d.end); }
+
+/** Looks right: the "recreated" marker line is removed. */
+function clearRecheck(text, r) { return removeLines(text, r.line, r.line); }
+
+/** The log entry for a verified transcription. `drawings` is [{ label, decision }]. */
+function transcribeVerifyLogEntry({ name, date, pages, trashed, kept, missing = [], drawings = [], unsure = 0 }) {
+  const lines = [`### [${date}] verify | ${name} (transcription)`, "", "- **Verify:**", `  - Approved: [[${name}]]`];
+  const bits = [`${trashed.length} moved to the trash`];
+  if (kept.length) bits.push(`${kept.length} kept because another unverified note lists it (${kept.join(", ")})`);
+  if (missing.length) bits.push(`${missing.length} already gone (${missing.join(", ")})`);
+  lines.push(`  - Scans (${pages.length}): ${pages.join(", ") || "none listed"} — ${bits.join("; ")}`);
+  if (drawings.length) {
+    lines.push(`  - Drawings I decided on (${drawings.length}):`);
+    drawings.forEach((d) => lines.push(`    - ${oneLine(d.label || "Drawing")} — ${oneLine(d.decision)}`));
+  }
+  if (unsure) lines.push(`  - Unsure words still in the note when I approved it: ${unsure}`);
+  return lines.join("\n");
 }
 
 function groupOf(path) {
@@ -881,6 +1011,565 @@ class QueueView extends ItemView {
         requestAnimationFrame(() => requestAnimationFrame(() => { r.style.transition = "transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1)"; r.style.transform = ""; }));
       });
     }
+  }
+}
+
+/* ---------- Transcription queue (3.16.0) ---------- */
+
+/** Asks before a transcription is verified: it moves its scans to the trash. `unsure` unsure words need a tick. */
+class TranscribeVerifyModal extends Modal {
+  constructor(app, opts) {
+    super(app);
+    this.opts = opts; // { name, scans: [{ name, keep }], unsure, onConfirm }
+  }
+
+  onOpen() {
+    const { name, scans, unsure, onConfirm } = this.opts;
+    const el = this.contentEl;
+    this.modalEl.addClass("nicrosil-modal");
+    el.empty();
+    el.createEl("h2", { text: `Verify “${name}”?` });
+    el.createDiv({
+      cls: "cm-sub",
+      text: "This means you checked the transcription against the scan. It removes the transcription and scan_pages properties from the note and adds a log entry. The scans below go to the trash, so Obsidian's trash setting decides whether they can still be recovered.",
+    });
+    const goners = scans.filter((s) => !s.keep);
+    const keepers = scans.filter((s) => s.keep);
+    if (goners.length) {
+      el.createDiv({ text: `${goners.length} scan${goners.length === 1 ? "" : "s"} will be moved to the trash:` });
+      const ul = el.createEl("ul", { cls: "cm-links" });
+      goners.forEach((s) => ul.createEl("li", { text: s.name }));
+    }
+    if (keepers.length) {
+      el.createDiv({ text: `${keepers.length} stay, because another unverified note lists the same page:` });
+      const ul = el.createEl("ul", { cls: "cm-links" });
+      keepers.forEach((s) => ul.createEl("li", { text: s.name }));
+    }
+    let confirmed = !unsure;
+    if (unsure) {
+      const row = el.createDiv({ cls: "cm-check" });
+      const cb = row.createEl("input", { type: "checkbox" });
+      row.createSpan({ text: `${unsure} unsure word${unsure === 1 ? " is" : "s are"} still in the note. Verify anyway (the scan will be gone).` });
+      cb.addEventListener("change", () => { confirmed = cb.checked; refresh(); });
+    }
+    const buttons = el.createDiv({ cls: "cm-buttons" });
+    buttons.createSpan({ cls: "cm-hint", text: "Ctrl+Enter to confirm" });
+    buttons.createEl("button", { text: "Cancel" }).addEventListener("click", () => this.close());
+    const go = buttons.createEl("button", { text: goners.length ? "Verify and delete scans" : "Verify", cls: "mod-cta" });
+    go.addEventListener("click", async () => { go.disabled = true; this.close(); await onConfirm(); });
+    confirmOnCtrlEnter(this, go);
+    const refresh = () => { go.disabled = !confirmed; };
+    refresh();
+  }
+
+  onClose() { this.contentEl.empty(); }
+}
+
+/** Scrolls a textarea so the character at `index` is in the middle: a hidden copy of the text (same width and font) measures where it falls. */
+function scrollTextareaTo(ta, index) {
+  const cs = getComputedStyle(ta);
+  const mirror = document.body.createDiv();
+  ["fontFamily", "fontSize", "fontWeight", "lineHeight", "letterSpacing", "paddingTop", "paddingRight", "paddingBottom", "paddingLeft", "borderLeftWidth", "borderRightWidth", "tabSize"].forEach((k) => { mirror.style[k] = cs[k]; });
+  mirror.style.cssText += ";position:absolute;visibility:hidden;white-space:pre-wrap;overflow-wrap:break-word;box-sizing:border-box;top:0;left:-9999px;width:" + ta.clientWidth + "px";
+  mirror.setText(ta.value.slice(0, index));
+  mirror.appendChild(document.createElement("span")).setText("​");
+  const top = mirror.lastChild.offsetTop;
+  mirror.remove();
+  ta.scrollTop = Math.max(0, top - ta.clientHeight / 2);
+}
+
+class TranscribeView extends ItemView {
+  constructor(leaf, plugin) {
+    super(leaf);
+    this.plugin = plugin;
+    this.path = null;       // the note being reviewed
+    this.head = "";         // its properties block, as last read
+    this.body = "";         // its text as shown (always \n line breaks)
+    this.eol = "\n";
+    this.pages = [];        // the scan names it lists
+    this.page = 0;          // which of them is showing
+    this.zoom = 100;        // scan width as a percent of its pane
+    this.preview = false;   // text pane in Preview instead of editing
+    this.cropFor = null;    // the drawing a screenshot is being chosen for
+    this.cropRect = null;   // { x, y, w, h } as fractions of the scan
+    this.decisions = {};    // note path -> [{ label, decision }], for the log
+    this.skipped = [];
+    this.dirty = false;
+    this.busy = false;
+    this.sig = "";          // what the list looked like when it was last drawn
+    this.saveSoon = debounce(() => this.saveNow(), 700, true);
+    this.checksSoon = debounce(() => this.renderChecks(), 250, true);
+    // a note came or went, or a scan did: redraw, unless I am in the middle of typing or choosing a screenshot
+    this.refreshSoon = debounce(() => {
+      if (this.dirty || this.cropFor || (this.ta && document.activeElement === this.ta)) return;
+      if (this.listSig() !== this.sig) this.render();
+    }, 400, true);
+  }
+
+  /** A short description of the queue (which notes, their scans, how many scans are not in a note), to tell when it has changed. */
+  listSig() {
+    const items = this.plugin.pendingTranscriptions();
+    return items.map((i) => i.file.path + "|" + i.pages.join(",")).join("¦") + "¦" + this.plugin.scansWaiting(items).length;
+  }
+
+  getViewType() { return TR_VIEW_TYPE; }
+  getDisplayText() { return "Transcription queue"; }
+  getIcon() { return "scan-text"; }
+
+  async onOpen() {
+    this.registerEvent(this.app.metadataCache.on("changed", (f) => this.onNoteChanged(f)));
+    this.registerEvent(this.app.vault.on("delete", (f) => { if (f.path.startsWith(NOTES_DIR) || f.path.startsWith(SCAN_DIR)) this.refreshSoon(); }));
+    this.registerEvent(this.app.vault.on("create", (f) => { if (f.path.startsWith(SCAN_DIR)) this.refreshSoon(); }));
+    await this.render();
+  }
+
+  async onClose() {
+    await this.saveNow();
+    this.contentEl.empty();
+  }
+
+  /** The note changed on disk: pick up a change that didn't come from here (the agent wrote it, say), unless I have typed something not saved yet. */
+  async onNoteChanged(file) {
+    if (!file || !file.path.startsWith(NOTES_DIR)) return;
+    if (file.path !== this.path) { this.refreshSoon(); return; }
+    if (this.dirty || this.cropFor) return;
+    const { body } = splitNote(await this.app.vault.read(file));
+    if (body.replace(/\r\n/g, "\n") !== this.body) this.render(); // changed from outside (the agent, or another tab)
+    else this.refreshSoon();       // our own save; only the list might have changed
+  }
+
+  /** Writes what is in the text box into the note, keeping the note's properties as they are now. */
+  async saveNow() {
+    if (!this.dirty || !this.path) return;
+    const file = this.app.vault.getAbstractFileByPath(this.path);
+    this.dirty = false;
+    if (!(file instanceof TFile)) return;
+    const body = this.body;
+    await this.app.vault.process(file, (cur) => {
+      const s = splitNote(cur);
+      return s.head + (s.eol === "\n" ? body : body.replace(/\n/g, s.eol));
+    });
+  }
+
+  currentItem(items) {
+    return items.find((i) => i.file.path === this.path) || null;
+  }
+
+  async render() {
+    if (this.busy) { this.again = true; return; }
+    this.busy = true;
+    try {
+      await this.saveNow();
+      await this.draw();
+    } finally {
+      this.busy = false;
+      if (this.again) { this.again = false; this.render(); }
+    }
+  }
+
+  async draw() {
+    const p = this.plugin;
+    const root = this.contentEl;
+    root.empty();
+    root.addClass("cm-tr");
+    const items = p.pendingTranscriptions();
+    if (!this.currentItem(items)) { this.path = items.length ? items[0].file.path : null; this.page = 0; this.cropFor = null; }
+    const item = this.currentItem(items);
+    const waiting = p.scansWaiting(items);
+    this.sig = this.listSig();
+
+    const head = root.createDiv({ cls: "cm-tr-head" });
+    head.createEl("h4", { text: "Transcription queue" });
+    if (!item) {
+      const empty = root.createDiv({ cls: "cm-tr-empty" });
+      empty.createDiv({ cls: "cm-card-label", text: "Nothing to review" });
+      empty.createDiv({ text: "When Claude transcribes scans, each note it makes (with transcription: draft in its properties) shows up here, next to its scan." });
+      empty.createDiv({ cls: "cm-sub", text: waiting.length ? `${waiting.length} scan${waiting.length === 1 ? "" : "s"} in Sources/Scans are not in any note yet.` : "There are no scans waiting in Sources/Scans." });
+      return;
+    }
+    const idx = items.findIndex((i) => i.file.path === item.file.path);
+    head.createSpan({ cls: "cm-tr-count", text: `${idx + 1} of ${items.length}` });
+    const sel = head.createEl("select", { cls: "dropdown cm-tr-select" });
+    items.forEach((i) => {
+      const o = sel.createEl("option", { text: i.file.basename, value: i.file.path });
+      if (i.file.path === item.file.path) o.selected = true;
+    });
+    sel.addEventListener("change", () => this.go(sel.value));
+    const prev = head.createEl("button", { cls: "cm-mini", text: "◀" });
+    const next = head.createEl("button", { cls: "cm-mini", text: "▶" });
+    prev.setAttr("aria-label", "Previous note");
+    next.setAttr("aria-label", "Next note");
+    prev.disabled = next.disabled = items.length < 2;
+    prev.addEventListener("click", () => this.go(items[(idx + items.length - 1) % items.length].file.path));
+    next.addEventListener("click", () => this.go(items[(idx + 1) % items.length].file.path));
+    head.createSpan({ cls: "cm-tr-waiting", text: waiting.length ? `${waiting.length} scan${waiting.length === 1 ? "" : "s"} not in a note yet` : "" });
+
+    // load the note
+    const file = item.file;
+    const s = splitNote(await this.app.vault.read(file));
+    this.head = s.head;
+    this.eol = s.eol;
+    this.body = s.body.replace(/\r\n/g, "\n");
+    this.pages = item.pages;
+    if (this.page >= this.pages.length) this.page = 0;
+
+    const grid = root.createDiv({ cls: "cm-tr-grid" });
+    this.scanPane = grid.createDiv({ cls: "cm-tr-scan" });
+    const textPane = grid.createDiv({ cls: "cm-tr-text" });
+
+    // right: the note
+    const top = textPane.createDiv({ cls: "cm-tr-notehead" });
+    const title = top.createDiv({ cls: "cm-tr-notetitle" });
+    title.createSpan({ cls: "cm-tr-name", text: file.basename });
+    title.createSpan({ cls: "cm-tr-where", text: file.parent ? file.parent.path.replace(NOTES_DIR, "") : "" });
+    const mode = top.createDiv({ cls: "cm-tr-mode" });
+    const editBtn = mode.createEl("button", { cls: "cm-mini" + (this.preview ? "" : " is-on"), text: "Edit" });
+    const viewBtn = mode.createEl("button", { cls: "cm-mini" + (this.preview ? " is-on" : ""), text: "Preview" });
+    editBtn.addEventListener("click", () => { if (this.preview) { this.preview = false; this.render(); } });
+    viewBtn.addEventListener("click", async () => { if (!this.preview) { await this.saveNow(); this.preview = true; this.render(); } });
+
+    this.textHost = textPane.createDiv({ cls: "cm-tr-texthost" });
+    this.ta = null;
+    if (this.preview) {
+      const box = this.textHost.createDiv({ cls: "cm-tr-preview markdown-rendered" });
+      try {
+        if (MarkdownRenderer.render) await MarkdownRenderer.render(this.app, this.body, box, file.path, this);
+        else await MarkdownRenderer.renderMarkdown(this.body, box, file.path, this);
+      } catch (e) { box.setText(this.body); }
+    } else {
+      const ta = this.textHost.createEl("textarea", { cls: "cm-tr-ta" });
+      ta.spellcheck = false;
+      ta.value = this.body;
+      this.ta = ta;
+      ta.addEventListener("input", () => { this.body = ta.value; this.dirty = true; this.saveSoon(); this.checksSoon(); });
+      ta.addEventListener("blur", () => this.saveNow());
+    }
+
+    this.checksEl = textPane.createDiv({ cls: "cm-tr-checks" });
+    const act = textPane.createDiv({ cls: "cm-tr-actions" });
+    const verify = act.createEl("button", { text: "Verify", cls: "mod-cta" });
+    verify.setAttr("aria-label", "I checked this against the scan: remove the scan and clear the draft mark");
+    verify.addEventListener("click", () => this.verify(item));
+    act.createEl("button", { text: "Skip" }).addEventListener("click", () => this.skip(items, idx));
+    act.createEl("button", { text: "Open note" }).addEventListener("click", async () => { await this.saveNow(); this.app.workspace.getLeaf("tab").openFile(file, { state: { mode: "source" } }); });
+    const discard = act.createEl("button", { text: "Discard transcription", cls: "cm-danger" });
+    discard.setAttr("aria-label", "Delete this draft note and keep the scans, so it can be redone");
+    discard.addEventListener("click", () => this.discard(item, items, idx));
+    this.verifyBtn = verify;
+
+    this.renderChecks();
+    await this.drawScan();
+  }
+
+  async go(path) {
+    await this.saveNow();
+    this.path = path;
+    this.page = 0;
+    this.cropFor = null;
+    this.render();
+  }
+
+  /* --- the scan (left) --- */
+
+  scanFile(name) {
+    const f = this.app.vault.getAbstractFileByPath(scanPath(name));
+    return f instanceof TFile ? f : null;
+  }
+
+  async drawScan() {
+    const pane = this.scanPane;
+    pane.empty();
+    const name = this.pages[this.page];
+    const bar = pane.createDiv({ cls: "cm-tr-scanbar" });
+    const tabs = bar.createDiv({ cls: "cm-tr-tabs" });
+    this.pages.forEach((n, i) => {
+      const t = tabs.createEl("button", { cls: "cm-mini" + (i === this.page ? " is-on" : ""), text: this.pages.length > 1 ? `Page ${i + 1}` : "Scan" });
+      t.setAttr("aria-label", n);
+      t.addEventListener("click", () => { if (this.cropFor) { new Notice("Finish or cancel the screenshot first."); return; } this.page = i; this.drawScan(); });
+    });
+    if (name) tabs.createSpan({ cls: "cm-tr-file", text: name });
+    const zoom = bar.createDiv({ cls: "cm-tr-zoom" });
+    const setZoom = (z) => { this.zoom = Math.max(50, Math.min(400, z)); if (this.wrap) this.wrap.style.width = this.zoom + "%"; zlabel.setText(this.zoom + "%"); };
+    zoom.createEl("button", { cls: "cm-mini", text: "−" }).addEventListener("click", () => setZoom(this.zoom - 25));
+    const zlabel = zoom.createSpan({ cls: "cm-tr-zlabel", text: this.zoom + "%" });
+    zoom.createEl("button", { cls: "cm-mini", text: "+" }).addEventListener("click", () => setZoom(this.zoom + 25));
+    zoom.createEl("button", { cls: "cm-mini", text: "Fit" }).addEventListener("click", () => setZoom(100));
+
+    if (this.cropFor) {
+      const banner = pane.createDiv({ cls: "cm-tr-cropbar" });
+      banner.createSpan({ text: "Drag a box over the drawing, then Save." });
+      this.cropSave = banner.createEl("button", { cls: "cm-mini mod-cta", text: "Save screenshot" });
+      this.cropSave.disabled = true;
+      this.cropSave.addEventListener("click", () => this.saveCrop(false));
+      banner.createEl("button", { cls: "cm-mini", text: "Whole page" }).addEventListener("click", () => this.saveCrop(true));
+      banner.createEl("button", { cls: "cm-mini", text: "Cancel" }).addEventListener("click", () => { this.cropFor = null; this.cropRect = null; this.drawScan(); });
+    }
+
+    const view = pane.createDiv({ cls: "cm-tr-scanview" });
+    const file = name ? this.scanFile(name) : null;
+    if (!name) { view.createDiv({ cls: "cm-sub cm-tr-missing", text: "This note doesn't list a scan (scan_pages in its properties)." }); return; }
+    if (!file) { view.createDiv({ cls: "cm-sub cm-tr-missing", text: `${name} isn't in Sources/Scans. If this note is already checked, verify it to clear the draft mark.` }); return; }
+    const wrap = view.createDiv({ cls: "cm-tr-imgwrap" });
+    wrap.style.width = this.zoom + "%";
+    this.wrap = wrap;
+    const img = wrap.createEl("img", { cls: "cm-tr-img" });
+    img.src = this.app.vault.getResourcePath(file);
+    img.draggable = false;
+    if (this.cropFor) this.drawCropLayer(wrap);
+  }
+
+  /** A transparent layer over the scan that turns a drag into a box (kept as fractions of the scan, so zooming doesn't move it). */
+  drawCropLayer(wrap) {
+    const layer = wrap.createDiv({ cls: "cm-tr-croplayer" });
+    const box = layer.createDiv({ cls: "cm-tr-cropbox" });
+    box.style.display = "none";
+    let start = null;
+    const frac = (e) => {
+      const r = layer.getBoundingClientRect();
+      return { x: Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), y: Math.max(0, Math.min(1, (e.clientY - r.top) / r.height)) };
+    };
+    const paint = () => {
+      const c = this.cropRect;
+      if (!c) { box.style.display = "none"; return; }
+      box.style.display = "block";
+      box.style.left = c.x * 100 + "%"; box.style.top = c.y * 100 + "%";
+      box.style.width = c.w * 100 + "%"; box.style.height = c.h * 100 + "%";
+    };
+    layer.addEventListener("pointerdown", (e) => { e.preventDefault(); layer.setPointerCapture(e.pointerId); start = frac(e); this.cropRect = { x: start.x, y: start.y, w: 0, h: 0 }; paint(); });
+    layer.addEventListener("pointermove", (e) => {
+      if (!start) return;
+      const q = frac(e);
+      this.cropRect = { x: Math.min(start.x, q.x), y: Math.min(start.y, q.y), w: Math.abs(q.x - start.x), h: Math.abs(q.y - start.y) };
+      paint();
+    });
+    layer.addEventListener("pointerup", () => {
+      start = null;
+      const c = this.cropRect;
+      if (this.cropSave) this.cropSave.disabled = !(c && c.w > 0.02 && c.h > 0.02);
+    });
+    paint();
+  }
+
+  /** Saves the chosen part of the scan (or the whole page) as an image in _attachments/Tinmind/ and puts it in the note where the drawing flag was. */
+  async saveCrop(whole) {
+    const d = this.cropFor;
+    if (!d) return;
+    const c = whole ? { x: 0, y: 0, w: 1, h: 1 } : this.cropRect;
+    if (!c || c.w <= 0.02 || c.h <= 0.02) { new Notice("Drag a box over the drawing first."); return; }
+    const name = d.scan || this.pages[this.page];
+    const scan = name && this.scanFile(name);
+    if (!scan) { new Notice("That scan isn't in Sources/Scans any more."); return; }
+    try {
+      const url = URL.createObjectURL(new Blob([await this.app.vault.readBinary(scan)], { type: "image/jpeg" }));
+      const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => rej(new Error("couldn't open the scan as an image")); i.src = url; });
+      const sx = Math.round(c.x * img.naturalWidth), sy = Math.round(c.y * img.naturalHeight);
+      const sw = Math.max(1, Math.round(c.w * img.naturalWidth)), sh = Math.max(1, Math.round(c.h * img.naturalHeight));
+      const canvas = document.createElement("canvas");
+      canvas.width = sw; canvas.height = sh;
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, sw, sh);
+      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
+      URL.revokeObjectURL(url);
+      const blob = await new Promise((res) => canvas.toBlob(res, "image/jpeg", 0.9));
+      if (!blob) throw new Error("couldn't make the image");
+      const file = this.app.vault.getAbstractFileByPath(this.path);
+      await this.plugin.tinEnsureFolder(TIN_DRAWINGS_DIR);
+      const out = this.plugin.tinUniquePath(TIN_DRAWINGS_DIR, `${cleanName(file.basename)} drawing`, ".jpg");
+      await this.app.vault.createBinary(out, await blob.arrayBuffer());
+      const made = out.split("/").pop();
+      this.record(d, whole ? "kept a screenshot of the whole page" : "kept a screenshot of part of the page");
+      this.body = keepDrawing(this.body, this.drawingNow(d), made);
+      this.cropFor = null; this.cropRect = null;
+      this.dirty = true;
+      await this.saveNow();
+      new Notice(`Saved ${made} in ${TIN_DRAWINGS_DIR}/ and put it in the note.`, 5000);
+      await this.render();
+    } catch (e) {
+      console.error("Nicrosil: saving the screenshot failed", e);
+      new Notice(`Couldn't save the screenshot: ${e.message}`, 8000);
+    }
+  }
+
+  /* --- what still needs me (under the text) --- */
+
+  record(d, decision) {
+    (this.decisions[this.path] = this.decisions[this.path] || []).push({ label: d.label, decision });
+  }
+
+  /** The drawing as it stands in the text now (its line numbers may have moved since the card was drawn). */
+  drawingNow(d) {
+    return parseDrawings(this.body).find((x) => x.label === d.label && x.scan === d.scan && x.kind === d.kind) || d;
+  }
+
+  /** The "recreated" marker as it stands in the text now. */
+  recheckNow(r) {
+    return parseRechecks(this.body).find((x) => x.scan === r.scan && x.label === r.label) || r;
+  }
+
+  async change(next, decisionFor, decision) {
+    if (decisionFor) this.record(decisionFor, decision);
+    this.body = next;
+    this.dirty = true;
+    await this.saveNow();
+    if (this.preview) { await this.render(); return; }
+    if (this.ta) this.ta.value = this.body;
+    this.renderChecks();
+  }
+
+  showScan(name) {
+    const i = this.pages.findIndex((n) => scanKey(n) === scanKey(name));
+    if (i >= 0 && !this.cropFor) { this.page = i; this.drawScan(); }
+  }
+
+  renderChecks() {
+    const el = this.checksEl;
+    if (!el || !el.isConnected) return;
+    el.empty();
+    const drawings = parseDrawings(this.body);
+    const rechecks = parseRechecks(this.body);
+    const unsure = findUnsure(this.body);
+    const open = drawings.length + rechecks.length;
+
+    if (drawings.length) {
+      el.createDiv({ cls: "cm-tr-checkhead", text: `Drawings (${drawings.length})` });
+      drawings.forEach((d) => {
+        const card = el.createDiv({ cls: "cm-tr-card cm-tr-" + d.kind });
+        const top = card.createDiv({ cls: "cm-tr-cardtop" });
+        top.createSpan({ cls: "cm-tr-cardtitle", text: d.label || "Drawing" });
+        top.createSpan({ cls: "cm-tr-cardkind", text: d.kind === "recreate" ? "waiting to be recreated" : "needs your decision" });
+        if (d.body) card.createDiv({ cls: "cm-tr-cardbody", text: d.body });
+        const row = card.createDiv({ cls: "cm-tr-cardbtns" });
+        if (d.scan) {
+          const look = row.createEl("button", { cls: "cm-mini", text: "Show on scan" });
+          look.addEventListener("click", () => this.showScan(d.scan));
+        }
+        const keep = row.createEl("button", { cls: "cm-mini", text: d.kind === "recreate" ? "Keep screenshot instead" : "Keep screenshot" });
+        keep.addEventListener("click", () => { this.cropFor = d; this.cropRect = null; if (d.scan) { const i = this.pages.findIndex((n) => scanKey(n) === scanKey(d.scan)); if (i >= 0) this.page = i; } this.drawScan(); });
+        if (d.kind === "drawing") {
+          row.createEl("button", { cls: "cm-mini", text: "Recreate" }).addEventListener("click", () => this.change(recreateDrawing(this.body, this.drawingNow(d)), d, "to be recreated in the note"));
+        }
+        row.createEl("button", { cls: "cm-mini", text: "Leave out" }).addEventListener("click", () => this.change(leaveOutDrawing(this.body, this.drawingNow(d)), d, "left out of the note"));
+        if (d.kind === "recreate") card.createDiv({ cls: "cm-sub", text: "The scan stays until you check the recreated drawing. Ask Claude to recreate it." });
+      });
+    }
+    if (rechecks.length) {
+      el.createDiv({ cls: "cm-tr-checkhead", text: `Recreated drawings to check (${rechecks.length})` });
+      rechecks.forEach((r) => {
+        const card = el.createDiv({ cls: "cm-tr-card cm-tr-recheck" });
+        const top = card.createDiv({ cls: "cm-tr-cardtop" });
+        top.createSpan({ cls: "cm-tr-cardtitle", text: r.label || "Recreated drawing" });
+        top.createSpan({ cls: "cm-tr-cardkind", text: "compare with the scan" });
+        const row = card.createDiv({ cls: "cm-tr-cardbtns" });
+        if (r.scan) row.createEl("button", { cls: "cm-mini", text: "Show on scan" }).addEventListener("click", () => this.showScan(r.scan));
+        row.createEl("button", { cls: "cm-mini mod-cta", text: "Looks right" }).addEventListener("click", () => this.change(clearRecheck(this.body, this.recheckNow(r)), { label: r.label || "Recreated drawing" }, "recreated, and I checked it"));
+      });
+    }
+    if (unsure.length) {
+      el.createDiv({ cls: "cm-tr-checkhead", text: `Unsure words (${unsure.length})` });
+      const row = el.createDiv({ cls: "cm-tr-card cm-tr-unsure" });
+      row.createDiv({ cls: "cm-tr-cardbody", text: "[?word?] is a guess; [??] couldn't be read. Step through them, check each against the scan, then type the word in or accept the guess." });
+      const btns = row.createDiv({ cls: "cm-tr-cardbtns" });
+      const nextB = btns.createEl("button", { cls: "cm-mini", text: "Next unsure word" });
+      const acceptB = btns.createEl("button", { cls: "cm-mini", text: "Accept the guess" });
+      nextB.disabled = acceptB.disabled = this.preview;
+      nextB.addEventListener("click", () => this.nextUnsure());
+      acceptB.addEventListener("click", () => this.acceptCurrent());
+    }
+    if (!open && !unsure.length) el.createDiv({ cls: "cm-ok", text: "No drawings or unsure words left." });
+    if (this.verifyBtn) {
+      this.verifyBtn.disabled = open > 0;
+      this.verifyBtn.setAttr("title", open ? "Decide on every drawing first" : "");
+    }
+  }
+
+  nextUnsure() {
+    const ta = this.ta;
+    if (!ta) return;
+    const list = findUnsure(ta.value);
+    if (!list.length) return;
+    const from = ta.selectionEnd || 0;
+    const u = list.find((x) => x.index >= from) || list[0];
+    ta.focus();
+    ta.setSelectionRange(u.index, u.index + u.length);
+    scrollTextareaTo(ta, u.index);
+  }
+
+  acceptCurrent() {
+    const ta = this.ta;
+    if (!ta) return;
+    const list = findUnsure(ta.value);
+    const u = list.find((x) => ta.selectionStart >= x.index && ta.selectionEnd <= x.index + x.length && ta.selectionEnd > ta.selectionStart);
+    if (!u) { this.nextUnsure(); return; }
+    if (!u.guess) { new Notice("That one has no guess. Type the word in."); return; }
+    ta.value = acceptGuess(ta.value, u);
+    this.body = ta.value;
+    this.dirty = true;
+    this.saveSoon();
+    ta.setSelectionRange(u.index + u.guess.length, u.index + u.guess.length);
+    this.renderChecks();
+    this.nextUnsure();
+  }
+
+  /* --- the buttons --- */
+
+  /** Moves to the note after the one at `idx` (or the first if it was the last), after this one goes away. */
+  afterWith(items, idx) {
+    const rest = items.filter((_, i) => i !== idx);
+    const next = rest[idx] || rest[0];
+    this.path = next ? next.file.path : null;
+    this.page = 0;
+    this.cropFor = null;
+  }
+
+  async skip(items, idx) {
+    await this.saveNow();
+    if (items.length < 2) { new Notice("That is the only note waiting."); return; }
+    this.path = items[(idx + 1) % items.length].file.path;
+    this.page = 0;
+    this.cropFor = null;
+    this.render();
+  }
+
+  async verify(item) {
+    await this.saveNow();
+    const open = parseDrawings(this.body).length + parseRechecks(this.body).length;
+    if (open) { new Notice("Decide on every drawing first."); return; }
+    const p = this.plugin;
+    const used = p.scanKeysUsedElsewhere(item.file.path);
+    const scans = this.pages.map((n) => ({ name: n, keep: used.has(scanKey(n)) }));
+    const unsure = findUnsure(this.body).length;
+    new TranscribeVerifyModal(this.app, {
+      name: item.file.basename, scans, unsure,
+      onConfirm: async () => {
+        const items = p.pendingTranscriptions();
+        const idx = items.findIndex((i) => i.file.path === item.file.path);
+        try {
+          await p.verifyTranscription(item.file, this.pages, this.decisions[item.file.path] || [], unsure);
+          delete this.decisions[item.file.path];
+          this.afterWith(items, idx);
+        } catch (e) {
+          console.error("Nicrosil: verifying a transcription failed", e);
+          new Notice(`Verify failed: ${e.message}. Check the note, its scans and the log.`, 10000);
+        }
+        this.render();
+      },
+    }).open();
+  }
+
+  async discard(item, items, idx) {
+    await this.saveNow();
+    const p = this.plugin;
+    const reason = String((await p.tinPrompt({ title: `Discard “${item.file.basename}”?`, label: "This deletes the draft note and keeps its scans, so Claude can try again. Why are you discarding it? (required)", ok: "Discard" })) || "").trim();
+    if (!reason) { new Notice("A reason is required, so nothing was discarded."); return; }
+    try {
+      await p.discardTranscription(item.file, reason);
+      delete this.decisions[item.file.path];
+      this.afterWith(items, idx);
+    } catch (e) {
+      console.error("Nicrosil: discarding a transcription failed", e);
+      new Notice(`Discard failed: ${e.message}`, 10000);
+    }
+    this.render();
   }
 }
 
@@ -2629,6 +3318,7 @@ module.exports = class Nicrosil extends Plugin {
     this.lastHover = null;         // the page the pointer last hovered a link to, so a hover preview knows which page it shows
 
     this.registerView(VIEW_TYPE, (leaf) => new QueueView(leaf, this));
+    this.registerView(TR_VIEW_TYPE, (leaf) => new TranscribeView(leaf, this));
     this.registerView(REL_VIEW_TYPE, (leaf) => new RelationsView(leaf, this));
     this.registerView(MAP_VIEW_TYPE, (leaf) => new WikiMapView(leaf, this));
     this.addSettingTab(new ReviewSettings(this.app, this));
@@ -2783,6 +3473,7 @@ module.exports = class Nicrosil extends Plugin {
     this.addCommand({ id: "open-wiki-map", name: "Open the wiki map", hotkeys: [{ modifiers: ["Alt"], key: "m" }], callback: () => this.activateWikiMap() });
     this.addCommand({ id: "open-relations", name: "Open the relations panel", hotkeys: [{ modifiers: ["Alt"], key: "l" }], callback: () => this.activateRelations() });
     this.addCommand({ id: "open-queue", name: "Open the review queue", hotkeys: [{ modifiers: ["Alt"], key: "q" }], callback: () => this.activateView() });
+    this.addCommand({ id: "open-transcription-queue", name: "Open the transcription queue", hotkeys: [{ modifiers: ["Alt"], key: "t" }], callback: () => this.activateTranscribe() });
   }
 
   /* --- the Coppermind button at the top of the file list --- */
@@ -3497,6 +4188,11 @@ module.exports = class Nicrosil extends Plugin {
     // The Notebook has no semester, so its card is here whichever semester is picked (3.10.0). It shows no count; Quick note makes a dated note in one click.
     const nb = this.notebookFile();
     if (nb) cards.push({ icon: "pen-line", title: "Notebook", sub: "Notes that aren't for a class", go: open(nb.path), action: { label: "Quick note", run: () => this.tinQuickNote() } });
+    const trItems = this.pendingTranscriptions(), trWait = this.scansWaiting(trItems).length;
+    if (trItems.length || trWait) { // the transcription queue (3.16.0)
+      const sub = [trItems.length ? `${trItems.length} to review` : "", trWait ? `${trWait} scan${trWait === 1 ? "" : "s"} waiting` : ""].filter(Boolean).join(" \u00b7 ");
+      cards.push({ icon: "scan-text", title: "Transcriptions", sub, go: () => this.activateTranscribe() });
+    }
     this.drawNavCards(el.createDiv(), cards);
     if (!semesters.length) el.createDiv({ cls: "cm-sub", text: "No courses yet. Make a semester with New semester in the Tinmind's course tree." });
   }
@@ -5096,6 +5792,82 @@ module.exports = class Nicrosil extends Plugin {
     return { file, created: true };
   }
 
+  /* ---------- Transcription queue (3.16.0) ---------- */
+
+  /** Notes in the Tinmind whose properties say `transcription: draft`, each with the scans it lists, in the order the scans were photographed. */
+  pendingTranscriptions() {
+    const out = [];
+    for (const f of this.app.vault.getMarkdownFiles()) {
+      if (!f.path.startsWith(NOTES_DIR)) continue;
+      const fm = (this.app.metadataCache.getFileCache(f) || {}).frontmatter;
+      if (!fm || String(fm.transcription || "").trim().toLowerCase() !== "draft") continue;
+      out.push({ file: f, pages: scanNames(fm.scan_pages) });
+    }
+    const num = { numeric: true };
+    return out.sort((a, b) => (a.pages[0] || "~").localeCompare(b.pages[0] || "~", undefined, num) || a.file.path.localeCompare(b.file.path, undefined, num));
+  }
+
+  /** The scans in Sources/Scans. */
+  scanFiles() {
+    return this.app.vault.getFiles().filter((f) => f.path.startsWith(SCAN_DIR) && /\.(jpe?g|png|webp)$/i.test(f.path));
+  }
+
+  /** The scans no pending note lists yet: the pages still to be transcribed. */
+  scansWaiting(items) {
+    const used = new Set();
+    items.forEach((i) => i.pages.forEach((n) => used.add(scanKey(n))));
+    return this.scanFiles().filter((f) => !used.has(scanKey(f.name)));
+  }
+
+  /** The scans (as scanKey) that pending notes other than `path` still list, so a page two notes share isn't deleted under the second one. */
+  scanKeysUsedElsewhere(path) {
+    const used = new Set();
+    this.pendingTranscriptions().filter((i) => i.file.path !== path).forEach((i) => i.pages.forEach((n) => used.add(scanKey(n))));
+    return used;
+  }
+
+  async activateTranscribe() {
+    let leaf = this.app.workspace.getLeavesOfType(TR_VIEW_TYPE)[0];
+    if (!leaf) {
+      leaf = this.app.workspace.getLeaf("tab");
+      await leaf.setViewState({ type: TR_VIEW_TYPE, active: true });
+    }
+    this.app.workspace.revealLeaf(leaf);
+  }
+
+  /**
+   * Verify a transcription: the scans it lists go to the trash (all but any that another unverified note still lists), then the note
+   * loses `transcription` and `scan_pages`, then the log gets an entry. The scans go first, so a failure there leaves the note as it was.
+   */
+  async verifyTranscription(file, pages, decisions, unsure) {
+    const date = today();
+    const names = [...new Set(pages)];
+    const used = this.scanKeysUsedElsewhere(file.path);
+    const trashed = [], kept = [], missing = [];
+    for (const name of names) {
+      const f = this.app.vault.getAbstractFileByPath(scanPath(name));
+      if (!(f instanceof TFile)) { missing.push(name); continue; }
+      if (used.has(scanKey(name))) { kept.push(name); continue; }
+      await this.app.fileManager.trashFile(f);
+      trashed.push(name);
+    }
+    await this.app.fileManager.processFrontMatter(file, (fm) => { delete fm.transcription; delete fm.scan_pages; });
+    await this.appendLog(transcribeVerifyLogEntry({ name: file.basename, date, pages: names, trashed, kept, missing, drawings: decisions, unsure }));
+    new Notice(`Verified “${file.basename}”. ${trashed.length} scan${trashed.length === 1 ? "" : "s"} moved to the trash.`, 5000);
+    this.scheduleTinRefresh();
+    this.dashboards.forEach((r) => r());
+  }
+
+  /** Discard a transcription: the draft note is deleted and its scans stay, so it can be done again. The reason is logged first. */
+  async discardTranscription(file, reason) {
+    await this.appendLog(rejectLogEntry({ name: `${file.basename} (transcription)`, date: today(), reason, dangling: [], resolved: [] }));
+    const name = file.basename;
+    await this.app.fileManager.trashFile(file);
+    new Notice(`Discarded “${name}”. Its scans are still in Sources/Scans.`, 5000);
+    this.scheduleTinRefresh();
+    this.dashboards.forEach((r) => r());
+  }
+
   async appendLog(entry) {
     const { file } = await this.ensureLog(today());
     await this.app.vault.process(file, (text) => addToLog(text, entry));
@@ -5106,4 +5878,5 @@ module.exports.__test = {
   parseProposedRating, ratingOf, syncIndex, indexNeeds, leadLine, parseFlags, removeLines, sortQueue, nextAfter, groupOf, editIndex,
   verifyLogEntry, rejectLogEntry, addToLog, daysBetween, today, parseLog, describeEntry, renameLogEntry, parseIndex, renderIndex,
   logPathFor, logOrder, logFileHeader, isLogPath, setFrontmatterProps, schemaInfo, checkVersion, addChangelogEntry, findChangelog,
+  scanPath, scanNames, scanKey, splitNote, parseDrawings, parseRechecks, findUnsure, acceptGuess, keepDrawing, recreateDrawing, leaveOutDrawing, clearRecheck, transcribeVerifyLogEntry,
 };

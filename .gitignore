@@ -8,3 +8,5 @@
 .DS_Store
 Thumbs.db
 desktop.ini
+# Scans of handwritten notes waiting for transcription review (deleted when verified; never committed)
+Sources/Scans/
