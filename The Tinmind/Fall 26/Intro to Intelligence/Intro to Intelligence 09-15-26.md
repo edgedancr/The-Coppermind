@@ -1,0 +1,88 @@
+---
+type: course-note
+course: "Intro to Intelligence"
+semester: "Fall 26"
+---
+##### Topic Sentences
+- Mistakes
+	- Stating merely a fact
+	- The statement is too broad or vague
+	- Sometimes it can be too detailed
+- Strong topic sentences
+	- Shows the causation relationships
+	- Creates a roadmap for the paragraph
+- Example
+	- Bad: "Many things are happening in the world today that affect our country's national security."
+	- Good: "Contemporary US national security planning is primarily challenged by Russian cyber warfare, Chinese industrial espionage, and Iranian regional proxy networks."
+
+##### Style and Purpose in Intel Writing
+- Intelligence writing should be **clear**, **concise**, **informative**, **timely**, and **tailored**.
+- Its goal is not to stimulate the reader's more refined literary sensibilities with flowery language and creative descriptions, but to give the facts about a certain situation and either
+	- recommend a course of action based on those fact; or
+	- explain the relevant implications of their analysis.
+- The first sentence should be the article's **Recommendations** or **Implications.**
+	- We are not writing a story that tries to keep the reader engaged. We are trying to provide information as fast as possible.
+- The reader should be able to immediately understand the article's **purpose** and **perspective.**
+- Paragraph Structure
+	- First sentence should summarize the paragraph.
+	- The difference between the topic and concluding sentence is that the topic sentence assumes that the reader doesn't have the paragraph's information yet, while the concluding sentence assumes that the reader has, which means you can include different information than the topic sentence.
+- Sentence structure
+	- Make each sentence count — no fluff, no unneeded description.
+	- Use the active voice.
+	- Avoid dangling prepositions and log dependent clause.
+	- Do not use qualifiers like "very" or "horrible." We need specifics, not opinions.
+- Become your own ruthless editor. Leave your writing after you are finished, at least for 30 minutes, then come back and re-read it. You will find improvements you can make.
+
+##### Collection
+- Intelligence Cycle
+	- Collection
+		- The IC gathers the raw data used to produce finished intel products. Collection can be from open sources or from clandestine sources (technical means, etc...)
+	- Processing
+		- The IC converts the information that is collected into a usable format (e.g., language translation or decryption)
+	- Analysis and Production
+		- The IC analyze processed information to turn it into finished intel (e.g., drafting reports, evaluating reliability of sources, or resolving data conflicts.)
+	- Dissemination
+- OSINT — Open Source Intelligence
+	- Technically, the CIA is the functional manager of OSINT. This means that they have the responsibility for the community to advance and carry forward the development of tools, new technology, training, etc... for not only their own agency but for the whole IC. 
+	- Anything that is publicly available to a standard citizen.
+	- How do we handle personal info?
+		- Very carefully.
+		- It must be anonymized. You can cite information, but you must use pseudonyms, redact, or otherwise protect personal information. 
+	- OSINT does not require specialized *collection* techniques.
+- HUMINT — Human Intelligence
+	- CIA is the functional manager of HUMINT.
+	- Data from human sources. This includes overt collection from personnel, clandestine operations, political intrigue, official contacts with foreign government, and direct observation.
+	- Strengths
+		- This is where you can get insights into plans and intentions of people.
+		- The collection process for HUMINT is monetarily cheap, but the human cost can be very high.
+	- Weaknesses
+		- Humans can be unreliable.
+		- Often puts lives at risk during collection.
+- SIGINT — Signals Intelligence
+	- COMINT — Communications Intelligence
+		- Any communications media that is digitized or broadcast in analog form
+	- ELINT
+		- Anything that is emitted from electronics, either from an antenna, or even unintendedly from its own private signals.
+	- FIS — Foreign Instrumentation Signals
+		- How we stay informed about foreign abilities and 
+	- The difference between SIGINT and MASINT is that SIGINT tries to interpret signals, while MASINT is trying to prove that the signals exist.
+- MASINT — Measurements & Signatures Intelligence
+	- Radio frequencies, Radar, etc...
+- GEOINT
+	- Information describing visually depicting events. 
+	- Able to be done remotely.
+	- Downsides
+		- Very expensive
+		- Can be overly compelling
+		- Weather and spoofing can mislead
+- FININT — Financial Intelligence
+	- Follow the money
+	- Tracking where people are spending money can help gauge where you should be investigating. If a foreign country suddenly starts spending a lot of money at a R&D facility, that should be investigated. 
+- ABI/POL
+	- POL — Pattern of Life
+		- The specific sets of behaviors and movements associated with a particular entity over a given period of time.
+	- ABI — Activity Based Intel
+		- A methodology that rapidly integrates data from multiple sources to discover relevant patterns, determine and identify change, and understanding through spatial and temporal correlation across multiple data sets.
+- ADTECH
+	- Information about where you look when you look at a screen.
+	- "Digital Exhaust" or "behavioral surplus" left behind by people traversing the digital info domain (e.g., websites visited; ads looked at; and metadata)

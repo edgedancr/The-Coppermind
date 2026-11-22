@@ -3,8 +3,6 @@ type: course-note
 course: "Chinese I"
 semester: "Fall 26"
 ---
-← [[The Tinmind/Fall 26/Chinese I]]
-
 ##### Test L1D1 Vocab
 1. 我 — I, me
 2. 小姐 — miss, young lady

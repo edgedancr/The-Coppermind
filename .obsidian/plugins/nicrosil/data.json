@@ -14,21 +14,24 @@
     "tinmindMode": true,
     "tinOpen": {
       "The Tinmind/Spring 26/Euclidean Geometry": true,
-      "The Tinmind/Spring 26/Euclidean Geometry/Propositions": true,
+      "The Tinmind/Spring 26/Euclidean Geometry/Propositions": false,
       "The Tinmind/Fall 26/Philosophy.md": false,
       "The Tinmind/Fall 26/Intro to Intelligence.md": false,
       "The Tinmind/Fall 26/Freedom's Foundations 1.md": false,
       "The Tinmind/Spring 26/West Lit 2.md": false,
       "The Tinmind/Spring 26/Logic.md": false,
-      "The Tinmind/Spring 26/Euclidean Geometry.md": true,
+      "The Tinmind/Spring 26/Euclidean Geometry.md": false,
       "The Tinmind/Fall 26/Chinese I.md": false,
       "The Tinmind/Fall 26/Chinese I/Vocab by Lesson": false,
       "The Tinmind/Fall 26/SAIL.md": false,
       "The Tinmind/Fall 26/Chinese I/Study Guides": false,
-      "The Tinmind/Fall 26/Chinese I": true
+      "The Tinmind/Fall 26/Chinese I": true,
+      "The Tinmind/Fall 25/SI Section 00.md": true,
+      "The Tinmind/Fall 26/Events.md": false
     },
     "tinBacklinksRemoved": true,
     "tinHubsRenamed": true,
+    "tinCourseLinksRemoved": true,
     "tinRightWasOpen": true
   },
   "resolved": {}

@@ -3,8 +3,6 @@ type: course-note
 course: "Chinese I"
 semester: "Fall 26"
 ---
-← [[The Tinmind/Fall 26/Chinese I]]
-
 - 九月 — September
 - 月 — Month
 - 十二 — twelve

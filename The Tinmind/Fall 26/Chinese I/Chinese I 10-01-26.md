@@ -3,8 +3,6 @@ type: course-note
 course: "Chinese I"
 semester: "Fall 26"
 ---
-← [[The Tinmind/Fall 26/Chinese I]]
-
 ##### Family
 - 家人 — family
 - 我的 — my

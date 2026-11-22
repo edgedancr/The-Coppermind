@@ -3,8 +3,6 @@ type: course-note
 course: "Chinese I"
 semester: "Fall 26"
 ---
-← [[The Tinmind/Fall 26/Chinese I]]
-
 1. 是
 	- To be
 2. 老师

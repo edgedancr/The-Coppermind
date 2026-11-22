@@ -3,8 +3,6 @@ type: course-note
 course: "Chinese I"
 semester: "Fall 26"
 ---
-← [[The Tinmind/Fall 26/Chinese I]]
-
 - 动物 — Animal
 - 医生 — Doctor
 - 护士 — Nurse

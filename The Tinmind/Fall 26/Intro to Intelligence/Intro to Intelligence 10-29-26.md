@@ -1,0 +1,78 @@
+---
+type: course-note
+course: "Intro to Intelligence"
+semester: "Fall 26"
+---
+##### Guest Lecture 5, CDR. Blocker: ==Chip Wars==
+> *How the Internet of Things (IoT), Cyber, and AIML drive Strategic Policy and National Security*
+- Semiconductors: The Oil of the 21st Century
+	- IoT, Cyber, Artificial Intel/Machine Learning, National Security.
+- History of Chips (1940s—Present)
+	- Origins (1940s—1970s)
+		- Transistor (Bell Labs, 1947)
+		- Integrated circuits (Kilby, Noyce)
+			- Kilby went and founded Texas Instruments
+		- Moore's Law
+			- Technology doubles every 10 years
+		- Cold War
+	- US Dominance (1970s-1980s)
+		- Intel & microprocessors
+		- Chips embedded in military systems
+	- Japan's Challenge (1980s)
+		- Japan's DRAM dominance (NEC, Toshiba, Hitachi)
+		- US trade disputes
+		- US pivots to design-heavy chips
+	- Taiwan & South Korea (1990s—2000s)
+		- TSMC & foundry model (Morris Chang)
+		- Samsung & SK Hynix lead memory
+		- Globalized supply chains ➔ efficiency + dependency.
+	- China's Realization (2000s—2010)
+		- Manufacturing is about engineering and not IP
+		- Can still the technology, but not the innovation
+	- Pursuit of Self-Sufficiency (2010s)
+		- CCP invests in SMIC, YMTC, Huawei HiSilicon
+		- Still behind in cutting-edge logic manufacturing (3-5 generations)
+	- Chips as Strategic Weapons (2020—Present)
+		- COVID disrupts supply chains
+		- US export controls (2022—2023) restricts China's access.
+- The Technology Terrain
+	- Key Types of Chips
+		- Logic / Processors 
+			- CPU, GPU (Taiwan)
+		- Memory 
+			- DRAM, NAND (South Korea)
+		- Specialized accelerators 
+			- (NPU, quantum emerging)
+	- Tools of Chipmaking
+		- EUV Lithography 
+			- ASML (Netherlands)
+		- Process Equipment 
+			- Applied Materials, Lam (US)
+		- Manufacturing Gear 
+			- Tokyo Electron (Japan)
+- Chips as Strategic Weapons
+	- Control of chips = control of military and economic power.
+		- Every advanced weapon system (stealth aircraft, satellites, AI, hypersonics) depends on chips.
+		- Cybersecurity risks: hardware backdoors, supply chain infiltration.
+		- IoT creates mass dependence on low-cost, reliable chips.
+		- AI revolution = GPU revolution (NVIDIA, AMD, Google TPU).
+- AIML (Artificial Intelligence Machine Learning) Implications
+	- Specialized chips driving AI revolution
+		- GPUs (NVIDIA, AMD) ➔ parallel processing
+		- TPUs (Google) and AI accelerators (custom silicon) ➔ training at scale
+	- Training frontier
+		- Largest AI models require tens of thousands of GPUs ➔ access to chips = access to AI progress.
+	- National security implications
+		- Autonomous weapons, target recognition
+		- Intelligence analysis at scale (SIGINT, GEOINT, MASINT)
+		- Cyber defense automation
+	- US—China competition
+		- Export controls on NVIDIA A100/H100 GPUs explicitly about limiting China's AI growth
+	- Strategic implication
+		- Controlling AI chips = controlling pace of AI development
+- Key Takeaways from the Chip Wars
+	- Semiconductors are the most strategically important technology of our time.
+	- US Military demand created the industry; globalization reshaped it; now geopolitics threatens it.
+	- Every wave of global competition (Japan, Taiwan/Korea, China) has reshaped the balance of power.
+	- No country controls the entire supply chain—this creates both interdependence and vulnerability.
+	- The US—China rivalry over chips will shape the trajectory of AI, cyber power, and IoT infrastructure.

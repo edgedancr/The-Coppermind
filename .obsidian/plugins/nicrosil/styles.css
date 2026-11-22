@@ -1378,3 +1378,11 @@ body.cm-tin-mode .workspace-leaf-content[data-type="file-explorer"] .nav-files-c
   filter: var(--cm-tin-gradient-glow);
   animation: none;
 }
+
+/* ---------- The pill that goes back to the course page (3.6.0) ---------- */
+/* Above the title of a note inside a course: the course's name with an arrow, outlined in the Tinmind's lilac. */
+.cm-backpill { display: flex; align-items: center; gap: 6px; width: fit-content; max-width: 100%; margin: 0 0 12px; padding: 4px 12px 4px 9px; border: 0.5px solid #8f86b8; border-radius: 999px; font-size: var(--font-ui-small); line-height: 1.4; color: #d9d3f3; cursor: pointer; user-select: none; transition: background 0.15s, border-color 0.15s; }
+.cm-backpill:hover, .cm-backpill:focus-visible { background: #2e2a45; border-color: #b8a3f2; outline: none; }
+.cm-backpill-icon { display: inline-flex; color: #b8a3f2; }
+.cm-backpill-icon svg { width: 15px; height: 15px; }
+@media (prefers-reduced-motion: reduce) { .cm-backpill { transition: none; } }

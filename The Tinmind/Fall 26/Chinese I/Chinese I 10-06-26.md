@@ -3,8 +3,6 @@ type: course-note
 course: "Chinese I"
 semester: "Fall 26"
 ---
-← [[The Tinmind/Fall 26/Chinese I]]
-
 ##### L2 Vocab Practice
 - 那个 —That one
 	- 那个女生是我妹妹

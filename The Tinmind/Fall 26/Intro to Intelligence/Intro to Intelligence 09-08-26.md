@@ -1,0 +1,101 @@
+---
+type: course-note
+course: "Intro to Intelligence"
+semester: "Fall 26"
+---
+- Writing
+	- With topic sentences, you want to be clear and lead them by the hand. If they really wanted to make their own analysis, they'd do it regardless.
+##### Expectations in Intro to Intel: What is excellence in this class?
+- Cognitive: Knowledge
+	- Data knowledge and recall
+	- Meaning comprehension
+	- Application of an abstraction
+	- Analysis of facts & inferences
+	- Synthesis of new meaning or structure
+	- Evaluation of ideas or materials
+- Affective: Feelings, Values, Attitudes
+	- Receiving, listening
+	- Responding, active participation
+	- Valuing object, phenomenon, or behaviors
+	- Organizing, synthetizing values
+	- Internalizing values in behavior
+- Psychomotor: Physical Movement
+	- Perception of sensory cues to guide motor activity
+	- Mindset of readiness to act
+	- Imitation or guided response
+	- Learned responses or mechanistic repetition
+	- Skillful performance of complex minor acts
+	- Adaptation to modify skilled movement
+	- Origination of new movement patterns
+##### Connecting the Dots
+- Context is critical. Dots can be exactly the same, but have completely different implications based on context.
+- Puzzles & Mysteries
+	- Puzzles
+		- In principle, can be answered
+		- It is knowable, even if it might not actually be known
+		- Can be observed, doesn't need to be inferred.
+		- About the secret inside information that we have.
+			- Who, what, where, when
+		- Purpose: Tactical (minutes, hours)
+			-  Diplomatic/Tactics & military ops
+		- Timeframe: History ➔ NOW (facts, figures)
+		- Issues
+			- Missing puzzle pieces
+			- Unknowns (static)
+			- Information scarcity
+		- Examples
+			- How many missiles does Iran have in their reserves?
+			- Cold War
+				- Size of Soviet economey?
+				- Number of missiles, capabilities, locations, launch status?
+	- Mysteries
+		- Cannot be answered with certainty
+		- Must be inferred, not observed
+		- About open source public information
+			- Why, how
+		- Purpose: Strategic (months, years)
+			- Diplomacy/Objectives & future military capabilities/intentions
+		- Timeframe: Alternative futures; longer term (qualitative, trends)
+		- Issues
+			- Influence of US actions TBD (Dynamic)
+			- Unknown-unknowns
+			- Overwhelming data/flow of info
+		- Examples
+			- What is Iran really going to do when they have a nuclear weapon system ready to use?
+			- Is China going to invade Taiwan? When?
+			- Cold War
+				- Russia's inflation rate?
+				- China intervene in North Korea is US attacks move toward Yalu River?
+- Structured Analytic Technique (idk he said we need to know this term)
+##### Intelligence Community Culture: A Study in Tribal Differentiation
+- Seven Tribes of Intelligence
+	- Organizational location of power, or coveted positions are indicative of their mission priorities and culture.
+	- National
+		- NSA
+			- Power positions are in the Field Sites; RSOCs
+			- Collection capability development; technical smarts, hobby shop 
+		- NRO
+			- Power positions are in the Ground Stations
+			- Collection capability development; tech/mgt smarts, $B programs
+		- CIA
+			- Power positions are in the Embassies/NOCs (foreign undercover work)
+			- CIA is the functional manager of HUMINT
+			- Covert ops
+	- Military
+		- Airforce
+			- Power positions are in the wing
+			- Deliberation; Intelligence
+		- Army
+			- Power positions are in the company
+			- Urgency; Dedication & hard work
+		- Navy
+			- Power positions are in the battle group / carrier
+			- Independence of action; self contained resources
+	- Law Enforcement
+		- FBI
+			- Power positions are in the Field Office
+			- LE Urgency; dedication & Hard work; numbers of agents
+	- Religions & Clans
+	- NGO & Media
+	- Academic
+	- Business

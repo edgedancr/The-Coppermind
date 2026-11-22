@@ -3,8 +3,6 @@ type: course-note
 course: "Chinese I"
 semester: "Fall 26"
 ---
-← [[The Tinmind/Fall 26/Chinese I]]
-
 ##### Moon Festival
 - 吃 — to eat
 - 吃月饼 — eat moon cake

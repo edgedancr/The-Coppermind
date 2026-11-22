@@ -3,8 +3,6 @@ type: course-note
 course: "Chinese I"
 semester: "Fall 26"
 ---
-← [[The Tinmind/Fall 26/Chinese I]]
-
 - Pg 93. practice
 	1. 今天是不是星期五。 
 	2. 高大哥有没有女儿。

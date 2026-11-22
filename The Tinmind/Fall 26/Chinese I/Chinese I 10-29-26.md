@@ -3,8 +3,6 @@ type: course-note
 course: "Chinese I"
 semester: "Fall 26"
 ---
-← [[The Tinmind/Fall 26/Chinese I]]
-
 - 小时 — hour
 - 分 — minute (example: 12:30)
 - 分钟 — minutes (example: in 3 minutes)

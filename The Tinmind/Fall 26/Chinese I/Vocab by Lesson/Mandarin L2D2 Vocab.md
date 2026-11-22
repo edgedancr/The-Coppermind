@@ -3,8 +3,6 @@ type: course-note
 course: "Chinese I"
 semester: "Fall 26"
 ---
-← [[The Tinmind/Fall 26/Chinese I]]
-
 - 家 — Family, home
 - 几 — How many, some, a few.
 - 口 — (Measure word for number of family members)

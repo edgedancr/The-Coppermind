@@ -2789,6 +2789,7 @@ module.exports = class Nicrosil extends Plugin {
       await this.migrateTinDashboard();
       await this.migrateTinBacklinks();
       await this.migrateHubNames();
+      await this.migrateCourseLinks();
       this.registerEvent(this.app.metadataCache.on("resolved", () => { if (!this.settings.tinHubsRenamed) this.migrateHubNames(); })); // runs again once the properties are indexed
       if (this.app.vault.getAbstractFileByPath(DASHBOARD_PATH)) await this.fixHomepageSetting(); // the startup page follows the Dashboard's name
       await this.migrateSchemaStub();
@@ -3589,7 +3590,7 @@ module.exports = class Nicrosil extends Plugin {
       view.containerEl.classList.toggle("cm-agents-leaf", path === "_AGENTS.md"); // its title reads AGENTS in the Coppermind Gradient Style (2.18.2)
       const logM = /^_logs\/_log (\d{2}-\d{2})\.md$/.exec(path); // a log's title reads "Log 11-26" (the theme draws it from --cm-log-title)
       if (logM) view.containerEl.style.setProperty("--cm-log-title", `"Log ${logM[1]}"`); else view.containerEl.style.removeProperty("--cm-log-title");
-      view.containerEl.classList.toggle("cm-noprops-leaf", isDash || isTin || isLog || path === INDEX_PATH);
+      view.containerEl.classList.toggle("cm-noprops-leaf", isDash || isTin || isLog || path === INDEX_PATH || (!!view.file && path.startsWith(NOTES_DIR))); // no properties on any note in the Tinmind (3.6.0)
       const pageStatus = view.file ? ((this.app.metadataCache.getFileCache(view.file) || {}).frontmatter || {}).status : "";
       view.containerEl.classList.toggle("cm-st-verified", pageStatus === "verified");
       view.containerEl.classList.toggle("cm-st-draft", pageStatus === "draft");
@@ -3668,7 +3669,7 @@ module.exports = class Nicrosil extends Plugin {
   ensureStripsIn(root, file) {
     if (!file) return;
     // The Dashboard, index and logs never get a strip. A strip step queued by the note a pane showed before can run after the pane switches, so take any strip away here too.
-    if (this.isDashboard(file) || this.isTinDashboard(file) || file.path === INDEX_PATH || isLogPath(file.path)) { root.querySelectorAll(".cm-propstrip, .cm-hub").forEach((s) => s.remove()); return; }
+    if (this.isDashboard(file) || this.isTinDashboard(file) || file.path === INDEX_PATH || isLogPath(file.path)) { root.querySelectorAll(".cm-propstrip, .cm-hub, .cm-backpill").forEach((s) => s.remove()); return; }
     const info = this.stripInfo(file);
     // When Obsidian re-renders a note (for example on switching between editing and reading),
     // it can re-create the Properties block or move the title, leaving an old strip stranded
@@ -3697,7 +3698,31 @@ module.exports = class Nicrosil extends Plugin {
       const prev = h.previousElementSibling;
       if (!isHub || !prev || !prev.classList.contains("metadata-container") || h.__cmFile !== file) h.remove();
     });
+    // A note inside a course gets a pill above its title that goes back to the course page (3.6.0), drawn on screen only.
+    const back = inPreview || isHub ? null : this.backTarget(file);
+    root.querySelectorAll(".cm-backpill").forEach((p) => {
+      const nx = p.nextElementSibling;
+      if (!back || p.__cmFile !== file || !nx || !(nx.classList.contains("inline-title") || nx.classList.contains("cm-propstrip") || nx.classList.contains("metadata-container"))) p.remove();
+    });
     metas.forEach((meta) => {
+      if (back) {
+        const anchor = meta.parentElement.querySelector(":scope > .inline-title") || (meta.previousElementSibling && meta.previousElementSibling.classList.contains("cm-propstrip") ? meta.previousElementSibling : meta);
+        let pill = anchor.previousElementSibling;
+        if (pill && !pill.classList.contains("cm-backpill")) pill = null;
+        if (!pill) {
+          pill = document.createElement("div");
+          pill.className = "cm-backpill";
+          pill.setAttribute("role", "button");
+          pill.tabIndex = 0;
+          pill.addEventListener("click", (e) => { if (pill.__cmHub) this.openTinFile(pill.__cmHub, e.ctrlKey || e.metaKey); });
+          pill.addEventListener("keydown", (e) => { if ((e.key === "Enter" || e.key === " ") && pill.__cmHub) { e.preventDefault(); this.openTinFile(pill.__cmHub, e.ctrlKey || e.metaKey); } });
+          anchor.parentElement.insertBefore(pill, anchor);
+        }
+        pill.__cmFile = file;
+        pill.__cmHub = back;
+        const psig = [file.path, back.path, this.courseCtx(back).course].join("|");
+        if (pill.dataset.sig !== psig) { pill.dataset.sig = psig; this.drawBackPill(pill, back); }
+      }
       if (isHub) {
         let hub = meta.nextElementSibling;
         if (hub && !hub.classList.contains("cm-hub")) hub = null;
@@ -4054,6 +4079,13 @@ module.exports = class Nicrosil extends Plugin {
     if (o.chev !== undefined) setIcon(chev, o.chev ? "chevron-down" : "chevron-right");
     setIcon(row.createSpan({ cls: "cm-tin-icon" }), o.icon);
     row.createSpan({ cls: "cm-tin-label", text: o.label });
+    // Middle button (3.6.1): no autoscroll cursor on a row, and a middle-click does what Ctrl+click does.
+    row.addEventListener("mousedown", (e) => { if (e.button === 1) e.preventDefault(); });
+    row.addEventListener("auxclick", (e) => {
+      if (e.button !== 1 || e.__cmMiddle) return;
+      e.preventDefault();
+      row.dispatchEvent(new MouseEvent("click", { bubbles: false, cancelable: true, ctrlKey: true, button: 0 }));
+    });
     return row;
   }
 
@@ -4119,13 +4151,12 @@ module.exports = class Nicrosil extends Plugin {
       if (k instanceof TFolder) {
         const isOpen = !!open[k.path];
         const row = this.tinRow(parentEl, { depth, icon: isOpen ? "folder-open" : "folder", label: k.name, chev: isOpen });
-        row.addEventListener("click", () => this.tinToggle(k.path));
+        row.addEventListener("click", (e) => { if (!e.ctrlKey) this.tinToggle(k.path); });
         this.tinRowMenu(row, (e) => this.tinItemMenu(e, k, ctx));
         if (isOpen) this.drawTinFolder(parentEl, k, depth + 1, ctx);
       } else {
         const row = this.tinRow(parentEl, { depth, icon: "file-text", label: k.basename, active: !!active && active.path === k.path });
         row.addEventListener("click", (e) => this.openTinFile(k, e.ctrlKey || e.metaKey));
-        row.addEventListener("auxclick", (e) => { if (e.button === 1) { e.preventDefault(); this.openTinFile(k, true); } });
         this.tinRowMenu(row, (e) => this.tinItemMenu(e, k, ctx));
       }
     }
@@ -4186,7 +4217,7 @@ module.exports = class Nicrosil extends Plugin {
     try {
       await this.tinEnsureFolder(folderPath);
       const path = this.tinUniquePath(folderPath, name, ".md");
-      const body = `---\ntype: course-note\ncourse: ${JSON.stringify(ctx.course)}\nsemester: ${JSON.stringify(ctx.semester)}\n---\n← [[${ctx.hub.path.replace(/\.md$/, "")}]]\n\n`;
+      const body = `---\ntype: course-note\ncourse: ${JSON.stringify(ctx.course)}\nsemester: ${JSON.stringify(ctx.semester)}\n---\n`;
       const file = await this.app.vault.create(path, body);
       this.tinExpandTo(folderPath, ctx);
       await this.app.workspace.getLeaf(false).openFile(file, { state: { mode: "source" } });
@@ -4306,6 +4337,27 @@ module.exports = class Nicrosil extends Plugin {
     this.refreshTin();
   }
 
+  /** The course page a note belongs to: found by walking up the note's folders for one whose name matches a course page (Fall 26/Chinese I/ goes with Fall 26/Chinese I.md). */
+  backTarget(file) {
+    if (!(file instanceof TFile) || file.extension !== "md" || !file.path.startsWith(NOTES_DIR)) return null;
+    if (this.isClassHub(file) || this.isTinDashboard(file) || file.path === ALL_NOTES_PAGE + ".md") return null;
+    const root = NOTES_DIR.replace(/\/$/, "");
+    let p = file.parent;
+    while (p && p.path && p.path !== "/" && p.path.startsWith(root)) {
+      const h = this.app.vault.getAbstractFileByPath(p.path + ".md");
+      if (h instanceof TFile && this.isClassHub(h)) return h;
+      p = p.parent;
+    }
+    return null;
+  }
+
+  drawBackPill(pill, hub) {
+    pill.empty();
+    pill.setAttribute("aria-label", "Go to the course page (Ctrl+click for a new tab)");
+    setIcon(pill.createSpan({ cls: "cm-backpill-icon" }), "arrow-left");
+    pill.createSpan({ text: this.courseCtx(hub).course });
+  }
+
   /** The panel at the top of a course page: New note and New folder buttons, the course's notes, and the page's headings. Drawn on screen; the page file is not changed. */
   drawHub(panel, file) {
     panel.empty();
@@ -4399,6 +4451,34 @@ module.exports = class Nicrosil extends Plugin {
       console.error("Nicrosil: couldn't rename the course pages", e);
     } finally {
       this._renamingHubs = false;
+    }
+  }
+
+  /**
+   * One time (3.6.0): takes the "← [[The Tinmind/.../Course]]" line out of the notes inside courses (type: course-note). The pill above the title
+   * does that job now. Only that one line, at the start of a line and pointing into The Tinmind/, and the blank line after it; nothing else is touched.
+   */
+  async migrateCourseLinks() {
+    if (this.settings.tinCourseLinksRemoved) return;
+    const re = /^\u2190[ \t]*\[\[The Tinmind\/[^\]\n]*\]\][ \t]*\r?\n(?:[ \t]*\r?\n)?/m;
+    let n = 0;
+    try {
+      for (const f of this.app.vault.getMarkdownFiles()) {
+        if (!f.path.startsWith(NOTES_DIR) || this.isTinDashboard(f) || f.path === ALL_NOTES_PAGE + ".md") continue;
+        let changed = false;
+        await this.app.vault.process(f, (text) => {
+          if (!/^---\r?\n(?:[^\n]*\n){0,8}?type:[ \t]*"?course-note"?/.test(text)) return text;
+          const next = text.replace(re, "");
+          changed = next !== text;
+          return next;
+        });
+        if (changed) n++;
+      }
+      this.settings.tinCourseLinksRemoved = true;
+      await this.persist();
+      if (n) new Notice(`Took the course link out of ${n} note${n === 1 ? "" : "s"}; a button above the title does that now.`, 8000);
+    } catch (e) {
+      console.error("Nicrosil: couldn't remove the course links", e);
     }
   }
 

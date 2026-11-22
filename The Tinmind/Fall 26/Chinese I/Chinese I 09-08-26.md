@@ -3,8 +3,6 @@ type: course-note
 course: "Chinese I"
 semester: "Fall 26"
 ---
-← [[The Tinmind/Fall 26/Chinese I]]
-
 - Chinese character stroke order website: https://forlang.fsa.mtsu.edu/hanzi/stroke/ 
 - Quiz: Character recognition test vocabulary in lesson 1 (dialogue 1). (pg22)
 - Vocab

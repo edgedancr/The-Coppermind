@@ -3,8 +3,6 @@ type: course-note
 course: "Chinese I"
 semester: "Fall 26"
 ---
-← [[The Tinmind/Fall 26/Chinese I]]
-
 - 那 — that
 - 的 — (A possessive or descriptive particle)
 - 照片 — Picture, photo

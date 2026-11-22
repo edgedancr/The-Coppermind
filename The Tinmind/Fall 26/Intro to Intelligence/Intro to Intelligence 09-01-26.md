@@ -1,0 +1,66 @@
+---
+type: course-note
+course: "Intro to Intelligence"
+semester: "Fall 26"
+---
+##### Intelligence and Analysis
+- Why do we have intel agencies?
+	- To avoid surprises.
+	- To cultivate long-term expertise.
+	- To inform and support policy makers.
+	- To help maintain the secrecy of the information about our intelligence needs, methods, to keep current info current, and protect our sources and methods that we use for obtaining secret classified information.
+- Intelligence is not "truth"
+	- Intelligence is much more akin to proximate reality. It is as close as possible to objective truth, but we must take into account the credibility of our various sources, acknowledge that we don't have all the information we need, and most of all the unknown-unknowns.
+- Definition of Intelligence
+	- Sometimes defined as the capability to inform decisions, supporting those decisions, in time for it to make a difference.
+	- Customers of intelligence include law enforcement, policy makers.
+	- Also a product, process, and organization.
+	- Intel is a multidimensional topic.
+- Politicized Intel
+	- happens when there are strong preferences about the topic that impact the analysis. The preferences may come from a number of different sources. There may be agency level preference, due to budgetary reasons. It may be the preference of the intel officer, because they want to be seen in a positive light in the IC. It could be a preference that comes from an ideology. Most often it comes from attempting to curry favor. **==Any and all of these may influence and bias the analysis.==**
+- Intel Strategies
+	- National security strategy
+		- This is the ***supported*** strategy. People are supposed to align and support this
+	- National intelligence strategy
+		- This is the ***supporting*** strategy. This is the organization that is supposed to help and support the others.
+- For the Biographical sketch, you will need to understand your person's worldview
+	- The overall perspective from which one sees the world and understands reality.
+	- The way that a person answers these questions:
+		- Theology
+		- Philosophy
+		- Biology
+		- Psychology
+		- Morality/Ethics
+		- Sociology
+		- Law
+		- Politics
+		- Economics
+		- History 
+	- Reality
+		- What is prime reality?
+			- Christian Theism
+				- Prime reality is the infinite, personal God revealed in the Holy Scriptures.
+			- Naturalism, Materialism
+			- Easter Pantheistic Monism
+		- What is external reality?
+	- Nature of Truth
+	- Nature of Morality
+	- Nature of Reality
+- These answers come from their educational background, what they've written on, things they've talked about.
+- SEE-It framework
+	- State it. A clear, formal definition.
+	- Elaborate it. Restate it, "in other words."
+	- Exemplify it.
+	- Illustrate it. Paint a picture. 
+##### TCPED
+- In the IC, much of the information sent to intel officers is composed of "here is what I know, here is what I don't know." This loop drives much of the collection process.
+- Tasking
+	- We are going to create tasking to the people who will do collection.
+- Collection
+	- Comes out as data or bad information, and sent to processing.
+- Processing
+	- Turn the data or bad information and turning it into knowledge, which is man readable or understandable.
+- Exploitation
+	- This is where we have turned the knowledge into actionable intelligence.
+- Dissemination
+	- Distributing the intelligence to those who have the power to act on it.

@@ -3,8 +3,6 @@ type: course-note
 course: "Chinese I"
 semester: "Fall 26"
 ---
-← [[The Tinmind/Fall 26/Chinese I]]
-
 - [[Mandarin L3D1 Vocab]]
 - 时间 — time
 - 过去 — past
