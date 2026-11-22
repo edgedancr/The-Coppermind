@@ -14,7 +14,7 @@ A scan is only a way to get my handwriting into a note. Once I have checked the 
 
 | What | Where | Notes |
 |---|---|---|
-| Scans waiting to be transcribed | `Sources/Scans/` | Shrunk copies (see below). Git ignores this folder, so scans are never committed. |
+| Scans waiting to be transcribed | `Sources/Scans/` | Shrunk copies (see below). The folder is kept in git (the shrunk scans are small enough to push); a scan leaves it when I verify its transcription. |
 | My original photos | wherever I keep them (outside the vault) | The agent never changes them. They are my backup until I delete them. |
 | The transcription | the course's folder in `The Tinmind/`, one note per class session | Same file name pattern, properties and layout as the other notes in that course. If the course has no note to copy, the agent asks me. |
 | A drawing I keep as an image | `_attachments/Tinmind/` | A crop of the scan, saved by the queue when I choose **Keep screenshot**. |
