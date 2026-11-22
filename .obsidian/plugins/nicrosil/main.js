@@ -11,6 +11,14 @@
  *  - Rating buttons (reliability A–F, credibility 1–6) on source cards, under the properties strip and on the
  *    review card. They write `reliability` and `credibility`; the agent's "Proposed B-2" line is marked on them.
  *  - A Triage link on the Dashboard, under Schema, that opens Ingestion/Triage.md.
+ *  - The index keeps itself: _index.md gains, loses, renames and moves its lines (letter headings, counts, total and Jump to line
+ *    included) when a page in Wiki/, Perspectives/ or Sources/Source Cards/ is added, removed, renamed or moved, and at startup.
+ *    A new page's summary comes from its summary callout. "Update the index now" does it on demand; a setting turns it off.
+ *  - Unlinked mentions in the relations panel, both ways: pages that name this one without linking it, and pages this one names
+ *    without linking them (names and aliases, whole words; read-only).
+ *  - "Respond to this page" (a header button and Alt+P) on pages in Wiki/, Sources/Source Cards/ and Perspectives/: makes
+ *    Perspectives/Response to <page>.md from the Perspective template with `responds_to` set, opened beside the page. Each page
+ *    shows a "My take" line under its properties that links the perspectives responding to it (drawn on screen; the page file is not changed).
  *
  * Review tools for draft pages (all in the sidebar and on hotkeys; no buttons on the page header):
  *  - verify-and-next and skip, so a review session never goes back to a list
@@ -20,7 +28,7 @@
  *  - hotkeys and a status-bar counter
  *  - a search box for the Dashboard (```coppermind-search```): suggestion cards under it as I type,
  *    over wiki pages, source cards, and perspectives (not raw class notes); it only reads
- *  - Dashboard page blocks (```coppermind-hero```, -dashboard, -nav, -activity, and -classes for the Notes dashboard), a ribbon
+ *  - Dashboard page blocks (```coppermind-hero```, -dashboard, -nav, -activity, -classes for the Notes dashboard, and tinmind-hero for its title), a ribbon
  *    logo button and Alt+D to go back to the Dashboard, and a one-time Home to Dashboard rename
  *  - "Log a schema change" (a pen button in the header of any page in SCHEMAS/, or the command palette): asks for the new
  *    version number and what I changed, then adds the line to _changelogs/Schema Changelog.md and keeps the `version` and
@@ -44,13 +52,22 @@
  */
 const {
   Plugin, Modal, Notice, MarkdownView, TFile, ItemView, FuzzySuggestModal,
-  PluginSettingTab, Setting, MarkdownRenderChild, setIcon, addIcon, debounce, parseYaml,
+  PluginSettingTab, Setting, MarkdownRenderChild, setIcon, addIcon, debounce, parseYaml, Menu, TFolder,
 } = require("obsidian");
 
 const INDEX_PATH = "_index.md";
-const NOTES_DIR = "Notes/";                         // my own class notes (the Notes dashboard, one file per course, the all-notes page)
-const NOTES_DASHBOARD = "Notes/Notes Dashboard";    // opened by the Dashboard's Notes card
-const ALL_NOTES_PAGE = "Notes/All Class Notes";     // opened by the last card on the Notes dashboard
+const NOTES_DIR = "The Tinmind/";                   // my own class notes (the Notes dashboard, one file per course, the all-notes page)
+const NOTES_DASHBOARD = "The Tinmind/Notes Dashboard"; // opened by the Dashboard's Tinmind card
+const ALL_NOTES_PAGE = "The Tinmind/All Class Notes";  // opened by the last card on the Notes dashboard
+
+/** Sort key for a semester name such as "Fall 26" (year, then winter < spring < summer < fall); null when the name doesn't fit that shape. */
+function semesterKey(name) {
+  const m = /^(winter|spring|summer|fall|autumn)\s+(\d{2}|\d{4})$/i.exec(String(name).trim());
+  if (!m) return null;
+  let y = Number(m[2]);
+  if (y < 100) y += 2000;
+  return y * 10 + { winter: 0, spring: 1, summer: 2, fall: 3, autumn: 3 }[m[1].toLowerCase()];
+}
 const LOG_DIR = "_logs";                            // _logs/_log MM-YY.md, one file per month
 const DASHBOARD_PATH = "_dashboard.md";          // the underscore keeps it out of the file list unless the eye button is on
 const LEGACY_DASHBOARD_PATHS = ["Dashboard.md", "Home.md"]; // old names, still recognised if a vault has one
@@ -70,7 +87,7 @@ const FLAG_KINDS = {
   warning: { label: "Warning", plural: "Warnings (unsourced)", short: "W" },
 };
 const STALE_DAYS = 14;
-const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, hidePanels: true, readMode: "verified", healthDays: 14 };
+const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, hidePanels: true, readMode: "verified", healthDays: 14, autoIndex: true };
 const READ_MODES = { verified: "Verified pages only", all: "Every page", off: "Off" };
 // Admiralty Code, as SCHEMA - Writing Pages lays it out: reliability of the source, credibility of the information.
 const RATING_REL = [["A", "Completely reliable"], ["B", "Usually reliable"], ["C", "Fairly reliable"], ["D", "Not usually reliable"], ["E", "Unreliable"], ["F", "Cannot be judged"]];
@@ -344,6 +361,68 @@ function editIndex(text, name, mode, date) {
   if (!found) return { text, found: false };
   if (mode !== "remove") return { text, found: true };
   return { text: renderIndex(model, date).replace(/\n/g, eol), found: true };
+}
+
+/* ---- keeping _index.md up to date by itself ---- */
+const INDEX_SCOPE = [/^Wiki\//, /^Perspectives\//, /^Sources\/Source Cards\//];
+const isEmptyIndexLine = (t) => /^- \[\[[^\]]+\]\]\s*(?:\u2014\s*)?$/.test(t);
+const indexLine = (name, summary) => (summary ? `- [[${name}]] \u2014 ${summary}` : `- [[${name}]]`);
+
+/** Which of these page names an index text still needs a look at: names with no entry, and entries with no summary. */
+function indexNeeds(text, names) {
+  const have = new Map();
+  for (const sec of parseIndex(text).sections) for (const e of sec.entries) if (e.name) have.set(e.name, isEmptyIndexLine(e.text));
+  return new Set(names.filter((n) => !have.has(n) || have.get(n)));
+}
+
+/**
+ * Brings the index text in line with the pages that exist. pages: [{ name, group }] (group = the section title, from groupOf);
+ * summaries: { name: one-line summary } for pages that need one; renames: [[oldName, newName]], which keep an entry's summary.
+ * Adds an entry for each page that has none, removes entries whose page is gone, moves an entry to the right section,
+ * fills an empty summary when one is available, and drops a duplicate or a stray |alias. Counts, letter headings, the total
+ * and the Jump to line are rebuilt by renderIndex. Returns { text, changed, added, removed, moved, renamed, filled, empty }; text is
+ * the original, untouched, when nothing changed.
+ */
+function syncIndex(text, pages, summaries, renames, date) {
+  const eol = text.includes("\r\n") ? "\r\n" : "\n";
+  const model = parseIndex(text);
+  const out = { text, changed: false, added: [], removed: [], moved: [], renamed: [], filled: [], empty: [] };
+  const want = new Map();
+  for (const p of pages) if (!want.has(p.name)) want.set(p.name, p);
+  const names = () => new Set(model.sections.flatMap((s) => s.entries.map((e) => e.name)));
+  for (const [from, to] of renames || []) {
+    const have = names();
+    if (from === to || !have.has(from) || have.has(to) || !want.has(to)) continue;
+    for (const sec of model.sections) for (const e of sec.entries) if (e.name === from) { e.text = e.text.replace("[[" + from, "[[" + to); e.name = to; out.renamed.push(to); }
+  }
+  const seen = new Set(), moving = [];
+  for (const sec of model.sections) {
+    sec.entries = sec.entries.filter((e) => {
+      if (e.name === null) return true;
+      const p = want.get(e.name);
+      if (!p) { out.removed.push(e.name); return false; }
+      if (seen.has(e.name)) return false;
+      seen.add(e.name);
+      e.text = e.text.replace(/^(- \[\[[^\]|]+)\|[^\]]*\]\]/, "$1]]");
+      if (sec.title !== p.group) { out.moved.push(e.name); moving.push({ p, text: e.text }); return false; }
+      if (isEmptyIndexLine(e.text) && summaries && summaries[e.name]) { e.text = indexLine(e.name, summaries[e.name]); out.filled.push(e.name); }
+      return true;
+    });
+  }
+  const place = (p, line) => {
+    let sec = model.sections.find((s) => s.title === p.group);
+    if (!sec) { sec = { title: p.group, entries: [], extra: [] }; model.sections.push(sec); }
+    sec.entries.push({ name: p.name, text: line });
+  };
+  for (const m of moving) place(m.p, m.text);
+  for (const [name, p] of want) if (!seen.has(name)) { place(p, indexLine(name, (summaries && summaries[name]) || "")); out.added.push(name); }
+  for (const sec of model.sections) for (const e of sec.entries) if (e.name && isEmptyIndexLine(e.text)) out.empty.push(e.name);
+  const oldDate = (/^updated:[ \t]*(.*?)\s*$/m.exec(text) || [])[1] || date;
+  const before = renderIndex(parseIndex(text), oldDate);
+  if (renderIndex(model, oldDate) === before) return out;
+  out.changed = true;
+  out.text = renderIndex(model, date).replace(/\n/g, eol);
+  return out;
 }
 
 function oneLine(s) {
@@ -644,6 +723,19 @@ class FlagPicker extends FuzzySuggestModal {
   onChooseItem(f) { this.onChoose(f); }
 }
 
+/** When a page already has responses: open one of them, or start another. */
+class ResponsePicker extends FuzzySuggestModal {
+  constructor(app, existing, onChoose) {
+    super(app);
+    this.items = [...existing.map((f) => ({ file: f })), { fresh: true }];
+    this.onChoose = onChoose;
+    this.setPlaceholder("This page already has a response. Open it, or write another?");
+  }
+  getItems() { return this.items; }
+  getItemText(i) { return i.fresh ? "Write a new response" : `Open: ${i.file.basename}`; }
+  onChooseItem(i) { this.onChoose(i); }
+}
+
 /* ---------- sidebar queue ---------- */
 
 class QueueView extends ItemView {
@@ -824,6 +916,47 @@ function collectRelations(app) {
   return edges;
 }
 
+/* ---- unlinked mentions: a page's name written out in another page's text without a link ---- */
+const MENTION_SCOPE = [/^Wiki\//, /^Perspectives\//, /^Sources\/Source Cards\//];
+const mentionEscape = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+/** A page's names for matching: its file name (also without a trailing "(…)") and its aliases; names under four letters are left out. */
+function mentionNames(file, fm) {
+  const raw = [file.basename, file.basename.replace(/\s*\([^)]*\)\s*$/, ""), ...[].concat((fm && fm.aliases) || []).map(String)];
+  const seen = new Set(), out = [];
+  for (const n of raw.map((x) => x.trim())) {
+    const k = n.toLowerCase();
+    if (n.length < 4 || seen.has(k)) continue;
+    seen.add(k); out.push(n);
+  }
+  return out;
+}
+/** Whole-word, case-insensitive; a plural or possessive still counts. */
+function mentionRegex(name) {
+  return new RegExp("(?<![\\p{L}\\p{N}])" + mentionEscape(name) + "(?:s|'s|\u2019s)?(?![\\p{L}\\p{N}])", "giu");
+}
+/** The text a mention can be found in: no properties, code, comments, footnote definitions or links (a link already counts as a link). */
+function stripForMentions(text) {
+  return String(text)
+    .replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "")
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/%%[\s\S]*?%%/g, " ")
+    .replace(/<!--[\s\S]*?-->/g, " ")
+    .replace(/`[^`\n]*`/g, " ")
+    .replace(/!?\[\[[^\]]*\]\]/g, " ")
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, " ")
+    .replace(/^\[\^[^\]]+\]:.*$/gm, " ")
+    .replace(/https?:\/\/\S+/g, " ");
+}
+/** How many times the regexes match, one after another; each match is blanked out so a shorter name can't count inside a longer one. Returns { n, text }. */
+function countMentions(text, regexes) {
+  let n = 0;
+  for (const re of regexes) {
+    re.lastIndex = 0;
+    text = text.replace(re, () => { n++; return " "; });
+  }
+  return { n, text };
+}
+
 const SVG_NS = "http://www.w3.org/2000/svg";
 function svgEl(parent, tag, attrs, text) {
   const el = document.createElementNS(SVG_NS, tag);
@@ -890,6 +1023,7 @@ class RelationsView extends ItemView {
     const root = this.containerEl.children[1];
     root.empty();
     root.addClass("cm-rel");
+    const tok = (this._tok = (this._tok || 0) + 1);
     const file = this.file && this.app.vault.getAbstractFileByPath(this.file.path) instanceof TFile ? this.file : null;
     if (!file) { root.createDiv({ cls: "cm-sub", text: "Open a page to see how it relates to the rest of the wiki." }); return; }
 
@@ -905,6 +1039,7 @@ class RelationsView extends ItemView {
 
     if (!out.length && !inn.length) {
       root.createDiv({ cls: "cm-sub cm-rel-empty", text: "No typed links to or from this page yet. Plain links in the text don't show here; only the typed properties do (Schema §5)." });
+      this.drawUnlinked(root, file, tok);
       return;
     }
 
@@ -912,6 +1047,46 @@ class RelationsView extends ItemView {
     this.drawLegend(root, out, inn);
     this.drawGroups(root, "This page…", out, "out", (e) => e.to, (e) => e.toName);
     this.drawGroups(root, "Pointing at this page…", inn, "inn", (e) => e.from, (e) => this.app.vault.getAbstractFileByPath(e.from)?.basename || e.from);
+    this.drawUnlinked(root, file, tok);
+  }
+
+  /** Unlinked mentions, both ways, under the typed links. Worked out after the panel is drawn, so the panel never waits for it. */
+  async drawUnlinked(root, file, tok) {
+    const sec = root.createDiv({ cls: "cm-rel-unl" });
+    sec.createEl("h5", { cls: "cm-rel-h", text: "Unlinked mentions" });
+    const body = sec.createDiv({ cls: "cm-sub", text: "Looking…" });
+    let res = null;
+    try { res = await this.plugin.unlinkedMentions(file); }
+    catch (e) { console.error("Nicrosil: unlinked mentions failed", e); if (tok === this._tok) body.setText("Couldn't scan for mentions."); return; }
+    if (tok !== this._tok || !sec.isConnected) return;
+    if (!res) { sec.remove(); return; }
+    body.remove();
+    const draw = (title, hint, list) => {
+      const grp = sec.createDiv({ cls: "cm-rel-group" });
+      const h = grp.createDiv({ cls: "cm-rel-grouphead", text: title });
+      h.setAttr("title", hint);
+      h.createSpan({ cls: "cm-rel-count", text: String(list.length) });
+      if (!list.length) { grp.createDiv({ cls: "cm-sub", text: "None found." }); return; }
+      const SHOW = 8;
+      const rows = [];
+      list.forEach((it, i) => {
+        const row = grp.createDiv({ cls: "cm-rel-item" + (i >= SHOW ? " is-hidden" : "") });
+        const st = this.statusOf(it.file.path);
+        row.createSpan({ cls: `cm-rel-dot ${st ? "cm-rel-dot-" + st : ""}` }).setAttr("aria-label", st || "no status");
+        row.createSpan({ cls: "cm-rel-name", text: it.file.basename });
+        row.createSpan({ cls: "cm-rel-count", text: `×${it.count}` });
+        row.setAttr("role", "button"); row.setAttr("tabindex", "0");
+        row.addEventListener("click", (e) => this.go(it.file.path, e.ctrlKey || e.metaKey));
+        row.addEventListener("keydown", (e) => { if (e.key === "Enter") this.go(it.file.path, e.ctrlKey || e.metaKey); });
+        rows.push(row);
+      });
+      if (list.length > SHOW) {
+        const more = grp.createEl("button", { cls: "cm-mini cm-rel-showall", text: `Show all ${list.length}` });
+        more.addEventListener("click", () => { rows.forEach((r) => r.removeClass("is-hidden")); more.remove(); });
+      }
+    };
+    draw("Pages that name this one, without a link", "Other pages that write this page's name (or an alias) in their text but don't link to it", res.inbound);
+    draw("Pages named here, without a link", "Pages whose names appear in this page's text, but this page doesn't link to them", res.outbound);
   }
 
   /** Neighbors on both sides, deduplicated by page, each keeping the types that link it. */
@@ -1741,6 +1916,12 @@ class ReviewSettings extends PluginSettingTab {
       .addToggle((t) => t.setValue(this.plugin.settings.celebrate !== false).onChange(async (v) => {
         this.plugin.settings.celebrate = v; await this.plugin.persist();
       }));
+    new Setting(el).setName("Keep the index up to date")
+      .setDesc("When a page in Wiki, Perspectives or Source Cards is added, removed, renamed or moved, _index.md is updated by itself (entry, section, counts, total and the Jump to line). A new page's line uses its summary callout. “Update the index now” in the command palette does it on demand.")
+      .addToggle((t) => t.setValue(this.plugin.settings.autoIndex !== false).onChange(async (v) => {
+        this.plugin.settings.autoIndex = v; await this.plugin.persist();
+        if (v) this.plugin.scheduleIndexSync(500);
+      }));
     new Setting(el).setName("Close the extra sidebar panels on startup")
       .setDesc("Closes Backlinks, Outgoing links, Tags, All properties and Outline in the sidebar each time Obsidian starts. You can still open any of them from the command palette during a session.")
       .addToggle((t) => t.setValue(this.plugin.settings.hidePanels !== false).onChange(async (v) => { this.plugin.settings.hidePanels = v; await this.plugin.persist(); }));
@@ -2347,6 +2528,84 @@ function addChangelogEntry(text, version, date, desc) {
   return lines.join(eol);
 }
 
+/* ---------- The Tinmind's sidebar and course pages: helpers (3.1.0) ---------- */
+const byOldestSemester = (p, q) => {
+  const kp = semesterKey(p), kq = semesterKey(q);
+  if (kp !== null && kq !== null) return kp - kq;
+  if (kp !== null) return -1;
+  if (kq !== null) return 1;
+  return p.localeCompare(q);
+};
+const newestSemester = (list) => [...list].reverse().find((x) => semesterKey(x) !== null) || list[list.length - 1] || "";
+const naturalCompare = (a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }); // "Lecture 2" before "Lecture 10"
+/** A name typed into a prompt, made safe for a file name: no slashes or other characters Obsidian can't use in a link. */
+const cleanName = (s) => String(s || "").replace(/[\\/:*?"<>|#^\[\]]/g, " ").replace(/\.md$/i, "").replace(/\s+/g, " ").trim();
+
+/** A one-line text prompt. `done` gets the text, or null if cancelled. */
+class TinPromptModal extends Modal {
+  constructor(app, opts, done) {
+    super(app);
+    this.opts = opts;
+    this.done = done;
+    this.finished = false;
+  }
+
+  onOpen() {
+    const { contentEl } = this;
+    contentEl.empty();
+    contentEl.addClass("nicrosil-modal");
+    this.titleEl.setText(this.opts.title);
+    if (this.opts.label) contentEl.createDiv({ cls: "cm-sub", text: this.opts.label });
+    const input = contentEl.createEl("input", { type: "text", cls: "cm-tin-input" });
+    input.value = this.opts.value || "";
+    input.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); this.finish(input.value); } });
+    const btns = contentEl.createDiv({ cls: "cm-buttons" });
+    btns.createEl("button", { text: "Cancel" }).addEventListener("click", () => this.close());
+    btns.createEl("button", { text: this.opts.ok || "OK", cls: "mod-cta" }).addEventListener("click", () => this.finish(input.value));
+    setTimeout(() => { input.focus(); input.select(); }, 0);
+  }
+
+  finish(value) {
+    if (this.finished) return;
+    this.finished = true;
+    this.done(value);
+    this.close();
+  }
+
+  onClose() {
+    this.contentEl.empty();
+    if (!this.finished) { this.finished = true; this.done(null); }
+  }
+}
+
+/** A yes/no question. `done` gets true or false. */
+class TinConfirmModal extends Modal {
+  constructor(app, opts, done) {
+    super(app);
+    this.opts = opts;
+    this.done = done;
+    this.finished = false;
+  }
+
+  onOpen() {
+    const { contentEl } = this;
+    contentEl.empty();
+    contentEl.addClass("nicrosil-modal");
+    this.titleEl.setText(this.opts.title);
+    contentEl.createDiv({ cls: "cm-sub", text: this.opts.message });
+    const btns = contentEl.createDiv({ cls: "cm-buttons" });
+    btns.createEl("button", { text: "Cancel" }).addEventListener("click", () => this.close());
+    const ok = btns.createEl("button", { text: this.opts.ok || "OK", cls: "mod-warning" });
+    ok.addEventListener("click", () => { this.finished = true; this.done(true); this.close(); });
+    setTimeout(() => ok.focus(), 0);
+  }
+
+  onClose() {
+    this.contentEl.empty();
+    if (!this.finished) { this.finished = true; this.done(false); }
+  }
+}
+
 /* ---------- schema changelog dialog ---------- */
 
 class SchemaLogModal extends Modal {
@@ -2438,6 +2697,9 @@ module.exports = class Nicrosil extends Plugin {
     this.readHandled = new WeakMap(); // leaf -> path already considered for Reading view
     this.stripPaths = new WeakMap();
     this.stripObservers = new Set();
+    this.mentionCache = new Map(); // page path -> { mtime, text } with links and code removed, for unlinked mentions
+    this.indexRenames = [];   // [oldName, newName] pairs waiting for the next index sync, so a renamed page keeps its summary
+    this.indexEmpty = new Set(); // paths of pages whose index entry has no summary yet
     this.proposedCache = new Map(); // source card path -> { mtime, value } for its "Proposed B-2" line
     this.popObservers = new Set(); // watchers on hover previews, dropped when the preview closes
     this.lastHover = null;         // the page the pointer last hovered a link to, so a hover preview knows which page it shows
@@ -2457,6 +2719,7 @@ module.exports = class Nicrosil extends Plugin {
     this.addRibbonIcon("badge-check", "Review queue (Alt+Q)", () => this.activateView());
 
     this.registerMarkdownCodeBlockProcessor("coppermind-hero", (src, el, ctx) => this.renderHero(el, src, ctx));
+    this.registerMarkdownCodeBlockProcessor("tinmind-hero", (src, el) => this.renderTinHero(el, src));
     for (const [name, method] of [["coppermind-dashboard", "renderDashboard"], ["coppermind-nav", "renderNav"], ["coppermind-classes", "renderClassNav"], ["coppermind-activity", "renderActivity"]]) {
       this.registerMarkdownCodeBlockProcessor(name, (src, el, ctx) => ctx.addChild(new LiveBlock(el, this, method)));
     }
@@ -2500,16 +2763,23 @@ module.exports = class Nicrosil extends Plugin {
     this.register(() => popWatch.disconnect());
     this.registerEvent(this.app.metadataCache.on("changed", (file) => {
       this.scheduleRefresh(); this.syncDashboardLeaves(false);
-      if (file) this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view && l.view.file && l.view.file.path === file.path) this.ensureStrips(l.view); });
+      if (file && this.indexEmpty.has(file.path)) this.scheduleIndexSync(6000); // the page now may have a summary to show
+      if (file && file.path.startsWith("Perspectives/")) this.refreshAllStrips(); // a response may have been added, renamed or changed
+      else if (file) this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view && l.view.file && l.view.file.path === file.path) this.ensureStrips(l.view); });
     }));
     this.registerEvent(this.app.metadataCache.on("resolved", () => this.scheduleRefresh()));
     this.registerEvent(this.app.vault.on("delete", () => this.scheduleRefresh()));
     this.registerEvent(this.app.vault.on("rename", (file, oldPath) => this.onRename(file, oldPath)));
     this.app.workspace.onLayoutReady(async () => {
+      // keep _index.md up to date (registered now, so the files Obsidian loads at startup don't each count as a new page)
+      this.registerEvent(this.app.vault.on("create", (f) => { if (this.indexable(f)) this.scheduleIndexSync(); }));
+      this.registerEvent(this.app.vault.on("delete", (f) => { if (this.indexable(f)) this.scheduleIndexSync(); }));
+      if (this.settings.autoIndex !== false) this.scheduleIndexSync(4000);
       // close the panels Obsidian keeps bringing back in the right sidebar (backlinks, outgoing links, tags, properties, outline)
       if (this.settings.hidePanels !== false) {
         for (const t of ["backlink", "outgoing-link", "tag", "all-properties", "outline"]) this.app.workspace.detachLeavesOfType(t);
       }
+      this.paintTinMode(); // still in the Tinmind's mode from last time: its colors back on, the right sidebar shut
       this.startDashIntro();
       this.searchIndex.start();
       this.syncSchemaButtons(); this.syncHomeButtons();
@@ -2529,20 +2799,21 @@ module.exports = class Nicrosil extends Plugin {
 
   onunload() {
     clearTimeout(this.dashIntroTimer);
-    document.querySelectorAll(".cm-schema-log-btn").forEach((e) => e.remove());
-    this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view) l.view.__cmSchemaBtn = null; });
+    clearTimeout(this.indexTimer);
+    document.querySelectorAll(".cm-schema-log-btn, .cm-respond-btn").forEach((e) => e.remove());
+    this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view) { l.view.__cmSchemaBtn = null; l.view.__cmRespondBtn = null; } });
     document.querySelectorAll(".cm-resolve-btn, .cm-home-btn, .cm-underscore-btn").forEach((e) => e.remove());
     document.body.classList.remove("cm-hide-underscore");
-    document.body.classList.remove("cm-on-dashboard");
-    document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => { e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"); e.style.removeProperty("--cm-log-title"); });
+    document.body.classList.remove("cm-on-dashboard", "cm-on-tin", "cm-tin-mode");
+    document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-agents-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => { e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-agents-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"); e.style.removeProperty("--cm-log-title"); });
     document.querySelectorAll(".cm-dashboard-tab").forEach((e) => e.classList.remove("cm-dashboard-tab"));
     document.body.classList.remove("cm-quiet");
-    document.querySelectorAll(".cm-propstrip, .cm-ratebar").forEach((e) => e.remove());
+    document.querySelectorAll(".cm-propstrip, .cm-ratebar, .cm-mytake").forEach((e) => e.remove());
     this.stripObservers.forEach((o) => o.disconnect());
     this.stripObservers.clear();
     this.popObservers.forEach((o) => o.disconnect());
     this.popObservers.clear();
-    this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view && l.view.containerEl) { l.view.containerEl.classList.remove("cm-strip-leaf", "cm-props-open"); l.view.containerEl.querySelectorAll(".cm-propstrip, .cm-ratebar").forEach((e) => e.remove()); l.view.__cmStripObs = null; } });
+    this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view && l.view.containerEl) { l.view.containerEl.classList.remove("cm-strip-leaf", "cm-props-open"); l.view.containerEl.querySelectorAll(".cm-propstrip, .cm-ratebar, .cm-mytake").forEach((e) => e.remove()); l.view.__cmStripObs = null; } });
   }
 
   async persist() {
@@ -2563,6 +2834,20 @@ module.exports = class Nicrosil extends Plugin {
     this.addCommand({ id: "next-draft", name: "Open the next draft", hotkeys: [{ modifiers: ["Alt"], key: "n" }], callback: () => { const f = this.currentFile(); this.openNext(f ? f.path : null); } });
     this.addCommand({ id: "open-dashboard", name: "Go to the Dashboard", hotkeys: [{ modifiers: ["Alt"], key: "d" }], callback: () => this.openDashboard() });
     this.registerInterval(window.setInterval(() => this.syncHomeButtons(), 1500));
+    this.scheduleTinRefresh = debounce(() => this.refreshTin(), 150, true);
+    const inTin = (f) => !!f && typeof f.path === "string" && f.path.startsWith(NOTES_DIR);
+    this.registerEvent(this.app.vault.on("create", (f) => { if (inTin(f)) this.scheduleTinRefresh(); }));
+    this.registerEvent(this.app.vault.on("delete", (f) => { if (inTin(f)) this.scheduleTinRefresh(); }));
+    this.registerEvent(this.app.vault.on("rename", (f, old) => { if (inTin(f) || String(old).startsWith(NOTES_DIR)) this.scheduleTinRefresh(); }));
+    this.registerEvent(this.app.metadataCache.on("changed", (f) => { if (inTin(f)) this.scheduleTinRefresh(); }));
+    this.registerEvent(this.app.workspace.on("file-open", (f) => { if (inTin(f)) this.scheduleTinRefresh(); }));
+    this.addCommand({ id: "respond-to-page", name: "Respond to this page (new perspective)", hotkeys: [{ modifiers: ["Alt"], key: "p" }], checkCallback: (checking) => {
+      const f = this.currentFile();
+      if (!f || !this.isRespondable(f)) return false;
+      if (!checking) this.respondTo(f);
+      return true;
+    } });
+    this.addCommand({ id: "update-index", name: "Update the index now", callback: () => this.syncIndex({ manual: true }) });
     this.addCommand({ id: "log-schema-change", name: "Log a schema change", callback: () => this.openSchemaLog() });
     this.addCommand({ id: "open-wiki-map", name: "Open the wiki map", hotkeys: [{ modifiers: ["Alt"], key: "m" }], callback: () => this.activateWikiMap() });
     this.addCommand({ id: "open-relations", name: "Open the relations panel", hotkeys: [{ modifiers: ["Alt"], key: "l" }], callback: () => this.activateRelations() });
@@ -2588,7 +2873,9 @@ module.exports = class Nicrosil extends Plugin {
         bar.appendChild(eye);
       }
       this.paintUnderscoreButtons();
-      if (holder.querySelector(":scope > .cm-home-btn")) return;
+      const homeBtn = holder.querySelector(":scope > .cm-home-btn:not(.cm-tin-btn)");
+      if (homeBtn && !holder.querySelector(":scope > .cm-tin-btn")) this.makeTinButton(homeBtn); // the Tinmind button sits under it (2.17.0)
+      if (homeBtn) { this.ensureTinSide(holder); return; }
       const btn = createDiv({ cls: "cm-home-btn" });
       btn.setAttr("role", "button"); btn.setAttr("tabindex", "0");
       btn.setAttr("aria-label", "Open the Dashboard (Ctrl+click for a new tab)");
@@ -2599,7 +2886,74 @@ module.exports = class Nicrosil extends Plugin {
       btn.addEventListener("auxclick", (e) => { if (e.button === 1) { e.preventDefault(); this.openDashboard(true); } });
       btn.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); this.openDashboard(e.ctrlKey || e.metaKey); } });
       if (header) header.after(btn); else holder.prepend(btn);
+      this.makeTinButton(btn);
+      this.ensureTinSide(holder);
     });
+  }
+
+  /** The Tinmind button, directly under the Coppermind one: the same button in the Tinmind's colors and logo. It opens The Tinmind/Notes Dashboard; Ctrl+click or middle-click opens it in a new tab. */
+  makeTinButton(after) {
+    const btn = createDiv({ cls: "cm-home-btn cm-tin-btn" });
+    btn.setAttr("role", "button"); btn.setAttr("tabindex", "0");
+    btn.setAttr("aria-label", "Open The Tinmind (Ctrl+click for a new tab)");
+    btn.createSpan({ cls: "cm-logo cm-logo-tin cm-home-logo" }).setAttr("aria-hidden", "true");
+    btn.createSpan({ cls: "cm-home-name", text: "The Tinmind" });
+    btn.addEventListener("mousedown", (e) => { if (e.button === 1) e.preventDefault(); });
+    btn.addEventListener("click", (e) => this.openTinmind(e.ctrlKey || e.metaKey));
+    btn.addEventListener("auxclick", (e) => { if (e.button === 1) { e.preventDefault(); this.openTinmind(true); } });
+    btn.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); this.openTinmind(e.ctrlKey || e.metaKey); } });
+    after.after(btn);
+  }
+
+  /**
+   * Tinmind mode (2.18.0). Clicking The Tinmind (the file list button, or the Dashboard's card) switches the whole app to the Tinmind's
+   * grey-and-lilac colors (the body class `cm-tin-mode`) and closes the right sidebar, which holds the review queue and the relations
+   * panel. Opening the Dashboard (the Coppermind button, Alt+D) switches back, and the right sidebar comes back if it was open before.
+   * The mode is saved in `data.json`, so it is still on after Obsidian restarts.
+   */
+  enterTinMode() {
+    if (!this.settings.tinmindMode) {
+      const rs = this.app.workspace.rightSplit;
+      this.settings.tinmindMode = true;
+      this.settings.tinRightWasOpen = !!rs && !rs.collapsed;
+      this.persist();
+    }
+    this.paintTinMode();
+    try {
+      const ls = this.app.workspace.leftSplit;
+      if (ls && ls.collapsed) ls.expand();
+      const fe = this.app.workspace.getLeavesOfType("file-explorer")[0];
+      if (fe) this.app.workspace.revealLeaf(fe); // the course tree lives in the file list's place
+    } catch (e) { /* the tree is a convenience */ }
+    this.refreshTin();
+  }
+
+  exitTinMode() {
+    if (!this.settings.tinmindMode) return;
+    const reopen = !!this.settings.tinRightWasOpen;
+    this.settings.tinmindMode = false;
+    delete this.settings.tinRightWasOpen;
+    this.persist();
+    this.paintTinMode();
+    const rs = this.app.workspace.rightSplit;
+    if (reopen && rs && rs.collapsed) rs.expand();
+  }
+
+  /** Puts the page in line with the saved mode: the body class, and the right sidebar closed while the mode is on. */
+  paintTinMode() {
+    const on = !!this.settings.tinmindMode;
+    document.body.classList.toggle("cm-tin-mode", on);
+    const rs = this.app.workspace.rightSplit;
+    if (on && rs && !rs.collapsed) rs.collapse();
+  }
+
+  async openTinmind(newTab) {
+    const f = this.app.vault.getAbstractFileByPath(NOTES_DASHBOARD + ".md");
+    if (!(f instanceof TFile)) { new Notice(`Couldn't find ${NOTES_DASHBOARD}.md.`); return; }
+    this.enterTinMode();
+    const already = this.app.workspace.getLeavesOfType("markdown").find((l) => l.view.file && l.view.file.path === f.path);
+    if (already && !newTab) { this.app.workspace.setActiveLeaf(already, { focus: true }); return; }
+    await this.app.workspace.getLeaf(newTab ? "tab" : false).openFile(f, { state: { mode: "preview" } });
   }
 
   /** Shows or hides the folders and files whose names start with "_" in the file list. It is not remembered: they start hidden each time Obsidian opens. */
@@ -2635,7 +2989,92 @@ module.exports = class Nicrosil extends Plugin {
         view.__cmSchemaBtn.remove();
         view.__cmSchemaBtn = null;
       }
+      // the Respond button, on pages in Wiki/, Sources/Source Cards/ and Perspectives/
+      const canRespond = !!view.file && this.isRespondable(view.file);
+      const hasR = view.__cmRespondBtn && view.__cmRespondBtn.isConnected;
+      if (canRespond && !hasR) {
+        const btn = view.addAction("message-square-plus", "Respond to this page (Alt+P)", () => { if (view.file) this.respondTo(view.file); });
+        btn.addClass("cm-respond-btn");
+        view.__cmRespondBtn = btn;
+      } else if (!canRespond && view.__cmRespondBtn) {
+        view.__cmRespondBtn.remove();
+        view.__cmRespondBtn = null;
+      }
     });
+  }
+
+  /* --- respond to a page: a perspective saved in Perspectives/, linked back from the page --- */
+
+  isRespondable(file) {
+    return file instanceof TFile && file.extension === "md" && /^(Wiki|Sources\/Source Cards|Perspectives)\//.test(file.path);
+  }
+
+  /** The perspectives whose `responds_to` points at this page, by name. */
+  responsesTo(file) {
+    const out = [];
+    for (const f of this.app.vault.getMarkdownFiles()) {
+      if (!f.path.startsWith("Perspectives/") || f.path === file.path) continue;
+      const fm = this.fm(f);
+      if (String(fm.type || "") !== "perspective") continue;
+      const v = fm.responds_to;
+      const list = Array.isArray(v) ? v : v ? [v] : [];
+      const hit = list.some((x) => {
+        const m = /\[\[([^\]|#]+)/.exec(String(x));
+        const dest = m && this.app.metadataCache.getFirstLinkpathDest(m[1].trim(), f.path);
+        return !!dest && dest.path === file.path;
+      });
+      if (hit) out.push(f);
+    }
+    return out.sort((a, b) => a.basename.localeCompare(b.basename));
+  }
+
+  async respondTo(file) {
+    const existing = this.responsesTo(file);
+    if (!existing.length) return this.createResponse(file);
+    new ResponsePicker(this.app, existing, (i) => { if (i.fresh) this.createResponse(file); else this.openResponse(i.file); }).open();
+  }
+
+  async openResponse(f) {
+    const leaf = this.app.workspace.getLeaf("split", "vertical");
+    await leaf.openFile(f, { state: { mode: "source" } });
+  }
+
+  /** Makes Perspectives/Response to <page>.md from the Perspective template, with `responds_to` set to the page, and opens it beside the page. */
+  async createResponse(file) {
+    try {
+      const tplFile = this.app.vault.getAbstractFileByPath("_templates/Perspective.md");
+      let tpl = tplFile instanceof TFile ? (await this.app.vault.read(tplFile)).replace(/\r\n/g, "\n") : "";
+      if (!tpl.startsWith("---")) tpl = "---\ntype: perspective\nstatus: draft\nlayer: \nresponds_to: []\ncourses: []\nwritten_on: \"{{date:YYYY-MM-DD}}\"\nverified_on: \n---\n## My View\n- \n\n## Why I Hold It\n- \n\n## Where I Disagree or Feel Tension\n- \n\n## What Would Change My Mind\n- \n";
+      const raw = this.fm(file).courses;
+      const courses = (Array.isArray(raw) ? raw : raw ? [raw] : []).map((c) => String(c).trim()).filter(Boolean);
+      tpl = tpl.replace(/\{\{date:YYYY-MM-DD\}\}/g, today());
+      tpl = tpl.replace(/^responds_to:.*$/m, `responds_to:\n  - ${JSON.stringify(`[[${file.basename}]]`)}`);
+      if (courses.length) tpl = tpl.replace(/^courses:.*$/m, `courses:\n${courses.map((c) => `  - ${JSON.stringify(c)}`).join("\n")}`);
+      if (!this.app.vault.getAbstractFileByPath("Perspectives")) await this.app.vault.createFolder("Perspectives");
+      let name = `Response to ${file.basename}`, path = `Perspectives/${name}.md`, n = 2;
+      while (this.app.vault.getAbstractFileByPath(path)) { name = `Response to ${file.basename} ${n++}`; path = `Perspectives/${name}.md`; }
+      const made = await this.app.vault.create(path, tpl);
+      await this.openResponse(made);
+      new Notice(`Started “${name}”. The page links to it under its properties.`, 6000);
+    } catch (e) {
+      console.error("Nicrosil: couldn't start a response", e);
+      new Notice(`Couldn't start a response: ${e.message}`, 8000);
+    }
+  }
+
+  /** The "My take" line under a page's properties: links to the perspectives that respond to it. */
+  drawMyTake(host, responses) {
+    host.empty();
+    host.createSpan({ cls: "cm-mytake-label", text: "My take" });
+    responses.forEach((f) => {
+      const a = host.createEl("a", { cls: "cm-mytake-link", text: f.basename, attr: { href: "#" } });
+      a.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); this.app.workspace.getLeaf(e.ctrlKey || e.metaKey ? "tab" : false).openFile(f); });
+      if (this.fm(f).status !== "verified") host.createSpan({ cls: "cm-mytake-draft", text: "draft" });
+    });
+  }
+
+  refreshAllStrips() {
+    this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view && l.view.file) this.ensureStrips(l.view); });
   }
 
   schemaFile() {
@@ -2697,6 +3136,12 @@ module.exports = class Nicrosil extends Plugin {
   resolvedFor(path) { return this.resolved[path] || []; }
 
   async onRename(file, oldPath) {
+    const wasIn = oldPath.endsWith(".md") && INDEX_SCOPE.some((re) => re.test(oldPath));
+    if (wasIn || this.indexable(file)) {
+      const oldName = oldPath.replace(/^.*\//, "").replace(/\.md$/, "");
+      if (wasIn && this.indexable(file) && oldName !== file.basename) this.indexRenames.push([oldName, file.basename]);
+      this.scheduleIndexSync();
+    }
     if (this.resolved[oldPath]) {
       this.resolved[file.path] = this.resolved[oldPath];
       delete this.resolved[oldPath];
@@ -2742,6 +3187,7 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   async activateView() {
+    if (this.settings.tinmindMode) { new Notice("The Tinmind has no review queue. Click The Coppermind to go back."); return; }
     let leaf = this.app.workspace.getLeavesOfType(VIEW_TYPE)[0];
     if (!leaf) {
       leaf = this.app.workspace.getRightLeaf(false);
@@ -2779,6 +3225,17 @@ module.exports = class Nicrosil extends Plugin {
     if (tagline) text.createDiv({ cls: "cm-hero-tagline", text: tagline });
     const host = el.createDiv({ cls: "cm-hero-search" });
     if (ctx) ctx.addChild(new SearchBlock(host, this));
+  }
+
+  /** The Tinmind page's hero (2.16.0): the tin logo, the title, and the block's text as the quote under it. No search box. */
+  renderTinHero(el, src) {
+    el.empty();
+    el.addClass("cm-hero", "cm-tin-hero");
+    el.createSpan({ cls: "cm-logo cm-logo-hero cm-logo-tin" }).setAttr("aria-hidden", "true");
+    const text = el.createDiv({ cls: "cm-hero-text" });
+    text.createDiv({ cls: "cm-hero-title", text: "The Tinmind" });
+    const tagline = String(src || "").trim();
+    if (tagline) text.createDiv({ cls: "cm-hero-tagline", text: tagline });
   }
 
   renderDashboard(el) {
@@ -2968,29 +3425,60 @@ module.exports = class Nicrosil extends Plugin {
       { icon: "scroll-text", title: "Log", sub: "Every change and decision", go: (newTab) => { const f = this.latestLogFile(); if (f) this.app.workspace.getLeaf(newTab ? "tab" : false).openFile(f); else new Notice("There is no log file yet."); } },
       { icon: "network", title: "Wiki map", sub: "Every typed link, as a tree and a map", go: () => this.activateWikiMap() },
       { icon: "book-open", title: "Schema", sub: "The rulebook", go: open("SCHEMA") },
-      { icon: "notebook", title: "Notes", sub: "My class notes, by course", go: open(NOTES_DASHBOARD) }, // sits under Wiki map (first column), left of Triage
-      { icon: "list-checks", title: "Triage", sub: "Sources waiting to be ingested", go: open("Ingestion/Triage"), under: true }, // sits under Schema (second column)
+      { icon: "list-checks", title: "Triage", sub: "Sources waiting to be ingested", go: open("Ingestion/Triage") }, // sits under Wiki map (first column)
+      { icon: "bot", title: "Agents", sub: "The rules every agent reads first", go: open("_AGENTS"), under: true }, // sits under Schema (second column); the Tinmind has its own button in the file list
     ];
     this.drawNavCards(el, cards);
   }
 
-  /** The Notes dashboard's cards (```coppermind-classes```): one per course whose notes file has `type: class-notes` and `current: true`, then a card for the all-notes page. */
+  /**
+   * The Notes dashboard's switcher and cards (```coppermind-classes```). Every notes file in the Tinmind folder with `type: class-notes`
+   * has a `semester`; a box at the top picks one, and the cards are that semester's courses, then a card for the all-notes page.
+   * The pick is saved in Nicrosil's settings, so it is still there after Obsidian closes. Until something is picked, the semester
+   * of the files marked `current: true` (else the newest) is shown.
+   */
   renderClassNav(el) {
     el.empty();
     const open = (link) => (newTab) => this.app.workspace.openLinkText(link, "", !!newTab);
-    const courses = [];
+    const all = [];
     for (const f of this.app.vault.getMarkdownFiles()) {
       if (!f.path.startsWith(NOTES_DIR)) continue;
       const fm = (this.app.metadataCache.getFileCache(f) || {}).frontmatter;
-      if (!fm || fm.type !== "class-notes" || fm.current !== true) continue;
+      if (!fm || fm.type !== "class-notes" || !fm.semester) continue;
       const order = Number(fm.order);
-      courses.push({ file: f, order: Number.isFinite(order) ? order : 999, name: String(fm.course || f.basename), semester: fm.semester ? String(fm.semester) : "" });
+      all.push({ file: f, order: Number.isFinite(order) ? order : 999, name: String(fm.course || f.basename), semester: String(fm.semester).trim(), current: fm.current === true });
     }
-    courses.sort((a, b) => a.order - b.order || a.name.localeCompare(b.name));
-    const cards = courses.map((c) => ({ icon: "book-open", title: c.name, sub: c.semester ? `${c.semester} notes` : "Class notes", go: open(c.file.path) }));
+    // Oldest first, so the box reads in order of time. Names that aren't "Fall 26" style go last, alphabetically.
+    const byOldest = (p, q) => {
+      const kp = semesterKey(p), kq = semesterKey(q);
+      if (kp !== null && kq !== null) return kp - kq;
+      if (kp !== null) return -1;
+      if (kq !== null) return 1;
+      return p.localeCompare(q);
+    };
+    const newestOf = (list) => [...list].reverse().find((x) => semesterKey(x) !== null) || list[list.length - 1] || "";
+    const semesters = [...new Set(all.map((c) => c.semester))].sort(byOldest);
+    const flagged = [...new Set(all.filter((c) => c.current).map((c) => c.semester))].sort(byOldest);
+    let chosen = this.settings.tinmindSemester;
+    if (!semesters.includes(chosen)) chosen = newestOf(flagged) || newestOf(semesters);
+
+    if (semesters.length) {
+      const bar = el.createDiv({ cls: "cm-sem-bar" });
+      bar.createSpan({ cls: "cm-sem-label", text: "Semester" });
+      const select = bar.createEl("select", { cls: "dropdown cm-sem-select" });
+      semesters.forEach((sem) => { const o = select.createEl("option", { text: sem }); o.value = sem; o.selected = sem === chosen; });
+      select.addEventListener("change", async () => {
+        this.settings.tinmindSemester = select.value;
+        await this.persist();
+        this.dashboards.forEach((r) => r());
+      });
+    }
+
+    const courses = all.filter((c) => c.semester === chosen).sort((p, q) => p.order - q.order || p.name.localeCompare(q.name));
+    const cards = courses.map((c) => ({ icon: "book-open", title: c.name, sub: `${c.semester} notes`, go: open(c.file.path) }));
     cards.push({ icon: "library", title: "All Class Notes", sub: "Every course, every semester", go: open(ALL_NOTES_PAGE) });
-    this.drawNavCards(el, cards);
-    if (!courses.length) el.createDiv({ cls: "cm-sub", text: "No current courses yet. A notes file with type: class-notes and current: true in the Notes folder shows up here." });
+    this.drawNavCards(el.createDiv(), cards);
+    if (!semesters.length) el.createDiv({ cls: "cm-sub", text: "No courses yet. A notes file with type: class-notes and a semester in the Tinmind folder shows up here." });
   }
 
   /** Draws a row of Dashboard-style cards into `el` from {icon, title, sub, go, under?} entries. */
@@ -3067,6 +3555,11 @@ module.exports = class Nicrosil extends Plugin {
     return file instanceof TFile && (file.path === DASHBOARD_PATH || LEGACY_DASHBOARD_PATHS.includes(file.path));
   }
 
+  /** The Tinmind page (The Tinmind/Notes Dashboard): like the Dashboard, it never shows properties or a strip. */
+  isTinDashboard(file) {
+    return file instanceof TFile && file.path === NOTES_DASHBOARD + ".md";
+  }
+
   /**
    * Tag panes showing the Dashboard, index, or log so CSS can hide their properties (and the Dashboard's title),
    * tag the body when the Dashboard is the active note, and fold the log's entries the first time it opens.
@@ -3099,16 +3592,19 @@ module.exports = class Nicrosil extends Plugin {
       const isDash = this.isDashboard(view.file);
       const isLog = isLogPath(path);
       view.containerEl.classList.toggle("cm-dashboard-leaf", isDash);
+      const isTin = this.isTinDashboard(view.file);
+      view.containerEl.classList.toggle("cm-tin-leaf", isTin); // the Tinmind page: its own colors, no properties, and its file name and path are replaced by the hero (2.16.0, 2.17.0)
       if (leaf.tabHeaderEl) leaf.tabHeaderEl.classList.toggle("cm-dashboard-tab", isDash); // the Dashboard's tab shows the logo, not the file name
       view.containerEl.classList.toggle("cm-log-leaf", isLog);
+      view.containerEl.classList.toggle("cm-agents-leaf", path === "_AGENTS.md"); // its title reads AGENTS in the Coppermind Gradient Style (2.18.2)
       const logM = /^_logs\/_log (\d{2}-\d{2})\.md$/.exec(path); // a log's title reads "Log 11-26" (the theme draws it from --cm-log-title)
       if (logM) view.containerEl.style.setProperty("--cm-log-title", `"Log ${logM[1]}"`); else view.containerEl.style.removeProperty("--cm-log-title");
-      view.containerEl.classList.toggle("cm-noprops-leaf", isDash || isLog || path === INDEX_PATH);
+      view.containerEl.classList.toggle("cm-noprops-leaf", isDash || isTin || isLog || path === INDEX_PATH);
       const pageStatus = view.file ? ((this.app.metadataCache.getFileCache(view.file) || {}).frontmatter || {}).status : "";
       view.containerEl.classList.toggle("cm-st-verified", pageStatus === "verified");
       view.containerEl.classList.toggle("cm-st-draft", pageStatus === "draft");
       try { this.fitTitle(view); } catch (e) { /* the title gradient is cosmetic; never let it stop the rest */ }
-      const useStrip = !!view.file && !isDash && !isLog && path !== INDEX_PATH;
+      const useStrip = !!view.file && !isDash && !isTin && !isLog && path !== INDEX_PATH;
       view.containerEl.classList.toggle("cm-strip-leaf", useStrip);
       if (this.stripPaths.get(view) !== path) {
         this.stripPaths.set(view, path);
@@ -3123,6 +3619,7 @@ module.exports = class Nicrosil extends Plugin {
       if (!isLog) this.foldedViews.delete(view);
     });
     document.body.classList.toggle("cm-on-dashboard", this.isDashboard(ws.getActiveFile()));
+    document.body.classList.toggle("cm-on-tin", this.isTinDashboard(ws.getActiveFile()));
   }
 
   /**
@@ -3148,7 +3645,7 @@ module.exports = class Nicrosil extends Plugin {
     const hv = this.lastHover;
     if (!hv || Date.now() - hv.t > 4000) return;
     const file = hv.file;
-    if ([DASHBOARD_PATH, ...LEGACY_DASHBOARD_PATHS, INDEX_PATH].includes(file.path) || isLogPath(file.path) || !this.stripInfo(file)) return;
+    if ([DASHBOARD_PATH, ...LEGACY_DASHBOARD_PATHS, INDEX_PATH].includes(file.path) || this.isTinDashboard(file) || isLogPath(file.path) || !this.stripInfo(file)) return;
     el.classList.add("cm-strip-leaf");
     this.ensureStripsIn(el, file);
     let timer = null;
@@ -3162,7 +3659,7 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   removeStrips(view) {
-    view.containerEl.querySelectorAll(".cm-propstrip, .cm-ratebar").forEach((e) => e.remove());
+    view.containerEl.querySelectorAll(".cm-propstrip, .cm-ratebar, .cm-mytake").forEach((e) => e.remove());
     if (view.__cmStripObs) { view.__cmStripObs.disconnect(); this.stripObservers.delete(view.__cmStripObs); view.__cmStripObs = null; }
   }
 
@@ -3181,7 +3678,7 @@ module.exports = class Nicrosil extends Plugin {
   ensureStripsIn(root, file) {
     if (!file) return;
     // The Dashboard, index and logs never get a strip. A strip step queued by the note a pane showed before can run after the pane switches, so take any strip away here too.
-    if (this.isDashboard(file) || file.path === INDEX_PATH || isLogPath(file.path)) { root.querySelectorAll(".cm-propstrip").forEach((s) => s.remove()); return; }
+    if (this.isDashboard(file) || this.isTinDashboard(file) || file.path === INDEX_PATH || isLogPath(file.path)) { root.querySelectorAll(".cm-propstrip").forEach((s) => s.remove()); return; }
     const info = this.stripInfo(file);
     // When Obsidian re-renders a note (for example on switching between editing and reading),
     // it can re-create the Properties block or move the title, leaving an old strip stranded
@@ -3195,10 +3692,34 @@ module.exports = class Nicrosil extends Plugin {
       const prev = b.previousElementSibling;
       if (!prev || !prev.classList.contains("metadata-container")) b.remove();
     });
+    root.querySelectorAll(".cm-mytake").forEach((b) => {
+      const prev = b.previousElementSibling;
+      if (!prev || !(prev.classList.contains("metadata-container") || prev.classList.contains("cm-ratebar"))) b.remove();
+    });
+    const inPreview = !!(root.classList.contains("hover-popover") || root.closest(".hover-popover"));
+    const responses = inPreview ? [] : this.responsesTo(file);
     // Source cards also get the rating buttons, just under the Properties block (not in hover previews).
     const wantBar = this.isSourceCard(file) && !root.classList.contains("hover-popover") && !root.closest(".hover-popover");
     const metas = root.querySelectorAll(".metadata-container");
+    // A course page (type: class-notes) gets the course's notes tree under its properties, drawn on screen only (3.1.0).
+    const isHub = !inPreview && this.isClassHub(file);
+    root.querySelectorAll(".cm-hub").forEach((h) => {
+      const prev = h.previousElementSibling;
+      if (!isHub || !prev || !prev.classList.contains("metadata-container") || h.__cmFile !== file) h.remove();
+    });
     metas.forEach((meta) => {
+      if (isHub) {
+        let hub = meta.nextElementSibling;
+        if (hub && !hub.classList.contains("cm-hub")) hub = null;
+        if (!hub) {
+          hub = document.createElement("div");
+          hub.className = "cm-hub";
+          meta.parentElement.insertBefore(hub, meta.nextSibling);
+        }
+        hub.__cmFile = file;
+        const hsig = this.hubSig(file);
+        if (hub.dataset.sig !== hsig) { hub.dataset.sig = hsig; this.drawHub(hub, file); }
+      }
       let strip = meta.previousElementSibling;
       if (strip && !strip.classList.contains("cm-propstrip")) strip = null;
       if (!info) { if (strip) strip.remove(); return; }
@@ -3219,6 +3740,7 @@ module.exports = class Nicrosil extends Plugin {
       strip.setAttribute("aria-expanded", String(root.classList.contains("cm-props-open")));
       strip.setAttribute("aria-label", "Show or hide this page's properties");
       let bar = meta.nextElementSibling;
+      if (bar && bar.classList.contains("cm-hub")) bar = bar.nextElementSibling;
       if (bar && !bar.classList.contains("cm-ratebar")) bar = null;
       if (!wantBar) { if (bar) bar.remove(); }
       else {
@@ -3230,6 +3752,20 @@ module.exports = class Nicrosil extends Plugin {
         const r = ratingOf(this.fm(file));
         const bsig = [file.path, file.stat.mtime, r.rel, r.cred].join("|");
         if (bar.dataset.sig !== bsig) { bar.dataset.sig = bsig; this.drawRatingButtons(bar, file); }
+      }
+      // "My take": the perspectives that respond to this page
+      const anchor = wantBar && bar ? bar : meta;
+      let take = anchor.nextElementSibling;
+      if (take && !take.classList.contains("cm-mytake")) take = null;
+      if (!responses.length) { if (take) take.remove(); }
+      else {
+        if (!take) {
+          take = document.createElement("div");
+          take.className = "cm-mytake";
+          anchor.parentElement.insertBefore(take, anchor.nextSibling);
+        }
+        const tsig = [file.path, ...responses.map((f) => `${f.path}|${this.fm(f).status}`)].join(";");
+        if (take.dataset.sig !== tsig) { take.dataset.sig = tsig; this.drawMyTake(take, responses); }
       }
       if (strip.dataset.sig === sig) return;
       strip.dataset.sig = sig;
@@ -3365,9 +3901,385 @@ module.exports = class Nicrosil extends Plugin {
   async openDashboard(newTab) {
     const f = this.dashboardFile();
     if (!f) { new Notice(`Couldn't find ${DASHBOARD_PATH}.`); return; }
+    this.exitTinMode();
     const already = this.app.workspace.getLeavesOfType("markdown").find((l) => l.view.file && l.view.file.path === f.path);
     if (already && !newTab) { this.app.workspace.setActiveLeaf(already, { focus: true }); return; }
     await this.app.workspace.getLeaf(newTab ? "tab" : false).openFile(f, { state: { mode: "preview" } });
+  }
+
+  /* ---------- The Tinmind's sidebar and course pages (3.1.0) ---------- */
+  /*
+   * In Tinmind mode the file list is replaced, under the two buttons, by a tree of the semester's courses, so my class notes can be
+   * made, renamed and deleted without the folders. A course is its notes file (`type: class-notes`, the "hub") and the folder next to
+   * it with the same name minus " Notes" (The Tinmind/Fall 26/SAIL Notes.md and The Tinmind/Fall 26/SAIL/). The tree shows that folder's
+   * notes and folders as they are, and the hub's headings. The same tree and a **New note** button are drawn at the top of each hub
+   * page. All of it comes from folders and from Obsidian's index of headings and properties: Nicrosil never reads what the notes say,
+   * and the page files are not changed by the panel.
+   */
+
+  isClassHub(file) {
+    if (!(file instanceof TFile) || file.extension !== "md" || !file.path.startsWith(NOTES_DIR)) return false;
+    const fm = (this.app.metadataCache.getFileCache(file) || {}).frontmatter;
+    return !!fm && fm.type === "class-notes";
+  }
+
+  /** The folder that holds a course's own notes: the hub's folder plus the hub's name without " Notes". */
+  courseFolderPath(hub) {
+    const dir = hub.parent && hub.parent.path && hub.parent.path !== "/" ? hub.parent.path + "/" : "";
+    return dir + hub.basename.replace(/ Notes$/, "");
+  }
+
+  courseCtx(hub) {
+    const fm = (this.app.metadataCache.getFileCache(hub) || {}).frontmatter || {};
+    return { hub, course: String(fm.course || hub.basename.replace(/ Notes$/, "")), semester: String(fm.semester || "").trim(), folder: this.courseFolderPath(hub) };
+  }
+
+  /** The semesters and courses found in the Tinmind, and which semester is showing (the saved pick, else the current or newest). */
+  tinSemesterState() {
+    const all = [];
+    for (const f of this.app.vault.getMarkdownFiles()) {
+      if (!f.path.startsWith(NOTES_DIR)) continue;
+      const fm = (this.app.metadataCache.getFileCache(f) || {}).frontmatter;
+      if (!fm || fm.type !== "class-notes" || !fm.semester) continue;
+      const order = Number(fm.order);
+      all.push({ file: f, order: Number.isFinite(order) ? order : 999, name: String(fm.course || f.basename), semester: String(fm.semester).trim(), current: fm.current === true });
+    }
+    const semesters = [...new Set(all.map((c) => c.semester))].sort(byOldestSemester);
+    const flagged = [...new Set(all.filter((c) => c.current).map((c) => c.semester))].sort(byOldestSemester);
+    let chosen = this.settings.tinmindSemester;
+    if (!semesters.includes(chosen)) chosen = newestSemester(flagged) || newestSemester(semesters);
+    const courses = all.filter((c) => c.semester === chosen).sort((p, q) => p.order - q.order || p.name.localeCompare(q.name));
+    return { all, semesters, chosen, courses };
+  }
+
+  treeSig(folder) {
+    if (!(folder instanceof TFolder)) return "";
+    return folder.children.map((c) => (c instanceof TFolder ? c.path + "/" + this.treeSig(c) : c.path)).join(",");
+  }
+
+  /** What a hub panel shows, as one string, so it is only redrawn when that changes. */
+  hubSig(file) {
+    const folder = this.app.vault.getAbstractFileByPath(this.courseFolderPath(file));
+    const cache = this.app.metadataCache.getFileCache(file) || {};
+    const heads = (cache.headings || []).map((h) => h.level + h.heading).join("|");
+    const active = this.app.workspace.getActiveFile();
+    return [file.path, (cache.frontmatter || {}).course, this.treeSig(folder), heads, active ? active.path : "", JSON.stringify(this.settings.tinOpen || {})].join("¦");
+  }
+
+  /** Redraws the sidebar tree and every hub panel (after a change in the Tinmind folder, a click, or a switch of mode). */
+  refreshTin() {
+    const st = this.tinSemesterState();
+    const sideSig = [st.chosen, st.semesters.join(","), ...st.courses.map((c) => this.hubSig(c.file))].join("§");
+    document.querySelectorAll(".cm-tin-side").forEach((el) => {
+      if (el.dataset.sig === sideSig) return;
+      el.dataset.sig = sideSig;
+      this.drawTinSide(el);
+    });
+    document.querySelectorAll(".cm-hub").forEach((el) => {
+      if (!el.__cmFile || !el.isConnected) return;
+      const sig = this.hubSig(el.__cmFile);
+      if (el.dataset.sig === sig) return;
+      el.dataset.sig = sig;
+      this.drawHub(el, el.__cmFile);
+    });
+  }
+
+  /** Makes sure a file list has the tree box under the two buttons. */
+  ensureTinSide(holder) {
+    if (holder.querySelector(":scope > .cm-tin-side")) return;
+    const after = holder.querySelector(":scope > .cm-tin-btn");
+    if (!after) return;
+    const side = createDiv({ cls: "cm-tin-side" });
+    after.after(side);
+    this.drawTinSide(side);
+  }
+
+  drawTinSide(el) {
+    el.empty();
+    const st = this.tinSemesterState();
+    if (st.semesters.length) {
+      const bar = el.createDiv({ cls: "cm-sem-bar" });
+      bar.createSpan({ cls: "cm-sem-label", text: "Semester" });
+      const select = bar.createEl("select", { cls: "dropdown cm-sem-select" });
+      st.semesters.forEach((sem) => { const o = select.createEl("option", { text: sem }); o.value = sem; o.selected = sem === st.chosen; });
+      select.addEventListener("change", async () => {
+        this.settings.tinmindSemester = select.value;
+        await this.persist();
+        this.dashboards.forEach((r) => r());
+        this.refreshTin();
+      });
+    }
+    const list = el.createDiv({ cls: "cm-tin-list" });
+    for (const c of st.courses) this.drawTinCourse(list, c);
+    if (!st.courses.length) list.createDiv({ cls: "cm-sub", text: "No courses yet." });
+    const foot = el.createDiv({ cls: "cm-tin-foot" });
+    const all = this.tinRow(foot, { depth: 0, icon: "library", label: "All Class Notes" });
+    all.addEventListener("click", (e) => this.app.workspace.openLinkText(ALL_NOTES_PAGE, "", e.ctrlKey || e.metaKey));
+    const add = this.tinRow(foot, { depth: 0, icon: "plus", label: "New course" });
+    add.addClass("cm-tin-add");
+    add.addEventListener("click", () => this.tinNewCourse(st));
+  }
+
+  tinToggle(path) {
+    const open = this.settings.tinOpen || (this.settings.tinOpen = {});
+    open[path] = !open[path];
+    this.persist();
+    this.refreshTin();
+  }
+
+  /** Marks a course and the folders down to `folderPath` as open, so a new note is visible in the tree. */
+  tinExpandTo(folderPath, ctx) {
+    const open = this.settings.tinOpen || (this.settings.tinOpen = {});
+    open[ctx.hub.path] = true;
+    let cur = ctx.folder;
+    open[cur] = true;
+    if (folderPath.startsWith(ctx.folder + "/")) {
+      for (const part of folderPath.slice(ctx.folder.length + 1).split("/")) { cur += "/" + part; open[cur] = true; }
+    }
+    this.persist();
+  }
+
+  tinRow(parentEl, o) {
+    const row = parentEl.createDiv({ cls: "cm-tin-row" + (o.active ? " is-active" : "") + (o.cls ? " " + o.cls : "") });
+    row.style.paddingLeft = 6 + o.depth * 14 + "px";
+    const chev = row.createSpan({ cls: "cm-tin-chev" });
+    if (o.chev !== undefined) setIcon(chev, o.chev ? "chevron-down" : "chevron-right");
+    setIcon(row.createSpan({ cls: "cm-tin-icon" }), o.icon);
+    row.createSpan({ cls: "cm-tin-label", text: o.label });
+    return row;
+  }
+
+  /** Adds the "..." button and the right-click menu to a row. */
+  tinRowMenu(row, show) {
+    const more = row.createSpan({ cls: "cm-tin-more clickable-icon" });
+    setIcon(more, "more-horizontal");
+    more.setAttr("aria-label", "More");
+    const fire = (e) => { e.preventDefault(); e.stopPropagation(); show(e); };
+    more.addEventListener("click", fire);
+    row.addEventListener("contextmenu", fire);
+  }
+
+  drawTinCourse(list, c) {
+    const ctx = this.courseCtx(c.file);
+    const open = this.settings.tinOpen || (this.settings.tinOpen = {});
+    const isOpen = !!open[c.file.path];
+    const active = this.app.workspace.getActiveFile();
+    const row = this.tinRow(list, { depth: 0, icon: "book-open", label: c.name, chev: isOpen, cls: "cm-tin-course", active: !!active && active.path === c.file.path });
+    row.querySelector(".cm-tin-chev").addEventListener("click", (e) => { e.stopPropagation(); this.tinToggle(c.file.path); });
+    row.addEventListener("click", (e) => {
+      if (!isOpen) { open[c.file.path] = true; this.persist(); }
+      this.openTinFile(c.file, e.ctrlKey || e.metaKey);
+      this.refreshTin();
+    });
+    const plus = row.createSpan({ cls: "cm-tin-plus clickable-icon" });
+    setIcon(plus, "plus");
+    plus.setAttr("aria-label", "New note");
+    plus.addEventListener("click", (e) => { e.stopPropagation(); this.tinNewNote(ctx.folder, ctx); });
+    this.tinRowMenu(row, (e) => this.tinCourseMenu(e, ctx));
+    if (!isOpen) return;
+    this.drawCourseBody(list, ctx, 1);
+  }
+
+  /** The inside of a course: its folder's notes and folders, then the hub's own headings. Used by the sidebar and by the hub panel. */
+  drawCourseBody(parentEl, ctx, depth) {
+    const folder = this.app.vault.getAbstractFileByPath(ctx.folder);
+    const hasNotes = folder instanceof TFolder && folder.children.some((k) => k instanceof TFolder || (k instanceof TFile && k.extension === "md"));
+    if (hasNotes) this.drawTinFolder(parentEl, folder, depth, ctx);
+    const heads = ((this.app.metadataCache.getFileCache(ctx.hub) || {}).headings || []).filter((h) => h.level <= 3);
+    if (heads.length) {
+      if (hasNotes) parentEl.createDiv({ cls: "cm-tin-label2", text: "On the course page" }).style.paddingLeft = 6 + depth * 14 + "px";
+      const minLevel = Math.min(...heads.map((h) => h.level));
+      for (const h of heads) {
+        const row = this.tinRow(parentEl, { depth: depth + (h.level - minLevel), icon: "hash", label: h.heading, cls: "cm-tin-heading" });
+        row.addEventListener("click", (e) => this.app.workspace.openLinkText(ctx.hub.path.replace(/\.md$/, "") + "#" + h.heading, "", e.ctrlKey || e.metaKey));
+      }
+    }
+    if (!hasNotes && !heads.length) {
+      const empty = parentEl.createDiv({ cls: "cm-tin-empty", text: "No notes yet. " });
+      empty.style.paddingLeft = 6 + depth * 14 + "px";
+      const a = empty.createEl("a", { text: "New note" });
+      a.addEventListener("click", () => this.tinNewNote(ctx.folder, ctx));
+    }
+  }
+
+  drawTinFolder(parentEl, folder, depth, ctx) {
+    const kids = [...folder.children].filter((k) => k instanceof TFolder || (k instanceof TFile && k.extension === "md"));
+    kids.sort((a, b) => ((a instanceof TFolder) === (b instanceof TFolder) ? naturalCompare(a.name, b.name) : a instanceof TFolder ? -1 : 1));
+    const active = this.app.workspace.getActiveFile();
+    const open = this.settings.tinOpen || (this.settings.tinOpen = {});
+    for (const k of kids) {
+      if (k instanceof TFolder) {
+        const isOpen = !!open[k.path];
+        const row = this.tinRow(parentEl, { depth, icon: isOpen ? "folder-open" : "folder", label: k.name, chev: isOpen });
+        row.addEventListener("click", () => this.tinToggle(k.path));
+        this.tinRowMenu(row, (e) => this.tinItemMenu(e, k, ctx));
+        if (isOpen) this.drawTinFolder(parentEl, k, depth + 1, ctx);
+      } else {
+        const row = this.tinRow(parentEl, { depth, icon: "file-text", label: k.basename, active: !!active && active.path === k.path });
+        row.addEventListener("click", (e) => this.openTinFile(k, e.ctrlKey || e.metaKey));
+        row.addEventListener("auxclick", (e) => { if (e.button === 1) { e.preventDefault(); this.openTinFile(k, true); } });
+        this.tinRowMenu(row, (e) => this.tinItemMenu(e, k, ctx));
+      }
+    }
+  }
+
+  async openTinFile(file, newTab) {
+    await this.app.workspace.getLeaf(newTab ? "tab" : false).openFile(file);
+  }
+
+  tinCourseMenu(e, ctx) {
+    const menu = new Menu();
+    menu.addItem((i) => i.setTitle("New note").setIcon("file-plus").onClick(() => this.tinNewNote(ctx.folder, ctx)));
+    menu.addItem((i) => i.setTitle("New folder").setIcon("folder-plus").onClick(() => this.tinNewFolder(ctx.folder, ctx)));
+    menu.addSeparator();
+    menu.addItem((i) => i.setTitle("Open the course page").setIcon("book-open").onClick(() => this.openTinFile(ctx.hub, false)));
+    menu.showAtMouseEvent(e);
+  }
+
+  tinItemMenu(e, target, ctx) {
+    const menu = new Menu();
+    if (target instanceof TFolder) {
+      menu.addItem((i) => i.setTitle("New note here").setIcon("file-plus").onClick(() => this.tinNewNote(target.path, ctx)));
+      menu.addItem((i) => i.setTitle("New folder here").setIcon("folder-plus").onClick(() => this.tinNewFolder(target.path, ctx)));
+      menu.addSeparator();
+    } else {
+      menu.addItem((i) => i.setTitle("Open in a new tab").setIcon("external-link").onClick(() => this.openTinFile(target, true)));
+      menu.addSeparator();
+    }
+    menu.addItem((i) => i.setTitle("Rename").setIcon("pencil").onClick(() => this.tinRename(target)));
+    menu.addItem((i) => i.setTitle("Delete").setIcon("trash-2").setWarning(true).onClick(() => this.tinDelete(target)));
+    menu.showAtMouseEvent(e);
+  }
+
+  tinPrompt(opts) { return new Promise((resolve) => new TinPromptModal(this.app, opts, resolve).open()); }
+  tinConfirm(opts) { return new Promise((resolve) => new TinConfirmModal(this.app, opts, resolve).open()); }
+
+  async tinEnsureFolder(path) {
+    let cur = "";
+    for (const part of path.split("/")) {
+      cur = cur ? cur + "/" + part : part;
+      if (!this.app.vault.getAbstractFileByPath(cur)) await this.app.vault.createFolder(cur);
+    }
+  }
+
+  tinUniquePath(dir, name, ext) {
+    let p = `${dir}/${name}${ext}`, n = 2;
+    while (this.app.vault.getAbstractFileByPath(p)) p = `${dir}/${name} ${n++}${ext}`;
+    return p;
+  }
+
+  /** Asks for a name and makes a note in `folderPath` (made if it isn't there yet), with the course and semester as properties and a link back to the course page. */
+  async tinNewNote(folderPath, ctx) {
+    const name = cleanName(await this.tinPrompt({ title: "New note", label: `In ${ctx.course}`, ok: "Create" }));
+    if (!name) return;
+    try {
+      await this.tinEnsureFolder(folderPath);
+      const path = this.tinUniquePath(folderPath, name, ".md");
+      const body = `---\ntype: course-note\ncourse: ${JSON.stringify(ctx.course)}\nsemester: ${JSON.stringify(ctx.semester)}\n---\n← [[${ctx.hub.path.replace(/\.md$/, "")}]]\n\n`;
+      const file = await this.app.vault.create(path, body);
+      this.tinExpandTo(folderPath, ctx);
+      await this.app.workspace.getLeaf(false).openFile(file, { state: { mode: "source" } });
+    } catch (e) {
+      console.error("Nicrosil: couldn't make the note", e);
+      new Notice("Couldn't make that note. See the console for why.");
+    }
+    this.refreshTin();
+  }
+
+  async tinNewFolder(parentPath, ctx) {
+    const name = cleanName(await this.tinPrompt({ title: "New folder", label: `In ${ctx.course}`, ok: "Create" }));
+    if (!name) return;
+    try {
+      await this.tinEnsureFolder(parentPath);
+      const path = this.tinUniquePath(parentPath, name, "");
+      await this.app.vault.createFolder(path);
+      this.tinExpandTo(parentPath, ctx);
+      this.settings.tinOpen[path] = true;
+      this.persist();
+    } catch (e) {
+      console.error("Nicrosil: couldn't make the folder", e);
+      new Notice("Couldn't make that folder. See the console for why.");
+    }
+    this.refreshTin();
+  }
+
+  async tinRename(target) {
+    const isFolder = target instanceof TFolder;
+    const current = isFolder ? target.name : target.basename;
+    const name = cleanName(await this.tinPrompt({ title: isFolder ? "Rename folder" : "Rename note", value: current, ok: "Rename" }));
+    if (!name || name === current) return;
+    const dir = target.parent && target.parent.path && target.parent.path !== "/" ? target.parent.path + "/" : "";
+    const newPath = dir + name + (isFolder ? "" : "." + target.extension);
+    if (this.app.vault.getAbstractFileByPath(newPath)) { new Notice(`"${name}" already exists there.`); return; }
+    const oldPath = target.path;
+    try {
+      await this.app.fileManager.renameFile(target, newPath); // Obsidian updates links to it
+      const open = this.settings.tinOpen || {};
+      for (const k of Object.keys(open)) {
+        if (k === oldPath || k.startsWith(oldPath + "/")) { open[newPath + k.slice(oldPath.length)] = open[k]; delete open[k]; }
+      }
+      this.persist();
+    } catch (e) {
+      console.error("Nicrosil: couldn't rename", e);
+      new Notice("Couldn't rename that. See the console for why.");
+    }
+    this.refreshTin();
+  }
+
+  async tinDelete(target) {
+    const isFolder = target instanceof TFolder;
+    let count = 0;
+    const walk = (f) => f.children.forEach((c) => (c instanceof TFolder ? walk(c) : count++));
+    if (isFolder) walk(target);
+    const message = isFolder
+      ? `Delete the folder "${target.name}" and the ${count} file${count === 1 ? "" : "s"} in it? They go to the trash.`
+      : `Delete "${target.basename}"? It goes to the trash.`;
+    if (!(await this.tinConfirm({ title: isFolder ? "Delete folder" : "Delete note", message, ok: "Delete" }))) return;
+    try {
+      await this.app.fileManager.trashFile(target);
+    } catch (e) {
+      console.error("Nicrosil: couldn't delete", e);
+      new Notice("Couldn't delete that. See the console for why.");
+    }
+    this.refreshTin();
+  }
+
+  /** Makes a course page (and, on its first note, its folder) for the semester showing. */
+  async tinNewCourse(st) {
+    if (!st.chosen) { new Notice("There is no semester yet. A course page needs a semester property to start one."); return; }
+    const name = cleanName(await this.tinPrompt({ title: "New course", label: `In ${st.chosen}`, ok: "Create" }));
+    if (!name) return;
+    try {
+      const dir = st.courses.length ? st.courses[0].file.parent.path : NOTES_DIR + st.chosen;
+      await this.tinEnsureFolder(dir);
+      const path = this.tinUniquePath(dir, name + " Notes", ".md").replace(/ Notes( \d+)?\.md$/, (m, n) => (n || "") + " Notes.md");
+      const order = st.courses.reduce((m, c) => (c.order < 999 ? Math.max(m, c.order) : m), 0) + 1;
+      const current = st.courses.some((c) => c.current);
+      const body = `---\ntype: class-notes\ncourse: ${JSON.stringify(name)}\nsemester: ${JSON.stringify(st.chosen)}\ncurrent: ${current}\norder: ${order}\n---\n← [[${NOTES_DASHBOARD}]]\n`;
+      const file = await this.app.vault.create(path, body);
+      this.settings.tinOpen = this.settings.tinOpen || {};
+      this.settings.tinOpen[file.path] = true;
+      this.persist();
+    } catch (e) {
+      console.error("Nicrosil: couldn't make the course", e);
+      new Notice("Couldn't make that course. See the console for why.");
+    }
+    this.refreshTin();
+  }
+
+  /** The panel at the top of a course page: New note and New folder buttons, the course's notes, and the page's headings. Drawn on screen; the page file is not changed. */
+  drawHub(panel, file) {
+    panel.empty();
+    const ctx = this.courseCtx(file);
+    const head = panel.createDiv({ cls: "cm-hub-head" });
+    head.createSpan({ cls: "cm-hub-title", text: "Notes in this course" });
+    const btns = head.createDiv({ cls: "cm-hub-btns" });
+    const nb = btns.createEl("button", { text: "New note", cls: "mod-cta" });
+    nb.addEventListener("click", () => this.tinNewNote(ctx.folder, ctx));
+    const fb = btns.createEl("button", { text: "New folder" });
+    fb.addEventListener("click", () => this.tinNewFolder(ctx.folder, ctx));
+    const body = panel.createDiv({ cls: "cm-hub-body" });
+    this.drawCourseBody(body, ctx, 0);
   }
 
   /** One-time: rename Home.md to Dashboard.md (Obsidian updates links) and repoint the startup-page plugin. */
@@ -3435,6 +4347,7 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   async activateRelations() {
+    if (this.settings.tinmindMode) { new Notice("The Tinmind has no relations panel. Click The Coppermind to go back."); return; }
     let leaf = this.app.workspace.getLeavesOfType(REL_VIEW_TYPE)[0];
     if (!leaf) {
       leaf = this.app.workspace.getRightLeaf(false);
@@ -3484,6 +4397,64 @@ module.exports = class Nicrosil extends Plugin {
     if (fm.status === "verified") { new Notice(`“${file.basename}” is already verified.`); return null; }
     if (fm.status !== "draft") { new Notice(`“${file.basename}” has no status: draft property, so I left it alone.`); return null; }
     return fm;
+  }
+
+  /** A page's text, ready for mention matching, read again only when the file has changed. */
+  async mentionText(file) {
+    const c = this.mentionCache.get(file.path);
+    if (c && c.mtime === file.stat.mtime) return c.text;
+    const text = stripForMentions(await this.app.vault.cachedRead(file));
+    this.mentionCache.set(file.path, { mtime: file.stat.mtime, text });
+    return text;
+  }
+
+  /**
+   * Unlinked mentions for a page in Wiki/, Perspectives/ or Sources/Source Cards/ (anything else returns null):
+   * `inbound` = other pages that write this page's name without linking it; `outbound` = pages whose names this page writes without linking them.
+   * Each is [{ file, count }], most mentions first. Nothing is written.
+   */
+  async unlinkedMentions(file) {
+    const inScope = (f) => MENTION_SCOPE.some((re) => re.test(f.path));
+    if (!inScope(file)) return null;
+    const catalog = this.app.vault.getMarkdownFiles().filter(inScope).map((f) => ({ f, names: mentionNames(f, this.fm(f)) }));
+    const me = catalog.find((c) => c.f.path === file.path);
+    if (!me) return null;
+    const links = this.app.metadataCache.resolvedLinks || {};
+
+    // other pages that name this one
+    const mine = me.names.map((n) => n.toLowerCase());
+    const longer = [];
+    for (const c of catalog) {
+      if (c.f.path === file.path) continue;
+      for (const n of c.names) if (mine.some((m) => n.toLowerCase().includes(m) && n.length > m.length)) longer.push(n);
+    }
+    const longRes = [...new Set(longer)].sort((a, b) => b.length - a.length).map(mentionRegex);
+    const myRes = [...me.names].sort((a, b) => b.length - a.length).map(mentionRegex);
+    const inbound = [];
+    for (const c of catalog) {
+      if (c.f.path === file.path || (links[c.f.path] || {})[file.path]) continue;
+      const t = await this.mentionText(c.f);
+      const masked = countMentions(t, longRes).text;
+      const { n } = countMentions(masked, myRes);
+      if (n) inbound.push({ file: c.f, count: n });
+    }
+
+    // pages this one names
+    const linked = links[file.path] || {};
+    const cands = [];
+    for (const c of catalog) {
+      if (c.f.path === file.path || linked[c.f.path]) continue;
+      for (const n of c.names) cands.push({ c, n });
+    }
+    cands.sort((a, b) => b.n.length - a.n.length);
+    let text = await this.mentionText(file);
+    const tally = new Map();
+    for (const { c, n } of cands) {
+      const r = countMentions(text, [mentionRegex(n)]);
+      if (r.n) { text = r.text; tally.set(c.f.path, { file: c.f, count: (tally.get(c.f.path) || { count: 0 }).count + r.n }); }
+    }
+    const byMost = (a, b) => b.count - a.count || a.file.basename.localeCompare(b.file.basename);
+    return { inbound: inbound.sort(byMost), outbound: [...tally.values()].sort(byMost) };
   }
 
   isSourceCard(file) {
@@ -3824,6 +4795,66 @@ module.exports = class Nicrosil extends Plugin {
       .sort();
   }
 
+  indexable(f) {
+    return f instanceof TFile && f.extension === "md" && INDEX_SCOPE.some((re) => re.test(f.path));
+  }
+
+  /** Runs soon after the last change, so a burst of new pages makes one update. */
+  scheduleIndexSync(delay = 3000) {
+    if (this.settings.autoIndex === false) return;
+    clearTimeout(this.indexTimer);
+    this.indexTimer = setTimeout(() => this.syncIndex({}), delay);
+  }
+
+  /**
+   * Makes _index.md match the pages in Wiki/, Perspectives/ and Sources/Source Cards/ (see syncIndex). A new page's line takes its
+   * summary from the page's summary callout. An automatic run refuses a very large change (more than 20 removals or 100 additions at
+   * once) and says so; "Update the index now" does it anyway. Nothing is written when the index is already right.
+   */
+  async syncIndex({ manual = false } = {}) {
+    if (this.indexBusy) { this.indexAgain = true; return; }
+    this.indexBusy = true;
+    try {
+      const f = this.app.vault.getAbstractFileByPath(INDEX_PATH);
+      if (!(f instanceof TFile)) { if (manual) new Notice("_index.md not found."); return; }
+      const files = this.app.vault.getMarkdownFiles().filter((x) => this.indexable(x));
+      if (!files.length) { if (manual) new Notice("No pages found to index."); return; }
+      const pages = files.map((x) => ({ name: x.basename, group: groupOf(x.path), file: x }));
+      const renames = this.indexRenames.splice(0);
+      const date = today();
+      const text = await this.app.vault.read(f);
+      const need = indexNeeds(text, pages.map((p) => p.name));
+      const summaries = {};
+      for (const p of pages) if (need.has(p.name)) { try { summaries[p.name] = leadLine(await this.app.vault.cachedRead(p.file)); } catch (e) { /* no summary yet */ } }
+      let r = syncIndex(text, pages, summaries, renames, date);
+      this.indexEmpty = new Set(pages.filter((p) => r.empty.includes(p.name)).map((p) => p.file.path));
+      if (!r.changed) { if (manual) new Notice("The index is already up to date."); return; }
+      if (!manual && (r.removed.length > 20 || r.added.length > 100)) {
+        new Notice(`The index is out of step by a lot (${r.added.length} to add, ${r.removed.length} to remove), so I left it. Run “Update the index now” if that is right.`, 12000);
+        return;
+      }
+      await this.app.vault.process(f, (cur) => {
+        const again = syncIndex(cur, pages, summaries, renames, date);
+        r = again.changed ? again : r;
+        return again.changed ? again.text : cur;
+      });
+      const bits = [];
+      const list = (a) => a.slice(0, 3).join(", ") + (a.length > 3 ? ` and ${a.length - 3} more` : "");
+      if (r.added.length) bits.push(`added ${list(r.added)}`);
+      if (r.removed.length) bits.push(`removed ${list(r.removed)}`);
+      if (r.moved.length) bits.push(`moved ${list(r.moved)}`);
+      if (r.renamed.length) bits.push(`renamed ${list(r.renamed)}`);
+      if (r.filled.length) bits.push(`filled in ${r.filled.length} summar${r.filled.length === 1 ? "y" : "ies"}`);
+      new Notice("Index updated: " + (bits.join("; ") || "tidied") + ".", 5000);
+    } catch (e) {
+      console.error("Nicrosil: index update failed", e);
+      new Notice(`Couldn't update the index: ${e.message}`, 8000);
+    } finally {
+      this.indexBusy = false;
+      if (this.indexAgain) { this.indexAgain = false; this.scheduleIndexSync(); }
+    }
+  }
+
   async updateIndex(name, mode, date) {
     const f = this.app.vault.getAbstractFileByPath(INDEX_PATH);
     if (!(f instanceof TFile)) { new Notice("_index.md not found; update it by hand."); return false; }
@@ -3860,7 +4891,7 @@ module.exports = class Nicrosil extends Plugin {
 };
 
 module.exports.__test = {
-  parseProposedRating, ratingOf, parseFlags, removeLines, sortQueue, nextAfter, groupOf, editIndex,
+  parseProposedRating, ratingOf, syncIndex, indexNeeds, leadLine, parseFlags, removeLines, sortQueue, nextAfter, groupOf, editIndex,
   verifyLogEntry, rejectLogEntry, addToLog, daysBetween, today, parseLog, describeEntry, renameLogEntry, parseIndex, renderIndex,
   logPathFor, logOrder, logFileHeader, isLogPath, setFrontmatterProps, schemaInfo, checkVersion, addChangelogEntry, findChangelog,
 };

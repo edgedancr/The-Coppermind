@@ -34,7 +34,7 @@ The report's table has one row for each of these, in this order, every time:
 - pages missing from `_index.md`, or index entries for pages that no longer exist
 - `Ingestion/Triage.md` out of date: a batch still marked waiting whose sources already have source cards, a batch marked partly ingested (`[~]`) whose sources don't, or a batch that is fully ingested but still listed
 
-`Ingestion/Raw/` is outside every check: the script leaves it out, and the judgment checks don't open it ([[SCHEMA - Ingest#Raw sources]]).
+`Ingestion/Raw/` is outside every check: the script leaves it out, and the judgment checks don't open it ([[SCHEMA - Ingest#Raw sources]]). `The Tinmind/`, my own class notes, is outside every check in the same way.
 
 If this list changes, the agent updates the Health Check Report template and the script to match, so the table's rows stay the same in every report.
 

@@ -1,8 +1,8 @@
 ---
 type: class-notes
-course: Chinese I
+course: SAIL
 semester: Fall 26
 current: true
-order: 5
+order: 4
 ---
-← [[Notes Dashboard]]
+← [[The Tinmind/Notes Dashboard]]

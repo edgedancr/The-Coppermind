@@ -1,5 +1,5 @@
 // Injected on demand by background.js when the toolbar icon is clicked.
-// Defines window.CMSave(), which background.js then calls and awaits.
+// Defines window.CMSave(), which background.js then calls and awaits. It returns the Markdown; background.js saves it.
 (function () {
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -50,17 +50,6 @@
     return false;
   }
 
-  function download(name, text) {
-    const url = URL.createObjectURL(new Blob([text], { type: "text/markdown;charset=utf-8" }));
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = name;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 5000);
-  }
-
   window.CMSave = async function () {
     try {
       if (!isWatchPage()) return { ok: false, message: "Open a YouTube video first" };
@@ -70,8 +59,7 @@
       if (!items.some((i) => i.kind === "line")) return { ok: false, message: "Transcript was empty" };
       const meta = getMeta();
       const name = CM.fileName(meta.channel, meta.title);
-      download(name, CM.buildMarkdown(meta, items));
-      return { ok: true, message: "Saved to Downloads: " + name };
+      return { ok: true, fileName: name, markdown: CM.buildMarkdown(meta, items) }; // background.js saves it into Ingestion/Raw
     } catch (e) {
       return { ok: false, message: (e && e.message) || "Something went wrong" };
     }

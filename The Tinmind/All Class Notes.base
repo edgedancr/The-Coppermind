@@ -1,7 +1,7 @@
 filters:
   and:
     - type == "class-notes"
-    - file.inFolder("Notes")
+    - file.inFolder("The Tinmind")
 views:
   - type: table
     name: All class notes

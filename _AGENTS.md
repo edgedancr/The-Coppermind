@@ -35,9 +35,11 @@ More than one row can apply. Don't read anything in `_changelogs/` (the rules' c
 | `Wiki/` | Create and edit drafts | Mark a page verified without Harrison's explicit instruction |
 | `Perspectives/` | Read, and quote as *Harrison's* view in answers | Write or edit anything |
 | `SCHEMAS/` and `_AGENTS.md` | Read, and suggest changes in chat | Edit, unless he asks for a specific change |
-| `_index.md`, `_logs/` | Maintain | Delete or rewrite past log entries |
+| `_logs/` | Maintain | Delete or rewrite past log entries |
+| `_index.md` | Read | Edit (Nicrosil keeps it up to date) |
 | `Ingestion/Triage.md` | Maintain and keep current | Reorder, drop, or skip batches, unless he asks |
 | `Ingestion/Raw/` (sources not yet ingested) | Read one file, only when he names it and asks for it to be ingested | Open, list, search, quote, or mention anything else in it; edit, rename, move, or delete anything in it |
+| `The Tinmind/` (his own class notes) | Read one file, only when he names it and asks; build the dashboard page and the empty course files when he asks | Open, list, search, quote, count, or mention anything else in it, in any task; edit, rename, move, or delete anything in it unless he asks |
 | `Health Checks/` | Create a report for each health check; record his decisions in it | Change a saved report's findings, or delete a report |
 | `Tools/` | Read; build or revise a tool when he asks | Edit, rename, or delete otherwise |
 | `_changelogs/` | Add a line for each change | Rewrite or delete past lines |
@@ -54,7 +56,7 @@ The agent never deletes anything except a draft it created that Harrison rejecte
 **No unsourced claims.** Every factual claim is cited. Background no source in the vault provides goes in a `> [!warning] Unsourced background — verify or remove` callout.
 
 **Bookkeeping at the end of every operation.**
-- **Index:** when an operation adds, removes, or renames a page in `Wiki/`, `Perspectives/`, or `Sources/Source Cards/`, update `_index.md`: one line per page, `- [[Page Name]] — one-line summary`, alphabetical under its type (in Concepts and Glossary, under the page's first-letter heading, `### A`, or `### 0–9` for a name that starts with a digit; add a heading for a new letter and remove one that empties), with the type's count, the total, and the **Jump to** line's links at the top kept right (a link reads `[[#Concepts (94)|Concepts]]`, so it changes when the count does). A change of status doesn't change the index.
+- **Index:** don't edit `_index.md`. Nicrosil adds, removes, renames and files every page in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/` by itself, using the one-line summary from the page's `> [!summary]` callout. So **give every page a good summary callout**: it is what the index shows.
 - **Log:** add one entry at the top of the current month's log file, `_logs/_log MM-YY.md` (for example `_logs/_log 11-26.md`), under the header's closing `---` line and above the newest entry (each file is newest first), for every ingest, query, health check, verification, schema change, and tool change. Past entries are never rewritten; corrections go in a new entry. Format:
 
   ```
@@ -91,7 +93,7 @@ These rules cover how you explain things and talk with him in chat, in every tas
 ## Saving tokens
 
 - **Never read a log file whole.** They are long. To add an entry, read only the first 15 or so lines of the current month's file and insert the entry under the header's closing `---` line, above the newest entry (don't append to the end). If there is no file for the current month yet, create it by copying the header of the latest one (Nicrosil normally does this when Obsidian opens). To look something up, search the `### [date] operation | Subject` headings across `_logs/`.
-- **Find existing pages by searching**, not by reading `_index.md`: search file names and `aliases:` lines in `Wiki/` and `Sources/Source Cards/`. Read and edit only the section of `_index.md` you are changing. Without a shell or search tool, list the folders, or read the index.
+- **Find existing pages by searching**, not by reading `_index.md`: search file names and `aliases:` lines in `Wiki/` and `Sources/Source Cards/`. Without a shell or search tool, list the folders, or read the index.
 - **In `Ingestion/Triage.md`, read only the batch you are working on.**
 - **Read the `Nicrosil` guide or the plugin's code only when working on Nicrosil**, and a page's template only when drafting that type of page.
 - **For a health check, run `Tools/health-check/coppermind_check.py` first**; it does the mechanical checks so you don't have to read every page for them.

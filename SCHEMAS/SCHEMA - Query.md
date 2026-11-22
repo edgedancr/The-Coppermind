@@ -18,7 +18,7 @@ How I ask the wiki a question, and how an answer gets filed back.
    - Quote my Perspectives only as my view.
    - If the wiki can't answer, say what's missing instead of filling the gap. Outside knowledge is labeled as outside knowledge.
 3. **Verify (me).** I check the answer against the cited pages and decide whether to file it back.
-4. **File back (optional).** If I say so, the agent saves the answer as a draft ([[#Filing an answer back]]). It then goes through normal verification, and the index gets its line.
+4. **File back (optional).** If I say so, the agent saves the answer as a draft ([[#Filing an answer back]]). It then goes through normal verification, and Nicrosil gives it an index line.
 5. **Log** the question, its type and depth, the pages used, and whether it was filed back (operation: `query`).
 
 ## Depth

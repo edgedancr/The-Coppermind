@@ -15,7 +15,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 2. **Plan (agent).** Before drafting, the agent proposes a short plan: the pages it will create or update, and the source card if one is needed. I approve or adjust the plan. This keeps drafts focused and saves effort. If MODE is "plan first" (the default), the agent does steps 1–3 of [[#Dissect and draft]], gives me sections A–C of [[#The report]] as the plan, and stops until I approve it. If MODE is "draft directly," it skips this step.
 3. **Calculate (agent).** The agent works through [[#Dissect and draft]], drafting the pages with `status: draft`, then gives me [[#The report]].
 4. **Verify (me).** For each page, I approve it, ask for revisions (back to step 3), or reject it. I check the links the same way.
-5. **Commit.** The agent updates `_index.md`, deletes the batch from `Ingestion/Triage.md` if it came from there and is now fully ingested ([[#Triage]]), and adds the log entry (operation: `ingest`). I commit.
+5. **Commit.** The agent deletes the batch from `Ingestion/Triage.md` if it came from there and is now fully ingested ([[#Triage]]), and adds the log entry (operation: `ingest`). I commit.
 
 ## Dissect and draft
 

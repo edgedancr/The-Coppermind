@@ -5,7 +5,7 @@ owner: Harrison Nickles
 updated: 2026-11-22
 verified_on: 2026-11-22
 ---
-How the index, the log, and git work. The everyday parts (the index line and the log entry format) are in `_AGENTS.md`; this file has the rest.
+How the index, the log, and git work. The everyday parts (the index rule and the log entry format) are in `_AGENTS.md`; this file has the rest.
 
 ## The index
 
@@ -13,11 +13,11 @@ How the index, the log, and git work. The everyday parts (the index line and the
 - Under each type, pages are listed alphabetically in one list, with no split by status. Each entry is one line: `- [[Page Name]] — one-line summary`. The index does not show whether a page is draft or verified; the review queue and the page's own `status` do.
 - **Concepts and Glossary, the two long types, are split by first letter** under `### A`, `### B` ... headings (`### 0–9` for names that start with a digit). Pages stay alphabetical, and there is a heading only for a letter that has pages: add one when a page brings a new letter, remove one that empties. Other types stay one plain list.
 - **A Jump to line** under the total links to each type's heading, as `**Jump to:** [[#Concepts (94)|Concepts]] ...`. A link has to match its heading's count, so update it whenever a count changes. A stale one shows in a health check as a broken heading link.
-- **Looks:** `_index.md` has `cssclasses: coppermind-index`, which the `coppermind.css` snippet styles (columns, bold names, quieter summaries, letter tabs, jump chips). It changes only how the page looks; the line format above stays exactly as is. Nicrosil keeps the letter headings and the Jump to line right when I reject a page.
-- The agent updates the index **at the end of every operation** that adds, removes, or renames a page. A change of status does not change the index.
+- **Looks:** `_index.md` has `cssclasses: coppermind-index`, which the `coppermind.css` snippet styles (columns, bold names, quieter summaries, letter tabs, jump chips). It changes only how the page looks; the line format above stays exactly as is. Nicrosil keeps the letter headings and the Jump to line right.
+- **Nicrosil keeps the index up to date; the agent doesn't edit it.** It adds a page when one is created, removes the entry when one is deleted or rejected, keeps the entry when a page is renamed, moves it when the page changes folder, and fills in an empty summary, each time fixing the counts, the total and the Jump to line. It checks everything when Obsidian opens and a few seconds after each change, and the **Update the index now** command runs it on request. The setting **Keep the index up to date** turns the automatic part off. If one automatic run would remove more than 20 entries or add more than 100, it stops and shows a notice instead, so a bad sync can't wreck the index; the command lets me go ahead. A change of status doesn't change the index.
 - Not in the index: the rule files in `SCHEMAS/`, Triage (a plan), `Ingestion/Raw/` (sources not yet ingested), the log and the reports in `Health Checks/` (records), and `Tools/`.
-- **Read only the section you are changing.** To find whether a page exists, search file names and aliases instead.
-- I check the index during each health check.
+- **The summary comes from the page.** The text after the dash is the first sentence or two of the page's `> [!summary]` callout, cut to about 150 characters. To change an entry, change the callout, not the index. I can still edit a line by hand, and Nicrosil leaves a line that has a summary alone.
+- I check the index during each health check, and the check script still compares it to the pages.
 
 ## The log
 

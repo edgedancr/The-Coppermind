@@ -1,6 +1,6 @@
 ---
 type: schema
-version: 8.8
+version: 8.1
 status: verified
 owner: Harrison Nickles
 updated: 2026-11-22
@@ -14,7 +14,7 @@ An agent starts at `_AGENTS.md`, which holds the rules for every task and points
 
 | File | What it covers |
 |---|---|
-| `_AGENTS.md` (vault root) | Read by every agent, every time: scope, drafts only, permissions, voices, no unsourced claims, the index line and log entry formats, and which rule files to read |
+| `_AGENTS.md` (vault root) | Read by every agent, every time: scope, drafts only, permissions, voices, no unsourced claims, the index rule and log entry formats, and which rule files to read |
 | [[SCHEMA - Writing Pages]] | Naming, page properties, typed links, citations, attribution, source reliability, and page style |
 | [[SCHEMA - Review]] | Draft vs. verified, change notes on verified pages, and review size |
 | [[SCHEMA - Ingest]] | The ingest operation, step by step, Triage, and raw sources |
@@ -43,7 +43,7 @@ What is in and out of scope is in `_AGENTS.md`, because every task needs it.
 | Sources      | `Sources/`      | My notes, assignments, readings, and scans in their original form, plus a source card for each         | I collect; the agent drafts source cards |
 | Wiki pages   | `Wiki/`         | Concept, glossary, framework, case study, person, summary, prompt, workflow, guide, and analysis pages | The agent drafts; I verify               |
 | Schema       | `SCHEMAS/` and `_AGENTS.md` | This rulebook                                                                               | I direct                                 |
-| Index        | `_index.md`      | A map of every page                                                                                    | The agent maintains; I check             |
+| Index        | `_index.md`      | A map of every page                                                                                    | Nicrosil maintains; I check              |
 | Log          | `_logs/`              | A dated record of every operation and my decisions                                                | The agent maintains; I check             |
 | Perspectives | `Perspectives/` | My reflections, opinions, and conclusions                                                              | I write                                  |
 
@@ -77,6 +77,7 @@ The Coppermind/
 │   ├── Guides/             How-to pages about the Coppermind itself (its tools, setup, and use)
 │   └── Analyses/           Answers to questions, filed back from queries
 ├── Perspectives/           My views, organized by the Architecture of Worldview
+├── The Tinmind/            My own class notes and their dashboard (agents never look in here unless I ask)
 ├── Health Checks/          One report per health check, plus a table of past reports
 ├── Tools/                  Tools I use and have built (browser extensions, scripts, the health check script)
 ├── _changelogs/            The changelog of the rules and of each tool (Nicrosil's), kept out of the files agents read
@@ -86,7 +87,7 @@ The Coppermind/
 
 ## Files that are not wiki pages
 
-`_index.md`, the log, `Ingestion/Triage.md`, the reports in `Health Checks/`, everything in `Tools/`, and the files in `_changelogs/` are not wiki pages: they have no `status`, are not in `_index.md`, and I don't verify them. Like every file here, they also carry no `# Title` line that repeats the file name, because Obsidian already shows the name at the top. The rule files in `SCHEMAS/` do have a `status`, and I verify them like pages, but they are not listed in the index either.
+`_index.md`, the log, `Ingestion/Triage.md`, the reports in `Health Checks/`, everything in `Tools/`, everything in `The Tinmind/`, and the files in `_changelogs/` are not wiki pages: they have no `status`, are not in `_index.md`, and I don't verify them. Like every file here, they also carry no `# Title` line that repeats the file name, because Obsidian already shows the name at the top. The rule files in `SCHEMAS/` do have a `status`, and I verify them like pages, but they are not listed in the index either.
 
 ### Guides: about the Coppermind itself
 

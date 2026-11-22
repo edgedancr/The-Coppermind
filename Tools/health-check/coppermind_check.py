@@ -30,8 +30,8 @@ PAGE_TYPES = {"concept", "glossary", "framework", "case-study", "person", "summa
 FLAG_KINDS = {"question": "Whose view?", "warning": "Unsourced background",
               "caution": "Accuracy check / sources disagree", "todo": "Gap"}
 SKIP_DIRS = {".git", ".obsidian", ".trash", "node_modules"}
-# Sources I have not ingested yet. Nothing in here is read, listed, or checked.
-SKIP_PATHS = {"Ingestion/Raw"}
+# Sources I have not ingested yet, and my own class notes. Nothing in these is read, listed, or checked.
+SKIP_PATHS = {"Ingestion/Raw", "The Tinmind"}
 RECORD_PREFIXES = ("_logs/", "_log.md", "Health Checks/", "_changelogs/")   # records: links in them are history, not checked
 STALE_DAYS = 14
 SAMPLE_SIZE = 20

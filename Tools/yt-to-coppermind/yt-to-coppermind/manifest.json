@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
   "name": "YouTube to Coppermind",
-  "version": "1.1.0",
-  "description": "Click the toolbar icon on a YouTube video to download its transcript as a Markdown file formatted for the Coppermind.",
-  "permissions": ["activeTab", "scripting"],
+  "version": "1.2.0",
+  "description": "Click the toolbar icon on a YouTube video to save its transcript as a Markdown file, formatted for the Coppermind, into the vault's Ingestion/Raw folder.",
+  "permissions": ["activeTab", "scripting", "downloads"],
   "background": { "service_worker": "background.js" },
   "action": {
-    "default_title": "Save transcript to Downloads (Coppermind format)"
+    "default_title": "Save transcript to the Coppermind (Ingestion/Raw)"
   }
 }
