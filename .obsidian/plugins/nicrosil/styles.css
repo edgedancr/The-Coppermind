@@ -8,6 +8,18 @@ body {
   --cm-amber: #e0a846;
   --cm-rust: #c8604a;
   --cm-plum: #b97f93;
+  /* Coppermind Gradient Style (2.13.6): the one copper-to-teal gradient, its font and its glow, for every gradient title in the vault. Change them here and every title follows, including the index headings in coppermind.css. */
+  --cm-gradient: linear-gradient(100deg, #d99a62 0%, #f6d3a8 21%, #d99a62 32%, #86d2c1 100%);
+  --cm-gradient-font: 'Almendra SC', "Segoe UI", system-ui, sans-serif;
+  --cm-gradient-glow: drop-shadow(0 0 7px rgba(217, 138, 74, 0.4)) drop-shadow(0 0 16px rgba(95, 174, 158, 0.25));
+}
+/* Coppermind Gradient Style: add this class to a title in a new feature to get the whole style. */
+.cm-gradient-style {
+  width: fit-content; max-width: 100%;
+  font-family: var(--cm-gradient-font); font-weight: 600; letter-spacing: 0.02em;
+  background: var(--cm-gradient); background-size: 100% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  filter: var(--cm-gradient-glow);
 }
 
 /* status bar */
@@ -116,7 +128,7 @@ button.cm-danger { background: var(--cm-rust); color: #fff; }
 .cm-home-btn { display: flex; align-items: center; justify-content: center; gap: 10px; box-sizing: border-box; min-width: 0; overflow: hidden; container-type: inline-size; height: 46px; margin: 4px 10px 10px; padding: 0 12px; border: 1px solid transparent; border-radius: 2px; background: linear-gradient(135deg, rgba(184, 115, 51, 0.30), rgba(95, 174, 158, 0.22)) padding-box, linear-gradient(160deg, #2a2420, #1e1915) padding-box, linear-gradient(135deg, rgba(217, 138, 74, 0.9), rgba(95, 174, 158, 0.75)) border-box; cursor: pointer; user-select: none; transition: box-shadow .2s, filter .2s; }
 .cm-home-btn:hover, .cm-home-btn:focus-visible { background: linear-gradient(135deg, rgba(184, 115, 51, 0.44), rgba(95, 174, 158, 0.36)) padding-box, linear-gradient(160deg, #2a2420, #1e1915) padding-box, linear-gradient(135deg, #e89a5a, #86d2c1) border-box; box-shadow: 0 0 12px rgba(184, 115, 51, 0.3), 0 0 14px rgba(95, 174, 158, 0.22); outline: none; }
 .cm-home-logo { flex: none; width: 21px; height: 26px; filter: drop-shadow(0 1px 3px rgba(184, 115, 51, 0.4)); }
-.cm-home-name { font-family: 'Almendra SC', "Segoe UI", system-ui, sans-serif; font-size: 1.5em; font-size: clamp(0.7em, calc((100cqw - 31px) / 8), 1.7em); font-weight: 600; letter-spacing: 0; flex: none; background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 40%, #d99a62 62%, #86d2c1 100%); -webkit-background-clip: text; background-clip: text; color: transparent; white-space: nowrap; }
+.cm-home-name { font-family: var(--cm-gradient-font); font-size: 1.5em; font-size: clamp(0.7em, calc((100cqw - 31px) / 8), 1.7em); font-weight: 600; letter-spacing: 0; flex: none; background: var(--cm-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; white-space: nowrap; }
 body.cm-on-dashboard .cm-home-btn { box-shadow: inset 0 0 10px rgba(184, 115, 51, 0.25), inset 0 0 14px rgba(95, 174, 158, 0.18); }
 @media (prefers-reduced-motion: reduce) { .cm-home-btn { transition: none; } }
 
@@ -147,7 +159,7 @@ body.cm-on-dashboard .workspace-leaf-content[data-type="file-properties"] .view-
 /* hero */
 .cm-hero { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 22px; padding: 18px 4px 8px; }
 .cm-logo-hero { height: 84px; filter: drop-shadow(0 2px 6px rgba(184, 115, 51, 0.35)); }
-.cm-hero-title { font-family: 'Almendra SC', "Segoe UI", system-ui, sans-serif; font-size: 2.5em; line-height: 1.1; letter-spacing: 0.02em; color: var(--h1-color, #e8b27d); }
+.cm-hero-title { font-family: var(--cm-gradient-font); font-size: 2.5em; line-height: 1.1; letter-spacing: 0.02em; color: var(--h1-color, #e8b27d); }
 .cm-hero-tagline { margin-top: 6px; color: var(--text-muted); font-style: italic; }
 .cm-hero-rule { grid-column: 1 / -1; height: 2px; margin-top: 16px; border-radius: 2px; background: linear-gradient(90deg, var(--cm-copper), var(--cm-patina) 60%, transparent); }
 
@@ -472,7 +484,7 @@ body {
 }
 .cm-hero > :not(.cm-hero-bg) { position: relative; z-index: 1; }
 .cm-hero-title {
-  background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 36%, #d99a62 56%, #86d2c1 100%);
+  background: var(--cm-gradient);
   background-size: 230% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
   animation: cm-shimmer 10s ease-in-out infinite alternate;
 }
@@ -613,10 +625,11 @@ body {
 
 /* page titles: a glow for verified pages, a dim ember for drafts */
 .cm-st-verified .inline-title {
-  background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 40%, #d99a62 62%, #86d2c1 100%);
+  font-family: var(--cm-gradient-font); font-weight: 600; letter-spacing: 0.02em;
+  background: var(--cm-gradient);
   background-size: var(--cm-title-w, 14em) 100%; background-repeat: no-repeat; /* --cm-title-w: the title's own text width, set by Nicrosil, so the gradient runs across the words and not the whole line */
   -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 7px rgba(217, 138, 74, 0.4)) drop-shadow(0 0 16px rgba(95, 174, 158, 0.25));
+  filter: var(--cm-gradient-glow);
   animation: none;
 }
 @keyframes cm-title-shimmer { 0%, 55% { background-position: 120% 0; } 100% { background-position: -20% 0; } }
@@ -693,7 +706,7 @@ body {
 /* Review queue header and progress bar (2.0.0) */
 .cm-queue h4 {
   font-size: 1.55em; line-height: 1.15; letter-spacing: 0.02em; margin: 6px 0 12px;
-  background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 36%, #d99a62 56%, #86d2c1 100%);
+  background: var(--cm-gradient);
   background-size: 230% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
   animation: cm-shimmer 10s ease-in-out infinite alternate;
 }
@@ -805,7 +818,7 @@ body.cm-quiet .coppermind-dashboard h2 {
 /* hero: no box, no sparks, no shimmer; smaller and left-aligned */
 body.cm-quiet .cm-hero { background: none; border: none; box-shadow: none; border-radius: 0; padding: 14px 0 4px; margin: 0 0 6px; column-gap: 16px; }
 body.cm-quiet .cm-hero-bg { display: none; }
-body.cm-quiet .cm-hero-title { font-family: 'Almendra SC', "Segoe UI", system-ui, sans-serif; justify-self: start; width: fit-content; background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 40%, #d99a62 62%, #86d2c1 100%); -webkit-background-clip: text; background-clip: text; color: transparent; animation: none; font-size: 2.4em; letter-spacing: 0.03em; filter: drop-shadow(0 0 7px rgba(217, 138, 74, 0.4)) drop-shadow(0 0 16px rgba(95, 174, 158, 0.25)); }
+body.cm-quiet .cm-hero-title { font-family: var(--cm-gradient-font); justify-self: start; width: fit-content; background: var(--cm-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; animation: none; font-size: 2.4em; letter-spacing: 0.03em; filter: var(--cm-gradient-glow); }
 body.cm-quiet .cm-hero-tagline { font-size: 0.95em; }
 body.cm-quiet .cm-logo-hero { animation: none; filter: none; transform: scale(0.8); transform-origin: left center; }
 body.cm-quiet .cm-hero.is-intro { animation: none; }
@@ -1036,10 +1049,11 @@ body.cm-quiet .cm-qbar-fill {
 /* ---- Review queue and relations panel headers: still, glowing gradient like the Dashboard name (2.7.3). No shimmer. ---- */
 .cm-queue h4, .cm-rel-title {
   width: fit-content; max-width: 100%;
-  background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 40%, #d99a62 62%, #86d2c1 100%); background-size: 100% 100%;
+  font-family: var(--cm-gradient-font); font-weight: 600; letter-spacing: 0.02em;
+  background: var(--cm-gradient); background-size: 100% 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
   animation: none !important;
-  filter: drop-shadow(0 0 7px rgba(217, 138, 74, 0.4)) drop-shadow(0 0 16px rgba(95, 174, 158, 0.25));
+  filter: var(--cm-gradient-glow);
 }
 
 /* ---- File list: folders and files whose names start with "_" are hidden unless the eye button in its toolbar is on (2.7.5). The plugin adds cm-hide-underscore to the page on load. ---- */

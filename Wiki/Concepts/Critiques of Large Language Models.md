@@ -7,10 +7,12 @@ aliases:
   - Limits of LLMs
 courses:
   - SAIL
+  - Intro to Intelligence
 sources:
   - "[[SRC - Current AI Models Have 3 Unfixable Problems]]"
   - "[[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End]]"
   - "[[SRC - The Catastrophic Risks of AI and a Safer Path]]"
+  - "[[SRC - AI and Biblical Thinking (Bible Study Fellowship)]]"
 applies_to:
   - "[[Large Language Model]]"
 drafted_by: Claude (claude-opus-5-5)
@@ -35,6 +37,14 @@ verified_on:
 - **No surprise:** if the unexpected happens, they don't adjust.
 - **Imitation, not experience:** they learn from "here's what a person did," which never happens in an agent's normal life.[^6] See [[Continual Learning]].
 
+**Yann LeCun's view, as [[John Lennox]] reports it**[^9]
+- Lennox notes "vast differences of opinion" on whether LLMs will lead to AGI, and finds it interesting that "someone of the stature of Yann LeCun" doesn't believe they will.
+- LeCun has announced "a huge billion-dollar company," which the transcript gives as "Ami, the French for friend," for "artificial mechanical intelligence."
+- His argument, in Lennox's words: "LLMs are never going to bring AGI… What we need is an AI system developed to model the physical world." See [[World Model]].
+
+> [!caution] Accuracy check
+> The company's name and what it stands for come from an auto-captioned transcript of Lennox speaking from memory. Check them against a news source or LeCun's own announcement.
+
 **Counterarguments from Dwarkesh Patel**[^2]
 - LLMs seem to have "very robust world models," the best made in AI to date.
 - Next-token prediction is itself a goal, and models trained toward math goals won gold at the International Math Olympiad.
@@ -56,3 +66,4 @@ verified_on:
 [^6]: [[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End|Sutton interview, "Do humans do imitation learning?"]]
 [^7]: [[TED - Yoshua Bengio, The Catastrophic Risks of AI and a Safer Path (transcript)|Bengio, ch. 11]]
 [^8]: [[Sabine Hossenfelder - Current AI Models Have 3 Unfixable Problems (transcript)|Hossenfelder, intro]]
+[^9]: [[Bible Study Fellowship - AI and Biblical Thinking (transcript)|Lennox interview, ch. 2]]

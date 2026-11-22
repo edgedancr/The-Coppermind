@@ -6,8 +6,10 @@ aliases:
   - CS Lewis
 courses:
   - SAIL
+  - Intro to Intelligence
 sources:
   - "[[SRC - On Living in an Atomic Age]]"
+  - "[[SRC - AI and Biblical Thinking (Bible Study Fellowship)]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
 verified_on:
@@ -23,12 +25,19 @@ From "On Living in an Atomic Age":
 - **We are strangers here:** humans are "spirits, free and rational beings," who come from "another world," which is why we do not feel at home in Nature.[^3]
 - **Never put survival first:** we should live by "the law of love and temperance," not "the law of competition and grab," and the survival of our species is not worth having unless it comes by "honourable and merciful means".[^4] "Nothing is more likely to destroy a species or a nation than a determination to survive at all costs."[^4]
 
+**Cited by [[John Lennox]]**
+- Lennox says he learned from Lewis that "symbolism is always used to stand for something real," and applies it to the symbols in the Book of Revelation.[^5]
+- He says Lewis found the [[Golden Rule]] in "30 or 40 different areas."[^6]
+
 ## Appears In
 - SAIL, Module 5 resources ("On Living in an Atomic Age")
 - [[Summary - On Living in an Atomic Age]]
+- Intro to Intelligence resources, as cited by Lennox: [[Summary - AI and Biblical Thinking]]
 
 ## Footnotes
 [^1]: [[C. S. Lewis - On Living in an Atomic Age (1948).pdf#page=1|Lewis, p. 1]]
 [^2]: [[C. S. Lewis - On Living in an Atomic Age (1948).pdf#page=2|Lewis, p. 2]]
 [^3]: [[C. S. Lewis - On Living in an Atomic Age (1948).pdf#page=4|Lewis, p. 4]]
 [^4]: [[C. S. Lewis - On Living in an Atomic Age (1948).pdf#page=5|Lewis, p. 5]]
+[^5]: [[Bible Study Fellowship - AI and Biblical Thinking (transcript)|Lennox interview, ch. 4]]
+[^6]: [[Bible Study Fellowship - AI and Biblical Thinking (transcript)|Lennox interview, ch. 6]]

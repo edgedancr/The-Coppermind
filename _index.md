@@ -2,21 +2,22 @@
 type: index
 cssclasses:
   - coppermind-index
-updated: 2026-11-20
+updated: 2026-11-21
 ---
 A map of every page in the Coppermind, grouped by type. The AI agent updates this after every operation; I check it during health checks. Within each type, pages are listed alphabetically, each with a one-line summary.
 
-**Total:** 429 pages
+**Total:** 436 pages
 
-**Jump to:** [[#Concepts (94)|Concepts]] [[#Glossary (183)|Glossary]] [[#Frameworks (38)|Frameworks]] [[#Case Studies (17)|Case Studies]] [[#People (9)|People]] [[#Summaries (35)|Summaries]] [[#Prompts (2)|Prompts]] [[#Workflows (2)|Workflows]] [[#Guides (3)|Guides]] [[#Analyses (0)|Analyses]] [[#Perspectives (1)|Perspectives]] [[#Source Cards (45)|Source Cards]]
+**Jump to:** [[#Concepts (96)|Concepts]] [[#Glossary (185)|Glossary]] [[#Frameworks (38)|Frameworks]] [[#Case Studies (17)|Case Studies]] [[#People (10)|People]] [[#Summaries (36)|Summaries]] [[#Prompts (2)|Prompts]] [[#Workflows (2)|Workflows]] [[#Guides (3)|Guides]] [[#Analyses (0)|Analyses]] [[#Perspectives (1)|Perspectives]] [[#Source Cards (46)|Source Cards]]
 
-## Concepts (94)
+## Concepts (96)
 
 ### A
 
 - [[Agentic AI]] — AI with tools, and the added risk
 - [[AI Alignment]] — Systems doing what we intend, even under pressure
 - [[AI Deception]] — Bengio: AI deception, cheating, and self-preservation; plans hidden from chain of thought
+- [[AI Idolatry]] — Lennox: treating AI as a god, which he calls "sheer idolatry"
 - [[AI in Intelligence Production]] — How AI changes collection, threat prediction, and policymaking
 - [[AI in Warfighting]] — How AI compresses the lethal engagement cycle
 - [[AI Succession]] — Sutton's four-part argument that succession to AI is inevitable, and Patel's pushback
@@ -155,12 +156,13 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Topic Sentence]] — Types, faults, and the four patterns that make causation explicit
 - [[Tradecraft vs. Science in Intelligence Analysis]] — Johnston's case that analysis is a scientific process, not a craft
 - [[Transformer]] — The architecture behind LLMs
+- [[Transhumanism]] — Lennox's account of Harari's drive to defeat death and make humans gods, and his reply
 
 ### U
 
 - [[United States Intelligence Community]] — The 18 IC organizations and how they're grouped
 
-## Glossary (183)
+## Glossary (185)
 
 ### A
 
@@ -242,6 +244,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 - [[Gang of Eight]] — The congressional leaders and intelligence committee heads who may be briefed
 - [[Golden Chain]] — The Gulf financiers' network behind the Afghan jihad
+- [[Golden Rule]] — "Do unto others"; Lennox's proposed starting point for AI ethics
 - [[Goldwater-Nichols Act]] — The 1986 law that made the military joint; the Commission's model
 - [[Groupthink]] — Valuing conformity over objective analysis; premature unanimity
 
@@ -381,6 +384,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 ### T
 
 - [[Tearline]] — Reports with shareable information separated from the rest
+- [[Technological Fasting]] — Lennox: setting devices aside for a time
 - [[Technological Singularity]] — AGI outpacing human tracking or control
 - [[Temporal Difference Learning]] — TD learning: a value function that rewards progress toward a long-term goal
 - [[Terrorist Entrepreneur]] — Al-Qaeda's autonomous field commanders, such as KSM
@@ -478,9 +482,10 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Tarnak Farms Capture Plan (1998)]] — The CIA's most detailed pre-9/11 plan to capture Bin Ladin, called off in May 1998
 - [[USS Cole Bombing (2000)]] — The October 2000 attack, and why attribution never became a response
 
-## People (9)
+## People (10)
 
 - [[C. S. Lewis]] — Author of "On Living in an Atomic Age" (1948)
+- [[John Lennox]] — Christian critic of AI idolatry and transhumanism; Bible Study Fellowship interview
 - [[Khalid Sheikh Mohammed]] — Principal architect of the 9/11 attacks
 - [[Martin Heidegger]] — German philosopher; "The Question Concerning Technology" (1954)
 - [[Richard Sutton]] — Founder of reinforcement learning; "The Bitter Lesson"; 2024 Turing Award
@@ -490,11 +495,12 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Usama Bin Ladin]] — Founder and leader of al-Qaeda
 - [[Yoshua Bengio]] — Deep learning pioneer warning of AI agency and deception; Scientist AI
 
-## Summaries (35)
+## Summaries (36)
 
 - [[Summary - A Disneyland Without Children]] — Neutral summary of L Rudolf L's short story
 - [[Summary - About Us (Arena)]] — Neutral summary of Arena's About Us page
 - [[Summary - ACH GenAI Workflow]] — Neutral summary of the SAIL ACH-with-AI prompt sequence
+- [[Summary - AI and Biblical Thinking]] — Neutral summary of the Bible Study Fellowship interview with John Lennox
 - [[Summary - AI, Machine Learning, Deep Learning, and Generative AI Explained]] — Neutral summary of IBM Technology's explainer video
 - [[Summary - Algorithmic Bias and Fairness (Crash Course AI 18)]] — Neutral summary of the Crash Course AI episode on algorithmic bias
 - [[Summary - Analytic Culture in the US Intelligence Community]] — Neutral summary of Johnston's front matter, ch. 1–4, and ch. 8–9
@@ -550,11 +556,12 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 - [[My Worldview]] — The foundational convictions behind my perspectives, by layer of worldview
 
-## Source Cards (45)
+## Source Cards (46)
 
 - [[SRC - A Disneyland Without Children]] — L Rudolf L, LessWrong, 2023; fiction (rating proposed F-6)
 - [[SRC - About Us (Arena)]] — Arena's About Us page, saved 2026-11-17 (rating proposed B-2)
 - [[SRC - ACH GenAI Workflow]] — The SAIL ACH-with-AI course documents, eight files (rating proposed B-2)
+- [[SRC - AI and Biblical Thinking (Bible Study Fellowship)]] — Bible Study Fellowship interview with John Lennox, transcript (rating proposed C-3)
 - [[SRC - AI, Machine Learning, Deep Learning, and Generative AI Explained]] — IBM Technology video transcript (rating proposed B-2)
 - [[SRC - Algorithmic Bias and Fairness (Crash Course AI 18)]] — Crash Course AI episode 18 transcript (rating proposed C-2)
 - [[SRC - Analytic Culture in the US Intelligence Community (Johnston)]] — Johnston's 2005 ethnography of analytic culture (rating proposed B-2)

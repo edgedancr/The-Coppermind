@@ -3034,6 +3034,7 @@ module.exports = class Nicrosil extends Plugin {
     measure();
     requestAnimationFrame(measure);
     setTimeout(measure, 250);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure); // the title's font (Almendra SC) may finish loading after the first measure
     if (!t.dataset.cmFit) { t.dataset.cmFit = "1"; t.addEventListener("input", measure); }
   }
 

@@ -12,14 +12,14 @@ courses:
 sources: []
 related:
   - "[[SCHEMA]]"
-drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5; larger file-list button name and index letter headings and jump bar, the flat relations map, the trimmed guide body, and the changelog moved to its own file, by claude-sonnet-5-5)
+drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5; larger file-list button name and index letter headings and jump bar, the flat relations map, the trimmed guide body, and the changelog moved to its own file, by claude-sonnet-5-5; Coppermind Gradient Style section by claude-sonnet-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-21
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.13.5**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.13.6**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -115,6 +115,9 @@ On every other note, Nicrosil hides the full Properties block and puts a one-lin
 ## Ambience
 Small animations make the vault feel alive. None of them change how anything works. They include glows on page titles by status (a verified title is a copper-to-teal gradient, a draft title pulses like an ember), a soft pulse on flag callouts, a fade when a page opens, sparks on verified dots in the wiki map, a pulse on the newest Dashboard activity row, rows sliding into place in the review queue, and a glow on the status-bar count when it goes up.
 They are all off if the computer is set to reduce motion.
+
+## Coppermind Gradient Style
+The **Coppermind Gradient Style** is the vault's one look for a gradient title: copper-to-teal lettering in Almendra SC with a still glow. It is used for the Dashboard's name and title, a verified page's title, the review queue and relations panel headings, and the index's section headings. It is defined once in the plugin's `styles.css` as `--cm-gradient`, `--cm-gradient-font` and `--cm-gradient-glow`, and the theme snippet reads the same three. To give a title in a new feature the style, add the class `cm-gradient-style` to it. Change a variable and every title follows; the exact colors are in [[Nicrosil Changelog]].
 
 ## Logging a schema change
 Every change to the rules (`AGENTS.md` or a file in `SCHEMAS/`) needs a line in [[Schema Changelog]].[^4] Nicrosil adds it for me:

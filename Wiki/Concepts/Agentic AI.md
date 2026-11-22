@@ -5,11 +5,13 @@ aliases:
   - AI Agents
 courses:
   - SAIL
+  - Intro to Intelligence
 sources:
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
   - "[[SRC - OWASP Top 10 for LLM Applications 2026]]"
   - "[[SRC - Generative vs Agentic AI]]"
   - "[[SRC - The Catastrophic Risks of AI and a Safer Path]]"
+  - "[[SRC - AI and Biblical Thinking (Bible Study Fellowship)]]"
 type_of:
   - "[[Artificial Intelligence]]"
 causes:
@@ -18,7 +20,7 @@ related:
   - "[[Prompt Engineering]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-19
+verified_on: 2026-11-21
 ---
 > [!summary]
 > Agentic AI is AI that has access to external tools.[^1] It is the latest step in SAIL's progression of AI,[^2] and SAIL warned that ==access to external tools increases emergent behavior and risk==.[^1]
@@ -33,6 +35,7 @@ verified_on: 2026-11-19
 - **Bengio's main worry:** [[Yoshua Bengio]] says what worries him most is AI's increasing agency. He calls planning and agency the main thing separating current AI from human-level cognition; AIs are still weak at planning, but in one study the length of tasks they could complete has doubled every seven months over five years.[^10] On that curve, he estimates about five years to human level.[^11]
 - **Commercial pressure:** he argues there is "huge commercial pressure" to build AIs with more and more agency to replace human labor, without the scientific answers or societal guardrails to do it safely.[^12] See [[AI Deception]].
 - **His message to AI companies:** ==slow down on giving AIs agency==, and invest heavily in research on making agents behave safely.[^11] He proposes a non-agentic [[Scientist AI]] as a guardrail on untrusted agents.[^13]
+- **The permission flip:** the BSF host describes a trend in which AI agents act on a person's behalf and collaborate with one another over the internet until things "flip": the agents are "the ones calling the shots and asking us for permission," and maybe, over time, "asking us less frequently."[^14] [[John Lennox]] replies, "I think that is the fear."[^15] See [[AI Alignment]].
 - See [[Emergent Behavior]].
 
 ## Footnotes
@@ -49,3 +52,5 @@ verified_on: 2026-11-19
 [^11]: [[TED - Yoshua Bengio, The Catastrophic Risks of AI and a Safer Path (transcript)|Bengio, ch. 11]]
 [^12]: [[TED - Yoshua Bengio, The Catastrophic Risks of AI and a Safer Path (transcript)|Bengio, ch. 8]]
 [^13]: [[TED - Yoshua Bengio, The Catastrophic Risks of AI and a Safer Path (transcript)|Bengio, ch. 9]]
+[^14]: [[Bible Study Fellowship - AI and Biblical Thinking (transcript)|Lennox interview, ch. 4–5]]
+[^15]: [[Bible Study Fellowship - AI and Biblical Thinking (transcript)|Lennox interview, ch. 5]]

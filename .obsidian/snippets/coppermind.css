@@ -203,7 +203,7 @@ hr {
 /* ---------- Index page (index.md has cssclasses: coppermind-index) ---------- */
 /* Looks only. The page's text stays plain "- [[Page]] — summary" lines. Reading view. */
 .coppermind-index { --file-line-width: 66rem; }
-/* the section headings: the Coppermind's still, glowing copper-to-teal gradient on the text; the full-width rule sits under the heading's wrapper */
+/* the section headings: the Coppermind Gradient Style (copper-to-teal gradient on the text, Almendra SC, a still glow), defined once as --cm-gradient, --cm-gradient-font and --cm-gradient-glow in Nicrosil's styles.css; the full-width rule sits under the heading's wrapper */
 .coppermind-index .el-h2 {
   margin: 1.8em 0 0.5em;
   border-bottom: 1px solid transparent;
@@ -211,15 +211,15 @@ hr {
 }
 .coppermind-index h2 {
   width: fit-content; max-width: 100%;
-  font-family: 'Almendra SC', "Segoe UI", system-ui, sans-serif;
+  font-family: var(--cm-gradient-font);
   font-size: 1.35em;
   font-weight: 600;
   letter-spacing: 0.02em;
   margin: 0;
   padding-bottom: 0.25em;
-  background: linear-gradient(100deg, #d99a62 0%, #f6d3a8 40%, #d99a62 62%, #86d2c1 100%);
+  background: var(--cm-gradient);
   -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 7px rgba(217, 138, 74, 0.4)) drop-shadow(0 0 16px rgba(95, 174, 158, 0.25));
+  filter: var(--cm-gradient-glow);
 }
 /* the letter headings (### A ...) become small copper tabs */
 .coppermind-index h3 {
