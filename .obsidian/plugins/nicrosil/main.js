@@ -3296,16 +3296,21 @@ module.exports = class Nicrosil extends Plugin {
       // stats as one line of text above a thin bar, instead of number tiles and a ring
       const pctQ = all.length ? verified / all.length : 0;
       const box = el.createDiv({ cls: "cm-qstats" });
-      const line = box.createDiv({ cls: "cm-qstats-line" });
-      line.createSpan({ cls: "cm-q-verified", text: `${verified} of ${all.length}` });
-      line.appendText(` pages verified (${Math.round(pctQ * 100)}%) · ${drafts.length} draft${drafts.length === 1 ? "" : "s"} · ${flagCount} open flag${flagCount === 1 ? "" : "s"}`);
-      const bar = box.createDiv({ cls: "cm-qbar" }).createDiv({ cls: "cm-qbar-fill" });
+      // three parts side by side (3.9.0): the number verified, the line and bar, and the button
+      const left = box.createDiv({ cls: "cm-q-left" });
+      left.createDiv({ cls: "cm-q-big", text: String(verified) });
+      left.createDiv({ cls: "cm-q-of", text: `of ${all.length} pages verified` });
+      const mid = box.createDiv({ cls: "cm-q-mid" });
+      const line = mid.createDiv({ cls: "cm-qstats-line" });
+      line.createSpan({ cls: "cm-q-verified", text: `${Math.round(pctQ * 100)}%` });
+      line.appendText(` verified · ${drafts.length} draft${drafts.length === 1 ? "" : "s"} · ${flagCount} open flag${flagCount === 1 ? "" : "s"}`);
+      const bar = mid.createDiv({ cls: "cm-qbar" }).createDiv({ cls: "cm-qbar-fill" });
       bar.style.width = `${(pctQ * 100).toFixed(1)}%`;
       const bdQ = Object.entries(FLAG_KINDS)
         .map(([k, info]) => [info, drafts.reduce((n, i) => n + i.flags.filter((f) => f.kind === k).length, 0)])
         .filter(([, n]) => n > 0).map(([info, n]) => `${n} ${(n === 1 ? info.label : info.plural.replace(/ \(.*\)$/, "")).toLowerCase()}`).join(", ");
       const subBits = [bdQ ? `Open flags: ${bdQ}` : "", stale.length ? `${stale.length} draft${stale.length === 1 ? "" : "s"} older than ${STALE_DAYS} days` : ""].filter(Boolean);
-      if (subBits.length) box.createDiv({ cls: "cm-qstats-sub", text: subBits.join(". ") + "." });
+      if (subBits.length) mid.createDiv({ cls: "cm-qstats-sub", text: subBits.join(". ") + "." });
       // opens the next draft in the queue (and shows the review queue); Ctrl+click opens it in a new tab
       const nextBtn = box.createEl("button", { cls: "mod-cta cm-gbtn cm-qnext", text: drafts.length ? "Open next draft" : "All verified" });
       nextBtn.disabled = !drafts.length;
