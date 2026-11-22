@@ -1,9 +1,10 @@
 ---
 type: changelog
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 The changelog of [[Nicrosil]], newest first. It lives here in `_changelogs/`, outside the guide, so an agent reading the guide doesn't also read all of this. Read it only to add a line for a new version or to look up when something changed. Past lines are never rewritten; a correction goes in a new line. How something looks (corners, fonts, colors, animations) belongs in these lines, not in the guide's body.
 
+- **2.14.0:** The Dashboard has a new **Notes** card, under Wiki map and left of Triage, that opens `Notes/Notes Dashboard`. A new page block, `coppermind-classes`, draws the cards on that page: one per course whose notes file in `Notes/` has `type: class-notes` and `current: true` (name from `course`, order from `order`), then an **All Class Notes** card. The cards look and behave like the Dashboard's (Ctrl+click or middle-click opens a new tab). `main.js`: the card drawing moved out of `renderNav` into `drawNavCards`, which `renderNav` and the new `renderClassNav` share, so the Dashboard's own cards are unchanged apart from the new one. `styles.css` is unchanged: the new card takes its place from the existing grid.
 - **2.13.12:** The header Nicrosil writes at the top of a new month's log file now points to `_AGENTS.md`, since the rules' start file was renamed from `AGENTS.md`. Nothing else changed. `main.js` only.
 - **2.13.11:** With "Open next after verify" off, the verify animation plays only the check stamp, the ring and the sparks, and the page stays exactly where it is: it no longer slides up and away and slides back in. With the setting on, nothing changes: the page lifts away, the next page slides in, and the "Next: ..." pill shows. `main.js`: `playVerifyOut` and `playVerifyIn` take a `slide` flag, set from the setting; the settings description says so.
 - **2.13.10:** A draft page's title gets a soft copper glow (7px, 35% copper, `drop-shadow(0 0 7px rgba(184, 115, 51, 0.35))`), and it stays still, with no animation. The letters keep the dusty, faded copper of 2.13.9. The glow is in one variable, `--cm-draft-glow`, next to `--cm-draft-gradient` at the top of `styles.css`. It is copper only, with no teal, so it stays apart from a verified title's copper-and-teal glow.

@@ -1,6 +1,6 @@
 ---
 type: guide
-status: verified
+status: draft
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -12,14 +12,17 @@ courses:
 sources: []
 related:
   - "[[SCHEMA]]"
-drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5; larger file-list button name and index letter headings and jump bar, the flat relations map, the trimmed guide body, and the changelog moved to its own file, by claude-sonnet-5-5; Coppermind Gradient Style section by claude-sonnet-5-5)
+drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5; larger file-list button name and index letter headings and jump bar, the flat relations map, the trimmed guide body, and the changelog moved to its own file, by claude-sonnet-5-5; Coppermind Gradient Style section by claude-sonnet-5-5; Notes card and Notes dashboard cards by claude-sonnet-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-21
+changes_since_verified:
+  - "2026-11-22: Now describes v2.14.0 (a Notes card and a new page block for the Notes dashboard)"
+  - "2026-11-22: The Dashboard has six link cards, adding Notes; new paragraph on the Notes dashboard (Harrison asked for it) [[#The Dashboard]]"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.13.12**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.14.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -66,11 +69,13 @@ Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Card
 ## The Dashboard
 [[_dashboard|Dashboard]] is the page the vault opens on. It is the file `_dashboard.md`; the underscore keeps it out of the file list unless the eye button is on, and the Coppermind button and `Alt+D` open it. Each section is a block in the page's text, so a section can be moved or deleted by editing the note. From top to bottom it has:
 - **Header** (`coppermind-hero`): the Coppermind logo, name, and tagline, with the search box (see [[#Search]]) right under them.
-- **Four link cards** (`coppermind-nav`): Index, Log, Wiki map, and Schema, each a name and a one-line description. The **Log** card opens the newest month's log file. A click opens the page in the current tab. ==`Ctrl+click` (or middle-click) opens it in a new tab.== The Wiki map card opens its own tab instead, so it has no new-tab version.
+- **Six link cards** (`coppermind-nav`): Index, Log, Wiki map, Schema, Notes, and Triage, each a name and a one-line description. The **Log** card opens the newest month's log file. A click opens the page in the current tab. ==`Ctrl+click` (or middle-click) opens it in a new tab.== The Wiki map card opens its own tab instead, so it has no new-tab version.
 - **Review progress** (`coppermind-dashboard`): one line of stats (pages verified, with the share, drafts, and open flags), a progress bar showing how much is verified, and a small line counting the open flags by kind and the drafts older than 14 days. Under it is a bar for each page type showing its verified and draft pages. A **Changed since verified** section lists each re-review with its change lines. Below that are folded lists naming the pages with open flags, by kind, and the drafts older than 14 days. To start a review session from the Dashboard, use the **Open next draft** button on the first card (`Ctrl+click` opens the draft in a new tab). It also shows the review queue on the right.
 - **Health check card:** inside the review progress section, showing how long it has been since the last health check. A bar fills over the 14 days between checks, and it changes color for the last two days and again once the check is overdue (or if none has been saved yet). It reads the dates from the report names in `Health Checks/`, so it updates itself when a new report is saved, and clicking it opens the latest report.
 - **Recent activity** (`coppermind-activity`): the last six log entries (early in a month, the rest come from last month's file in `_logs/`). Click one to open the page it names, or the log file it came from.
 - **Reference:** folded sections on what the Coppermind is, how to read it, what it covers, and its six parts. These are ordinary text in the note.
+
+**The Notes dashboard.** The **Notes** card opens `Notes/Notes Dashboard`, an ordinary page with one block, `coppermind-classes`. The block draws a card for each course whose notes file in `Notes/` has `type: class-notes` and `current: true`, in the order of its `order` property, with the course's name from `course`. The last card, **All Class Notes**, opens a page that lists every class notes file in a table. A click opens the page in the current tab, and `Ctrl+click` (or middle-click) opens it in a new tab. To add a course, make its notes file with those properties; to retire one, set `current: false` and it leaves the cards but stays in the table. The block only reads properties, and nothing in the guide or the plugin reads the notes themselves.
 
 **Reading and editing.** The Dashboard always opens in Reading view, and every other note keeps the mode it was in. Its properties are hidden, and so is the Properties side pane while the Dashboard is the active note. To edit it, press `Ctrl+E`; it stays in editing until I click into the Dashboard again from another tab or note.
 

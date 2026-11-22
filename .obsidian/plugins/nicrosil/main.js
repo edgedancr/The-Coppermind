@@ -20,7 +20,7 @@
  *  - hotkeys and a status-bar counter
  *  - a search box for the Dashboard (```coppermind-search```): suggestion cards under it as I type,
  *    over wiki pages, source cards, and perspectives (not raw class notes); it only reads
- *  - Dashboard page blocks (```coppermind-hero```, -dashboard, -nav, -activity), a ribbon
+ *  - Dashboard page blocks (```coppermind-hero```, -dashboard, -nav, -activity, and -classes for the Notes dashboard), a ribbon
  *    logo button and Alt+D to go back to the Dashboard, and a one-time Home to Dashboard rename
  *  - "Log a schema change" (a pen button in the header of any page in SCHEMAS/, or the command palette): asks for the new
  *    version number and what I changed, then adds the line to _changelogs/Schema Changelog.md and keeps the `version` and
@@ -48,6 +48,9 @@ const {
 } = require("obsidian");
 
 const INDEX_PATH = "_index.md";
+const NOTES_DIR = "Notes/";                         // my own class notes (the Notes dashboard, one file per course, the all-notes page)
+const NOTES_DASHBOARD = "Notes/Notes Dashboard";    // opened by the Dashboard's Notes card
+const ALL_NOTES_PAGE = "Notes/All Class Notes";     // opened by the last card on the Notes dashboard
 const LOG_DIR = "_logs";                            // _logs/_log MM-YY.md, one file per month
 const DASHBOARD_PATH = "_dashboard.md";          // the underscore keeps it out of the file list unless the eye button is on
 const LEGACY_DASHBOARD_PATHS = ["Dashboard.md", "Home.md"]; // old names, still recognised if a vault has one
@@ -2454,7 +2457,7 @@ module.exports = class Nicrosil extends Plugin {
     this.addRibbonIcon("badge-check", "Review queue (Alt+Q)", () => this.activateView());
 
     this.registerMarkdownCodeBlockProcessor("coppermind-hero", (src, el, ctx) => this.renderHero(el, src, ctx));
-    for (const [name, method] of [["coppermind-dashboard", "renderDashboard"], ["coppermind-nav", "renderNav"], ["coppermind-activity", "renderActivity"]]) {
+    for (const [name, method] of [["coppermind-dashboard", "renderDashboard"], ["coppermind-nav", "renderNav"], ["coppermind-classes", "renderClassNav"], ["coppermind-activity", "renderActivity"]]) {
       this.registerMarkdownCodeBlockProcessor(name, (src, el, ctx) => ctx.addChild(new LiveBlock(el, this, method)));
     }
     this.registerMarkdownPostProcessor((el, ctx) => this.addResolveButtons(el, ctx));
@@ -2959,17 +2962,42 @@ module.exports = class Nicrosil extends Plugin {
 
   renderNav(el) {
     el.empty();
-    el.addClass("cm-nav");
-    el.toggleClass("is-quiet", this.isQuiet());
-    el.toggleClass("is-intro", !!this.dashIntro && !prefersReduced());
     const open = (link) => (newTab) => this.app.workspace.openLinkText(link, "", !!newTab);
     const cards = [
       { icon: "list", title: "Index", sub: "Every page, by type", go: open("_index") },
       { icon: "scroll-text", title: "Log", sub: "Every change and decision", go: (newTab) => { const f = this.latestLogFile(); if (f) this.app.workspace.getLeaf(newTab ? "tab" : false).openFile(f); else new Notice("There is no log file yet."); } },
       { icon: "network", title: "Wiki map", sub: "Every typed link, as a tree and a map", go: () => this.activateWikiMap() },
       { icon: "book-open", title: "Schema", sub: "The rulebook", go: open("SCHEMA") },
+      { icon: "notebook", title: "Notes", sub: "My class notes, by course", go: open(NOTES_DASHBOARD) }, // sits under Wiki map (first column), left of Triage
       { icon: "list-checks", title: "Triage", sub: "Sources waiting to be ingested", go: open("Ingestion/Triage"), under: true }, // sits under Schema (second column)
     ];
+    this.drawNavCards(el, cards);
+  }
+
+  /** The Notes dashboard's cards (```coppermind-classes```): one per course whose notes file has `type: class-notes` and `current: true`, then a card for the all-notes page. */
+  renderClassNav(el) {
+    el.empty();
+    const open = (link) => (newTab) => this.app.workspace.openLinkText(link, "", !!newTab);
+    const courses = [];
+    for (const f of this.app.vault.getMarkdownFiles()) {
+      if (!f.path.startsWith(NOTES_DIR)) continue;
+      const fm = (this.app.metadataCache.getFileCache(f) || {}).frontmatter;
+      if (!fm || fm.type !== "class-notes" || fm.current !== true) continue;
+      const order = Number(fm.order);
+      courses.push({ file: f, order: Number.isFinite(order) ? order : 999, name: String(fm.course || f.basename), semester: fm.semester ? String(fm.semester) : "" });
+    }
+    courses.sort((a, b) => a.order - b.order || a.name.localeCompare(b.name));
+    const cards = courses.map((c) => ({ icon: "book-open", title: c.name, sub: c.semester ? `${c.semester} notes` : "Class notes", go: open(c.file.path) }));
+    cards.push({ icon: "library", title: "All Class Notes", sub: "Every course, every semester", go: open(ALL_NOTES_PAGE) });
+    this.drawNavCards(el, cards);
+    if (!courses.length) el.createDiv({ cls: "cm-sub", text: "No current courses yet. A notes file with type: class-notes and current: true in the Notes folder shows up here." });
+  }
+
+  /** Draws a row of Dashboard-style cards into `el` from {icon, title, sub, go, under?} entries. */
+  drawNavCards(el, cards) {
+    el.addClass("cm-nav");
+    el.toggleClass("is-quiet", this.isQuiet());
+    el.toggleClass("is-intro", !!this.dashIntro && !prefersReduced());
     cards.forEach((c, idx) => {
       const card = el.createDiv({ cls: "cm-navcard" });
       if (c.under) card.addClass("cm-navcard-under");

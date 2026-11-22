@@ -1,0 +1,18 @@
+filters:
+  and:
+    - type == "class-notes"
+    - file.inFolder("Notes")
+views:
+  - type: table
+    name: All class notes
+    groupBy:
+      property: semester
+      direction: ASC
+    order:
+      - file.name
+      - course
+      - semester
+      - current
+    sort:
+      - property: order
+        direction: ASC
