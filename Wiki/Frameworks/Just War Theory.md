@@ -1,12 +1,19 @@
 ---
 type: framework
-status: draft
-aliases: ["Jus ad Bellum", "Jus in Bello"]
-courses: ["Intro to Intelligence", "SAIL"]
-sources: ["[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]", "[[SRC - SAIL Class Notes (Fall 2026)]]", "[[SRC - Grammar Summaries, Weeks 2-7]]"]
+status: verified
+aliases:
+  - Jus ad Bellum
+  - Jus in Bello
+courses:
+  - Intro to Intelligence
+  - SAIL
+sources:
+  - "[[SRC - Intro to Intelligence Class Notes (Fall 2026)]]"
+  - "[[SRC - SAIL Class Notes (Fall 2026)]]"
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on:
+verified_on: 2026-11-22
 ---
 > [!summary]
 > Just war theory judges both whether going to war is justified (**jus ad bellum**, "the right to war") and whether a war is fought justly (**jus in bello**, "right in war").[^1] Intro to Intelligence taught it with criteria drawn from Aquinas and Augustine.[^1]
@@ -25,15 +32,6 @@ verified_on:
 - **Protected status:** women, children, the infirm, wounded prisoners of war, and culturally or religiously valued objects.
 
 **The midterm list**:[^2] just cause, just intentions, proper authority, last resort, probability of success, ==proportionality of means to objectives==, and discrimination of control. The course's grammar summaries add that all seven must be satisfied.[^3]
-
-> [!todo] Gap in my notes
-> "Reasonable chance of success" has no description ("missed, check slides later"), and the Proportionality Matrix heading is empty (9/29).
-
-> [!caution] Accuracy check
-> My notes say just cause is "based on Aquinas two primary cancers," probably "causes." Check the slide for what the two were.
-
-> [!question] Whose view is this?
-> "JWT is not an exclusively Christian principle and is not the only Christian view on the subject, but it can be made to work with a Christian worldview. There can be found scriptural references that back up JWT." (Grammar Summaries, wk 5, discussion answer)
 
 ## How to Use It
 - Work through the jus ad bellum thresholds before force is authorized, then judge conduct by jus in bello.[^1]

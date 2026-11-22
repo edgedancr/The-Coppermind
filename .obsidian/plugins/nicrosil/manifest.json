@@ -1,7 +1,7 @@
 {
   "id": "nicrosil",
   "name": "Nicrosil",
-  "version": "3.13.3",
+  "version": "3.15.0",
   "minAppVersion": "2.3.0",
   "description": "The Coppermind's toolkit: verify or reject drafts with one click, a review queue sidebar, flag resolving, hotkeys, a Dashboard with a live search box and a home button, a collapsible properties strip, a button that logs schema changes, and a monthly log archive. Updates the page, index.md, and log.md.",
   "author": "Harrison Nickles",

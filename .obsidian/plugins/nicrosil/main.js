@@ -14,8 +14,6 @@
  *  - The index keeps itself: _index.md gains, loses, renames and moves its lines (letter headings, counts, total and Jump to line
  *    included) when a page in Wiki/, Perspectives/ or Sources/Source Cards/ is added, removed, renamed or moved, and at startup.
  *    A new page's summary comes from its summary callout. "Update the index now" does it on demand; a setting turns it off.
- *  - Unlinked mentions in the relations panel, both ways: pages that name this one without linking it, and pages this one names
- *    without linking them (names and aliases, whole words; read-only).
  *  - "Respond to this page" (a header button and Alt+P) on pages in Wiki/, Sources/Source Cards/ and Perspectives/: makes
  *    Perspectives/Response to <page>.md from the Perspective template with `responds_to` set, opened beside the page. Each page
  *    shows a "My take" line under its properties that links the perspectives responding to it (drawn on screen; the page file is not changed).
@@ -926,47 +924,6 @@ function collectRelations(app) {
   return edges;
 }
 
-/* ---- unlinked mentions: a page's name written out in another page's text without a link ---- */
-const MENTION_SCOPE = [/^Wiki\//, /^Perspectives\//, /^Sources\/Source Cards\//];
-const mentionEscape = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-/** A page's names for matching: its file name (also without a trailing "(…)") and its aliases; names under four letters are left out. */
-function mentionNames(file, fm) {
-  const raw = [file.basename, file.basename.replace(/\s*\([^)]*\)\s*$/, ""), ...[].concat((fm && fm.aliases) || []).map(String)];
-  const seen = new Set(), out = [];
-  for (const n of raw.map((x) => x.trim())) {
-    const k = n.toLowerCase();
-    if (n.length < 4 || seen.has(k)) continue;
-    seen.add(k); out.push(n);
-  }
-  return out;
-}
-/** Whole-word, case-insensitive; a plural or possessive still counts. */
-function mentionRegex(name) {
-  return new RegExp("(?<![\\p{L}\\p{N}])" + mentionEscape(name) + "(?:s|'s|\u2019s)?(?![\\p{L}\\p{N}])", "giu");
-}
-/** The text a mention can be found in: no properties, code, comments, footnote definitions or links (a link already counts as a link). */
-function stripForMentions(text) {
-  return String(text)
-    .replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "")
-    .replace(/```[\s\S]*?```/g, " ")
-    .replace(/%%[\s\S]*?%%/g, " ")
-    .replace(/<!--[\s\S]*?-->/g, " ")
-    .replace(/`[^`\n]*`/g, " ")
-    .replace(/!?\[\[[^\]]*\]\]/g, " ")
-    .replace(/\[([^\]]*)\]\([^)]*\)/g, " ")
-    .replace(/^\[\^[^\]]+\]:.*$/gm, " ")
-    .replace(/https?:\/\/\S+/g, " ");
-}
-/** How many times the regexes match, one after another; each match is blanked out so a shorter name can't count inside a longer one. Returns { n, text }. */
-function countMentions(text, regexes) {
-  let n = 0;
-  for (const re of regexes) {
-    re.lastIndex = 0;
-    text = text.replace(re, () => { n++; return " "; });
-  }
-  return { n, text };
-}
-
 const SVG_NS = "http://www.w3.org/2000/svg";
 function svgEl(parent, tag, attrs, text) {
   const el = document.createElementNS(SVG_NS, tag);
@@ -1033,7 +990,6 @@ class RelationsView extends ItemView {
     const root = this.containerEl.children[1];
     root.empty();
     root.addClass("cm-rel");
-    const tok = (this._tok = (this._tok || 0) + 1);
     const file = this.file && this.app.vault.getAbstractFileByPath(this.file.path) instanceof TFile ? this.file : null;
     if (!file) { root.createDiv({ cls: "cm-sub", text: "Open a page to see how it relates to the rest of the wiki." }); return; }
 
@@ -1049,7 +1005,6 @@ class RelationsView extends ItemView {
 
     if (!out.length && !inn.length) {
       root.createDiv({ cls: "cm-sub cm-rel-empty", text: "No typed links to or from this page yet. Plain links in the text don't show here; only the typed properties do (Schema §5)." });
-      this.drawUnlinked(root, file, tok);
       return;
     }
 
@@ -1057,46 +1012,6 @@ class RelationsView extends ItemView {
     this.drawLegend(root, out, inn);
     this.drawGroups(root, "This page…", out, "out", (e) => e.to, (e) => e.toName);
     this.drawGroups(root, "Pointing at this page…", inn, "inn", (e) => e.from, (e) => this.app.vault.getAbstractFileByPath(e.from)?.basename || e.from);
-    this.drawUnlinked(root, file, tok);
-  }
-
-  /** Unlinked mentions, both ways, under the typed links. Worked out after the panel is drawn, so the panel never waits for it. */
-  async drawUnlinked(root, file, tok) {
-    const sec = root.createDiv({ cls: "cm-rel-unl" });
-    sec.createEl("h5", { cls: "cm-rel-h", text: "Unlinked mentions" });
-    const body = sec.createDiv({ cls: "cm-sub", text: "Looking…" });
-    let res = null;
-    try { res = await this.plugin.unlinkedMentions(file); }
-    catch (e) { console.error("Nicrosil: unlinked mentions failed", e); if (tok === this._tok) body.setText("Couldn't scan for mentions."); return; }
-    if (tok !== this._tok || !sec.isConnected) return;
-    if (!res) { sec.remove(); return; }
-    body.remove();
-    const draw = (title, hint, list) => {
-      const grp = sec.createDiv({ cls: "cm-rel-group" });
-      const h = grp.createDiv({ cls: "cm-rel-grouphead", text: title });
-      h.setAttr("title", hint);
-      h.createSpan({ cls: "cm-rel-count", text: String(list.length) });
-      if (!list.length) { grp.createDiv({ cls: "cm-sub", text: "None found." }); return; }
-      const SHOW = 8;
-      const rows = [];
-      list.forEach((it, i) => {
-        const row = grp.createDiv({ cls: "cm-rel-item" + (i >= SHOW ? " is-hidden" : "") });
-        const st = this.statusOf(it.file.path);
-        row.createSpan({ cls: `cm-rel-dot ${st ? "cm-rel-dot-" + st : ""}` }).setAttr("aria-label", st || "no status");
-        row.createSpan({ cls: "cm-rel-name", text: it.file.basename });
-        row.createSpan({ cls: "cm-rel-count", text: `×${it.count}` });
-        row.setAttr("role", "button"); row.setAttr("tabindex", "0");
-        row.addEventListener("click", (e) => this.go(it.file.path, e.ctrlKey || e.metaKey));
-        row.addEventListener("keydown", (e) => { if (e.key === "Enter") this.go(it.file.path, e.ctrlKey || e.metaKey); });
-        rows.push(row);
-      });
-      if (list.length > SHOW) {
-        const more = grp.createEl("button", { cls: "cm-mini cm-rel-showall", text: `Show all ${list.length}` });
-        more.addEventListener("click", () => { rows.forEach((r) => r.removeClass("is-hidden")); more.remove(); });
-      }
-    };
-    draw("Pages that name this one, without a link", "Other pages that write this page's name (or an alias) in their text but don't link to it", res.inbound);
-    draw("Pages named here, without a link", "Pages whose names appear in this page's text, but this page doesn't link to them", res.outbound);
   }
 
   /** Neighbors on both sides, deduplicated by page, each keeping the types that link it. */
@@ -2707,7 +2622,6 @@ module.exports = class Nicrosil extends Plugin {
     this.readHandled = new WeakMap(); // leaf -> path already considered for Reading view
     this.stripPaths = new WeakMap();
     this.stripObservers = new Set();
-    this.mentionCache = new Map(); // page path -> { mtime, text } with links and code removed, for unlinked mentions
     this.indexRenames = [];   // [oldName, newName] pairs waiting for the next index sync, so a renamed page keeps its summary
     this.indexEmpty = new Set(); // paths of pages whose index entry has no summary yet
     this.proposedCache = new Map(); // source card path -> { mtime, value } for its "Proposed B-2" line
@@ -2762,7 +2676,9 @@ module.exports = class Nicrosil extends Plugin {
       try {
         const lt = String(e.linktext || "").split("#")[0].split("|")[0];
         const file = this.app.metadataCache.getFirstLinkpathDest(lt, e.sourcePath || "") || this.app.vault.getAbstractFileByPath(lt);
-        this.lastHover = file instanceof TFile ? { file, t: Date.now() } : null;
+        // A link to a spot on the page it is written in (a footnote, a heading, a block) previews part of that page, not the page, so the preview gets no strip.
+        const samePart = String(e.linktext || "").includes("#") && (lt === "" || (file instanceof TFile && file.path === e.sourcePath));
+        this.lastHover = file instanceof TFile && !samePart ? { file, t: Date.now() } : null;
       } catch (err) { this.lastHover = null; }
     }));
     const popWatch = new MutationObserver((muts) => {
@@ -4751,64 +4667,6 @@ module.exports = class Nicrosil extends Plugin {
     if (fm.status === "verified") { new Notice(`“${file.basename}” is already verified.`); return null; }
     if (fm.status !== "draft") { new Notice(`“${file.basename}” has no status: draft property, so I left it alone.`); return null; }
     return fm;
-  }
-
-  /** A page's text, ready for mention matching, read again only when the file has changed. */
-  async mentionText(file) {
-    const c = this.mentionCache.get(file.path);
-    if (c && c.mtime === file.stat.mtime) return c.text;
-    const text = stripForMentions(await this.app.vault.cachedRead(file));
-    this.mentionCache.set(file.path, { mtime: file.stat.mtime, text });
-    return text;
-  }
-
-  /**
-   * Unlinked mentions for a page in Wiki/, Perspectives/ or Sources/Source Cards/ (anything else returns null):
-   * `inbound` = other pages that write this page's name without linking it; `outbound` = pages whose names this page writes without linking them.
-   * Each is [{ file, count }], most mentions first. Nothing is written.
-   */
-  async unlinkedMentions(file) {
-    const inScope = (f) => MENTION_SCOPE.some((re) => re.test(f.path));
-    if (!inScope(file)) return null;
-    const catalog = this.app.vault.getMarkdownFiles().filter(inScope).map((f) => ({ f, names: mentionNames(f, this.fm(f)) }));
-    const me = catalog.find((c) => c.f.path === file.path);
-    if (!me) return null;
-    const links = this.app.metadataCache.resolvedLinks || {};
-
-    // other pages that name this one
-    const mine = me.names.map((n) => n.toLowerCase());
-    const longer = [];
-    for (const c of catalog) {
-      if (c.f.path === file.path) continue;
-      for (const n of c.names) if (mine.some((m) => n.toLowerCase().includes(m) && n.length > m.length)) longer.push(n);
-    }
-    const longRes = [...new Set(longer)].sort((a, b) => b.length - a.length).map(mentionRegex);
-    const myRes = [...me.names].sort((a, b) => b.length - a.length).map(mentionRegex);
-    const inbound = [];
-    for (const c of catalog) {
-      if (c.f.path === file.path || (links[c.f.path] || {})[file.path]) continue;
-      const t = await this.mentionText(c.f);
-      const masked = countMentions(t, longRes).text;
-      const { n } = countMentions(masked, myRes);
-      if (n) inbound.push({ file: c.f, count: n });
-    }
-
-    // pages this one names
-    const linked = links[file.path] || {};
-    const cands = [];
-    for (const c of catalog) {
-      if (c.f.path === file.path || linked[c.f.path]) continue;
-      for (const n of c.names) cands.push({ c, n });
-    }
-    cands.sort((a, b) => b.n.length - a.n.length);
-    let text = await this.mentionText(file);
-    const tally = new Map();
-    for (const { c, n } of cands) {
-      const r = countMentions(text, [mentionRegex(n)]);
-      if (r.n) { text = r.text; tally.set(c.f.path, { file: c.f, count: (tally.get(c.f.path) || { count: 0 }).count + r.n }); }
-    }
-    const byMost = (a, b) => b.count - a.count || a.file.basename.localeCompare(b.file.basename);
-    return { inbound: inbound.sort(byMost), outbound: [...tally.values()].sort(byMost) };
   }
 
   isSourceCard(file) {

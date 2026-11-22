@@ -1197,12 +1197,6 @@ body.cm-quiet .cm-nav.is-quiet .cm-navcard.cm-navcard-under { grid-column: 2; }
 
 /* The Tinmind dashboard: the semester switcher above the course cards */
 
-/* ---- unlinked mentions in the relations panel ---- */
-.cm-rel-unl { margin-top: 6px; }
-.cm-rel-unl .cm-rel-item .cm-rel-count { margin-left: auto; }
-.cm-rel-item.is-hidden { display: none; }
-.cm-rel-showall { margin: 4px 0 2px 14px; }
-
 /* ---------- The Tinmind hero (2.16.0) ---------- */
 /* The Tinmind page (The Tinmind/Tinmind Dashboard) has its own grey-to-lilac colors and a hero in place of the file name. The gradient, glow, background and accents are variables set on the page's pane, so everything on it follows. */
 body { --cm-tin-mask: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 354.32596 500.00198%22%3E%3Cpath transform=%22translate(142.43649 -23.789754)%22 d=%22m 58.419513,238.52375 c -38.537,-28.428 -83.445,-58.578 -83.445,-58.578 h -48.223 c 0,0 65.3299999,43.357 115.271,81.559 l -184.459003,258.092 h 38.787 l 169.025003,-239.599 c 9.814,8.091 18.115,15.472 23.861,21.552 7.547,8.01 14.675997,16.061 21.382997,24.111 l -129.147997,193.936 h 29.143 l 117.491997,-171.627 c 24.19696,32.62 41.81096,64.45 54.42996,91.915 1.344,2.852 2.602,5.659 3.857,8.428 19.5,44.532 25.496,75.479 25.496,75.479 V 23.789754 L 58.419513,238.52375 z m 111.538957,128.483 c -8.178,-13.963 -17.021,-28.391 -26.12496,-42.018 l 26.12496,-38.115 v 80.133 z m 0,-130.452 -43.06296,64.659 c -7.424,-9.771 -14.844,-18.406 -21.932,-25.326 -5.491997,-5.325 -13.546997,-12.036 -22.981997,-19.456 l 87.976957,-124.708 v 104.831 z%22/%3E%3C/svg%3E"); }
@@ -1565,3 +1559,11 @@ body.cm-tin-mode .workspace-tabs .cm-panel-btn { display: none !important; }
 .workspace-split.mod-left-split .workspace-tab-header-container > .sidebar-toggle-button { order: -1; margin: 0; }
 .workspace-split.mod-left-split .workspace-tab-header-container-inner { gap: 3px; flex: 0 0 auto; }
 .workspace-split.mod-left-split .workspace-tab-header-container-inner > :is(.cm-mode-btn, .cm-underscore-btn, .cm-panel-btn, .cm-git-btn) { margin: 0; }
+/* ---------- Hover previews: gradient outline (3.15.0) ---------- */
+/* The popup that opens when the pointer rests on a link gets a 1.5px outline in the current gradient style: --cm-gradient is the Coppermind Gradient Style (copper to teal), and body.cm-tin-mode swaps it for the Tinmind Gradient Style (grey to lilac), so one rule serves both modes. The fill stays the page color (--background-primary); the gradient shows only in the border, sized to the whole box (background-origin: border-box) so its edges don't seam. */
+body .popover.hover-popover {
+  border: 1.5px solid transparent;
+  background-image: linear-gradient(var(--background-primary), var(--background-primary)), var(--cm-gradient);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}

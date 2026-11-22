@@ -19,7 +19,7 @@ verified_on: 2026-11-22
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, records schema changes, and runs the Tinmind, my own class notes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v3.13.3**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v3.15.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## Turn it on (once per computer)
 1. In Obsidian: **Settings → Community plugins**, click the refresh icon next to "Installed plugins," and switch on **Nicrosil**.
@@ -86,7 +86,7 @@ The search box on the [[_dashboard|Dashboard]] shows suggestion cards as I type,
 - **Map.** Every page with a typed link is a dot, and every typed link an arrow from the page that states it. Scroll to zoom, drag to pan, drag a dot to move it. Click a relationship name to hide or show that type; menus filter by status, page type and course; the box finds a page by name. Click a dot to focus on it and its neighbors, `Ctrl+click` to open it. **Flow** turns the pulses on arrows off. Pages with no typed links are not shown, and a note says how many.
 
 ## The properties strip
-On every note except the Dashboard, the Tinmind page, the index and the logs, Nicrosil replaces the Properties block with a one-line strip showing **type**, **status**, and a date. Click it to open the real block; each note starts collapsed again when opened. The link hover preview shows the same strip.
+On every note except the Dashboard, the Tinmind page, the index and the logs, Nicrosil replaces the Properties block with a one-line strip showing **type**, **status**, and a date. Click it to open the real block; each note starts collapsed again when opened. The link hover preview shows the same strip, except when the link points at a spot on its own page (a footnote, a heading or a block), which gets no strip.
 
 ## Gradient styles
 Two named title styles, each a gradient with a glow in the font Almendra SC:
