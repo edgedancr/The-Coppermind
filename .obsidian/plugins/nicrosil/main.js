@@ -2563,7 +2563,7 @@ class TinPromptModal extends Modal {
     const btns = contentEl.createDiv({ cls: "cm-buttons" });
     btns.createEl("button", { text: "Cancel" }).addEventListener("click", () => this.close());
     btns.createEl("button", { text: this.opts.ok || "OK", cls: "mod-cta" }).addEventListener("click", () => this.finish(input.value));
-    setTimeout(() => { input.focus(); input.select(); }, 0);
+    setTimeout(() => { input.focus(); if (this.opts.caret === "end") input.setSelectionRange(input.value.length, input.value.length); else input.select(); }, 0);
   }
 
   finish(value) {
@@ -2780,12 +2780,16 @@ module.exports = class Nicrosil extends Plugin {
       if (this.settings.hidePanels !== false) {
         for (const t of ["backlink", "outgoing-link", "tag", "all-properties", "outline"]) this.app.workspace.detachLeavesOfType(t);
       }
-      this.paintTinMode(); // still in the Tinmind's mode from last time: its colors back on, the right sidebar shut
+      this.exitTinMode(); // Obsidian always opens in the Coppermind's mode (3.2.1): colors back, the right sidebar as it was before the Tinmind
+      this.paintTinMode();
       this.startDashIntro();
       this.searchIndex.start();
       this.syncSchemaButtons(); this.syncHomeButtons();
       await this.migrateHome();
       await this.migrateTinDashboard();
+      await this.migrateTinBacklinks();
+      await this.migrateHubNames();
+      this.registerEvent(this.app.metadataCache.on("resolved", () => { if (!this.settings.tinHubsRenamed) this.migrateHubNames(); })); // runs again once the properties are indexed
       if (this.app.vault.getAbstractFileByPath(DASHBOARD_PATH)) await this.fixHomepageSetting(); // the startup page follows the Dashboard's name
       await this.migrateSchemaStub();
       try {
@@ -2807,7 +2811,7 @@ module.exports = class Nicrosil extends Plugin {
     document.querySelectorAll(".cm-resolve-btn, .cm-home-btn, .cm-underscore-btn").forEach((e) => e.remove());
     document.body.classList.remove("cm-hide-underscore");
     document.body.classList.remove("cm-on-dashboard", "cm-on-tin", "cm-tin-mode");
-    document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-agents-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => { e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-agents-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"); e.style.removeProperty("--cm-log-title"); });
+    document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-agents-leaf, .cm-tinnote-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => { e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-agents-leaf", "cm-tinnote-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"); e.style.removeProperty("--cm-log-title"); });
     document.querySelectorAll(".cm-dashboard-tab").forEach((e) => e.classList.remove("cm-dashboard-tab"));
     document.body.classList.remove("cm-quiet");
     document.querySelectorAll(".cm-propstrip, .cm-ratebar, .cm-mytake").forEach((e) => e.remove());
@@ -2866,13 +2870,16 @@ module.exports = class Nicrosil extends Plugin {
       // The file list keeps its header buttons (.nav-header) and the files directly in the leaf, with no .view-content around them.
       const header = leafEl.querySelector(".nav-header");
       const holder = header ? header.parentElement : (leafEl.querySelector(".view-content") || leafEl);
-      // the eye button in the file list's toolbar (next to new note, new folder, sort, and the rest)
-      const bar = leafEl.querySelector(".nav-header .nav-buttons-container");
-      if (bar && !bar.querySelector(":scope > .cm-underscore-btn")) {
-        const eye = createDiv({ cls: "clickable-icon nav-action-button cm-underscore-btn" });
+      // the eye button sits at the right end of the sidebar's tab bar, beside the Files, Search and Bookmarks icons (3.4.0); the file list's own toolbar is hidden by styles.css
+      const tabs = leafEl.closest(".workspace-tabs");
+      const tabBar = tabs ? tabs.querySelector(":scope > .workspace-tab-header-container") : null;
+      const tabRow = tabBar ? tabBar.querySelector(":scope > .workspace-tab-header-container-inner") : null;
+      if (tabBar) tabBar.querySelectorAll(":scope > .cm-underscore-btn").forEach((e) => e.remove()); // the 3.4.0 spot, at the far right
+      if (tabRow && !tabRow.querySelector(":scope > .cm-underscore-btn")) {
+        const eye = createDiv({ cls: "clickable-icon cm-underscore-btn" });
         eye.setAttr("role", "button");
         eye.addEventListener("click", () => this.toggleUnderscoreFolders());
-        bar.appendChild(eye);
+        tabRow.appendChild(eye); // right after the Files icon (Search and Bookmarks are hidden)
       }
       this.paintUnderscoreButtons();
       const homeBtn = holder.querySelector(":scope > .cm-home-btn:not(.cm-tin-btn)");
@@ -3577,6 +3584,7 @@ module.exports = class Nicrosil extends Plugin {
       const isTin = this.isTinDashboard(view.file);
       view.containerEl.classList.toggle("cm-tin-leaf", isTin); // the Tinmind page: its own colors, no properties, and its file name and path are replaced by the hero (2.16.0, 2.17.0)
       if (leaf.tabHeaderEl) leaf.tabHeaderEl.classList.toggle("cm-dashboard-tab", isDash); // the Dashboard's tab shows the logo, not the file name
+      view.containerEl.classList.toggle("cm-tinnote-leaf", !!view.file && path.startsWith(NOTES_DIR) && !isTin); // every note in the Tinmind: its title in the Tinmind Gradient Style (3.3.0)
       view.containerEl.classList.toggle("cm-log-leaf", isLog);
       view.containerEl.classList.toggle("cm-agents-leaf", path === "_AGENTS.md"); // its title reads AGENTS in the Coppermind Gradient Style (2.18.2)
       const logM = /^_logs\/_log (\d{2}-\d{2})\.md$/.exec(path); // a log's title reads "Log 11-26" (the theme draws it from --cm-log-title)
@@ -3796,16 +3804,28 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   /**
-   * Opening a page puts it in Reading view (verified pages by default; see the "Open pages in Reading view" setting).
+   * Opening a page puts it in Reading view (verified pages by default; see the "Open pages in Reading view" setting). Pages in The Tinmind are the exception: they open in editing view.
    * Each tab is looked at once per page it shows, so switching a page to editing yourself is left alone until that tab opens another page.
    */
   async readOnOpen(file) {
     try {
       const mode = this.settings.readMode || "verified";
-      if (mode === "off" || !(file instanceof TFile) || file.extension !== "md") return;
+      if (!(file instanceof TFile) || file.extension !== "md") return;
       const view = this.app.workspace.getActiveViewOfType(MarkdownView);
       if (!view || !view.file || view.file.path !== file.path) return;
       const leaf = view.leaf;
+      // Notes in The Tinmind open in editing view, whatever the setting says (3.3.1). A tab that was in Reading view for the page before
+      // (the Tinmind Dashboard, say) would otherwise keep that mode. The dashboard itself stays in Reading view.
+      if (file.path.startsWith(NOTES_DIR) && !this.isTinDashboard(file)) {
+        if (this.readHandled.get(leaf) === file.path) return;
+        this.readHandled.set(leaf, file.path);
+        if (view.getMode() === "preview") {
+          const st = leaf.getViewState();
+          await leaf.setViewState({ ...st, state: { ...st.state, mode: "source" } });
+        }
+        return;
+      }
+      if (mode === "off") return;
       if (this.readHandled.get(leaf) === file.path) return;
       this.readHandled.set(leaf, file.path);
       if (view.getMode() !== "source") return;
@@ -3893,7 +3913,7 @@ module.exports = class Nicrosil extends Plugin {
   /*
    * In Tinmind mode the file list is replaced, under the two buttons, by a tree of the semester's courses, so my class notes can be
    * made, renamed and deleted without the folders. A course is its notes file (`type: class-notes`, the "hub") and the folder next to
-   * it with the same name minus " Notes" (The Tinmind/Fall 26/SAIL Notes.md and The Tinmind/Fall 26/SAIL/). The tree shows that folder's
+   * it with the same name (The Tinmind/Fall 26/SAIL.md and The Tinmind/Fall 26/SAIL/). The tree shows that folder's
    * notes and folders as they are, and the hub's headings. The same tree and a **New note** button are drawn at the top of each hub
    * page. All of it comes from folders and from Obsidian's index of headings and properties: Nicrosil never reads what the notes say,
    * and the page files are not changed by the panel.
@@ -3906,7 +3926,7 @@ module.exports = class Nicrosil extends Plugin {
     return !!fm && fm.type === "class-notes";
   }
 
-  /** The folder that holds a course's own notes: the hub's folder plus the hub's name without " Notes". */
+  /** The folder that holds a course's own notes: the hub's folder plus the hub's name (a leftover " Notes" from before 3.5.0 is ignored). */
   courseFolderPath(hub) {
     const dir = hub.parent && hub.parent.path && hub.parent.path !== "/" ? hub.parent.path + "/" : "";
     return dir + hub.basename.replace(/ Notes$/, "");
@@ -4112,7 +4132,7 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   async openTinFile(file, newTab) {
-    await this.app.workspace.getLeaf(newTab ? "tab" : false).openFile(file);
+    await this.app.workspace.getLeaf(newTab ? "tab" : false).openFile(file, { state: { mode: "source" } }); // editing view (3.3.1)
   }
 
   tinCourseMenu(e, ctx) {
@@ -4158,7 +4178,10 @@ module.exports = class Nicrosil extends Plugin {
 
   /** Asks for a name and makes a note in `folderPath` (made if it isn't there yet), with the course and semester as properties and a link back to the course page. */
   async tinNewNote(folderPath, ctx) {
-    const name = cleanName(await this.tinPrompt({ title: "New note", label: `In ${ctx.course}`, ok: "Create" }));
+    // The name starts as "<course> mm-dd-yy" for today (dashes, because a file name can't hold slashes); Enter takes it, or add to it first. A second note the same day gets " 2".
+    const now = new Date(), pad = (n) => String(n).padStart(2, "0");
+    const stamp = `${pad(now.getMonth() + 1)}-${pad(now.getDate())}-${String(now.getFullYear()).slice(-2)}`;
+    const name = cleanName(await this.tinPrompt({ title: "New note", label: `In ${ctx.course}`, value: `${ctx.course} ${stamp}`, caret: "end", ok: "Create" }));
     if (!name) return;
     try {
       await this.tinEnsureFolder(folderPath);
@@ -4268,10 +4291,10 @@ module.exports = class Nicrosil extends Plugin {
     try {
       const dir = st.courses.length ? st.courses[0].file.parent.path : NOTES_DIR + st.chosen;
       await this.tinEnsureFolder(dir);
-      const path = this.tinUniquePath(dir, name + " Notes", ".md").replace(/ Notes( \d+)?\.md$/, (m, n) => (n || "") + " Notes.md");
+      const path = this.tinUniquePath(dir, name, ".md"); // the course page is named for the course (3.5.0)
       const order = st.courses.reduce((m, c) => (c.order < 999 ? Math.max(m, c.order) : m), 0) + 1;
       const current = st.courses.some((c) => c.current);
-      const body = `---\ntype: class-notes\ncourse: ${JSON.stringify(name)}\nsemester: ${JSON.stringify(st.chosen)}\ncurrent: ${current}\norder: ${order}\n---\n← [[${NOTES_DASHBOARD}]]\n`;
+      const body = `---\ntype: class-notes\ncourse: ${JSON.stringify(name)}\nsemester: ${JSON.stringify(st.chosen)}\ncurrent: ${current}\norder: ${order}\n---\n`;
       const file = await this.app.vault.create(path, body);
       this.settings.tinOpen = this.settings.tinOpen || {};
       this.settings.tinOpen[file.path] = true;
@@ -4308,6 +4331,74 @@ module.exports = class Nicrosil extends Plugin {
     } catch (e) {
       console.error("Nicrosil: couldn't rename the Tinmind Dashboard", e);
       new Notice(`Couldn't rename Notes Dashboard to Tinmind Dashboard: ${e.message}. Rename it by hand in the file list.`, 10000);
+    }
+  }
+
+  /**
+   * One time (3.3.0): takes the "← [[...Dashboard]]" line out of the Tinmind's notes (course pages had one under their properties).
+   * The Tinmind button already goes back. Only a line that is exactly that link is removed; nothing else in a note is touched.
+   * It runs once, at startup, and the count is shown. New course pages are made without the line.
+   */
+  async migrateTinBacklinks() {
+    if (this.settings.tinBacklinksRemoved) return;
+    const re = /^[ \t]*\u2190[ \t]*\[\[[^\]\n]*(?:Notes|Tinmind) Dashboard[^\]\n]*\]\][ \t]*(?:\r?\n|$)/gm;
+    let n = 0;
+    try {
+      for (const f of this.app.vault.getMarkdownFiles()) {
+        if (!f.path.startsWith(NOTES_DIR) || this.isTinDashboard(f) || f.path === OLD_NOTES_DASHBOARD || f.path === ALL_NOTES_PAGE + ".md") continue;
+        let changed = false;
+        await this.app.vault.process(f, (text) => {
+          const next = text.replace(re, "");
+          changed = next !== text;
+          return next;
+        });
+        if (changed) n++;
+      }
+      this.settings.tinBacklinksRemoved = true;
+      await this.persist();
+      if (n) new Notice(`Removed the link to the Tinmind Dashboard from ${n} course note${n === 1 ? "" : "s"}.`, 8000);
+    } catch (e) {
+      console.error("Nicrosil: couldn't remove the dashboard links", e);
+    }
+  }
+
+  /**
+   * One time (3.5.0): a course page named "<Course> Notes" becomes "<Course>" (Obsidian's own rename, so links follow). Only a note directly in a
+   * semester folder with `type: class-notes` is renamed, and not if the new name is taken or another note anywhere already has that name (links by
+   * name would become ambiguous). Notes whose properties aren't indexed yet are left for the next run; it runs again until all are seen.
+   */
+  async migrateHubNames() {
+    if (this.settings.tinHubsRenamed || this._renamingHubs) return;
+    this._renamingHubs = true;
+    try {
+      const re = /^The Tinmind\/[^/]+\/([^/]+) Notes\.md$/;
+      let pending = false, n = 0;
+      const skipped = [];
+      const open = this.settings.tinOpen || {};
+      for (const f of [...this.app.vault.getMarkdownFiles()]) {
+        const m = re.exec(f.path);
+        if (!m) continue;
+        const cache = this.app.metadataCache.getFileCache(f);
+        if (!cache) { pending = true; continue; }
+        if (!cache.frontmatter || cache.frontmatter.type !== "class-notes") continue;
+        const target = f.parent.path + "/" + m[1] + ".md";
+        if (this.app.vault.getAbstractFileByPath(target) || this.app.vault.getMarkdownFiles().some((g) => g !== f && g.basename === m[1])) { skipped.push(m[1]); continue; }
+        const oldPath = f.path;
+        try {
+          await this.app.fileManager.renameFile(f, target);
+          if (open[oldPath] !== undefined) { open[target] = open[oldPath]; delete open[oldPath]; }
+          n++;
+        } catch (e) { console.error("Nicrosil: couldn't rename a course page", e); skipped.push(m[1]); }
+      }
+      if (!pending) { this.settings.tinHubsRenamed = true; }
+      await this.persist();
+      if (n) new Notice(`Renamed ${n} course page${n === 1 ? "" : "s"}: "Notes" is gone from the end of their names.`, 8000);
+      if (skipped.length) new Notice(`Left these course pages as they are, because another note already has that name: ${skipped.join(", ")}.`, 12000);
+      if (n) this.refreshTin();
+    } catch (e) {
+      console.error("Nicrosil: couldn't rename the course pages", e);
+    } finally {
+      this._renamingHubs = false;
     }
   }
 

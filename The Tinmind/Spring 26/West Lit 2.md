@@ -1,8 +1,7 @@
 ---
 type: class-notes
-course: Theology 2
+course: West Lit 2
 semester: Spring 26
 current: false
-order: 5
+order: 2
 ---
-← [[Tinmind Dashboard]]

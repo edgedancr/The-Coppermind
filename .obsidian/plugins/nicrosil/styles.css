@@ -1086,6 +1086,14 @@ body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-
 body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-file:has(> .nav-file-title[data-path^="_"]),
 body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-file:has(> .nav-file-title[data-path*="/_"]) { display: none; }
 .cm-underscore-btn.is-active { color: var(--text-accent); }
+/* 3.4.0: the file list's own toolbar (new note, new folder, sort, auto-reveal, collapse, and the eye) is gone, so the Coppermind button and the files sit at the top. The eye lives in the sidebar's tab bar instead, at the right end, and shows only while the Files tab is the open one (never in Tinmind mode, where the file list is replaced). */
+.workspace-leaf-content[data-type="file-explorer"] > .nav-header { display: none; }
+/* 3.4.1: the left sidebar's tab bar keeps only the Files icon, with the eye right next to it; the Search and Bookmarks icons are hidden (Ctrl+Shift+F and the bookmarks command still work) */
+.workspace-split.mod-left-split .workspace-tab-header[data-type="search"],
+.workspace-split.mod-left-split .workspace-tab-header[data-type="bookmarks"] { display: none; }
+.cm-underscore-btn { display: none; align-self: center; flex: 0 0 auto; margin-left: 2px; }
+.workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="file-explorer"].is-active) .cm-underscore-btn { display: flex; }
+body.cm-tin-mode .cm-underscore-btn { display: none; }
 
 /* Open next draft buttons (2.11.1): sharp corners, copper-to-teal gradient outline, glow (same as the index jump chips) */
 button.cm-gbtn.mod-cta {
@@ -1359,3 +1367,14 @@ body.cm-tin-mode .workspace-leaf-content[data-type="file-explorer"] .nav-files-c
 .cm-hub-btns button { height: var(--input-height, 30px); }
 .cm-hub .cm-tin-row { min-height: 28px; }
 .cm-tin-leaf .cm-hub, .cm-dashboard-leaf .cm-hub { display: none !important; }
+
+/* ---------- Titles of the Tinmind's notes (3.3.0) ---------- */
+/* Every note in The Tinmind (course pages, the notes inside a course, new notes) has its title in the Tinmind Gradient Style, whatever its status. The Tinmind Dashboard has the hero instead. */
+.cm-tinnote-leaf .inline-title {
+  font-family: var(--cm-gradient-font); font-weight: 600; letter-spacing: 0.02em;
+  background: var(--cm-tin-gradient);
+  background-size: var(--cm-title-w, 14em) 100%; background-repeat: no-repeat; /* --cm-title-w: the title's own text width, set by Nicrosil, so the gradient runs across the words */
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  filter: var(--cm-tin-gradient-glow);
+  animation: none;
+}

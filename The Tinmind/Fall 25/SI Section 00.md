@@ -1,8 +1,7 @@
 ---
 type: class-notes
-course: Rhetoric & Comp
+course: SI Section 00
 semester: Fall 25
 current: false
-order: 4
+order: 6
 ---
-← [[Tinmind Dashboard]]

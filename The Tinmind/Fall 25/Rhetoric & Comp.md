@@ -1,8 +1,7 @@
 ---
 type: class-notes
-course: West Civ 1
+course: Rhetoric & Comp
 semester: Fall 25
 current: false
-order: 2
+order: 4
 ---
-← [[Tinmind Dashboard]]

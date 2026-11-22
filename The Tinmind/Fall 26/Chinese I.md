@@ -1,8 +1,7 @@
 ---
 type: class-notes
-course: Philosophy
+course: Chinese I
 semester: Fall 26
 current: true
-order: 2
+order: 5
 ---
-← [[Tinmind Dashboard]]

@@ -5,4 +5,3 @@ semester: Fall 26
 current: true
 order: 1
 ---
-← [[Tinmind Dashboard]]

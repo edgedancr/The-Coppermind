@@ -1,8 +1,7 @@
 ---
 type: class-notes
-course: Chinese I
+course: SABER
 semester: Fall 26
 current: true
-order: 5
+order: 6
 ---
-← [[Tinmind Dashboard]]

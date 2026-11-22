@@ -1,8 +1,7 @@
 ---
 type: class-notes
-course: SABER
+course: SAIL
 semester: Fall 26
 current: true
-order: 6
+order: 4
 ---
-← [[Tinmind Dashboard]]

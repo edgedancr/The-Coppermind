@@ -1,8 +1,7 @@
 ---
 type: class-notes
-course: SI Section 00
+course: Recitation
 semester: Fall 25
 current: false
-order: 6
+order: 5
 ---
-← [[Tinmind Dashboard]]

@@ -1,8 +1,7 @@
 ---
 type: class-notes
-course: Recitation
+course: West Civ 1
 semester: Fall 25
 current: false
-order: 5
+order: 2
 ---
-← [[Tinmind Dashboard]]

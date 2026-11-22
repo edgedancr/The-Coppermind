@@ -1,8 +1,7 @@
 ---
 type: class-notes
-course: SAIL
+course: Philosophy
 semester: Fall 26
 current: true
-order: 4
+order: 2
 ---
-← [[Tinmind Dashboard]]

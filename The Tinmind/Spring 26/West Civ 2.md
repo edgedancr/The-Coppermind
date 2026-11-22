@@ -1,8 +1,7 @@
 ---
 type: class-notes
-course: West Lit 2
+course: West Civ 2
 semester: Spring 26
 current: false
-order: 2
+order: 4
 ---
-← [[Tinmind Dashboard]]
