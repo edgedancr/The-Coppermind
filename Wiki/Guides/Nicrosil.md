@@ -117,7 +117,7 @@ Small animations make the vault feel alive. None of them change how anything wor
 They are all off if the computer is set to reduce motion.
 
 ## Coppermind Gradient Style
-The **Coppermind Gradient Style** is the vault's one look for a gradient title: copper-to-teal lettering in Almendra SC with a still glow. It is used for the Dashboard's name and title, a verified page's title, the review queue and relations panel headings, and the index's section headings. It is defined once in the plugin's `styles.css` as `--cm-gradient`, `--cm-gradient-font` and `--cm-gradient-glow`, and the theme snippet reads the same three. To give a title in a new feature the style, add the class `cm-gradient-style` to it. Change a variable and every title follows; the exact colors are in [[Nicrosil Changelog]].
+The **Coppermind Gradient Style** (CGS) is the vault's one look for a gradient title: copper-to-teal lettering in Almendra SC with a still glow. It is used for the Dashboard's name and title, a verified page's title, the review queue and relations panel headings, and the index's section headings. It is defined once in the plugin's `styles.css` as `--cm-gradient`, `--cm-gradient-font` and `--cm-gradient-glow`, and the theme snippet reads the same three. To give a title in a new feature the style, add the class `cm-gradient-style` to it. Change a variable and every title follows; the exact colors are in [[Nicrosil Changelog]].
 
 ## Logging a schema change
 Every change to the rules (`AGENTS.md` or a file in `SCHEMAS/`) needs a line in [[Schema Changelog]].[^4] Nicrosil adds it for me:
