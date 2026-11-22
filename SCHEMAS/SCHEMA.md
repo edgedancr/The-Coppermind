@@ -1,20 +1,20 @@
 ---
 type: schema
-version: 8.0
+version: 8.8
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-20
-verified_on: 2026-11-20
+updated: 2026-11-22
+verified_on: 2026-11-22
 ---
-This is the overview of the Coppermind's rules: what the wiki is for, how it is laid out, and which rule file covers what. It is the rulebook for my personal LLM wiki (SAIL portfolio). The Coppermind follows the SAIL version of the LLM-wiki pattern, not Karpathy's original: **I design, the AI drafts, I verify.** Nothing becomes part of the wiki as final until I have reviewed and approved it.
+This is the overview of the Coppermind's rules: what the wiki is for, how it is laid out, and which rule file covers what. It is the rulebook for my personal LLM wiki. The Coppermind follows the SAIL version of the LLM-wiki pattern, not Karpathy's original: **I design, the AI drafts, I verify.** Nothing becomes part of the wiki as final until I have reviewed and approved it.
 
-An agent starts at `AGENTS.md`, which holds the rules for every task and points to the rule files below. Where a rule file and an instruction in chat disagree, the agent asks me before acting.
+An agent starts at `_AGENTS.md`, which holds the rules for every task and points to the rule files below. Where a rule file and an instruction in chat disagree, the agent asks me before acting.
 
 ## The rule files
 
 | File | What it covers |
 |---|---|
-| `AGENTS.md` (vault root) | Read by every agent, every time: scope, drafts only, permissions, voices, no unsourced claims, the index line and log entry formats, and which rule files to read |
+| `_AGENTS.md` (vault root) | Read by every agent, every time: scope, drafts only, permissions, voices, no unsourced claims, the index line and log entry formats, and which rule files to read |
 | [[SCHEMA - Writing Pages]] | Naming, page properties, typed links, citations, attribution, source reliability, and page style |
 | [[SCHEMA - Review]] | Draft vs. verified, change notes on verified pages, and review size |
 | [[SCHEMA - Ingest]] | The ingest operation, step by step, Triage, and raw sources |
@@ -25,17 +25,16 @@ An agent starts at `AGENTS.md`, which holds the rules for every task and points 
 | [[SCHEMA - Export]] | Keeping the vault portable and moving it to another tool |
 | [[Schema Changelog]] (in `_changelogs/`) | The history of every version of the rules |
 
-All of them, `AGENTS.md` included, are one rulebook with one version number, kept in this file's `version` property.
+All of them, `_AGENTS.md` included, are one rulebook with one version number, kept in this file's `version` property.
 
 ## Purpose and scope
 
-The Coppermind has three jobs, in priority order:
+The Coppermind has two jobs, in priority order:
 
 1. **A productivity tool for life.** It should help me in later courses, apprenticeships, and work.
-2. **A showcase.** An employer or mentor should be able to open it and see what I know and how I think.
-3. **A record of my developing perspective.** My own views sit next to outside sources and show how my thinking grows.
+2. **A record of my developing perspective.** My own views sit next to outside sources and show how my thinking grows.
 
-What is in and out of scope is in `AGENTS.md`, because every task needs it.
+What is in and out of scope is in `_AGENTS.md`, because every task needs it.
 
 ## The six parts of the wiki
 
@@ -43,7 +42,7 @@ What is in and out of scope is in `AGENTS.md`, because every task needs it.
 | ------------ | --------------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
 | Sources      | `Sources/`      | My notes, assignments, readings, and scans in their original form, plus a source card for each         | I collect; the agent drafts source cards |
 | Wiki pages   | `Wiki/`         | Concept, glossary, framework, case study, person, summary, prompt, workflow, guide, and analysis pages | The agent drafts; I verify               |
-| Schema       | `SCHEMAS/` and `AGENTS.md` | This rulebook                                                                               | I direct                                 |
+| Schema       | `SCHEMAS/` and `_AGENTS.md` | This rulebook                                                                               | I direct                                 |
 | Index        | `_index.md`      | A map of every page                                                                                    | The agent maintains; I check             |
 | Log          | `_logs/`              | A dated record of every operation and my decisions                                                | The agent maintains; I check             |
 | Perspectives | `Perspectives/` | My reflections, opinions, and conclusions                                                              | I write                                  |
@@ -52,8 +51,7 @@ What is in and out of scope is in `AGENTS.md`, because every task needs it.
 
 ```
 The Coppermind/
-├── AGENTS.md               Start here: the rules for every task, and which rule file to read
-├── CLAUDE.md               Loads AGENTS.md for Claude Code
+├── _AGENTS.md              Start here: the rules for every task, and which rule file to read
 ├── _dashboard.md           Front door and review dashboard (hidden in the file list unless the eye button is on)
 ├── _index.md               Map of every page
 ├── _logs/                  The log: one file per month ("_log 11-26" is November 2026)

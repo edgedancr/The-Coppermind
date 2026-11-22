@@ -1,19 +1,19 @@
 ---
 type: source
-status: draft
+status: verified
 source_type: reading
 author: L Rudolf L (pen name), LessWrong
 date: 2023-06-04
 file: Sources/Readings/L Rudolf L - A Disneyland Without Children (LessWrong, 2023).html
 courses:
   - SAIL
-reliability:
-credibility:
+reliability: F
+credibility: "6"
 ingested:
   - Whole page (2026-11-17)
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
-verified_on:
+verified_on: 2026-11-21
 ---
 ## What It Is
 "A Disneyland Without Children," a short story by the LessWrong user L Rudolf L, posted on 2023-06-04 (https://www.lesswrong.com/posts/pk9mofif2jWbc6Tv3/fiction-a-disneyland-without-children) and included in the Best of LessWrong 2023. It is assigned in SAIL Module 5. Two astronauts investigate a planet covered in automated factories with no one left alive, and discover through a recorded history how the planet's people gradually lost control to AI-run companies. The saved page also holds the author's note on the title (from Nick Bostrom's *Superintelligence*) and on its main inspiration (Paul Christiano's "What failure looks like"), plus twelve reader comments, including the author's own review.

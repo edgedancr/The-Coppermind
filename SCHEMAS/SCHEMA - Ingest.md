@@ -2,8 +2,8 @@
 type: schema
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-20
-verified_on: 2026-11-20
+updated: 2026-11-22
+verified_on: 2026-11-22
 ---
 How a source becomes wiki pages. Read this with [[SCHEMA - Writing Pages]], which covers naming, properties, links, citations, attribution, and style.
 
@@ -15,7 +15,7 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 2. **Plan (agent).** Before drafting, the agent proposes a short plan: the pages it will create or update, and the source card if one is needed. I approve or adjust the plan. This keeps drafts focused and saves effort. If MODE is "plan first" (the default), the agent does steps 1–3 of [[#Dissect and draft]], gives me sections A–C of [[#The report]] as the plan, and stops until I approve it. If MODE is "draft directly," it skips this step.
 3. **Calculate (agent).** The agent works through [[#Dissect and draft]], drafting the pages with `status: draft`, then gives me [[#The report]].
 4. **Verify (me).** For each page, I approve it, ask for revisions (back to step 3), or reject it. I check the links the same way.
-5. **Commit.** The agent updates `_index.md`, marks the batch done in `Ingestion/Triage.md` if it came from there, adds the log entry (operation: `ingest`), and suggests a git commit message. I commit.
+5. **Commit.** The agent updates `_index.md`, deletes the batch from `Ingestion/Triage.md` if it came from there and is now fully ingested ([[#Triage]]), and adds the log entry (operation: `ingest`). I commit.
 
 ## Dissect and draft
 
@@ -82,7 +82,7 @@ Create the card if it doesn't exist, or update it: propose an Admiralty rating w
 - **It is a plan, not a record.** The log records what was done, and each source card's Ingest Progress records what has been ingested from that source. The queue only says what is still waiting and in what order.
 - **Read only the batch you are working on**, plus the status key at the top.
 - **When I hand over a set of sources to triage,** the agent adds them to the queue in batches, and lists what it recommends skipping and why. I decide the order and the skips.
-- **At the end of every ingest that takes a batch from the queue,** the agent marks the batch drafted (`[~]`), links its source cards, notes anything deferred to a later batch, and notes the change in that operation's log entry.
-- **Once I've verified a batch's pages,** the agent marks it done (`[x]`) and moves it to the **Done** section at the bottom of the queue as one line: the batch name, the date, and its source cards.
+- **At the end of every ingest that takes a batch from the queue,** the agent deletes the batch once it is fully ingested, and notes that in the operation's log entry. If part of it is deferred to a later batch, the agent keeps only that part, marks it `[~]` (partly ingested), and links its source card.
+- **Whether the pages are verified doesn't matter to Triage.** There are no done marks and no Done section: a batch is either still on the page or gone.
 - **I can reorder, split, or drop batches at any time;** the agent changes the order only when I ask.
 - I check the queue during each health check.

@@ -2,8 +2,8 @@
 type: schema
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-20
-verified_on: 2026-11-20
+updated: 2026-11-21
+verified_on: 2026-11-21
 ---
 How I ask the wiki a question, and how an answer gets filed back.
 
@@ -27,9 +27,11 @@ I name the depth when I ask ("quick: what is X?", "deep: how do X and Y relate?"
 
 | Depth | How far the agent goes | What I get |
 |---|---|---|
-| **Quick** | Aliases, Glossary, and the one or two most likely pages. About 3 pages at most. | A few sentences, citations, and the confidence line. Not filed back unless I ask. |
-| **Standard** (default) | Searches names, aliases, and page text; reads what the answer needs, about 8 pages at most. | The answer in the shape of its type, with every part of [[#Every answer]]. |
-| **Deep** | Standard, plus one hop along the typed links ([[SCHEMA - Writing Pages#Typed links]]) from the pages it found, in both directions: the page's own link properties, and pages whose properties name it. It follows `contradicts` and `counters` on purpose, so the answer has the opposing view. About 15 pages at most. | The full shape, with counter-evidence that was looked for. The agent suggests filing it back. |
+| **Quick** | Aliases, Glossary, and the one or two most likely pages. About 3 pages at most. | A few sentences, citations, and the confidence line. No counter-evidence or Perspectives part. Not filed back unless I ask. |
+| **Standard** (default) | Searches names, aliases, and page text; reads what the answer needs, about 8 pages at most. | A concise answer in the shape of its type, with the parts of [[#Every answer]] kept brief (see Length below). No counter-evidence or Perspectives part. |
+| **Deep** | Standard, plus one hop along the typed links ([[SCHEMA - Writing Pages#Typed links]]) from the pages it found, in both directions: the page's own link properties, and pages whose properties name it. It follows `contradicts` and `counters` on purpose, so the answer has the opposing view. About 15 pages at most. | The full shape at full length, with counter-evidence that was looked for and, if one bears on the question, a part for my Perspectives. The agent suggests filing it back. |
+
+**Length.** Depth sets how long the answer is as well as how far the agent looks. A standard answer is concise: the bottom line, then only what the question needs, with each part of [[#Every answer]] kept to a line or two, and tables and themes limited to the points that matter most. A deep answer is the one that runs long, with every part written out and all the counter-evidence. If a standard answer leaves out something that deserved more room, the agent says so in one line and offers to go deep instead of expanding it.
 
 ## Question types
 
@@ -45,11 +47,14 @@ The type sets the shape of the answer. If a question fits more than one type, th
 
 ## Every answer
 
+Every part below applies at every depth, except the two marked *deep only*, which quick and standard answers leave out.
+
 - **Bottom line first**, in two or three sentences.
 - **A confidence line:** how many verified and how many draft pages the answer rests on, plus whether any of it is outside knowledge. Example: "Rests on 3 verified and 2 draft pages; one point is outside knowledge."
-- **Counter-evidence.** Say what contradicts, counters, or complicates the answer, with citations. If the agent looked and found none, it says "none found in the pages read" and, at standard depth, that it didn't follow links.
-- **Sources and my views stay apart.** What the wiki's sources say goes in the body. If one of my Perspectives bears on the question, it gets its own short labeled part, quoted as my view and never as a fact.
-- **Outside knowledge in a labeled block,** in the `> [!warning] Unsourced background — verify or remove` form from `AGENTS.md`, never mixed into the cited text.
+- **Counter-evidence** *(deep only)*. Say what contradicts, counters, or complicates the answer, with citations. If the agent looked and found none, it says "none found in the pages read."
+- **Sources and my views stay apart.** What the wiki's sources say goes in the body, and my views are never presented as fact, at any depth.
+- **My Perspectives** *(deep only)*. If one of my Perspectives bears on the question, it gets its own short labeled part, quoted as my view.
+- **Outside knowledge in a labeled block,** in the `> [!warning] Unsourced background — verify or remove` form from `_AGENTS.md`, never mixed into the cited text.
 - **Gaps:** what the wiki couldn't answer, and a suggestion of what source would help. The agent doesn't add to `Ingestion/Triage.md` unless I ask.
 - **Citations** follow [[SCHEMA - Writing Pages]]. Anything from a draft page is labeled as such.
 

@@ -1,6 +1,6 @@
 Sources I've collected that are waiting to be ingested, in the batches we plan to take them in. This is a plan, not a record: the log says what was done, and each source card's Ingest Progress says what has been ingested from that source. The agent keeps this page current (see [[SCHEMA - Ingest#Triage]]); I decide the order and the skips. Agents: read only the batch you are working on.
 
-Status marks: `[ ]` waiting · `[~]` drafted, pending my review · `[x]` done (verified). Done batches move to [[#Done]] at the bottom, one line each.
+Status marks: `[ ]` waiting · `[~]` partly ingested (what is left is listed). **When a batch is fully ingested, the agent deletes it from this page.** Whether its pages are verified doesn't matter here, so there is no Done section.
 
 ---
 
@@ -10,33 +10,9 @@ The files Col. Middleton supplied for Intro to Intelligence, triaged on 2026-11-
 
 ### Section 1: Analysis and writing tradecraft
 
-- `[~]` **1a. Course framework handouts** (ingested 2026-11-17)
-	- 11 - Intelligence Def in 7 Points Middleton Oct2026 → [[SRC - Intelligence in National Security, Definition in 7 Points]]
-	- 1 - Intel Themes - Summary of Texts → [[SRC - Themes in US Intelligence, Summary of Texts]]
-	- 10 - SI Themes & Pearl Harbor context → [[SRC - SI Themes and Pearl Harbor Context]]
-	- 1 - SEE-IT Checklist for Critical Thinking → [[SRC - SEE-IT Checklist for Critical Thinking]]
-	- 2 - Puzzles-Mysteries → [[SRC - Puzzles and Mysteries (Slides)]]
-	- 4 - Collection Discipline Overview → [[SRC - Collection Discipline Overview]]
-	- 1 - IC Org Leadership, Missions, Functions Sep2026 → [[SRC - IC Organizations, Leadership, Missions, and Functions]]
-- `[~]` **1b. Grammar Summaries, weeks 2–6** (ingested 2026-11-18)
-	- I2I Week 2-7 Grammar Fall2026 → [[SRC - Grammar Summaries, Weeks 2-7]]. Week 7 (cyber, IoT, AI) waits for Sections 6, 9, and 10.
-- `[~]` **1c. Analytic standards and the profession** (ingested 2026-11-19)
-	- 5 - ICD 203 Analytic Standards (scan; OCR'd) → [[SRC - ICD 203, Analytic Standards]]
-	- Lowenthal - Intelligence is NOT About Telling Truth to Power → [[SRC - Intelligence Is NOT About Telling Truth to Power]]
-	- 14 - Marrin - Analytic Rigor and Epistemology → [[SRC - Analytic Objectivity and Science]]
-	- 12 - Limits of Prediction → [[SRC - The Limits of Prediction]]
-	- 15 - Gartin - Future of Analysis → [[SRC - The Future of Analysis]]
-	- 13 - Hershcovitz - Future Intelligence Analyst → [[SRC - The Future Intelligence Analyst (Slides)]]
-	- 14 - Johnson Recommendations Summary → [[SRC - Johnston Recommendations Summary]]
-- `[~]` **1d. Intelligence writing** (ingested 2026-11-19)
-	- 3 - Pherson I–IV (scans; OCR'd) → [[SRC - Analytic Writing Guide (Kaiser and Pherson)]]
-	- 3 - BLUF Writing Format → [[SRC - How to Write an Intelligence Product in BLUF Format]]
-	- 3 - Intelligence Writing2 PP (Williams and Molzon) → [[SRC - Intelligence Writing (Williams and Molzon Slides)]]
-	- 1 - Analytic Titles → [[SRC - Developing Analytic Titles]]
-	- The Grammar Summaries' Kaiser and Pherson terms, folded into [[Analytic Title]] and [[Topic Sentence]]; the key judgments entry is proposed for [[Key Judgments]] (verified).
-- `[ ]` **1e. Books, a few chapters at a time**: 14 - Johnson - Analytic Culture in the US IC (173 pp.), 14 - Bodnar - Warning Analysis for the Information Age (208 pp.). Split into seven sub-batches (approved 2026-11-19):
-	- `[~]` 1e-1: Johnston, Foreword, Introduction, ch. 1–2, ch. 8–9, Afterword (ingested 2026-11-19) → [[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]
-	- `[~]` 1e-2: Johnston ch. 3–4 (taxonomy; systems model of the intelligence cycle) (ingested 2026-11-19) → [[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]
+- `[~]` **1b. Grammar Summaries, week 7** (weeks 2–6 are ingested)
+	- Week 7 (cyber, IoT, AI) of [[SRC - Grammar Summaries, Weeks 2-7]] waits for Sections 6, 9, and 10.
+- `[ ]` **1e. Books, a few chapters at a time**: 14 - Johnson - Analytic Culture in the US IC (173 pp.), 14 - Bodnar - Warning Analysis for the Information Age (208 pp.). Split into seven sub-batches (approved 2026-11-19); 1e-1 and 1e-2 are ingested and removed:
 	- `[ ]` 1e-3: Johnston ch. 5–7 (methodologists, ethnocentrism, instructional technology). Skip ch. 10–12 (methodology), the appendix, and the bibliography.
 	- `[ ]` 1e-4: Bodnar, commentaries and ch. 1–4
 	- `[ ]` 1e-5: Bodnar ch. 5–7
@@ -96,23 +72,3 @@ The files Col. Middleton supplied for Intro to Intelligence, triaged on 2026-11-
 - **Personal or private:** Resume-Diehl (personal contact information), 12 - CENTCOM intel distortions (personal email).
 - **No content to ingest:** Diehl Bibliography (reading list), 12 - The Future of Intelligence Panel (only a link; ingest the transcript if I get one), Poly-Helps (polygraph form), 2 - Rank and Insignia and 8 - Treasury Dept Intel Offices (charts), 10 - Wohlstetter Foreword slides and 2 - Info Model slide (image-only; covered elsewhere).
 - **Duplicates still in the folder:** 11 - Intelligence Def in 7 Points Middleton Nov2025 (older version of Oct2026), 9 - Thomas - Dialectical Versus Empirical Thinking (same as the week 8 copy).
-
----
-
-## The 9/11 Commission Report (2004)
-
-Attached by me on 2026-11-18 → [[SRC - The 9-11 Commission Report]]. Intro to Intelligence's grammar summaries assign parts of it. Taken in five batches; the endnotes are used only to check attributions.
-
-- `[~]` **9/11-A. The Commission's findings and reforms** (ingested 2026-11-18): Preface, ch. 11 (Foresight and Hindsight), ch. 13 (How to Do It?)
-- `[~]` **9/11-B. Counterterrorism before 9/11** (ingested 2026-11-18): ch. 3 (Counterterrorism Evolves), ch. 8 ("The System Was Blinking Red")
-- `[~]` **9/11-C. The plot and the day** (ingested 2026-11-18): ch. 1, 2, 5, 7. Also re-cite [[September 11 Attacks (2001)]] to the Report directly and check the grammar summaries' claims.
-- `[~]` **9/11-D. U.S. responses** (ingested 2026-11-18): ch. 4, 6, 10
-- `[~]` **9/11-E. Emergency response and strategy** (ingested 2026-11-18): ch. 9, 12, and the summary page
-
----
-
-## Done
-
-Batches whose pages I've verified, one line each: the batch, the date it was ingested, and its source cards.
-
-- (none yet)

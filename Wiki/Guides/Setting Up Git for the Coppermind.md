@@ -10,7 +10,7 @@ related:
   - "[[SCHEMA]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-10
-verified_on: 2026-11-19
+verified_on: 2026-11-22
 ---
 > [!summary]
 > Git keeps a full history of the Coppermind, so every approved change is recorded and any mistake can be undone. In this wiki, ==a git commit is the "save as final" step==: it happens right after I verify the agent's drafts.[^1] This guide sets git up once and then explains the habit for each review session.
@@ -66,7 +66,7 @@ The vault is not synced by OneDrive or Obsidian Sync, which avoids corrupted fil
 The rule: **pull when I sit down, commit and push when I leave.** Never walk away from a computer with unpushed work.
 1. **Start:** run **Git: Pull** before touching anything.
 2. **Work and review** as usual.
-3. **Finish:** commit with a message (see the habit below), then run **Git: Push**.
+3. **Finish:** commit (see the habit below), then run **Git: Push**.
 4. **Check:** the Source Control panel should show nothing waiting to be committed or pushed.
 
 If I forget to push on one computer, go back to it and push, then pull on the other. If a pull reports a conflict, stop. A conflict means the same lines were changed on both computers. Don't resolve it by deleting files; ask for help first and record what happened in the [[_log 11-26]]. To avoid conflicts, only work on one computer at a time, and run Claude on only one computer at a time.
@@ -75,7 +75,7 @@ If I forget to push on one computer, go back to it and push, then pull on the ot
 1. **Pull** when I start, if I use more than one computer.
 2. Finish the review: approve, revise, or reject each draft.
 3. Read the list of changed files before committing. This is a second look at what's about to become final.
-4. Commit, using the message the agent suggests at the end of the operation (format: `ingest: SAIL notes 8/27/26 — 4 approved, 1 revised, 1 rejected`).
+4. Commit. The message doesn't matter; the log entry is the record of what happened.
 5. **Push**, so GitHub and my other computer have it.
 
 ## Troubleshooting

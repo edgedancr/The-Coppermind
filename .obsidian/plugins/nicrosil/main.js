@@ -1,10 +1,16 @@
 "use strict";
 /*
- * Nicrosil (v0.10.0)
+ * Nicrosil (the version is in manifest.json; the full guide is Wiki/Guides/Nicrosil.md)
  *
  * A nicrosil mind stores investiture and amplifies whoever draws on it. This plugin does the same for
  * the Coppermind: it holds the tools that make working in the vault faster. (Its folder and id are
  * `nicrosil`; they used to be `coppermind-review`.)
+ *
+ * 3.0.0 work so far:
+ *  - Log entries no longer carry a suggested commit message.
+ *  - Rating buttons (reliability A–F, credibility 1–6) on source cards, under the properties strip and on the
+ *    review card. They write `reliability` and `credibility`; the agent's "Proposed B-2" line is marked on them.
+ *  - A Triage link on the Dashboard, under Schema, that opens Ingestion/Triage.md.
  *
  * Review tools for draft pages (all in the sidebar and on hotkeys; no buttons on the page header):
  *  - verify-and-next and skip, so a review session never goes back to a list
@@ -63,6 +69,20 @@ const FLAG_KINDS = {
 const STALE_DAYS = 14;
 const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, hidePanels: true, readMode: "verified", healthDays: 14 };
 const READ_MODES = { verified: "Verified pages only", all: "Every page", off: "Off" };
+// Admiralty Code, as SCHEMA - Writing Pages lays it out: reliability of the source, credibility of the information.
+const RATING_REL = [["A", "Completely reliable"], ["B", "Usually reliable"], ["C", "Fairly reliable"], ["D", "Not usually reliable"], ["E", "Unreliable"], ["F", "Cannot be judged"]];
+const RATING_CRED = [["1", "Confirmed by other sources"], ["2", "Probably true"], ["3", "Possibly true"], ["4", "Doubtful"], ["5", "Improbable"], ["6", "Cannot be judged"]];
+/** The "**Proposed B-2**" line the agent writes on a source card, as { rel, cred }, or null. */
+function parseProposedRating(text) {
+  const m = /\*\*Proposed ([A-F])-([1-6])\*\*/.exec(text || "");
+  return m ? { rel: m[1], cred: m[2] } : null;
+}
+/** A card's rating from its properties: reliability is a letter A–F, credibility a digit 1–6; anything else counts as blank. */
+function ratingOf(fm) {
+  const rel = String((fm && fm.reliability) || "").trim().toUpperCase();
+  const cred = String((fm && fm.credibility) || "").trim();
+  return { rel: /^[A-F]$/.test(rel) ? rel : "", cred: /^[1-6]$/.test(cred) ? cred : "" };
+}
 const SORTS = { clean: "Clean pages first", flagged: "Flagged pages first", type: "By page type", az: "A to Z" };
 
 /* ---------- pure helpers (tested outside Obsidian) ---------- */
@@ -346,7 +366,6 @@ function verifyLogEntry({ name, date, note, openFlags, resolved = [] }) {
     lines.push(`  - Flags still on the page when I approved it (${openFlags.length}): ` +
       openFlags.map(flagName).join("; "));
   }
-  lines.push(`- **Commit:** \`verify: ${name}\``);
   return lines.join("\n");
 }
 
@@ -358,7 +377,6 @@ function rejectLogEntry({ name, date, reason, dangling, resolved = [] }) {
     lines.push(...resolvedLines(resolved));
   }
   if (dangling.length) lines.push(`  - Pages that still link to it: ${dangling.map((n) => `[[${n}]]`).join(", ")}`);
-  lines.push(`- **Commit:** \`reject: ${name}\``);
   return lines.join("\n");
 }
 
@@ -388,7 +406,6 @@ function renameLogEntry(date) {
     "- **Think:** The front page works as a dashboard, so it should be named like one.",
     "- **Calculate:** The Coppermind Review plugin renamed `Home.md` to `Dashboard.md` through Obsidian, which updated the links that pointed to it, and pointed the startup-page plugin at the new name.",
     "- **Verify:** pending. To check that the links to the Dashboard still work.",
-    "- **Commit:** `setup: rename Home to Dashboard`",
   ].join("\n");
 }
 
@@ -426,7 +443,7 @@ function logFileHeader(date) {
   const name = new Date(y, m - 1, 1).toLocaleString("en-US", { month: "long", year: "numeric" });
   return [
     "---", "type: log", "---",
-    `A dated record of every ingest, query, health check, verification, schema change, and tool change, and what I approved, revised, or rejected. Newest entries are at the top, so a new entry goes just under the line below, above the newest one. Past entries are never rewritten. This file holds ${name}; each month has its own file in \`${LOG_DIR}/\`. Format and rules: \`AGENTS.md\` and [[SCHEMA - Index and Log#The log]]. Agents: don't read this file whole; read only the first 15 or so lines to add an entry, and search the headings.`,
+    `A dated record of every ingest, query, health check, verification, schema change, and tool change, and what I approved, revised, or rejected. Newest entries are at the top, so a new entry goes just under the line below, above the newest one. Past entries are never rewritten. This file holds ${name}; each month has its own file in \`${LOG_DIR}/\`. Format and rules: \`_AGENTS.md\` and [[SCHEMA - Index and Log#The log]]. Agents: don't read this file whole; read only the first 15 or so lines to add an entry, and search the headings.`,
     "", "---",
   ].join("\n");
 }
@@ -689,6 +706,7 @@ class QueueView extends ItemView {
       } else {
         card.createDiv({ cls: "cm-ok", text: "No open flags." });
       }
+      if (p.isSourceCard(cur)) p.drawRatingButtons(card.createDiv({ cls: "cm-ratebar cm-ratebar-card" }), cur);
       const pending = p.resolvedFor(cur.path);
       if (pending.length) card.createDiv({ cls: "cm-pending", text: `${pending.length} flag${pending.length > 1 ? "s" : ""} resolved; logged when you verify.` });
       const row = card.createDiv({ cls: "cm-card-buttons" });
@@ -1716,7 +1734,7 @@ class ReviewSettings extends PluginSettingTab {
         this.plugin.settings.autoAdvance = v; await this.plugin.persist();
       }));
     new Setting(el).setName("Play an animation when I verify a page")
-      .setDesc("A check stamp and a burst of sparks, then the next page slides in. It is skipped if your computer is set to reduce motion.")
+      .setDesc("A check stamp and a burst of sparks, then the next page slides in (with Open next after verify off, only the stamp and sparks play and the page stays put). It is skipped if your computer is set to reduce motion.")
       .addToggle((t) => t.setValue(this.plugin.settings.celebrate !== false).onChange(async (v) => {
         this.plugin.settings.celebrate = v; await this.plugin.persist();
       }));
@@ -2417,6 +2435,7 @@ module.exports = class Nicrosil extends Plugin {
     this.readHandled = new WeakMap(); // leaf -> path already considered for Reading view
     this.stripPaths = new WeakMap();
     this.stripObservers = new Set();
+    this.proposedCache = new Map(); // source card path -> { mtime, value } for its "Proposed B-2" line
     this.popObservers = new Set(); // watchers on hover previews, dropped when the preview closes
     this.lastHover = null;         // the page the pointer last hovered a link to, so a hover preview knows which page it shows
 
@@ -2476,7 +2495,10 @@ module.exports = class Nicrosil extends Plugin {
     });
     popWatch.observe(document.body, { childList: true });
     this.register(() => popWatch.disconnect());
-    this.registerEvent(this.app.metadataCache.on("changed", () => { this.scheduleRefresh(); this.syncDashboardLeaves(false); }));
+    this.registerEvent(this.app.metadataCache.on("changed", (file) => {
+      this.scheduleRefresh(); this.syncDashboardLeaves(false);
+      if (file) this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view && l.view.file && l.view.file.path === file.path) this.ensureStrips(l.view); });
+    }));
     this.registerEvent(this.app.metadataCache.on("resolved", () => this.scheduleRefresh()));
     this.registerEvent(this.app.vault.on("delete", () => this.scheduleRefresh()));
     this.registerEvent(this.app.vault.on("rename", (file, oldPath) => this.onRename(file, oldPath)));
@@ -2512,12 +2534,12 @@ module.exports = class Nicrosil extends Plugin {
     document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => { e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"); e.style.removeProperty("--cm-log-title"); });
     document.querySelectorAll(".cm-dashboard-tab").forEach((e) => e.classList.remove("cm-dashboard-tab"));
     document.body.classList.remove("cm-quiet");
-    document.querySelectorAll(".cm-propstrip").forEach((e) => e.remove());
+    document.querySelectorAll(".cm-propstrip, .cm-ratebar").forEach((e) => e.remove());
     this.stripObservers.forEach((o) => o.disconnect());
     this.stripObservers.clear();
     this.popObservers.forEach((o) => o.disconnect());
     this.popObservers.clear();
-    this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view && l.view.containerEl) { l.view.containerEl.classList.remove("cm-strip-leaf", "cm-props-open"); l.view.containerEl.querySelectorAll(".cm-propstrip").forEach((e) => e.remove()); l.view.__cmStripObs = null; } });
+    this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view && l.view.containerEl) { l.view.containerEl.classList.remove("cm-strip-leaf", "cm-props-open"); l.view.containerEl.querySelectorAll(".cm-propstrip, .cm-ratebar").forEach((e) => e.remove()); l.view.__cmStripObs = null; } });
   }
 
   async persist() {
@@ -2946,9 +2968,11 @@ module.exports = class Nicrosil extends Plugin {
       { icon: "scroll-text", title: "Log", sub: "Every change and decision", go: (newTab) => { const f = this.latestLogFile(); if (f) this.app.workspace.getLeaf(newTab ? "tab" : false).openFile(f); else new Notice("There is no log file yet."); } },
       { icon: "network", title: "Wiki map", sub: "Every typed link, as a tree and a map", go: () => this.activateWikiMap() },
       { icon: "book-open", title: "Schema", sub: "The rulebook", go: open("SCHEMA") },
+      { icon: "list-checks", title: "Triage", sub: "Sources waiting to be ingested", go: open("Ingestion/Triage"), under: true }, // sits under Schema (second column)
     ];
     cards.forEach((c, idx) => {
       const card = el.createDiv({ cls: "cm-navcard" });
+      if (c.under) card.addClass("cm-navcard-under");
       if (!this.isQuiet()) card.style.setProperty("--acc", DASH_COLORS[idx % DASH_COLORS.length]);
       card.style.setProperty("--i", String(idx));
       card.setAttr("role", "button");
@@ -3110,7 +3134,7 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   removeStrips(view) {
-    view.containerEl.querySelectorAll(".cm-propstrip").forEach((e) => e.remove());
+    view.containerEl.querySelectorAll(".cm-propstrip, .cm-ratebar").forEach((e) => e.remove());
     if (view.__cmStripObs) { view.__cmStripObs.disconnect(); this.stripObservers.delete(view.__cmStripObs); view.__cmStripObs = null; }
   }
 
@@ -3139,6 +3163,12 @@ module.exports = class Nicrosil extends Plugin {
       const next = s.nextElementSibling;
       if (!next || !next.classList.contains("metadata-container")) s.remove();
     });
+    root.querySelectorAll(".cm-ratebar").forEach((b) => {
+      const prev = b.previousElementSibling;
+      if (!prev || !prev.classList.contains("metadata-container")) b.remove();
+    });
+    // Source cards also get the rating buttons, just under the Properties block (not in hover previews).
+    const wantBar = this.isSourceCard(file) && !root.classList.contains("hover-popover") && !root.closest(".hover-popover");
     const metas = root.querySelectorAll(".metadata-container");
     metas.forEach((meta) => {
       let strip = meta.previousElementSibling;
@@ -3160,6 +3190,19 @@ module.exports = class Nicrosil extends Plugin {
       }
       strip.setAttribute("aria-expanded", String(root.classList.contains("cm-props-open")));
       strip.setAttribute("aria-label", "Show or hide this page's properties");
+      let bar = meta.nextElementSibling;
+      if (bar && !bar.classList.contains("cm-ratebar")) bar = null;
+      if (!wantBar) { if (bar) bar.remove(); }
+      else {
+        if (!bar) {
+          bar = document.createElement("div");
+          bar.className = "cm-ratebar";
+          meta.parentElement.insertBefore(bar, meta.nextSibling);
+        }
+        const r = ratingOf(this.fm(file));
+        const bsig = [file.path, file.stat.mtime, r.rel, r.cred].join("|");
+        if (bar.dataset.sig !== bsig) { bar.dataset.sig = bsig; this.drawRatingButtons(bar, file); }
+      }
       if (strip.dataset.sig === sig) return;
       strip.dataset.sig = sig;
       strip.empty ? strip.empty() : (strip.textContent = "");
@@ -3415,12 +3458,85 @@ module.exports = class Nicrosil extends Plugin {
     return fm;
   }
 
+  isSourceCard(file) {
+    return !!file && file.extension === "md" && /^Sources\/Source Cards\//.test(file.path) && String(this.fm(file).type || "") === "source";
+  }
+
+  /** The agent's "Proposed B-2" line on a card; read once per saved version of the file. undefined is never returned. */
+  async proposedRating(file) {
+    const c = this.proposedCache.get(file.path);
+    if (c && c.mtime === file.stat.mtime) return c.value;
+    let value = null;
+    try { value = parseProposedRating(await this.app.vault.cachedRead(file)); } catch (e) { console.error("Nicrosil: couldn't read the proposed rating", e); }
+    this.proposedCache.set(file.path, { mtime: file.stat.mtime, value });
+    return value;
+  }
+
+  /** Write one half of the rating (part "rel" or "cred"; null clears it), or both at once (part "both", value { rel, cred }). */
+  async setRating(file, part, value) {
+    try {
+      await this.app.fileManager.processFrontMatter(file, (f) => {
+        if (part === "both") { f.reliability = value.rel; f.credibility = String(value.cred); }
+        else if (part === "rel") f.reliability = value;
+        else f.credibility = value === null ? null : String(value);
+      });
+    } catch (e) {
+      console.error("Nicrosil: couldn't set the rating", e);
+      new Notice(`Couldn't set the rating: ${e.message}`, 8000);
+    }
+  }
+
+  /**
+   * Two rows of buttons: reliability A–F and credibility 1–6. A click sets that value; clicking the lit one clears it.
+   * If the card has a "Proposed B-2" line, those two buttons get a dotted outline and a "Use B-2" button sets both.
+   * The new value reaches the page through the metadata cache, which redraws the buttons.
+   */
+  drawRatingButtons(host, file, proposed) {
+    if (!host.isConnected && proposed !== undefined) return;
+    const cached = this.proposedCache.get(file.path);
+    if (proposed === undefined && cached && cached.mtime === file.stat.mtime) proposed = cached.value;
+    host.empty();
+    const cur = ratingOf(this.fm(file));
+    const box = host.createDiv({ cls: "cm-rate" });
+    const row = (label, list, now, part, prop) => {
+      const r = box.createDiv({ cls: "cm-rate-row" });
+      r.createSpan({ cls: "cm-rate-label", text: label });
+      const g = r.createDiv({ cls: "cm-rate-group" });
+      g.setAttr("role", "group");
+      g.setAttr("aria-label", label);
+      list.forEach(([k, meaning]) => {
+        const b = g.createEl("button", { cls: "cm-rate-btn", text: k });
+        b.setAttr("title", `${k}: ${meaning}` + (prop === k ? " (proposed)" : ""));
+        b.setAttr("aria-label", `${label} ${k}: ${meaning}`);
+        b.setAttr("aria-pressed", String(now === k));
+        if (now === k) b.addClass("is-on");
+        if (prop === k && now !== k) b.addClass("is-proposed");
+        b.addEventListener("click", (e) => { e.stopPropagation(); this.setRating(file, part, now === k ? null : k); });
+      });
+    };
+    row("Reliability", RATING_REL, cur.rel, "rel", proposed ? proposed.rel : "");
+    row("Credibility", RATING_CRED, cur.cred, "cred", proposed ? proposed.cred : "");
+    const foot = box.createDiv({ cls: "cm-rate-foot" });
+    const meaning = (list, k) => (list.find((x) => x[0] === k) || [])[1] || "";
+    if (cur.rel && cur.cred) foot.createSpan({ cls: "cm-rate-sum", text: `${cur.rel}-${cur.cred}: ${meaning(RATING_REL, cur.rel)}; ${meaning(RATING_CRED, cur.cred).toLowerCase()}` });
+    else foot.createSpan({ cls: "cm-rate-sum is-empty", text: cur.rel || cur.cred ? "Half rated. Set both before verifying." : "Not rated yet" });
+    if (proposed && (cur.rel !== proposed.rel || cur.cred !== proposed.cred)) {
+      const use = foot.createEl("button", { cls: "cm-mini", text: `Use ${proposed.rel}-${proposed.cred}` });
+      use.setAttr("title", "Set both to the rating the agent proposed");
+      use.addEventListener("click", (e) => { e.stopPropagation(); this.setRating(file, "both", proposed); });
+    }
+    if (proposed === undefined) this.proposedRating(file).then((p) => { if (host.isConnected) this.drawRatingButtons(host, file, p); });
+  }
+
   async verify(file) {
     const fm = this.precheck(file);
     if (!fm) return;
-    if (fm.type === "source" && !String(fm.reliability || "").trim()) {
-      new Notice("Fill in this source card's reliability rating first (SCHEMA - Review: ratings are item by item).", 8000);
-      return;
+    if (fm.type === "source") {
+      const r = ratingOf(fm);
+      if (!r.rel || !r.cred) {
+        new Notice("Rate this source card first: reliability A–F and credibility 1–6 (SCHEMA - Review: ratings are item by item).", 8000);
+        return;
+      }
     }
     const flags = parseFlags(await this.app.vault.read(file));
     const resolved = this.resolvedFor(file.path);
@@ -3441,9 +3557,9 @@ module.exports = class Nicrosil extends Plugin {
           await this.persist();
           new Notice(`Verified “${file.basename}”.` + (indexed || !file.path.includes("/") || file.path.startsWith(SCHEMA_DIR) ? "" : " It wasn't in _index.md; add it by hand."), 5000);
           const nxt = nextAfter(order, file.path);
-          const fx = this.settings.celebrate !== false && !prefersReduced() ? await this.playVerifyOut(file, order.length > 1 ? "Verified" : "All drafts verified") : null;
+          const fx = this.settings.celebrate !== false && !prefersReduced() ? await this.playVerifyOut(file, order.length > 1 ? "Verified" : "All drafts verified", !!this.settings.autoAdvance) : null;
           if (this.settings.autoAdvance) await this.openNext(file.path, order);
-          if (fx) this.playVerifyIn(fx, this.settings.autoAdvance && nxt ? `Next: ${nxt.name} · ${Math.max(0, order.length - 1)} left` : "");
+          if (fx) this.playVerifyIn(fx, this.settings.autoAdvance && nxt ? `Next: ${nxt.name} · ${Math.max(0, order.length - 1)} left` : "", !!this.settings.autoAdvance);
           else this.vfBusy = false;
           if (!this.settings.autoAdvance) setTimeout(() => this.pulseStrip(file), 600);
         } catch (e) {
@@ -3527,7 +3643,8 @@ module.exports = class Nicrosil extends Plugin {
     setTimeout(() => strip.removeClass("cm-strip-pulse"), 2200);
   }
 
-  playVerifyOut(file, label) {
+  /** `slide` is false when "Open next after verify" is off: then only the check and sparks play and the page stays where it is. */
+  playVerifyOut(file, label, slide = true) {
     this.vfBusy = true;
     const view = this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).find((v) => v && v.file && v.file.path === file.path);
     const host = view && view.containerEl;
@@ -3550,16 +3667,16 @@ module.exports = class Nicrosil extends Plugin {
       p.style.setProperty("--c", cols[i % 4]);
       p.style.animationDelay = `${(i % 5) * 22}ms`;
     }
-    content.addClass("cm-vf-out");
+    if (slide) content.addClass("cm-vf-out");
     return new Promise((res) => setTimeout(() => { ov.remove(); res({ host, content }); }, 700));
   }
 
-  playVerifyIn(fx, label) {
+  playVerifyIn(fx, label, slide = true) {
     fx.content.removeClass("cm-vf-out");
     const leaf = this.mainLeaf();
     const host = leaf && leaf.view && leaf.view.containerEl;
     const content = host && host.querySelector(".view-content");
-    if (content) {
+    if (content && slide) {
       content.addClass("cm-vf-in");
       setTimeout(() => content.removeClass("cm-vf-in"), 650);
     }
@@ -3715,7 +3832,7 @@ module.exports = class Nicrosil extends Plugin {
 };
 
 module.exports.__test = {
-  parseFlags, removeLines, sortQueue, nextAfter, groupOf, editIndex,
+  parseProposedRating, ratingOf, parseFlags, removeLines, sortQueue, nextAfter, groupOf, editIndex,
   verifyLogEntry, rejectLogEntry, addToLog, daysBetween, today, parseLog, describeEntry, renameLogEntry, parseIndex, renderIndex,
   logPathFor, logOrder, logFileHeader, isLogPath, setFrontmatterProps, schemaInfo, checkVersion, addChangelogEntry, findChangelog,
 };

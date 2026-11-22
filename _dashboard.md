@@ -23,7 +23,7 @@ It is not my position to judge truth... I simply carry it
 ## Reference
 
 > [!info]- About the Coppermind
-> **The Coppermind** is my personal knowledge wiki, built for SAIL (INT323) at Patrick Henry College and meant to keep growing long after the course. It collects what I learn in my courses, personal work, and more, then links it together and records how my own thinking develops.
+> **The Coppermind** is my personal knowledge wiki, built for SAIL and meant to keep growing long after the course. It collects what I learn in my courses, personal work, and more, then links it together and records how my own thinking develops.
 >
 > It is built with an AI agent, under one rule: **I design, the AI drafts, I verify.** Nothing counts as part of the wiki until I have reviewed it and approved it.
 
@@ -32,13 +32,6 @@ It is not my position to judge truth... I simply carry it
 > - **Claims are cited.** Each factual claim links back to the original source: usually my class notes for a specific date, or a reading with a page number. Click a citation to see where it came from.
 > - **Links have meaning.** The properties at the top of each page say *how* ideas relate: one idea *supports*, *contradicts*, *counters*, or is an *example of* another.
 > - **My opinions are kept separate.** Wiki pages report what sources and courses teach. My own views live in [[My Worldview]] and the rest of the Perspectives folder.
-
-> [!info]- What's covered
-> | Course | Semester |
-> |---|---|
-> | SAIL (INT323) | Fall 2026 |
-> | Intro to Intelligence | Fall 2026 |
-> | Freedom's Foundations 1 | Fall 2026 |
 
 > [!info]- The six parts
 > | Part | What it holds |

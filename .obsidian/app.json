@@ -4,5 +4,6 @@
   "newLinkFormat": "shortest",
   "useMarkdownLinks": false,
   "showUnsupportedFiles": true,
-  "openBehavior": "file:_dashboard.md"
+  "openBehavior": "file:_dashboard.md",
+  "userIgnoreFilters": null
 }

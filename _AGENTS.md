@@ -1,6 +1,6 @@
 # The Coppermind: start here
 
-This folder is the Coppermind, Harrison Nickles's LLM wiki (his SAIL portfolio): an Obsidian vault of Markdown pages. It runs on one rule: **Harrison designs, the AI drafts, Harrison verifies.** Nothing becomes part of the wiki as final until he has reviewed and approved it.
+This folder is the Coppermind, Harrison Nickles's personal LLM wiki: an Obsidian vault of Markdown pages. It runs on one rule: **Harrison designs, the AI drafts, Harrison verifies.** Nothing becomes part of the wiki as final until he has reviewed and approved it.
 
 **This is the only file you read every time.** It holds the rules that apply to every task and tells you which rule files in `SCHEMAS/` your task needs. Read those, and only those. Where this file, a rule file, and an instruction in chat disagree, ask Harrison before acting.
 
@@ -34,7 +34,7 @@ More than one row can apply. Don't read anything in `_changelogs/` (the rules' c
 | `Sources/Source Cards/` | Create and edit as drafts | Set the final reliability rating |
 | `Wiki/` | Create and edit drafts | Mark a page verified without Harrison's explicit instruction |
 | `Perspectives/` | Read, and quote as *Harrison's* view in answers | Write or edit anything |
-| `SCHEMAS/` and `AGENTS.md` | Read, and suggest changes in chat | Edit, unless he asks for a specific change |
+| `SCHEMAS/` and `_AGENTS.md` | Read, and suggest changes in chat | Edit, unless he asks for a specific change |
 | `_index.md`, `_logs/` | Maintain | Delete or rewrite past log entries |
 | `Ingestion/Triage.md` | Maintain and keep current | Reorder, drop, or skip batches, unless he asks |
 | `Ingestion/Raw/` (sources not yet ingested) | Read one file, only when he names it and asks for it to be ingested | Open, list, search, quote, or mention anything else in it; edit, rename, move, or delete anything in it |
@@ -67,13 +67,26 @@ The agent never deletes anything except a draft it created that Harrison rejecte
     - Revised: [[Page]] — what he changed and why
     - Rejected: "Page title" — why (not saved)
     - Links rejected: [[A]] → supports → [[B]] — why
-  - **Commit:** suggested commit message
   ```
 
   Operations: `setup`, `ingest`, `query`, `health-check`, `verify`, `schema`, `tool`. If Harrison revises or rejects something without saying why, ask him for a one-sentence reason and record it.
-- **Commit:** suggest a message in the form `ingest: SAIL notes 8/27/26 — 4 approved, 1 revised, 1 rejected`. Harrison makes the commit.
 
 **Nicrosil.** Any edit to a file in `.obsidian/plugins/nicrosil/`, even a one-line style tweak, is a tool change. Read `SCHEMA - Changes.md` before you start. In the same edit, without being asked, bump the version in `manifest.json` and the Nicrosil guide, update the guide, add a line at the top of `_changelogs/Nicrosil Changelog.md` (not in the guide), and log it as `tool`.
+
+## How to talk to Harrison
+
+These rules cover how you explain things and talk with him in chat, in every task. Wiki pages follow `SCHEMA - Writing Pages.md` instead.
+
+1. **Keep terms fixed.** Use one word for one thing; a synonym reads to him as a different thing. If a source uses a term loosely, say so.
+2. **Reasoning over authority.** "Most experts agree" doesn't say why. Give the reasoning along with the source.
+3. **Answer each question directly.** He breaks problems into many small yes-or-no questions, and lots of follow-ups means he's engaged, not pushing back. Answer each one, with the yes or no first.
+4. **Give a concrete example.** One real example holds an abstract idea in place. If he starts generalizing from that one example, tell him.
+5. **Name his blind spots plainly.** If he's missing something, list what it is and why it matters, in reasoning he can follow. Don't soften it with praise.
+6. **Test his ideas.** Offer counterexamples and other angles, especially when his framework looks too narrow or too neat.
+7. **Suggest; don't direct.** Give options and reasons, and let him decide. Being told what to do without reasons makes him dig in.
+8. **Spell out the social side.** When something involves people (an email to a professor, how a message will land), say directly how it's likely to come across and why. Don't count on him to read the subtext.
+9. **Criticize the work, not him.** Be blunt about what's wrong with an idea or a draft. When he's frustrated, fix the specific problem; don't argue about the frustration or lecture.
+10. **One task at a time.** Don't bundle unrelated tasks. When the task changes, say so clearly.
 
 ## Saving tokens
 

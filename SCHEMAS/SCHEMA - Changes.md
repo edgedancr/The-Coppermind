@@ -2,20 +2,20 @@
 type: schema
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-20
-verified_on: 2026-11-20
+updated: 2026-11-21
+verified_on: 2026-11-21
 ---
 How the rules, templates, and tools change, and how each change is recorded.
 
 ## Changing the rules
 
-The rules are `AGENTS.md` and the files in `SCHEMAS/`. Together they are one rulebook with one version number, kept in the `version` property of [[SCHEMA]].
+The rules are `_AGENTS.md` and the files in `SCHEMAS/`. Together they are one rulebook with one version number, kept in the `version` property of [[SCHEMA]].
 
 - **The agent may suggest changes in chat**, especially after a health check, **but only I approve them**, and the agent edits a rule file only when I ask for a specific change.
-- **Put each rule in the one file it belongs to**, using the table in [[SCHEMA#The rule files]]. Don't repeat a rule in a second file; point to it. A rule every task needs goes in `AGENTS.md`, and `AGENTS.md` stays short, because every agent reads it every time.
+- **Put each rule in the one file it belongs to**, using the table in [[SCHEMA#The rule files]]. Don't repeat a rule in a second file; point to it. A rule every task needs goes in `_AGENTS.md`, and `_AGENTS.md` stays short, because every agent reads it every time.
 - **Version numbers:** small clarifications bump the decimal (1.0 → 1.1); changes to structure or workflow bump the whole number.
 - **Every change gets three records, written in the same edit:**
-  1. **A change note on each rule file changed.** The agent sets that file to `draft`, keeps its `verified_on`, and adds one line per rule changed to its `changes_since_verified`, exactly as for any verified page ([[SCHEMA - Review#Changing a verified page]]). `AGENTS.md` has no properties, so a change to it is noted on [[SCHEMA]]. I re-review only the listed changes, and the notes are deleted when I verify the file.
+  1. **A change note on each rule file changed.** The agent sets that file to `draft`, keeps its `verified_on`, and adds one line per rule changed to its `changes_since_verified`, exactly as for any verified page ([[SCHEMA - Review#Changing a verified page]]). `_AGENTS.md` has no properties, so a change to it is noted on [[SCHEMA]]. I re-review only the listed changes, and the notes are deleted when I verify the file.
   2. **A line in [[Schema Changelog]]**, with the new version and date, naming the files and sections changed. The **Log a schema change** button in [[Nicrosil]] adds it and updates the version in [[SCHEMA]].
   3. **A `schema` entry in the log.**
 

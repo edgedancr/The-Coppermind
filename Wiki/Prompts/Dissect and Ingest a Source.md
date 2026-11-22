@@ -21,7 +21,7 @@ verified_on: 2026-11-19
 Fill in the five lines. Anything left blank uses the default in brackets.
 
 ```
-Ingest a source into the Coppermind. Read AGENTS.md, then SCHEMAS/SCHEMA - Ingest.md and SCHEMAS/SCHEMA - Writing Pages.md, and follow them. If this prompt and those files disagree, the files win and you tell me.
+Ingest a source into the Coppermind. Read _AGENTS.md, then SCHEMAS/SCHEMA - Ingest.md and SCHEMAS/SCHEMA - Writing Pages.md, and follow them. If this prompt and those files disagree, the files win and you tell me.
 
 SOURCE: 
 SCOPE: [default: everything not yet listed under "Ingest Progress" on its source card]

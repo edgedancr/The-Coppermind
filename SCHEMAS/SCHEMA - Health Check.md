@@ -2,8 +2,8 @@
 type: schema
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-20
-verified_on: 2026-11-20
+updated: 2026-11-22
+verified_on: 2026-11-22
 ---
 A health check reviews the whole wiki (or one folder) and saves a short report I can decide from. One is due every 14 days, counted from the date of the newest report in `Health Checks/`. The Dashboard's health check card ([[Nicrosil]]) shows the days since the last one and turns red when the next is overdue. I can ask for one sooner at any time.
 
@@ -32,7 +32,7 @@ The report's table has one row for each of these, in this order, every time:
 - verified pages changed since they were verified, and drafts that have `verified_on` but no `changes_since_verified` note, or verified pages that still carry one (the rule files in `SCHEMAS/` are checked like any other page)
 - gaps in the sources themselves (unfinished notes, "?" placeholders, empty definitions)
 - pages missing from `_index.md`, or index entries for pages that no longer exist
-- `Ingestion/Triage.md` out of date: a batch still marked waiting whose sources already have source cards, or a batch marked done whose sources don't
+- `Ingestion/Triage.md` out of date: a batch still marked waiting whose sources already have source cards, a batch marked partly ingested (`[~]`) whose sources don't, or a batch that is fully ingested but still listed
 
 `Ingestion/Raw/` is outside every check: the script leaves it out, and the judgment checks don't open it ([[SCHEMA - Ingest#Raw sources]]).
 

@@ -2,8 +2,8 @@
 type: schema
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-20
-verified_on: 2026-11-20
+updated: 2026-11-21
+verified_on: 2026-11-21
 ---
 The Coppermind must outlive any one tool or agent.
 
@@ -11,7 +11,7 @@ The Coppermind must outlive any one tool or agent.
 
 1. **Everything that matters is plain text:** Markdown pages, YAML properties, and `[[wikilinks]]`. Images, PDFs, and tools sit in ordinary folders.
 2. **Obsidian-only extras are conveniences, never the only copy of anything:** `Health Check History.base`, the Nicrosil plugin, CSS snippets, themes, and `.obsidian/` settings. Outside Obsidian, the pages themselves are plain text and read fine.
-3. **The rules are written in plain language**, so any agent can follow them. `AGENTS.md` is where every agent starts, and `CLAUDE.md` loads it for Claude Code. For a new agent, point its instructions file at `AGENTS.md`.
+3. **The rules are written in plain language**, so any agent can follow them. `_AGENTS.md` is where every agent starts. For a new agent, point its instructions file at `_AGENTS.md`.
 
 ## Moving to a new tool
 

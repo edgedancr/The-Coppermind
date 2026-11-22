@@ -11,6 +11,9 @@ body {
   /* Coppermind Gradient Style (2.13.6): the one copper-to-teal gradient, its font and its glow, for every gradient title in the vault. Change them here and every title follows, including the index headings in coppermind.css. */
   --cm-gradient: linear-gradient(100deg, #d99a62 0%, #f6d3a8 21%, #d99a62 32%, #86d2c1 100%);
   --cm-gradient-font: 'Almendra SC', "Segoe UI", system-ui, sans-serif;
+  /* Draft title style (2.13.9): dusty, faded copper, the dull opposite of the verified gradient, with no green so the two stay apart. The colors are a little see-through on purpose. */
+  --cm-draft-gradient: linear-gradient(100deg, rgba(165, 139, 114, 0.9) 0%, rgba(142, 119, 98, 0.9) 55%, rgba(122, 103, 87, 0.9) 100%);
+  --cm-draft-glow: drop-shadow(0 0 7px rgba(184, 115, 51, 0.35));
   --cm-gradient-glow: drop-shadow(0 0 7px rgba(217, 138, 74, 0.4)) drop-shadow(0 0 16px rgba(95, 174, 158, 0.25));
 }
 /* Coppermind Gradient Style: add this class to a title in a new feature to get the whole style. */
@@ -636,7 +639,14 @@ body {
   animation: none;
 }
 @keyframes cm-title-shimmer { 0%, 55% { background-position: 120% 0; } 100% { background-position: -20% 0; } }
-.cm-st-draft .inline-title { animation: cm-ember 4.5s ease-in-out infinite; }
+.cm-st-draft .inline-title {
+  font-family: var(--cm-gradient-font); font-weight: 600; letter-spacing: 0.02em;
+  background: var(--cm-draft-gradient);
+  filter: var(--cm-draft-glow);
+  background-size: var(--cm-title-w, 14em) 100%; background-repeat: no-repeat; /* --cm-title-w: the title's own text width, set by Nicrosil, same as a verified title */
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  animation: none;
+}
 @keyframes cm-ember { 0%, 100% { text-shadow: 0 0 0 rgba(184, 115, 51, 0); } 50% { text-shadow: 0 0 16px rgba(184, 115, 51, 0.38); } }
 
 /* properties strip glows once after verify */
@@ -1129,3 +1139,23 @@ button.cm-gbtn.mod-cta:disabled {
   box-shadow: 0 0 7px rgba(232,154,90,.5), 0 0 12px rgba(120,210,192,.38) !important;
 }
 .cm-hero .cm-search-bar .cm-search-input { font-family: "Segoe UI", system-ui, sans-serif; font-size: 1.1em; }
+
+/* ---- source card rating buttons (reliability A–F, credibility 1–6) ---- */
+.cm-ratebar { margin: -8px 0 14px -4px; }
+.cm-props-open .cm-ratebar { margin-top: 8px; }
+.cm-ratebar-card { margin: 8px 0 4px; }
+.cm-rate { display: flex; flex-direction: column; gap: 6px; font-size: var(--font-ui-smaller); }
+.cm-rate-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cm-rate-label { width: 66px; flex: none; color: var(--text-faint); }
+.cm-rate-group { display: flex; gap: 3px; }
+.cm-rate-btn { all: unset; box-sizing: border-box; min-width: 26px; height: 24px; display: inline-flex; align-items: center; justify-content: center; padding: 0 6px; border: 1px solid var(--background-modifier-border); border-radius: 4px; font-size: var(--font-ui-smaller); font-weight: 600; color: var(--text-muted); cursor: pointer; user-select: none; }
+.cm-rate-btn:hover { background: var(--cm-copper-soft); color: var(--text-normal); }
+.cm-rate-btn:focus-visible { outline: 2px solid var(--cm-copper); outline-offset: 1px; }
+.cm-rate-btn.is-proposed { border-style: dashed; border-color: var(--cm-copper); color: var(--cm-copper); }
+.cm-rate-btn.is-on { background: var(--cm-copper); border-color: var(--cm-copper); color: #fff; }
+.cm-rate-foot { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 22px; }
+.cm-rate-sum { color: var(--text-muted); }
+.cm-rate-sum.is-empty { color: var(--text-faint); font-style: italic; }
+
+/* Triage link sits under the Schema link, in the second column */
+body.cm-quiet .cm-nav.is-quiet .cm-navcard.cm-navcard-under { grid-column: 2; }

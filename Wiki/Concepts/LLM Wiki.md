@@ -12,7 +12,7 @@ sources:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-19
+verified_on: 2026-11-21
 ---
 > [!summary]
 > An LLM wiki is a growing, interlinked knowledge base that a person develops and maintains with an AI agent. Instead of asking an AI the same questions over and over, the AI compiles what you learn into linked pages that compound over time.[^1] The Coppermind is one.
@@ -28,8 +28,7 @@ verified_on: 2026-11-19
 
 **Why build it this way**[^1]
 1. **A productivity tool for life:** useful in later courses, apprenticeships, and personal and professional life.
-2. **A showcase:** employers, coworkers, and mentors can see what you know and how you think.
-3. **A record of developing perspective:** your work, opinions, and worldview sit beside outside sources and show how your thinking grows.
+2. **A record of developing perspective:** your work, opinions, and worldview sit beside outside sources and show how your thinking grows.
 
 **The six parts**[^1]
 

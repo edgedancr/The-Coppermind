@@ -19,7 +19,7 @@ verified_on: 2026-11-21
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, and records schema changes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v2.13.8**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v2.13.12**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -113,14 +113,14 @@ Open it with `Alt+M` or the Wiki map card on the Dashboard. It opens in its own 
 On every other note, Nicrosil hides the full Properties block and puts a one-line strip in its place, showing the page's **type**, **status**, and a date (`drafted` or `verified`). Click the strip to open the real Properties block. Each note starts collapsed again when I open it. The pop-up preview that appears when I point at a link shows the same strip, so a preview looks like the page itself.
 
 ## Ambience
-Small animations make the vault feel alive. None of them change how anything works. They include glows on page titles by status (a verified title is a copper-to-teal gradient, a draft title pulses like an ember), a soft pulse on flag callouts, a fade when a page opens, sparks on verified dots in the wiki map, a pulse on the newest Dashboard activity row, rows sliding into place in the review queue, and a glow on the status-bar count when it goes up.
+Small animations make the vault feel alive. None of them change how anything works. They include glows on page titles by status (a verified title is a copper-to-teal gradient, a draft title is a dusty, faded copper with a soft copper glow), a soft pulse on flag callouts, a fade when a page opens, sparks on verified dots in the wiki map, a pulse on the newest Dashboard activity row, rows sliding into place in the review queue, and a glow on the status-bar count when it goes up.
 They are all off if the computer is set to reduce motion.
 
 ## Coppermind Gradient Style
 The **Coppermind Gradient Style** (CGS) is the vault's one look for a gradient title: copper-to-teal lettering in Almendra SC with a still glow. It is used for the Dashboard's name and title, a verified page's title, the review queue and relations panel headings, the index's section headings, the Index page's title, and each month's log title ("Log 11-26"). It is defined once in the plugin's `styles.css` as `--cm-gradient`, `--cm-gradient-font` and `--cm-gradient-glow`, and the theme snippet reads the same three. To give a title in a new feature the style, add the class `cm-gradient-style` to it. Change a variable and every title follows; the exact colors are in [[Nicrosil Changelog]].
 
 ## Logging a schema change
-Every change to the rules (`AGENTS.md` or a file in `SCHEMAS/`) needs a line in [[Schema Changelog]].[^4] Nicrosil adds it for me:
+Every change to the rules (`_AGENTS.md` or a file in `SCHEMAS/`) needs a line in [[Schema Changelog]].[^4] Nicrosil adds it for me:
 1. On any page in `SCHEMAS/`, click the pen button in the page header, or run **Log a schema change** from the command palette.
 2. Enter the new version number in the form `4.2` and a description of what changed. The version must be newer than the current one and not already in the changelog.
 3. Nicrosil adds the dated line at the top of the changelog and updates its `updated` property, then sets `version` and `updated` on [[SCHEMA]], which holds the rulebook's version.
@@ -147,7 +147,7 @@ Change any of them in **Settings → Hotkeys** (search "Nicrosil"). Nicrosil als
 ## Settings
 In **Settings → Nicrosil**:
 - **Open the next draft after verifying or rejecting** (on by default)
-- **Play an animation when I verify a page** (on by default): the check, sparks, and page lift described in [[#A review session]]. It is skipped if the computer is set to reduce motion.
+- **Play an animation when I verify a page** (on by default): the check, sparks, and page lift described in [[#A review session]]. With Open next after verify off, only the check and sparks play and the page stays where it is. It is skipped if the computer is set to reduce motion.
 - **Close the extra sidebar panels on startup** (on by default): closes Backlinks, Outgoing links, Tags, All properties and Outline each time Obsidian starts, so they stop coming back. They can still be opened from the command palette.
 - **Open pages in Reading view:** "Verified pages only" (the default), "Every page", or "Off". When a page is opened from a link, the file list, search or the Dashboard, it opens in Reading view instead of editing. If I switch a page to editing myself, it stays that way until that tab opens a different page. "Every page" also covers drafts, but a new empty note always opens ready to type.
 - **Days between health checks** (14 by default): how long the Dashboard's health check card counts before it calls the check overdue.
