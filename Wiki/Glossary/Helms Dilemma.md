@@ -1,12 +1,15 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]"]
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 type_of: []
 part_of: []
-example_of: ["[[Ethical and Moral Issues in Intelligence]]"]
+example_of:
+  - "[[Ethical and Moral Issues in Intelligence]]"
 causes: []
 counters: []
 applies_to: []
@@ -16,7 +19,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-22
 ---
 > [!summary]
 > **Helms dilemma:** Director of Central Intelligence Richard Helms was "caught between" the obligation to keep secret the CIA's involvement in the government of Chile and "his obligation to testify fully and honestly before Congress".[^1]

@@ -1,9 +1,12 @@
 ---
 type: glossary
-status: draft
-aliases: ["ICS"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+status: verified
+aliases:
+  - ICS
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +19,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-22
 ---
 > [!summary]
 > **Incident Command System (ICS):** "a formalized management structure for emergency response".[^1] The 9/11 Commission credited it with helping the multi-jurisdiction response at the Pentagon succeed,[^1] found it did not integrate the agencies responding at the World Trade Center,[^2] and recommended that emergency response agencies nationwide adopt it.[^3]

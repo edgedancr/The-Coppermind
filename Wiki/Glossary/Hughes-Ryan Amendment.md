@@ -1,22 +1,25 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
 causes: []
 counters: []
-applies_to: ["[[Covert Action]]"]
+applies_to:
+  - "[[Covert Action]]"
 supports: []
 contradicts: []
 developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-22
 ---
 > [!summary]
 > **Hughes-Ryan Amendment:** legislation from after the Watergate era requiring that the President approve, and report to Congress, any covert action. The 9/11 Commission notes that CIA case officers read it as a message that covert action "often leads to trouble and can severely damage one's career".[^1]

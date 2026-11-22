@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - LLM08
   - System Prompt Leakage
@@ -13,7 +13,7 @@ part_of:
   - "[[OWASP Top 10 for Large Language Model Applications]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
-verified_on:
+verified_on: 2026-11-22
 ---
 > [!summary]
 > **Hidden context exposure:** the unauthorized extraction, inference, or reconstruction of the hidden instructions and context placed in a model's context window, such as the system prompt, developer instructions, and tool schemas.[^1] OWASP advises designing as if hidden context is discoverable: never put credentials in it, and never rely on its secrecy for authorization or content filtering.[^1] It replaced "System Prompt Leakage" on the 2026 list.[^2] In SAIL's [[Bing Sydney Incident (2023)]], prompt injection let users expose hidden system prompts and codenames.[^3]

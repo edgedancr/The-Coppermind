@@ -1,9 +1,14 @@
 ---
 type: glossary
-status: draft
-aliases: ["Signposts", "Signposts and Indicators"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The Limits of Prediction]]", "[[SRC - ICD 203, Analytic Standards]]"]
+status: verified
+aliases:
+  - Signposts
+  - Signposts and Indicators
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The Limits of Prediction]]"
+  - "[[SRC - ICD 203, Analytic Standards]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +21,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on:
+verified_on: 2026-11-22
 ---
 > [!summary]
 > **Indicators and signposts:** developments that analysts and policymakers can watch to tell whether a projected future is approaching; Bobby W. calls a strong set of them the most vital part of answering policymakers' questions about scenarios.[^1] ICD 203 asks products to identify indicators that would change the uncertainty of major judgments or the likelihood of alternatives.[^2]
