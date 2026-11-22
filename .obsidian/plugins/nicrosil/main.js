@@ -59,6 +59,10 @@ const INDEX_PATH = "_index.md";
 const NOTES_DIR = "The Tinmind/";                   // my own class notes (the Notes dashboard, one file per course, the all-notes page)
 const NOTES_DASHBOARD = "The Tinmind/Tinmind Dashboard"; // opened by the Tinmind button (named Notes Dashboard before 3.2.0)
 const OLD_NOTES_DASHBOARD = "The Tinmind/Notes Dashboard.md";
+const GIT_BUTTONS = [ // the two git shortcuts in the left sidebar's tab bar (3.12.0); each runs one of Obsidian Git's own commands
+  { cls: "cm-git-sync", icon: "arrow-up-circle", label: "Commit and push (Obsidian Git: Commit-and-sync)", command: "obsidian-git:push" },
+  { cls: "cm-git-pull", icon: "download", label: "Pull (Obsidian Git)", command: "obsidian-git:pull" },
+];
 const NOTEBOOK_PAGE = "The Tinmind/Notebook";  // the pinned Notebook (type: notebook, no semester): its card is on the Tinmind Dashboard in every semester (3.10.0)
 const ALL_NOTES_PAGE = "The Tinmind/All Class Notes";  // opened by the All Class Notes row in the Tinmind's course tree
 
@@ -2810,7 +2814,7 @@ module.exports = class Nicrosil extends Plugin {
     clearTimeout(this.indexTimer);
     document.querySelectorAll(".cm-schema-log-btn, .cm-respond-btn").forEach((e) => e.remove());
     this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view) { l.view.__cmSchemaBtn = null; l.view.__cmRespondBtn = null; } });
-    document.querySelectorAll(".cm-resolve-btn, .cm-home-btn, .cm-underscore-btn, .cm-mode-btn").forEach((e) => e.remove());
+    document.querySelectorAll(".cm-resolve-btn, .cm-home-btn, .cm-underscore-btn, .cm-mode-btn, .cm-git-btn").forEach((e) => e.remove());
     document.body.classList.remove("cm-hide-underscore");
     document.body.classList.remove("cm-on-dashboard", "cm-on-tin", "cm-tin-mode");
     document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-agents-leaf, .cm-tinnote-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => { e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-agents-leaf", "cm-tinnote-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"); e.style.removeProperty("--cm-log-title"); });
@@ -2892,6 +2896,19 @@ module.exports = class Nicrosil extends Plugin {
         mode.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); this.toggleMode(); } });
         tabRow.appendChild(mode);
       }
+      // the two git buttons sit right after the mode button (3.12.0), in both modes: Commit-and-sync, then Pull
+      if (tabRow) {
+        for (const g of GIT_BUTTONS) {
+          if (tabRow.querySelector(":scope > ." + g.cls)) continue;
+          const b = createDiv({ cls: "clickable-icon cm-git-btn " + g.cls });
+          b.setAttr("role", "button"); b.setAttr("tabindex", "0");
+          b.setAttr("aria-label", g.label);
+          setIcon(b, g.icon);
+          b.addEventListener("click", () => this.runGit(g));
+          b.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); this.runGit(g); } });
+          tabRow.appendChild(b);
+        }
+      }
       this.paintModeButtons();
       const homeBtn = holder.querySelector(":scope > .cm-home-btn:not(.cm-tin-btn)");
       if (homeBtn && !holder.querySelector(":scope > .cm-tin-btn")) this.makeTinButton(homeBtn); // the Tinmind button sits under it (2.17.0)
@@ -2969,6 +2986,12 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   /** The mode button in the left sidebar's tab bar (3.8.0): switches between the Coppermind and the Tinmind, and opens no page. */
+  /** Runs one of Obsidian Git's commands, as if I had clicked it in the Source Control panel. Nicrosil runs no git itself. */
+  runGit(g) {
+    const ok = this.app.commands.executeCommandById(g.command);
+    if (!ok) new Notice("Obsidian Git isn't turned on, so this button can't run. Turn it on in Settings, Community plugins.", 8000);
+  }
+
   toggleMode() {
     if (this.settings.tinmindMode) this.exitTinMode(); else this.enterTinMode();
   }

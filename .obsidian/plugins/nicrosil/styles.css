@@ -1550,3 +1550,8 @@ body.cm-quiet .cm-nav.is-quiet .cm-navcard-act:hover, body.cm-quiet .cm-nav.is-q
 .cm-sem-title.is-side .cm-sem-chev svg { width: 16px; height: 16px; }
 .cm-sem-title.is-side .cm-sem-menu { gap: 4px 16px; margin-top: 6px; }
 .cm-sem-title.is-side .cm-sem-item { font-size: 1em; }
+
+/* ---------- 3.12.0: the git buttons ---------- */
+/* Two icon buttons in the left sidebar's tab bar, right after the mode button, with the tab bar's own icon look (clickable-icon). Like the mode button they show while the Files tab is open, in both modes. */
+.cm-git-btn { display: none; align-self: center; flex: 0 0 auto; margin-left: 2px; }
+.workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="file-explorer"].is-active) .cm-git-btn { display: flex; }

@@ -1,6 +1,6 @@
 ---
 type: guide
-status: draft
+status: verified
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -15,15 +15,11 @@ related:
 drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5; larger file-list button name and index letter headings and jump bar, the flat relations map, the trimmed guide body, and the changelog moved to its own file, by claude-sonnet-5-5; Coppermind Gradient Style section by claude-sonnet-5-5; the Tinmind (notes dashboard, semester switcher, hero, button, mode) and the Tinmind Gradient Style by claude-sonnet-5-5; trimmed to what Nicrosil does and brought to v3.0.0 by claude-sonnet-5-5; Tinmind course tree and course pages by claude-sonnet-5-5; mode button, dashboard status bar and the dashboards' Ledger look by claude-sonnet-5-5; the Notebook by claude-sonnet-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-22
-changes_since_verified:
-  - "2026-11-22: Added the Notebook, a pinned card and tree row with no semester and a Quick note button (Nicrosil 3.10.0); version now 3.10.0 [[#The Tinmind]]"
-  - "2026-11-22: The semester switcher on the Tinmind Dashboard is now the page title with a menu, and the course tree has no switcher (Nicrosil 3.11.0); version now 3.11.0 [[#The Tinmind]]"
-  - "2026-11-22: The course tree has a small semester switcher again, at the top under the Tinmind button (Nicrosil 3.11.1); version now 3.11.1 [[#The Tinmind]]"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, records schema changes, and runs the Tinmind, my own class notes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v3.11.1**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v3.12.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -140,6 +136,7 @@ It does not touch `status`, `verified_on`, or the log. After a schema change, ea
 
 Change any of them in **Settings → Hotkeys** (search "Nicrosil"). Nicrosil also adds:
 - A **mode button** right after the eye, in the same tab bar. It shows the logo of the mode you are in (the Coppermind's or the Tinmind's); clicking it switches to the other mode ([[#The Tinmind]]) and opens no page. It shows while the Files tab is open, in both modes.
+- **Two git buttons** right after the mode button, in the same tab bar, in both modes (they show while the Files tab is open). The first (an up arrow in a circle) runs Obsidian Git's **Commit-and-sync**: it commits every change, pulls if Obsidian Git is set to pull before pushing, and pushes, with Obsidian Git's usual commit message. The second (a down arrow) runs **Pull**. They do what the matching buttons in the Source Control panel do, so I don't have to open it; Obsidian Git's own notices say how it went, and if Obsidian Git is off the button says so.
 - **The Coppermind** and **The Tinmind** buttons above the files in the file list. They open the Dashboard and the Tinmind page, and switch the mode ([[#The Tinmind]]).
 - Two **ribbon** buttons, for the relations panel and the review queue.
 - A **status-bar counter** of verified pages (for example, `12/60 verified`).
@@ -158,7 +155,7 @@ In **Settings → Nicrosil**:
 
 ## What it will not do
 - **It never verifies on its own.** Every change starts with my click or keypress.
-- **It does not commit to git.**
+- **It does not run git itself.** The two git buttons only run Obsidian Git's own Commit-and-sync and Pull commands when I click one; nothing is committed, pushed or pulled any other way.
 - **It will not verify a source card with a blank `reliability` rating.** Ratings are always item by item.[^1]
 - **It does not touch verified pages.** If a verified page's content changes, it goes back to `draft` and needs checking again.
 - **It cannot undo a verify or a resolved flag.** To undo a verify, set `status: draft` by hand, change the index line back, and add a correction to the log (past entries are never rewritten). To undo a resolved flag, restore the callout from git before verifying.
