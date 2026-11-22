@@ -1315,9 +1315,6 @@ body.cm-tin-mode .callout[data-callout="info"] { --callout-color: 176, 176, 189;
 body.cm-tin-mode .callout[data-callout="question"] { --callout-color: 184, 163, 242; }
 /* the Coppermind button keeps its copper in either mode, so it still says where it goes */
 body.cm-tin-mode .cm-home-btn:not(.cm-tin-btn) { --cm-gradient: linear-gradient(100deg, #d99a62 0%, #f6d3a8 21%, #d99a62 32%, #86d2c1 100%); }
-/* no review queue or relations panel in this mode, so their buttons go too */
-body.cm-tin-mode .side-dock-ribbon-action[aria-label^="Review queue"],
-body.cm-tin-mode .side-dock-ribbon-action[aria-label^="Relations panel"] { display: none; }
 
 /* ---------- _AGENTS title (2.18.2) ---------- */
 /* The file name (_AGENTS) is replaced by AGENTS in the Coppermind Gradient Style, the same way the Index and the logs are in the coppermind.css snippet: the real title is hidden (font-size 0) and not clickable, so the file can't be renamed by accident. */
@@ -1555,3 +1552,16 @@ body.cm-quiet .cm-nav.is-quiet .cm-navcard-act:hover, body.cm-quiet .cm-nav.is-q
 /* Two icon buttons in the left sidebar's tab bar, right after the mode button, with the tab bar's own icon look (clickable-icon). Like the mode button they show while the Files tab is open, in both modes. */
 .cm-git-btn { display: none; align-self: center; flex: 0 0 auto; margin-left: 2px; }
 .workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="file-explorer"].is-active) .cm-git-btn { display: flex; }
+
+/* ---------- 3.13.0: no far-left ribbon, no Files icon ---------- */
+/* The ribbon (the narrow icon strip at the far left) is hidden in both modes, and so is the Files icon in the left sidebar's tab bar, which is never switched away from. The tab bar then holds only Nicrosil's buttons. The review queue and relations buttons, which used to be ribbon icons, are in the tab bar now, before the git buttons, and show only in the Coppermind's mode (the Tinmind has neither panel). */
+body .workspace-ribbon.side-dock-ribbon.mod-primary, body .workspace-ribbon.mod-left { display: none !important; }
+.workspace-split.mod-left-split .workspace-tab-header[data-type="file-explorer"] { display: none; }
+.cm-panel-btn { display: none; align-self: center; flex: 0 0 auto; margin-left: 2px; }
+.workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="file-explorer"].is-active) .cm-panel-btn { display: flex; }
+body.cm-tin-mode .workspace-tabs .cm-panel-btn { display: none !important; }
+/* 3.13.3: the left sidebar's tab bar is one left-justified row with even spacing; the sidebar's collapse button is first. */
+.workspace-split.mod-left-split .workspace-tab-header-container { justify-content: flex-start; gap: 3px; }
+.workspace-split.mod-left-split .workspace-tab-header-container > .sidebar-toggle-button { order: -1; margin: 0; }
+.workspace-split.mod-left-split .workspace-tab-header-container-inner { gap: 3px; flex: 0 0 auto; }
+.workspace-split.mod-left-split .workspace-tab-header-container-inner > :is(.cm-mode-btn, .cm-underscore-btn, .cm-panel-btn, .cm-git-btn) { margin: 0; }

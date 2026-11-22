@@ -1,6 +1,6 @@
 ---
 type: guide
-status: verified
+status: draft
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -15,11 +15,14 @@ related:
 drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5; larger file-list button name and index letter headings and jump bar, the flat relations map, the trimmed guide body, and the changelog moved to its own file, by claude-sonnet-5-5; Coppermind Gradient Style section by claude-sonnet-5-5; the Tinmind (notes dashboard, semester switcher, hero, button, mode) and the Tinmind Gradient Style by claude-sonnet-5-5; trimmed to what Nicrosil does and brought to v3.0.0 by claude-sonnet-5-5; Tinmind course tree and course pages by claude-sonnet-5-5; mode button, dashboard status bar and the dashboards' Ledger look by claude-sonnet-5-5; the Notebook by claude-sonnet-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-22
+changes_since_verified:
+  - "2026-11-22: The left sidebar's collapse button is back, as the first button in the tab bar, and all the buttons there are left-justified and evenly spaced (Nicrosil 3.13.3) [[#Hotkeys and buttons]]"
+  - "2026-11-22: The far-left ribbon and the Files icon are hidden; the review queue and relations buttons moved to the left sidebar's tab bar next to the mode and git buttons, in the Coppermind's mode only (Nicrosil 3.13.0, fixed in 3.13.1 and 3.13.2); the mode button now comes before the eye; version now 3.13.2 [[#Hotkeys and buttons]]"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, records schema changes, and runs the Tinmind, my own class notes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v3.12.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v3.13.3**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## What Nicrosil does
 | Area | What it does | Where to read more |
@@ -43,7 +46,7 @@ This guide describes Nicrosil **v3.12.0**. Its folder is `.obsidian/plugins/nicr
 ## Review tools
 Review tools work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`, the rule files in `SCHEMAS/`, and root-level files, that have a `status` property.
 
-- **Review queue (right sidebar).** Open it with `Alt+Q` or the ribbon button. It shows a progress bar, a card for the page I'm on with its flags and the **Verify**, **Skip**, and **Reject** buttons, and every draft in review order with flag badges: **A** accuracy check, **G** gap, **Q** question ("Whose view is this?"), **W** unsourced warning, **✓** no flags.
+- **Review queue (right sidebar).** Open it with `Alt+Q` or the review queue button in the left sidebar's tab bar. It shows a progress bar, a card for the page I'm on with its flags and the **Verify**, **Skip**, and **Reject** buttons, and every draft in review order with flag badges: **A** accuracy check, **G** gap, **Q** question ("Whose view is this?"), **W** unsourced warning, **✓** no flags.
 - **Changed since verified.** A list at the top (badge **R**) of verified pages the AI changed at my request. Each shows the lines from its `changes_since_verified` property, so I check only what changed. A line that ends with a link to a section (`[[#Heading]]`) is clickable and goes to that spot; `Ctrl+click` opens the page in a new tab.
 - **Resolve buttons on flags.** Each flag callout gets a **Resolve** button in Reading view. In editing view, use the sidebar card or `Alt+F`.
 
@@ -89,7 +92,7 @@ The search box on the [[_dashboard|Dashboard]] shows suggestion cards as I type,
 - **One log file per month:** the log lives in `_logs/`, named `_log MM-YY` (`_log 11-26` is November 2026). The first time Obsidian opens in a new month, Nicrosil creates that month's file with its header.[^5]
 
 ## The relations panel
-Open it with `Alt+L` or the ribbon button. It follows the open page and shows how it connects to the rest of the wiki through the typed links in its properties:[^3]
+Open it with `Alt+L` or the relations button in the left sidebar's tab bar. It follows the open page and shows how it connects to the rest of the wiki through the typed links in its properties:[^3]
 - **A map** with the page in the middle: pages that point at it on the left, pages it points at on the right. Arrows are colored by relationship type (the legend names them), and a page's outline shows its status. Click a page to open it (`Ctrl+click` for a new tab). The map shows up to six pages a side; **Enlarge** shows every page.
 - **Two lists:** "This page…" groups outgoing links by type, and "Pointing at this page…" groups incoming ones. Incoming links are worked out from the other pages' properties, since each relationship is stored once.[^3]
 - **Not shown:** plain links in the page text, which are "see also" links, not relationships.
@@ -135,12 +138,12 @@ It does not touch `status`, `verified_on`, or the log. After a schema change, ea
 | `Ctrl+click` or middle-click | Open a card, a button, a search result or a queue page in a new tab |
 
 Change any of them in **Settings → Hotkeys** (search "Nicrosil"). Nicrosil also adds:
-- A **mode button** right after the eye, in the same tab bar. It shows the logo of the mode you are in (the Coppermind's or the Tinmind's); clicking it switches to the other mode ([[#The Tinmind]]) and opens no page. It shows while the Files tab is open, in both modes.
-- **Two git buttons** right after the mode button, in the same tab bar, in both modes (they show while the Files tab is open). The first (an up arrow in a circle) runs Obsidian Git's **Commit-and-sync**: it commits every change, pulls if Obsidian Git is set to pull before pushing, and pushes, with Obsidian Git's usual commit message. The second (a down arrow) runs **Pull**. They do what the matching buttons in the Source Control panel do, so I don't have to open it; Obsidian Git's own notices say how it went, and if Obsidian Git is off the button says so.
+- A **mode button** in the left sidebar's tab bar, right after Obsidian's own collapse-sidebar button (which is first) and before the eye. All the buttons in that row are left-justified and evenly spaced. It shows the logo of the mode you are in (the Coppermind's or the Tinmind's); clicking it switches to the other mode ([[#The Tinmind]]) and opens no page. It shows while the Files tab is open, in both modes.
+- **Two git buttons** at the right end of the same tab bar, after the panel buttons, in both modes (they show while the Files tab is open). The first (an up arrow in a circle) runs Obsidian Git's **Commit-and-sync**: it commits every change, pulls if Obsidian Git is set to pull before pushing, and pushes, with Obsidian Git's usual commit message. The second (a down arrow) runs **Pull**. They do what the matching buttons in the Source Control panel do, so I don't have to open it; Obsidian Git's own notices say how it went, and if Obsidian Git is off the button says so.
 - **The Coppermind** and **The Tinmind** buttons above the files in the file list. They open the Dashboard and the Tinmind page, and switch the mode ([[#The Tinmind]]).
-- Two **ribbon** buttons, for the relations panel and the review queue.
+- Two **panel buttons** in the left sidebar's tab bar, after the eye and before the git buttons: **Review queue** (a badge with a check) and **Relations panel** (a fork). They show while the Files tab is open, in the Coppermind's mode only, because the Tinmind has neither panel. Obsidian's far-left ribbon is hidden in both modes, so other plugins' ribbon icons are hidden with it. The left sidebar's collapse button, which Obsidian draws in the ribbon's place, shows at the left end of the tab bar; the **Toggle left sidebar** command is also in the command palette.
 - A **status-bar counter** of verified pages (for example, `12/60 verified`).
-- An **eye button** in the left sidebar's tab bar, right next to the Files icon (the Search and Bookmarks icons are hidden; `Ctrl+Shift+F` still opens search) that shows or hides folders and files whose names start with an underscore. It appears while the Files tab is open (not in the Tinmind's mode, where the file list is replaced). They are hidden each time Obsidian opens. The file list's own toolbar (new note, new folder, sort and the rest) is hidden; those actions are still in the command palette and the right-click menu.
+- An **eye button** in the left sidebar's tab bar, right after the mode button (the Files, Search and Bookmarks icons are all hidden, so the tab bar holds only these buttons; `Ctrl+Shift+F` still opens search) that shows or hides folders and files whose names start with an underscore. It appears while the Files tab is open (not in the Tinmind's mode, where the file list is replaced). They are hidden each time Obsidian opens. The file list's own toolbar (new note, new folder, sort and the rest) is hidden; those actions are still in the command palette and the right-click menu.
 
 **Log a schema change** has no default hotkey.
 

@@ -60,8 +60,12 @@ const NOTES_DIR = "The Tinmind/";                   // my own class notes (the N
 const NOTES_DASHBOARD = "The Tinmind/Tinmind Dashboard"; // opened by the Tinmind button (named Notes Dashboard before 3.2.0)
 const OLD_NOTES_DASHBOARD = "The Tinmind/Notes Dashboard.md";
 const GIT_BUTTONS = [ // the two git shortcuts in the left sidebar's tab bar (3.12.0); each runs one of Obsidian Git's own commands
-  { cls: "cm-git-sync", icon: "arrow-up-circle", label: "Commit and push (Obsidian Git: Commit-and-sync)", command: "obsidian-git:push" },
-  { cls: "cm-git-pull", icon: "download", label: "Pull (Obsidian Git)", command: "obsidian-git:pull" },
+  { cls: "cm-git-sync", icon: "arrow-up-circle", label: "Commit and push", command: "obsidian-git:push" },
+  { cls: "cm-git-pull", icon: "download", label: "Pull", command: "obsidian-git:pull" },
+];
+const PANEL_BUTTONS = [ // the review queue and relations panel buttons in the same tab bar, before the git ones (3.13.0); the far-left ribbon that held them is hidden
+  { cls: "cm-queue-btn", icon: "badge-check", label: "Review queue (Alt+Q)", method: "activateView" },
+  { cls: "cm-rel-btn", icon: "git-fork", label: "Relations panel (Alt+L)", method: "activateRelations" },
 ];
 const NOTEBOOK_PAGE = "The Tinmind/Notebook";  // the pinned Notebook (type: notebook, no semester): its card is on the Tinmind Dashboard in every semester (3.10.0)
 const ALL_NOTES_PAGE = "The Tinmind/All Class Notes";  // opened by the All Class Notes row in the Tinmind's course tree
@@ -2721,8 +2725,7 @@ module.exports = class Nicrosil extends Plugin {
     document.body.classList.add("cm-quiet");
     // no status bar counter (removed in 2.13.4): renderStatus() does nothing while statusEl is unset
 
-    this.addRibbonIcon("git-fork", "Relations panel (Alt+L)", () => this.activateRelations());
-    this.addRibbonIcon("badge-check", "Review queue (Alt+Q)", () => this.activateView());
+    // (3.13.0: the review queue and relations panel buttons are in the left sidebar's tab bar now, and the ribbon is hidden)
 
     this.registerMarkdownCodeBlockProcessor("coppermind-hero", (src, el, ctx) => this.renderHero(el, src, ctx));
     this.registerMarkdownCodeBlockProcessor("tinmind-hero", (src, el) => this.renderTinHero(el, src));
@@ -2814,7 +2817,7 @@ module.exports = class Nicrosil extends Plugin {
     clearTimeout(this.indexTimer);
     document.querySelectorAll(".cm-schema-log-btn, .cm-respond-btn").forEach((e) => e.remove());
     this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view) { l.view.__cmSchemaBtn = null; l.view.__cmRespondBtn = null; } });
-    document.querySelectorAll(".cm-resolve-btn, .cm-home-btn, .cm-underscore-btn, .cm-mode-btn, .cm-git-btn").forEach((e) => e.remove());
+    document.querySelectorAll(".cm-resolve-btn, .cm-home-btn, .cm-underscore-btn, .cm-mode-btn, .cm-git-btn, .cm-panel-btn").forEach((e) => e.remove());
     document.body.classList.remove("cm-hide-underscore");
     document.body.classList.remove("cm-on-dashboard", "cm-on-tin", "cm-tin-mode");
     document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-agents-leaf, .cm-tinnote-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => { e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-agents-leaf", "cm-tinnote-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"); e.style.removeProperty("--cm-log-title"); });
@@ -2894,19 +2897,24 @@ module.exports = class Nicrosil extends Plugin {
         mode.setAttr("role", "button"); mode.setAttr("tabindex", "0");
         mode.addEventListener("click", () => this.toggleMode());
         mode.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); this.toggleMode(); } });
-        tabRow.appendChild(mode);
+        tabRow.insertBefore(mode, tabRow.querySelector(":scope > .cm-underscore-btn")); // the mode button comes first, then the eye (3.13.2)
       }
-      // the two git buttons sit right after the mode button (3.12.0), in both modes: Commit-and-sync, then Pull
+      if (tabRow) { // a tab bar made before 3.13.2 has the eye first: put the mode button ahead of it
+        const eyeEl = tabRow.querySelector(":scope > .cm-underscore-btn"), modeEl = tabRow.querySelector(":scope > .cm-mode-btn");
+        if (eyeEl && modeEl && (eyeEl.compareDocumentPosition(modeEl) & Node.DOCUMENT_POSITION_FOLLOWING)) tabRow.insertBefore(modeEl, eyeEl);
+      }
+      // after the mode button: the review queue and relations buttons (3.13.0, Coppermind mode only), then the two git buttons (3.12.0, both modes): Commit-and-sync, then Pull
       if (tabRow) {
-        for (const g of GIT_BUTTONS) {
+        for (const g of [...PANEL_BUTTONS, ...GIT_BUTTONS]) {
           if (tabRow.querySelector(":scope > ." + g.cls)) continue;
-          const b = createDiv({ cls: "clickable-icon cm-git-btn " + g.cls });
+          const b = createDiv({ cls: "clickable-icon " + (g.command ? "cm-git-btn " : "cm-panel-btn ") + g.cls });
           b.setAttr("role", "button"); b.setAttr("tabindex", "0");
           b.setAttr("aria-label", g.label);
           setIcon(b, g.icon);
-          b.addEventListener("click", () => this.runGit(g));
-          b.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); this.runGit(g); } });
-          tabRow.appendChild(b);
+          const go = () => (g.command ? this.runGit(g) : this[g.method]());
+          b.addEventListener("click", go);
+          b.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+          tabRow.insertBefore(b, g.command ? null : tabRow.querySelector(":scope > .cm-git-btn")); // panel buttons go before the git ones
         }
       }
       this.paintModeButtons();
