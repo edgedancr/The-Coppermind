@@ -1568,112 +1568,92 @@ body .popover.hover-popover {
   background-clip: padding-box, border-box;
 }
 
-/* ---------- 3.16.0: the transcription queue ---------- */
-/* A main-area view (type nicrosil-transcribe): scan on the left, the note on the right, what still needs me under the text, and the buttons at the bottom. It uses Obsidian's own colors, so it follows the Coppermind's and the Tinmind's modes. */
-.view-content.cm-tr { display: flex; flex-direction: column; height: 100%; padding: 10px 14px; gap: 8px; overflow: hidden; }
-.cm-tr-head { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; flex-wrap: wrap; }
-.cm-tr-head h4 { margin: 0 8px 0 0; }
-.cm-tr-count { color: var(--text-muted); font-size: 12px; }
-.cm-tr-select { max-width: 280px; }
-.cm-tr-waiting { margin-left: auto; color: var(--text-muted); font-size: 12px; }
-.cm-tr-empty { display: flex; flex-direction: column; gap: 6px; max-width: 520px; padding: 14px 16px; border: 1px solid var(--background-modifier-border); border-radius: 8px; }
-.cm-tr-grid { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
-.cm-tr-scan, .cm-tr-text { min-height: 0; min-width: 0; display: flex; flex-direction: column; gap: 6px; padding: 8px; border: 1px solid var(--background-modifier-border); border-radius: 8px; background: var(--background-primary); }
-.cm-tr button.cm-mini.is-on { background: var(--interactive-accent); color: var(--text-on-accent); }
-.cm-tr-scanbar, .cm-tr-notehead { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex: 0 0 auto; flex-wrap: wrap; }
-.cm-tr-tabs, .cm-tr-zoom, .cm-tr-mode { display: flex; align-items: center; gap: 4px; }
-.cm-tr-file, .cm-tr-where, .cm-tr-zlabel { color: var(--text-muted); font-size: 11px; }
-.cm-tr-zlabel { min-width: 34px; text-align: center; }
-.cm-tr-name { font-weight: 600; margin-right: 8px; }
-.cm-tr-scanview { flex: 1 1 auto; min-height: 0; overflow: auto; border-radius: 4px; background: var(--background-secondary); }
-.cm-tr-imgwrap { position: relative; margin: 0 auto; }
-.cm-tr-img { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
-.cm-tr-missing { padding: 16px; }
-.cm-tr-cropbar { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; flex-wrap: wrap; padding: 4px 6px; border-radius: 4px; background: var(--background-modifier-hover); font-size: 12px; }
-.cm-tr-croplayer { position: absolute; inset: 0; cursor: crosshair; touch-action: none; }
-.cm-tr-cropbox { position: absolute; border: 2px solid var(--interactive-accent); background: rgba(120, 160, 255, 0.18); pointer-events: none; }
-.cm-tr-texthost { flex: 1 1 auto; min-height: 0; display: flex; }
-.cm-tr-ta { flex: 1 1 auto; width: 100%; resize: none; padding: 8px; font-family: var(--font-text); font-size: 14px; line-height: 1.5; }
-.cm-tr-preview { flex: 1 1 auto; overflow: auto; padding: 4px 8px; }
-.cm-tr-checks { flex: 0 1 auto; max-height: 38%; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
-.cm-tr-checkhead { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); }
-.cm-tr-card { display: flex; flex-direction: column; gap: 4px; padding: 6px 8px; border: 1px solid var(--background-modifier-border); border-left: 3px solid var(--color-orange, #e0953f); border-radius: 6px; }
-.cm-tr-card.cm-tr-recreate { border-left-color: var(--color-blue, #5b8fd9); }
-.cm-tr-card.cm-tr-recheck { border-left-color: var(--color-green, #4caf7a); }
-.cm-tr-card.cm-tr-unsure { border-left-color: var(--color-yellow, #d9b84a); }
-.cm-tr-cardtop { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
-.cm-tr-cardtitle { font-weight: 600; }
-.cm-tr-cardkind { color: var(--text-muted); font-size: 11px; }
-.cm-tr-cardbody { font-size: 12px; color: var(--text-muted); }
-.cm-tr-cardbtns { display: flex; gap: 6px; flex-wrap: wrap; }
-.cm-tr-actions { display: flex; gap: 6px; flex-wrap: wrap; flex: 0 0 auto; }
-.cm-tr-actions button.cm-danger { margin-left: auto; }
-@media (max-width: 760px) { .cm-tr-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); } }
-/* The transcription button in the left sidebar's tab bar belongs to the Tinmind: it shows in the Tinmind's mode only (the other panel buttons show in the Coppermind's). */
-body:not(.cm-tin-mode) .workspace-tabs .cm-panel-btn.cm-tr-btn { display: none !important; }
-body.cm-tin-mode .workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="file-explorer"].is-active) .cm-panel-btn.cm-tr-btn { display: flex !important; }
-
-/* ---------- 3.17.0: rename a note in the transcription queue ---------- */
-/* A small Rename button beside the note's name; clicking it turns the name into a text box (Enter renames, Esc cancels). */
-.cm-tr-pen { margin-right: 8px; }
-.cm-tr-nameinput { font-weight: 600; min-width: 220px; max-width: 100%; margin-right: 8px; }
-
-/* ---------- 3.18.0: the transcription queue in the Ledger look ---------- */
-/* The queue in the Tinmind's own style: the grey-to-lilac gradient and its glow on the two titles, flat square panels with hairline borders over the Tinmind's soft grey and lilac glows, Alegreya in the note picker, tabs for Edit/Preview, and a gradient-outlined Verify. Colors come from the Tinmind variables, so change them in one place. */
-.view-content.cm-tr {
+/* ---------- 3.28.0: the transcription queue as a locked split ---------- */
+/* The queue is two panes with no tabs. Left: the scan (type nicrosil-transcribe), with what still needs me under it. Right: the note in an ordinary Obsidian editor, with the review bar across its top. Every other pane in the main area is hidden while the queue is open (cm-tr-hidden) and the two panes lose their tab strip and view header (cm-tr-locked). Everything is in the Tinmind Gradient Style: the gradient and its glow on the title, flat square panels with hairline borders over the Tinmind's soft grey and lilac glows, Alegreya in the note picker, lilac underlines for tabs, and a gradient-outlined Verify. Colors come from the three --cm-tr-* variables. */
+.workspace-tabs.cm-tr-hidden { display: none !important; }
+.workspace-tabs.cm-tr-locked > .workspace-tab-header-container { display: none; }
+.workspace-tabs.cm-tr-locked .view-header { display: none; }
+.view-content.cm-tr, .cm-tr-bar {
   --cm-tr-line: rgba(176, 176, 189, 0.22);
   --cm-tr-panel: rgba(29, 29, 37, 0.78);
   --cm-tr-lilac: #b8a3f2;
+}
+.view-content.cm-tr {
+  display: flex; flex-direction: column; align-items: stretch; height: 100%; padding: 0; gap: 0; overflow: hidden;
   background:
     radial-gradient(520px 300px at 8% -8%, rgba(165, 160, 185, 0.22), transparent 62%),
     radial-gradient(480px 320px at 100% 4%, rgba(150, 115, 230, 0.18), transparent 60%),
     radial-gradient(600px 400px at 50% 112%, rgba(140, 130, 175, 0.14), transparent 60%),
     var(--background-primary);
-  padding: 18px 26px; gap: 14px;
 }
-.cm-tr-head { padding-bottom: 12px; border-bottom: 1px solid var(--cm-tr-line); gap: 12px; align-items: center; }
-.cm-tr-head h4.cm-tin-gradient-style { font-size: 2em; line-height: 1.1; margin: 0 8px 0 0; }
-.cm-tr-count, .cm-tr-waiting, .cm-tr-where, .cm-tr-file, .cm-tr-zlabel { color: var(--text-muted); }
-.cm-tr-select { font-family: 'Alegreya', Georgia, serif; font-size: 1.2em; background-color: transparent; background-image: none; -webkit-appearance: none; appearance: none; padding-right: 6px; border: 0; border-bottom: 1px solid #6f6b88; border-radius: 0; box-shadow: none; min-height: 36px; padding-left: 6px; }
-.cm-tr-select:focus, .cm-tr-select:hover { border-bottom-color: var(--cm-tr-lilac); box-shadow: none; }
-.cm-tr-head .cm-mini, .cm-tr-scanbar .cm-mini, .cm-tr-notehead .cm-mini, .cm-tr-actions button, .cm-tr-cardbtns button { border-radius: 0; background: transparent; border: 1px solid var(--cm-tr-line); box-shadow: none; min-height: 36px; }
-.cm-tr-head .cm-mini, .cm-tr-scanbar .cm-mini, .cm-tr-notehead .cm-mini { min-width: 36px; }
-.cm-tr-head .cm-mini:hover, .cm-tr-scanbar .cm-mini:hover, .cm-tr-notehead .cm-mini:hover, .cm-tr-actions button:hover, .cm-tr-cardbtns button:hover { border-color: var(--cm-tr-lilac); background: rgba(184, 163, 242, 0.08); }
-.cm-tr-grid { gap: 18px; }
-.cm-tr-scan, .cm-tr-text { border-radius: 0; background: var(--cm-tr-panel); border: 1px solid var(--cm-tr-line); padding: 0; gap: 0; }
-.cm-tr-scanbar, .cm-tr-notehead { padding: 8px 12px; border-bottom: 1px solid var(--cm-tr-line); }
-.cm-tr-scanview { border-radius: 0; background: rgba(18, 18, 23, 0.9); padding: 12px; }
+.cm-tr-count, .cm-tr-waiting, .cm-tr-where, .cm-tr-file, .cm-tr-zlabel { color: var(--text-muted); font-size: 12px; }
+.cm-tr-waiting { margin-left: 4px; }
+.cm-tr-where, .cm-tr-file, .cm-tr-zlabel { font-size: 11px; }
+.cm-tr-zlabel { min-width: 34px; text-align: center; }
 .cm-tr-file { color: var(--cm-tr-lilac); border-bottom: 1px solid var(--cm-tr-lilac); padding-bottom: 1px; }
-.cm-tr-name.cm-tin-gradient-style { font-size: 1.7em; line-height: 1.1; font-weight: 400; margin-right: 6px; }
-.cm-tr-pen { background: transparent; border: 0 !important; color: var(--cm-tr-lilac); }
-.cm-tr-nameinput { border-radius: 0; background: transparent; border: 0; border-bottom: 1px solid var(--cm-tr-lilac); box-shadow: none; font-family: 'Alegreya', Georgia, serif; font-size: 1.3em; }
-.cm-tr-mode { gap: 16px; }
-.cm-tr-mode .cm-mini { border: 0; border-bottom: 1px solid transparent; min-width: 0; padding: 4px 0; color: var(--text-muted); background: transparent; }
-.cm-tr .cm-tr-mode button.cm-mini, .cm-tr .cm-tr-mode button.cm-mini:hover, .cm-tr .cm-tr-mode button.cm-mini.is-on { background: transparent; box-shadow: none; }
-.cm-tr .cm-tr-mode button.cm-mini.is-on { color: var(--text-normal); border-bottom-color: var(--cm-tr-lilac); }
-.cm-tr-texthost { padding: 0; }
-.cm-tr-ta { border: 0; border-radius: 0; background: transparent; box-shadow: none; padding: 14px 18px; }
-.cm-tr-preview { padding: 14px 18px; }
-.cm-tr-checks { padding: 10px 12px 0; border-top: 1px solid var(--cm-tr-line); }
-.cm-tr-checkhead { letter-spacing: 0.09em; }
-.cm-tr-card { border-radius: 0; background: rgba(224, 149, 63, 0.07); border: 1px solid rgba(224, 149, 63, 0.35); border-left-width: 1px; }
+
+/* the queue's buttons: square, hairline, transparent; lilac on hover */
+.view-content.cm-tr button, .cm-tr-bar button { border-radius: 0; background: transparent; border: 1px solid var(--cm-tr-line); box-shadow: none; min-height: 28px; }
+.view-content.cm-tr button:hover:not(:disabled), .cm-tr-bar button:hover:not(:disabled) { border-color: var(--cm-tr-lilac); background: rgba(184, 163, 242, 0.08); }
+.view-content.cm-tr button.cm-mini, .cm-tr-bar button.cm-mini { min-width: 32px; }
+.cm-tr-bar button:disabled { opacity: 0.5; }
+
+/* the empty state */
+.cm-tr-head { display: flex; align-items: center; gap: 12px; padding: 18px 26px 12px; border-bottom: 1px solid var(--cm-tr-line); }
+.cm-tr-head h4.cm-tin-gradient-style { font-size: 2em; line-height: 1.1; margin: 0 8px 0 0; }
+.cm-tr-head .cm-tr-x { margin-left: auto; }
+.cm-tr-empty { display: flex; flex-direction: column; gap: 6px; max-width: 520px; margin: 18px 26px; padding: 14px 16px; border: 1px solid var(--cm-tr-line); background: var(--cm-tr-panel); }
+
+/* left: the scan */
+.cm-tr-scan { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.cm-tr-scanbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex: 0 0 auto; flex-wrap: wrap; padding: 8px 12px; border-bottom: 1px solid var(--cm-tr-line); background: var(--cm-tr-panel); }
+.cm-tr-tabs, .cm-tr-zoom { display: flex; align-items: center; gap: 4px; }
+.cm-tr .cm-tr-tabs button.cm-mini, .cm-tr .cm-tr-tabs button.cm-mini:hover, .cm-tr .cm-tr-tabs button.cm-mini.is-on { background: transparent; box-shadow: none; border: 0; border-bottom: 1px solid transparent; min-width: 0; min-height: 0; padding: 4px 0; margin-right: 10px; color: var(--text-muted); }
+.cm-tr .cm-tr-tabs button.cm-mini.is-on { color: var(--text-normal); border-bottom-color: var(--cm-tr-lilac); }
+.cm-tr-scanview { flex: 1 1 auto; min-height: 0; overflow: auto; background: rgba(18, 18, 23, 0.9); padding: 12px; }
+.cm-tr-imgwrap { position: relative; margin: 0 auto; }
+.cm-tr-img { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
+.cm-tr-missing { padding: 16px; }
+.cm-tr-cropbar { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; flex-wrap: wrap; padding: 6px 12px; border-bottom: 1px solid var(--cm-tr-line); background: rgba(184, 163, 242, 0.08); }
+.cm-tr-croplayer { position: absolute; inset: 0; cursor: crosshair; touch-action: none; }
+.cm-tr-cropbox { position: absolute; border: 2px solid var(--cm-tr-lilac); background: rgba(184, 163, 242, 0.18); pointer-events: none; }
+
+/* left, under the scan: what still needs me */
+.cm-tr-checks { flex: 0 1 auto; max-height: 42%; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border-top: 1px solid var(--cm-tr-line); background: var(--cm-tr-panel); }
+.cm-tr-trayhead { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.cm-tr-trayhead button.cm-mini { min-height: 24px; font-size: 11px; }
+.cm-tr-checkhead { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-muted); }
+.cm-tr-card { display: flex; flex-direction: column; gap: 4px; padding: 6px 8px; border: 1px solid rgba(224, 149, 63, 0.35); background: rgba(224, 149, 63, 0.07); }
 .cm-tr-card.cm-tr-recreate { background: rgba(91, 143, 217, 0.07); border-color: rgba(91, 143, 217, 0.35); }
 .cm-tr-card.cm-tr-recheck { background: rgba(76, 175, 122, 0.07); border-color: rgba(76, 175, 122, 0.35); }
-.cm-tr-card.cm-tr-unsure { background: rgba(184, 163, 242, 0.07); border-color: rgba(184, 163, 242, 0.35); }
-.cm-tr-actions { padding: 12px; border-top: 1px solid var(--cm-tr-line); align-items: center; }
-.cm-tr-actions button.mod-cta { min-height: 40px; padding: 0 28px; color: #f1f0f8; font-weight: 600; border: 1.5px solid transparent; background: linear-gradient(#1d1d25, #1d1d25) padding-box, var(--cm-tin-gradient) border-box; box-shadow: 0 0 14px rgba(170, 135, 240, 0.28); }
-.cm-tr-actions button.mod-cta:hover { background: linear-gradient(#26242f, #26242f) padding-box, var(--cm-tin-gradient) border-box; }
-.cm-tr-actions button.mod-cta:disabled { opacity: 0.55; box-shadow: none; }
-.cm-tr-actions button.cm-danger { color: #f08a7e; border-color: rgba(240, 138, 126, 0.4); }
-.cm-tr-actions button.cm-danger:hover { border-color: #f08a7e; background: rgba(240, 138, 126, 0.08); }
+.cm-tr-cardtop { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.cm-tr-cardtitle { font-weight: 600; }
+.cm-tr-cardkind { color: var(--text-muted); font-size: 11px; }
+.cm-tr-cardbody { font-size: 12px; color: var(--text-muted); }
+.cm-tr-cardbtns { display: flex; gap: 6px; flex-wrap: wrap; }
 
-/* 3.18.0 fix: the note picker. Obsidian's own dropdown rule draws an arrow image behind the name; this removes it with enough weight to win, and lets the field grow with the name (never narrower than 300px, never wider than the row) so a long file name is not cut or overlapped. The header wraps onto a second line if a name is very long. */
-.cm-tr .cm-tr-head select.cm-tr-select { background-image: none !important; -webkit-appearance: none; appearance: none; padding: 0 6px; min-width: 300px; max-width: 100%; width: auto; flex: 0 1 auto; text-overflow: ellipsis; }
-.cm-tr .cm-tr-head { row-gap: 8px; padding-bottom: 14px; }
-.cm-tr .cm-tr-head select.cm-tr-select::after, .cm-tr .cm-tr-head select.cm-tr-select::before { content: none !important; }
-/* 3.18.0 fix: the Scan tab. The older rule `.cm-tr button.cm-mini.is-on` gave the tab in use a solid purple fill; the scan tabs now have no fill or glow, only a lilac underline, like Edit and Preview. */
-.cm-tr .cm-tr-tabs button.cm-mini, .cm-tr .cm-tr-tabs button.cm-mini:hover, .cm-tr .cm-tr-tabs button.cm-mini.is-on { background: transparent; box-shadow: none; border: 0; border-bottom: 1px solid transparent; min-width: 0; padding: 4px 0; margin-right: 10px; color: var(--text-muted); }
-.cm-tr .cm-tr-tabs button.cm-mini.is-on { color: var(--text-normal); border-bottom-color: var(--cm-tr-lilac); }
+/* right: the review bar across the top of the note */
+.cm-tr-bar { flex: 0 0 auto; display: flex; flex-direction: column; gap: 6px; padding: 8px 14px; border-bottom: 1px solid var(--cm-tr-line); background: radial-gradient(420px 160px at 100% -20%, rgba(150, 115, 230, 0.16), transparent 70%), var(--cm-tr-panel); }
+.cm-trb-top, .cm-trb-sub { display: flex; align-items: center; gap: 8px 10px; flex-wrap: wrap; }
+.cm-trb-top { row-gap: 8px; }
+.cm-trb-title.cm-tin-gradient-style { font-size: 1.35em; line-height: 1.1; margin: 0 4px 0 0; }
+.cm-trb-actions { margin-left: auto; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.cm-trb-unsure { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cm-tr-select { font-family: 'Alegreya', Georgia, serif; font-size: 1.2em; background-color: transparent; background-image: none !important; -webkit-appearance: none; appearance: none; padding: 0 6px; min-height: 28px; min-width: 200px; max-width: 100%; width: auto; flex: 0 1 auto; text-overflow: ellipsis; border: 0; border-bottom: 1px solid #6f6b88; border-radius: 0; box-shadow: none; }
+.cm-tr-select:focus, .cm-tr-select:hover { border-bottom-color: var(--cm-tr-lilac); box-shadow: none; }
+.cm-tr-select::after, .cm-tr-select::before { content: none !important; }
+.cm-tr-bar button.mod-cta { min-height: 32px; padding: 0 20px; color: #f1f0f8; font-weight: 600; border: 1.5px solid transparent; background: linear-gradient(#1d1d25, #1d1d25) padding-box, var(--cm-tin-gradient) border-box; box-shadow: 0 0 14px rgba(170, 135, 240, 0.28); }
+.cm-tr-bar button.mod-cta:hover:not(:disabled) { background: linear-gradient(#26242f, #26242f) padding-box, var(--cm-tin-gradient) border-box; }
+.cm-tr-bar button.mod-cta:disabled { opacity: 0.55; box-shadow: none; }
+.cm-tr-bar button.cm-danger { color: #f08a7e; border-color: rgba(240, 138, 126, 0.4); }
+.cm-tr-bar button.cm-danger:hover { border-color: #f08a7e; background: rgba(240, 138, 126, 0.08); }
+
+/* the note beside the scan keeps Obsidian's own editor; it only loses the padding that would leave a band under the bar */
+.workspace-tabs.cm-tr-locked .workspace-leaf-content[data-type="markdown"] > .view-content { flex: 1 1 auto; min-height: 0; }
+
+/* The transcription button in the left sidebar's tab bar belongs to the Tinmind: it shows in the Tinmind's mode only (the other panel buttons show in the Coppermind's). */
+body:not(.cm-tin-mode) .workspace-tabs .cm-panel-btn.cm-tr-btn { display: none !important; }
+body.cm-tin-mode .workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="file-explorer"].is-active) .cm-panel-btn.cm-tr-btn { display: flex !important; }
 
 /* ---------- 3.19.0: the shelf on the Tinmind Dashboard ---------- */
 /* The Notebook and Transcriptions as text links under the hero, above the semester title. The two words are in the Tinmind Gradient Style (grey to lilac with its glow); the icons are the gradient's grey. A hairline runs under the row. */

@@ -6,7 +6,6 @@ semester: "Fall 26"
 ## Social Avarice
 |                                           |                 |                                                                                                        |
 | ----------------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------ |
-| **IX.4** Friendship and self-love         | 1166a1–1166b29  | The good person enjoys his own company (~1166a); the bad seek company to flee themselves (~1166b13–25) |
 | **IX.7** Benefactors love more            | 1167b17–1168a27 | Loving as activity, being loved as passivity                                                           |
 | **IX.8** Self-love                        | 1168a28–1169b2  | The grasping "self-lovers" vs. the noble self-lover                                                    |
 | **IX.9** Do the happy need friends?       | 1169b3–1170b19  | No one would choose all goods alone; man is a political animal (~1169b16–19)                           |
@@ -29,6 +28,7 @@ semester: "Fall 26"
 	- A flatterer pretends to love more than he is loved.
 	- Real friendship consists in loving others, rather than being loved.
 	- The erotic lover assumes that he will be loved as much as he loves.
-- Bk 9.4 (pg. 341)
+- Bk 9.4 (pg. 341-342)
 	- The excellent person does good things for himself because they are good, and treats himself as one of his friends.
 	- The excellent person finds it pleasant to spend time with himself. 
+	- Vicious people cannot be with themselves, and need others around them at all times so that they can forget about their bad things. They have no love for themselves.
