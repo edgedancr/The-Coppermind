@@ -1666,3 +1666,28 @@ body.cm-tin-mode .workspace-tabs:has(> .workspace-tab-header-container .workspac
 .cm-tr-actions button.mod-cta:disabled { opacity: 0.55; box-shadow: none; }
 .cm-tr-actions button.cm-danger { color: #f08a7e; border-color: rgba(240, 138, 126, 0.4); }
 .cm-tr-actions button.cm-danger:hover { border-color: #f08a7e; background: rgba(240, 138, 126, 0.08); }
+
+/* 3.18.0 fix: the note picker. Obsidian's own dropdown rule draws an arrow image behind the name; this removes it with enough weight to win, and lets the field grow with the name (never narrower than 300px, never wider than the row) so a long file name is not cut or overlapped. The header wraps onto a second line if a name is very long. */
+.cm-tr .cm-tr-head select.cm-tr-select { background-image: none !important; -webkit-appearance: none; appearance: none; padding: 0 6px; min-width: 300px; max-width: 100%; width: auto; flex: 0 1 auto; text-overflow: ellipsis; }
+.cm-tr .cm-tr-head { row-gap: 8px; padding-bottom: 14px; }
+.cm-tr .cm-tr-head select.cm-tr-select::after, .cm-tr .cm-tr-head select.cm-tr-select::before { content: none !important; }
+/* 3.18.0 fix: the Scan tab. The older rule `.cm-tr button.cm-mini.is-on` gave the tab in use a solid purple fill; the scan tabs now have no fill or glow, only a lilac underline, like Edit and Preview. */
+.cm-tr .cm-tr-tabs button.cm-mini, .cm-tr .cm-tr-tabs button.cm-mini:hover, .cm-tr .cm-tr-tabs button.cm-mini.is-on { background: transparent; box-shadow: none; border: 0; border-bottom: 1px solid transparent; min-width: 0; padding: 4px 0; margin-right: 10px; color: var(--text-muted); }
+.cm-tr .cm-tr-tabs button.cm-mini.is-on { color: var(--text-normal); border-bottom-color: var(--cm-tr-lilac); }
+
+/* ---------- 3.19.0: the shelf on the Tinmind Dashboard ---------- */
+/* The Notebook and Transcriptions as text links under the hero, above the semester title. The two words are in the Tinmind Gradient Style (grey to lilac with its glow); the icons are the gradient's grey. A hairline runs under the row. */
+.cm-shelf { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 26px; margin: 0 0 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(176, 176, 189, 0.22); }
+.cm-shelf button { background: transparent; box-shadow: none; border: 0; border-radius: 0; height: auto; min-height: 44px; padding: 0; cursor: pointer; }
+.cm-shelf-link { display: inline-flex; align-items: center; gap: 9px; }
+.cm-shelf-icon { display: inline-flex; color: #b0b0bd; }
+.cm-shelf-icon svg { width: 18px; height: 18px; }
+.cm-shelf-text.cm-tin-gradient-style { display: inline-block; font-size: 1.45em; line-height: 1.2; padding-bottom: 1px; }
+.cm-shelf-link:hover .cm-shelf-text, .cm-shelf-link:focus-visible .cm-shelf-text { text-decoration: underline; text-decoration-color: #b8a3f2; text-underline-offset: 4px; }
+.cm-shelf-link:focus-visible, .cm-shelf-quick:focus-visible { outline: 1px solid #b8a3f2; outline-offset: 2px; }
+.cm-shelf-quick { display: inline-flex; align-items: center; gap: 4px; font-size: 0.88em; color: var(--text-muted); }
+.cm-shelf-quick-icon { display: inline-flex; }
+.cm-shelf-quick-icon svg { width: 14px; height: 14px; }
+.cm-shelf-quick:hover, .cm-shelf-quick:focus-visible { color: var(--text-normal); text-decoration: underline; }
+.cm-shelf-sep { width: 1px; height: 22px; background: rgba(176, 176, 189, 0.22); }
+.cm-shelf-sub { color: var(--text-muted); font-size: 0.88em; }

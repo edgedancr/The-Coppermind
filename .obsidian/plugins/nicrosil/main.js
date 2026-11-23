@@ -4247,19 +4247,50 @@ module.exports = class Nicrosil extends Plugin {
     const open = (link) => (newTab) => this.app.workspace.openLinkText(link, "", !!newTab);
     const { semesters, chosen, courses } = this.tinSemesterState();
 
+    this.drawShelf(el, open); // the Notebook and the transcription queue, between the hero and the semester (3.19.0)
+
     if (semesters.length) this.drawSemSwitch(el, semesters, chosen);
 
     const cards = courses.map((c) => ({ icon: "book-open", title: c.name, sub: this.courseCardLine(c.file), go: open(c.file.path) }));
-    // The Notebook has no semester, so its card is here whichever semester is picked (3.10.0). It shows no count; Quick note makes a dated note in one click.
-    const nb = this.notebookFile();
-    if (nb) cards.push({ icon: "pen-line", title: "Notebook", sub: "Notes that aren't for a class", go: open(nb.path), action: { label: "Quick note", run: () => this.tinQuickNote() } });
-    const trItems = this.pendingTranscriptions(), trWait = this.scansWaiting(trItems).length;
-    if (trItems.length || trWait) { // the transcription queue (3.16.0)
-      const sub = [trItems.length ? `${trItems.length} to review` : "", trWait ? `${trWait} scan${trWait === 1 ? "" : "s"} waiting` : ""].filter(Boolean).join(" \u00b7 ");
-      cards.push({ icon: "scan-text", title: "Transcriptions", sub, go: () => this.activateTranscribe() });
-    }
     this.drawNavCards(el.createDiv(), cards);
     if (!semesters.length) el.createDiv({ cls: "cm-sub", text: "No courses yet. Make a semester with New semester in the Tinmind's course tree." });
+  }
+
+  /**
+   * The shelf (3.19.0): the Notebook and the transcription queue as two text links in the Tinmind Gradient Style, in a row under the hero and above the
+   * semester title, so the course cards below are only class notes. The Notebook shows in every semester, with a small Quick note beside it; Transcriptions
+   * shows only while there are notes to review or scans waiting, as before. Ctrl+click or middle-click opens the Notebook in a new tab, like a card.
+   */
+  drawShelf(el, open) {
+    const nb = this.notebookFile();
+    const trItems = this.pendingTranscriptions(), trWait = this.scansWaiting(trItems).length;
+    const hasTr = !!(trItems.length || trWait);
+    if (!nb && !hasTr) return;
+    const shelf = el.createDiv({ cls: "cm-shelf" });
+    const link = (parent, icon, text, label, go) => {
+      const b = parent.createEl("button", { cls: "cm-shelf-link" });
+      b.setAttr("aria-label", label);
+      setIcon(b.createSpan({ cls: "cm-shelf-icon" }), icon);
+      b.createSpan({ cls: "cm-shelf-text cm-tin-gradient-style", text });
+      b.addEventListener("click", (e) => go(e.ctrlKey || e.metaKey));
+      b.addEventListener("auxclick", (e) => { if (e.button === 1) { e.preventDefault(); go(true); } });
+      b.addEventListener("mousedown", (e) => { if (e.button === 1) e.preventDefault(); });
+      return b;
+    };
+    if (nb) {
+      link(shelf, "pen-line", "Notebook", "Open the Notebook: notes that aren't for a class (Ctrl+click for a new tab)", open(nb.path));
+      const q = shelf.createEl("button", { cls: "cm-shelf-quick" });
+      q.setAttr("aria-label", "Quick note: make a dated note in the Notebook and open it");
+      setIcon(q.createSpan({ cls: "cm-shelf-quick-icon" }), "plus");
+      q.createSpan({ text: "Quick note" });
+      q.addEventListener("click", () => this.tinQuickNote());
+    }
+    if (nb && hasTr) shelf.createSpan({ cls: "cm-shelf-sep" });
+    if (hasTr) {
+      link(shelf, "scan-text", "Transcriptions", "Open the transcription queue", () => this.activateTranscribe());
+      const sub = [trItems.length ? `${trItems.length} to review` : "", trWait ? `${trWait} scan${trWait === 1 ? "" : "s"} waiting` : ""].filter(Boolean).join(" \u00b7 ");
+      shelf.createSpan({ cls: "cm-shelf-sub", text: sub });
+    }
   }
 
   /** The line under a course's name on the Tinmind Dashboard (3.7.0): how many notes it has and the newest date in a note's name. Only names are read, never what is inside. */

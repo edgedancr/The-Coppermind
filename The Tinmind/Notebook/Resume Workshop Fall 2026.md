@@ -1,7 +1,5 @@
 ---
-type: course-note
-course: "Events"
-semester: "Fall 26"
+type: notebook-note
 ---
 9/5/26
 #### Why its hard for gen Z to get jobs

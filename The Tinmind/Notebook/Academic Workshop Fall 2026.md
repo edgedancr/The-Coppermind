@@ -1,7 +1,5 @@
 ---
-type: course-note
-course: "Events"
-semester: "Fall 26"
+type: notebook-note
 ---
 ### Study Tips
 1. Structure

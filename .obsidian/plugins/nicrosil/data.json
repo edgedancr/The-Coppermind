@@ -10,8 +10,8 @@
     "mapTab": "tree",
     "mapFlow": true,
     "milestone": 25,
-    "tinmindSemester": "Spring 26",
-    "tinmindMode": true,
+    "tinmindSemester": "Fall 26",
+    "tinmindMode": false,
     "tinOpen": {
       "The Tinmind/Spring 26/Euclidean Geometry": true,
       "The Tinmind/Spring 26/Euclidean Geometry/Propositions": false,
@@ -22,15 +22,15 @@
       "The Tinmind/Spring 26/Logic.md": false,
       "The Tinmind/Spring 26/Euclidean Geometry.md": false,
       "The Tinmind/Notebook.md": false,
-      "The Tinmind/Notebook": true
+      "The Tinmind/Notebook": true,
+      "The Tinmind/Fall 26/Events.md": false
     },
     "tinBacklinksRemoved": true,
     "tinHubsRenamed": true,
     "tinCourseLinksRemoved": true,
     "tinSemesters": [
       "Spring 27"
-    ],
-    "tinRightWasOpen": true
+    ]
   },
   "resolved": {}
 }

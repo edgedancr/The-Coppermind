@@ -43,25 +43,25 @@ verified_on: 2026-11-22
 
 ## By task
 
-| Task | Default | Step down to | Step up to |
-|---|---|---|---|
-| Ingest a source[^7] | Opus | Sonnet, for one short, clean source | Fable, for a multi-source batch or a long PDF |
-| Triage new sources into Triage | Sonnet | Haiku | Opus |
-| Health check: run the script, write the report | Sonnet | Haiku, to run the script and file the report | |
-| Health check: judgment checks (citations, contradictions, typed links) | Opus | Sonnet, for one folder | Fable, for the whole wiki |
-| Query, quick or standard (a lookup or a compare)[^23] | Sonnet | Haiku, for quick only | Opus |
-| Query, deep, or a synthesis, disagreement or gap, or one to file back as an Analysis | Opus | | Fable |
-| Mechanical edits (typos, formatting, a renamed link) | Haiku | | Sonnet |
-| Content edits to a page, or any change to a verified page | Opus | | |
-| Schema change | Opus, high effort | | Fable, if it touches most of the vault |
-| New guide or prompt page | Opus | Sonnet | |
-| Plugin, Dashboard, or tool: small feature or fix | Sonnet | | Opus |
-| Plugin or tool: new feature, or a bug Sonnet couldn't fix | Opus | | Fable, for a ground-up rebuild |
-| Transcribe scans into Tinmind notes[^15] | Opus | Sonnet, for clean, upright pages once a sample has come back clean | Fable, only if Opus keeps missing the rules on a long run |
-| Recreate a flagged drawing as a diagram or table[^15] | Opus | Sonnet, for a simple table or short flow | |
-| Shrink new scans (`shrink_scans.py`)[^15] | Haiku | | Sonnet |
-| Tinmind chores: empty course files, the dashboard page, fixing a note I name[^17] | Haiku | | Sonnet, for many files |
-| Export test[^8] | Sonnet | | |
+| Task                                                                                 | Default           |
+| ------------------------------------------------------------------------------------ | ----------------- |
+| Ingest a source[^7]                                                                  | Opus              |
+| Triage new sources into Triage                                                       | Sonnet            |
+| Health check: run the script, write the report                                       | Sonnet            |
+| Health check: judgment checks (citations, contradictions, typed links)               | Opus              |
+| Query, quick or standard (a lookup or a compare)[^23]                                | Sonnet            |
+| Query, deep, or a synthesis, disagreement or gap, or one to file back as an Analysis | Opus              |
+| Mechanical edits (typos, formatting, a renamed link)                                 | Haiku             |
+| Content edits to a page, or any change to a verified page                            | Opus              |
+| Schema change                                                                        | Opus, high effort |
+| New guide or prompt page                                                             | Opus              |
+| Plugin, Dashboard, or tool: small feature or fix                                     | Sonnet            |
+| Plugin or tool: new feature, or a bug Sonnet couldn't fix                            | Opus              |
+| Transcribe scans into Tinmind notes[^15]                                             | Opus              |
+| Recreate a flagged drawing as a diagram or table[^15]                                | Opus              |
+| Shrink new scans (`shrink_scans.py`)[^15]                                            | Haiku             |
+| Tinmind chores: empty course files, the dashboard page, fixing a note I name[^17]    | Haiku             |
+| Export test[^8]                                                                      | Sonnet            |
 
 ### Ingesting
 - **Use Opus.** Ingest is where the schema's hardest rules apply at once:
