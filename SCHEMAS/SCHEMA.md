@@ -1,12 +1,10 @@
 ---
 type: schema
 version: 9.1
-status: draft
+status: verified
 owner: Harrison Nickles
 updated: 2026-11-22
 verified_on: 2026-11-22
-changes_since_verified:
-  - "2026-11-22: [[#Folder layout]] says Sources/Scans/ is kept in git (it was wrongly described as Git-ignored); the scans are small enough to push, and Nicrosil deletes each one when I verify its transcription"
 ---
 This is the overview of the Coppermind's rules: what the wiki is for, how it is laid out, and which rule file covers what. It is the rulebook for my personal LLM wiki. The Coppermind follows the SAIL version of the LLM-wiki pattern, not Karpathy's original: **I design, the AI drafts, I verify.** Nothing becomes part of the wiki as final until I have reviewed and approved it.
 

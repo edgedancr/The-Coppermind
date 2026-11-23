@@ -139,7 +139,7 @@ button.cm-danger { background: var(--cm-rust); color: #fff; }
   mask: var(--cm-logo-mask) center / contain no-repeat;
 }
 /* the button at the top of the file list that opens the Dashboard */
-.cm-home-btn { display: flex; align-items: center; justify-content: center; gap: 10px; box-sizing: border-box; min-width: 0; overflow: hidden; container-type: inline-size; height: 46px; margin: 4px 10px 10px; padding: 0 12px; border: 1px solid transparent; border-radius: 2px; background: linear-gradient(135deg, rgba(184, 115, 51, 0.30), rgba(95, 174, 158, 0.22)) padding-box, linear-gradient(160deg, #2a2420, #1e1915) padding-box, linear-gradient(135deg, rgba(217, 138, 74, 0.9), rgba(95, 174, 158, 0.75)) border-box; cursor: pointer; user-select: none; transition: box-shadow .2s, filter .2s; }
+.cm-home-btn { display: flex; flex: 0 0 auto; align-items: center; justify-content: center; gap: 10px; box-sizing: border-box; min-width: 0; overflow: hidden; container-type: inline-size; height: 46px; margin: 4px 10px 10px; padding: 0 12px; border: 1px solid transparent; border-radius: 2px; background: linear-gradient(135deg, rgba(184, 115, 51, 0.30), rgba(95, 174, 158, 0.22)) padding-box, linear-gradient(160deg, #2a2420, #1e1915) padding-box, linear-gradient(135deg, rgba(217, 138, 74, 0.9), rgba(95, 174, 158, 0.75)) border-box; cursor: pointer; user-select: none; transition: box-shadow .2s, filter .2s; }
 .cm-home-btn:hover, .cm-home-btn:focus-visible { background: linear-gradient(135deg, rgba(184, 115, 51, 0.44), rgba(95, 174, 158, 0.36)) padding-box, linear-gradient(160deg, #2a2420, #1e1915) padding-box, linear-gradient(135deg, #e89a5a, #86d2c1) border-box; box-shadow: 0 0 12px rgba(184, 115, 51, 0.3), 0 0 14px rgba(95, 174, 158, 0.22); outline: none; }
 .cm-home-logo { flex: none; width: 21px; height: 26px; filter: drop-shadow(0 1px 3px rgba(184, 115, 51, 0.4)); }
 .cm-home-name { font-family: var(--cm-gradient-font); font-size: 1.5em; font-size: clamp(0.7em, calc((100cqw - 31px) / 8), 1.7em); font-weight: 400; letter-spacing: 0; flex: none; background: var(--cm-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; white-space: nowrap; }
@@ -1612,3 +1612,57 @@ body .popover.hover-popover {
 /* The transcription button in the left sidebar's tab bar belongs to the Tinmind: it shows in the Tinmind's mode only (the other panel buttons show in the Coppermind's). */
 body:not(.cm-tin-mode) .workspace-tabs .cm-panel-btn.cm-tr-btn { display: none !important; }
 body.cm-tin-mode .workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="file-explorer"].is-active) .cm-panel-btn.cm-tr-btn { display: flex !important; }
+
+/* ---------- 3.17.0: rename a note in the transcription queue ---------- */
+/* A small Rename button beside the note's name; clicking it turns the name into a text box (Enter renames, Esc cancels). */
+.cm-tr-pen { margin-right: 8px; }
+.cm-tr-nameinput { font-weight: 600; min-width: 220px; max-width: 100%; margin-right: 8px; }
+
+/* ---------- 3.18.0: the transcription queue in the Ledger look ---------- */
+/* The queue in the Tinmind's own style: the grey-to-lilac gradient and its glow on the two titles, flat square panels with hairline borders over the Tinmind's soft grey and lilac glows, Alegreya in the note picker, tabs for Edit/Preview, and a gradient-outlined Verify. Colors come from the Tinmind variables, so change them in one place. */
+.view-content.cm-tr {
+  --cm-tr-line: rgba(176, 176, 189, 0.22);
+  --cm-tr-panel: rgba(29, 29, 37, 0.78);
+  --cm-tr-lilac: #b8a3f2;
+  background:
+    radial-gradient(520px 300px at 8% -8%, rgba(165, 160, 185, 0.22), transparent 62%),
+    radial-gradient(480px 320px at 100% 4%, rgba(150, 115, 230, 0.18), transparent 60%),
+    radial-gradient(600px 400px at 50% 112%, rgba(140, 130, 175, 0.14), transparent 60%),
+    var(--background-primary);
+  padding: 18px 26px; gap: 14px;
+}
+.cm-tr-head { padding-bottom: 12px; border-bottom: 1px solid var(--cm-tr-line); gap: 12px; align-items: center; }
+.cm-tr-head h4.cm-tin-gradient-style { font-size: 2em; line-height: 1.1; margin: 0 8px 0 0; }
+.cm-tr-count, .cm-tr-waiting, .cm-tr-where, .cm-tr-file, .cm-tr-zlabel { color: var(--text-muted); }
+.cm-tr-select { font-family: 'Alegreya', Georgia, serif; font-size: 1.2em; background-color: transparent; background-image: none; -webkit-appearance: none; appearance: none; padding-right: 6px; border: 0; border-bottom: 1px solid #6f6b88; border-radius: 0; box-shadow: none; min-height: 36px; padding-left: 6px; }
+.cm-tr-select:focus, .cm-tr-select:hover { border-bottom-color: var(--cm-tr-lilac); box-shadow: none; }
+.cm-tr-head .cm-mini, .cm-tr-scanbar .cm-mini, .cm-tr-notehead .cm-mini, .cm-tr-actions button, .cm-tr-cardbtns button { border-radius: 0; background: transparent; border: 1px solid var(--cm-tr-line); box-shadow: none; min-height: 36px; }
+.cm-tr-head .cm-mini, .cm-tr-scanbar .cm-mini, .cm-tr-notehead .cm-mini { min-width: 36px; }
+.cm-tr-head .cm-mini:hover, .cm-tr-scanbar .cm-mini:hover, .cm-tr-notehead .cm-mini:hover, .cm-tr-actions button:hover, .cm-tr-cardbtns button:hover { border-color: var(--cm-tr-lilac); background: rgba(184, 163, 242, 0.08); }
+.cm-tr-grid { gap: 18px; }
+.cm-tr-scan, .cm-tr-text { border-radius: 0; background: var(--cm-tr-panel); border: 1px solid var(--cm-tr-line); padding: 0; gap: 0; }
+.cm-tr-scanbar, .cm-tr-notehead { padding: 8px 12px; border-bottom: 1px solid var(--cm-tr-line); }
+.cm-tr-scanview { border-radius: 0; background: rgba(18, 18, 23, 0.9); padding: 12px; }
+.cm-tr-file { color: var(--cm-tr-lilac); border-bottom: 1px solid var(--cm-tr-lilac); padding-bottom: 1px; }
+.cm-tr-name.cm-tin-gradient-style { font-size: 1.7em; line-height: 1.1; font-weight: 400; margin-right: 6px; }
+.cm-tr-pen { background: transparent; border: 0 !important; color: var(--cm-tr-lilac); }
+.cm-tr-nameinput { border-radius: 0; background: transparent; border: 0; border-bottom: 1px solid var(--cm-tr-lilac); box-shadow: none; font-family: 'Alegreya', Georgia, serif; font-size: 1.3em; }
+.cm-tr-mode { gap: 16px; }
+.cm-tr-mode .cm-mini { border: 0; border-bottom: 1px solid transparent; min-width: 0; padding: 4px 0; color: var(--text-muted); background: transparent; }
+.cm-tr .cm-tr-mode button.cm-mini, .cm-tr .cm-tr-mode button.cm-mini:hover, .cm-tr .cm-tr-mode button.cm-mini.is-on { background: transparent; box-shadow: none; }
+.cm-tr .cm-tr-mode button.cm-mini.is-on { color: var(--text-normal); border-bottom-color: var(--cm-tr-lilac); }
+.cm-tr-texthost { padding: 0; }
+.cm-tr-ta { border: 0; border-radius: 0; background: transparent; box-shadow: none; padding: 14px 18px; }
+.cm-tr-preview { padding: 14px 18px; }
+.cm-tr-checks { padding: 10px 12px 0; border-top: 1px solid var(--cm-tr-line); }
+.cm-tr-checkhead { letter-spacing: 0.09em; }
+.cm-tr-card { border-radius: 0; background: rgba(224, 149, 63, 0.07); border: 1px solid rgba(224, 149, 63, 0.35); border-left-width: 1px; }
+.cm-tr-card.cm-tr-recreate { background: rgba(91, 143, 217, 0.07); border-color: rgba(91, 143, 217, 0.35); }
+.cm-tr-card.cm-tr-recheck { background: rgba(76, 175, 122, 0.07); border-color: rgba(76, 175, 122, 0.35); }
+.cm-tr-card.cm-tr-unsure { background: rgba(184, 163, 242, 0.07); border-color: rgba(184, 163, 242, 0.35); }
+.cm-tr-actions { padding: 12px; border-top: 1px solid var(--cm-tr-line); align-items: center; }
+.cm-tr-actions button.mod-cta { min-height: 40px; padding: 0 28px; color: #f1f0f8; font-weight: 600; border: 1.5px solid transparent; background: linear-gradient(#1d1d25, #1d1d25) padding-box, var(--cm-tin-gradient) border-box; box-shadow: 0 0 14px rgba(170, 135, 240, 0.28); }
+.cm-tr-actions button.mod-cta:hover { background: linear-gradient(#26242f, #26242f) padding-box, var(--cm-tin-gradient) border-box; }
+.cm-tr-actions button.mod-cta:disabled { opacity: 0.55; box-shadow: none; }
+.cm-tr-actions button.cm-danger { color: #f08a7e; border-color: rgba(240, 138, 126, 0.4); }
+.cm-tr-actions button.cm-danger:hover { border-color: #f08a7e; background: rgba(240, 138, 126, 0.08); }

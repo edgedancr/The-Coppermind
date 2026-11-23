@@ -1017,6 +1017,16 @@ class QueueView extends ItemView {
 /* ---------- Transcription queue (3.16.0) ---------- */
 
 /** Asks before a transcription is verified: it moves its scans to the trash. `unsure` unsure words need a tick. */
+/** Checks a new name typed for a note in the transcription queue (3.17.0). Returns { ok, name } or { ok: false, error }. */
+function cleanNoteName(raw) {
+  const n = String(raw || "").trim().replace(/\.md$/i, "").trim();
+  if (!n) return { ok: false, error: "A note needs a name." };
+  const bad = n.match(/[\\/:*?"<>|#^\[\]]/);
+  if (bad) return { ok: false, error: `A note's name can't contain ${bad[0]}` };
+  if (n.startsWith(".")) return { ok: false, error: "A note's name can't start with a dot." };
+  return { ok: true, name: n };
+}
+
 class TranscribeVerifyModal extends Modal {
   constructor(app, opts) {
     super(app);
@@ -1120,6 +1130,13 @@ class TranscribeView extends ItemView {
     this.registerEvent(this.app.metadataCache.on("changed", (f) => this.onNoteChanged(f)));
     this.registerEvent(this.app.vault.on("delete", (f) => { if (f.path.startsWith(NOTES_DIR) || f.path.startsWith(SCAN_DIR)) this.refreshSoon(); }));
     this.registerEvent(this.app.vault.on("create", (f) => { if (f.path.startsWith(SCAN_DIR)) this.refreshSoon(); }));
+    // a note was renamed (here, or anywhere): keep showing it under its new name
+    this.registerEvent(this.app.vault.on("rename", (f, oldPath) => {
+      if (!f.path.startsWith(NOTES_DIR) && !oldPath.startsWith(NOTES_DIR)) return;
+      if (oldPath === this.path) this.path = f.path;
+      if (this.decisions[oldPath]) { this.decisions[f.path] = this.decisions[oldPath]; delete this.decisions[oldPath]; }
+      this.refreshSoon();
+    }));
     await this.render();
   }
 
@@ -1155,6 +1172,31 @@ class TranscribeView extends ItemView {
     return items.find((i) => i.file.path === this.path) || null;
   }
 
+  /** Renames the note being reviewed (same folder, same extension), so links to it follow. Returns true when it is done or nothing needed to change. */
+  async rename(item, raw) {
+    const c = cleanNoteName(raw);
+    if (!c.ok) { new Notice(c.error); return false; }
+    const file = item.file;
+    if (c.name === file.basename) { this.render(); return true; }
+    const dir = file.parent && file.parent.path !== "/" ? file.parent.path + "/" : "";
+    const newPath = dir + c.name + "." + file.extension;
+    const clash = this.app.vault.getAbstractFileByPath(newPath);
+    if (clash && clash !== file) { new Notice(`There is already a note called “${c.name}” in this folder.`); return false; }
+    await this.saveNow();
+    const old = file.path;
+    this.path = newPath; // before the rename, so the "rename" event doesn't find the queue showing a note that is gone
+    try {
+      await this.app.fileManager.renameFile(file, newPath);
+    } catch (e) {
+      this.path = old;
+      new Notice("Couldn't rename the note: " + (e && e.message ? e.message : e));
+      return false;
+    }
+    new Notice(`Renamed to “${c.name}”.`);
+    this.render();
+    return true;
+  }
+
   async render() {
     if (this.busy) { this.again = true; return; }
     this.busy = true;
@@ -1179,7 +1221,7 @@ class TranscribeView extends ItemView {
     this.sig = this.listSig();
 
     const head = root.createDiv({ cls: "cm-tr-head" });
-    head.createEl("h4", { text: "Transcription queue" });
+    head.createEl("h4", { text: "Transcription queue", cls: "cm-tin-gradient-style" });
     if (!item) {
       const empty = root.createDiv({ cls: "cm-tr-empty" });
       empty.createDiv({ cls: "cm-card-label", text: "Nothing to review" });
@@ -1220,7 +1262,30 @@ class TranscribeView extends ItemView {
     // right: the note
     const top = textPane.createDiv({ cls: "cm-tr-notehead" });
     const title = top.createDiv({ cls: "cm-tr-notetitle" });
-    title.createSpan({ cls: "cm-tr-name", text: file.basename });
+    const nameEl = title.createSpan({ cls: "cm-tr-name cm-tin-gradient-style", text: file.basename });
+    const pen = title.createEl("button", { cls: "cm-mini cm-tr-pen", text: "Rename" });
+    pen.setAttr("aria-label", "Rename this note, for example to fix an unclear date");
+    pen.addEventListener("click", () => {
+      const input = createEl("input", { type: "text", cls: "cm-tr-nameinput" });
+      input.value = file.basename;
+      input.setAttr("aria-label", "New name for this note");
+      nameEl.replaceWith(input);
+      pen.hide();
+      input.focus();
+      input.select();
+      let done = false;
+      const finish = async (apply) => {
+        if (done) return;
+        done = true;
+        if (apply && !(await this.rename(item, input.value))) { done = false; input.focus(); return; }
+        if (!apply) this.render();
+      };
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") { e.preventDefault(); finish(true); }
+        else if (e.key === "Escape") { e.preventDefault(); finish(false); }
+      });
+      input.addEventListener("blur", () => finish(false));
+    });
     title.createSpan({ cls: "cm-tr-where", text: file.parent ? file.parent.path.replace(NOTES_DIR, "") : "" });
     const mode = top.createDiv({ cls: "cm-tr-mode" });
     const editBtn = mode.createEl("button", { cls: "cm-mini" + (this.preview ? "" : " is-on"), text: "Edit" });
@@ -5878,5 +5943,5 @@ module.exports.__test = {
   parseProposedRating, ratingOf, syncIndex, indexNeeds, leadLine, parseFlags, removeLines, sortQueue, nextAfter, groupOf, editIndex,
   verifyLogEntry, rejectLogEntry, addToLog, daysBetween, today, parseLog, describeEntry, renameLogEntry, parseIndex, renderIndex,
   logPathFor, logOrder, logFileHeader, isLogPath, setFrontmatterProps, schemaInfo, checkVersion, addChangelogEntry, findChangelog,
-  scanPath, scanNames, scanKey, splitNote, parseDrawings, parseRechecks, findUnsure, acceptGuess, keepDrawing, recreateDrawing, leaveOutDrawing, clearRecheck, transcribeVerifyLogEntry,
+  cleanNoteName, scanPath, scanNames, scanKey, splitNote, parseDrawings, parseRechecks, findUnsure, acceptGuess, keepDrawing, recreateDrawing, leaveOutDrawing, clearRecheck, transcribeVerifyLogEntry,
 };
