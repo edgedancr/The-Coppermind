@@ -67,16 +67,67 @@
 /* ---------- Typography ---------- */
 body {
   --file-line-width: 44rem;
-  --h1-font: "Segoe UI", system-ui, sans-serif;
-  --h2-font: "Segoe UI", system-ui, sans-serif;
-  --h3-font: "Segoe UI", system-ui, sans-serif;
-  --h1-weight: 700;
-  --h2-weight: 600;
-  --h3-weight: 600;
-  --h1-size: 1.9em;
-  --h2-size: 1.5em;
+  --h1-font: var(--cm-gradient-font, 'Almendra SC', "Segoe UI", system-ui, sans-serif);
+  --h2-font: var(--h1-font);
+  --h3-font: var(--h1-font);
+  --h4-font: var(--h1-font);
+  --h1-weight: 400;
+  --h2-weight: 400;
+  --h3-weight: 400;
+  --h4-weight: 400;
+  --h1-size: 1.7em;
+  --h2-size: 1.45em;
   --h3-size: 1.25em;
+  --h4-size: 1.08em;
+  --h1-line-height: 1.2;
+  --h2-line-height: 1.2;
+  --h3-line-height: 1.25;
+  --h4-line-height: 1.3;
+  --inline-title-size: 2.4em;
   --line-height-normal: 1.65;
+  --cm-rule-a: rgba(217, 138, 74, 0.85);
+  --cm-rule-b: rgba(95, 174, 158, 0.6);
+}
+/* Tinmind: the same heading rules in grey and lilac, on every Tinmind note and while Tinmind mode is on */
+body.cm-tin-mode,
+.cm-tinnote-leaf {
+  --cm-rule-a: rgba(184, 163, 242, 0.85);
+  --cm-rule-b: rgba(176, 176, 189, 0.5);
+}
+.cm-tinnote-leaf {
+  --cm-gradient: var(--cm-tin-gradient);
+  --cm-gradient-glow: var(--cm-tin-gradient-glow);
+}
+
+/* ---------- Headings: the filename's gradient style, smaller each level (option B) ---------- */
+/* H1 to H4 are the Coppermind Gradient Style (copper to teal; grey to lilac in the Tinmind) in Almendra SC. Glow on H1 and H2 only. H1 has a full-width fading hairline under it and H2 a shorter one; the file name keeps its solid 2px rule, so it stays the biggest and the only solid-ruled title. Not applied to the Index, the Dashboard or the logs, which style their own headings; a heading with a class (the Tinmind's course panels) is left alone. Reading view first, then Live Preview and Source. */
+.markdown-rendered:not(.coppermind-index, .coppermind-dashboard) :is(h1, h2, h3, h4):not([class]):not(.cm-log-leaf *),
+.markdown-source-view:not(.coppermind-index, .coppermind-dashboard) :is(.cm-header-1, .cm-header-2, .cm-header-3, .cm-header-4):not(.cm-log-leaf *) {
+  width: fit-content; max-width: 100%;
+  letter-spacing: 0.02em;
+  background: var(--cm-gradient); background-size: 100% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+}
+.markdown-rendered:not(.coppermind-index, .coppermind-dashboard) :is(h1, h2):not([class]):not(.cm-log-leaf *),
+.markdown-source-view:not(.coppermind-index, .coppermind-dashboard) :is(.cm-header-1, .cm-header-2):not(.cm-log-leaf *) {
+  filter: var(--cm-gradient-glow);
+}
+.markdown-rendered:not(.coppermind-index, .coppermind-dashboard) .el-h1:not(.cm-log-leaf *),
+.markdown-source-view:not(.coppermind-index, .coppermind-dashboard) .HyperMD-header-1:not(.cm-log-leaf *) {
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(90deg, var(--cm-rule-a), var(--cm-rule-b) 60%, transparent) 1;
+  padding-bottom: 0.2em;
+  margin-bottom: 0.5em;
+}
+.markdown-rendered:not(.coppermind-index, .coppermind-dashboard) .el-h2:not(.cm-log-leaf *),
+.markdown-source-view:not(.coppermind-index, .coppermind-dashboard) .HyperMD-header-2:not(.cm-log-leaf *) {
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(90deg, var(--cm-rule-a), transparent 55%) 1;
+  padding-bottom: 0.18em;
+  margin-bottom: 0.4em;
+}
+.markdown-rendered:not(.coppermind-index, .coppermind-dashboard) :is(.el-h1, .el-h2):not(.cm-log-leaf *) > :is(h1, h2) {
+  margin-bottom: 0.1em;
 }
 
 /* Page title (the large title above each note) */
@@ -213,7 +264,7 @@ hr {
   content: "Index";
   display: inline-block;
   font-family: var(--cm-gradient-font);
-  font-size: calc(var(--font-text-size, 16px) * 1.9); /* not em: the real title is font-size 0, so em would give 0 */
+  font-size: calc(var(--font-text-size, 16px) * 2.4); /* not em: the real title is font-size 0, so em would give 0. 2.4 matches --inline-title-size */
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.2;
@@ -291,4 +342,9 @@ hr {
 .coppermind-index p a.internal-link:hover {
   background: linear-gradient(#2a221b, #2a221b) padding-box, linear-gradient(135deg, #e89a5a, #78d2c0) border-box;
   box-shadow: 0 0 8px rgba(217, 138, 74, 0.5), 0 0 12px rgba(95, 174, 158, 0.4);
+}
+
+/* the _AGENTS title is drawn by Nicrosil at 1.9; this keeps it the same size as the other file names (2.4) */
+body .cm-agents-leaf .inline-title::before {
+  font-size: calc(var(--font-text-size, 16px) * 2.4);
 }
