@@ -1,6 +1,6 @@
 ---
 type: guide
-status: draft
+status: verified
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -14,9 +14,7 @@ related:
   - "[[SCHEMA]]"
 drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5; larger file-list button name and index letter headings and jump bar, the flat relations map, the trimmed guide body, and the changelog moved to its own file, by claude-sonnet-5-5; Coppermind Gradient Style section by claude-sonnet-5-5; the Tinmind (notes dashboard, semester switcher, hero, button, mode) and the Tinmind Gradient Style by claude-sonnet-5-5; trimmed to what Nicrosil does and brought to v3.0.0 by claude-sonnet-5-5; Tinmind course tree and course pages by claude-sonnet-5-5; mode button, dashboard status bar and the dashboards' Ledger look by claude-sonnet-5-5; the Notebook by claude-sonnet-5-5; transcription queue by claude-sonnet-5-5; buttons kept full size by claude-sonnet-5-5); the transcription queue's Rename button by claude-sonnet-5-5; the transcription queue as a locked split by claude-sonnet-5-5
 drafted_on: 2026-11-11
-verified_on: 2026-11-22
-changes_since_verified:
-  - "2026-11-23: the transcription queue is now a locked split, the scan on the left and the note on the right in an ordinary Obsidian editor with a review bar across its top, in the Tinmind Gradient Style (Nicrosil 3.28.0) [[#The Tinmind]]"
+verified_on: 2026-11-23
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, records schema changes, and runs the Tinmind, my own class notes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
