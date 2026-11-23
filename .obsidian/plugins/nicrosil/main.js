@@ -105,7 +105,7 @@ const FLAG_KINDS = {
   warning: { label: "Warning", plural: "Warnings (unsourced)", short: "W" },
 };
 const STALE_DAYS = 14;
-const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, hidePanels: true, readMode: "verified", healthDays: 14, autoIndex: true };
+const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, hidePanels: true, closeTabsOnStart: true, readMode: "verified", healthDays: 14, autoIndex: true };
 const READ_MODES = { verified: "Verified pages only", all: "Every page", off: "Off" };
 // Admiralty Code, as SCHEMA - Writing Pages lays it out: reliability of the source, credibility of the information.
 const RATING_REL = [["A", "Completely reliable"], ["B", "Usually reliable"], ["C", "Fairly reliable"], ["D", "Not usually reliable"], ["E", "Unreliable"], ["F", "Cannot be judged"]];
@@ -2604,6 +2604,9 @@ class ReviewSettings extends PluginSettingTab {
     new Setting(el).setName("Close the extra sidebar panels on startup")
       .setDesc("Closes Backlinks, Outgoing links, Tags, All properties and Outline in the sidebar each time Obsidian starts. You can still open any of them from the command palette during a session.")
       .addToggle((t) => t.setValue(this.plugin.settings.hidePanels !== false).onChange(async (v) => { this.plugin.settings.hidePanels = v; await this.plugin.persist(); }));
+    new Setting(el).setName("Close the other tabs on startup")
+      .setDesc("When Obsidian starts, keeps only the Dashboard open in the main area and closes every other tab, so a page left open last time (the transcription queue, a note) doesn't come back in the wrong mode. Does nothing when you only reload the plugin during a session.")
+      .addToggle((t) => t.setValue(this.plugin.settings.closeTabsOnStart !== false).onChange(async (v) => { this.plugin.settings.closeTabsOnStart = v; await this.plugin.persist(); }));
     new Setting(el).setName("Open pages in Reading view")
       .setDesc("When a page is opened (from a link, the file list, search or the Dashboard), it opens in Reading view instead of editing. Switching to editing yourself sticks until you open a different page in that tab. \"Every page\" also covers drafts; empty new notes always open ready to type.")
       .addDropdown((d) => {
@@ -2873,12 +2876,76 @@ function searchEntries(entries, query, limit) {
   return limit ? hits.slice(0, limit) : hits;
 }
 
+/* ---------- the Tinmind's search (3.26.0): every note under The Tinmind/, and every heading in them ---------- */
+
+function inTinScope(path) {
+  return path.startsWith(NOTES_DIR) && path !== NOTES_DASHBOARD + ".md";
+}
+
+/** A class note's searchable record: the usual one, plus its headings as written and where it sits ("Fall 26 › SAIL"). */
+function makeTinEntry(path, text, yaml) {
+  const e = makeEntry(path, text, yaml);
+  const headings = [];
+  let inFence = false;
+  for (const raw of text.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, "").split(/\r?\n/)) {
+    if (/^\s*```/.test(raw)) { inFence = !inFence; continue; }
+    if (inFence) continue;
+    const m = raw.match(/^#{1,6}[ \t]+(.+?)[ \t]*#*[ \t]*$/);
+    if (!m) continue;
+    const h = m[1].replace(/[*_`]/g, "").trim();
+    if (h && h.toLowerCase() !== "footnotes") headings.push(h);
+  }
+  const parts = path.slice(NOTES_DIR.length).split("/");
+  parts.pop();
+  e.headings = headings;
+  e.headingsTL = headings.map((h) => h.toLowerCase());
+  e.where = parts.join(" › ");
+  e.typeLabel = e.where; // shown as the tag on a note's card
+  e.status = "";
+  return e;
+}
+
+/** Notes (by title, alias and text, as the Coppermind's search ranks them) and headings (a card each), best first. */
+function searchTin(entries, query, limit) {
+  const tokens = tokenize(query);
+  if (!tokens.length) return [];
+  const list = [...entries];
+  const hits = searchEntries(list, query);
+  const full = tokens.join(" ");
+  for (const e of list) {
+    (e.headingsTL || []).forEach((hl, i) => {
+      let score = 0;
+      for (const tok of tokens) {
+        const s = TITLE_SCORE[fieldMatch(hl, tok)];
+        if (!s) return;
+        score += s;
+      }
+      if (hl === full) score += 40;
+      hits.push({ entry: e, heading: e.headings[i], idx: i, score: Math.round(score * 0.9), aliasNote: "", tokens, snippet: "" });
+    });
+  }
+  hits.sort((a, b) =>
+    b.score - a.score ||
+    (a.heading ? 1 : 0) - (b.heading ? 1 : 0) ||
+    a.entry.name.localeCompare(b.entry.name) ||
+    (a.idx || 0) - (b.idx || 0));
+  return limit ? hits.slice(0, limit) : hits;
+}
+
+/** The link that opens a heading: the note, then # and the heading with the characters links can't hold turned to spaces. */
+function headingLink(path, heading) {
+  return path.replace(/\.md$/, "") + "#" + heading.replace(/[#|^:%\[\]]/g, " ").replace(/\s+/g, " ").trim();
+}
+
 /* ---------- search box on the Dashboard ---------- */
 
 /** Keeps a searchable record of every page in scope, refreshed as pages change. */
 class SearchIndex {
-  constructor(app) {
+  constructor(app, scope, make, searcher) {
     this.app = app;
+    this.scope = scope || inSearchScope;
+    this.make = make || makeEntry;
+    this.searcher = searcher || searchEntries;
     this.entries = new Map();
     this.dirty = new Set();
     this.ready = null;
@@ -2890,20 +2957,20 @@ class SearchIndex {
   }
 
   async buildAll() {
-    const files = this.app.vault.getMarkdownFiles().filter((f) => inSearchScope(f.path));
+    const files = this.app.vault.getMarkdownFiles().filter((f) => this.scope(f.path));
     for (const f of files) await this.index(f);
     // Drop anything that has since left the scope or the vault.
     for (const p of [...this.entries.keys()]) if (!this.app.vault.getAbstractFileByPath(p)) this.entries.delete(p);
   }
 
   async index(file) {
-    if (!(file instanceof TFile) || !inSearchScope(file.path)) return;
+    if (!(file instanceof TFile) || !this.scope(file.path)) return;
     try {
       const text = await this.app.vault.read(file);
       const m = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
       let yaml = {};
       if (m) { try { yaml = parseYaml(m[1]) || {}; } catch (e) { yaml = {}; } }
-      this.entries.set(file.path, makeEntry(file.path, text, yaml));
+      this.entries.set(file.path, this.make(file.path, text, yaml));
     } catch (e) {
       this.entries.delete(file.path);
     }
@@ -2911,7 +2978,7 @@ class SearchIndex {
 
   /** Called when a page changes: re-reads it a moment later, once. */
   touch(file) {
-    if (!(file instanceof TFile) || !inSearchScope(file.path)) return;
+    if (!(file instanceof TFile) || !this.scope(file.path)) return;
     this.dirty.add(file.path);
     if (this.timer) return;
     this.timer = setTimeout(async () => {
@@ -2932,12 +2999,14 @@ class SearchIndex {
     await this.index(file);
   }
 
-  search(q) { return searchEntries(this.entries.values(), q); }
+  search(q) { return this.searcher(this.entries.values(), q); }
 }
 
 class SearchBlock extends MarkdownRenderChild {
-  constructor(el, plugin) {
+  /** opts.tin: the Tinmind's search (its own index, heading cards, no "search everything" link). */
+  constructor(el, plugin, opts) {
     super(el);
+    this.opts = opts || {};
     this.plugin = plugin;
     this.app = plugin.app;
     this.hits = [];
@@ -2945,13 +3014,16 @@ class SearchBlock extends MarkdownRenderChild {
     this.query = "";
   }
 
+  idx() { return this.opts.tin ? this.plugin.tinIndex : this.plugin.searchIndex; }
+
   onload() {
     const el = this.containerEl;
     el.empty();
     el.addClass("cm-search");
+    const what = this.opts.tin ? "the Tinmind" : "the Coppermind";
     const bar = el.createDiv({ cls: "cm-search-bar" });
     setIcon(bar.createSpan({ cls: "cm-search-icon" }), "search");
-    this.input = bar.createEl("input", { cls: "cm-search-input", attr: { type: "text", placeholder: "Search the Coppermind…", spellcheck: "false", autocomplete: "off", "aria-label": "Search the Coppermind" } });
+    this.input = bar.createEl("input", { cls: "cm-search-input", attr: { type: "text", placeholder: `Search ${what}…`, spellcheck: "false", autocomplete: "off", "aria-label": `Search ${what}` } });
     this.clearBtn = bar.createSpan({ cls: "cm-search-clear", attr: { role: "button", "aria-label": "Clear search" } });
     setIcon(this.clearBtn, "x");
     this.list = el.createDiv({ cls: "cm-search-results" });
@@ -2973,9 +3045,10 @@ class SearchBlock extends MarkdownRenderChild {
     this.query = this.input.value;
     this.clearBtn.toggleClass("is-visible", !!this.query);
     if (!this.query.trim()) { this.hits = []; this.list.hide(); return; }
-    if (this.plugin.searchIndex.ready) await this.plugin.searchIndex.ready;
+    const idx = this.idx();
+    if (idx.ready) await idx.ready;
     if (this.query !== this.input.value) return; // typed more while waiting
-    this.hits = this.plugin.searchIndex.search(this.query);
+    this.hits = idx.search(this.query);
     this.active = 0;
     this.render();
   }
@@ -2995,16 +3068,18 @@ class SearchBlock extends MarkdownRenderChild {
       return;
     }
     if (!this.hits.length) {
-      list.createDiv({ cls: "cm-search-empty", text: `No pages match “${this.query.trim()}”.` });
+      list.createDiv({ cls: "cm-search-empty", text: this.opts.tin ? `No notes or headings match “${this.query.trim()}”.` : `No pages match “${this.query.trim()}”.` });
     }
     this.cards = list.createDiv({ cls: "cm-search-cards" });
     this.shown = 0;
     const foot = list.createDiv({ cls: "cm-search-foot" });
     this.count = foot.createSpan({ cls: "cm-search-count" });
-    const link = foot.createSpan({ cls: "cm-search-more", text: "Search everything, including class notes ↗", attr: { role: "button", tabindex: "0" } });
-    const go = () => this.searchAll();
-    link.addEventListener("click", go);
-    link.addEventListener("keydown", (ev) => { if (ev.key === "Enter") { ev.preventDefault(); go(); } });
+    if (!this.opts.tin) {
+      const link = foot.createSpan({ cls: "cm-search-more", text: "Search everything, including class notes ↗", attr: { role: "button", tabindex: "0" } });
+      const go = () => this.searchAll();
+      link.addEventListener("click", go);
+      link.addEventListener("keydown", (ev) => { if (ev.key === "Enter") { ev.preventDefault(); go(); } });
+    }
     this.more();
     this.updateCount();
     // if the first batch doesn't fill the list, there is nothing to scroll: draw until it does
@@ -3025,10 +3100,16 @@ class SearchBlock extends MarkdownRenderChild {
       card.setAttr("role", "option");
       const top = card.createDiv({ cls: "cm-search-top" });
       const title = top.createSpan({ cls: "cm-search-title" });
-      this.marked(title, e.name, tokens);
-      if (e.typeLabel) top.createSpan({ cls: "cm-search-tag", text: e.typeLabel });
+      this.marked(title, h.heading || e.name, tokens);
+      if (h.heading) top.createSpan({ cls: "cm-search-tag", text: "Heading" });
+      else if (e.typeLabel) top.createSpan({ cls: "cm-search-tag", text: e.typeLabel });
       if (e.status) top.createSpan({ cls: "cm-search-status cm-search-" + e.status, text: e.status });
-      if (h.aliasNote) {
+      if (h.heading) {
+        const a = card.createDiv({ cls: "cm-search-alias" });
+        a.appendText("In ");
+        a.createSpan({ text: e.name });
+        if (e.where) a.appendText(" · " + e.where);
+      } else if (h.aliasNote) {
         const a = card.createDiv({ cls: "cm-search-alias" });
         a.appendText("Also known as ");
         this.marked(a.createSpan(), h.aliasNote, tokens);
@@ -3080,7 +3161,7 @@ class SearchBlock extends MarkdownRenderChild {
   }
 
   open(hit, newTab) {
-    this.app.workspace.openLinkText(hit.entry.path, "", !!newTab);
+    this.app.workspace.openLinkText(hit.heading ? headingLink(hit.entry.path, hit.heading) : hit.entry.path, "", !!newTab);
     if (!newTab) { this.input.value = ""; this.onType(); }
     else this.list.hide();
   }
@@ -3397,7 +3478,7 @@ module.exports = class Nicrosil extends Plugin {
     // (3.13.0: the review queue and relations panel buttons are in the left sidebar's tab bar now, and the ribbon is hidden)
 
     this.registerMarkdownCodeBlockProcessor("coppermind-hero", (src, el, ctx) => this.renderHero(el, src, ctx));
-    this.registerMarkdownCodeBlockProcessor("tinmind-hero", (src, el) => this.renderTinHero(el, src));
+    this.registerMarkdownCodeBlockProcessor("tinmind-hero", (src, el, ctx) => this.renderTinHero(el, src, ctx));
     for (const [name, method] of [["coppermind-dashboard", "renderDashboard"], ["coppermind-nav", "renderNav"], ["coppermind-classes", "renderClassNav"], ["coppermind-activity", "renderActivity"]]) {
       this.registerMarkdownCodeBlockProcessor(name, (src, el, ctx) => ctx.addChild(new LiveBlock(el, this, method)));
     }
@@ -3408,6 +3489,11 @@ module.exports = class Nicrosil extends Plugin {
     this.registerEvent(this.app.vault.on("create", (f) => this.searchIndex.touch(f)));
     this.registerEvent(this.app.vault.on("delete", (f) => this.searchIndex.remove(f.path)));
     this.registerEvent(this.app.vault.on("rename", (f, oldPath) => this.searchIndex.rename(f, oldPath)));
+    this.tinIndex = new SearchIndex(this.app, inTinScope, makeTinEntry, searchTin);
+    this.registerEvent(this.app.vault.on("modify", (f) => this.tinIndex.touch(f)));
+    this.registerEvent(this.app.vault.on("create", (f) => this.tinIndex.touch(f)));
+    this.registerEvent(this.app.vault.on("delete", (f) => this.tinIndex.remove(f.path)));
+    this.registerEvent(this.app.vault.on("rename", (f, oldPath) => this.tinIndex.rename(f, oldPath)));
 
     this.scheduleRefresh = debounce(() => this.refresh(), 400, true);
     this.registerInterval(window.setInterval(() => this.scheduleRefresh(), 60 * 60 * 1000)); // keeps the health check card current overnight
@@ -3459,10 +3545,12 @@ module.exports = class Nicrosil extends Plugin {
       if (this.settings.hidePanels !== false) {
         for (const t of ["backlink", "outgoing-link", "tag", "all-properties", "outline"]) this.app.workspace.detachLeavesOfType(t);
       }
+      if (performance.now() < 20000) window.setTimeout(() => this.closeOtherTabsOnStart(), 1500); // only when Obsidian itself just started (3.21.0), not when the plugin is reloaded later
       this.exitTinMode(); // Obsidian always opens in the Coppermind's mode (3.2.1): colors back, the right sidebar as it was before the Tinmind
       this.paintTinMode();
       this.startDashIntro();
       this.searchIndex.start();
+      this.tinIndex.start();
       this.syncSchemaButtons(); this.syncHomeButtons();
       await this.migrateHome();
       await this.migrateTinDashboard();
@@ -3518,6 +3606,8 @@ module.exports = class Nicrosil extends Plugin {
     this.addCommand({ id: "skip-page", name: "Skip this draft for now", hotkeys: [{ modifiers: ["Alt"], key: "s" }], checkCallback: onPage((f) => this.skip(f)) });
     this.addCommand({ id: "resolve-flag", name: "Resolve a flag on this page", hotkeys: [{ modifiers: ["Alt"], key: "f" }], checkCallback: onPage((f) => this.pickFlag(f)) });
     this.addCommand({ id: "next-draft", name: "Open the next draft", hotkeys: [{ modifiers: ["Alt"], key: "n" }], callback: () => { const f = this.currentFile(); this.openNext(f ? f.path : null); } });
+    this.addCommand({ id: "switch-mode", name: "Switch between the Coppermind and the Tinmind", hotkeys: [{ modifiers: ["Alt", "Shift"], key: "d" }], callback: () => this.toggleMode() });
+    this.addCommand({ id: "show-files", name: "Show the file list", hotkeys: [{ modifiers: ["Alt"], key: "e" }], callback: () => this.showFiles() });
     this.addCommand({ id: "open-dashboard", name: "Go to the Dashboard", hotkeys: [{ modifiers: ["Alt"], key: "d" }], callback: () => this.openDashboard() });
     this.registerInterval(window.setInterval(() => this.syncHomeButtons(), 1500));
     this.scheduleTinRefresh = debounce(() => this.refreshTin(), 150, true);
@@ -3672,8 +3762,20 @@ module.exports = class Nicrosil extends Plugin {
     if (!ok) new Notice("Obsidian Git isn't turned on, so this button can't run. Turn it on in Settings, Community plugins.", 8000);
   }
 
+  /** Switches between the Coppermind and the Tinmind and brings the file list back (3.27.0), whichever left sidebar tab was showing. */
   toggleMode() {
     if (this.settings.tinmindMode) this.exitTinMode(); else this.enterTinMode();
+    this.showFiles();
+  }
+
+  /** Opens the left sidebar on the file list (the Files tab's icon is hidden, so this is the way back from the search tab). */
+  showFiles() {
+    try {
+      const ls = this.app.workspace.leftSplit;
+      if (ls && ls.collapsed) ls.expand();
+      const fe = this.app.workspace.getLeavesOfType("file-explorer")[0];
+      if (fe) this.app.workspace.revealLeaf(fe);
+    } catch (e) { /* a convenience */ }
   }
 
   /** Draws the mode button's icon: the Coppermind's logo in the Coppermind's mode, the Tinmind's logo in the Tinmind's. Drawn in the tab bar's own icon color, not a gradient. */
@@ -3970,8 +4072,8 @@ module.exports = class Nicrosil extends Plugin {
     if (ctx) ctx.addChild(new SearchBlock(host, this));
   }
 
-  /** The Tinmind page's hero (2.16.0): the tin logo, the title, and the block's text as the quote under it. No search box. */
-  renderTinHero(el, src) {
+  /** The Tinmind page's hero (2.16.0): the tin logo, the title, and the block's text as the quote under it. From 3.26.0 a search box sits at its right. */
+  renderTinHero(el, src, ctx) {
     el.empty();
     el.addClass("cm-hero", "cm-tin-hero");
     el.createSpan({ cls: "cm-logo cm-logo-hero cm-logo-tin" }).setAttr("aria-hidden", "true");
@@ -3979,6 +4081,10 @@ module.exports = class Nicrosil extends Plugin {
     text.createDiv({ cls: "cm-hero-title", text: "The Tinmind" });
     const tagline = String(src || "").trim();
     if (tagline) text.createDiv({ cls: "cm-hero-tagline", text: tagline });
+    if (ctx) {
+      const host = el.createDiv({ cls: "cm-hero-search cm-tin-hero-search" });
+      ctx.addChild(new SearchBlock(host, this, { tin: true }));
+    }
   }
 
   renderDashboard(el) {
@@ -4778,6 +4884,34 @@ module.exports = class Nicrosil extends Plugin {
     await this.app.workspace.getLeaf(newTab ? "tab" : false).openFile(file, line !== null ? { eState: { line } } : undefined);
   }
 
+  /**
+   * Start with one tab (3.21.0): once Obsidian has started and the startup page has had a moment to open, every main-area tab except the Dashboard is closed,
+   * so a page left open last time (the transcription queue, a note) doesn't come back beside it in the Coppermind's mode. The Dashboard is opened if the
+   * startup page didn't. Sidebars are left alone. Off with "Close the other tabs on startup" in the settings.
+   */
+  async closeOtherTabsOnStart() {
+    if (this.settings.closeTabsOnStart === false) return;
+    try {
+      const ws = this.app.workspace;
+      const f = this.dashboardFile();
+      if (!f) return;
+      const isDash = (l) => {
+        const vs = l.getViewState();
+        if (!vs || vs.type !== "markdown") return false;
+        const p = l.view && l.view.file ? l.view.file.path : (vs.state || {}).file;
+        return p === f.path;
+      };
+      const find = () => { let hit = null; ws.iterateRootLeaves((l) => { if (!hit && isDash(l)) hit = l; }); return hit; };
+      let keep = find();
+      if (!keep) { await this.openDashboard(); keep = find(); }
+      if (!keep) return;
+      const others = [];
+      ws.iterateRootLeaves((l) => { if (l !== keep) others.push(l); });
+      others.forEach((l) => l.detach());
+      ws.setActiveLeaf(keep, { focus: true });
+    } catch (e) { console.error("Nicrosil: couldn't close the other tabs on startup", e); }
+  }
+
   async openDashboard(newTab) {
     const f = this.dashboardFile();
     if (!f) { new Notice(`Couldn't find ${DASHBOARD_PATH}.`); return; }
@@ -5003,10 +5137,11 @@ module.exports = class Nicrosil extends Plugin {
     for (const k of kids) {
       if (k instanceof TFolder) {
         const isOpen = !!open[k.path];
-        const row = this.tinRow(parentEl, { depth, icon: isOpen ? "folder-open" : "folder", label: k.name, chev: isOpen });
+        const row = this.tinRow(parentEl, { depth, icon: isOpen ? "folder-open" : "folder", label: k.name, chev: isOpen, cls: isOpen ? "is-open" : "" });
         row.addEventListener("click", (e) => { if (!e.ctrlKey) this.tinToggle(k.path); });
         this.tinRowMenu(row, (e) => this.tinItemMenu(e, k, ctx));
-        if (isOpen) this.drawTinFolder(parentEl, k, depth + 1, ctx);
+        // an open folder's notes sit in their own block (3.25.0), so the course page can draw a guide line beside them; the sidebar draws it exactly as before
+        if (isOpen) this.drawTinFolder(parentEl.createDiv({ cls: "cm-tin-nest" }), k, depth + 1, ctx);
       } else {
         const row = this.tinRow(parentEl, { depth, icon: "file-text", label: k.basename, active: !!active && active.path === k.path });
         row.addEventListener("click", (e) => this.openTinFile(k, e.ctrlKey || e.metaKey));
@@ -5025,7 +5160,42 @@ module.exports = class Nicrosil extends Plugin {
     menu.addItem((i) => i.setTitle("New folder").setIcon("folder-plus").onClick(() => this.tinNewFolder(ctx.folder, ctx)));
     menu.addSeparator();
     menu.addItem((i) => i.setTitle(ctx.notebook ? "Open the Notebook page" : "Open the course page").setIcon("book-open").onClick(() => this.openTinFile(ctx.hub, false)));
+    if (!ctx.notebook) { // 3.20.0: the Notebook is pinned and has no delete
+      menu.addSeparator();
+      menu.addItem((i) => i.setTitle("Delete course").setIcon("trash-2").setWarning(true).onClick(() => this.tinDeleteCourse(ctx)));
+    }
     menu.showAtMouseEvent(e);
+  }
+
+  /**
+   * Delete a course (3.20.0): its page and its folder go to the trash together, after a question that says how many files are in the folder.
+   * The folder goes first, so a failure leaves the page (and the course) in place. Nothing else is touched; links to the deleted notes are left as they are.
+   */
+  async tinDeleteCourse(ctx) {
+    const hub = ctx.hub;
+    if (!hub || ctx.notebook) return;
+    const name = ctx.course || hub.basename.replace(/ Notes$/, "");
+    const folder = this.app.vault.getAbstractFileByPath(ctx.folder);
+    let count = 0;
+    const walk = (f) => f.children.forEach((c) => (c instanceof TFolder ? walk(c) : count++));
+    if (folder instanceof TFolder) walk(folder);
+    const message = count
+      ? `Delete the course "${name}"? Its page and its folder, with the ${count} file${count === 1 ? "" : "s"} in it, go to the trash. Move any notes you want to keep first.`
+      : `Delete the course "${name}"? Its page${folder instanceof TFolder ? " and its empty folder" : ""} go to the trash.`;
+    if (!(await this.tinConfirm({ title: "Delete course", message, ok: "Delete course" }))) return;
+    try {
+      if (folder instanceof TFolder) await this.app.fileManager.trashFile(folder);
+      await this.app.fileManager.trashFile(hub);
+      const open = this.settings.tinOpen || {};
+      for (const k of Object.keys(open)) if (k === hub.path || k.startsWith(ctx.folder + "/")) delete open[k];
+      this.persist();
+      new Notice(`Deleted the course "${name}". It is in the trash.`);
+    } catch (e) {
+      console.error("Nicrosil: couldn't delete the course", e);
+      new Notice("Couldn't delete that course. See the console for why.");
+    }
+    this.refreshTin();
+    this.dashboards.forEach((r) => r());
   }
 
   tinItemMenu(e, target, ctx) {
@@ -5224,13 +5394,20 @@ module.exports = class Nicrosil extends Plugin {
   drawHub(panel, file) {
     panel.empty();
     const ctx = this.courseCtx(file);
+    // Open tree (3.25.0): a section heading with a rule running out to the right, and the two actions as text links.
     const head = panel.createDiv({ cls: "cm-hub-head" });
-    head.createSpan({ cls: "cm-hub-title", text: ctx.notebook ? "Notes in the Notebook" : "Notes in this course" });
+    head.createEl("h4", { cls: "cm-hub-title cm-tin-gradient-style", text: "Notes" });
+    head.createDiv({ cls: "cm-hub-rule" });
     const btns = head.createDiv({ cls: "cm-hub-btns" });
-    const nb = btns.createEl("button", { text: "New note", cls: "mod-cta" });
-    nb.addEventListener("click", () => this.tinNewNote(ctx.folder, ctx));
-    const fb = btns.createEl("button", { text: "New folder" });
-    fb.addEventListener("click", () => this.tinNewFolder(ctx.folder, ctx));
+    const act = (label, icon, fn) => {
+      const b = btns.createEl("button", { cls: "cm-hub-act" });
+      setIcon(b.createSpan({ cls: "cm-hub-act-icon" }), icon);
+      b.createSpan({ text: label });
+      b.addEventListener("click", fn);
+    };
+    act("New note", "plus", () => this.tinNewNote(ctx.folder, ctx));
+    btns.createDiv({ cls: "cm-hub-sep" });
+    act("New folder", "folder-plus", () => this.tinNewFolder(ctx.folder, ctx));
     const body = panel.createDiv({ cls: "cm-hub-body" });
     this.drawCourseBody(body, ctx, 0);
   }
@@ -5971,6 +6148,7 @@ module.exports = class Nicrosil extends Plugin {
 };
 
 module.exports.__test = {
+  makeTinEntry, searchTin, inTinScope, headingLink,
   parseProposedRating, ratingOf, syncIndex, indexNeeds, leadLine, parseFlags, removeLines, sortQueue, nextAfter, groupOf, editIndex,
   verifyLogEntry, rejectLogEntry, addToLog, daysBetween, today, parseLog, describeEntry, renameLogEntry, parseIndex, renderIndex,
   logPathFor, logOrder, logFileHeader, isLogPath, setFrontmatterProps, schemaInfo, checkVersion, addChangelogEntry, findChangelog,

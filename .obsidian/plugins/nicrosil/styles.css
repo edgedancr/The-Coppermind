@@ -1691,3 +1691,46 @@ body.cm-tin-mode .workspace-tabs:has(> .workspace-tab-header-container .workspac
 .cm-shelf-quick:hover, .cm-shelf-quick:focus-visible { color: var(--text-normal); text-decoration: underline; }
 .cm-shelf-sep { width: 1px; height: 22px; background: rgba(176, 176, 189, 0.22); }
 .cm-shelf-sub { color: var(--text-muted); font-size: 0.88em; }
+
+
+/* ---------- The course page's notes panel, open tree (3.25.0) ---------- */
+/* No box: a section heading in the Tinmind Gradient Style with a hairline running out to the right, "New note" and "New folder" as text links, and the notes below in Alegreya with an open folder's notes under a lilac guide line. The sidebar's tree keeps its own look. */
+.cm-tin-nest { display: flex; flex-direction: column; gap: 1px; }
+.cm-hub { margin: 14px 0 18px; padding: 0; border: 0; border-radius: 0; background: transparent; }
+.cm-hub-head { display: flex; align-items: center; justify-content: flex-start; gap: 16px; margin-bottom: 6px; flex-wrap: nowrap; }
+.cm-hub-title.cm-tin-gradient-style { flex: none; font-size: 1.65em; line-height: 1.15; margin: 0; padding-bottom: 1px; }
+.cm-hub-rule { flex: 1 1 24px; min-width: 24px; height: 1px; background: linear-gradient(90deg, rgba(176, 176, 189, 0.45), rgba(184, 163, 242, 0.05)); }
+.cm-hub-btns { display: flex; align-items: center; gap: 16px; flex: none; }
+.cm-hub-btns button.cm-hub-act { display: inline-flex; align-items: center; gap: 7px; height: auto; min-height: 44px; padding: 0; background: transparent; box-shadow: none; border: 0; border-radius: 0; color: var(--text-muted); font-family: 'Alegreya', Georgia, serif; font-size: 1.05em; cursor: pointer; }
+.cm-hub-act-icon { display: inline-flex; color: #b0b0bd; }
+.cm-hub-act-icon svg { width: 16px; height: 16px; }
+.cm-hub-btns button.cm-hub-act:hover, .cm-hub-btns button.cm-hub-act:focus-visible { color: var(--text-normal); text-decoration: underline; text-decoration-color: #b8a3f2; text-underline-offset: 4px; }
+.cm-hub-btns button.cm-hub-act:focus-visible { outline: 1px solid #b8a3f2; outline-offset: 2px; }
+.cm-hub-sep { width: 1px; height: 22px; background: rgba(176, 176, 189, 0.22); }
+.cm-hub .cm-tin-row { gap: 12px; min-height: 44px; padding: 3px 0 3px 4px !important; border-radius: 0; background: transparent; box-shadow: none; color: #e0deee; font-family: 'Alegreya', Georgia, serif; font-size: 1.12em; }
+.cm-hub .cm-tin-row:hover { background: transparent; color: #f1f0f8; }
+.cm-hub .cm-tin-row:hover .cm-tin-label { text-decoration: underline; text-decoration-color: #b8a3f2; text-underline-offset: 4px; }
+.cm-hub .cm-tin-row.is-active { background: transparent; box-shadow: none; }
+.cm-hub .cm-tin-chev { width: 16px; height: 16px; flex: 0 0 16px; opacity: 1; color: #a6a3b8; }
+.cm-hub .cm-tin-icon { flex: 0 0 18px; opacity: 1; color: #b0b0bd; }
+.cm-hub .cm-tin-chev svg { width: 16px; height: 16px; }
+.cm-hub .cm-tin-icon svg { width: 18px; height: 18px; }
+.cm-hub .cm-tin-row.is-open .cm-tin-chev { color: #b8a3f2; }
+.cm-hub .cm-tin-row.is-open .cm-tin-icon { color: #c9b8f5; }
+.cm-hub .cm-tin-nest { margin-left: 11px; padding-left: 22px; border-left: 1px solid rgba(184, 163, 242, 0.4); }
+.cm-hub .cm-tin-label2 { padding-left: 4px !important; font-family: 'Alegreya', Georgia, serif; color: #c9b8f5; letter-spacing: 0.1em; }
+.cm-hub .cm-tin-empty { padding-left: 4px !important; font-family: 'Alegreya', Georgia, serif; font-size: 1.05em; }
+
+/* ---------- The Tinmind's search box (3.26.0) ---------- */
+/* At the right of the hero, level with the title. Its suggestions open wider than the box, ending at the box's right edge. Everything else about it comes from the Coppermind's search styles and the Tinmind's colors. */
+.cm-tin-hero { grid-template-columns: auto 1fr minmax(240px, 340px); }
+.cm-tin-hero .cm-hero-search.cm-tin-hero-search { grid-column: 3; grid-row: 1; margin-top: 0; align-self: center; }
+.cm-tin-hero .cm-search-results { left: auto; right: 0; width: min(620px, calc(100vw - 56px)); }
+@media (max-width: 760px) {
+  .cm-tin-hero { grid-template-columns: auto 1fr; }
+  .cm-tin-hero .cm-hero-search.cm-tin-hero-search { grid-column: 1 / -1; grid-row: auto; margin-top: 10px; }
+  .cm-tin-hero .cm-search-results { left: 0; width: auto; }
+}
+
+/* ---------- 3.27.0: the mode button also shows while the left sidebar is on its Search tab, so there is a way back to the file list ---------- */
+.workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="search"].is-active) .cm-mode-btn { display: flex; }

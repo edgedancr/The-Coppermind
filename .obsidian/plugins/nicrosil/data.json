@@ -4,6 +4,7 @@
     "sort": "type",
     "celebrate": true,
     "hidePanels": true,
+    "closeTabsOnStart": true,
     "readMode": "verified",
     "healthDays": 14,
     "autoIndex": true,
@@ -23,7 +24,7 @@
       "The Tinmind/Spring 26/Euclidean Geometry.md": false,
       "The Tinmind/Notebook.md": false,
       "The Tinmind/Notebook": true,
-      "The Tinmind/Fall 26/Events.md": false
+      "The Tinmind/Fall 26/Philosophy": true
     },
     "tinBacklinksRemoved": true,
     "tinHubsRenamed": true,
