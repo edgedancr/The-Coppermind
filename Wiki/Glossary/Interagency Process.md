@@ -1,9 +1,12 @@
 ---
 type: glossary
-status: draft
-aliases: ["Inter-Agency Process"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]"]
+status: verified
+aliases:
+  - Inter-Agency Process
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +19,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **Interagency process:** the process by which all the executive branch agencies involved reach consensus on policy recommendations or implementation actions, through bargaining or negotiating.[^1]

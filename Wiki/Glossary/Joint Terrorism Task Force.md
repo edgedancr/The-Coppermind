@@ -1,9 +1,13 @@
 ---
 type: glossary
-status: draft
-aliases: ["JTTF"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]", "[[SRC - The 9-11 Commission Report]]"]
+status: verified
+aliases:
+  - JTTF
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +20,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **Joint Terrorism Task Force (JTTF):** a forum in which local law enforcement and the FBI collaborate on domestic counterterrorism operations and investigations.[^1] In 2004 the FBI had them in 84 locations;[^2] the 9/11 Commission urged a reciprocal relationship in which state and local agents also receive information about their communities.[^3] First tried in New York City in 1980, there were 34 by 9/11; they set priorities by regional and field-office concerns, and most were not fully staffed.[^4]

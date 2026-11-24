@@ -1,12 +1,15 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]"]
-type_of: []
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
+type_of:
 part_of: []
-example_of: []
+example_of:
+  - "[[Denial and Deception]]"
 causes: []
 counters: []
 applies_to: []
@@ -16,7 +19,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **Maskirovka:** Russia's tradition of hiding its realities to confuse or mislead outside observers.[^1]

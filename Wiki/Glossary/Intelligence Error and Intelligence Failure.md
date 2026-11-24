@@ -1,9 +1,14 @@
 ---
 type: glossary
-status: draft
-aliases: ["Intelligence Error", "Intelligence Failure", "Analytic Error"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"]
+status: verified
+aliases:
+  - Intelligence Error
+  - Intelligence Failure
+  - Analytic Error
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +21,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **Intelligence error and intelligence failure:** in Rob Johnston's working definitions, errors are "factual inaccuracies in analysis resulting from poor or missing data," and failure is "systemic organizational surprise resulting from incorrect, missing, discarded, or inadequate hypotheses".[^1] Interviewees showed little consensus on the terms; novice analysts worried about being inaccurate, while senior analysts, managers, and consumers worried about being surprised.[^2] A failure to judge an adversary's intention may come from missing information or from missing hypotheses.[^3]

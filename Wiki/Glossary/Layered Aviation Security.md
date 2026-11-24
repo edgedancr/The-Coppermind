@@ -1,9 +1,12 @@
 ---
 type: glossary
-status: draft
-aliases: ["Layered Security"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+status: verified
+aliases:
+  - Layered Security
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +19,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **Layered aviation security:** the FAA's system of rules meant to give "layered" defense, so that the failure of any one layer would not be fatal. The 9/11 Commission found every layer relevant to hijacking (intelligence, passenger prescreening, checkpoint screening, and onboard security) seriously flawed before [[September 11 Attacks (2001)|9/11]]; for example, the FAA's [[No-Fly List|no-fly list]] held just 12 names, while government watchlists held many thousands.[^1]

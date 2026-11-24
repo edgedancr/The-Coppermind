@@ -1,9 +1,13 @@
 ---
 type: glossary
-status: draft
-aliases: ["Message-Driven Organization", "Inverted Pyramid"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Analytic Writing Guide (Kaiser and Pherson)]]"]
+status: verified
+aliases:
+  - Message-Driven Organization
+  - Inverted Pyramid
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Analytic Writing Guide (Kaiser and Pherson)]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +20,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **Inverted triangle:** Kaiser and Pherson's figure contrasting a data-driven paper, common in academia (research question, literature review, data and hypotheses, testing, findings, conclusion), with the message-driven paper used in the [[United States Intelligence Community|Intelligence Community]], which opens with [[Key Judgments|key judgments]] and moves through the "what," "why now," and impact to the outlook and implications.[^1] They offer it as a possible replacement for the "inverted pyramid," which some find confusing because supporting evidence seems to belong at a pyramid's base.[^1]
