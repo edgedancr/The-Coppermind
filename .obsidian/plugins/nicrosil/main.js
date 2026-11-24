@@ -42,11 +42,13 @@
  *         screenshot (a box dragged over the scan, saved to _attachments/Tinmind/ and embedded), recreate (the scan stays until the recreated drawing is
  *         checked) or leave out. Verify clears the draft mark, moves the scans to the trash and logs it; Discard deletes the draft and keeps the scans.
  *
- * Relations panel (Alt+L): for the open page, a map and grouped lists of its typed links (SCHEMA - Writing Pages),
- *         outgoing and incoming, colored by type. The incoming side is worked out from the other pages.
+ * The Lens (Alt+L; the relations panel before 3.29.0): for the open page, a map and grouped lists of its links, outgoing
+ *         and incoming, typed links colored by type and plain links after them; its topic; pages two steps away it
+ *         doesn't link with yet; and a trail of the pages opened before it.
  *
- * Wiki map (Alt+M): two views of the whole wiki's typed links. Hierarchy is a collapsible tree built from
- *         type_of, part_of and example_of; Map is a zoomable network of every typed link, with filters.
+ * Atlas (Alt+M; the wiki map, 3.29.0): the topics in _topics.md as circles, every page as a dot in its topic's circle, and
+ *         the links between topics as bands. Which topic a page is in is worked out from the links, spreading out from
+ *         each topic's anchor pages; nobody tags pages. Click a topic to zoom in, a dot to trace its links.
  *
  * Verify: sets status: verified and verified_on, deletes `changes_since_verified` if the page has it,
  *         checks the page is listed in _index.md, and adds an entry at the top of the current month's log file.
@@ -71,7 +73,7 @@ const GIT_BUTTONS = [ // the two git shortcuts in the left sidebar's tab bar (3.
 ];
 const PANEL_BUTTONS = [ // the review queue and relations panel buttons in the same tab bar, before the git ones (3.13.0); the far-left ribbon that held them is hidden
   { cls: "cm-queue-btn", icon: "badge-check", label: "Review queue (Alt+Q)", method: "activateView" },
-  { cls: "cm-rel-btn", icon: "git-fork", label: "Relations panel (Alt+L)", method: "activateRelations" },
+  { cls: "cm-rel-btn", icon: "git-fork", label: "Lens (Alt+L)", method: "activateRelations" },
   { cls: "cm-tr-btn", icon: "scan-text", label: "Transcription queue (Alt+T)", method: "activateTranscribe" }, // shows in the Tinmind's mode only (3.16.0)
 ];
 const NOTEBOOK_PAGE = "The Tinmind/Notebook";  // the pinned Notebook (type: notebook, no semester): its card is on the Tinmind Dashboard in every semester (3.10.0)
@@ -1757,7 +1759,225 @@ class TranscribeView extends ItemView {
   }
 }
 
-/* ---------- Relations panel and local map ---------- */
+/* ---------- Atlas: topics, page placement and layout (pure helpers, tested outside Obsidian) ---------- */
+
+/**
+ * The topics in _topics.md: each `## Name` heading, the first plain line under it as its description,
+ * and the [[links]] in its list items as its anchor pages. Text before the first heading is the file's intro.
+ */
+function parseTopics(text) {
+  const body = String(text || "").replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, "");
+  const topics = [];
+  let cur = null;
+  for (const raw of body.split(/\r?\n/)) {
+    const line = raw.trim();
+    const h = /^##\s+(.+?)\s*#*$/.exec(line);
+    if (h && !/^###/.test(line)) { cur = { name: h[1].trim(), desc: "", anchors: [] }; topics.push(cur); continue; }
+    if (!cur || !line) continue;
+    if (/^[-*+]\s/.test(line)) {
+      const re = /\[\[([^\]|#]+)(?:#[^\]|]*)?(?:\|[^\]]*)?\]\]/g;
+      let m;
+      while ((m = re.exec(line))) cur.anchors.push(m[1].trim());
+    } else if (!cur.desc && !/^#/.test(line)) cur.desc = line;
+  }
+  return topics.filter((t) => t.name);
+}
+
+/**
+ * Which topic each page belongs to. ids: page ids; adj: Map id -> Map(neighbor id -> weight), undirected;
+ * anchors: one array of page ids per topic. Each topic spreads its weight out from its anchors along the
+ * links (a random walk that restarts at the anchors); a page joins the topic that reaches it most strongly.
+ * Anchors stay in their own topic (the first one, if a page is listed twice). Returns
+ * { topic: Map id -> index or -1, score: Map id -> Float64Array of every topic's share, sorted by nothing }.
+ */
+function assignTopics(ids, adj, anchors, opts = {}) {
+  const restart = opts.restart ?? 0.25, rounds = opts.rounds ?? 40;
+  const n = ids.length, T = anchors.length;
+  const ix = new Map(ids.map((id, i) => [id, i]));
+  const nb = ids.map((id) => [...(adj.get(id) || new Map())].filter(([j]) => ix.has(j)).map(([j, w]) => [ix.get(j), w]));
+  const wsum = nb.map((l) => l.reduce((s, [, w]) => s + w, 0));
+  const pinned = new Map();
+  anchors.forEach((list, t) => list.forEach((id) => { if (ix.has(id) && !pinned.has(ix.get(id))) pinned.set(ix.get(id), t); }));
+  const scores = [];
+  for (let t = 0; t < T; t++) {
+    const seeds = anchors[t].filter((id) => ix.has(id) && pinned.get(ix.get(id)) === t).map((id) => ix.get(id));
+    const s0 = new Float64Array(n);
+    seeds.forEach((i) => { s0[i] = 1 / seeds.length; });
+    let p = Float64Array.from(s0);
+    for (let r = 0; r < rounds && seeds.length; r++) {
+      const q = new Float64Array(n);
+      for (let i = 0; i < n; i++) {
+        if (!p[i] || !wsum[i]) continue;
+        const share = (p[i] * (1 - restart)) / wsum[i];
+        for (const [j, w] of nb[i]) q[j] += share * w;
+      }
+      for (let i = 0; i < n; i++) q[i] += restart * s0[i];
+      p = q;
+    }
+    scores.push(p);
+  }
+  const topic = new Map(), score = new Map();
+  ids.forEach((id, i) => {
+    const row = new Float64Array(T);
+    let best = -1, bv = 0, tot = 0;
+    for (let t = 0; t < T; t++) {
+      // divide by the page's own link weight, so a busy page is judged by its mix of links, not their number
+      const v = scores[t][i] / Math.max(1, wsum[i]);
+      row[t] = v; tot += v;
+      if (v > bv) { bv = v; best = t; }
+    }
+    if (tot > 0) for (let t = 0; t < T; t++) row[t] /= tot;
+    topic.set(id, pinned.has(i) ? pinned.get(i) : bv > 1e-12 ? best : -1);
+    score.set(id, row);
+  });
+  return { topic, score };
+}
+
+/** A small repeatable number in [0, 1) from a string, so the layout is the same every time it is drawn. */
+function hash01(s, salt = 0) {
+  let h = 2166136261 ^ salt;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return ((h >>> 0) % 100000) / 100000;
+}
+
+/**
+ * Positions for the atlas, worked out once (no live motion).
+ * groups: [{ key, members: [id] }] (the topics, then "No topic yet" if it has pages);
+ * adj: as for assignTopics; radiusOf(id): a dot's radius; anchorSet: ids pinned as anchors; aspect: the width the
+ * whole map should have for its height (the atlas's tab is wider than it is tall).
+ * Returns { groups: [{ key, x, y, r }], pos: Map id -> { x, y } }.
+ */
+function layoutAtlas(groups, adj, radiusOf, anchorSet = new Set(), aspect = 1.7) {
+  const G = groups.length;
+  const gOf = new Map();
+  groups.forEach((g, i) => g.members.forEach((id) => gOf.set(id, i)));
+  const rad = groups.map((g) => 26 + 21 * Math.sqrt(Math.max(1, g.members.length)));
+  const GAP = 58; // room between circles for a topic's name (one or two lines), which sits above its circle
+  // links between groups
+  const W = groups.map(() => new Float64Array(G));
+  for (const [a, m] of adj) {
+    const ga = gOf.get(a);
+    if (ga === undefined) continue;
+    for (const [b, w] of m) { const gb = gOf.get(b); if (gb !== undefined && gb !== ga) W[ga][gb] += w / 2; }
+  }
+  // 1. the topic circles: start on a ring in file order, pull linked topics together, push overlaps apart
+  const ringR = groups.reduce((s, _, i) => s + rad[i], 0) / Math.PI;
+  const P = groups.map((g, i) => ({ x: Math.cos((2 * Math.PI * i) / G - Math.PI / 2) * ringR * Math.sqrt(aspect), y: Math.sin((2 * Math.PI * i) / G - Math.PI / 2) * ringR / Math.sqrt(aspect) }));
+  const maxW = Math.max(1, ...W.map((r) => Math.max(...r)));
+  for (let it = 0; it < 600; it++) {
+    const heat = 1 - it / 600;
+    const F = P.map(() => ({ x: 0, y: 0 }));
+    for (let a = 0; a < G; a++) for (let b = a + 1; b < G; b++) {
+      let dx = P[b].x - P[a].x, dy = P[b].y - P[a].y;
+      const d = Math.hypot(dx, dy) || 0.01; dx /= d; dy /= d;
+      const want = rad[a] + rad[b] + GAP + 8;
+      const w = W[a][b] / maxW;
+      let f = 0;
+      if (d < want) f = -(want - d) * 0.5;                       // overlap: push apart
+      else f = (d - want) * (0.004 + 0.05 * Math.sqrt(w));      // apart: linked topics pull together harder
+      F[a].x += dx * f; F[a].y += dy * f; F[b].x -= dx * f; F[b].y -= dy * f;
+    }
+    for (let a = 0; a < G; a++) { F[a].x -= (P[a].x * 0.002) / aspect; F[a].y -= P[a].y * 0.002 * aspect; } // squashed gravity: wider than tall
+    for (let a = 0; a < G; a++) { P[a].x += F[a].x * (0.3 + heat); P[a].y += F[a].y * (0.3 + heat); }
+  }
+  // stretch toward the wanted shape, then let the overlap pass below space the circles out again
+  let bx0 = Infinity, bx1 = -Infinity, by0 = Infinity, by1 = -Infinity;
+  P.forEach((p, i) => { bx0 = Math.min(bx0, p.x - rad[i]); bx1 = Math.max(bx1, p.x + rad[i]); by0 = Math.min(by0, p.y - rad[i]); by1 = Math.max(by1, p.y + rad[i]); });
+  const have = (bx1 - bx0) / Math.max(1, by1 - by0);
+  if (G > 2 && have < aspect) { const f = Math.sqrt(aspect / have); P.forEach((p) => { p.x *= f; p.y /= f; }); }
+  for (let it = 0; it < 400; it++) { // final pass: no two circles touch
+    let moved = false;
+    for (let a = 0; a < G; a++) for (let b = a + 1; b < G; b++) {
+      let dx = P[b].x - P[a].x, dy = P[b].y - P[a].y;
+      const d = Math.hypot(dx, dy) || 0.01; const want = rad[a] + rad[b] + GAP;
+      if (d < want) { const m = (want - d) / 2; dx /= d; dy /= d; P[a].x -= dx * m; P[a].y -= dy * m; P[b].x += dx * m; P[b].y += dy * m; moved = true; }
+    }
+    if (!moved) break;
+  }
+  // 2. the pages inside each circle: linked pages near each other, anchors toward the middle,
+  //    and a page with links to another topic toward that side of its circle
+  const pos = new Map();
+  groups.forEach((g, gi) => {
+    const R = rad[gi], cx = P[gi].x, cy = P[gi].y;
+    const mem = g.members;
+    const loc = mem.map((id) => {
+      const a = hash01(id, 1) * 2 * Math.PI, r = Math.sqrt(hash01(id, 2)) * R * (anchorSet.has(id) ? 0.25 : 0.8);
+      return { id, x: Math.cos(a) * r, y: Math.sin(a) * r, r: radiusOf(id), tx: 0, ty: 0, pull: 0 };
+    });
+    const li = new Map(mem.map((id, i) => [id, i]));
+    const springs = [];
+    loc.forEach((p, i) => {
+      let ox = 0, oy = 0, ow = 0;
+      for (const [b, w] of adj.get(p.id) || []) {
+        const j = li.get(b);
+        if (j !== undefined) { if (j > i) springs.push([i, j, w]); continue; }
+        const gb = gOf.get(b);
+        if (gb === undefined) continue;
+        const dx = P[gb].x - cx, dy = P[gb].y - cy, d = Math.hypot(dx, dy) || 1;
+        ox += (dx / d) * w; oy += (dy / d) * w; ow += w;
+      }
+      let own = 0;
+      for (const [b, w] of adj.get(p.id) || []) if (li.has(b)) own += w;
+      if (ow) { const d = Math.hypot(ox, oy) || 1; p.tx = (ox / d) * R * 0.78; p.ty = (oy / d) * R * 0.78; p.pull = ow / (ow + own); }
+    });
+    const k = R / Math.sqrt(Math.max(1, mem.length)) * 0.62;
+    for (let it = 0; it < 260; it++) {
+      const heat = 1 - it / 260;
+      const F = loc.map(() => ({ x: 0, y: 0 }));
+      for (let i = 0; i < loc.length; i++) for (let j = i + 1; j < loc.length; j++) {
+        let dx = loc[j].x - loc[i].x, dy = loc[j].y - loc[i].y;
+        let d = Math.hypot(dx, dy);
+        if (d < 0.01) { dx = hash01(loc[i].id + loc[j].id) - 0.5; dy = 0.5 - hash01(loc[j].id + loc[i].id); d = Math.hypot(dx, dy) || 0.01; }
+        let f = (k * k) / d;
+        const min = loc[i].r + loc[j].r + 4;
+        if (d < min) f += (min - d) * 3;
+        F[i].x -= (dx / d) * f; F[i].y -= (dy / d) * f; F[j].x += (dx / d) * f; F[j].y += (dy / d) * f;
+      }
+      for (const [i, j, w] of springs) {
+        const dx = loc[j].x - loc[i].x, dy = loc[j].y - loc[i].y, d = Math.hypot(dx, dy) || 0.01;
+        const f = (d * d) / k * 0.04 * Math.min(2, w);
+        F[i].x += (dx / d) * f; F[i].y += (dy / d) * f; F[j].x -= (dx / d) * f; F[j].y -= (dy / d) * f;
+      }
+      loc.forEach((p, i) => {
+        const c = anchorSet.has(p.id) ? 0.14 : 0.045;
+        F[i].x += -p.x * c + (p.tx - p.x) * 0.06 * p.pull;
+        F[i].y += -p.y * c + (p.ty - p.y) * 0.06 * p.pull;
+        const step = Math.min(k * 0.6 * heat + 0.5, Math.hypot(F[i].x, F[i].y));
+        const fl = Math.hypot(F[i].x, F[i].y) || 1;
+        p.x += (F[i].x / fl) * step; p.y += (F[i].y / fl) * step;
+        const lim = R - p.r - 6, d = Math.hypot(p.x, p.y);
+        if (d > lim) { p.x *= lim / d; p.y *= lim / d; }
+      });
+    }
+    loc.forEach((p) => pos.set(p.id, { x: cx + p.x, y: cy + p.y }));
+  });
+  return { groups: groups.map((g, i) => ({ key: g.key, x: P[i].x, y: P[i].y, r: rad[i] })), pos };
+}
+
+/**
+ * Pages two steps away from `id` that it doesn't link with: pages that several of its neighbors also
+ * link with. A neighbor or a candidate with many links counts for less, so a summary or a hub page that
+ * links to everything doesn't make everything look related. Returns [{ id, via: [neighbor ids], score }].
+ */
+function suggestLinks(id, adj, opts = {}) {
+  const min = opts.min ?? 2, limit = opts.limit ?? 8, skip = opts.skip || (() => false);
+  const mine = adj.get(id) || new Map();
+  const cand = new Map();
+  for (const [n] of mine) {
+    const nn = adj.get(n) || new Map();
+    const w = 1 / Math.log(2 + nn.size);
+    for (const [c] of nn) {
+      if (c === id || mine.has(c) || skip(c)) continue;
+      if (!cand.has(c)) cand.set(c, { id: c, via: [], score: 0 });
+      const o = cand.get(c); o.via.push(n); o.score += w;
+    }
+  }
+  // a candidate with many links of its own is reached from everywhere, so it counts for less too
+  for (const c of cand.values()) c.score /= Math.sqrt(1 + (adj.get(c.id) || new Map()).size);
+  return [...cand.values()].filter((c) => c.via.length >= min).sort((a, b) => b.score - a.score || a.id.localeCompare(b.id)).slice(0, limit);
+}
+
+/* ---------- Links between pages, shared by the Lens and the atlas ---------- */
 
 const REL_VIEW_TYPE = "nicrosil-relations";
 
@@ -1774,6 +1994,9 @@ const REL_TYPES = {
   developed_by: { out: "Developed by",     inn: "Ideas developed here",  color: "#a58ad6", dash: "" },
   related:      { out: "Related to",       inn: "Related from",          color: "#8a8a8a", dash: "5 4" },
 };
+/** Plain links in the text (and in properties that aren't typed links): "see also" links, drawn after the typed ones (3.29.0). */
+const LINK_TYPES = { ...REL_TYPES, see: { out: "Links to", inn: "Linked from", color: "#8c8174", dash: "3 3", label: "see also" } };
+const linkLabel = (t) => LINK_TYPES[t].label || t.replace("_", " ");
 
 /** Every typed link in the vault as {from, to, type}, read from the metadata cache (no file reads). */
 function collectRelations(app) {
@@ -1797,6 +2020,47 @@ function collectRelations(app) {
   return edges;
 }
 
+/** Pages the Lens shows links between: wiki pages, perspectives and source cards (not the index, logs or rule files, which link to everything). */
+const inLinkScope = (path) => /\.md$/.test(path) && (/^(Wiki|Perspectives)\//.test(path) || path.startsWith("Sources/Source Cards/"));
+/** Pages on the atlas: wiki pages and perspectives (source cards would bury it). */
+const inAtlasScope = (path) => /\.md$/.test(path) && /^(Wiki|Perspectives)\//.test(path);
+
+/**
+ * Every link between pages in scope, once per page pair and type: the typed links in the properties, then a "see"
+ * link for each other link Obsidian resolved (the text, and properties such as `sources`) between two pages that no typed link joins in that direction.
+ */
+function collectLinks(app, rels) {
+  const seen = new Set();
+  const edges = [];
+  for (const e of rels || collectRelations(app)) {
+    if (!e.to || e.from === e.to || !inLinkScope(e.from) || !inLinkScope(e.to)) continue;
+    const k = `${e.from}|${e.to}|${e.type}`;
+    if (seen.has(k)) continue;
+    seen.add(k); seen.add(`${e.from}|${e.to}`);
+    edges.push({ from: e.from, to: e.to, type: e.type });
+  }
+  const rl = app.metadataCache.resolvedLinks || {};
+  for (const from of Object.keys(rl)) {
+    if (!inLinkScope(from)) continue;
+    for (const to of Object.keys(rl[from] || {})) {
+      if (to === from || !inLinkScope(to) || seen.has(`${from}|${to}`)) continue;
+      seen.add(`${from}|${to}`);
+      edges.push({ from, to, type: "see" });
+    }
+  }
+  return edges;
+}
+
+/** A page's review state: verified, rereview (a verified page changed since), draft, or "" (no status). */
+function pageState(fm) {
+  if (!fm) return "";
+  if (fm.status === "verified") return "verified";
+  if (fm.status === "draft") return [].concat(fm.changes_since_verified || []).some((x) => String(x || "").trim()) ? "rereview" : "draft";
+  return "";
+}
+const STATE_COLORS = { verified: "#5fae9e", rereview: "#ecb54e", draft: "#a65f2b", "": "#8a8178" };
+const STATE_LABELS = { verified: "Verified", rereview: "Re-review", draft: "Draft", "": "No status" };
+
 const SVG_NS = "http://www.w3.org/2000/svg";
 function svgEl(parent, tag, attrs, text) {
   const el = document.createElementNS(SVG_NS, tag);
@@ -1806,13 +2070,22 @@ function svgEl(parent, tag, attrs, text) {
   return el;
 }
 function clip(s, n) { return s.length > n ? s.slice(0, n - 1).trimEnd() + "…" : s; }
+/** Words in lines of about n letters, at most two lines (the second takes the rest). */
+function wrapWords(s, n) {
+  const words = String(s).split(" ");
+  let a = "";
+  while (words.length && (!a || (a + " " + words[0]).length <= n)) a = (a ? a + " " : "") + words.shift();
+  return words.length ? [a, words.join(" ")] : [a];
+}
 
-/** The relations map in a large window, with every page (opened by the Enlarge button). */
+/* ---------- The Lens (the relations panel) ---------- */
+
+/** The Lens's map in a large window, with every page (opened by the Enlarge button). */
 class RelationsMapModal extends Modal {
   constructor(app, view, file, out, inn) { super(app); this.view = view; this.file = file; this.out = out; this.inn = inn; }
   onOpen() {
     this.modalEl.addClass("cm-rel-modal");
-    this.titleEl.setText(`Relations: ${this.file.basename}`);
+    this.titleEl.setText(`Lens: ${this.file.basename}`);
     this.view.bigModal = this;
     this.view.drawMap(this.contentEl, this.file, this.out, this.inn, true);
     this.view.drawLegend(this.contentEl, this.out, this.inn);
@@ -1820,30 +2093,46 @@ class RelationsMapModal extends Modal {
   onClose() { if (this.view.bigModal === this) this.view.bigModal = null; this.contentEl.empty(); }
 }
 
+/**
+ * The Lens (Alt+L, 3.29.0; the relations panel before): the open page's neighborhood. A map with the pages that link to it
+ * on the left and the pages it links to on the right, typed links first and then plain links; its topic on the atlas;
+ * pages two steps away that it doesn't link with yet; and the trail of pages opened while it was open.
+ */
 class RelationsView extends ItemView {
   constructor(leaf, plugin) {
     super(leaf);
     this.plugin = plugin;
     this.file = null;
-    this.rerender = debounce(() => this.render(), 250, true);
+    this.trail = [];
+    this.token = 0;
+    this.rerender = debounce(() => this.render(), 400, true);
   }
   getViewType() { return REL_VIEW_TYPE; }
-  getDisplayText() { return "Relations"; }
+  getDisplayText() { return "Lens"; }
   getIcon() { return "git-fork"; }
   async onOpen() {
-    this.file = this.plugin.currentFile();
-    this.render();
-    this.registerEvent(this.app.workspace.on("file-open", (f) => { if (f) { this.file = f; this.render(); } }));
+    this.setFile(this.plugin.currentFile());
+    this.registerEvent(this.app.workspace.on("file-open", (f) => { if (f) this.setFile(f); }));
     this.registerEvent(this.app.workspace.on("active-leaf-change", () => {
       const f = this.plugin.currentFile();
-      if (f && (!this.file || f.path !== this.file.path)) { this.file = f; this.render(); }
+      if (f && (!this.file || f.path !== this.file.path)) this.setFile(f);
     }));
     this.registerEvent(this.app.metadataCache.on("changed", () => this.rerender()));
     this.registerEvent(this.app.metadataCache.on("resolved", () => this.rerender()));
-    this.registerEvent(this.app.vault.on("rename", () => this.rerender()));
-    this.registerEvent(this.app.vault.on("delete", () => this.rerender()));
+    this.registerEvent(this.app.vault.on("rename", (f, old) => { this.trail = this.trail.map((p) => (p === old ? f.path : p)); this.rerender(); }));
+    this.registerEvent(this.app.vault.on("delete", (f) => { this.trail = this.trail.filter((p) => p !== f.path); this.rerender(); }));
   }
   async onClose() { this.containerEl.children[1].empty(); }
+
+  setFile(f) {
+    this.file = f;
+    if (f && inLinkScope(f.path)) {
+      this.trail = this.trail.filter((p) => p !== f.path);
+      this.trail.push(f.path);
+      if (this.trail.length > 8) this.trail.shift();
+    }
+    this.render();
+  }
 
   go(path, newTab) {
     if (!path) return;
@@ -1853,64 +2142,103 @@ class RelationsView extends ItemView {
     if (f instanceof TFile) this.app.workspace.getLeaf(true).openFile(f);
   }
 
-  statusOf(path) {
+  stateOf(path) {
     const f = this.app.vault.getAbstractFileByPath(path);
-    const fm = f instanceof TFile ? (this.app.metadataCache.getFileCache(f) || {}).frontmatter : null;
-    return fm && fm.status ? String(fm.status) : "";
+    return f instanceof TFile ? pageState((this.app.metadataCache.getFileCache(f) || {}).frontmatter) : "";
   }
+  nameOf(path) { return this.app.vault.getAbstractFileByPath(path)?.basename || String(path).replace(/^.*\//, "").replace(/\.md$/, ""); }
 
-  render() {
+  async render() {
+    const token = ++this.token;
+    const file = this.file && this.app.vault.getAbstractFileByPath(this.file.path) instanceof TFile ? this.file : null;
+    let atlas = null;
+    if (file && inAtlasScope(file.path)) { try { atlas = await this.plugin.atlas(); } catch (e) { console.error("Nicrosil: atlas", e); } }
+    if (token !== this.token) return; // a newer render started while this one waited
     const root = this.containerEl.children[1];
     root.empty();
     root.addClass("cm-rel");
-    const file = this.file && this.app.vault.getAbstractFileByPath(this.file.path) instanceof TFile ? this.file : null;
-    if (!file) { root.createDiv({ cls: "cm-sub", text: "Open a page to see how it relates to the rest of the wiki." }); return; }
-
-    const edges = collectRelations(this.app);
-    const out = edges.filter((e) => e.from === file.path);
-    const inn = edges.filter((e) => e.to === file.path);
-
-    const head = root.createDiv({ cls: "cm-rel-head" });
-    head.createDiv({ cls: "cm-rel-title", text: file.basename });
-    const st = this.statusOf(file.path);
-    if (st) head.createSpan({ cls: `cm-rel-status cm-rel-${st}`, text: st });
-    head.createDiv({ cls: "cm-sub", text: `${out.length} outgoing · ${inn.length} incoming` });
-
-    if (!out.length && !inn.length) {
-      root.createDiv({ cls: "cm-sub cm-rel-empty", text: "No typed links to or from this page yet. Plain links in the text don't show here; only the typed properties do (Schema §5)." });
+    if (!file) { root.createDiv({ cls: "cm-sub", text: "Open a page to see its neighborhood in the wiki." }); return; }
+    if (!inLinkScope(file.path)) {
+      root.createDiv({ cls: "cm-rel-title", text: file.basename });
+      root.createDiv({ cls: "cm-sub cm-rel-empty", text: "The Lens shows wiki pages, perspectives and source cards." });
       return;
     }
 
-    this.drawMap(root, file, out, inn);
-    this.drawLegend(root, out, inn);
-    this.drawGroups(root, "This page…", out, "out", (e) => e.to, (e) => e.toName);
-    this.drawGroups(root, "Pointing at this page…", inn, "inn", (e) => e.from, (e) => this.app.vault.getAbstractFileByPath(e.from)?.basename || e.from);
+    const edges = collectLinks(this.app);
+    this.inDeg = new Map();
+    for (const e of edges) this.inDeg.set(e.to, (this.inDeg.get(e.to) || 0) + 1);
+    const out = edges.filter((e) => e.from === file.path);
+    const inn = edges.filter((e) => e.to === file.path);
+
+    this.drawTrail(root, file);
+    const head = root.createDiv({ cls: "cm-rel-head" });
+    head.createDiv({ cls: "cm-rel-title", text: file.basename });
+    const meta = head.createDiv({ cls: "cm-rel-meta" });
+    const st = this.stateOf(file.path);
+    if (st) meta.createSpan({ cls: `cm-rel-status cm-rel-${st}`, text: STATE_LABELS[st] });
+    if (atlas) {
+      const ti = atlas.topic.get(file.path);
+      const name = ti === undefined ? null : ti < 0 ? "No topic yet" : atlas.topics[ti].name;
+      if (name) {
+        const chip = meta.createSpan({ cls: "cm-rel-topic", text: name, attr: { role: "button", tabindex: "0", "aria-label": `Show ${file.basename} in the atlas` } });
+        const show = () => this.plugin.activateWikiMap({ focus: file.path });
+        chip.addEventListener("click", show);
+        chip.addEventListener("keydown", (e) => { if (e.key === "Enter") show(); });
+      }
+    }
+    const typedN = (l) => l.filter((e) => e.type !== "see").length;
+    head.createDiv({ cls: "cm-sub", text: `${out.length} out (${typedN(out)} typed) · ${inn.length} in (${typedN(inn)} typed)` });
+
+    if (!out.length && !inn.length) {
+      root.createDiv({ cls: "cm-sub cm-rel-empty", text: "No links to or from this page yet." });
+    } else {
+      this.drawMap(root, file, out, inn);
+      this.drawLegend(root, out, inn);
+    }
+    if (atlas) this.drawSuggestions(root, file, atlas);
+    this.drawGroups(root, "This page…", out, "out", (e) => e.to);
+    this.drawGroups(root, "Pointing at this page…", inn, "inn", (e) => e.from);
   }
 
-  /** Neighbors on both sides, deduplicated by page, each keeping the types that link it. */
-  neighbors(list, key, name) {
+  /** The pages opened before this one while the Lens was open, oldest first; click one to go back to it. */
+  drawTrail(root, file) {
+    const prev = this.trail.filter((p) => p !== file.path && this.app.vault.getAbstractFileByPath(p)).slice(-5);
+    if (!prev.length) return;
+    const row = root.createDiv({ cls: "cm-rel-trail" });
+    row.createSpan({ cls: "cm-rel-trail-label", text: "Trail" });
+    prev.forEach((p) => {
+      const c = row.createSpan({ cls: "cm-rel-trail-step", text: clip(this.nameOf(p), 22), attr: { role: "button", tabindex: "0", title: this.nameOf(p) } });
+      c.addEventListener("click", (e) => this.go(p, e.ctrlKey || e.metaKey));
+      c.addEventListener("keydown", (e) => { if (e.key === "Enter") this.go(p, e.ctrlKey || e.metaKey); });
+    });
+  }
+
+  /** Neighbors on one side, one per page, each keeping the types that link it: typed links first, then the most-linked pages. */
+  neighbors(list, key) {
     const map = new Map();
     for (const e of list) {
-      const id = key(e) || "x:" + name(e);
-      if (!map.has(id)) map.set(id, { path: key(e), name: name(e), types: [] });
+      const id = key(e);
+      if (!map.has(id)) map.set(id, { path: id, name: this.nameOf(id), types: [] });
       const n = map.get(id);
       if (!n.types.includes(e.type)) n.types.push(e.type);
     }
-    return [...map.values()];
+    const typed = (n) => n.types.some((t) => t !== "see");
+    return [...map.values()].sort((a, b) => typed(b) - typed(a) || (this.inDeg.get(b.path) || 0) - (this.inDeg.get(a.path) || 0) || a.name.localeCompare(b.name));
   }
 
   drawMap(root, file, out, inn, big = false) {
     const LIMIT = 6;
     const MAX = big ? Infinity : LIMIT;
-    const L = this.neighbors(inn, (e) => e.from, (e) => this.app.vault.getAbstractFileByPath(e.from)?.basename || e.from);
-    const R = this.neighbors(out, (e) => e.to, (e) => e.toName);
+    const L = this.neighbors(inn, (e) => e.from);
+    const R = this.neighbors(out, (e) => e.to);
     const Ls = L.slice(0, MAX), Rs = R.slice(0, MAX);
     const NW = 100, NH = 26, GAP = 10, CW = 100, X1 = 0, X2 = 136, X3 = 272, W = 372;
-    const rows = Math.max(Ls.length, Rs.length, 1) + ((L.length > MAX || R.length > MAX) ? 1 : 0);
+    const extra = (L.length > MAX || R.length > MAX) ? 1 : 0;
+    const rows = Math.max(Ls.length, Rs.length, 1) + extra;
     const H = rows * (NH + GAP) + GAP;
     const cy = H / 2;
     const wrap = root.createDiv({ cls: "cm-rel-map" });
-    const svg = svgEl(wrap, "svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img", "aria-label": `Relations map for ${file.basename}` });
+    const svg = svgEl(wrap, "svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img", "aria-label": `Lens map for ${file.basename}` });
     svg.classList.add("cm-rel-svg");
     const defs = svgEl(svg, "defs");
     const cg = svgEl(defs, "linearGradient", { id: "cm-rel-cg", x1: 0, y1: 0, x2: 0, y2: 1 });
@@ -1923,63 +2251,53 @@ class RelationsView extends ItemView {
     const og = svgEl(defs, "linearGradient", { id: "cm-rel-og", x1: 0, y1: 0, x2: 1, y2: 1 });
     svgEl(og, "stop", { offset: "0%", style: "stop-color: #e89a5a" });
     svgEl(og, "stop", { offset: "100%", style: "stop-color: #86d2c1" });
-    for (const [t, info] of Object.entries(REL_TYPES)) {
+    for (const [t, info] of Object.entries(LINK_TYPES)) {
       const m = svgEl(defs, "marker", { id: `cm-arrow-${t}`, viewBox: "0 0 8 8", refX: 7, refY: 4, markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse" });
       svgEl(m, "path", { d: "M0,0 L8,4 L0,8 z", fill: info.color });
     }
-    const yFor = (i, n) => GAP + i * (NH + GAP) + ((rows - n - ((L.length > MAX || R.length > MAX) ? 1 : 0)) * (NH + GAP)) / 2;
+    const yFor = (i, n) => GAP + i * (NH + GAP) + ((rows - n - extra) * (NH + GAP)) / 2;
 
     const edgePath = (x1, y1, x2, y2) => `M${x1},${y1} C${(x1 + x2) / 2},${y1} ${(x1 + x2) / 2},${y2} ${x2},${y2}`;
     const edgeEls = {};
-    let ei = 0;
     const drawEdges = (side, nodes, n) => {
       nodes.forEach((nd, i) => {
         const y = yFor(i, n) + NH / 2;
         nd.types.forEach((t, k) => {
-          const info = REL_TYPES[t];
+          const info = LINK_TYPES[t];
           const off = (k - (nd.types.length - 1) / 2) * 4;
-          const attrs = { fill: "none", stroke: info.color, "stroke-width": 1.6, "stroke-opacity": 0.9, "marker-end": `url(#cm-arrow-${t})` };
+          const attrs = { fill: "none", stroke: info.color, "stroke-width": 1.6, "stroke-opacity": t === "see" ? 0.6 : 0.9, "marker-end": `url(#cm-arrow-${t})` };
           if (info.dash) attrs["stroke-dasharray"] = info.dash;
           const d = side === "out" ? edgePath(X2 + CW, cy + off, X3 - 1, y + off) : edgePath(X1 + NW, y + off, X2 - 1, cy + off);
-          const p = svgEl(svg, "path", { ...attrs, d, class: "cm-rel-edge" });
-          p.style.setProperty("--c", info.color); p.style.setProperty("--i", ei);
-          const f = svgEl(svg, "path", { d, fill: "none", stroke: info.color, class: "cm-rel-flow" });
-          f.style.setProperty("--c", info.color); f.style.setProperty("--i", ei);
-          (edgeEls[side + i] = edgeEls[side + i] || []).push(p, f);
-          ei++;
+          const p = svgEl(svg, "path", { ...attrs, d, class: "cm-rel-edge" + (t === "see" ? " is-see" : "") });
+          p.style.setProperty("--c", info.color);
+          (edgeEls[side + i] = edgeEls[side + i] || []).push(p);
         });
       });
     };
     drawEdges("inn", Ls, Ls.length);
     drawEdges("out", Rs, Rs.length);
 
-    let ni = 0;
-    const node = (x, y, w, nd, center, key) => {
-      const g = svgEl(svg, "g", { class: "cm-rel-node" + (center ? " is-center" : "") + (nd.path ? "" : " is-missing"), tabindex: 0, role: "button" });
-      g.style.setProperty("--i", ni++);
+    const node = (x, y, w, nd, key) => {
+      const g = svgEl(svg, "g", { class: "cm-rel-node", tabindex: 0, role: "button" });
       const hot = (on) => {
         svg.classList.toggle("is-hovering", on); g.classList.toggle("is-hl", on);
         (edgeEls[key] || []).forEach((el) => el.classList.toggle("is-hl", on));
-        // light up this page's relationship names in the legend under the map
+        // light up this page's link types in the legend under the map
         root.querySelectorAll(".cm-rel-chip").forEach((c) => c.classList.toggle("is-hl", on && nd.types.includes(c.getAttribute("data-type"))));
       };
       g.addEventListener("mouseenter", () => hot(true)); g.addEventListener("mouseleave", () => hot(false));
       g.addEventListener("focus", () => hot(true)); g.addEventListener("blur", () => hot(false));
-      const st = nd.path ? this.statusOf(nd.path) : "";
+      const st = this.stateOf(nd.path);
       svgEl(g, "rect", { x, y, width: w, height: NH, rx: 5, class: `cm-rel-box ${st ? "cm-rel-box-" + st : ""}` });
-      svgEl(g, "text", { x: x + w / 2, y: y + NH / 2 + 4, "text-anchor": "middle", class: "cm-rel-label" }, clip(nd.name, center ? 15 : 16));
-      svgEl(g, "title", {}, nd.name + (nd.path ? "" : " (page not found)"));
-      if (nd.path && !center) {
-        g.addEventListener("click", (e) => this.go(nd.path, e.ctrlKey || e.metaKey));
-        g.addEventListener("keydown", (e) => { if (e.key === "Enter") this.go(nd.path, e.ctrlKey || e.metaKey); });
-      }
+      svgEl(g, "text", { x: x + w / 2, y: y + NH / 2 + 4, "text-anchor": "middle", class: "cm-rel-label" }, clip(nd.name, 16));
+      svgEl(g, "title", {}, `${nd.name} (${nd.types.map(linkLabel).join(", ")})`);
+      g.addEventListener("click", (e) => this.go(nd.path, e.ctrlKey || e.metaKey));
+      g.addEventListener("keydown", (e) => { if (e.key === "Enter") this.go(nd.path, e.ctrlKey || e.metaKey); });
     };
-    Ls.forEach((nd, i) => node(X1, yFor(i, Ls.length), NW, nd, false, "inn" + i));
-    Rs.forEach((nd, i) => node(X3, yFor(i, Rs.length), NW, nd, false, "out" + i));
+    Ls.forEach((nd, i) => node(X1, yFor(i, Ls.length), NW, nd, "inn" + i));
+    Rs.forEach((nd, i) => node(X3, yFor(i, Rs.length), NW, nd, "out" + i));
     const ch = Math.min(H - 2 * GAP, 56);
     const g = svgEl(svg, "g", { class: "cm-rel-node is-center" });
-    g.style.setProperty("--i", ni++);
-    svgEl(g, "rect", { x: X2 - 3, y: cy - ch / 2 - 3, width: CW + 6, height: ch + 10 - 4, rx: 10, class: "cm-rel-halo" });
     svgEl(g, "rect", { x: X2, y: cy - ch / 2, width: CW, height: ch, rx: 7, class: "cm-rel-box cm-rel-box-center" });
     const words = file.basename.split(" "); const lines = []; let cur = "";
     for (const w of words) { if ((cur + " " + w).trim().length > 15 && cur) { lines.push(cur); cur = w; } else cur = (cur + " " + w).trim(); }
@@ -1987,10 +2305,7 @@ class RelationsView extends ItemView {
     const shown = lines.slice(0, 3);
     shown.forEach((ln, i) => svgEl(g, "text", { x: X2 + CW / 2, y: cy - ((shown.length - 1) * 6.5) + i * 13 + 4, "text-anchor": "middle", class: "cm-rel-label cm-rel-center-label" }, clip(ln, 16)));
     svgEl(g, "title", {}, file.basename);
-    const more = (L.length - Ls.length) + (R.length - Rs.length);
-    if (more > 0) svgEl(svg, "text", { x: W / 2, y: H - 4, "text-anchor": "middle", class: "cm-rel-more" }, `${L.length > MAX ? L.length - MAX + " more incoming" : ""}${L.length > MAX && R.length > MAX ? " · " : ""}${R.length > MAX ? R.length - MAX + " more outgoing" : ""} (Enlarge to see all)`);
-    svgEl(svg, "text", { x: X1, y: 8, class: "cm-rel-side" }, "");
-    // an Enlarge button under the inline map (always there) opens the map large, with every page
+    if (extra) svgEl(svg, "text", { x: W / 2, y: H - 4, "text-anchor": "middle", class: "cm-rel-more" }, `${L.length > MAX ? L.length - MAX + " more in" : ""}${L.length > MAX && R.length > MAX ? " · " : ""}${R.length > MAX ? R.length - MAX + " more out" : ""} (Enlarge to see all)`);
     if (!big) {
       const btn = root.createEl("button", { cls: "mod-cta cm-gbtn cm-rel-expand", text: "Enlarge" });
       btn.addEventListener("click", () => new RelationsMapModal(this.app, this, file, out, inn).open());
@@ -1998,183 +2313,118 @@ class RelationsView extends ItemView {
   }
 
   drawLegend(root, out, inn) {
-    const present = Object.keys(REL_TYPES).filter((t) => out.concat(inn).some((e) => e.type === t));
+    const present = Object.keys(LINK_TYPES).filter((t) => out.concat(inn).some((e) => e.type === t));
     const lg = root.createDiv({ cls: "cm-rel-legend" });
     present.forEach((t) => {
       const chip = lg.createSpan({ cls: "cm-rel-chip" });
-      chip.setAttr("data-type", t); chip.style.setProperty("--c", REL_TYPES[t].color);
+      chip.setAttr("data-type", t); chip.style.setProperty("--c", LINK_TYPES[t].color);
       const sw = chip.createSpan({ cls: "cm-rel-swatch" });
-      sw.style.background = REL_TYPES[t].color; sw.style.setProperty("--c", REL_TYPES[t].color);
-      if (REL_TYPES[t].dash) sw.addClass("is-dashed");
-      chip.appendText(t.replace("_", " "));
+      sw.style.background = LINK_TYPES[t].color; sw.style.setProperty("--c", LINK_TYPES[t].color);
+      if (LINK_TYPES[t].dash) sw.addClass("is-dashed");
+      chip.appendText(linkLabel(t));
     });
   }
 
-  drawGroups(root, title, list, dir, key, name) {
+  /** Pages two steps away that this page doesn't link with: each is linked with at least two of its neighbors. */
+  drawSuggestions(root, file, atlas) {
+    const skip = (id) => { const n = atlas.nodes.get(id); return !n || ["summary", "guide", "prompt"].includes(n.type); };
+    const list = suggestLinks(file.path, atlas.adj, { skip, limit: 6 });
+    root.createEl("h5", { cls: "cm-rel-h", text: "Two steps away, not linked yet" });
+    if (!list.length) { root.createDiv({ cls: "cm-sub cm-rel-sugg-none", text: "None: no page is linked with two of this page's neighbors without being linked with it." }); return; }
+    const box = root.createDiv({ cls: "cm-rel-group cm-rel-sugg" });
+    list.forEach((s) => {
+      const row = box.createDiv({ cls: "cm-rel-item", attr: { role: "button", tabindex: "0" } });
+      const st = this.stateOf(s.id);
+      row.createSpan({ cls: `cm-rel-dot ${st ? "cm-rel-dot-" + st : ""}` });
+      const txt = row.createDiv({ cls: "cm-rel-sugg-text" });
+      txt.createSpan({ cls: "cm-rel-name", text: this.nameOf(s.id) });
+      const via = s.via.map((p) => this.nameOf(p));
+      txt.createSpan({ cls: "cm-rel-via", text: `via ${via.slice(0, 2).join(", ")}${via.length > 2 ? ` +${via.length - 2}` : ""}` });
+      row.setAttr("title", `Linked with ${via.length} of this page's neighbors: ${via.join(", ")}`);
+      row.addEventListener("click", (e) => this.go(s.id, e.ctrlKey || e.metaKey));
+      row.addEventListener("keydown", (e) => { if (e.key === "Enter") this.go(s.id, e.ctrlKey || e.metaKey); });
+    });
+  }
+
+  drawGroups(root, title, list, dir, key) {
     if (!list.length) return;
     root.createEl("h5", { cls: "cm-rel-h", text: title });
-    for (const t of Object.keys(REL_TYPES)) {
-      const items = this.neighbors(list.filter((e) => e.type === t), key, name);
+    for (const t of Object.keys(LINK_TYPES)) {
+      const items = this.neighbors(list.filter((e) => e.type === t), key);
       if (!items.length) continue;
-      const grp = root.createDiv({ cls: "cm-rel-group" });
-      const h = grp.createDiv({ cls: "cm-rel-grouphead" });
+      // plain links can run long, so a long list starts folded
+      const grp = t === "see" ? root.createEl("details", { cls: "cm-rel-group cm-rel-see" }) : root.createDiv({ cls: "cm-rel-group" });
+      if (t === "see") grp.open = items.length <= 8;
+      const h = t === "see" ? grp.createEl("summary", { cls: "cm-rel-grouphead" }) : grp.createDiv({ cls: "cm-rel-grouphead" });
       const sw = h.createSpan({ cls: "cm-rel-swatch" });
-      sw.style.background = REL_TYPES[t].color; sw.style.setProperty("--c", REL_TYPES[t].color);
-      if (REL_TYPES[t].dash) sw.addClass("is-dashed");
-      h.appendText(REL_TYPES[t][dir]);
+      sw.style.background = LINK_TYPES[t].color; sw.style.setProperty("--c", LINK_TYPES[t].color);
+      if (LINK_TYPES[t].dash) sw.addClass("is-dashed");
+      h.appendText(LINK_TYPES[t][dir]);
       h.createSpan({ cls: "cm-rel-count", text: String(items.length) });
       items.sort((a, b) => a.name.localeCompare(b.name)).forEach((it) => {
-        const row = grp.createDiv({ cls: "cm-rel-item" + (it.path ? "" : " is-missing") });
-        const st = it.path ? this.statusOf(it.path) : "";
-        row.createSpan({ cls: `cm-rel-dot ${st ? "cm-rel-dot-" + st : ""}` }).setAttr("aria-label", st || "no status");
+        const row = grp.createDiv({ cls: "cm-rel-item" });
+        const st = this.stateOf(it.path);
+        row.createSpan({ cls: `cm-rel-dot ${st ? "cm-rel-dot-" + st : ""}` }).setAttr("aria-label", STATE_LABELS[st]);
         row.createSpan({ cls: "cm-rel-name", text: it.name });
-        if (!it.path) row.createSpan({ cls: "cm-rel-miss", text: "no page" });
-        else {
-          row.setAttr("role", "button"); row.setAttr("tabindex", "0");
-          row.addEventListener("click", (e) => this.go(it.path, e.ctrlKey || e.metaKey));
-          row.addEventListener("keydown", (e) => { if (e.key === "Enter") this.go(it.path, e.ctrlKey || e.metaKey); });
-        }
+        row.setAttr("role", "button"); row.setAttr("tabindex", "0");
+        row.addEventListener("click", (e) => this.go(it.path, e.ctrlKey || e.metaKey));
+        row.addEventListener("keydown", (e) => { if (e.key === "Enter") this.go(it.path, e.ctrlKey || e.metaKey); });
       });
     }
   }
 }
 
-/* ---------- Wiki map: hierarchy tree and typed-link map ---------- */
+/* ---------- The atlas (the wiki map, 3.29.0) ---------- */
 
 const MAP_VIEW_TYPE = "nicrosil-wikimap";
+const TOPICS_PATH = "_topics.md"; // the topic list: a heading, a line and anchor pages for each topic (SCHEMA - Ingest, step 6)
 
-/** Fill colors for the map's dots, by page type. */
+/** Dot colors by page type, for the atlas's "Type" coloring. */
 const PAGE_COLORS = {
   concept: "#7aa2d6", glossary: "#9ac28a", framework: "#d6a76a", "case-study": "#d98a8a",
   person: "#c3a0d9", summary: "#8fb8b0", prompt: "#d9cf7a", workflow: "#8aa0b8",
-  guide: "#b8b08a", analysis: "#cc9a7a", perspective: "#a8a8a8", source: "#888888",
+  guide: "#b8b08a", analysis: "#cc9a7a", perspective: "#a8a8a8",
 };
 const pageColor = (t) => PAGE_COLORS[t] || "#999999";
-const lighten = (hex, t) => { const n = parseInt(hex.slice(1), 16); return `rgb(${[(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => Math.round(v + (255 - v) * t)).join(",")})`; };
-const pageGradId = (t) => `cm-wm-g-${PAGE_COLORS[t] ? t : "other"}`;
-/** One soft radial gradient per page type, so dots read as small lit orbs instead of flat discs. */
-function addPageGradients(defs) {
-  for (const t of [...Object.keys(PAGE_COLORS), "other"]) {
-    const col = pageColor(t === "other" ? "" : t);
-    const g = svgEl(defs, "radialGradient", { id: `cm-wm-g-${t}`, cx: 0.35, cy: 0.3, r: 0.8 });
-    svgEl(g, "stop", { offset: "0%", "stop-color": lighten(col, 0.55) });
-    svgEl(g, "stop", { offset: "100%", "stop-color": col });
-  }
-}
-const inMapScope = (path) => /^(Wiki|Perspectives)\//.test(path) || path.startsWith("Sources/Source Cards/");
-
-/** Pages (nodes) and typed links (edges) for the whole wiki, from the metadata cache. */
-function buildWikiGraph(app) {
-  const mc = app.metadataCache;
-  const nodes = new Map();
-  for (const f of app.vault.getMarkdownFiles()) {
-    if (!inMapScope(f.path)) continue;
-    const fm = (mc.getFileCache(f) || {}).frontmatter || {};
-    nodes.set(f.path, {
-      path: f.path, name: f.basename, type: String(fm.type || ""),
-      status: fm.status === "verified" ? "verified" : fm.status === "draft" ? "draft" : "",
-      courses: [].concat(fm.courses || []).map(String), out: [], in: [], deg: 0,
-      changed: [].concat(fm.changes_since_verified || []).some((x) => String(x).trim()),
-    });
-  }
-  const edges = [];
-  const seen = new Set();
-  for (const e of collectRelations(app)) {
-    if (!e.to || e.from === e.to || !nodes.has(e.from) || !nodes.has(e.to)) continue;
-    const k = `${e.from}|${e.to}|${e.type}`;
-    if (seen.has(k)) continue;
-    seen.add(k);
-    edges.push(e);
-    nodes.get(e.from).out.push(e);
-    nodes.get(e.to).in.push(e);
-  }
-  for (const n of nodes.values()) n.deg = new Set(n.out.map((e) => e.to).concat(n.in.map((e) => e.from))).size;
-  return { nodes, edges };
-}
-
-const SIM = { rep: 500, spr: 0.25, len: 40, grav: 0.06 };
-
-/** Start positions for the map: a small, repeatable cloud around the middle, from the page paths. */
-function seedPositions(ids, W, H) {
-  return ids.map((id) => {
-    let h = 7;
-    for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
-    const a = ((h % 3600) / 3600) * 2 * Math.PI;
-    const r = Math.sqrt(((h >>> 8) % 1000) / 1000) * Math.min(W, H) * 0.105;
-    return { x: W / 2 + Math.cos(a) * r, y: H / 2 + Math.sin(a) * r };
-  });
-}
+const dotRadius = (inDeg) => 3.2 + Math.min(8, 1.5 * Math.sqrt(inDeg));
 
 /**
- * Live physics for the map. State S = { p: [{x,y,vx,vy,r,fixed}], E: [[a,b]], W, H, k }.
- * Each step pushes every pair of dots apart, pulls linked dots together, and nudges everything
- * toward the middle. `alpha` is the "heat": it falls each step and the motion stops when it is low.
+ * The atlas: every topic in _topics.md as a circle, every page in Wiki/ and Perspectives/ as a dot in its topic's circle,
+ * and the links between topics as bands whose width is the number of links. Click a topic to look inside it, a dot to
+ * trace its links; scroll zooms, dragging pans. Nothing moves on its own: the layout is worked out once from the links
+ * (Nicrosil's atlas(), again only when the links or the topic list change), and the view only changes what it shows.
  */
-function stepSim(S, alpha) {
-  const { p, E, W, H, k } = S;
-  const n = p.length;
-  const reach = k * 4;
-  for (let i = 0; i < n; i++) {
-    const a = p[i];
-    for (let j = i + 1; j < n; j++) {
-      const b = p[j];
-      let dx = a.x - b.x, dy = a.y - b.y;
-      let d2 = dx * dx + dy * dy;
-      if (d2 > reach * reach) continue;
-      if (d2 < 1) { dx = (i % 2 ? 1 : -1) * 0.7; dy = ((i + j) % 2 ? 1 : -1) * 0.7; d2 = dx * dx + dy * dy; }
-      const d = Math.sqrt(d2);
-      let f = SIM.rep / d;
-      const min = a.r + b.r + 9;
-      if (d < min) f += (min - d) * 1.2;
-      const fx = (dx / d) * f * alpha, fy = (dy / d) * f * alpha;
-      a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
-    }
-  }
-  for (const [ia, ib] of E) {
-    const a = p[ia], b = p[ib];
-    const dx = b.x - a.x, dy = b.y - a.y;
-    const d = Math.sqrt(dx * dx + dy * dy) || 0.01;
-    const f = ((d - SIM.len) / d) * SIM.spr * alpha;
-    a.vx += dx * f; a.vy += dy * f; b.vx -= dx * f; b.vy -= dy * f;
-  }
-  for (const a of p) {
-    a.vx += (W / 2 - a.x) * SIM.grav * alpha; a.vy += (H / 2 - a.y) * SIM.grav * alpha;
-    if (a.fixed) { a.vx = 0; a.vy = 0; continue; }
-    a.vx *= 0.6; a.vy *= 0.6;
-    const sp = Math.sqrt(a.vx * a.vx + a.vy * a.vy);
-    if (sp > 14) { a.vx *= 14 / sp; a.vy *= 14 / sp; }
-    a.x = Math.min(W - 20, Math.max(20, a.x + a.vx));
-    a.y = Math.min(H - 20, Math.max(20, a.y + a.vy));
-  }
-}
-
 class WikiMapView extends ItemView {
   constructor(leaf, plugin) {
     super(leaf);
     this.plugin = plugin;
-    this.state = {
-      tab: "map", // the map always opens first; the Hierarchy tab is one click away
-      open: new Set(), openInit: false, filter: "", examples: true,
-      hidden: new Set(), status: "", ptype: "", course: "", focus: null, q: "",
-    };
-    this.view = { x: 0, y: 0, k: 1 };
-    this.layoutKey = "";
-    this.layout = null;
-    this.simRaf = 0;
-    this.glideRaf = 0;
-    this.rerender = debounce(() => this.render(), 600, true);
+    this.st = { topic: null, focus: null, color: "state" };
+    this.vb = null;
+    this.raf = 0;
+    this.token = 0;
+    this.rerender = debounce(() => this.render(), 900, true);
   }
   getViewType() { return MAP_VIEW_TYPE; }
-  getDisplayText() { return "Wiki map"; }
+  getDisplayText() { return "Atlas"; }
   getIcon() { return "network"; }
   async onOpen() {
     this.render();
     this.registerEvent(this.app.metadataCache.on("resolved", () => this.rerender()));
+    this.registerEvent(this.app.metadataCache.on("changed", () => this.rerender()));
     this.registerEvent(this.app.vault.on("rename", () => this.rerender()));
     this.registerEvent(this.app.vault.on("delete", () => this.rerender()));
+    this.registerDomEvent(this.containerEl, "keydown", (e) => {
+      if (e.key === "Escape" && !(e.target instanceof HTMLInputElement)) { this.back(); e.preventDefault(); }
+    });
   }
-  async onClose() { this.stopSim(); this.containerEl.children[1].empty(); }
-  stopSim() { cancelAnimationFrame(this.simRaf); cancelAnimationFrame(this.glideRaf); this.simRaf = 0; this.glideRaf = 0; }
+  async onClose() { cancelAnimationFrame(this.raf); this.containerEl.children[1].empty(); }
+  /** The tab was resized or shown: fit the view again if it was drawn while hidden, and keep text and lines their size. */
+  onResize() {
+    if (!this.svg || !this.vb) return;
+    const r = this.svg.getBoundingClientRect();
+    if (!r.width) return;
+    if (this.drawnHidden) { this.drawnHidden = false; this.drawSvgBounds(); this.apply(true); } else this.setVb(this.vb);
+  }
 
   go(path, newTab) {
     if (!path) return;
@@ -2183,499 +2433,506 @@ class WikiMapView extends ItemView {
     if (f instanceof TFile) this.app.workspace.getLeaf(true).openFile(f);
   }
 
-  render() {
-    this.stopSim();
-    const root = this.containerEl.children[1];
-    root.empty();
-    root.addClass("cm-wm");
-    this.graph = buildWikiGraph(this.app);
-    const tabs = root.createDiv({ cls: "cm-wm-tabs" });
-    [["tree", "Hierarchy"], ["map", "Map"]].forEach(([id, label]) => {
-      const b = tabs.createEl("button", { text: label, cls: this.state.tab === id ? "is-active" : "" });
-      b.addEventListener("click", async () => {
-        this.state.tab = id; this.plugin.settings.mapTab = id; await this.plugin.persist(); this.render();
-      });
-    });
-    const connected = [...this.graph.nodes.values()].filter((n) => n.deg > 0).length;
-    tabs.createSpan({ cls: "cm-sub cm-wm-stats", text: `${this.graph.nodes.size} pages · ${this.graph.edges.length} typed links · ${connected} pages linked` });
-    this.body = root.createDiv({ cls: "cm-wm-body" });
-    if (this.state.tab === "map") this.renderMap(this.body); else this.renderTree(this.body);
+  /** Opens on a topic or a page (from the Lens, a command or the Dashboard). */
+  show(opts = {}) {
+    if (opts.focus) { this.st.focus = opts.focus; this.st.topic = null; }
+    else if (opts.topic !== undefined) { this.st.topic = opts.topic; this.st.focus = null; }
+    if (this.data) this.apply(); else this.render();
   }
 
-  /* ---------- hierarchy tree ---------- */
-
-  renderTree(el) {
-    const g = this.graph;
-    const HIER = { type_of: "kind of", part_of: "part of", example_of: "example" };
-    const kids = new Map(), hasParent = new Set();
-    for (const e of g.edges) {
-      if (!HIER[e.type] || (e.type === "example_of" && !this.state.examples)) continue;
-      if (!kids.has(e.to)) kids.set(e.to, []);
-      kids.get(e.to).push({ path: e.from, type: e.type });
-      hasParent.add(e.from);
-    }
-    const nm = (p) => (g.nodes.get(p) || {}).name || p;
-    // descendants of each page (as a set), guarding against loops
-    const desc = new Map();
-    const descOf = (p, seen) => {
-      if (desc.has(p)) return desc.get(p);
-      const s = new Set();
-      if (seen.has(p)) return s;
-      seen.add(p);
-      for (const c of kids.get(p) || []) { s.add(c.path); for (const d of descOf(c.path, seen)) s.add(d); }
-      seen.delete(p);
-      desc.set(p, s);
-      return s;
-    };
-    for (const p of kids.keys()) descOf(p, new Set());
-    let roots = [...kids.keys()].filter((p) => !hasParent.has(p));
-    const covered = new Set(roots.flatMap((r) => [r, ...descOf(r, new Set())]));
-    for (const p of kids.keys()) if (!covered.has(p)) { roots.push(p); descOf(p, new Set()).forEach((d) => covered.add(d)); covered.add(p); }
-    const size = (p) => (desc.get(p) ? desc.get(p).size : 0);
-    roots.sort((a, b) => size(b) - size(a) || nm(a).localeCompare(nm(b)));
-
-    const st = this.state;
-    if (!st.openInit) { roots.forEach((r) => st.open.add(r)); st.openInit = true; }
-    let q = st.filter.trim().toLowerCase();
-    // with a search, show only branches that contain a match
-    const matches = (p, seen) => {
-      if (nm(p).toLowerCase().includes(q)) return true;
-      if (seen.has(p)) return false;
-      seen.add(p);
-      const r = (kids.get(p) || []).some((c) => matches(c.path, seen));
-      seen.delete(p);
-      return r;
-    };
-
-    const bar = el.createDiv({ cls: "cm-wt-bar" });
-    const input = bar.createEl("input", { type: "text", cls: "cm-wt-filter", placeholder: "Filter the tree by page name…", value: st.filter });
-    input.addEventListener("input", () => { st.filter = input.value; q = input.value.trim().toLowerCase(); this.drawTreeRows(rows, roots, kids, HIER, desc, nm, q, matches); });
-    const mkBtn = (txt, fn) => { const b = bar.createEl("button", { text: txt }); b.addEventListener("click", fn); };
-    mkBtn("Expand all", () => { const all = (p, key, seen) => { st.open.add(key); if (seen.has(p)) return; seen.add(p); (kids.get(p) || []).forEach((c) => all(c.path, key + "/" + c.path, seen)); seen.delete(p); }; roots.forEach((r) => all(r, r, new Set())); this.render(); });
-    mkBtn("Collapse all", () => { st.open.clear(); this.render(); });
-    const ex = bar.createEl("label", { cls: "cm-wt-ex" });
-    const cb = ex.createEl("input", { type: "checkbox" });
-    cb.checked = st.examples;
-    ex.appendText(" Show examples");
-    cb.addEventListener("change", () => { st.examples = cb.checked; this.render(); });
-
-    if (!roots.length) { el.createDiv({ cls: "cm-sub cm-wt-empty", text: "No kind-of, part-of or example-of links yet, so there is no hierarchy to show." }); return; }
-    const rows = el.createDiv({ cls: "cm-wt-rows" });
-    this._treeFresh = true;
-    this.drawTreeRows(rows, roots, kids, HIER, desc, nm, q, matches);
-
-    // pages the hierarchy doesn't reach
-    const inTree = new Set(roots.flatMap((r) => [r, ...descOf(r, new Set())]));
-    const outside = [...g.nodes.values()].filter((n) => n.path.startsWith("Wiki/") && !inTree.has(n.path)).sort((a, b) => a.name.localeCompare(b.name));
-    const legend = el.createDiv({ cls: "cm-wm-legend" });
-    for (const t of Object.keys(HIER)) {
-      const c = legend.createSpan({ cls: "cm-rel-chip" });
-      const sw = c.createSpan({ cls: "cm-rel-swatch" }); sw.style.background = REL_TYPES[t].color; sw.style.setProperty("--c", REL_TYPES[t].color); if (REL_TYPES[t].dash) sw.addClass("is-dashed");
-      c.appendText(`${HIER[t]} (line to the page above)`);
-    }
-    [...new Set([...inTree].map((p) => (g.nodes.get(p) || {}).type))].filter(Boolean).sort().forEach((t) => {
-      const c = legend.createSpan({ cls: "cm-rel-chip" });
-      const dot = c.createSpan({ cls: "cm-wm-legdot" }); dot.style.background = pageColor(t); dot.style.setProperty("--c", pageColor(t));
-      c.appendText(t);
-    });
-    legend.createSpan({ cls: "cm-sub", text: "Click a card to open the page (Ctrl+click for a new tab). The circle at its right opens or closes a branch; the number is how many pages sit below. Teal ring = verified, dashed copper ring = draft. Drag the background to pan." });
-    const det = el.createEl("details", { cls: "cm-wt-outside" });
-    det.createEl("summary", { text: `Wiki pages outside the hierarchy (${outside.length})` });
-    outside.forEach((n) => {
-      const r = det.createDiv({ cls: "cm-wt-out-row" });
-      r.createSpan({ cls: `cm-rel-dot ${n.status ? "cm-rel-dot-" + n.status : ""}` });
-      r.createSpan({ text: n.name });
-      r.createSpan({ cls: "cm-wt-tag", text: n.type });
-      r.addEventListener("click", (e) => this.go(n.path, e.ctrlKey || e.metaKey));
-    });
+  back() {
+    if (this.st.focus) this.st.focus = null;
+    else if (this.st.topic !== null) this.st.topic = null;
+    else return;
+    this.apply();
   }
 
-  /** Draws the hierarchy as a left-to-right branching diagram of cards joined by curved lines. */
-  drawTreeRows(rows, roots, kids, HIER, desc, nm, q, matches) {
-    const g = this.graph, st = this.state;
-    const keepX = rows.scrollLeft, keepY = this.body ? this.body.scrollTop : 0;
-    rows.empty();
-    const ROW = 34, CH = 26, GAP = 66, PAD = 14;
-    const items = [];
-    const build = (p, key, depth, via, path, parent) => {
-      if (q && !matches(p, new Set())) return null;
-      const node = g.nodes.get(p);
-      const ch = (kids.get(p) || []).slice().sort((x, y) => ((kids.get(y.path) || []).length > 0) - ((kids.get(x.path) || []).length > 0) || nm(x.path).localeCompare(nm(y.path)));
-      const hasKids = ch.length > 0 && !path.has(p);
-      const inst = { p, key, depth, via, parent, node, ch: [], hasKids, open: hasKids && (q ? true : st.open.has(key)), cnt: desc.get(p) ? desc.get(p).size : 0 };
-      const name = nm(p);
-      inst.label = clip(name, 26);
-      inst.w = Math.max(100, Math.min(26, name.length) * 6.4 + (inst.cnt ? 62 : 42));
-      items.push(inst);
-      if (inst.open) {
-        const np = new Set(path); np.add(p);
-        ch.forEach((c) => { const k = build(c.path, key + "/" + c.path, depth + 1, c.type, np, inst); if (k) inst.ch.push(k); });
-      }
-      return inst;
-    };
-    const tops = roots.map((r) => build(r, r, 0, null, new Set(), null)).filter(Boolean);
-    if (!tops.length) {
-      if (q) rows.createDiv({ cls: "cm-sub cm-wt-empty", text: `No page in the hierarchy matches \u201c${st.filter.trim()}\u201d.` });
+  async render() {
+    const token = ++this.token;
+    let data;
+    try { data = await this.plugin.atlas(); } catch (e) { console.error("Nicrosil: atlas", e); return; }
+    if (token !== this.token) return;
+    if (data === this.data && this.svg && this.svg.isConnected) {
+      // the same links and topics: only statuses may have changed, so recolor and keep the view (and its zoom) as it is
+      this.paintDots();
+      const sc = this.side.scrollTop;
+      const focus = this.st.focus ? data.nodes.get(this.st.focus) : null;
+      this.drawSide(focus ? data.topic.get(focus.path) : this.st.topic, focus);
+      this.side.scrollTop = sc;
       return;
     }
-    let row = 0;
-    const place = (n) => {
-      if (!n.ch.length) { n.y = PAD + row * ROW + ROW / 2; row++; return; }
-      n.ch.forEach(place);
-      n.y = (n.ch[0].y + n.ch[n.ch.length - 1].y) / 2;
-    };
-    tops.forEach((t) => { place(t); row += 0.45; });
-    const cw = [];
-    items.forEach((n) => { cw[n.depth] = Math.max(cw[n.depth] || 0, n.w); });
-    const cx = [PAD];
-    for (let d = 1; d < cw.length; d++) cx[d] = cx[d - 1] + cw[d - 1] + GAP;
-    items.forEach((n) => { n.x = cx[n.depth]; });
-    const Wd = cx[cw.length - 1] + cw[cw.length - 1] + PAD + 14, Ht = PAD * 2 + row * ROW;
-
-    const svg = svgEl(rows, "svg", { width: Wd, height: Ht, viewBox: `0 0 ${Wd} ${Ht}`, class: "cm-wt-svg" + (this._treeFresh ? " is-new" : ""), role: "img", "aria-label": "Hierarchy of pages" });
-    this._treeFresh = false;
-    const defs = svgEl(svg, "defs");
-    const ng = svgEl(defs, "linearGradient", { id: "cm-wt-ng", x1: 0, y1: 0, x2: 0, y2: 1 });
-    svgEl(ng, "stop", { offset: "0%", style: "stop-color: var(--background-secondary)" });
-    svgEl(ng, "stop", { offset: "100%", style: "stop-color: var(--background-primary)" });
-    addPageGradients(defs);
-    const lines = svgEl(svg, "g");
-    const cards = svgEl(svg, "g");
-    items.forEach((n) => {
-      if (n.parent) {
-        const pa = n.parent, x1 = pa.x + pa.w + 17, x2 = n.x, xm = (x1 + x2) / 2, info = REL_TYPES[n.via];
-        const attrs = { d: `M${x1},${pa.y} C${xm},${pa.y} ${xm},${n.y} ${x2},${n.y}`, fill: "none", stroke: info.color, "stroke-width": 1.7, class: "cm-wt-edge" };
-        if (info.dash) attrs["stroke-dasharray"] = info.dash;
-        n.edge = svgEl(lines, "path", attrs);
-        n.edge.style.setProperty("--c", info.color); n.edge.style.setProperty("--i", String(n.depth));
-        n.flow = svgEl(lines, "path", { d: attrs.d, fill: "none", stroke: info.color, class: "cm-wt-flow" });
-        n.flow.style.setProperty("--c", info.color); n.flow.style.setProperty("--i", String(n.depth));
-        svgEl(n.edge, "title", {}, `${nm(n.p)} \u2014 ${HIER[n.via]} \u2192 ${nm(pa.p)}`);
-      }
-    });
-    const hit = (n) => !!q && nm(n.p).toLowerCase().includes(q);
-    items.forEach((n) => {
-      const node = n.node || {};
-      const grp = svgEl(cards, "g", { class: "cm-wt-card" + (hit(n) ? " is-match" : "") + (node.changed ? " is-changed" : ""), transform: `translate(${n.x},${n.y - CH / 2})` });
-      n.el = grp;
-      grp.style.setProperty("--i", String(n.depth));
-      svgEl(grp, "rect", { width: n.w, height: CH, rx: 8, class: `cm-wt-box cm-wt-box-${node.status || "none"}` });
-      const pd = svgEl(grp, "circle", { cx: 13, cy: CH / 2, r: 5, fill: `url(#${pageGradId(node.type)})`, class: "cm-wt-pdot" });
-      pd.style.setProperty("--c", pageColor(node.type));
-      svgEl(grp, "text", { x: 24, y: CH / 2 + 4, class: "cm-wt-label" }, n.label);
-      if (n.cnt) svgEl(grp, "text", { x: n.w - 9, y: CH / 2 + 4, "text-anchor": "end", class: "cm-wt-cnt" }, String(n.cnt));
-      svgEl(grp, "title", {}, `${nm(n.p)} (${node.type || "page"}, ${node.status || "no status"})${n.cnt ? `, ${n.cnt} below` : ""}`);
-      grp.addEventListener("click", (e) => this.go(n.p, e.ctrlKey || e.metaKey));
-      const chain = (on) => {
-        svg.toggleClass("is-hovering", on);
-        const mark = (x, up) => {
-          x.el.toggleClass("is-hl", on);
-          if (x.edge) { x.edge.toggleClass("is-hl", on); x.flow.toggleClass("is-hl", on); }
-          if (up && x.parent) mark(x.parent, true);
-        };
-        mark(n, true);
-        const down = (x) => x.ch.forEach((c) => { c.el.toggleClass("is-hl", on); c.edge.toggleClass("is-hl", on); c.flow.toggleClass("is-hl", on); down(c); });
-        down(n);
-      };
-      grp.addEventListener("pointerenter", () => chain(true));
-      grp.addEventListener("pointerleave", () => chain(false));
-      if (n.hasKids) {
-        const tg = svgEl(svg, "g", { class: "cm-wt-tog", transform: `translate(${n.x + n.w + 17},${n.y})`, role: "button", tabindex: 0 });
-        const col = REL_TYPES[n.ch.length ? n.ch[0].via : "part_of"].color;
-        svgEl(tg, "circle", { r: 8.5, class: "cm-wt-tog-bg", stroke: col }).style.setProperty("--c", col);
-        svgEl(tg, "path", { d: n.open ? "M-3.5,0 H3.5" : "M-3.5,0 H3.5 M0,-3.5 V3.5", class: "cm-wt-tog-mark" });
-        svgEl(tg, "title", {}, n.open ? "Close this branch" : "Open this branch");
-        const flip = () => { if (n.open) st.open.delete(n.key); else st.open.add(n.key); this.drawTreeRows(rows, roots, kids, HIER, desc, nm, q, matches); };
-        tg.addEventListener("click", flip);
-        tg.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); } });
-      }
-    });
-    // drag the background to pan
-    let pan = null;
-    svg.addEventListener("pointerdown", (ev) => {
-      if (ev.target.closest && (ev.target.closest(".cm-wt-card") || ev.target.closest(".cm-wt-tog"))) return;
-      pan = { x: ev.clientX, y: ev.clientY, l: rows.scrollLeft, t: this.body ? this.body.scrollTop : 0 };
-      svg.setPointerCapture(ev.pointerId); svg.addClass("is-drag");
-    });
-    svg.addEventListener("pointermove", (ev) => { if (!pan) return; rows.scrollLeft = pan.l - (ev.clientX - pan.x); if (this.body) this.body.scrollTop = pan.t - (ev.clientY - pan.y); });
-    const endPan = () => { pan = null; svg.removeClass("is-drag"); };
-    svg.addEventListener("pointerup", endPan); svg.addEventListener("pointercancel", endPan);
-    rows.scrollLeft = keepX;
-    if (this.body) this.body.scrollTop = keepY;
+    this.data = data;
+    if (this.st.focus && !data.nodes.has(this.st.focus)) this.st.focus = null;
+    if (this.st.topic !== null && !data.groups.some((g) => g.key === this.st.topic)) this.st.topic = null;
+    cancelAnimationFrame(this.raf);
+    const root = this.containerEl.children[1];
+    root.empty();
+    root.addClass("cm-at");
+    this.drawBar(root);
+    const main = root.createDiv({ cls: "cm-at-main" });
+    this.stage = main.createDiv({ cls: "cm-at-stage" });
+    this.side = main.createDiv({ cls: "cm-at-side" });
+    this.drawSvg();
+    this.apply(true);
   }
 
-  /* ---------- typed-link map ---------- */
-
-  renderMap(el) {
-    const g = this.graph, st = this.state;
-    const ids = [...g.nodes.values()].filter((n) => n.deg > 0).map((n) => n.path).sort();
-    const isolated = g.nodes.size - ids.length;
-    if (!ids.length) { el.createDiv({ cls: "cm-sub cm-wt-empty", text: "No typed links yet, so there is nothing to map." }); return; }
-    const W = 1000, H = 700;
-    const key = ids.join("|") + "#" + g.edges.map((e) => `${e.from}>${e.to}`).sort().join(",");
-    const radius = (n) => 4 + Math.sqrt(n.deg) * 2.4;
-    const reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-    const fresh = key !== this.layoutKey || !this.layout;
-    if (fresh) { this.layout = seedPositions(ids, W, H); this.layoutKey = key; this.ids = ids; }
-    const idx = new Map(ids.map((id, i) => [id, i]));
-    const S = {
-      p: ids.map((id, i) => ({ x: this.layout[i].x, y: this.layout[i].y, vx: 0, vy: 0, r: radius(g.nodes.get(id)), fixed: false })),
-      E: g.edges.map((e) => [idx.get(e.from), idx.get(e.to)]), W, H, k: Math.sqrt((W * H) / ids.length) * 0.75,
+  drawBar(root) {
+    const bar = root.createDiv({ cls: "cm-at-bar" });
+    bar.createDiv({ cls: "cm-at-title", text: "Atlas" });
+    this.crumbs = bar.createDiv({ cls: "cm-at-crumbs" });
+    bar.createDiv({ cls: "cm-at-gap" });
+    const sw = bar.createDiv({ cls: "cm-at-search" });
+    const input = sw.createEl("input", { type: "search", attr: { placeholder: "Find a page…", "aria-label": "Find a page on the atlas" } });
+    const list = sw.createDiv({ cls: "cm-at-results" });
+    let hits = [], act = 0;
+    const pick = (p) => { input.value = ""; list.empty(); list.removeClass("is-open"); this.st.focus = p; this.st.topic = null; this.apply(); };
+    const draw = () => {
+      list.empty();
+      list.toggleClass("is-open", hits.length > 0);
+      hits.forEach((n, i) => {
+        const r = list.createDiv({ cls: "cm-at-result" + (i === act ? " is-active" : ""), text: n.name });
+        r.createSpan({ cls: "cm-at-result-topic", text: this.topicName(this.data.topic.get(n.path)) });
+        r.addEventListener("mousedown", (e) => { e.preventDefault(); pick(n.path); });
+      });
     };
-    const pos = new Map(ids.map((id, i) => [id, S.p[i]]));
-    let alpha = fresh ? 1 : 0; // the "heat" of the physics; it cools to zero and the map comes to rest
-    if (fresh && reduce) { while (alpha > 0.02) { stepSim(S, alpha); alpha *= 0.99; } alpha = 0; this.layout = S.p.map((q) => ({ x: q.x, y: q.y })); }
-    let flowOn = this.plugin.settings.mapFlow !== false;
-
-    // toolbar
-    const bar = el.createDiv({ cls: "cm-wm-bar" });
-    const chips = bar.createDiv({ cls: "cm-wm-chips" });
-    const present = Object.keys(REL_TYPES).filter((t) => g.edges.some((e) => e.type === t));
-    const chipEls = {};
-    present.forEach((t) => {
-      const c = chips.createSpan({ cls: "cm-rel-chip cm-wm-chip" + (st.hidden.has(t) ? " is-off" : ""), attr: { role: "button", tabindex: "0" } });
-      const sw = c.createSpan({ cls: "cm-rel-swatch" }); sw.style.background = REL_TYPES[t].color; sw.style.setProperty("--c", REL_TYPES[t].color); if (REL_TYPES[t].dash) sw.addClass("is-dashed");
-      c.appendText(t.replace("_", " "));
-      const tog = () => { if (st.hidden.has(t)) st.hidden.delete(t); else st.hidden.add(t); c.toggleClass("is-off", st.hidden.has(t)); apply(); };
-      c.addEventListener("click", tog);
-      c.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); tog(); } });
-      chipEls[t] = c;
+    input.addEventListener("input", () => {
+      const q = input.value.trim().toLowerCase();
+      act = 0;
+      hits = !q ? [] : [...this.data.nodes.values()].filter((n) => n.name.toLowerCase().includes(q))
+        .sort((a, b) => (b.name.toLowerCase().startsWith(q) - a.name.toLowerCase().startsWith(q)) || b.inDeg - a.inDeg).slice(0, 8);
+      draw();
     });
-    const sel = (label, values, cur, setter) => {
-      const s = bar.createEl("select", { cls: "dropdown cm-wm-sel", attr: { "aria-label": label } });
-      s.createEl("option", { text: label, value: "" });
-      values.forEach((v) => { const o = s.createEl("option", { text: v, value: v }); if (v === cur) o.selected = true; });
-      s.addEventListener("change", () => { setter(s.value); apply(); });
-    };
-    const nodes = [...g.nodes.values()].filter((n) => n.deg > 0);
-    sel("Any status", ["verified", "draft"], st.status, (v) => { st.status = v; });
-    sel("Any page type", [...new Set(nodes.map((n) => n.type).filter(Boolean))].sort(), st.ptype, (v) => { st.ptype = v; });
-    sel("Any course", [...new Set(nodes.flatMap((n) => n.courses))].sort(), st.course, (v) => { st.course = v; });
-    const find = bar.createEl("input", { type: "text", cls: "cm-wt-filter cm-wm-find", placeholder: "Find a page, Enter to focus it", value: st.q });
-    const reset = bar.createEl("button", { text: "Reset view" });
-    const flowBtn = bar.createEl("button", { text: "Flow", attr: { "aria-label": "Animate the links" } });
-    flowBtn.toggleClass("is-active", flowOn);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown" && hits.length) { act = (act + 1) % hits.length; draw(); e.preventDefault(); }
+      else if (e.key === "ArrowUp" && hits.length) { act = (act - 1 + hits.length) % hits.length; draw(); e.preventDefault(); }
+      else if (e.key === "Enter" && hits[act]) pick(hits[act].path);
+      else if (e.key === "Escape") { input.value = ""; hits = []; draw(); }
+    });
+    input.addEventListener("blur", () => { list.removeClass("is-open"); });
+    const seg = bar.createDiv({ cls: "cm-at-seg", attr: { role: "group", "aria-label": "Color the dots by" } });
+    [["state", "Status"], ["type", "Type"]].forEach(([id, label]) => {
+      const b = seg.createEl("button", { text: label, cls: this.st.color === id ? "is-active" : "" });
+      b.addEventListener("click", () => { this.st.color = id; seg.querySelectorAll("button").forEach((x) => x.toggleClass("is-active", x === b)); this.paintDots(); this.drawKey(); });
+    });
+    const edit = bar.createEl("button", { cls: "cm-at-edit", text: "Edit topics" });
+    edit.addEventListener("click", async (e) => {
+      let f = this.app.vault.getAbstractFileByPath(TOPICS_PATH);
+      if (!(f instanceof TFile)) f = await this.app.vault.create(TOPICS_PATH, "The major topics of the Coppermind, for the atlas. Each `## Topic` heading is a circle; under it, one line on what it covers and a list of its anchor pages (`- [[Page]]`).\n");
+      this.go(f.path, e.ctrlKey || e.metaKey || true);
+    });
+  }
 
-    const stage = el.createDiv({ cls: "cm-wm-stage" });
-    const svg = svgEl(stage, "svg", { viewBox: `0 0 ${W} ${H}`, class: "cm-wm-svg", role: "img", "aria-label": "Map of typed links between pages" });
+  topicName(key) {
+    if (key === undefined || key === null) return "";
+    return key < 0 ? "No topic yet" : this.data.topics[key].name;
+  }
+  group(key) { return this.data.groups.find((g) => g.key === key); }
+
+  drawSvg() {
+    const d = this.data;
+    this.stage.empty();
+    const svg = this.svg = svgEl(this.stage, "svg", { class: "cm-at-svg", role: "img", "aria-label": "Atlas of the wiki's topics" });
     const defs = svgEl(svg, "defs");
-    for (const [t, info] of Object.entries(REL_TYPES)) {
-      const m = svgEl(defs, "marker", { id: `cm-wm-arrow-${t}`, viewBox: "0 0 8 8", refX: 8, refY: 4, markerWidth: 6, markerHeight: 6, markerUnits: "userSpaceOnUse", orient: "auto" });
+    const fill = svgEl(defs, "radialGradient", { id: "cm-at-fill", cx: 0.5, cy: 0.42, r: 0.62 });
+    svgEl(fill, "stop", { offset: "0%", style: "stop-color: #b87333; stop-opacity: .17" });
+    svgEl(fill, "stop", { offset: "100%", style: "stop-color: #b87333; stop-opacity: .04" });
+    const fillNone = svgEl(defs, "radialGradient", { id: "cm-at-fill-none", cx: 0.5, cy: 0.45, r: 0.6 });
+    svgEl(fillNone, "stop", { offset: "0%", style: "stop-color: #8a8178; stop-opacity: .12" });
+    svgEl(fillNone, "stop", { offset: "100%", style: "stop-color: #8a8178; stop-opacity: .03" });
+    // topic names: the Coppermind Gradient Style's colors (SVG text can't use the CSS gradient)
+    const tg = svgEl(defs, "linearGradient", { id: "cm-at-tgrad", x1: 0, y1: 0, x2: 1, y2: 0 });
+    [["0%", "#d99a62"], ["21%", "#f6d3a8"], ["32%", "#d99a62"], ["100%", "#86d2c1"]].forEach(([o, c]) => svgEl(tg, "stop", { offset: o, style: `stop-color: ${c}` }));
+    for (const [t, info] of Object.entries(LINK_TYPES)) {
+      const m = svgEl(defs, "marker", { id: `cm-at-arrow-${t}`, viewBox: "0 0 8 8", refX: 7, refY: 4, markerWidth: 5, markerHeight: 5, orient: "auto-start-reverse" });
       svgEl(m, "path", { d: "M0,0 L8,4 L0,8 z", fill: info.color });
     }
-    const world = svgEl(svg, "g", { class: "cm-wm-world" });
-    svg.toggleClass("no-flow", !flowOn);
-    flowBtn.addEventListener("click", async () => {
-      flowOn = !flowOn; flowBtn.toggleClass("is-active", flowOn); svg.toggleClass("no-flow", !flowOn);
-      this.plugin.settings.mapFlow = flowOn; await this.plugin.persist();
-    });
-    // curved arrow from a to b, ending at the edge of b's dot
-    const edgePath = (a, b, r) => {
-      const dx = b.x - a.x, dy = b.y - a.y, d = Math.sqrt(dx * dx + dy * dy) || 1;
-      const ux = dx / d, uy = dy / d, bend = d * 0.13;
-      const ex = b.x - ux * r, ey = b.y - uy * r;
-      return `M${a.x.toFixed(1)},${a.y.toFixed(1)} Q${((a.x + b.x) / 2 - uy * bend).toFixed(1)},${((a.y + b.y) / 2 + ux * bend).toFixed(1)} ${ex.toFixed(1)},${ey.toFixed(1)}`;
-    };
-    const edgeEls = g.edges.map((e) => {
-      const nb = g.nodes.get(e.to);
-      const info = REL_TYPES[e.type];
-      const attrs = { d: "M0,0", fill: "none", stroke: info.color, "stroke-width": 1.2, "marker-end": `url(#cm-wm-arrow-${e.type})`, class: "cm-wm-edge" };
-      if (info.dash) attrs["stroke-dasharray"] = info.dash;
-      const ln = svgEl(world, "path", attrs);
-      svgEl(ln, "title", {}, `${g.nodes.get(e.from).name} — ${e.type.replace("_", " ")} → ${nb.name}`);
-      const flow = svgEl(world, "path", { d: "M0,0", fill: "none", stroke: info.color, class: "cm-wm-flow" });
-      ln.style.setProperty("--c", info.color); flow.style.setProperty("--c", info.color);
-      return { e, el: ln, flow, r: radius(nb) + 1 };
-    });
-    const nodeEls = new Map();
-    for (const id of ids) {
-      const n = g.nodes.get(id), p = pos.get(id);
-      const grp = svgEl(world, "g", { class: "cm-wm-node" + (n.deg >= 3 ? " is-hub" : "") + (n.changed ? " is-changed" : ""), transform: `translate(${p.x},${p.y})`, tabindex: 0, role: "button" });
-      if (n.status === "verified") {
-        for (let s = 0; s < 2; s++) {
-          const sp = svgEl(grp, "circle", { cx: (s ? 1 : -1) * radius(n) * 0.45, cy: -radius(n) * 0.6, r: 1.5, class: "cm-wm-spark" });
-          sp.style.animationDelay = `-${(((ids.indexOf(id) * 7 + s * 13) % 30) / 10).toFixed(1)}s`;
-        }
-      }
-      svgEl(grp, "circle", { r: radius(n), fill: pageColor(n.type), class: `cm-wm-dot cm-wm-dot-${n.status || "none"}` });
-      svgEl(grp, "text", { x: radius(n) + 3, y: 3.5, class: "cm-wm-label" }, clip(n.name, 26));
-      svgEl(grp, "title", {}, `${n.name} (${n.type || "page"}, ${n.status || "no status"})`);
-      let nd = null, suppress = false;
-      grp.addEventListener("pointerdown", (ev) => {
-        suppress = false;
-        if (ev.button !== 0 || ev.ctrlKey || ev.metaKey) return;
-        nd = { x: ev.clientX, y: ev.clientY, moved: false };
-        grp.setPointerCapture(ev.pointerId);
-      });
-      grp.addEventListener("pointermove", (ev) => {
-        if (!nd || (!nd.moved && Math.hypot(ev.clientX - nd.x, ev.clientY - nd.y) < 5)) return;
-        if (!nd.moved) { nd.moved = true; grp.addClass("is-drag"); }
-        const q = toSvg(ev), pp = pos.get(id);
-        pp.fixed = true;
-        pp.x = Math.min(W - 20, Math.max(20, (q.x - v.x) / v.k));
-        pp.y = Math.min(H - 20, Math.max(20, (q.y - v.y) / v.k));
-        draw(); heat(0.35);
-      });
-      const drop = () => { if (!nd) return; pos.get(id).fixed = false; suppress = nd.moved; grp.removeClass("is-drag"); nd = null; };
-      grp.addEventListener("pointerup", drop); grp.addEventListener("pointercancel", drop);
-      grp.addEventListener("pointerenter", () => { if (!nd) hover(id); });
-      grp.addEventListener("pointerleave", () => { if (!nd) hover(null); });
-      grp.addEventListener("click", (ev) => {
-        ev.stopPropagation();
-        if (suppress) { suppress = false; return; }
-        if (ev.ctrlKey || ev.metaKey) this.go(id, true); else { st.focus = st.focus === id ? null : id; apply(); if (st.focus) { glideNode(id); ripple(id); } }
-      });
-      grp.addEventListener("keydown", (ev) => { if (ev.key === "Enter") { st.focus = st.focus === id ? null : id; apply(); if (st.focus) { glideNode(id); ripple(id); } } });
-      nodeEls.set(id, grp);
+    this.gBands = svgEl(svg, "g", { class: "cm-at-bands" });
+    this.gTopics = svgEl(svg, "g", { class: "cm-at-topics" });
+    this.gEdges = svgEl(svg, "g", { class: "cm-at-edges" });
+    this.gDots = svgEl(svg, "g", { class: "cm-at-dots" });
+    this.gLabels = svgEl(svg, "g", { class: "cm-at-labels" });
+
+    // bands between topics: from rim to rim, bowed a little, as wide as the links between them
+    this.bandEls = [];
+    for (const [k, n] of d.pairs) {
+      const [a, b] = k.split("|").map(Number);
+      const A = this.group(a), B = this.group(b);
+      if (!A || !B) continue;
+      const dx = B.x - A.x, dy = B.y - A.y, dist = Math.hypot(dx, dy) || 1, ux = dx / dist, uy = dy / dist;
+      const x1 = A.x + ux * A.r, y1 = A.y + uy * A.r, x2 = B.x - ux * B.r, y2 = B.y - uy * B.r;
+      const mx = (x1 + x2) / 2 - uy * dist * 0.08, my = (y1 + y2) / 2 + ux * dist * 0.08;
+      const p = svgEl(this.gBands, "path", { d: `M${x1},${y1} Q${mx},${my} ${x2},${y2}`, class: "cm-at-band" });
+      p.style.strokeWidth = String(Math.min(16, 1.2 + 1.5 * Math.sqrt(n)));
+      svgEl(p, "title", {}, `${this.topicName(a)} ↔ ${this.topicName(b)}: ${n} link${n === 1 ? "" : "s"}`);
+      this.bandEls.push({ a, b, el: p });
     }
-    const draw = () => {
-      nodeEls.forEach((grp, id) => { const q = pos.get(id); grp.setAttribute("transform", `translate(${q.x.toFixed(1)},${q.y.toFixed(1)})`); });
-      edgeEls.forEach(({ e, el: ln, flow, r }) => { const d = edgePath(pos.get(e.from), pos.get(e.to), r); ln.setAttribute("d", d); flow.setAttribute("d", d); });
-    };
-    // physics: a few steps per frame while the map is warm, then it rests until a dot is dragged
-    const frame = () => {
-      this.simRaf = 0;
-      for (let s = 0; s < 3 && alpha > 0.02; s++) { stepSim(S, alpha); alpha *= 0.99; }
-      draw();
-      if (alpha > 0.02) this.simRaf = requestAnimationFrame(frame);
-      else { alpha = 0; this.layout = S.p.map((q) => ({ x: q.x, y: q.y })); }
-    };
-    const heat = (a) => { alpha = Math.max(alpha, a); if (!this.simRaf) this.simRaf = requestAnimationFrame(frame); };
-    // pointing at a dot lights up its links and neighbors
-    const hover = (id) => {
-      svg.toggleClass("is-hovering", !!id);
-      nodeEls.forEach((n) => n.removeClass("is-hl"));
-      edgeEls.forEach(({ el: ln, flow }) => { ln.removeClass("is-hl"); flow.removeClass("is-hl"); });
-      if (!id) return;
-      nodeEls.get(id).addClass("is-hl");
-      edgeEls.forEach(({ e, el: ln, flow }) => {
-        if ((e.from !== id && e.to !== id) || ln.hasClass("is-hidden")) return;
-        ln.addClass("is-hl"); flow.addClass("is-hl");
-        nodeEls.get(e.from).addClass("is-hl"); nodeEls.get(e.to).addClass("is-hl");
-      });
-    };
-    // a ring spreads out from a focused dot, and its neighbors flash one after another
-    const ripple = (id) => {
-      if (reduce) return;
-      const q = pos.get(id);
-      const ring = svgEl(world, "circle", { cx: q.x, cy: q.y, r: 6, class: "cm-wm-ripple" });
-      setTimeout(() => ring.remove(), 1100);
-      const nb = new Set();
-      g.edges.forEach((e) => { if (e.from === id) nb.add(e.to); else if (e.to === id) nb.add(e.from); });
-      [...nb].forEach((nid, i) => {
-        const el2 = nodeEls.get(nid);
-        if (!el2) return;
-        setTimeout(() => { el2.addClass("is-ping"); setTimeout(() => el2.removeClass("is-ping"), 700); }, 160 + i * 90);
-      });
-    };
-    // smooth camera moves
-    const glideTo = (tx, ty, tk, ms = 480) => {
-      cancelAnimationFrame(this.glideRaf);
-      if (reduce) { v.x = tx; v.y = ty; v.k = tk; setView(); return; }
-      const f = { x: v.x, y: v.y, k: v.k }, t0 = performance.now();
-      const stepG = (now) => {
-        const u = Math.min(1, (now - t0) / ms), e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
-        v.x = f.x + (tx - f.x) * e; v.y = f.y + (ty - f.y) * e; v.k = f.k + (tk - f.k) * e;
-        setView();
-        if (u < 1) this.glideRaf = requestAnimationFrame(stepG);
-      };
-      this.glideRaf = requestAnimationFrame(stepG);
-    };
-    const glideNode = (id, k) => { const q = pos.get(id), kk = k || Math.max(v.k, 1.5); glideTo(W / 2 - q.x * kk, H / 2 - q.y * kk, kk); };
-    const info = el.createDiv({ cls: "cm-wm-info" });
-    const legend = el.createDiv({ cls: "cm-wm-legend" });
-    [...new Set(nodes.map((n) => n.type))].filter(Boolean).sort().forEach((t) => {
-      const c = legend.createSpan({ cls: "cm-rel-chip" });
-      const dot = c.createSpan({ cls: "cm-wm-legdot" }); dot.style.background = pageColor(t); dot.style.setProperty("--c", pageColor(t));
-      c.appendText(t);
-    });
-    legend.createSpan({ cls: "cm-sub", text: "Dot size = number of linked pages. Teal ring = verified, dashed copper ring = draft. Click a dot to focus it, Ctrl+click to open the page, drag a dot to move it. Scroll to zoom, drag the background to pan." + (isolated ? ` ${isolated} pages have no typed links and are not shown.` : "") });
 
-    // zoom and pan
-    const v = this.view;
-    const setView = () => {
-      world.setAttribute("transform", `translate(${v.x},${v.y}) scale(${v.k})`);
-      svg.toggleClass("zoom-all", v.k >= 1.7);
-    };
-    setView();
-    const toSvg = (ev) => { const r = svg.getBoundingClientRect(); return { x: ((ev.clientX - r.left) / r.width) * W, y: ((ev.clientY - r.top) / r.height) * H }; };
-    svg.addEventListener("wheel", (ev) => {
-      ev.preventDefault();
-      cancelAnimationFrame(this.glideRaf);
-      const p = toSvg(ev);
-      const nk = Math.min(6, Math.max(0.4, v.k * (ev.deltaY < 0 ? 1.15 : 1 / 1.15)));
-      v.x = p.x - ((p.x - v.x) / v.k) * nk; v.y = p.y - ((p.y - v.y) / v.k) * nk; v.k = nk;
-      setView();
+    // topic circles and their names
+    this.topicEls = new Map();
+    for (const g of d.groups) {
+      const el = svgEl(this.gTopics, "g", { class: "cm-at-topic" + (g.key < 0 ? " is-none" : ""), tabindex: 0, role: "button", "aria-label": `${this.topicName(g.key)}, ${g.members.length} pages` });
+      svgEl(el, "circle", { cx: g.x, cy: g.y, r: g.r, class: "cm-at-disc", fill: g.key < 0 ? "url(#cm-at-fill-none)" : "url(#cm-at-fill)" });
+      // the name above the circle, on two lines when it is long
+      const lines = wrapWords(this.topicName(g.key), 18);
+      const tx = svgEl(el, "text", { x: g.x, y: g.y - g.r - 8, "text-anchor": "middle", class: "cm-at-tname" });
+      lines.forEach((ln, i) => svgEl(tx, "tspan", { x: g.x, dy: i ? "1.15em" : `${-(lines.length - 1) * 1.15}em` }, ln));
+      svgEl(el, "title", {}, `${this.topicName(g.key)}: ${g.members.length} pages`);
+      el.addEventListener("click", (e) => { if (this.dragged) return; e.stopPropagation(); this.st.topic = g.key; this.st.focus = null; this.apply(); });
+      el.addEventListener("keydown", (e) => { if (e.key === "Enter") { this.st.topic = g.key; this.st.focus = null; this.apply(); } });
+      this.topicEls.set(g.key, el);
+    }
+
+    // one dot per page; anchors get a ring
+    this.dotEls = new Map();
+    this.labelEls = new Map();
+    for (const n of d.nodes.values()) {
+      const p = d.pos.get(n.path);
+      if (!p) continue;
+      const c = svgEl(this.gDots, "circle", { cx: p.x, cy: p.y, r: dotRadius(n.inDeg), class: "cm-at-dot" + (d.anchorSet.has(n.path) ? " is-anchor" : "") });
+      svgEl(c, "title", {}, `${n.name} · ${STATE_LABELS[n.state].toLowerCase()} · ${n.inDeg} link${n.inDeg === 1 ? "" : "s"} in`);
+      c.addEventListener("click", (e) => {
+        if (this.dragged) return;
+        e.stopPropagation();
+        if (e.ctrlKey || e.metaKey) { this.go(n.path, true); return; }
+        this.st.focus = this.st.focus === n.path ? null : n.path;
+        this.apply();
+      });
+      c.addEventListener("dblclick", (e) => { e.stopPropagation(); this.go(n.path, false); });
+      this.dotEls.set(n.path, c);
+      const t = svgEl(this.gLabels, "text", { x: p.x, y: p.y - dotRadius(n.inDeg) - 3, "text-anchor": "middle", class: "cm-at-label" }, clip(n.name, 26));
+      c.addEventListener("mouseenter", () => t.addClass("is-hover"));
+      c.addEventListener("mouseleave", () => t.removeClass("is-hover"));
+      this.labelEls.set(n.path, t);
+    }
+    this.paintDots();
+
+    this.key = this.stage.createDiv({ cls: "cm-at-key" });
+    this.drawKey();
+    this.hint = this.stage.createDiv({ cls: "cm-at-hint", text: "Click a topic to look inside · click a dot to trace it · double-click to open · scroll to zoom, drag to pan · Esc goes back" });
+
+    // zoom with the wheel around the pointer; drag to pan; a click on empty space goes back to the whole wiki
+    svg.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      const pt = this.toSvg(e.clientX, e.clientY), f = Math.exp(e.deltaY * 0.0015), vb = this.vb;
+      const w = Math.max(60, Math.min(this.full.w * 2, vb.w * f)), h = w * (vb.h / vb.w), k = w / vb.w;
+      this.setVb({ x: pt.x - (pt.x - vb.x) * k, y: pt.y - (pt.y - vb.y) * k, w, h });
     }, { passive: false });
-    let drag = null;
-    svg.addEventListener("pointerdown", (ev) => { if (ev.target.closest && ev.target.closest(".cm-wm-node")) return; cancelAnimationFrame(this.glideRaf); drag = { x: ev.clientX, y: ev.clientY, vx: v.x, vy: v.y }; svg.setPointerCapture(ev.pointerId); svg.addClass("is-drag"); });
-    svg.addEventListener("pointermove", (ev) => { if (!drag) return; const r = svg.getBoundingClientRect(); v.x = drag.vx + ((ev.clientX - drag.x) / r.width) * W; v.y = drag.vy + ((ev.clientY - drag.y) / r.height) * H; setView(); });
-    const end = () => { drag = null; svg.removeClass("is-drag"); };
-    svg.addEventListener("pointerup", end); svg.addEventListener("pointercancel", end);
-    svg.addEventListener("click", (ev) => { if (!ev.target.closest(".cm-wm-node")) { st.focus = null; apply(); } });
-    reset.addEventListener("click", () => { v.x = 0; v.y = 0; v.k = 1; st.focus = null; st.hidden.clear(); st.status = ""; st.ptype = ""; st.course = ""; st.q = ""; this.render(); });
-    find.addEventListener("keydown", (ev) => {
-      if (ev.key !== "Enter") return;
-      const q = find.value.trim().toLowerCase(); st.q = find.value;
-      const hit = ids.map((i) => g.nodes.get(i)).filter((n) => !nodeEls.get(n.path).hasClass("is-hidden")).find((n) => n.name.toLowerCase().includes(q));
-      if (!hit || !q) return;
-      st.focus = hit.path;
-      apply(); glideNode(hit.path, 2.2);
+    svg.addEventListener("pointerdown", (e) => {
+      if (e.button !== 0) return;
+      const start = { x: e.clientX, y: e.clientY, vb: { ...this.vb } };
+      const scale = this.vb.w / (svg.getBoundingClientRect().width || 1);
+      this.dragged = false;
+      const move = (ev) => {
+        const dx = ev.clientX - start.x, dy = ev.clientY - start.y;
+        if (!this.dragged && Math.hypot(dx, dy) < 4) return;
+        this.dragged = true; svg.addClass("is-panning");
+        cancelAnimationFrame(this.raf);
+        this.setVb({ ...start.vb, x: start.vb.x - dx * scale, y: start.vb.y - dy * scale });
+      };
+      const up = () => {
+        window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up);
+        svg.removeClass("is-panning");
+        window.setTimeout(() => { this.dragged = false; }, 0);
+      };
+      window.addEventListener("pointermove", move); window.addEventListener("pointerup", up);
     });
-
-    const apply = () => {
-      const edgeOn = (e) => !st.hidden.has(e.type);
-      const passes = (n) => (!st.status || n.status === st.status) && (!st.ptype || n.type === st.ptype) && (!st.course || n.courses.includes(st.course));
-      const vis = new Set();
-      edgeEls.forEach(({ e }) => { if (edgeOn(e) && passes(g.nodes.get(e.from)) && passes(g.nodes.get(e.to))) { vis.add(e.from); vis.add(e.to); } });
-      const near = new Set();
-      if (st.focus && vis.has(st.focus)) {
-        near.add(st.focus);
-        edgeEls.forEach(({ e }) => { if (edgeOn(e) && vis.has(e.from) && vis.has(e.to) && (e.from === st.focus || e.to === st.focus)) { near.add(e.from); near.add(e.to); } });
-      }
-      const focusing = near.size > 0;
-      edgeEls.forEach(({ e, el: ln, flow }) => {
-        const shown = edgeOn(e) && vis.has(e.from) && vis.has(e.to);
-        const dim = shown && focusing && !(e.from === st.focus || e.to === st.focus);
-        for (const x of [ln, flow]) { x.toggleClass("is-hidden", !shown); x.toggleClass("is-dim", dim); }
-      });
-      nodeEls.forEach((grp, id) => {
-        grp.toggleClass("is-hidden", !vis.has(id));
-        grp.toggleClass("is-dim", vis.has(id) && focusing && !near.has(id));
-        grp.toggleClass("is-near", focusing && near.has(id));
-        grp.toggleClass("is-focus", focusing && id === st.focus);
-      });
-      this.drawInfo(info, focusing ? st.focus : null, vis, (id) => { st.focus = id; apply(); glideNode(id); });
-    };
-    apply();
-    draw();
-    if (alpha > 0) this.simRaf = requestAnimationFrame(frame);
+    svg.addEventListener("click", () => { if (this.dragged) return; if (this.st.focus || this.st.topic !== null) { this.st.focus = null; this.st.topic = null; this.apply(); } });
+    this.drawSvgBounds();
   }
 
-  drawInfo(el, path, vis, focusOn) {
+  /** The box that shows the whole wiki, with room for the topic names above the circles. */
+  drawSvgBounds() {
+    const d = this.data;
+    this.drawnHidden = !this.stage.clientWidth;
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    // a topic's name can be wider than its circle: allow about 8px a letter at the size the whole map is drawn
+    let k0 = 1;
+    for (let pass = 0; pass < 2; pass++) {
+      x0 = Infinity; y0 = Infinity; x1 = -Infinity; y1 = -Infinity;
+      for (const g of d.groups) {
+        const lines = wrapWords(this.topicName(g.key), 18);
+        const half = Math.max(g.r, (Math.max(...lines.map((l) => l.length)) * 8 * k0) / 2);
+        x0 = Math.min(x0, g.x - half); x1 = Math.max(x1, g.x + half); y0 = Math.min(y0, g.y - g.r - (10 + 18 * lines.length) * k0); y1 = Math.max(y1, g.y + g.r);
+      }
+      k0 = (x1 - x0) / Math.max(400, this.stage.clientWidth || 1000);
+    }
+    if (!isFinite(x0)) { x0 = -100; y0 = -100; x1 = 100; y1 = 100; }
+    const m = 30;
+    this.full = { x: x0 - m, y: y0 - m, w: x1 - x0 + 2 * m, h: y1 - y0 + 2 * m };
+  }
+
+  toSvg(cx, cy) {
+    const r = this.svg.getBoundingClientRect(), vb = this.vb;
+    const s = Math.max(vb.w / (r.width || 1), vb.h / (r.height || 1)); // preserveAspectRatio "meet": the larger scale wins
+    return { x: vb.x + vb.w / 2 + (cx - r.left - r.width / 2) * s, y: vb.y + vb.h / 2 + (cy - r.top - r.height / 2) * s };
+  }
+  setVb(v) {
+    this.vb = v;
+    this.svg.setAttribute("viewBox", `${v.x} ${v.y} ${v.w} ${v.h}`);
+    // labels and lines keep their size on screen as the view zooms
+    const r = this.svg.getBoundingClientRect();
+    const s = Math.max(v.w / (r.width || 800), v.h / (r.height || 600));
+    this.svg.style.setProperty("--k", String(s));
+  }
+  glide(to, now) {
+    cancelAnimationFrame(this.raf);
+    const from = this.vb;
+    if (!from || now || window.matchMedia("(prefers-reduced-motion: reduce)").matches) { this.setVb(to); return; }
+    const t0 = performance.now(), dur = 380;
+    const step = (t) => {
+      const u = Math.min(1, (t - t0) / dur), e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+      this.setVb({ x: from.x + (to.x - from.x) * e, y: from.y + (to.y - from.y) * e, w: from.w + (to.w - from.w) * e, h: from.h + (to.h - from.h) * e });
+      if (u < 1) this.raf = requestAnimationFrame(step);
+    };
+    this.raf = requestAnimationFrame(step);
+  }
+
+  paintDots() {
+    for (const [path, el] of this.dotEls || []) {
+      const n = this.data.nodes.get(path);
+      el.style.fill = this.st.color === "type" ? pageColor(n.type) : STATE_COLORS[n.state];
+    }
+  }
+
+  drawKey() {
+    if (!this.key) return;
+    this.key.empty();
+    const entries = this.st.color === "type"
+      ? Object.keys(PAGE_COLORS).filter((t) => [...this.data.nodes.values()].some((n) => n.type === t)).map((t) => [t.replace("-", " "), PAGE_COLORS[t]])
+      : ["verified", "rereview", "draft"].map((s) => [STATE_LABELS[s], STATE_COLORS[s]]);
+    entries.forEach(([label, col]) => { const s = this.key.createSpan({ cls: "cm-at-keyitem" }); s.createSpan({ cls: "cm-at-keydot" }).style.background = col; s.appendText(label); });
+    const a = this.key.createSpan({ cls: "cm-at-keyitem" }); a.createSpan({ cls: "cm-at-keydot is-anchor" }); a.appendText("anchor");
+  }
+
+  /** Puts the view in line with this.st: what is lit, dimmed and labeled, which links are drawn, the side panel and the zoom. */
+  apply(now = false) {
+    const d = this.data, st = this.st;
+    const focus = st.focus ? d.nodes.get(st.focus) : null;
+    const tkey = focus ? d.topic.get(focus.path) : st.topic;
+    const near = new Set();
+    if (focus) { near.add(focus.path); for (const e of focus.out) near.add(e.to); for (const e of focus.inn) near.add(e.from); }
+    this.svg.toggleClass("is-zoomed", tkey !== null && tkey !== undefined);
+    this.svg.toggleClass("is-tracing", !!focus);
+
+    for (const [k, el] of this.topicEls) el.toggleClass("is-active", k === tkey);
+    for (const b of this.bandEls) {
+      b.el.toggleClass("is-lit", !focus && tkey !== null && (b.a === tkey || b.b === tkey));
+      b.el.toggleClass("is-faded", !!focus || (tkey !== null && b.a !== tkey && b.b !== tkey));
+    }
+    // labels: the anchors and busiest pages of the open topic, or the traced page and its neighbors
+    const labeled = new Set();
+    if (focus) {
+      // a busy page's neighbors would bury each other's names: then only its typed links and its busiest neighbors are named
+      const typedNear = new Set([...focus.out, ...focus.inn].filter((e) => e.type !== "see").map((e) => (e.from === focus.path ? e.to : e.from)));
+      const list = [...near];
+      const keep = list.length <= 22 ? list : [focus.path, ...typedNear, ...list.sort((a, b) => d.nodes.get(b).inDeg - d.nodes.get(a).inDeg).slice(0, 10)];
+      keep.forEach((p) => labeled.add(p));
+    }
+    else if (tkey !== null) {
+      const g = this.group(tkey);
+      const busiest = g ? [...g.members].sort((a, b) => d.nodes.get(b).inDeg - d.nodes.get(a).inDeg).slice(0, 14) : [];
+      busiest.forEach((p) => labeled.add(p));
+      if (g) g.members.forEach((p) => { if (d.anchorSet.has(p)) labeled.add(p); });
+    }
+    for (const [p, el] of this.dotEls) {
+      const inT = d.topic.get(p) === tkey;
+      el.toggleClass("is-focus", !!focus && p === focus.path);
+      el.toggleClass("is-near", !!focus && near.has(p) && p !== focus.path);
+      el.toggleClass("is-dim", focus ? !near.has(p) : tkey !== null && !inT);
+    }
+    for (const [p, el] of this.labelEls) el.toggleClass("is-shown", labeled.has(p));
+
+    // links between pages: the traced page's, or those of the open topic (none on the whole-wiki view, where the bands stand for them)
+    this.gEdges.empty();
+    const line = (e, cls) => {
+      const a = d.pos.get(e.from), b = d.pos.get(e.to);
+      if (!a || !b) return;
+      const dx = b.x - a.x, dy = b.y - a.y, dist = Math.hypot(dx, dy) || 1;
+      const rb = dotRadius(d.nodes.get(e.to).inDeg) + 1.5;
+      const x2 = b.x - (dx / dist) * rb, y2 = b.y - (dy / dist) * rb;
+      const mx = (a.x + x2) / 2 - (dy / dist) * dist * 0.1, my = (a.y + y2) / 2 + (dx / dist) * dist * 0.1;
+      const info = LINK_TYPES[e.type];
+      const p = svgEl(this.gEdges, "path", { d: `M${a.x},${a.y} Q${mx},${my} ${x2},${y2}`, class: `cm-at-edge ${cls}` + (e.type === "see" ? " is-see" : "") });
+      p.style.stroke = info.color;
+      if (cls === "is-trace") p.setAttribute("marker-end", `url(#cm-at-arrow-${e.type})`);
+    };
+    if (focus) { focus.out.forEach((e) => line(e, "is-trace")); focus.inn.forEach((e) => line(e, "is-trace")); }
+    else if (tkey !== null) {
+      for (const e of d.edges) {
+        const ta = d.topic.get(e.from), tb = d.topic.get(e.to);
+        if (ta === tkey && tb === tkey) line(e, "is-inside");
+        else if (ta === tkey || tb === tkey) line(e, "is-across");
+      }
+    }
+    this.drawCrumbs(tkey, focus);
+    this.drawSide(tkey, focus);
+
+    // zoom: the traced page and its neighbors, the open topic, or the whole wiki
+    let box = this.full;
+    if (focus) {
+      let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+      near.forEach((p) => { const q = d.pos.get(p); if (q) { x0 = Math.min(x0, q.x); x1 = Math.max(x1, q.x); y0 = Math.min(y0, q.y); y1 = Math.max(y1, q.y); } });
+      const w = Math.max(220, x1 - x0 + 120), h = Math.max(160, y1 - y0 + 120);
+      box = { x: (x0 + x1) / 2 - w / 2, y: (y0 + y1) / 2 - h / 2, w, h };
+    } else if (tkey !== null) {
+      const g = this.group(tkey);
+      if (g) { const s = g.r * 1.25; box = { x: g.x - s, y: g.y - s - 18, w: 2 * s, h: 2 * s + 18 }; }
+    }
+    const r = this.svg.getBoundingClientRect();
+    const asp = r.width && r.height ? r.width / r.height : 1.5;
+    if (box.w / box.h < asp) { const w = box.h * asp; box = { ...box, x: box.x - (w - box.w) / 2, w }; }
+    else { const h = box.w / asp; box = { ...box, y: box.y - (h - box.h) / 2, h }; }
+    this.glide(box, now || !this.vb);
+  }
+
+  drawCrumbs(tkey, focus) {
+    const c = this.crumbs;
+    c.empty();
+    const step = (text, fn, last) => {
+      const s = c.createSpan({ cls: "cm-at-crumb" + (last ? " is-last" : ""), text });
+      if (!last) { s.setAttr("role", "button"); s.setAttr("tabindex", "0"); s.addEventListener("click", fn); s.addEventListener("keydown", (e) => { if (e.key === "Enter") fn(); }); }
+    };
+    const levels = [["Whole wiki", () => { this.st.topic = null; this.st.focus = null; this.apply(); }]];
+    if (tkey !== null && tkey !== undefined) levels.push([this.topicName(tkey), () => { this.st.topic = tkey; this.st.focus = null; this.apply(); }]);
+    if (focus) levels.push([focus.name, () => {}]);
+    levels.forEach(([t, fn], i) => { if (i) c.createSpan({ cls: "cm-at-sep", text: "›" }); step(t, fn, i === levels.length - 1); });
+  }
+
+  /* ---------- side panel ---------- */
+
+  stateBar(parent, paths) {
+    const n = { verified: 0, rereview: 0, draft: 0, "": 0 };
+    paths.forEach((p) => { n[this.data.nodes.get(p).state]++; });
+    const bar = parent.createDiv({ cls: "cm-at-sbar" });
+    for (const s of ["verified", "rereview", "draft", ""]) if (n[s]) { const seg = bar.createSpan(); seg.style.flexGrow = String(n[s]); seg.style.background = STATE_COLORS[s]; seg.setAttr("title", `${STATE_LABELS[s]}: ${n[s]}`); }
+    const txt = parent.createDiv({ cls: "cm-at-snums" });
+    for (const s of ["verified", "rereview", "draft", ""]) if (n[s]) { const t = txt.createSpan(); t.createSpan({ cls: "cm-at-keydot" }).style.background = STATE_COLORS[s]; t.appendText(`${n[s]} ${STATE_LABELS[s].toLowerCase()}`); }
+  }
+  pageRow(parent, path, extra) {
+    const n = this.data.nodes.get(path);
+    const row = parent.createDiv({ cls: "cm-at-row", attr: { role: "button", tabindex: "0" } });
+    row.createSpan({ cls: "cm-at-keydot" }).style.background = STATE_COLORS[n.state];
+    row.createSpan({ cls: "cm-at-row-name", text: n.name });
+    if (extra !== undefined) row.createSpan({ cls: "cm-at-row-num", text: String(extra) });
+    const fn = (e) => { if (e && (e.ctrlKey || e.metaKey)) { this.go(path, true); return; } this.st.focus = path; this.apply(); };
+    row.addEventListener("click", fn);
+    row.addEventListener("keydown", (e) => { if (e.key === "Enter") fn(e); });
+    return row;
+  }
+  topicRow(parent, key, num) {
+    const row = parent.createDiv({ cls: "cm-at-row", attr: { role: "button", tabindex: "0" } });
+    row.createSpan({ cls: "cm-at-ring" + (key < 0 ? " is-none" : "") });
+    row.createSpan({ cls: "cm-at-row-name", text: this.topicName(key) });
+    if (num !== undefined) row.createSpan({ cls: "cm-at-row-num", text: String(num) });
+    const fn = () => { this.st.topic = key; this.st.focus = null; this.apply(); };
+    row.addEventListener("click", fn);
+    row.addEventListener("keydown", (e) => { if (e.key === "Enter") fn(); });
+    return row;
+  }
+  h(parent, text) { parent.createDiv({ cls: "cm-at-h", text }); }
+
+  drawSide(tkey, focus) {
+    const el = this.side, d = this.data;
     el.empty();
-    const g = this.graph;
-    const n = path ? g.nodes.get(path) : null;
-    if (!n) { el.createDiv({ cls: "cm-sub", text: "Click a dot to see how that page connects." }); return; }
-    const head = el.createDiv({ cls: "cm-wm-info-head" });
-    head.createSpan({ cls: "cm-wm-info-name", text: n.name });
-    head.createSpan({ cls: "cm-wt-tag", text: n.type || "page" });
-    if (n.status) head.createSpan({ cls: `cm-rel-status cm-rel-${n.status}`, text: n.status });
-    const open = head.createEl("button", { text: "Open page", cls: "mod-cta" });
-    open.addEventListener("click", () => this.go(n.path, false));
-    const groups = el.createDiv({ cls: "cm-wm-info-groups" });
-    for (const t of Object.keys(REL_TYPES)) {
-      for (const [dir, list, other] of [["out", n.out.filter((e) => e.type === t), (e) => e.to], ["inn", n.in.filter((e) => e.type === t), (e) => e.from]]) {
-        const items = list.filter((e) => vis.has(other(e)));
+    el.scrollTop = 0;
+    if (focus) return this.sidePage(el, focus);
+    if (tkey !== null && tkey !== undefined) return this.sideTopic(el, tkey);
+    el.createDiv({ cls: "cm-at-side-title", text: "The Coppermind" });
+    const typed = d.edges.filter((e) => e.type !== "see").length;
+    el.createDiv({ cls: "cm-sub", text: `${d.nodes.size} pages · ${d.edges.length} links (${typed} typed) · ${d.topics.length} topics` });
+    this.stateBar(el, [...d.nodes.keys()]);
+    if (!d.hasFile) el.createDiv({ cls: "cm-at-warn", text: `There is no ${TOPICS_PATH} yet, so every page is under "No topic yet". Edit topics makes it.` });
+    if (d.missing.length) {
+      const w = el.createDiv({ cls: "cm-at-warn" });
+      w.createDiv({ text: `Anchors in ${TOPICS_PATH} that aren't pages:` });
+      d.missing.forEach(([t, name]) => w.createDiv({ cls: "cm-at-warn-item", text: `${name} (${t})` }));
+    }
+    if (d.topics.length) this.h(el, "Topics");
+    d.groups.filter((g) => g.key >= 0).forEach((g) => this.topicRow(el, g.key, g.members.length));
+    d.topics.forEach((t, i) => { if (!this.group(i)) el.createDiv({ cls: "cm-at-row is-empty", text: `${t.name}: no pages found` }); });
+    const none = this.group(-1);
+    if (none) { this.h(el, "Not in a topic"); this.topicRow(el, -1, none.members.length); el.createDiv({ cls: "cm-sub", text: "Pages with no path of links to any anchor. List one as an anchor to give it a topic." }); }
+  }
+
+  sideTopic(el, key) {
+    const d = this.data, g = this.group(key);
+    if (!g) return;
+    const t = key >= 0 ? d.topics[key] : null;
+    el.createDiv({ cls: "cm-at-side-title", text: this.topicName(key) });
+    if (t && t.desc) el.createDiv({ cls: "cm-at-desc", text: t.desc });
+    const inside = d.edges.filter((e) => d.topic.get(e.from) === key && d.topic.get(e.to) === key).length;
+    let across = 0;
+    const per = new Map();
+    for (const [k, n] of d.pairs) { const [a, b] = k.split("|").map(Number); if (a === key || b === key) { const o = a === key ? b : a; per.set(o, n); across += n; } }
+    el.createDiv({ cls: "cm-sub", text: `${g.members.length} pages · ${inside} links inside · ${across} to other topics` });
+    this.stateBar(el, g.members);
+    if (t) {
+      const anchors = g.members.filter((p) => d.anchorSet.has(p));
+      if (anchors.length) { this.h(el, "Anchors"); anchors.forEach((p) => this.pageRow(el, p)); }
+    }
+    this.h(el, "Most linked");
+    [...g.members].sort((a, b) => d.nodes.get(b).inDeg - d.nodes.get(a).inDeg).slice(0, 8).forEach((p) => this.pageRow(el, p, d.nodes.get(p).inDeg));
+    const linked = [...per].sort((a, b) => b[1] - a[1]);
+    if (linked.length) { this.h(el, "Linked topics"); linked.slice(0, 6).forEach(([o, n]) => this.topicRow(el, o, n)); }
+    if (key >= 0) {
+      const none = d.groups.filter((x) => x.key >= 0 && x.key !== key && !per.has(x.key));
+      if (none.length) { this.h(el, "No links with"); const w = el.createDiv({ cls: "cm-at-chips" }); none.forEach((x) => { const c = w.createSpan({ cls: "cm-at-chip", text: this.topicName(x.key), attr: { role: "button", tabindex: "0" } }); c.addEventListener("click", () => { this.st.topic = x.key; this.apply(); }); }); }
+      // pages nearly as close to another topic: candidates for an anchor there, or for a link
+      const lean = [];
+      for (const p of g.members) {
+        if (d.anchorSet.has(p)) continue;
+        const row = d.score.get(p);
+        if (!row) continue;
+        let o = -1, ov = 0;
+        row.forEach((v, i) => { if (i !== key && v > ov) { ov = v; o = i; } });
+        if (o >= 0 && row[key] > 0 && ov / row[key] >= 0.75) lean.push([p, o, ov / row[key]]);
+      }
+      if (lean.length) {
+        this.h(el, "Almost in another topic");
+        lean.sort((a, b) => b[2] - a[2]).slice(0, 6).forEach(([p, o]) => { const r = this.pageRow(el, p); r.createSpan({ cls: "cm-at-row-num", text: `→ ${clip(this.topicName(o), 18)}` }); });
+      }
+    } else el.createDiv({ cls: "cm-sub cm-at-pad", text: "These pages link to nothing that leads to an anchor. Add links, or list one as an anchor in a topic." });
+  }
+
+  sidePage(el, n) {
+    const d = this.data;
+    el.createDiv({ cls: "cm-at-side-title", text: n.name });
+    const meta = el.createDiv({ cls: "cm-at-meta" });
+    meta.createSpan({ cls: "cm-at-tag", text: n.type || "page" });
+    if (n.state) meta.createSpan({ cls: `cm-rel-status cm-rel-${n.state}`, text: STATE_LABELS[n.state] });
+    const key = d.topic.get(n.path);
+    const tl = el.createDiv({ cls: "cm-sub cm-at-pad" });
+    tl.appendText(d.anchorSet.has(n.path) ? "Anchor of " : "In ");
+    const tlink = tl.createSpan({ cls: "cm-at-inlink", text: this.topicName(key), attr: { role: "button", tabindex: "0" } });
+    tlink.addEventListener("click", () => { this.st.focus = null; this.st.topic = key; this.apply(); });
+    const row = d.score.get(n.path);
+    if (row && key >= 0) {
+      let o = -1, ov = 0;
+      row.forEach((v, i) => { if (i !== key && v > ov) { ov = v; o = i; } });
+      if (o >= 0 && ov >= 0.2) tl.appendText(` · also close to ${this.topicName(o)}`);
+    }
+    const btns = el.createDiv({ cls: "cm-at-btns" });
+    const open = btns.createEl("button", { cls: "mod-cta cm-gbtn", text: "Open page" });
+    open.addEventListener("click", (e) => this.go(n.path, e.ctrlKey || e.metaKey));
+    el.createDiv({ cls: "cm-sub", text: `${n.out.length} links out · ${n.inn.length} in` });
+    for (const [dir, list, other] of [["out", n.out, (e) => e.to], ["inn", n.inn, (e) => e.from]]) {
+      for (const t of Object.keys(LINK_TYPES)) {
+        const items = list.filter((e) => e.type === t);
         if (!items.length) continue;
-        const row = groups.createDiv({ cls: "cm-wm-info-row" });
-        const lab = row.createSpan({ cls: "cm-wm-info-label", text: REL_TYPES[t][dir] });
-        lab.style.color = REL_TYPES[t].color;
-        items.forEach((e) => {
-          const id = other(e);
-          const c = row.createSpan({ cls: "cm-wm-info-link", text: g.nodes.get(id).name, attr: { role: "button", tabindex: "0" } });
-          c.addEventListener("click", () => focusOn(id));
+        const grp = el.createDiv({ cls: "cm-at-lgroup" });
+        const lab = grp.createDiv({ cls: "cm-at-lhead" });
+        const sw = lab.createSpan({ cls: "cm-rel-swatch" });
+        sw.style.background = LINK_TYPES[t].color; sw.style.setProperty("--c", LINK_TYPES[t].color);
+        if (LINK_TYPES[t].dash) sw.addClass("is-dashed");
+        lab.appendText(`${LINK_TYPES[t][dir]} (${items.length})`);
+        const w = grp.createDiv({ cls: "cm-at-chips" });
+        const names = items.map(other).sort((a, b) => d.nodes.get(a).name.localeCompare(d.nodes.get(b).name));
+        names.slice(0, 24).forEach((p) => {
+          const c = w.createSpan({ cls: "cm-at-chip", text: d.nodes.get(p).name, attr: { role: "button", tabindex: "0" } });
+          c.style.setProperty("--c", STATE_COLORS[d.nodes.get(p).state]);
+          c.addEventListener("click", (e) => { if (e.ctrlKey || e.metaKey) { this.go(p, true); return; } this.st.focus = p; this.apply(); });
         });
+        if (names.length > 24) w.createSpan({ cls: "cm-sub", text: `+${names.length - 24} more` });
       }
     }
   }
@@ -3591,6 +3848,7 @@ module.exports = class Nicrosil extends Plugin {
 
     delete this.settings.ambient; // the Ambient animations switch was removed in 2.7.6: everything it controlled is always on
     delete this.settings.dashStyle; // the Classic/Quiet switch was removed in 2.4.2
+    delete this.settings.mapTab; delete this.settings.mapFlow; // the wiki map's Hierarchy/Map tabs and Flow switch went with the atlas in 3.29.0
     document.body.classList.add("cm-quiet");
     // no status bar counter (removed in 2.13.4): renderStatus() does nothing while statusEl is unset
 
@@ -3744,8 +4002,14 @@ module.exports = class Nicrosil extends Plugin {
     } });
     this.addCommand({ id: "update-index", name: "Update the index now", callback: () => this.syncIndex({ manual: true }) });
     this.addCommand({ id: "log-schema-change", name: "Log a schema change", callback: () => this.openSchemaLog() });
-    this.addCommand({ id: "open-wiki-map", name: "Open the wiki map", hotkeys: [{ modifiers: ["Alt"], key: "m" }], callback: () => this.activateWikiMap() });
-    this.addCommand({ id: "open-relations", name: "Open the relations panel", hotkeys: [{ modifiers: ["Alt"], key: "l" }], callback: () => this.activateRelations() });
+    this.addCommand({ id: "open-wiki-map", name: "Open the atlas", hotkeys: [{ modifiers: ["Alt"], key: "m" }], callback: () => this.activateWikiMap() });
+    this.addCommand({ id: "show-in-atlas", name: "Show this page in the atlas", checkCallback: (checking) => {
+      const f = this.currentFile();
+      if (!f || !inAtlasScope(f.path)) return false;
+      if (!checking) this.activateWikiMap({ focus: f.path });
+      return true;
+    } });
+    this.addCommand({ id: "open-relations", name: "Open the Lens", hotkeys: [{ modifiers: ["Alt"], key: "l" }], callback: () => this.activateRelations() });
     this.addCommand({ id: "open-queue", name: "Open the review queue", hotkeys: [{ modifiers: ["Alt"], key: "q" }], callback: () => this.activateView() });
     this.addCommand({ id: "open-transcription-queue", name: "Open the transcription queue", hotkeys: [{ modifiers: ["Alt"], key: "t" }], callback: () => this.activateTranscribe() });
   }
@@ -4396,7 +4660,7 @@ module.exports = class Nicrosil extends Plugin {
     const cards = [
       { icon: "list", title: "Index", sub: "Every page, by type", go: open("_index") },
       { icon: "scroll-text", title: "Log", sub: "Every change and decision", go: (newTab) => { const f = this.latestLogFile(); if (f) this.app.workspace.getLeaf(newTab ? "tab" : false).openFile(f); else new Notice("There is no log file yet."); } },
-      { icon: "network", title: "Wiki map", sub: "Every typed link, as a tree and a map", go: () => this.activateWikiMap() },
+      { icon: "network", title: "Atlas", sub: "The wiki's topics and how they connect", go: () => this.activateWikiMap() },
       { icon: "book-open", title: "Schema", sub: "The rulebook", go: open("SCHEMA") },
       { icon: "list-checks", title: "Triage", sub: "Sources waiting to be ingested", go: open("Ingestion/Triage") }, // sits under Wiki map (first column)
       { icon: "bot", title: "Agents", sub: "The rules every agent reads first", go: open("_AGENTS"), under: true }, // sits under Schema (second column); the Tinmind has its own button in the file list
@@ -5687,6 +5951,70 @@ module.exports = class Nicrosil extends Plugin {
     }
   }
 
+  /**
+   * The atlas's data (3.29.0): every page in Wiki/ and Perspectives/, the links between them, the topics in _topics.md,
+   * which topic each page is in, and where everything sits. Worked out again only when the links, the pages or the topic
+   * list change; a status change only recolors. Shared by the atlas and the Lens.
+   */
+  async atlas() {
+    const mc = this.app.metadataCache;
+    const tf = this.app.vault.getAbstractFileByPath(TOPICS_PATH);
+    const text = tf instanceof TFile ? await this.app.vault.cachedRead(tf) : null;
+    const files = this.app.vault.getMarkdownFiles().filter((f) => inAtlasScope(f.path)).sort((a, b) => (a.path < b.path ? -1 : 1));
+    const edges = collectLinks(this.app).filter((e) => inAtlasScope(e.from) && inAtlasScope(e.to));
+    const key = `${text}\n${files.map((f) => f.path).join("\n")}\n${edges.map((e) => `${e.from}>${e.to}>${e.type}`).sort().join("\n")}`;
+    const fmOf = (f) => (mc.getFileCache(f) || {}).frontmatter || {};
+    if (this.atlasCache && this.atlasCache.key === key) {
+      for (const f of files) { const n = this.atlasCache.nodes.get(f.path); if (n) { const fm = fmOf(f); n.state = pageState(fm); n.type = String(fm.type || ""); } }
+      return this.atlasCache;
+    }
+    const nodes = new Map();
+    for (const f of files) {
+      const fm = fmOf(f);
+      nodes.set(f.path, { path: f.path, name: f.basename, type: String(fm.type || ""), state: pageState(fm), out: [], inn: [], inDeg: 0 });
+    }
+    const adj = new Map([...nodes.keys()].map((p) => [p, new Map()]));
+    for (const e of edges) {
+      nodes.get(e.from).out.push(e);
+      nodes.get(e.to).inn.push(e);
+      const w = e.type === "see" ? 1 : 2; // a typed link ties two pages twice as closely as a plain one
+      adj.get(e.from).set(e.to, (adj.get(e.from).get(e.to) || 0) + w);
+      adj.get(e.to).set(e.from, (adj.get(e.to).get(e.from) || 0) + w);
+    }
+    for (const n of nodes.values()) n.inDeg = new Set(n.inn.map((e) => e.from)).size;
+
+    const topics = text === null ? [] : parseTopics(text);
+    const missing = [];
+    const anchorSet = new Set();
+    topics.forEach((t) => {
+      t.paths = [];
+      for (const name of t.anchors) {
+        const dest = mc.getFirstLinkpathDest(name, TOPICS_PATH);
+        if (dest && nodes.has(dest.path)) { t.paths.push(dest.path); anchorSet.add(dest.path); } else missing.push([t.name, name]);
+      }
+    });
+    const ids = [...nodes.keys()];
+    const { topic, score } = assignTopics(ids, adj, topics.map((t) => t.paths));
+    const groups = topics.map((t, i) => ({ key: i, members: ids.filter((p) => topic.get(p) === i) })).filter((g) => g.members.length);
+    const loose = ids.filter((p) => topic.get(p) < 0);
+    if (loose.length) groups.push({ key: -1, members: loose });
+    const lay = layoutAtlas(groups, adj, (p) => dotRadius(nodes.get(p).inDeg), anchorSet);
+    lay.groups.forEach((g, i) => Object.assign(groups[i], { x: g.x, y: g.y, r: g.r }));
+    // links between topics, counted once per page pair
+    const pairs = new Map();
+    const seen = new Set();
+    for (const e of edges) {
+      const a = topic.get(e.from), b = topic.get(e.to);
+      const pk = e.from < e.to ? `${e.from}|${e.to}` : `${e.to}|${e.from}`;
+      if (a === b || seen.has(pk)) continue;
+      seen.add(pk);
+      const k = a < b ? `${a}|${b}` : `${b}|${a}`;
+      pairs.set(k, (pairs.get(k) || 0) + 1);
+    }
+    this.atlasCache = { key, nodes, edges, adj, topics, topic, score, groups, pos: lay.pos, pairs, anchorSet, missing, hasFile: text !== null };
+    return this.atlasCache;
+  }
+
   /* --- navigation --- */
 
   mainLeaf() {
@@ -5695,17 +6023,20 @@ module.exports = class Nicrosil extends Plugin {
     return leaves.find((l) => l.view.file && l.view.file.path === cur) || leaves[0] || this.app.workspace.getLeaf(false);
   }
 
-  async activateWikiMap() {
+  /** Opens the atlas in its own tab (or brings it forward), on a topic ({ topic }) or a page ({ focus: path }) if given. */
+  async activateWikiMap(opts = {}) {
     let leaf = this.app.workspace.getLeavesOfType(MAP_VIEW_TYPE)[0];
     if (!leaf) {
       leaf = this.app.workspace.getLeaf("tab");
       await leaf.setViewState({ type: MAP_VIEW_TYPE, active: true });
     }
-    this.app.workspace.revealLeaf(leaf);
+    await this.app.workspace.revealLeaf(leaf);
+    if (leaf.loadIfDeferred) await leaf.loadIfDeferred();
+    if (leaf.view instanceof WikiMapView && (opts.focus || opts.topic !== undefined)) leaf.view.show(opts);
   }
 
   async activateRelations() {
-    if (this.settings.tinmindMode) { new Notice("The Tinmind has no relations panel. Click The Coppermind to go back."); return; }
+    if (this.settings.tinmindMode) { new Notice("The Tinmind has no Lens. Click The Coppermind to go back."); return; }
     let leaf = this.app.workspace.getLeavesOfType(REL_VIEW_TYPE)[0];
     if (!leaf) {
       leaf = this.app.workspace.getRightLeaf(false);
@@ -6280,4 +6611,5 @@ module.exports.__test = {
   verifyLogEntry, rejectLogEntry, addToLog, daysBetween, today, parseLog, describeEntry, renameLogEntry, parseIndex, renderIndex,
   logPathFor, logOrder, logFileHeader, isLogPath, setFrontmatterProps, schemaInfo, checkVersion, addChangelogEntry, findChangelog,
   cleanNoteName, scanPath, scanNames, scanKey, splitNote, parseDrawings, parseRechecks, findUnsure, acceptGuess, keepDrawing, recreateDrawing, leaveOutDrawing, clearRecheck, transcribeVerifyLogEntry,
+  parseTopics, assignTopics, layoutAtlas, suggestLinks, pageState,
 };

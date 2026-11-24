@@ -1,6 +1,6 @@
 ---
 type: guide
-status: verified
+status: draft
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -12,14 +12,19 @@ courses:
 sources: []
 related:
   - "[[SCHEMA]]"
-drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5; larger file-list button name and index letter headings and jump bar, the flat relations map, the trimmed guide body, and the changelog moved to its own file, by claude-sonnet-5-5; Coppermind Gradient Style section by claude-sonnet-5-5; the Tinmind (notes dashboard, semester switcher, hero, button, mode) and the Tinmind Gradient Style by claude-sonnet-5-5; trimmed to what Nicrosil does and brought to v3.0.0 by claude-sonnet-5-5; Tinmind course tree and course pages by claude-sonnet-5-5; mode button, dashboard status bar and the dashboards' Ledger look by claude-sonnet-5-5; the Notebook by claude-sonnet-5-5; transcription queue by claude-sonnet-5-5; buttons kept full size by claude-sonnet-5-5); the transcription queue's Rename button by claude-sonnet-5-5; the transcription queue as a locked split by claude-sonnet-5-5
+drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5; larger file-list button name and index letter headings and jump bar, the flat relations map, the trimmed guide body, and the changelog moved to its own file, by claude-sonnet-5-5; Coppermind Gradient Style section by claude-sonnet-5-5; the Tinmind (notes dashboard, semester switcher, hero, button, mode) and the Tinmind Gradient Style by claude-sonnet-5-5; trimmed to what Nicrosil does and brought to v3.0.0 by claude-sonnet-5-5; Tinmind course tree and course pages by claude-sonnet-5-5; mode button, dashboard status bar and the dashboards' Ledger look by claude-sonnet-5-5; the Notebook by claude-sonnet-5-5; transcription queue by claude-sonnet-5-5; buttons kept full size by claude-sonnet-5-5); the transcription queue's Rename button by claude-sonnet-5-5; the transcription queue as a locked split by claude-sonnet-5-5; the atlas and the Lens by claude-opus-5-5
 drafted_on: 2026-11-11
 verified_on: 2026-11-23
+changes_since_verified:
+  - "2026-11-23: version 3.28.0 → 3.29.0 (the atlas and the Lens)"
+  - "2026-11-23: the relations panel is now the Lens: plain links as well as typed ones, the page's topic, pages two steps away that it doesn't link with, and a trail (Harrison asked for the lens view on each page) [[#The Lens]]"
+  - "2026-11-23: the wiki map is now the atlas, drawn from the topic list in `_topics.md`; its Hierarchy and Map views are gone (Harrison asked to replace both) [[#The atlas]]"
+  - "2026-11-23: the new names in the Dashboard's link cards and the Tinmind mode, and in the hotkey table and sidebar buttons, plus the Show this page in the atlas command [[#Hotkeys and buttons]]"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, records schema changes, and runs the Tinmind, my own class notes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v3.28.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v3.29.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## Turn it on (once per computer)
 1. In Obsidian: **Settings → Community plugins**, click the refresh icon next to "Installed plugins," and switch on **Nicrosil**.
@@ -49,7 +54,7 @@ They work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`, the
 ## The Dashboard
 [[_dashboard|Dashboard]] is the page the vault opens on (`_dashboard.md`, hidden from the file list unless the eye button is on). The **The Coppermind** button above the file list and `Alt+D` open it, always in Reading view. Each section is a block in the note, so a section can be moved or deleted by editing the note. It has:
 - **Header** (`coppermind-hero`): logo, name, tagline, and the search box ([[#Search]]).
-- **Six link cards** (`coppermind-nav`): Index, Log (newest month's file), Wiki map, Schema, Triage, and Agents (`_AGENTS`). `Ctrl+click` or middle-click opens a card's page in a new tab; the Wiki map card opens its own tab.
+- **Six link cards** (`coppermind-nav`): Index, Log (newest month's file), Atlas, Schema, Triage, and Agents (`_AGENTS`). `Ctrl+click` or middle-click opens a card's page in a new tab; the Atlas card opens its own tab.
 - **Review progress** (`coppermind-dashboard`): verified count and percentage, drafts and open flags, and **Open next draft**. Under it: a **health check card** (days since the last health check, read from the report names in `Health Checks/`; click opens the latest report), the **Changed since verified** list, and folded lists of pages with open flags and of stale drafts.
 - **Recent activity** (`coppermind-activity`): the last six log entries; click one to open the page it names.
 
@@ -58,7 +63,7 @@ The **Tinmind** is my own class notes, in `The Tinmind/`, kept apart from the wi
 - **A button.** **The Tinmind**, under **The Coppermind** above the file list, opens the Tinmind Dashboard (`Ctrl+click` or middle-click: new tab).
 - **A dashboard.** `The Tinmind/Tinmind Dashboard` has a hero and one block, `coppermind-classes`. Each class notes file has `type: class-notes`, a `course`, a `semester` (such as `Fall 26`), a `current` flag and an `order`. The page title is the picked semester; clicking it opens a menu of every semester, oldest first, and the cards under it are that semester's courses. Each card shows the note count and the newest date in a note's name (`28 notes · last 11-17`, or `No notes yet`), counted from file names, never from note contents. The pick is saved; until one is made, the semester marked `current: true` shows. To add a course, make its notes file with those properties. Properties are hidden on every note in `The Tinmind/`.
 - **A search box.** At the right of the Tinmind page's hero. It searches every note under `The Tinmind/` by title, alias and text, and every heading in them: a heading is its own card, marked **Heading**, naming its note and where that sits (such as `Fall 26 › SAIL`), and opening it jumps to that heading. Clicking or arrow keys and `Enter` open a result; `Ctrl+Enter` opens it in a new tab; `Esc` closes the list, and again clears the box. It reads in the background and keeps nothing on disk; it never changes a note.
-- **A mode.** Clicking the button switches the whole app to the Tinmind's colors and closes the right sidebar, so the review queue and relations panel are gone (`Alt+Q` and `Alt+L` only show a note). **The Coppermind** or `Alt+D` switches back and reopens the sidebar if it was open. The mode is not remembered: Obsidian always opens in the Coppermind's mode.
+- **A mode.** Clicking the button switches the whole app to the Tinmind's colors and closes the right sidebar, so the review queue and the Lens are gone (`Alt+Q` and `Alt+L` only show a note). **The Coppermind** or `Alt+D` switches back and reopens the sidebar if it was open. The mode is not remembered: Obsidian always opens in the Coppermind's mode.
 - **A course tree.** In the mode, the file list shows the semester's courses instead of folders, under a copy of the dashboard's semester switcher (same pick). A course is its notes file plus the same-named folder (`Fall 26/SAIL.md` and `Fall 26/SAIL/`). Right-click a course and choose **Delete course** to send its page and its folder to the trash, after a question that says how many files are in it (the Notebook can't be deleted this way). Opening a course lists the folder's notes and sub-folders, then the course page's headings. Click to open; middle-click or `Ctrl+click` for a new tab. Hover a course for **+** (new note) and **...**; right-click or **...** on a note or folder to **Rename** or **Delete** (deletes go to the trash and ask first). **New course** makes a course page for the semester showing, with the properties above. **New semester** asks for a season and year (it suggests the next one), makes the folder and switches to it. **All Class Notes**, a table of every class notes file, has its own row at the bottom. A new note's name starts as the course and today's date (`SAIL 11-22-26`) and can be changed before creating; it gets `type: course-note`, the course and semester (hidden properties), and opens in editing view. A note inside a course shows a pill with the course's name above its title that links to the course page (drawn from the note's folder, so the note has no link line). Course pages have no link back to the dashboard.
 - **A course page.** A class notes file also shows a panel under its properties with the same list, drawn as an open tree: a **Notes** heading with a rule running out to the right, **New note** and **New folder** as text links on the right of it, and the notes below, with an open folder's notes under a lilac guide line. It is drawn on screen; the file is not changed. Nicrosil makes folders and notes only when I ask, and reads only folder names and headings (the search box above is the one place it reads what the notes say). Not covered: renaming or deleting a course or semester, and reordering notes (they sort by name).
 - **A Notebook.** A place for notes that aren't for a class. `The Tinmind/Notebook` has `type: notebook` and no semester, so it shows on the Tinmind Dashboard whichever semester is picked, as a link in the row under the hero (not a course card), and it has its own row in the course tree. It works like a course: notes sit in `Notebook/` next to the page (made with the first note), topic folders are allowed, and its page has the same panel. A note's name starts as `Notebook` and today's date; its only property is `type: notebook-note`, and its pill says Notebook. The card has a **Quick note** button that makes a note without asking for a name and opens it ready to type. No counts, nothing sorts notes into courses, and the Notebook is not in **All Class Notes**.
@@ -76,16 +81,22 @@ The search box on the [[_dashboard|Dashboard]] shows suggestion cards as I type,
 - **Log:** Nicrosil adds the entry for each verify and reject to the top of the current month's log file (newest first, old entries never rewritten). The log opens with every entry folded, which needs Obsidian's **Fold heading** option (Settings → Editor).
 - **One log file per month:** in `_logs/`, named `_log MM-YY` (`_log 11-26` is November 2026). The first time Obsidian opens in a new month, Nicrosil creates that month's file with its header.[^5]
 
-## The relations panel
-`Alt+L` or its button opens it. It follows the open page and shows its typed links from the properties:[^3]
-- **A map** with the page in the middle: pages that point at it on the left, pages it points at on the right (up to six a side; **Enlarge** shows all). Arrows are colored by relationship type (legend), and a page's outline shows its status. Click a page to open it (`Ctrl+click`: new tab).
-- **Two lists:** "This page…" (outgoing, grouped by type) and "Pointing at this page…" (incoming, worked out from other pages' properties, since each relationship is stored once).[^3]
-- **Not shown:** plain links in the page text, which are "see also" links, not relationships.
+## The Lens
+`Alt+L` or its button opens it in the right sidebar. It follows the open page when that is a wiki page, a perspective or a source card, and changes no file:
+- **Trail:** the pages opened before this one while the Lens was open. Click one to go back to it.
+- **Header:** the page's status and its topic on the atlas. Click the topic to show the page in the atlas.
+- **A map** with the page in the middle: pages that link to it on the left, pages it links to on the right (up to six a side, typed links first; **Enlarge** shows all). Typed links are colored by relationship type (legend); plain links, in the text or in properties such as `sources`, are "see also" links and drawn dashed. A page's outline shows its status. Click a page to open it (`Ctrl+click`: new tab).
+- **Two steps away, not linked yet:** up to six pages that at least two of this page's neighbors are linked with but this page isn't, best first, each with the neighbors that join them. Summaries, guides and prompts are left out. They are links worth checking, not links to add without reading.
+- **Two lists:** "This page…" (outgoing) and "Pointing at this page…" (incoming, worked out from other pages, since each relationship is stored once),[^3] grouped by type, with plain links last as **Links to** and **Linked from** (folded when long).
 
-## The wiki map
-`Alt+M` or the Wiki map card opens it in its own tab, with two views chosen at the top. Both read only the typed links in the properties[^3] and change no file.
-- **Hierarchy.** A tree built from `type_of`, `part_of`, and `example_of`: each page is a card under the page it is a kind of, part of, or example of. Click a card to open the page; the circle on its edge opens or closes the branch. A box filters by name; **Expand all**, **Collapse all** and **Show examples** do what they say. Pages with none of these links are in a folded list at the bottom.
-- **Map.** Every page with a typed link is a dot, and every typed link an arrow from the page that states it. Scroll to zoom, drag to pan, drag a dot to move it. Click a relationship name to hide or show that type; menus filter by status, page type and course; the box finds a page by name. Click a dot to focus on it and its neighbors, `Ctrl+click` to open it. **Flow** turns the pulses on arrows off. Pages with no typed links are not shown, and a note says how many.
+## The atlas
+`Alt+M` or the Atlas card opens it in its own tab. It replaced the wiki map's Hierarchy and Map views in 3.29.0. It reads the links and [[_topics]], and changes no file.
+- **Topics.** Each topic in `_topics.md` is a circle, and its anchor pages are pinned to it. Every other page in `Wiki/` and `Perspectives/` joins the topic its links tie it to most closely: Nicrosil spreads out from each topic's anchors along the links (a typed link counts double) and puts each page with the topic that reaches it most strongly. Pages with no path of links to any anchor sit in a dashed **No topic yet** circle. Nothing is written on the pages. The atlas works this out again when links, pages or the topic list change; otherwise the layout stays the same.
+- **The whole wiki.** Bands between circles show how many links join two topics. Each dot is a page, sized by how many pages link to it and colored by status (or by page type with **Type**); anchors have a ring. The side panel gives the counts and lists the topics.
+- **A topic.** Click its circle to zoom in. Its links are drawn, its anchors and busiest pages are named, and the side panel shows its description, status, anchors, most-linked pages, the topics it links with most, the topics it never links with, and pages that are almost in another topic (candidates for an anchor there, or for a link).
+- **A page.** Click a dot, or find the page with the search box, to trace it: its links are drawn in their colors and everything else fades. The side panel lists its links by type, its topic, and **Open page**. Double-click or `Ctrl+click` a dot to open the page.
+- **Moving around.** Scroll to zoom, drag to pan, and `Esc` or the path at the top goes back a level. **Edit topics** opens `_topics.md`. **Show this page in the atlas** (command palette) opens it on the page I'm reading.
+- **The topic list is mine.** The agent checks it at each ingest ([[SCHEMA - Ingest#6. Check the topic list]]). Anchors that aren't pages are listed in the side panel.
 
 ## The properties strip
 On every note except the Dashboard, the Tinmind page, the index and the logs, Nicrosil replaces the Properties block with a one-line strip showing **type**, **status**, and a date. Click it to open the real block; each note starts collapsed again when opened. The link hover preview shows the same strip, except when the link points at a spot on its own page (a footnote, a heading or a block), which gets no strip.
@@ -114,22 +125,22 @@ It does not touch `status`, `verified_on`, or the log. After a schema change, ea
 | `Alt+N` | Open the next draft |
 | `Alt+F` | Resolve a flag on this page |
 | `Alt+Q` | Open the review queue |
-| `Alt+L` | Open the relations panel |
+| `Alt+L` | Open the Lens |
 | `Alt+T` | Open the transcription queue |
-| `Alt+M` | Open the wiki map |
+| `Alt+M` | Open the atlas |
 | `Alt+D` | Go to the Dashboard |
 | `Alt+Shift+D` | Switch between the Coppermind and the Tinmind, and bring the file list back |
 | `Alt+E` | Show the file list (the way back from the sidebar's search tab) |
 | `Ctrl+Enter` | Confirm a dialog |
 | `Ctrl+click` or middle-click | Open a card, a button, a search result or a queue page in a new tab |
 
-Change them in **Settings → Hotkeys** (search "Nicrosil"). **Log a schema change** has no default hotkey. Nicrosil also adds:
+Change them in **Settings → Hotkeys** (search "Nicrosil"). **Log a schema change** and **Show this page in the atlas** have no default hotkey. Nicrosil also adds:
 - **The Coppermind** and **The Tinmind** buttons above the file list: open the Dashboard and the Tinmind page, and switch the mode ([[#The Tinmind]]).
 - **Left sidebar tab bar buttons** (shown while the Files tab is open; the Files, Search and Bookmarks icons and Obsidian's far-left ribbon are hidden, so other plugins' ribbon icons are hidden too; `Ctrl+Shift+F` still opens search):
   - **Collapse button** (Obsidian's own, first); the **Toggle left sidebar** command is also in the command palette.
   - **Mode button** (both modes): shows the current mode's logo; click to switch to the other mode ([[#The Tinmind]]). Opens no page.
   - **Eye button** (Coppermind mode only, since the Tinmind replaces the file list): shows or hides files and folders whose names start with an underscore. Hidden each time Obsidian opens. The file list's own toolbar is hidden; those actions are still in the command palette and right-click menu.
-  - **Review queue** and **Relations panel** buttons (Coppermind mode only), and the **Transcription queue** button (Tinmind mode only).
+  - **Review queue** and **Lens** buttons (Coppermind mode only), and the **Transcription queue** button (Tinmind mode only).
   - **Two git buttons** (both modes): an up arrow runs Obsidian Git's **Commit-and-sync** (commit everything, pull if Obsidian Git is set to pull before pushing, push, with its usual message); a down arrow runs **Pull**. Same as the Source Control panel's buttons; Obsidian Git's notices report the result, and the button says so if Obsidian Git is off.
 - A **status-bar counter** of verified pages (for example, `12/60 verified`).
 

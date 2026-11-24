@@ -4,13 +4,9 @@ course: "Philosophy"
 semester: "Fall 26"
 ---
 # Social Avarice
-|                                           |                 |                                                                              |
-| ----------------------------------------- | --------------- | ---------------------------------------------------------------------------- |
-| **IX.9** Do the happy need friends?       | 1169b3–1170b19  | No one would choose all goods alone; man is a political animal (~1169b16–19) |
-| **IX.10** How many friends                | 1170b20–1171a20 | The limit on friends; the obsequious man of many friends                     |
-| **IX.11** Friends in good and bad fortune | 1171a21–1171b28 | Calling on friends sparingly; not being keen to receive (~1171b)             |
-| **IX.12** Living together                 | 1171b29–1172a15 | Friends share whatever they love most in life                                |
+
 ## Instructions
+- Your paper should open with a short introductory paragraph that overviews the structure of the essay and includes a **bolded thesis statement**. Your paper should also conclude with a review of your key points and central thesis.
 - Analysis should include elements like:
 	- the ways in which they manifest themselves behaviorally;
 	- accompanying thoughts, feelings, and actions;
@@ -47,5 +43,14 @@ semester: "Fall 26"
 	- The self-lover gratifies the most controlling part of himself.
 - Bk 9.9 (pg. 345-347)
 	- Having friends seems to be the greatest external good.
-	- The solitary person's lie is hard since it is hard to be continuously active all by himself.
-	- 
+	- The solitary person's life is hard since it is hard to be continuously active all by himself.
+	- The good of your friend is ultimately good for you too, and you should want it for them.
+- Bk 9.10 (pg. 347)
+	- Those who have many friends and treat everyone as close to them seem to be friends to no one. These people are regarded as ingratiating.
+	- It is impossible to be many people's friend for their virtue and for themselves.
+- Bk 9.11 (pg. 347-348) Calling on friends sparingly; not being keen to receive (~1171b)
+	- The very presence of friends is pleasant.
+	- Everyone tries to avoid causing pain to their friends.
+	- Eagerness to be benefitted is not fine.
+- Bk 9.12 (pg. 348-349) Friends share whatever they love most in life
+	- We are related to our friend as we are related to ourselves.

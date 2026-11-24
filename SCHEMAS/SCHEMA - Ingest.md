@@ -1,9 +1,13 @@
 ---
 type: schema
-status: verified
+status: draft
 owner: Harrison Nickles
 updated: 2026-11-23
 verified_on: 2026-11-23
+changes_since_verified:
+  - "2026-11-23: new step 6, Check the topic list: read `_topics.md`, add a topic or an anchor when the ingest calls for one, propose any other change (Harrison asked for a topic list the agent keeps current and Nicrosil's atlas draws) [[#6. Check the topic list]]"
+  - "2026-11-23: Source card renumbered from step 6 to step 7 [[#7. Source card]]"
+  - "2026-11-23: report section C ends with the topic list's changes, or says there were none [[#The report]]"
 ---
 How a source becomes wiki pages. Read this with [[SCHEMA - Writing Pages]], which covers naming, properties, links, citations, attribution, and style.
 
@@ -64,14 +68,22 @@ Pages written before a page existed name it without linking to it, and nothing e
 - **Verified pages: edit them directly too, whatever VERIFIED PAGES says.** I've asked for this standing edit because I can re-verify a backfilled page quickly when I know exactly what changed. In the same edit, set `status: draft`, keep `verified_on`, and add one `changes_since_verified` line per page per ingest naming each link added and the words linked, ending with a link to the section when it is in one place ([[SCHEMA - Review#Changing a verified page]]), for example: `"2026-11-24: linked first mention of 'LLMs' to [[Large Language Model]] (backfill, Module 6 ingest) [[#Key Points]]"`.
 - **In "plan first" mode,** the plan doesn't list the backfill; it runs during the calculate step and is reported in section C.
 
-### 6. Source card
+### 6. Check the topic list
+`_topics.md` lists the wiki's major topics for the atlas in [[Nicrosil]]: each is a `##` heading, one line on what it covers, and a list of its anchor pages (the pages at its center). Nicrosil places every other page from its links, so pages get no topic property and the agent never sorts pages into topics.
+- **Read `_topics.md`** once the pages are drafted. It is short.
+- **Add a topic** only when this ingest starts a subject that no topic covers and that is big enough to stand alone: about five or more new pages on it, or a new course. Give it a name, a one-line description, and two to six anchors.
+- **Add an anchor** to an existing topic when a page this ingest created is now central to it and the topic has fewer than six.
+- **Propose, don't make,** any rename, merge, split, or removal of a topic, and any removal of an anchor. These go in the report for me to decide.
+- **Most ingests change nothing here.** Say so in the report.
+
+### 7. Source card
 Create the card if it doesn't exist, or update it: propose an Admiralty rating with a one-sentence reason (never set the final rating), and add this ingest under Ingest Progress with today's date and what was skipped.
 
 ## The report
 
 - **A.** Defaults used, and any reading of my request you had to choose
 - **B.** Created: `[[Page]] (type)` — one line each
-- **C.** Appended: `[[Page]]` — what was added; verified pages as a proposed before/after. Then the backfilled links from step 5, one line per page: `[[Page]]`: linked "words" → `[[New page]]`, with pages that were verified marked as now back to `draft`
+- **C.** Appended: `[[Page]]` — what was added; verified pages as a proposed before/after. Then the backfilled links from step 5, one line per page: `[[Page]]`: linked "words" → `[[New page]]`, with pages that were verified marked as now back to `draft`. Last, the topic list from step 6: what was added to `_topics.md` and any change proposed, or "topic list: no change"
 - **D.** Proposed typed links, grouped by type: `[[A]] → relation → [[B]]` — a one-line reason each, pointing to where the source says it. Each `related` link also says which type came closest and why it doesn't fit. If more than about a third of the links are `related`, re-check them before reporting.
 - **E.** Flags: whose view, unsourced background, accuracy checks, sources disagree, gaps, and flags this source may resolve
 - **F.** Skipped on purpose, and Perspectives material from my own work

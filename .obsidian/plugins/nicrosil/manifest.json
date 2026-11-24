@@ -1,9 +1,9 @@
 {
   "id": "nicrosil",
   "name": "Nicrosil",
-  "version": "3.28.0",
+  "version": "3.29.0",
   "minAppVersion": "2.3.0",
-  "description": "The Coppermind's toolkit: verify or reject drafts with one click, a review queue sidebar, flag resolving, hotkeys, a Dashboard with a live search box and a home button, a collapsible properties strip, a button that logs schema changes, a monthly log archive, and a transcription queue that checks scans of handwritten notes against their transcriptions. Updates the page, index.md, and log.md.",
+  "description": "The Coppermind's toolkit: verify or reject drafts with one click, a review queue sidebar, flag resolving, hotkeys, a Dashboard with a live search box and a home button, a collapsible properties strip, a button that logs schema changes, a monthly log archive, an atlas of the wiki's topics, a Lens on each page's links, and a transcription queue that checks scans of handwritten notes against their transcriptions. Updates the page, index.md, and log.md.",
   "author": "Harrison Nickles",
   "isDesktopOnly": false
 }

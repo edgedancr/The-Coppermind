@@ -1,10 +1,12 @@
 ---
 type: schema
-version: 10.0
-status: verified
+version: 11.0
+status: draft
 owner: Harrison Nickles
 updated: 2026-11-23
 verified_on: 2026-11-22
+changes_since_verified:
+  - "2026-11-23: `_topics.md` added to the folder layout and to the files that are not wiki pages, with a new Topics bullet under The other files (the topic list Nicrosil's atlas draws from) [[#Files that are not wiki pages]]"
 ---
 This is the overview of the Coppermind's rules: what the wiki is for, how it is laid out, and which rule file covers what. It is the rulebook for my personal LLM wiki. The Coppermind follows the SAIL version of the LLM-wiki pattern, not Karpathy's original: **I design, the AI drafts, I verify.** Nothing becomes part of the wiki as final until I have reviewed and approved it.
 
@@ -55,6 +57,7 @@ The Coppermind/
 ├── _AGENTS.md              Start here: the rules for every task, and which rule file to read
 ├── _dashboard.md           Front door and review dashboard (hidden in the file list unless the eye button is on)
 ├── _index.md               Map of every page
+├── _topics.md              The wiki's major topics and their anchor pages, drawn by Nicrosil's atlas
 ├── _logs/                  The log: one file per month ("_log 11-26" is November 2026)
 ├── Ingestion/              Everything before ingestion
 │   ├── Triage.md           Sources I've collected that are waiting to be ingested, in batches
@@ -88,7 +91,7 @@ The Coppermind/
 
 ## Files that are not wiki pages
 
-`_index.md`, the log, `Ingestion/Triage.md`, the reports in `Health Checks/`, everything in `Tools/`, everything in `The Tinmind/`, and the files in `_changelogs/` are not wiki pages: they have no `status`, are not in `_index.md`, and I don't verify them. Like every file here, they also carry no `# Title` line that repeats the file name, because Obsidian already shows the name at the top. The rule files in `SCHEMAS/` do have a `status`, and I verify them like pages, but they are not listed in the index either.
+`_index.md`, `_topics.md`, the log, `Ingestion/Triage.md`, the reports in `Health Checks/`, everything in `Tools/`, everything in `The Tinmind/`, and the files in `_changelogs/` are not wiki pages: they have no `status`, are not in `_index.md`, and I don't verify them. Like every file here, they also carry no `# Title` line that repeats the file name, because Obsidian already shows the name at the top. The rule files in `SCHEMAS/` do have a `status`, and I verify them like pages, but they are not listed in the index either.
 
 ### Guides: about the Coppermind itself
 
@@ -100,6 +103,7 @@ A **guide** explains how to set up, run, review, or get the most out of the Copp
 
 ### The other files
 
+- **Topics:** `_topics.md` lists the wiki's major topics, each with a one-line description and its anchor pages (the pages at its center). The atlas in [[Nicrosil]] draws a circle for each and places every other page from its links, so pages carry no topic property. I own the list; the agent checks it at each ingest, may add a topic or an anchor, and proposes any other change ([[SCHEMA - Ingest#6. Check the topic list]]).
 - **Triage:** sources waiting to be ingested, in batches. See [[SCHEMA - Ingest#Triage]].
 - **Raw sources:** `Ingestion/Raw/` holds sources I haven't ingested yet. It isn't part of the wiki, and agents never look in it. See [[SCHEMA - Ingest#Raw sources]].
 - **Health Checks:** one report per health check. See [[SCHEMA - Health Check#The report archive]].
