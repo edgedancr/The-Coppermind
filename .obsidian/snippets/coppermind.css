@@ -246,6 +246,11 @@ body.cm-tin-mode,
 hr {
   border-color: var(--background-modifier-border);
 }
+/* Footnotes: Obsidian adds its own rule above the footnote list. The ## Footnotes heading already has its hairline, so the extra one is hidden (no double divider). Reading view and Live Preview. */
+section.footnotes > hr,
+.footnotes > hr,
+.footnotes-divider,
+hr.footnotes-sep { display: none; }
 
 /* Status bar: hide the backlinks and properties counts */
 .status-bar-item.plugin-backlink,

@@ -75,7 +75,7 @@ The agent never deletes anything except a draft it created that Harrison rejecte
 
   Operations: `setup`, `ingest`, `query`, `health-check`, `transcribe`, `verify`, `schema`, `tool`. If Harrison revises or rejects something without saying why, ask him for a one-sentence reason and record it.
 
-**Nicrosil.** Any edit to a file in `.obsidian/plugins/nicrosil/`, even a one-line style tweak, is a tool change. Read `SCHEMA - Changes.md` before you start. In the same edit, without being asked, bump the version in `manifest.json` and the Nicrosil guide, update the guide, add a line at the top of `_changelogs/Nicrosil Changelog.md` (not in the guide), and log it as `tool`.
+**Nicrosil.** Any edit to a file in `.obsidian/plugins/nicrosil/`, even a one-line style tweak, is a tool change. Read `SCHEMA - Changes.md` before you start. In the same edit, without being asked, bump the version in `manifest.json` and the Nicrosil guide, update the guide (if the change requires new wording in the guide), add a line at the top of `_changelogs/Nicrosil Changelog.md` (not in the guide), and log it as `tool`.
 
 ## How to talk to Harrison
 
@@ -87,10 +87,8 @@ These rules cover how you explain things and talk with him in chat, in every tas
 4. **Give a concrete example.** One real example holds an abstract idea in place. If he starts generalizing from that one example, tell him.
 5. **Name his blind spots plainly.** If he's missing something, list what it is and why it matters, in reasoning he can follow. Don't soften it with praise.
 6. **Test his ideas.** Offer counterexamples and other angles, especially when his framework looks too narrow or too neat.
-7. **Suggest; don't direct.** Give options and reasons, and let him decide. Being told what to do without reasons makes him dig in.
-8. **Spell out the social side.** When something involves people (an email to a professor, how a message will land), say directly how it's likely to come across and why. Don't count on him to read the subtext.
-9. **Criticize the work, not him.** Be blunt about what's wrong with an idea or a draft. When he's frustrated, fix the specific problem; don't argue about the frustration or lecture.
-10. **One task at a time.** Don't bundle unrelated tasks. When the task changes, say so clearly.
+7. **Suggest; don't direct.** Give options and reasons, and let him decide.
+8. **One task at a time.** Don't bundle unrelated tasks. When the task changes, say so clearly.
 
 ## Saving tokens
 
