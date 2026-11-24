@@ -29,7 +29,7 @@ verified_on:
 
 **History**[^5]
 - **Sudan, 1991–1996:** businesses that covertly supported terrorism, and an "Islamic Army Shura" coordinating allied groups from across the Muslim world.[^6] Bin Ladin left on May 19, 1996, "significantly weakened".[^7]
-- **Afghanistan, 1996–2001:** an alliance with the Taliban gave it sanctuary; U.S. intelligence estimated that 10,000 to 20,000 fighters trained in Bin Ladin-supported camps from 1996 through 9/11, but no more than a few hundred became members.[^3]
+- **Afghanistan, 1996–2001:** an alliance with the Taliban gave it [[Terrorist Sanctuary|sanctuary]]; U.S. intelligence estimated that 10,000 to 20,000 fighters trained in Bin Ladin-supported camps from 1996 through [[September 11 Attacks (2001)|9/11]], but no more than a few hundred became members.[^3]
 - By 1998 it had effectively merged with Ayman al Zawahiri's Egyptian Islamic Jihad, and instead of mainly funding and training allied groups, it planned, directed, and executed the [[East Africa Embassy Bombings (1998)|1998 embassy bombings]] itself.[^3]
 
 **State contacts:** the Commission found an informal agreement with Iranian operatives to cooperate on training, and strong evidence that Iran facilitated members' transit before 9/11, but no evidence that Iran or Hezbollah knew of the 9/11 planning.[^8] It reports contacts with Iraq but "no evidence that these or the earlier contacts ever developed into a collaborative operational relationship".[^9]

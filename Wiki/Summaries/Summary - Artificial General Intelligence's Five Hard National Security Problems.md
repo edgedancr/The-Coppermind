@@ -17,7 +17,7 @@ Jim Mitre and Joel B. Predd of RAND argue that the emergence of [[Artificial Gen
 ## Main Points
 - Uncertainty about scaling, thresholds, and timing is "endemic," so a strategy over-optimized for one future is high-risk.[^4]
 - Each problem rests on different assumptions, from sudden breakthrough to gradual adoption.[^5]
-- Relying heavily on compute and export controls could prove brittle.[^3]
+- Relying heavily on compute and [[Semiconductor Export Controls|export controls]] could prove brittle.[^3]
 
 ## Themes
 - Planning under uncertainty rather than prediction.

@@ -26,7 +26,7 @@ verified_on:
 - The House and Senate intelligence committees authorize intelligence funding, but the final budget review happens in the Defense subcommittees of the Appropriations committees, which have no intelligence subcommittees, and only a few members and staff review the requests.[^3]
 - Under existing rules, the intelligence committees "lack the power, influence, and sustained capability" to meet the challenge.[^2]
 
-**Before 9/11**[^4]
+**Before [[September 11 Attacks (2001)|9/11]]**[^4]
 - The select committees, created in 1977, had limited authority: appropriations went through the Appropriations committees, and Armed Services held jurisdiction over the Defense intelligence agencies and, in the Senate, the CIA.[^5]
 - Term limits kept members from building expertise, and secrecy denied them "democracy's best oversight mechanism: public disclosure".[^5] See [[Church and Pike Committees]].
 - Terrorism fell under at least 14 committees in the House alone[^6] and was "a second- or third-order priority".[^7]

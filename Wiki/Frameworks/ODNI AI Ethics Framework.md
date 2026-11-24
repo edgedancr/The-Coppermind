@@ -9,7 +9,7 @@ drafted_on: 2026-11-11
 verified_on:
 ---
 > [!summary]
-> SAIL introduced the Office of the Director of National Intelligence (ODNI) AI Ethics Framework for the Intelligence Community by first correcting two common misconceptions about AI.[^1] SAIL also described it as the kind of multi-dimensional framework that complements the [[Three-Ps Risk Framework]].[^2]
+> SAIL introduced the Office of the [[Director of National Intelligence]] (ODNI) AI Ethics Framework for the [[United States Intelligence Community|Intelligence Community]] by first correcting two common misconceptions about AI.[^1] SAIL also described it as the kind of multi-dimensional framework that complements the [[Three-Ps Risk Framework]].[^2]
 
 > [!todo] Gap in my notes
 > My notes record the misconceptions used to introduce the framework, but not the framework's principles. Add the ODNI document to `Sources/Readings` and ingest it to complete this page.

@@ -19,7 +19,7 @@ drafted_on: 2026-11-19
 verified_on:
 ---
 > [!summary]
-> Kaiser and Pherson treat outlining as part of thinking, not only writing: the more detailed the outline, the better the odds of insightful and accurate analysis.[^1] ==The goal is a roadmap down to the paragraph level==, whose main points become the paper's topic sentences.[^2]
+> Kaiser and Pherson treat outlining as part of thinking, not only writing: the more detailed the outline, the better the odds of insightful and accurate analysis.[^1] ==The goal is a roadmap down to the paragraph level==, whose main points become the paper's [[Topic Sentence|topic sentences]].[^2]
 
 ## Key Points
 - **Start with a working title and a lead sentence,** or a working summary for a longer paper. A writer who cannot write the lead sentence needs to do more analysis.[^1] See [[Analytic Title]].

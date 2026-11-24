@@ -19,7 +19,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> The 9/11 Commission set out what al-Qaeda's leaders would have needed in order "to organize and conduct a complex international terrorist operation to inflict catastrophic harm".[^1] It concluded that ==by the spring and summer of 2000, al-Qaeda "was able to meet these requirements"==.[^2]
+> The 9/11 Commission set out what [[Al-Qaeda|al-Qaeda]]'s leaders would have needed in order "to organize and conduct a complex international terrorist operation to inflict catastrophic harm".[^1] It concluded that ==by the spring and summer of 2000, al-Qaeda "was able to meet these requirements"==.[^2]
 
 ## Components
 The Commission's list:[^3]

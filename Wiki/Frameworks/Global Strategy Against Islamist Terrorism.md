@@ -21,16 +21,16 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on: 2026-11-19
+verified_on: 2026-11-23
 ---
 > [!summary]
-> The 9/11 Commission named the enemy as twofold: al-Qaeda, "a stateless network of terrorists," and "a radical ideological movement in the Islamic world" that will menace Americans long after Bin Ladin is gone.[^1] Its recommended strategy rests on ==a "tripod" of policies: attack terrorists and their organizations; prevent the continued growth of Islamist terrorism; and protect against and prepare for terrorist attacks==.[^1]
+> The 9/11 Commission named the enemy as twofold: al-Qaeda, "a stateless network of terrorists," and "a radical ideological movement in the Islamic world" that will menace Americans long after [[Usama Bin Ladin|Bin Ladin]] is gone.[^1] Its recommended strategy rests on ==a "tripod" of policies: attack terrorists and their organizations; prevent the continued growth of Islamist terrorism; and protect against and prepare for terrorist attacks==.[^1]
 
 ## Key Points
 **Principles**
 - The enemy is not "some generic evil" but Islamist terrorism, especially al-Qaeda, its affiliates, and its ideology.[^2] "Islam is not the enemy".[^1]
-- Long-term success "demands the use of all elements of national power": diplomacy, intelligence, covert action, law enforcement, economic policy, foreign aid, public diplomacy, and homeland defense.[^3]
-- Goals need concrete objectives that reasonable observers can judge.[^4] Al-Qaeda was capable but "fragile, dependent on a few key personalities",[^4] and no president can promise that another 9/11 will not happen.[^5]
+- Long-term success "demands the use of all elements of national power": diplomacy, intelligence, [[Covert Action|covert action]], law enforcement, economic policy, foreign aid, public diplomacy, and homeland defense.[^3]
+- Goals need concrete objectives that reasonable observers can judge.[^4] Al-Qaeda was capable but "fragile, dependent on a few key personalities",[^4] and no president can promise that another [[September 11 Attacks (2001)|9/11]] will not happen.[^5]
 
 **1. Attack terrorists and their organizations**
 - Identify and prioritize [[Terrorist Sanctuary|terrorist sanctuaries]], with long-term commitments to Pakistan and Afghanistan and an open reckoning with Saudi Arabia.[^6] For why sanctuary matters, see [[Requirements for a Complex Terrorist Operation]].

@@ -19,7 +19,7 @@ verified_on:
 
 ## Key Points
 **In SAIL's history of AI**
-- RL is a step in SAIL's progression: statistics → machine learning → deep learning → reinforcement learning → generative AI → agentic AI.[^1]
+- RL is a step in SAIL's progression: statistics → machine learning → deep learning → reinforcement learning → [[Generative AI|generative AI]] → [[Agentic AI|agentic AI]].[^1]
 - It was one of three breakthroughs, with CNNs and GPUs, that unlocked [[Deep Learning|deep learning]] around 2012: a system learning through pure trial and error rather than trained datasets.[^2]
 - AlphaGo (2016) combined deep learning, to recognize board patterns, with RL, to improve through self-play and rewards.[^2]
 

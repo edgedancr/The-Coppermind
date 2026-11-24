@@ -25,14 +25,14 @@ verified_on:
 
 **Lowenthal's definition:** the capability to forecast changes, positive or negative, in time to do something about them; information collected, analyzed, and narrowed to meet the defined needs of users such as policy, military, law enforcement, and diplomatic. All intelligence is information, but not all information is intelligence.[^9]
 **Johnston's working definition:** "Intelligence is secret state or group activity to understand or influence foreign or domestic entities," adapted from Michael Warner's to include nonstate and domestic activity.[^10]
-**Who it serves:** customers include law enforcement and policymakers.[^3] The national security strategy is the *supported* strategy, and the national intelligence strategy is the *supporting* one.[^3]
+**Who it serves:** customers include law enforcement and policymakers.[^3] The national security strategy is the *supported* strategy, and the [[National Intelligence Strategy|national intelligence strategy]] is the *supporting* one.[^3]
 
 **Qualities of good intelligence**:[^11] timely, tailored, concise, validated, digestible, and stating what is known and what is not. Lowenthal's version: intelligence that helps decision makers make good decisions, being timely, tailored, and digestible, with knowns and unknowns clearly stated.[^12]
 
 **Related terms:** [[All-Source Intelligence]], [[Analytic Confidence]], [[Key Judgments]], [[Mirror Imaging]], [[Priority Creep]], [[Indicators of Compromise]], [[Computer Network Exploitation]], [[Computer Network Attack]], [[Metaphors for Intelligence]].
 
 ## Why It Matters
-- Providing actionable intelligence is "an invaluable skill in the IC".[^1]
+- Providing [[Actionable Intelligence|actionable intelligence]] is "an invaluable skill in the IC".[^1]
 - In an Intro to Intelligence guest lecture, CDR Blocker put it this way: "Information shapes decisions. Decisions shape history."[^8]
 - For the course's fuller definition in seven points, see [[Seven-Point Definition of Intelligence]].
 - For how intelligence is produced, see [[Tasking, Collection, Processing, Exploitation, and Dissemination]], [[Information Model]], and [[Levels of Intelligence]].

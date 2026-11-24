@@ -11,23 +11,23 @@ sources:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-19
+verified_on: 2026-11-23
 ---
 > [!summary]
 > Executive Order 12333, signed by President Reagan in 1981, defines the powers, restraints, and structure of the modern U.S. Intelligence Community.[^1] Intro to Intelligence taught it in two parts: definitions and roles, and the parameters that restrain intelligence activity.[^1]
 
 ## Components
-**History:** amended in 2003 after 9/11, in 2004, and again in 2008.[^1]
+**History:** amended in 2003 after [[September 11 Attacks (2001)|9/11]], in 2004, and again in 2008.[^1]
 
 **Definitions (Section 3.5)**[^1]
 - **Foreign intelligence (3.5(e)):** information relating to the capabilities, intentions, or activities of foreign governments, organizations, persons, or international terrorists, regardless of how or where it was collected.
 - **National intelligence (3.5(i)):** all intelligence, from any source, gathered inside or outside the United States, that involves threats to the U.S. or its interests.
 - ==After 9/11, "national intelligence" made all intelligence a shared enterprise==, whether collected at home by the FBI or abroad by the CIA, and demanded full integration to counter transnational threats.
 
-**The Director of National Intelligence (Section 1.3)**[^1]
-- Head of the Intelligence Community and principal adviser to the President, the National Security Council, and the Homeland Security Council.
-- Sets priorities and guidance for the whole IC (1.3(b)(1)); determines requirements, directs the tasking of national collection assets, and resolves conflicts between IC elements (1.3(b)(17)).
-- **Non-abrogation (1.3(c)):** the DNI directs the National Intelligence Program but does not command every agency's day-to-day operations; department heads keep their statutory authority.
+**The [[Director of National Intelligence]] (Section 1.3)**[^1]
+- Head of the Intelligence Community and principal adviser to the President, the [[National Security Council]], and the Homeland Security Council.
+- Sets priorities and guidance for the whole IC (1.3(b)(1)); determines requirements, directs the tasking of national collection assets, and resolves conflicts between [[Intelligence Community Elements and Missions|IC elements]] (1.3(b)(17)).
+- **Non-abrogation (1.3(c)):** the DNI directs the [[National Intelligence Program]] but does not command every agency's day-to-day operations; department heads keep their statutory authority.
 
 **Functional managers**:[^1] the CIA Director for human intelligence (1.3(b)(12)(A)(ii)), the NSA Director for signals intelligence (1.3(b)(12)(A)(i)), and the NGA Director for geospatial intelligence. A functional manager advises the DNI on resources and collection gaps and sets the standards for training, tradecraft, and technical architecture across the IC (1.3(b)(12)(A)(iii)).
 
@@ -42,7 +42,7 @@ verified_on: 2026-11-19
 
 ## Limits and Cautions
 - Together, 2.12 and 2.13 stop the IC from outsourcing illegal acts to proxies and keep foreign covert influence from feeding back into domestic politics.[^1]
-- The 9/11 Commission reports that the Clinton administration held killing a person posing an imminent threat to be self-defense, "not an assassination";[^2] in August 2001 the Deputies Committee took the same view of an armed Predator strike on Bin Ladin.[^3] See [[Covert Action Authorities Against Bin Ladin]].
+- The 9/11 Commission reports that the Clinton administration held killing a person posing an imminent threat to be self-defense, "not an assassination";[^2] in August 2001 the Deputies Committee took the same view of an [[Predator Drone|armed Predator]] strike on [[Usama Bin Ladin|Bin Ladin]].[^3] See [[Covert Action Authorities Against Bin Ladin]].
 
 ## Footnotes
 [^1]: [[Intro to Intelligence Class Notes (Fall 2026)#9/10/26|Intro notes, 9/10/26]]

@@ -10,7 +10,7 @@ drafted_on: 2026-11-11
 verified_on:
 ---
 > [!summary]
-> Intro to Intelligence distinguished two kinds of intelligence question: **puzzles**, which can in principle be answered, and **mysteries**, which cannot be answered with certainty and must be inferred.[^1] The course taught it under the heading "Connecting the Dots," with the warning that ==dots can be exactly the same but have completely different implications based on context==.[^1]
+> Intro to Intelligence distinguished two kinds of intelligence question: **puzzles**, which can in principle be answered, and **mysteries**, which cannot be answered with certainty and must be inferred.[^1] The course taught it under the heading "[[Metaphors for Intelligence|Connecting the Dots]]," with the warning that ==dots can be exactly the same but have completely different implications based on context==.[^1]
 
 ## Components
 | | Puzzles | Mysteries |

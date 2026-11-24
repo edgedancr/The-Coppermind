@@ -16,7 +16,7 @@ Eight researchers, most at Google Brain and Google Research, propose the [[Trans
 - Multi-head attention runs eight attention functions in parallel, each attending to different information.[^4]
 - Because there is no recurrence, [[Positional Encoding|positional encodings]] tell the model the order of words.[^5]
 - The base model trained in 12 hours on eight GPUs.[^6]
-- Individual attention heads appear to learn different tasks, some related to sentence structure.[^7]
+- Individual [[Attention Head|attention heads]] appear to learn different tasks, some related to sentence structure.[^7]
 
 ## Themes
 - Parallelism as the key to scale.

@@ -24,10 +24,10 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on: 2026-11-19
+verified_on: 2026-11-23
 ---
 > [!summary]
-> ICD 203 is the [[Intelligence Community Directive]] that sets the IC Analytic Standards, which "govern the production and evaluation of analytic products".[^1] DNI James Clapper signed the current version in January 2015.[^2] ==All IC analytic products "shall be consistent with" five analytic standards, the fifth of which contains nine analytic tradecraft standards==.[^3]
+> ICD 203 is the [[Intelligence Community Directive]] that sets the IC Analytic Standards, which "govern the production and evaluation of analytic products".[^1] [[Director of National Intelligence|DNI]] James Clapper signed the current version in January 2015.[^2] ==All IC analytic products "shall be consistent with" five analytic standards, the fifth of which contains nine analytic tradecraft standards==.[^3]
 
 ## Key Points
 **The five analytic standards**[^4]

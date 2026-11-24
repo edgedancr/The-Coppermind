@@ -22,7 +22,7 @@ verified_on:
 
 Source for the table:[^1]
 
-- Examples from class: hallucinations are a program-level risk, and large numbers of people using AI as a therapist or romantic partner is a population-level risk.[^1]
+- Examples from class: [[Hallucination|hallucinations]] are a program-level risk, and large numbers of people using AI as a therapist or romantic partner is a population-level risk.[^1]
 
 ## How to Use It
 1. At each level, ask about both intended and unintended consequences: ==if it works, what will happen? If it doesn't work, what will happen?==[^1]

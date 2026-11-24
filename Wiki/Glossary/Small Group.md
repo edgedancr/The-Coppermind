@@ -19,7 +19,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Small Group:** National Security Advisor Berger's inner circle of principals cleared for the most sensitive counterterrorism matters concerning Bin Ladin; Clarke's Counterterrorism Security Group often reported to it rather than to the full Principals Committee.[^1]
+> **Small Group:** National Security Advisor Berger's inner circle of principals cleared for the most sensitive counterterrorism matters concerning [[Usama Bin Ladin|Bin Ladin]]; Clarke's Counterterrorism Security Group often reported to it rather than to the full Principals Committee.[^1]
 
 **Used in:** none yet; compare [[Principals Committee]], [[Counterterrorism Security Group]]
 

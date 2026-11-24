@@ -11,7 +11,7 @@ drafted_on: 2026-11-11
 verified_on:
 ---
 > [!summary]
-> Cognitive debt is the cost of letting an AI do your thinking first. Discussing "Your Brain on ChatGPT," SAIL taught that LLMs can improve your thinking, but only after you have already given a problem your full thought; relying on them first builds a cognitive debt that reduces your capacity to think on your own.[^1]
+> Cognitive debt is the cost of letting an AI do your thinking first. Discussing "Your Brain on ChatGPT," SAIL taught that [[Large Language Model|LLMs]] can improve your thinking, but only after you have already given a problem your full thought; relying on them first builds a cognitive debt that reduces your capacity to think on your own.[^1]
 
 ## Key Points
 - ==We must learn how to think for ourselves.==[^1]

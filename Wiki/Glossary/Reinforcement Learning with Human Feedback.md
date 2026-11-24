@@ -17,7 +17,7 @@ drafted_on: 2026-11-17
 verified_on:
 ---
 > [!summary]
-> **Reinforcement learning with human feedback (RLHF):** training after [[Pre-Training|pre-training]] in which workers flag unhelpful or problematic predictions, and their corrections further change the model's parameters, making it more likely to give predictions users prefer.[^1] 3Blue1Brown calls it just as important as pre-training.[^1]
+> **Reinforcement learning with human feedback (RLHF):** training after [[Pre-Training|pre-training]] in which workers flag unhelpful or problematic predictions, and their corrections further change the model's [[Parameter|parameters]], making it more likely to give predictions users prefer.[^1] 3Blue1Brown calls it just as important as pre-training.[^1]
 
 **Used in:** [[Large Language Model]]
 

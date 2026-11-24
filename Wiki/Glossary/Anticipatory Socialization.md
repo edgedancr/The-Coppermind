@@ -19,10 +19,10 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on: 2026-11-20
+verified_on: 2026-11-23
 ---
 > [!summary]
-> **Anticipatory socialization:** the learning that happens before a recruit enters on duty, the first of Daniel Feldman's three stages of organizational socialization (getting in, breaking in, settling in), as Stephen Konya and Rob Johnston describe it.[^1] Intelligence recruits often form expectations from fictional media, and an intentionally closed system risks culture shock, turnover, and a greater likelihood of [[Groupthink|groupthink]].[^2] They recommend realistic job previews, structured and panel interviews, situational exercises, and degree programs in intelligence analysis.[^3]
+> **Anticipatory socialization:** the learning that happens before a recruit enters on duty, the first of Daniel Feldman's three stages of organizational socialization (getting in, breaking in, settling in), as Stephen Konya and [[Rob Johnston]] describe it.[^1] Intelligence recruits often form expectations from fictional media, and an intentionally closed system risks culture shock, turnover, and a greater likelihood of [[Groupthink|groupthink]].[^2] They recommend realistic job previews, structured and panel interviews, situational exercises, and degree programs in [[Intelligence Analysis|intelligence analysis]].[^3]
 
 **Used in:** [[Johnston's Analytic Culture Recommendations]]
 

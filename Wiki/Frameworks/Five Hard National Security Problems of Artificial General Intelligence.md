@@ -14,7 +14,7 @@ related:
   - "[[Semiconductor Export Controls]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
-verified_on: 2026-11-19
+verified_on: 2026-11-23
 ---
 > [!summary]
 > RAND researchers Jim Mitre and Joel B. Predd propose five hard problems that the possible emergence of [[Artificial General Intelligence|artificial general intelligence]] (AGI) poses for U.S. national security.[^1] They offer them as ==a common language for debating AGI's risks and opportunities, and a rubric for evaluating strategies==, because proposals that advance one problem can undermine or ignore another.[^1] Reach for it when judging whether an AI strategy is built for only one possible future.
@@ -31,7 +31,7 @@ verified_on: 2026-11-19
 ## How to Use It
 1. Test a proposed AI strategy against all five: does progress on one problem come at the cost of another?[^3]
 2. Don't bet on a single future; the authors call any strategy over-optimized for one paradigm "a high-risk proposition".[^2]
-3. The authors' recommendations:[^4] keep "no-regret" options that make sense in any future (STEM education, situational awareness, protecting model weights, and safety research); develop high-regret options and contingency plans before they're needed; and run scenario exercises on post-AGI shifts in military power and the economy.
+3. The authors' recommendations:[^4] keep "no-regret" options that make sense in any future (STEM education, situational awareness, protecting model [[Parameter|weights]], and safety research); develop high-regret options and contingency plans before they're needed; and run scenario exercises on post-AGI shifts in military power and the economy.
 
 ## Limits and Cautions
 - The authors say the problems overlap and may not cover everything policymakers will face.[^3]

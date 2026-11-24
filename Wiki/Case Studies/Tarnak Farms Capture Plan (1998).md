@@ -20,7 +20,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> In 1997–98 the CIA's Counterterrorist Center planned a nighttime raid by Afghan tribals on Tarnak Farms, Bin Ladin's compound near Kandahar, to capture him and fly him out for trial.[^1] The operation was called off in May 1998; the 9/11 Commission found that ==no capture plan before 9/11 "ever again attained the same level of detail and preparation"==.[^2]
+> In 1997–98 the CIA's [[Counterterrorist Center (CIA)|Counterterrorist Center]] planned a nighttime raid by Afghan tribals on Tarnak Farms, [[Usama Bin Ladin|Bin Ladin]]'s compound near Kandahar, to capture him and fly him out for trial.[^1] The operation was called off in May 1998; the 9/11 Commission found that ==no capture plan before [[September 11 Attacks (2001)|9/11]] "ever again attained the same level of detail and preparation"==.[^2]
 
 ## What Happened
 - **The plan:** one group of tribals would subdue the guards and seize Bin Ladin, hand him to a second group, and a CIA plane would fly him to New York, an Arab capital, or wherever he was to be arraigned; it was rehearsed several times.[^3]
@@ -29,7 +29,7 @@ verified_on:
 
 ## What Went Wrong
 - Senior CIA management did not think the plan would work, while working-level officers were disappointed; one called it the "best plan we are going to come up with".[^2]
-- Even the draft authority for the raid surfaced an ingrained unease about paramilitary covert action: a senior operations official thought it had "at least a slight flavor of a plan for an assassination".[^5] See [[Covert Action Authorities Against Bin Ladin]].
+- Even the draft authority for the raid surfaced an ingrained unease about paramilitary [[Covert Action|covert action]]: a senior operations official thought it had "at least a slight flavor of a plan for an assassination".[^5] See [[Covert Action Authorities Against Bin Ladin]].
 
 ## Lessons
 - The Commission's judgment: it was the duty of Tenet and the CIA leadership "to balance the risks of inaction against jeopardizing the lives of their operatives and agents," and they had reason to worry about failure.[^2]

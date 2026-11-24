@@ -9,7 +9,7 @@ drafted_on: 2026-11-19
 verified_on:
 ---
 ## Executive Summary
-Joseph Gartin argues that intelligence analysis stands at an inflection point: decades of accomplishment behind it, and ahead a future shaped by AI, big data, and machine learning.[^1] Much of it still resembles Sherman Kent's day, a matter of reading and writing by very smart, very similar people, whose repeated failures show the limits of that model.[^2] Five drivers have reshaped the profession since then.[^3] He imagines an analyst in 2030 working with a digital assistant that tracks prediction markets, base rates, sources, and her own accuracy.[^4] He closes with five suggestions and his optimism that the IC will adapt.[^5]
+Joseph Gartin argues that [[Intelligence Analysis|intelligence analysis]] stands at an inflection point: decades of accomplishment behind it, and ahead a future shaped by AI, big data, and [[Machine Learning|machine learning]].[^1] Much of it still resembles Sherman Kent's day, a matter of reading and writing by very smart, very similar people, whose repeated failures show the limits of that model.[^2] Five drivers have reshaped the profession since then.[^3] He imagines an analyst in 2030 working with a digital assistant that tracks prediction markets, base rates, sources, and her own accuracy.[^4] He closes with five suggestions and his optimism that the IC will adapt.[^5]
 
 ## Main Points
 - The drivers, the 2030 scenario, and the suggestions: [[Future of Intelligence Analysis]].

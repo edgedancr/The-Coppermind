@@ -34,7 +34,7 @@ verified_on:
 
 **As a strategy**[^5]
 - Mitre and Predd write that a control regime embodying the "small yard, high fence" policy appears to have produced a five-year gap in advanced semiconductors.
-- They warn that leaning on compute for advantage could be brittle if the controls aren't enforced, if China's chip industry catches up, or if AGI proves reachable with less compute.
+- They warn that leaning on compute for advantage could be brittle if the controls aren't enforced, if China's chip industry catches up, or if [[Artificial General Intelligence|AGI]] proves reachable with less compute.
 
 **How far behind is China?** The sources measure differently:
 - CDR Blocker: still 3–5 generations behind in cutting-edge logic manufacturing.[^2]

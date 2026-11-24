@@ -9,10 +9,10 @@ sources:
   - "[[SRC - Themes in US Intelligence, Summary of Texts]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-19
+verified_on: 2026-11-23
 ---
 > [!summary]
-> **Mirror imaging:** assuming your enemy will think and act the same way you would.[^1] Lowenthal calls it one of the most frequent flaws of analysis, leaving no room for different norms or motives. Its opposite is "clientism," or going native.[^2] Treverton ties many intelligence failures to it.[^3]
+> **Mirror imaging:** assuming your enemy will think and act the same way you would.[^1] Lowenthal calls it one of the most frequent flaws of analysis, leaving no room for different norms or motives. Its opposite is "clientism," or going native.[^2] Treverton ties many [[Intelligence Error and Intelligence Failure|intelligence failures]] to it.[^3]
 
 **Used in:** [[Intelligence (National Security)]], [[Politicized Intelligence]]
 

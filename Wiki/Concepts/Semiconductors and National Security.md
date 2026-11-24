@@ -30,7 +30,7 @@ All from CDR Blocker's guest lecture.[^1]
 **Why chips are strategic**
 - Control of chips is control of military and economic power. Cyber risks include hardware backdoors and supply-chain infiltration.
 - The AI revolution is a GPU revolution: the largest models need tens of thousands of GPUs, so access to chips is access to AI progress. U.S. export controls on NVIDIA A100 and H100 GPUs are explicitly about limiting China's AI growth.
-- National security uses: autonomous weapons and target recognition, intelligence analysis at scale (SIGINT, GEOINT, MASINT), and cyber defense automation.
+- National security uses: autonomous weapons and target recognition, [[Intelligence Analysis|intelligence analysis]] at scale (SIGINT, GEOINT, MASINT), and cyber defense automation.
 
 > [!caution] Accuracy check
 > Two lines: Moore's Law as "technology doubles every 10 years" (usually stated as transistor counts doubling about every two years), and Kilby having "founded" Texas Instruments (he worked there; he didn't found it).

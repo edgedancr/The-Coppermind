@@ -19,7 +19,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Muscle hijackers:** the 9/11 operatives who would storm the cockpits and control the passengers; despite the name, most were between 5'5" and 5'7". Twelve of the 13 came from Saudi Arabia and one from the UAE; all were between 20 and 28.[^1]
+> **Muscle hijackers:** the [[September 11 Attacks (2001)|9/11]] operatives who would storm the cockpits and control the passengers; despite the name, most were between 5'5" and 5'7". Twelve of the 13 came from Saudi Arabia and one from the UAE; all were between 20 and 28.[^1]
 
 **Used in:** [[Planes Operation]]
 

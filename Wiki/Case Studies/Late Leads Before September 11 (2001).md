@@ -20,14 +20,14 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> The 9/11 Commission describes several leads in 2001 that could have exposed the plot: two future hijackers, Khalid al Mihdhar and Nawaf al Hazmi, who were already known to the CIA; the Phoenix memo; the arrest of Zacarias Moussaoui; and reporting on Khalid Sheikh Mohammed.[^1] ==No one working these leads "connected the case in his or her in-box to the threat reports"== agitating senior officials.[^2]
+> The 9/11 Commission describes several leads in 2001 that could have exposed the plot: two future hijackers, Khalid al Mihdhar and Nawaf al Hazmi, who were already known to the CIA; the Phoenix memo; the arrest of Zacarias Moussaoui; and reporting on [[Khalid Sheikh Mohammed]].[^1] ==No one working these leads "connected the case in his or her in-box to the threat reports"== agitating senior officials.[^2]
 
 ## What Happened
-- **Khallad (January 2001):** a source identified Khallad, a planner of the USS Cole bombing, in a photo from the January 2000 Kuala Lumpur meeting with Mihdhar; the CIA neither renewed the search for Mihdhar nor told the FBI.[^3]
+- **Khallad (January 2001):** a source identified Khallad, a planner of the [[USS Cole Bombing (2000)|USS Cole bombing]], in a photo from the January 2000 Kuala Lumpur meeting with Mihdhar; the CIA neither renewed the search for Mihdhar nor told the FBI.[^3]
 - **New York meeting (June 2001):** an FBI analyst showed Cole agents photos from Kuala Lumpur but would not share NSA reports because of their caveats, and a CIA analyst who knew of Mihdhar's U.S. visa was not asked and did not volunteer it.[^4] Mihdhar received a new visa two days later and flew to New York on July 4.[^5]
 - **The search (August 2001):** Mihdhar and Hazmi were added to the [[TIPOFF Watchlist|TIPOFF watchlist]] on August 24, but the FBI lead was marked "Routine," criminal agents were kept off the search because of [[The Wall (FBI)|"the wall"]], and it went to one agent on his first counterterrorism lead.[^6]
-- **The [[Phoenix Memo]] (July 2001)** went unread by headquarters managers before 9/11.[^7]
-- **Moussaoui (August 2001):** arrested on an immigration violation after seeking 747 simulator training, but FBI headquarters judged there was not enough to seek a FISA warrant to search his belongings.[^8] KSM says Moussaoui was meant for a "second wave"; the Commission suspects he was being primed as a possible pilot in the planes operation itself.[^9]
+- **The [[Phoenix Memo]] (July 2001)** went unread by headquarters managers before [[September 11 Attacks (2001)|9/11]].[^7]
+- **Moussaoui (August 2001):** arrested on an immigration violation after seeking 747 simulator training, but FBI headquarters judged there was not enough to seek a FISA warrant to search his belongings.[^8] KSM says Moussaoui was meant for a "second wave"; the Commission suspects he was being primed as a possible pilot in the [[Planes Operation|planes operation]] itself.[^9]
 - **KSM:** the CIA did not connect reporting that "Mukhtar" was planning attacks with an August 28 cable giving that as KSM's nickname.[^10]
 
 ## What Went Wrong

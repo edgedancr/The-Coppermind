@@ -10,10 +10,10 @@ sources:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-19
+verified_on: 2026-11-23
 ---
 > [!summary]
-> **Bach faucet:** a derogatory term for generative AI that can be "turned on and off" to generate art and creative works, devaluing the original.[^1]
+> **Bach faucet:** a derogatory term for [[Generative AI|generative AI]] that can be "turned on and off" to generate art and creative works, devaluing the original.[^1]
 
 **Used in:** [[Artificial Intelligence]]
 

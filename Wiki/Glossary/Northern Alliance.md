@@ -19,7 +19,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Northern Alliance:** the anti-Taliban forces in northeastern Afghanistan led by Ahmed Shah Massoud, perhaps the CIA's best capture option in 1999, though by December the CIA rated the chance he would act against Bin Ladin at under 15 percent.[^1] Massoud was assassinated by al-Qaeda operatives disguised as journalists on September 9, 2001.[^2]
+> **Northern Alliance:** the anti-Taliban forces in northeastern Afghanistan led by Ahmed Shah Massoud, perhaps the CIA's best capture option in 1999, though by December the CIA rated the chance he would act against [[Usama Bin Ladin|Bin Ladin]] at under 15 percent.[^1] Massoud was assassinated by [[Al-Qaeda|al-Qaeda]] operatives disguised as journalists on September 9, 2001.[^2]
 
 **Used in:** [[The Plan (CIA)]]
 

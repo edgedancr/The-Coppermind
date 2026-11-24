@@ -20,7 +20,7 @@ related:
   - "[[Prompt Engineering]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-21
+verified_on: 2026-11-23
 ---
 > [!summary]
 > Agentic AI is AI that has access to external tools.[^1] It is the latest step in SAIL's progression of AI,[^2] and SAIL warned that ==access to external tools increases emergent behavior and risk==.[^1]
@@ -28,7 +28,7 @@ verified_on: 2026-11-21
 ## Key Points
 - With tool use, the model is not just a chatbot; it is an operating system that can call tools to solve problems.[^3]
 - **IBM's account:** agentic systems are proactive rather than reactive. They often start from a prompt but use it to pursue goals through a series of actions, in a cycle of perceiving the environment, deciding on an action, executing it, and learning from the result, "all with minimal human intervention".[^4] See [[Generative vs. Agentic AI]].
-- **The reasoning engine:** large language models provide the reasoning engine for agentic systems,[^5] through [[Chain-of-Thought Reasoning|chain-of-thought reasoning]].[^6]
+- **The reasoning engine:** [[Large Language Model|large language models]] provide the reasoning engine for agentic systems,[^5] through [[Chain-of-Thought Reasoning|chain-of-thought reasoning]].[^6]
 - **Example:** a personal shopping agent searches platforms for a product, monitors prices, handles checkout, and coordinates delivery, largely by itself, seeking input only when needed.[^7]
 - AI agents at work are on the near horizon.[^1]
 - OWASP calls the vulnerability that lets an LLM's unexpected or manipulated output trigger damaging actions [[Excessive Agency]], caused by excessive functionality, permissions, or autonomy.[^8] It treats the model as a component; once the model becomes an actor, with tools it can call, memory it carries between sessions, and downstream consequences, the risk moves to the OWASP Top 10 for Agentic Applications.[^9]

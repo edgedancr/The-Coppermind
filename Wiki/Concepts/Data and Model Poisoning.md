@@ -23,11 +23,11 @@ verified_on:
 
 ## Key Points
 - **Intentional or accidental:** malicious poisoning, or poor data hygiene and contaminated sources.[^1]
-- **Where it happens**:[^1] pre-training corpora, fine-tuning datasets, stored [[Embedding|embeddings]], reused models (transfer learning), and continuous-learning pipelines that ingest data automatically.
+- **Where it happens**:[^1] [[Pre-Training|pre-training]] corpora, [[Fine-Tuning|fine-tuning]] datasets, stored [[Embedding|embeddings]], reused models (transfer learning), and continuous-learning pipelines that ingest data automatically.
 - **Backdoors and "sleeper agents":** shared model files can carry malicious code or tampered settings, and a backdoor may leave behavior untouched until a trigger changes it.[^2]
-- **Small amounts are enough:** OWASP cites research finding that as few as 250 poisoned documents compromised models from 600 million to 13 billion parameters, regardless of dataset size.[^2]
+- **Small amounts are enough:** OWASP cites research finding that as few as 250 poisoned documents compromised models from 600 million to 13 billion [[Parameter|parameters]], regardless of dataset size.[^2]
 - **Examples**:[^3] mislabeled transactions that teach a fraud model to ignore fraud; trigger phrases planted in a widely used open dataset; hidden web instructions that poison an AI's memory; and minimal poisoning of medical training data that still passes standard evaluations.
-- **Mitigations**:[^4] track data and model lineage and sign artifacts; validate incoming data and vet vendors; sandbox; watch for anomalies; keep datasets under version control; require human oversight of automated retraining; and red-team for hidden triggers after every alignment cycle, because safety alignment does not remove backdoors.
+- **Mitigations**:[^4] track data and model lineage and sign artifacts; validate incoming data and vet vendors; sandbox; watch for anomalies; keep datasets under version control; require human oversight of automated retraining; and red-team for hidden triggers after every [[AI Alignment|alignment]] cycle, because safety alignment does not remove backdoors.
 
 ## Why It Matters
 - SAIL warned that U.S. military systems remain vulnerable to data poisoning, sensor spoofing, and model manipulation.[^5] See [[AI in Warfighting]].

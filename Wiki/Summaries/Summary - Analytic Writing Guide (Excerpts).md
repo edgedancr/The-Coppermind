@@ -9,7 +9,7 @@ drafted_on: 2026-11-19
 verified_on:
 ---
 ## Executive Summary
-Louis Kaiser and Randolph Pherson's guide treats analytic writing as a step-by-step process. A paper's direction comes from five focal questions, taken in order: what has changed, why now, the impact so far, the outlook, and the implications for the reader.[^1] A detailed outline down to the paragraph level is part of the thinking, not only the writing.[^2] Each paragraph rests on a topic sentence that makes an analytic judgment, supported by two to four pieces of evidence.[^3] Refining the draft means checking each paragraph's coherence, cutting words, and reviewing the whole as the reader would.[^4]
+Louis Kaiser and Randolph Pherson's guide treats analytic writing as a step-by-step process. A paper's direction comes from five focal questions, taken in order: what has changed, why now, the impact so far, the outlook, and the implications for the reader.[^1] A detailed outline down to the paragraph level is part of the thinking, not only the writing.[^2] Each paragraph rests on a [[Topic Sentence|topic sentence]] that makes an analytic judgment, supported by two to four pieces of evidence.[^3] Refining the draft means checking each paragraph's coherence, cutting words, and reviewing the whole as the reader would.[^4]
 
 ## Main Points
 - The five focal questions: [[Analytic Line of March]].[^5]

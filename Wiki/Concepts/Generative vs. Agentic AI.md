@@ -36,7 +36,7 @@ verified_on:
 
 ## Why It Matters
 - The video predicts that the most powerful systems won't be purely one or the other, but "intelligent collaborators" that know when to explore options through generation and when to commit to action,[^4].[^6]
-- SAIL's progression of AI places generative AI just before agentic AI,[^7] and SAIL warned that access to external tools increases emergent behavior and risk.[^8]
+- SAIL's progression of AI places generative AI just before agentic AI,[^7] and SAIL warned that access to external tools increases [[Emergent Behavior|emergent behavior]] and risk.[^8]
 
 ## Footnotes
 [^1]: [[IBM Technology - Generative vs Agentic AI (transcript)|IBM, generative vs. agentic, ch. 1]]

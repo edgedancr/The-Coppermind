@@ -19,7 +19,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Tyranny of the ad hocs:** the way surprise issues get placed at a higher priority, diverting attention from work already in progress; a special national intelligence estimate (SNIE) is one example.[^1]
+> **Tyranny of the ad hocs:** the way surprise issues get placed at a higher priority, diverting attention from work already in progress; a special [[National Intelligence Estimate|national intelligence estimate]] (SNIE) is one example.[^1]
 
 **Used in:** [[National Intelligence Priorities Framework]]; compare [[Priority Creep]], [[Collection Swarm Ball]]
 

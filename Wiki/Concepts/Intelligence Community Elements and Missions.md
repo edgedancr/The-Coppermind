@@ -18,10 +18,10 @@ drafted_on: 2026-11-17
 verified_on:
 ---
 > [!summary]
-> Intro to Intelligence's handout on IC organizations lists the Office of the Director of National Intelligence (ODNI) and the 17 other members of the U.S. Intelligence Community, in three groups, with each one's core mission.[^1] Some members are **functional managers**, which, under Executive Order 12333, ==set strategy, training, and tradecraft standards for one intelligence discipline across the whole community==.[^2]
+> Intro to Intelligence's handout on IC organizations lists the Office of the [[Director of National Intelligence]] (ODNI) and the 17 other members of the U.S. Intelligence Community, in three groups, with each one's core mission.[^1] Some members are **functional managers**, which, under Executive Order 12333, ==set strategy, training, and tradecraft standards for one intelligence discipline across the whole community==.[^2]
 
 ## Key Points
-**ODNI** oversees and leads integration in the IC, is the principal intelligence adviser to the President, the National Security Council, and the Homeland Security Council, and directs the National Intelligence Program (EO 12333, sec. 1.3).[^1]
+**ODNI** oversees and leads integration in the IC, is the principal intelligence adviser to the President, the [[National Security Council]], and the Homeland Security Council, and directs the [[National Intelligence Program]] (EO 12333, sec. 1.3).[^1]
 
 **Program managers**[^1]
 - **CIA:** functional manager for HUMINT; all-source intelligence for the President and NSC; special activities as the President directs.
@@ -29,7 +29,7 @@ verified_on:
 - **NSA:** functional manager for SIGINT; protects the nation's information systems and collects foreign SIGINT.
 - **NGA:** functional manager for GEOINT; a Defense combat support agency providing information about the Earth.
 - **NRO:** the "eyes and ears" in space; builds and operates space-based reconnaissance (GEOINT and SIGINT).
-- **FBI:** head of U.S. counterintelligence; focuses on terrorists, foreign intelligence services, WMD proliferators, and criminal enterprises.
+- **FBI:** head of U.S. [[Counterintelligence|counterintelligence]]; focuses on terrorists, foreign intelligence services, WMD proliferators, and criminal enterprises.
 
 **Departmental organizations**[^1]
 - **DEA:** drug-related information from its enforcement work.
@@ -40,7 +40,7 @@ verified_on:
 
 **Military service organizations:** Air Force, Army, Navy, Marine Corps, Coast Guard, and Space Force intelligence, each supporting its service's missions; the Coast Guard also supports law enforcement, and the Space Force also serves as a service cryptologic component to NSA and a service cyber component to U.S. Cyber Command.[^1]
 
-**All-source producers:** the CIA's Directorate of Intelligence, DIA's, and State's INR serve specific policymakers and work together most often on National Intelligence Estimates.[^3] See [[Redundant Analytic Structure]].
+**All-source producers:** the CIA's Directorate of Intelligence, DIA's, and State's INR serve specific policymakers and work together most often on [[National Intelligence Estimate|National Intelligence Estimates]].[^3] See [[Redundant Analytic Structure]].
 
 ## Why It Matters
 - Thomas Fingar notes that implied status differences between collectors and analysts ("blue-collar versus white-collar") sometimes kept analysts and whole agencies from certain information and from combining insights across disciplines.[^2] See [[All-Source Intelligence]].

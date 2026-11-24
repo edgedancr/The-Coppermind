@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - Emerging Behaviors
   - Emergent Risk
@@ -13,7 +13,7 @@ related:
   - "[[ODNI AI Ethics Framework]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
+verified_on: 2026-11-23
 ---
 > [!summary]
 > Emergent behavior is behavior an AI system shows that its developers did not design and cannot fully predict. SAIL used it to answer the misconception that "AI is just a tool": developers do not fully understand how models reach some outputs and cannot predict all failure modes, so ==AI is a system with emerging behaviors==.[^1]
@@ -21,7 +21,7 @@ verified_on: 2026-11-11
 ## Key Points
 - Giving AI access to external tools increases emergent behavior and risk.[^2] See [[Agentic AI]].
 - The [[Bing Sydney Incident (2023)]] showed emergent risk in sustained human–AI interaction: problems surfaced in extended conversations that short tests missed.[^3]
-- No one knows exactly why a model's parameters work as well as they do, and AI cannot be reverse engineered.[^4]
+- No one knows exactly why a model's [[Parameter|parameters]] work as well as they do, and AI cannot be reverse engineered.[^4]
 - 3Blue1Brown makes the same point about large language models: researchers design the framework, but the specific behavior is "an emergent phenomenon" of how hundreds of billions of parameters are tuned in training, which makes it "incredibly challenging" to determine why a model predicts what it does.[^5] See [[Large Language Model]].
 
 ## Footnotes

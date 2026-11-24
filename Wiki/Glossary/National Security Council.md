@@ -19,7 +19,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **National Security Council (NSC):** in the course's summary of Lowenthal, the President, the Vice President, the Secretaries of Energy, Defense, and State, and the chairman of the Joint Chiefs of Staff, with the Director of National Intelligence as a subordinate intelligence adviser. It advises the President and helps carry out the President's security priorities.[^1] The 9/11 Commission recommended merging the Homeland Security Council into a single NSC, where interagency policy disputes would stay.[^2]
+> **National Security Council (NSC):** in the course's summary of Lowenthal, the President, the Vice President, the Secretaries of Energy, Defense, and State, and the chairman of the Joint Chiefs of Staff, with the [[Director of National Intelligence]] as a subordinate intelligence adviser. It advises the President and helps carry out the President's security priorities.[^1] The 9/11 Commission recommended merging the Homeland Security Council into a single NSC, where interagency policy disputes would stay.[^2]
 
 > [!caution] Accuracy check
 > The chairman of the Joint Chiefs is usually described as the NSC's statutory military adviser, not a member, just as the DNI is its intelligence adviser. Check Lowenthal's list.

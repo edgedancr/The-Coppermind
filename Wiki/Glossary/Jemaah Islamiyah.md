@@ -19,7 +19,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Jemaah Islamiyah (JI):** a Southeast Asian terrorist organization that by 1998 had allied with al-Qaeda; under the arrangement, JI did casing and found materials, while al-Qaeda paid for operations, provided bomb-making expertise, and supplied suicide operatives. Its coordinator, Hambali, helped future 9/11 hijackers passing through Kuala Lumpur in January 2000.[^1]
+> **Jemaah Islamiyah (JI):** a Southeast Asian terrorist organization that by 1998 had allied with al-Qaeda; under the arrangement, JI did casing and found materials, while al-Qaeda paid for operations, provided bomb-making expertise, and supplied suicide operatives. Its coordinator, Hambali, helped future [[September 11 Attacks (2001)|9/11]] hijackers passing through Kuala Lumpur in January 2000.[^1]
 
 **Used in:** none yet; compare [[Al-Qaeda]], [[Terrorist Entrepreneur]]
 

@@ -18,11 +18,11 @@ drafted_on: 2026-11-17
 verified_on:
 ---
 > [!summary]
-> Continual learning is learning during an agent's normal interaction with the world, rather than in a separate training phase before deployment.[^1] Dwarkesh Patel's summary of [[Richard Sutton]]'s view: ==LLMs can't learn on the job, so no amount of scaling will be enough==; a new architecture will be needed, after which agents will learn on the fly "like all humans, and indeed, like all animals".[^2]
+> Continual learning is learning during an agent's normal interaction with the world, rather than in a separate training phase before deployment.[^1] Dwarkesh Patel's summary of [[Richard Sutton]]'s view: ==[[Large Language Model|LLMs]] can't learn on the job, so no amount of scaling will be enough==; a new architecture will be needed, after which agents will learn on the fly "like all humans, and indeed, like all animals".[^2]
 
 ## Key Points
 - **The experiential paradigm:** Sutton describes life as a stream of sensation, action, and reward; intelligence alters actions to increase the rewards, and knowledge is about the stream, so it can be tested against the stream and learned continually.[^3]
-- **Weights, not context:** Patel asks how an agent would hold all the context a new employee picks up. Sutton answers that in LLMs that information has to go into the context window, but in continual learning "it just goes into the weights".[^3]
+- **Weights, not context:** Patel asks how an agent would hold all the context a new employee picks up. Sutton answers that in LLMs that information has to go into the context window, but in continual learning "it just goes into the [[Parameter|weights]]".[^3]
 - **The big world hypothesis:** people become useful on the job because they meet their own part of the world, which "can't all have been put in in advance." Sutton calls the LLM dream that "you can teach the agent everything" in advance mistaken for this reason.[^3]
 - **Learning from more than reward:** agents learn from all their sensations, not just the reward signal.[^3]
 - **What mammals have and AI lacks:** Patel notes that all mammals can learn continually but AI can't, while AI can solve hard math problems almost no animal can; Sutton names this Moravec's paradox.[^4]

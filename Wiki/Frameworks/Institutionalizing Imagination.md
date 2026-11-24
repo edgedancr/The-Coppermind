@@ -20,10 +20,10 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on: 2026-11-19
+verified_on: 2026-11-23
 ---
 > [!summary]
-> The 9/11 Commission argued that because "imagination is not a gift usually associated with bureaucracies," government must find a way of "routinizing, even bureaucratizing, the exercise of imagination".[^1] It found that the warning methods the Intelligence Community had developed since Pearl Harbor ==did not fail against al-Qaeda: "they were not really tried"==.[^2]
+> The 9/11 Commission argued that because "imagination is not a gift usually associated with bureaucracies," government must find a way of "routinizing, even bureaucratizing, the exercise of imagination".[^1] It found that the warning methods the [[United States Intelligence Community|Intelligence Community]] had developed since Pearl Harbor ==did not fail against [[Al-Qaeda|al-Qaeda]]: "they were not really tried"==.[^2]
 
 ## Components
 **The four common elements** of methods for avoiding surprise attack[^3]
@@ -39,7 +39,7 @@ verified_on: 2026-11-19
 4. No one analyzed systemic defenses within or against aircraft; the FAA reacted only to specific, credible threats.
 
 ## How to Use It
-- The scenario was "imaginable, and imagined":[^5] a 1999 FAA intelligence paper named a "suicide hijacking operation" but judged it unlikely,[^5] and NORAD set aside an exercise of a hijacked airliner hitting the Pentagon as "too unrealistic".[^3]
+- The scenario was "imaginable, and imagined":[^5] a 1999 FAA intelligence paper named a "suicide hijacking operation" but judged it unlikely,[^5] and [[North American Aerospace Defense Command|NORAD]] set aside an exercise of a hijacked airliner hitting the Pentagon as "too unrealistic".[^3]
 - The Commission's challenge: "flesh out and test those scenarios, then figure out a way to turn a scenario into constructive action".[^3]
 
 ## Limits and Cautions

@@ -13,7 +13,7 @@ related:
   - "[[Seven Tribes of Intelligence]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-19
+verified_on: 2026-11-23
 ---
 > [!summary]
 > In an Intro to Intelligence guest lecture, Detective Mennen, an NYPD intelligence detective, described intelligence-led policing, in which ==intelligence is part of the operational cycle, "not a packet handed off after the fact"==.[^1] A later lecture contrasted the two cultures involved: law enforcement, built around prosecution, and the IC, built around prevention.[^2]
@@ -39,7 +39,7 @@ verified_on: 2026-11-19
 
 | | Prosecution | Prevention |
 |---|---|---|
-| **Culture** | Law enforcement | Intelligence Community |
+| **Culture** | Law enforcement | [[United States Intelligence Community\|Intelligence Community]] |
 | **Focus** | Action: identify, apprehend, and prosecute offenders | Analysis: anticipate, assess, and mitigate threats |
 | **Primary goal** | Public safety and justice | National security and strategic foresight |
 

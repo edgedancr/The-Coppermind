@@ -34,7 +34,7 @@ The Commission's findings:
 - **Iraq:** a September 18 memo from Clarke's office found no "compelling case" that Iraq had planned or perpetrated the attacks, citing only anecdotal evidence.[^7] President Bush told journalist Bob Woodward that the decision not to invade Iraq was made on September 15, with Afghanistan as the priority.[^8]
 
 ## Lessons
-- On the alleged Prague meeting cited in the Iraq debate, see [[Alleged Atta-Ani Meeting in Prague (2001)]]; on al-Qaeda's contacts with Iraq before 9/11, see [[Al-Qaeda]].
+- On the alleged Prague meeting cited in the Iraq debate, see [[Alleged Atta-Ani Meeting in Prague (2001)]]; on al-Qaeda's contacts with Iraq before [[September 11 Attacks (2001)|9/11]], see [[Al-Qaeda]].
 
 ## Footnotes
 [^1]: [[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=344|9/11 Report, pp. 327–336]]

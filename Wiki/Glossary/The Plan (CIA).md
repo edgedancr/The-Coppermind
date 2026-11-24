@@ -19,7 +19,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **The Plan:** the CIA's new Bin Ladin strategy, unveiled by DCI Tenet in fall 1999: continued disruption and rendition operations worldwide, hiring and training better counterterrorism officers, recruiting more assets and penetrating al-Qaeda, closing gaps in technical collection, and more contact with the Northern Alliance.[^1] By the end of 1999, no capture option under it was rated above a 15 percent chance of success.[^2]
+> **The Plan:** the CIA's new [[Usama Bin Ladin|Bin Ladin]] strategy, unveiled by DCI Tenet in fall 1999: continued disruption and rendition operations worldwide, hiring and training better counterterrorism officers, recruiting more assets and penetrating [[Al-Qaeda|al-Qaeda]], closing gaps in technical collection, and more contact with the [[Northern Alliance]].[^1] By the end of 1999, no capture option under it was rated above a 15 percent chance of success.[^2]
 
 **Used in:** [[September 11 Attacks (2001)]]; compare [[Delenda Plan]]
 

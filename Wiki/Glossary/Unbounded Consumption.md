@@ -15,7 +15,7 @@ drafted_on: 2026-11-14
 verified_on:
 ---
 > [!summary]
-> **Unbounded consumption:** when an LLM application allows excessive, uncontrolled inference, letting attackers disrupt service, inflict unsustainable costs, or steal intellectual property by cloning the model.[^1] Its defining trait is cost asymmetry: attackers trigger expensive computation at negligible cost to themselves.[^1] **Denial of wallet** is the variant that exploits pay-per-use pricing to run up costs the provider can't sustain.[^1]
+> **Unbounded consumption:** when an [[Large Language Model|LLM]] application allows excessive, uncontrolled inference, letting attackers disrupt service, inflict unsustainable costs, or steal intellectual property by cloning the model.[^1] Its defining trait is cost asymmetry: attackers trigger expensive computation at negligible cost to themselves.[^1] **Denial of wallet** is the variant that exploits pay-per-use pricing to run up costs the provider can't sustain.[^1]
 
 **Used in:** [[OWASP Top 10 for Large Language Model Applications]]
 

@@ -12,7 +12,7 @@ drafted_on: 2026-11-17
 verified_on:
 ---
 ## Executive Summary
-In a TED talk, computer scientist [[Yoshua Bengio]] warns of potentially catastrophic risks from AI.[^1] He says ChatGPT showed in 2023 that AI was advancing faster than he expected, and that there is still no way to make sure it won't turn against us.[^2] His greatest worry is AI's growing agency: the length of tasks AI can complete is doubling every seven months.[^3] He describes studies in which advanced models showed deception, cheating, and self-preservation, including one that lied to avoid being shut down.[^4] He argues commercial pressure is driving agency forward without scientific answers or regulation.[^5] His proposed path is [[Scientist AI]], a non-agentic system that could serve as a guardrail on AI agents.[^6]
+In a TED talk, computer scientist [[Yoshua Bengio]] warns of potentially catastrophic risks from AI.[^1] He says ChatGPT showed in 2023 that AI was advancing faster than he expected, and that there is still no way to make sure it won't turn against us.[^2] His greatest worry is AI's growing agency: the length of tasks AI can complete is doubling every seven months.[^3] He describes studies in which advanced models showed deception, cheating, and self-preservation, including one that lied to avoid being shut down.[^4] He argues commercial pressure is driving agency forward without scientific answers or regulation.[^5] His proposed path is [[Scientist AI]], a non-agentic system that could serve as a guardrail on [[Agentic AI|AI agents]].[^6]
 
 ## Main Points
 - He signed the "Pause" letter and a statement that mitigating the risk of extinction from AI should be a global priority.[^7]

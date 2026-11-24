@@ -22,7 +22,7 @@ verified_on:
 - **Examples:** convolutional neural networks (CNNs) for images; [[Recurrent Neural Network|RNNs]] and [[Transformer|transformers]] for text.[^1]
 
 **Milestones**[^1]
-- **ImageNet competition (2012), "the Big Bang of modern AI":** deep learning was unlocked by combined breakthroughs in CNNs (specialized networks tailored to kinds of pattern recognition), GPUs (making training on very large datasets feasible), and reinforcement learning.
+- **ImageNet competition (2012), "the Big Bang of modern AI":** deep learning was unlocked by combined breakthroughs in CNNs (specialized networks tailored to kinds of pattern recognition), GPUs (making training on very large datasets feasible), and [[Reinforcement Learning|reinforcement learning]].
 - **AlphaGo (2016), "when AI learned strategy":** Go has more positions than atoms in the universe (2.08 × 10¹⁷⁰). AlphaGo won by combining deep learning (recognizing patterns in board positions) with reinforcement learning (improving through self-play and rewards). It showed AI could learn something close to strategic intuition, not just rules, and adapt to a player's moves, demonstrating the power of learning representations plus learning actions.
 
 > [!caution] Accuracy check

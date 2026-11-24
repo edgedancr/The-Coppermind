@@ -18,7 +18,7 @@ drafted_on: 2026-11-17
 verified_on:
 ---
 > [!summary]
-> **World model:** in [[Richard Sutton]]'s terms, a model that lets an agent predict what will happen, including the consequences of its own actions; he calls it the "transition model of the world," one of an agent's four parts, learned from everything the agent senses,[^1].[^2] Sabine Hossenfelder names world models as one step toward the abstract reasoning she thinks current AI lacks.[^3] Yann LeCun, as [[John Lennox]] reports, argues that LLMs will never bring AGI and that "what we need is an AI system developed to model the physical world."[^4]
+> **World model:** in [[Richard Sutton]]'s terms, a model that lets an agent predict what will happen, including the consequences of its own actions; he calls it the "transition model of the world," one of an agent's four parts, learned from everything the agent senses,[^1].[^2] Sabine Hossenfelder names world models as one step toward the abstract reasoning she thinks current AI lacks.[^3] Yann LeCun, as [[John Lennox]] reports, argues that [[Large Language Model|LLMs]] will never bring [[Artificial General Intelligence|AGI]] and that "what we need is an AI system developed to model the physical world."[^4]
 
 > [!caution] Sources disagree
 > Patel: LLMs "seem to have very robust world models," the best AI has made.[^1] vs. Sutton: they predict what a person would say, not what will happen, so they mimic things that have world models rather than having one.[^1]

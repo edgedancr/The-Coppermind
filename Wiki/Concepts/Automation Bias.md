@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - Oval Office Vulnerability
 courses:
@@ -12,15 +12,15 @@ related:
   - "[[Human Decision Point]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
+verified_on: 2026-11-23
 ---
 > [!summary]
 > Automation bias is the tendency to over-trust confident AI outputs.[^1] SAIL called it the core risk of policymaking under AI: at the decision stage, ==confident AI outputs are often mistaken for verified intelligence==, a weakness SAIL called the "Oval Office vulnerability".[^1]
 
 ## Key Points
 - AI-generated assessments are now reaching the highest levels of decision-making.[^1]
-- An open question from class: if the President's Daily Brief contains AI-assisted analysis, should the President know?[^1]
-- The OWASP Top 10 for LLM applications calls the same tendency **overreliance**: humans and systems often treat fluent, confident, or well-structured outputs as authoritative, and in agentic systems this overreliance is often built into the design.[^2] See [[Capability vs. Reliability]].
+- An open question from class: if the [[President's Daily Brief]] contains AI-assisted analysis, should the President know?[^1]
+- The [[OWASP Top 10 for Large Language Model Applications|OWASP Top 10 for LLM applications]] calls the same tendency **overreliance**: humans and systems often treat fluent, confident, or well-structured outputs as authoritative, and in agentic systems this overreliance is often built into the design.[^2] See [[Capability vs. Reliability]].
 
 ## Footnotes
 [^1]: [[SAIL Class Notes (Fall 2026)#10/20/26|SAIL notes, 10/20/26]]

@@ -25,7 +25,7 @@ verified_on:
 - **Use a printed copy;** some writers read the draft aloud.[^1]
 - **The final review, in order**:[^2]
 	1. The title: does it capture the "what?" and "so what?", and can it be shorter? See [[Analytic Title]].
-	2. The topic sentences alone: does the storyline advance with each one?
+	2. The [[Topic Sentence|topic sentences]] alone: does the storyline advance with each one?
 	3. The order within paragraphs, and whether any paragraph is a "word brick" or a grocery list of bullets.
 	4. Terms and background the reader may need.
 	5. Spelling and grammar, on a printed copy.

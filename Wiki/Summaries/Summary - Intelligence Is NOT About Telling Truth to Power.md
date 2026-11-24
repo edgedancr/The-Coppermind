@@ -12,7 +12,7 @@ verified_on:
 Mark Lowenthal argues that the phrase intelligence officers use for their role, "telling truth to power," is "wrong and it is dangerous".[^1] Intelligence rarely has a complete picture and works to reduce uncertainty, so overstating certainty leads policymakers into bad decisions.[^2] The scales of estimative language, from Robert Walpole's guide to ICD 203, contain no "never" or "always".[^3] Analysis is often a compromise among analysts or agencies, and policymakers may rightly reject it.[^4] The phrase is also arrogant, inviting more reliance on analysis than it warrants.[^4] He prefers "speaking honesty to power".[^5]
 
 ## Main Points
-- The phrase's origin with Bayard Rustin and the Quakers, and its adoption by the IC and the DNI's 2017 ethics principles.[^6]
+- The phrase's origin with Bayard Rustin and the Quakers, and its adoption by the IC and the [[Director of National Intelligence|DNI]]'s 2017 ethics principles.[^6]
 - Uncertainty is the true nature of intelligence.[^2] See [[Estimative Language]].
 - The case in full: [[Speaking Truth to Power]].
 

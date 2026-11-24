@@ -36,7 +36,7 @@ verified_on:
 > Stratvert: a GPT "has all the different knowledge and data available on the internet," though it can't answer what it doesn't know.[^3] vs. IBM: what a model knows depends on its training data and knowledge cutoff date, so newer or missing data has to be retrieved.[^14]
 
 > [!caution] Accuracy check
-> The tutorial says you "teach" a custom GPT,[^1] that other GPTs were "trained" on papers or GitHub data,[^5] and that you can "train" yours on an invoice.[^13] What it demonstrates is writing instructions and uploading files. IBM's video uses training to mean changing a model's weights, as in [[Fine-Tuning|fine-tuning]].[^15] Check which sense applies before relying on "trained" here.
+> The tutorial says you "teach" a custom GPT,[^1] that other GPTs were "trained" on papers or GitHub data,[^5] and that you can "train" yours on an invoice.[^13] What it demonstrates is writing instructions and uploading files. IBM's video uses training to mean changing a model's [[Parameter|weights]], as in [[Fine-Tuning|fine-tuning]].[^15] Check which sense applies before relying on "trained" here.
 
 > [!todo] Gap in the source
 > The tutorial has no recording date, so the interface it shows may have changed since.

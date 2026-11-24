@@ -19,7 +19,7 @@ drafted_on: 2026-11-19
 verified_on:
 ---
 > [!summary]
-> Intelligence officers often describe their role as "telling truth to power," and the DNI's 2017 ethics principles say "speak truth to power".[^1] Mark Lowenthal calls the idea ==wrong, dangerous, and arrogant==, because intelligence conveys uncertainty rather than truth.[^2]
+> Intelligence officers often describe their role as "telling truth to power," and the [[Director of National Intelligence|DNI]]'s 2017 ethics principles say "speak truth to power".[^1] Mark Lowenthal calls the idea ==wrong, dangerous, and arrogant==, because intelligence conveys uncertainty rather than truth.[^2]
 
 ## Key Points
 **Lowenthal's case**

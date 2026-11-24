@@ -14,7 +14,7 @@ drafted_on: 2026-11-17
 verified_on:
 ---
 > [!summary]
-> **Redundant analytic structure:** the deliberate overlap of three all-source analytic agencies, the CIA's Directorate of Intelligence, the State Department's Bureau of Intelligence and Research (INR), and the Defense Intelligence Agency (DIA), which see the full range of collected intelligence and work on nearly the same issues, with emphases that reflect their main policy customers.[^1] The course's tagline for it is "Importance of competitive analysis".[^2]
+> **Redundant analytic structure:** the deliberate overlap of three all-source analytic agencies, the CIA's Directorate of Intelligence, the State Department's Bureau of Intelligence and Research (INR), and the Defense Intelligence Agency (DIA), which see the full range of collected intelligence and work on nearly the same issues, with emphases that reflect their main policy customers.[^1] The course's tagline for it is "Importance of [[Competitive Analysis|competitive analysis]]".[^2]
 
 **Used in:** [[Themes in U.S. Intelligence]], [[Intelligence Community Elements and Missions]]
 

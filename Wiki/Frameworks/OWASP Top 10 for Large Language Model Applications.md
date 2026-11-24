@@ -13,7 +13,7 @@ drafted_on: 2026-11-14
 verified_on:
 ---
 > [!summary]
-> The OWASP Top 10 for LLM Applications is a ranked list of the ten most critical security risks for applications built on large language models (LLMs), from the OWASP GenAI Security Project.[^1] The 2026 edition's guiding posture, in the project leads' words: =="Stop trying to build a model that cannot be fooled. Build the system around it,"== so that when the model is fooled, nothing important breaks.[^2] Reach for it when designing, reviewing, or testing any system that puts an LLM inside an application.
+> The OWASP Top 10 for LLM Applications is a ranked list of the ten most critical security risks for applications built on [[Large Language Model|large language models]] (LLMs), from the OWASP GenAI Security Project.[^1] The 2026 edition's guiding posture, in the project leads' words: =="Stop trying to build a model that cannot be fooled. Build the system around it,"== so that when the model is fooled, nothing important breaks.[^2] Reach for it when designing, reviewing, or testing any system that puts an LLM inside an application.
 
 ## Components
 

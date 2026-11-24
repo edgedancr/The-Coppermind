@@ -33,7 +33,7 @@ verified_on:
 	- Set federal standards for birth certificates and sources of identification such as driver's licenses.[^6]
 
 ## Why It Matters
-- It is part of the third leg of the [[Global Strategy Against Islamist Terrorism]]. For pre-9/11 screening, see [[TIPOFF Watchlist]], [[No-Fly List]], and [[Layered Aviation Security]]; for the hijackers' forged documents, see [[Planes Operation]].
+- It is part of the third leg of the [[Global Strategy Against Islamist Terrorism]]. For pre-[[September 11 Attacks (2001)|9/11]] screening, see [[TIPOFF Watchlist]], [[No-Fly List]], and [[Layered Aviation Security]]; for the hijackers' forged documents, see [[Planes Operation]].
 
 ## Footnotes
 [^1]: [[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=401|9/11 Report, p. 384]]

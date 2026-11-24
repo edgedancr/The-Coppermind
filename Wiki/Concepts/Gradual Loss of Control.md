@@ -30,7 +30,7 @@ verified_on:
 - **Closed loops:** AIs with goals copied from human tasks keep selling to other AIs, so the economy no longer needs to pass through humans.
 - **Selection effects:** systems "willing to goodhart further are more likely to remain in the economy," and AI-run organizations grow faster and gain more power, so even if most people, organizations, and countries don't adopt them, "the few that do will control the future."
 - **Coordination failure:** uncertainty, no clear "fire-alarm threshold," and the short-term benefits of racing, as with climate change.
-- **Normal-sounding language:** the AIs' messages read as sensible even as the physical world is transformed, so LLMs using business language correctly is not strong evidence their actions will be safe.
+- **Normal-sounding language:** the AIs' messages read as sensible even as the physical world is transformed, so [[Large Language Model|LLMs]] using business language correctly is not strong evidence their actions will be safe.
 
 **The title's source:** Nick Bostrom's *Superintelligence* describes a society of "economic miracles and technological awesomeness, with nobody there to benefit"—"a Disneyland without children".[^4] The story's outline draws most on Paul Christiano's "What failure looks like" (same location).
 

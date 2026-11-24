@@ -26,7 +26,7 @@ verified_on:
 - It assumes one can know in advance who will need the information, and that the risk of disclosure outweighs the benefit of sharing; "those Cold War assumptions are no longer appropriate."
 - Agencies felt they owned what they collected; the Commission wanted them to feel "a duty to the information."
 - Security rules nurtured overclassification and excessive compartmentation; sharing carried risks but few rewards, and not sharing carried no punishment.
-- In the 9/11 story, information was available but no one asked, was distributed only in a compartmented channel, or was asked for but could not be shared.
+- In the [[September 11 Attacks (2001)|9/11]] story, information was available but no one asked, was distributed only in a compartmented channel, or was asked for but could not be shared.
 
 **What the Commission recommended**[^3]
 - Give incentives for sharing, and hold intelligence to the same standards "whether it is collected in Pakistan or in Texas".[^2]
@@ -35,7 +35,7 @@ verified_on:
 - The President should lead, because "the policy and legal issues are harder than the technical ones".[^7]
 
 ## Why It Matters
-- The Commission did not dismiss security: counterintelligence concerns "are still real".[^2]
+- The Commission did not dismiss security: [[Counterintelligence|counterintelligence]] concerns "are still real".[^2]
 - Without a government-wide effort, agencies "may only be able to modernize the stovepipes, not replace them".[^6] See [[Stovepipe]], [[Originator Controlled]], and need to know in [[Security Classification]].
 - The Commission's global strategy adds that guidelines for sharing, among agencies and with the private sector, should safeguard the privacy of the people the information is about.[^8]
 

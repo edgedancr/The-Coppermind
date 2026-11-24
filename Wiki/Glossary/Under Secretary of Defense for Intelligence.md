@@ -19,7 +19,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Under Secretary of Defense for Intelligence (USDI):** the Department of Defense official who handles day-to-day intelligence issues. The USDI reports to the Secretary of Defense but is also under the Director of National Intelligence for activities related to EXCOM, and is one of the two main sources of intelligence for Congress.[^1] The 9/11 Commission notes that Congress created the post after 9/11, and proposed the USDI as a National Intelligence Director's deputy for defense intelligence.[^2]
+> **Under Secretary of Defense for Intelligence (USDI):** the Department of Defense official who handles day-to-day intelligence issues. The USDI reports to the Secretary of Defense but is also under the Director of National Intelligence for activities related to EXCOM, and is one of the two main sources of intelligence for Congress.[^1] The 9/11 Commission notes that Congress created the post after [[September 11 Attacks (2001)|9/11]], and proposed the USDI as a National Intelligence Director's deputy for defense intelligence.[^2]
 
 > [!caution] Accuracy check
 > The title may be out of date: since 2020 the post has been the Under Secretary of Defense for Intelligence and Security. Check which edition of Lowenthal the course uses.

@@ -13,7 +13,7 @@ sources:
   - "[[SRC - Analytic Objectivity and Science]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-19
+verified_on: 2026-11-23
 ---
 > [!summary]
 > Politicized intelligence is giving the intelligence you think the client wants, instead of what the information actually supports.[^1] Intro to Intelligence taught that it happens when strong preferences about a topic shape the analysis, and that ==any and all of these preferences may influence and bias the analysis==.[^2]
@@ -34,7 +34,7 @@ verified_on: 2026-11-19
 
 ## Why It Matters
 - Good intelligence states what is known and what is not;[^1] politicized intelligence trades that for what the customer wants to hear. See [[Intelligence (National Security)]].
-- Related analytic errors: [[Mirror Imaging]] and [[Priority Creep]].
+- Related [[Intelligence Error and Intelligence Failure|analytic errors]]: [[Mirror Imaging]] and [[Priority Creep]].
 - ICD 203 makes independence from political consideration one of its five analytic standards, and analysts can raise concerns about politicization with the [[Analytic Ombuds]].[^6][^7]
 - Stephen Marrin argues that because all analysis carries some bias, spotting politicization has to turn on intent rather than distortion; see [[Analytic Objectivity]].[^8]
 

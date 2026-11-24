@@ -19,7 +19,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **National Intelligence Priorities Framework (NIPF):** a five-tier mechanism by which the National Security Council and the Director of National Intelligence set priorities for the Intelligence Community, so that its products stay relevant to policymakers and other users.[^1]
+> **National Intelligence Priorities Framework (NIPF):** a five-tier mechanism by which the National Security Council and the [[Director of National Intelligence]] set priorities for the Intelligence Community, so that its products stay relevant to policymakers and other users.[^1]
 
 **Used in:** [[Tyranny of the Ad Hocs]], [[National Security Council]]; compare [[Priority Creep]]
 

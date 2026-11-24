@@ -28,12 +28,12 @@ verified_on:
 - Tested it by observing analysts in a controlled training environment, including exercises he joined himself.
 
 **The four groups**
-1. **Systemic variables:** the organization and its environment: structure, leadership, culture (history, traditions, social practice, taboo), resources and incentives, and external factors such as consumer needs, time imperatives, politics, security, and adversaries' denial and deception.[^5]
+1. **Systemic variables:** the organization and its environment: structure, leadership, culture (history, traditions, social practice, taboo), resources and incentives, and external factors such as consumer needs, time imperatives, politics, security, and adversaries' [[Denial and Deception|denial and deception]].[^5]
 2. **Systematic variables:** the analytic process itself: user requirements, how information was acquired, its reliability and validity, how it is stored and retrieved, analytic methods (intuitive, structured, or semi-structured), decision strategies, and reporting.[^6]
 3. **Idiosyncratic variables:** the individual analyst: *Weltanschauung* (world view) from familial, cultural, ethnic, religious, linguistic, and political affiliations; psychology, including biases, personality, [[Cognitive Load|cognitive load]], expertise, and reaction to stress; and education, training, and readiness.[^7]
 4. **Communicative variables:** formal and informal communication within and among groups and organizations, from products to e-mails, and the technology for networked collaboration.[^8]
 
-**Its definition of analysis:** reviewing definitions from Kent to Heuer, Johnston concludes that analysis is a socio-cognitive process in a secret domain; see [[Intelligence Analysis]].[^9]
+**Its definition of analysis:** reviewing definitions from [[Sherman Kent|Kent]] to [[Richards Heuer|Heuer]], Johnston concludes that analysis is a socio-cognitive process in a secret domain; see [[Intelligence Analysis]].[^9]
 
 ## How to Use It
 - As a research map: Johnston suggests it could seed a research agenda, training programs, a lessons-learned database, and tools for collaborative forecasting.[^10]

@@ -19,9 +19,9 @@ verified_on:
 	- *[[Chain-of-Thought Reasoning|Chain of thought]]:* force the model to reason before answering: "Think step-by-step. Break the problem into sub-tasks. Explain reasoning before providing the final answer..."
 	- *Tool use:* the model is not just a chatbot; it is an operating system that can call tools to solve problems. See [[Agentic AI]].
 	- *ORTCOW:* a structure for prompts: Objectives, Requirements, Tasking, Constraints, Output, Workflow.
-- **Why prompting works, per IBM:** a model processes a prompt through layers of attention mechanisms, each focusing on different aspects of the text. Including examples, context, or the desired format directs its attention to relevant patterns it learned in training, and telling it to "think about this step-by-step" activates patterns from training data where methodical reasoning led to accurate results.[^5]
+- **Why prompting works, per IBM:** a model processes a prompt through layers of [[Self-Attention|attention mechanisms]], each focusing on different aspects of the text. Including examples, context, or the desired format directs its attention to relevant patterns it learned in training, and telling it to "think about this step-by-step" activates patterns from training data where methodical reasoning led to accurate results.[^5]
 - **Formatting by example:** in a custom GPT tutorial, adding an example of the wanted layout to the GPT's instructions changed how its answers were formatted.[^6] See [[Custom GPT]].
-- Compared with retrieval and fine-tuning, prompt engineering needs no new data or infrastructure but can't teach a model new information.[^5] See [[Retrieval-Augmented Generation vs. Fine-Tuning vs. Prompt Engineering]].
+- Compared with retrieval and [[Fine-Tuning|fine-tuning]], prompt engineering needs no new data or infrastructure but can't teach a model new information.[^5] See [[Retrieval-Augmented Generation vs. Fine-Tuning vs. Prompt Engineering]].
 - How far a person takes these is measured by the [[Four Levels of Prompt Engineering]].[^2]
 - For analysis, [[Analysis of Competing Hypotheses]] includes specific rules for prompting an AI step by step.[^7]
 

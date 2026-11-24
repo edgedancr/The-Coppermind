@@ -18,7 +18,7 @@ drafted_on: 2026-11-14
 verified_on:
 ---
 > [!summary]
-> Prompt injection happens when any input to a large language model (LLM), from a user's message to a retrieved web page, an image, or the model's own memory, changes the model's behavior in ways the developer did not intend.[^1] OWASP ranks it first among LLM application risks and explains why it can't simply be filtered out: ==LLMs make no architectural distinction between instructions and data==, since both are tokens on the same stream.[^1]
+> Prompt injection happens when any input to a [[Large Language Model|large language model]] (LLM), from a user's message to a retrieved web page, an image, or the model's own memory, changes the model's behavior in ways the developer did not intend.[^1] OWASP ranks it first among LLM application risks and explains why it can't simply be filtered out: ==LLMs make no architectural distinction between instructions and data==, since both are tokens on the same stream.[^1]
 
 ## Key Points
 **Types**[^2]

@@ -9,7 +9,7 @@ sources:
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-19
+verified_on: 2026-11-23
 ---
 > [!summary]
 > SAIL distinguishes six kinds of essay by purpose, and identifies the ==analytical essay as the most common type in Strategic Intelligence (SI)==.[^1]
@@ -28,7 +28,7 @@ verified_on: 2026-11-19
 Source for the table:[^1]
 
 ## How to Use It
-- **The topic sentence test:** the topic sentences of every paragraph, put together, should form a mini essay that explains the whole argument.[^1]
+- **The topic sentence test:** the [[Topic Sentence|topic sentences]] of every paragraph, put together, should form a mini essay that explains the whole argument.[^1]
 
 ## Footnotes
 [^1]: [[SAIL Class Notes (Fall 2026)#9/8/26|SAIL notes, 9/8/26]]

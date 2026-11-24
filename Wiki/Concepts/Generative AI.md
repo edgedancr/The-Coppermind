@@ -27,8 +27,8 @@ verified_on:
 - **Reactive by design:** IBM's agentic AI video describes generative AI as waiting for a prompt, generating content from patterns learned in training, and stopping there: "It doesn't take further steps without your input".[^4] Large language models power chatbots, while images and audio typically use diffusion models.[^5] See [[Generative vs. Agentic AI]].
 - **Uses:** generating new content, or summarizing existing content into something "bite size and manageable".[^6]
 - **Example workflow:** Tao Prompts' tutorial makes a music video in a day using only AI tools: ChatGPT for the lyrics, an AI music generator for the song, Midjourney for still images kept consistent with a style reference, an image-to-video generator to animate them and lip-sync the singer, and CapCut to edit,[^7],[^8],[^9],[^10],[^11].[^12]
-- **Adoption:** for decades AI seemed "about 5 to 10 years away"; machine learning and deep learning brought an uptick, then foundation models and generative AI sent adoption "straight to the moon".[^6]
-- **In SAIL's progression:** statistics → machine learning → deep learning → reinforcement learning → generative AI → agentic AI.[^13] See [[Artificial Intelligence]] and [[Agentic AI]].
+- **Adoption:** for decades AI seemed "about 5 to 10 years away"; [[Machine Learning|machine learning]] and deep learning brought an uptick, then foundation models and generative AI sent adoption "straight to the moon".[^6]
+- **In SAIL's progression:** statistics → machine learning → deep learning → [[Reinforcement Learning|reinforcement learning]] → generative AI → agentic AI.[^13] See [[Artificial Intelligence]] and [[Agentic AI]].
 
 ## Why It Matters
 - IBM notes deepfakes have legitimate uses, such as letting someone who is losing their voice keep speaking in it, but can also be abused.[^3] SAIL asked what still counts as evidence when video and audio can be forged.[^14]

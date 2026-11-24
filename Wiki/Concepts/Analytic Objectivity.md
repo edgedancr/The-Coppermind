@@ -34,7 +34,7 @@ verified_on:
 - Make the pursuit of objectivity, not its attainment, the standard.
 - Treat objectivity as a byproduct of tradecraft as a whole, as MacEachin did, not only of an individual analyst's efforts against bias.
 - Do not borrow the legitimacy of science: even [[Structured Analytic Technique|structured analytic techniques]] rest on subjective inputs.
-- Build analysis around the decision maker's concepts, as the IC and NSC staff did in the 1970s.
+- Build analysis around the decision maker's concepts, as the IC and [[National Security Council|NSC]] staff did in the 1970s.
 
 > [!question] Whose view is this?
 > Marrin calls these "tentative conclusions";[^8] ICD 203 still requires objectivity.[^1]

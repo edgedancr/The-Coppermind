@@ -19,7 +19,7 @@ verified_on:
 
 ## Themes
 - Scale as the source of capability.
-- Designed framework, emergent behavior.
+- Designed framework, [[Emergent Behavior|emergent behavior]].
 
 ## Key Takeaways
 - Explicit: the specific behavior of an LLM is "an emergent phenomenon" of training.[^6]

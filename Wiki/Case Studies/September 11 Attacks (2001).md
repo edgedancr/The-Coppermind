@@ -26,8 +26,8 @@ verified_on:
 - **The flights**:[^2] American 11 (Boston) hit the North Tower at 8:46:40 and United 175 (Boston) the South Tower at 9:03:11; American 77 (Washington Dulles) hit the Pentagon at 9:37:46; United 93 (Newark) crashed in a field in Shanksville, Pennsylvania, after a passenger revolt, about 20 minutes' flying time from Washington. Five hijackers were on each flight except United 93, which had four.
 - **The response:** see [[Air Defense on September 11 (2001)]].
 - **Background**
-	- Bin Ladin's February 1998 [[World Islamic Front Fatwa|fatwa]] called for killing Americans anywhere;[^3] see [[Al-Qaeda]].
-	- Khalid Sheikh Mohammed (KSM), the plot's "principal architect," proposed the [[Planes Operation|planes operation]] to Bin Ladin in 1996.[^4]
+	- [[Usama Bin Ladin|Bin Ladin]]'s February 1998 [[World Islamic Front Fatwa|fatwa]] called for killing Americans anywhere;[^3] see [[Al-Qaeda]].
+	- [[Khalid Sheikh Mohammed]] (KSM), the plot's "principal architect," proposed the [[Planes Operation|planes operation]] to Bin Ladin in 1996.[^4]
 	- Al-Qaeda moved money by [[Hawala|hawala]],[^5] and in October 2000 bombed the [[USS Cole Bombing (2000)|USS Cole]].[^6]
 	- All 19 tickets were bought between August 25 and September 5, 2001.[^7]
 - **U.S. approaches beforehand:** Richard Clarke's [[Delenda Plan]][^8] and the CIA's [[The Plan (CIA)|"Plan"]];[^9] see also [[Tarnak Farms Capture Plan (1998)]] and [[August 1998 Missile Strikes]].

@@ -45,7 +45,7 @@ verified_on:
 - Training effectiveness: test student performance before and after courses.[^8]
 - Organizational culture: track cultural markers such as language, norms, and taboos.[^9]
 
-**Access:** research needs open, regular access between researchers and the Intelligence Community, and "access equals trust".[^10]
+**Access:** research needs open, regular access between researchers and the [[United States Intelligence Community|Intelligence Community]], and "access equals trust".[^10]
 
 ## Why It Matters
 - It is recommendation 3 of [[Johnston's Analytic Culture Recommendations]], and it answers the gaps in [[Analytic Culture]].

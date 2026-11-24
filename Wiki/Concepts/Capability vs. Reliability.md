@@ -14,7 +14,7 @@ verified_on:
 > ==Capability is not reliability.== SAIL drew this lesson from [[Mata v. Avianca (2023)]]: AI is *capable* of generating professional-quality legal language, but it is not *reliable* enough to verify facts or sources on its own, and confusing the two leads to misuse.[^1]
 
 ## Key Points
-- Generative AI systems are powerful tools, not authoritative sources. They can produce fluent, confident output even when it is false.[^1]
+- [[Generative AI]] systems are powerful tools, not authoritative sources. They can produce fluent, confident output even when it is false.[^1]
 - Using AI in high-risk professional settings without verification exposes others to real harm: "Using AI without understanding its limits is not innovation; it is risk transfer."[^1]
 - Intro to Intelligence's AI video analysis exercise ended with two takeaways: "Detail doesn't carry the same weight as documentation," and "Precision does not excuse lack of accuracy."[^2]
 

@@ -19,7 +19,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Predator:** an unmanned aircraft first flown over Afghanistan in fall 2000, when 10 of 15 trial missions were rated successful and a "man in white" at Tarnak Farms was judged probably Bin Ladin.[^1] In 2001, debate centered on an armed version: who would pay, who would authorize a strike, and whether the CIA should "pull the trigger".[^2]
+> **Predator:** an unmanned aircraft first flown over Afghanistan in fall 2000, when 10 of 15 trial missions were rated successful and a "man in white" at Tarnak Farms was judged probably [[Usama Bin Ladin|Bin Ladin]].[^1] In 2001, debate centered on an armed version: who would pay, who would authorize a strike, and whether the CIA should "pull the trigger".[^2]
 
 **Used in:** [[Covert Action Authorities Against Bin Ladin]]
 

@@ -19,13 +19,13 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> Before 9/11, the CIA's covert action against Bin Ladin ran on a series of presidential [[Memorandum of Notification|memoranda of notification]] that set how far it could go. The 9/11 Commission found that ==Clinton administration policymakers believed the President wanted Bin Ladin dead, but "this intent was never well communicated or understood within the CIA"==.[^1]
+> Before [[September 11 Attacks (2001)|9/11]], the CIA's covert action against [[Usama Bin Ladin|Bin Ladin]] ran on a series of presidential [[Memorandum of Notification|memoranda of notification]] that set how far it could go. The 9/11 Commission found that ==Clinton administration policymakers believed the President wanted Bin Ladin dead, but "this intent was never well communicated or understood within the CIA"==.[^1]
 
 ## Key Points
 **How the authorities changed**
 - **1998:** a 1986 presidential finding already authorized worldwide covert action against terrorism, but CIA managers, mindful of the old "rogue elephant" charge, wanted a memorandum on paper for the Tarnak Farms raid.[^2] The August 1998 memorandum allowed lethal force only in self-defense during a capture.[^3]
-- **December 1998:** President Clinton approved a memorandum allowing the tribals to kill Bin Ladin if capture was not feasible; the administration's position was that under the law of armed conflict, killing a person posing an imminent threat would be self-defense, "not an assassination".[^4]
-- **February 1999:** asked to give the same guidance for the Northern Alliance, the President crossed out the key language and inserted more ambiguous wording; he told the Commission he had no recollection of why.[^1]
+- **December 1998:** President Clinton approved a memorandum allowing the tribals to kill Bin Ladin if capture was not feasible; the administration's position was that under the [[Law of Armed Conflict|law of armed conflict]], killing a person posing an imminent threat would be self-defense, "not an assassination".[^4]
+- **February 1999:** asked to give the same guidance for the [[Northern Alliance]], the President crossed out the key language and inserted more ambiguous wording; he told the Commission he had no recollection of why.[^1]
 - **Later in 1999:** lawyers returned to the August 1998 language, authorizing force only in a capture operation.[^1]
 
 **The resulting dispute:** Tenet told the Commission that, except in one case, the CIA was authorized to kill Bin Ladin only in the context of a capture operation; the Commission finds it "possible to understand" how White House and CIA officials might disagree on whether killing him was ever authorized.[^1]

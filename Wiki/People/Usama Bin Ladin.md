@@ -19,7 +19,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> Usama Bin Ladin founded [[Al-Qaeda]] with Abdullah Azzam in 1988 and was its leader (emir) by August of that year.[^1] The 9/11 Commission describes him approving and shaping the [[Planes Operation|planes operation]]: he gave Khalid Sheikh Mohammed the go-ahead in 1999, chose the first targets with him and Mohammed Atef, and selected the first suicide operatives.[^2]
+> Usama Bin Ladin founded [[Al-Qaeda]] with Abdullah Azzam in 1988 and was its leader (emir) by August of that year.[^1] The 9/11 Commission describes him approving and shaping the [[Planes Operation|planes operation]]: he gave [[Khalid Sheikh Mohammed]] the go-ahead in 1999, chose the first targets with him and Mohammed Atef, and selected the first suicide operatives.[^2]
 
 ## Key Ideas and Contributions
 - **Background:** the seventeenth of 57 children of a Saudi construction magnate, he arrived in Afghanistan in 1980, at 23, and became known chiefly as someone "who generously helped fund the anti-Soviet jihad".[^3] He drew on the [[Golden Chain]] of Gulf financiers.[^3]

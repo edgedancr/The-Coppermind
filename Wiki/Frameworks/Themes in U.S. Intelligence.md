@@ -25,13 +25,13 @@ Taglines are from [[SRC - SI Themes and Pearl Harbor Context|SI Themes]]; defini
 **Organization**
 1. **Role of culture** ("Importance of IC & national security organizations and understanding foreign cultures"). The CIA's operations culture is powerful but "fundamentally at odds with accountability";[^3] its standard is "good enough to act," the FBI's "beyond a reasonable doubt".[^4] Foreign cultures complicate U.S. decisions too (the instructor's note).[^5] See [[Seven Tribes of Intelligence]].
 2. **Collection synergy** ("There are few 'silver bullets' in intelligence"). One discipline tips off another, and combining them offsets each one's weaknesses.[^6] See [[All-Source Intelligence]].
-3. **Redundant analytic structure** ("Importance of competitive analysis"). See [[Redundant Analytic Structure]].[^7]
+3. **Redundant analytic structure** ("Importance of [[Competitive Analysis|competitive analysis]]"). See [[Redundant Analytic Structure]].[^7]
 
 **People**
 
 4. **Strategic vs. tactical intelligence** ("The long view and the short-term view"). Policymakers need tailored, timely background, warning, and assessments; tactical users need "dominant battlefield awareness" in near real time.[^8] See [[Levels of Intelligence]].
 5. **Policymakers' use of intelligence** ("How intelligence gets used—and abused"). See [[Consumer-Producer Relations]].[^9]
-6. **Politicization** ("Speaking truth to power vs. giving them what they want"). See [[Politicized Intelligence]].[^10]
+6. **Politicization** ("[[Speaking Truth to Power|Speaking truth to power]] vs. giving them what they want"). See [[Politicized Intelligence]].[^10]
 
 **Process**
 

@@ -12,10 +12,10 @@ sources:
   - "[[SRC - Themes in US Intelligence, Summary of Texts]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-19
+verified_on: 2026-11-23
 ---
 > [!summary]
-> Intro to Intelligence sorted intelligence analysis and reporting into three levels, strategic, operational, and tactical, and by the time horizon and questions each answers.[^1] The course later added technical intelligence as a fourth type,[^2] and a guest lecture showed the same three levels at work in police intelligence.[^3]
+> Intro to Intelligence sorted [[Intelligence Analysis|intelligence analysis]] and reporting into three levels, strategic, operational, and tactical, and by the time horizon and questions each answers.[^1] The course later added technical intelligence as a fourth type,[^2] and a guest lecture showed the same three levels at work in police intelligence.[^3]
 
 ## Components
 **The levels**[^1]

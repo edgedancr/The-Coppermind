@@ -32,7 +32,7 @@ verified_on:
 
 **Proposed solutions**[^8]
 - Understand that algorithms will be biased, and be critical of recommendations instead of accepting that "the computer said so."
-- [[Algorithmic Transparency]], though the hidden layers of deep learning are hard to interpret.
+- [[Algorithmic Transparency]], though the [[Hidden Layer|hidden layers]] of [[Deep Learning|deep learning]] are hard to interpret.
 - More training data on protected classes, to check for discrimination. Crash Course calls this a double-edged sword, since members of those groups may worry about privacy or being targeted.
 - Some advocate testing algorithms for "side effects" the way medicines are tested; the episode says nothing like that was in the works.
 

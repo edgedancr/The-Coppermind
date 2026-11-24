@@ -12,7 +12,7 @@ sources:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-21
+verified_on: 2026-11-23
 ---
 > [!summary]
 > An LLM wiki is a growing, interlinked knowledge base that a person develops and maintains with an AI agent. Instead of asking an AI the same questions over and over, the AI compiles what you learn into linked pages that compound over time.[^1] The Coppermind is one.
@@ -23,7 +23,7 @@ verified_on: 2026-11-21
 | | Karpathy's version | SAIL version |
 |---|---|---|
 | Who does the work | The AI does all the writing, modifying, and promoting to the baseline | You design, the AI drafts, you verify |
-| Known weakness | Often criticized for compounding hallucinations | Built on the [[Think-Calculate-Verify Loop]] |
+| Known weakness | Often criticized for compounding [[Hallucination\|hallucinations]] | Built on the [[Think-Calculate-Verify Loop]] |
 | The rule | | ==Nothing becomes part of the wiki until you have reviewed and approved it== |
 
 **Why build it this way**[^1]

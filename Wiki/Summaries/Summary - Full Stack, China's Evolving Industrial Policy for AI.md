@@ -12,7 +12,7 @@ drafted_on: 2026-11-14
 verified_on:
 ---
 ## Executive Summary
-Kyle Chan and four RAND co-authors examine how Beijing is using industrial policy across the full [[AI Technology Stack|AI technology stack]], from chips to applications, toward its goal of global AI leadership by 2030.[^1] They judge that the policy will likely accelerate China's AI progress, especially through research, talent, subsidized compute, and applications.[^1] They also find waste, such as inefficient chip allocation, and bottlenecks that state support can't easily overcome, chiefly U.S.-led [[Semiconductor Export Controls|export controls]].[^1] They note that Beijing frames AI around economic and industrial applications rather than a "race to AGI".[^2] Their bottom line is that China will likely remain at least a close second to the United States.[^1]
+Kyle Chan and four RAND co-authors examine how Beijing is using industrial policy across the full [[AI Technology Stack|AI technology stack]], from chips to applications, toward its goal of global AI leadership by 2030.[^1] They judge that the policy will likely accelerate China's AI progress, especially through research, talent, subsidized compute, and applications.[^1] They also find waste, such as inefficient chip allocation, and bottlenecks that state support can't easily overcome, chiefly U.S.-led [[Semiconductor Export Controls|export controls]].[^1] They note that Beijing frames AI around economic and industrial applications rather than a "race to [[Artificial General Intelligence|AGI]]".[^2] Their bottom line is that China will likely remain at least a close second to the United States.[^1]
 
 ## Main Points
 - Three bottlenecks decide success: domestic chips, talent, and energy.[^3]

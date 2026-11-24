@@ -24,7 +24,7 @@ verified_on:
 - **AlphaZero as an example:** it improved on AlphaGo by not using human knowledge, learning only from experience.[^2]
 - **Not a law:** Sutton calls it "an empirical observation about a particular period in history," 70 years that need not predict the next 70.[^2]
 
-**Are LLMs a case of it?**[^1]
+**Are [[Large Language Model|LLMs]] a case of it?**[^1]
 - Patel notes people cite the essay to justify scaling LLMs, as the one way found to pour huge amounts of compute into learning.
 - Sutton calls it "an interesting question": LLMs scale with computation up to the limits of the internet, but they also put in lots of human knowledge. He expects them to reach the limits of their data and be superseded by systems that learn from experience, which would be "another instance of the bitter lesson."
 

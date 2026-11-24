@@ -20,10 +20,10 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> On October 12, 2000, al-Qaeda operatives in a small boat laden with explosives attacked the destroyer USS Cole in Aden, Yemen, killing 17 crew members and wounding at least 40.[^1] The 9/11 Commission found that the United States did not respond militarily, in part because ==officials never received the definitive attribution they said they needed==.[^2]
+> On October 12, 2000, [[Al-Qaeda|al-Qaeda]] operatives in a small boat laden with explosives attacked the destroyer USS Cole in Aden, Yemen, killing 17 crew members and wounding at least 40.[^1] The 9/11 Commission found that the United States did not respond militarily, in part because ==officials never received the definitive attribution they said they needed==.[^2]
 
 ## What Happened
-- **The operation:** "a full-fledged al Qaeda operation, supervised directly by Bin Ladin," who chose the target, selected the suicide operatives, and paid for the explosives; Abd al Rahim al Nashiri was the field commander.[^1] An earlier attempt on another warship in January 2000 had failed when the boat sank.[^1]
+- **The operation:** "a full-fledged al Qaeda operation, supervised directly by [[Usama Bin Ladin|Bin Ladin]]," who chose the target, selected the suicide operatives, and paid for the explosives; Abd al Rahim al Nashiri was the field commander.[^1] An earlier attempt on another warship in January 2000 had failed when the boat sank.[^1]
 - **The investigation:** by late November, Yemeni evidence identified operatives the United States knew were al-Qaeda, including Khallad and Nashiri; evidence of Bin Ladin's personal involvement came only with their capture in 2002 and 2003.[^3]
 - **The judgment:** on December 21 the CIA's "preliminary judgment" was that al-Qaeda "supported the attack," with "no definitive answer on [the] crucial question of outside direction of the attack".[^4]
 
@@ -33,7 +33,7 @@ verified_on:
 - Soon after the attack, analysts stopped distributing written reports on responsibility.[^7]
 
 ## Lessons
-- After 9/11, President Bush announced that al-Qaeda was responsible for the Cole; before 9/11, neither president took action, and the Commission suggests Bin Ladin may have inferred such attacks were "risk free".[^8] See [[Attribution (Cyber)]] for the same problem in cyberspace.
+- After [[September 11 Attacks (2001)|9/11]], President Bush announced that al-Qaeda was responsible for the Cole; before 9/11, neither president took action, and the Commission suggests Bin Ladin may have inferred such attacks were "risk free".[^8] See [[Attribution (Cyber)]] for the same problem in cyberspace.
 
 ## Footnotes
 [^1]: [[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=207|9/11 Report, p. 190]]

@@ -16,7 +16,7 @@ related:
   - "[[Capability vs. Reliability]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-19
+verified_on: 2026-11-23
 ---
 > [!summary]
 > Analysis of Competing Hypotheses (ACH) is a structured analytic technique that reverses the usual order of analysis: instead of starting from a conclusion and gathering support for it, the analyst lists every plausible hypothesis and uses the evidence to disprove them.[^1] SAIL taught that it was developed by [[Richards Heuer]] at the CIA in 1999 to counteract [[Confirmation Bias]].[^1]
@@ -36,7 +36,7 @@ verified_on: 2026-11-19
 Source for the stages:[^1]
 
 ## How to Use It With AI
-LLMs pattern-match to the most plausible, fluent narrative, so by default they do normal analysis (confirmation bias), not ACH's elimination logic.[^1]
+[[Large Language Model|LLMs]] pattern-match to the most plausible, fluent narrative, so by default they do normal analysis (confirmation bias), not ACH's elimination logic.[^1]
 
 **Do**[^1]
 - Force at least four hypotheses, explicitly including political or internal adversarial motives.

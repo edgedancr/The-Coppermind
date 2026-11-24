@@ -19,7 +19,7 @@ drafted_on: 2026-11-19
 verified_on:
 ---
 > [!summary]
-> Judith Meister Johnston and Rob Johnston argue that the traditional [[Intelligence Cycle]] "omits elements and fails to capture the process accurately".[^1] Using a systems analysis and a computer simulation, they model the cycle as a feedback loop. ==The analyst's ability to produce is the central factor, yet only one of the five factors that shape it is under the analyst's control==.[^2]
+> Judith Meister Johnston and [[Rob Johnston]] argue that the traditional [[Intelligence Cycle]] "omits elements and fails to capture the process accurately".[^1] Using a systems analysis and a computer simulation, they model the cycle as a feedback loop. ==The analyst's ability to produce is the central factor, yet only one of the five factors that shape it is under the analyst's control==.[^2]
 
 ## Key Points
 **The traditional cycle's flaws**[^3]

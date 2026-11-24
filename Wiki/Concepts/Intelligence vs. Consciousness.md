@@ -16,7 +16,7 @@ verified_on:
 - SAIL's "Reality Check for AI": AI is already operational, outpacing humans, and introducing risks from its scale and our dependency on it. Treating AI as if it were human makes you reliant on it, and that dependence could become like a highly addictive drug.[^2]
 
 **[[John Lennox]]'s view**
-- He calls "artificial intelligence," "machine intelligence," and "machine learning" anthropomorphisms, and risky ones, because "these machines are not intelligent. They only simulate intelligence."[^3]
+- He calls "[[Artificial Intelligence|artificial intelligence]]," "machine intelligence," and "[[Machine Learning|machine learning]]" anthropomorphisms, and risky ones, because "these machines are not intelligent. They only simulate intelligence."[^3]
 - **No full AGI without consciousness:** building a machine that does all that humans can do "runs up against the huge problem of consciousness." Unless we discover what consciousness is and recreate it, he says, "you're never going to get AGI in the fullest sense of the word."[^3] See [[Artificial General Intelligence]].
 - **Nobody knows what it is:** he says he has talked to several leading neuroscientists and "nobody knows what consciousness is"; some people don't believe it exists at all, which he calls "a very easy way of escaping it."[^4]
 - He quotes "Peter Norvig's big book," which he calls the AI community's Bible: "We are not trying to construct a conscious machine because we don't even know what that would mean." He calls this honest.[^4]

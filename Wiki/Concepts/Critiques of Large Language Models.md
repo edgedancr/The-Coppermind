@@ -51,7 +51,7 @@ verified_on:
 - Imitation can give a good prior for later learning from experience.
 
 > [!caution] Sources disagree
-> Bengio: on his chart's trend, AI would reach human level in about five years.[^7] vs. Hossenfelder: current models won't get there given more time.[^8]
+> [[Yoshua Bengio|Bengio]]: on his chart's trend, AI would reach human level in about five years.[^7] vs. Hossenfelder: current models won't get there given more time.[^8]
 
 ## Why It Matters
 - Hossenfelder predicts the revenue expected to justify AI companies' valuations will evaporate, though the models will keep their uses.[^1]

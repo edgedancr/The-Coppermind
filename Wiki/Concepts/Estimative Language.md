@@ -38,7 +38,7 @@ verified_on:
 - **Likelihood vs. confidence:** likelihood refers to an event or development; confidence is in the basis for a judgment, resting on its logic and evidence, including the quantity and quality of sources.[^1] See [[Analytic Confidence]].
 - **Explain the uncertainty:** products should note its causes, such as the type, currency, and amount of information, knowledge gaps, and the nature of the issue, and identify [[Indicators and Signposts|indicators]] that would change it.[^1]
 - **Where the scale came from:** after the 2003 Iraq WMD estimate, Mark Lowenthal had national intelligence officer Robert Walpole write "What We Mean When We Say: An Explanation of Estimate Language," after three failed earlier attempts.[^3] ICD 203's range is very similar to Walpole's.[^4]
-- **No "never" or "always":** if either applied, there would be no need for intelligence analysis.[^4]
+- **No "never" or "always":** if either applied, there would be no need for [[Intelligence Analysis|intelligence analysis]].[^4]
 - Kaiser and Pherson note that analytic topic sentences often carry caveats such as "almost certainly" or "probably".[^5] See [[Six Qualities of an Analytic Topic Sentence]].
 - Sherman Kent's work on confidence, probability, and estimative statements still underpins all-source analysis.[^6] See [[Sherman Kent]].
 

@@ -19,7 +19,7 @@ verified_on:
 
 ## Key Points
 - **The question that prompted it:** the BSF host suggests that if AI could be given access to all the information in the physical world, "even down to the quantum level," it might be "perhaps god-like, little g god-like."[^2]
-- **The anthropomorphism problem:** Lennox calls the words "artificial intelligence," "machine intelligence," and "machine learning" anthropomorphisms, and risky ones, because "these machines are not intelligent. They only simulate intelligence." He finds that "quite hard to keep hold of."[^1] See [[Intelligence vs. Consciousness]].
+- **The anthropomorphism problem:** Lennox calls the words "[[Artificial Intelligence|artificial intelligence]]," "machine intelligence," and "[[Machine Learning|machine learning]]" anthropomorphisms, and risky ones, because "these machines are not intelligent. They only simulate intelligence." He finds that "quite hard to keep hold of."[^1] See [[Intelligence vs. Consciousness]].
 - **Why AI draws worship:** it "is omnipresent. It's around the world everywhere. It seems to be omniscient."[^1]
 - **Who encourages it:** "some intellectuals, who I think ought to know better"; the difficulty, he says, is that this gives people "an alternate god."[^1]
 - **What lies behind it:** influential voices in the AI community who are "not necessarily technologically trained," above all Yuval Noah Harari, and behind them "a drive towards transhumanism."[^1] See [[Transhumanism]].

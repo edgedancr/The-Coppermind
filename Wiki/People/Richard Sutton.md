@@ -12,7 +12,7 @@ drafted_on: 2026-11-17
 verified_on:
 ---
 > [!summary]
-> Richard Sutton is one of the founding fathers of [[Reinforcement Learning|reinforcement learning]] and inventor of many of its main techniques, including [[Temporal Difference Learning|temporal difference (TD) learning]] and policy gradient methods, for which he received the 2024 Turing Award,[^1].[^2] He wrote the 2019 essay "The Bitter Lesson".[^2] He appears in the Coppermind for his Dwarkesh Podcast interview arguing that large language models are a dead end, assigned in SAIL Module 5.
+> Richard Sutton is one of the founding fathers of [[Reinforcement Learning|reinforcement learning]] and inventor of many of its main techniques, including [[Temporal Difference Learning|temporal difference (TD) learning]] and policy gradient methods, for which he received the 2024 Turing Award,[^1].[^2] He wrote the 2019 essay "The Bitter Lesson".[^2] He appears in the Coppermind for his Dwarkesh Podcast interview arguing that [[Large Language Model|large language models]] are a dead end, assigned in SAIL Module 5.
 
 ## Key Ideas and Contributions
 - **Intelligence as goal achievement:** Sutton calls having a goal "the essence of intelligence" and endorses John McCarthy's definition: intelligence is "the computational part of the ability to achieve goals".[^2]

@@ -23,13 +23,13 @@ verified_on:
 
 ## Key Points
 **Why**[^2]
-- In each missed opportunity before 9/11, "no one was firmly in charge of managing the case".[^3] The Commission found labels like "[[Metaphors for Intelligence|connecting the dots]]" too narrow: they "describe the symptoms, not the disease".[^3]
+- In each missed opportunity before [[September 11 Attacks (2001)|9/11]], "no one was firmly in charge of managing the case".[^3] The Commission found labels like "[[Metaphors for Intelligence|connecting the dots]]" too narrow: they "describe the symptoms, not the disease".[^3]
 - ==Cooperation is not joint action==: when agencies cooperate, one defines the problem and seeks help; when they act jointly, the problem and options are defined together from the start.[^3] The Commission asked witnesses, "Who is the quarterback?"[^3]
 - Terrorism analysis was duplicated across the TTIC, the CIA's [[Counterterrorist Center (CIA)|Counterterrorist Center]], DIA, and Homeland Security, with too few experts to go around.[^4]
 - Donald Rumsfeld told the Commission the executive branch was "stove-piped much like the four services were nearly 20 years ago," before the [[Goldwater-Nichols Act]].[^1] See [[Stovepipe]].
 
 **What it would do**[^5]
-- **Intelligence:** lead strategic analysis, pooling all-source intelligence, foreign and domestic; produce net assessments; provide warning; task collection inside and outside the U.S.
+- **Intelligence:** lead strategic analysis, pooling [[All-Source Intelligence|all-source intelligence]], foreign and domestic; produce net assessments; provide warning; task collection inside and outside the U.S.
 - **Operations:** plan jointly and assign lead agencies, but leave execution to them, then track implementation.
 - **Not policymaking:** it would follow the President's and the NSC's direction.
 - **Authorities:** a head appointed by the President, confirmed by the Senate, reporting to a [[Director of National Intelligence|National Intelligence Director]], with a say in choosing the leaders of agencies' counterterrorism units.
@@ -38,7 +38,7 @@ verified_on:
 
 ## Why It Matters
 - The Commission named its "most serious disadvantage" as "the reverse of its greatest virtue": concentrating too much power in one place.[^6]
-- It closed the section with Thomas Schelling's comment on Pearl Harbor: surprise "is likely to be a complicated, diffuse, bureaucratic thing".[^6]
+- It closed the section with Thomas Schelling's comment on [[Pearl Harbor (1941)|Pearl Harbor]]: surprise "is likely to be a complicated, diffuse, bureaucratic thing".[^6]
 
 ## Footnotes
 [^1]: [[National Commission on Terrorist Attacks - The 9-11 Commission Report (2004).pdf#page=420|9/11 Report, p. 403]]

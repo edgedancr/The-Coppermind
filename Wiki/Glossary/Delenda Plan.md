@@ -20,10 +20,10 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on: 2026-11-20
+verified_on: 2026-11-23
 ---
 > [!summary]
-> **Delenda Plan:** Richard Clarke's 1998 "Political-Military Plan Delenda," named for the Roman vow that Carthage "must be destroyed"; it aimed to "immediately eliminate any significant threat to Americans" from the Bin Ladin network through diplomacy, covert action to capture Bin Ladin, cutting off his money, and follow-on military strikes. It was never formally adopted by the principals.[^1]
+> **Delenda Plan:** Richard Clarke's 1998 "Political-Military Plan Delenda," named for the Roman vow that Carthage "must be destroyed"; it aimed to "immediately eliminate any significant threat to Americans" from the [[Usama Bin Ladin|Bin Ladin]] network through diplomacy, [[Covert Action|covert action]] to capture Bin Ladin, cutting off his money, and follow-on military strikes. It was never formally adopted by the principals.[^1]
 
 **Used in:** [[August 1998 Missile Strikes]], [[September 11 Attacks (2001)]]; compare [[The Plan (CIA)]]
 

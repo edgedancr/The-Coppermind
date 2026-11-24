@@ -19,7 +19,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> Lowenthal, as summarized in Intro to Intelligence's grammar summaries, uses Executive Order 12333's definition of counterintelligence: "information gathered and activities conducted to identify, deceive, exploit, disrupt or protect" against espionage and other activities by foreign states or non-state adversaries. He divides it into three types: collection, defensive, and offensive.[^1] The course's handout on IC organizations names the FBI as the head of U.S. counterintelligence.[^2]
+> Lowenthal, as summarized in Intro to Intelligence's grammar summaries, uses [[Executive Order 12333]]'s definition of counterintelligence: "information gathered and activities conducted to identify, deceive, exploit, disrupt or protect" against espionage and other activities by foreign states or non-state adversaries. He divides it into three types: collection, defensive, and offensive.[^1] The course's handout on IC organizations names the FBI as the head of U.S. counterintelligence.[^2]
 
 ## Key Points
 **Three types**[^1]

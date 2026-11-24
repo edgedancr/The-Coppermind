@@ -15,7 +15,7 @@ drafted_on: 2026-11-14
 verified_on:
 ---
 > [!summary]
-> Excessive agency is the vulnerability that lets an LLM-based system take damaging actions in response to unexpected, ambiguous, or manipulated model output, whatever is causing the model to malfunction.[^1] OWASP traces it to three root causes: ==excessive functionality, excessive permissions, and excessive autonomy==.[^1] It rose to third on the 2026 list, which OWASP calls the most consequential move, because both the practitioner vote and the incident record show damage landing in agentic deployments.[^2]
+> Excessive agency is the vulnerability that lets an [[Large Language Model|LLM]]-based system take damaging actions in response to unexpected, ambiguous, or manipulated model output, whatever is causing the model to malfunction.[^1] OWASP traces it to three root causes: ==excessive functionality, excessive permissions, and excessive autonomy==.[^1] It rose to third on the 2026 list, which OWASP calls the most consequential move, because both the practitioner vote and the incident record show damage landing in agentic deployments.[^2]
 
 ## Key Points
 - **Agency** here means the developer's grant of tools (also called extensions, plugins, or skills) that let the model call functions or interface with other systems; an agent may also choose which tool to call.[^1]
@@ -29,7 +29,7 @@ verified_on:
 
 ## Why It Matters
 - OWASP describes prompt injection as the input-side compromise and excessive agency as what gives that compromise consequences outside the chat window.[^6]
-- SAIL warned that access to external tools increases emergent behavior and risk.[^7] See [[Agentic AI]].
+- SAIL warned that access to external tools increases [[Emergent Behavior|emergent behavior]] and risk.[^7] See [[Agentic AI]].
 
 ## Footnotes
 [^1]: [[OWASP Top 10 for LLM Applications 2026.pdf#page=23|OWASP, p. 23]]

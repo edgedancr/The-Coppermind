@@ -19,13 +19,13 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> The 9/11 Commission found that the pre-9/11 FBI was superb at investigating attacks after the fact but poorly built to prevent them: its 56 field offices set their own priorities, performance was measured by arrests and convictions, and it "lacked the ability to know what it knew".[^1] Its 1998 strategic plan made counterterrorism the top priority, but "the plan did not succeed".[^2]
+> The 9/11 Commission found that the pre-[[September 11 Attacks (2001)|9/11]] FBI was superb at investigating attacks after the fact but poorly built to prevent them: its 56 field offices set their own priorities, performance was measured by arrests and convictions, and it "lacked the ability to know what it knew".[^1] Its 1998 strategic plan made counterterrorism the top priority, but "the plan did not succeed".[^2]
 
 ## Key Points
 **Structure and incentives**[^3]
 - Each field office's special agent in charge was largely free to set priorities, which centered on traditional crimes such as white-collar offenses, drugs, and gangs: ==individual field offices served "local priorities, not national priorities."==
-- Counterterrorism and counterintelligence cases, which might never produce quantifiable results, were not career-enhancing.
-- Under the [[Office of Origin|office of origin]] system, the New York Field Office held all Bin Ladin cases, and other offices had little reason to invest in them.
+- Counterterrorism and [[Counterintelligence|counterintelligence]] cases, which might never produce quantifiable results, were not career-enhancing.
+- Under the [[Office of Origin|office of origin]] system, the New York Field Office held all [[Usama Bin Ladin|Bin Ladin]] cases, and other offices had little reason to invest in them.
 
 **Why the 1998 plan failed**[^4]
 - Resources did not shift: counterterrorism spending stayed flat from 1998 to 2001, and in 2000 twice as many agents worked drugs as counterterrorism.

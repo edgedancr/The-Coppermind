@@ -18,10 +18,10 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on: 2026-11-20
+verified_on: 2026-11-23
 ---
 > [!summary]
-> **Actionable intelligence:** intelligence specific enough to act on. Before 9/11, JCS Chairman Shelton made clear his doubts about any military action that risked U.S. lives "unless the intelligence was 'actionable'";[^1] one Special Operations commander's view was "give me the action, I will give you the intelligence".[^2]
+> **Actionable intelligence:** intelligence specific enough to act on. Before [[September 11 Attacks (2001)|9/11]], JCS Chairman Shelton made clear his doubts about any military action that risked U.S. lives "unless the intelligence was 'actionable'";[^1] one Special Operations commander's view was "give me the action, I will give you the intelligence".[^2]
 
 **Used in:** [[August 1998 Missile Strikes]]; compare [[Current vs. Long-Term Intelligence]]
 

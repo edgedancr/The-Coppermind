@@ -15,7 +15,7 @@ verified_on:
 ## Key Points
 **Five capabilities of a strong centaur professional**[^2]
 1. **Domain mastery:** enough substantive expertise to recognize bad assumptions, missing constraints, unsafe recommendations, and fabricated claims.
-2. **AI literacy:** a practical understanding of what a model is good at, what it cannot verify, how prompting and context affect output, and where bias or hallucination can enter.
+2. **AI literacy:** a practical understanding of what a model is good at, what it cannot verify, how [[Prompt Engineering|prompting]] and context affect output, and where bias or [[Hallucination|hallucination]] can enter.
 3. **Workflow design:** deciding which parts of a task should remain human-led, which can be AI-assisted, and which should be automated with guardrails.
 4. **Verification discipline:** source checking, independent calculation, testing and validation, version control, provenance, and documented assumptions.
 5. **Human judgment.**

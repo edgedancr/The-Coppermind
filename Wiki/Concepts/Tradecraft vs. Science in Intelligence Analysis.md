@@ -28,7 +28,7 @@ verified_on:
 - "Good" methods are simply those that survive, with no formal system for measuring their validity or reliability.
 
 **Analysis as science**
-- Analysts described anomaly detection, pattern recognition, scenarios, and weighing diagnostic evidence.[^5] Johnston argues these can be formalized and replicated once their parameters, variables, and rules of evidence are made explicit.[^3]
+- Analysts described anomaly detection, pattern recognition, scenarios, and weighing [[Diagnostic Evidence|diagnostic evidence]].[^5] Johnston argues these can be formalized and replicated once their parameters, variables, and rules of evidence are made explicit.[^3]
 - **The scientific method, broadly**:[^3] observe and describe phenomena; form hypotheses; have independent experts test them; refute or confirm them.
 - Many analysts resisted the idea: "We're not scientists; we're analysts".[^6]
 
@@ -37,7 +37,7 @@ verified_on:
 - Lessons passed on by apprenticeship are lost when experts retire.[^6]
 - Ad hoc methods are seldom tested against competing methods, so analysts choose what they know or what deadlines allow.[^7]
 
-**The medicine parallel:** medicine is also art, tradecraft, and science, but basic sciences revolutionized its practice; intelligence analysis "has not experienced that revolution," because the human sciences beneath it are harder to control.[^8]
+**The medicine parallel:** medicine is also art, tradecraft, and science, but basic sciences revolutionized its practice; [[Intelligence Analysis|intelligence analysis]] "has not experienced that revolution," because the human sciences beneath it are harder to control.[^8]
 
 **His conclusion:** developing the science is easy; the hard part is changing practitioners' perceptions and the culture of tradecraft.[^9] A research agenda that collects effectiveness data is the first step from a tradecraft model to a scientific one.[^7]
 

@@ -9,7 +9,7 @@ drafted_on: 2026-11-19
 verified_on:
 ---
 ## Executive Summary
-Stephen Marrin argues that ICD 203 sets an unattainable standard by requiring analysts to perform their functions with objectivity.[^1] The standard descends from Sherman Kent and the 1940s hope of making social science a science.[^2] In practice bias cannot be eliminated, and analysis has a built-in bias toward warning.[^3] Even if attainable, objectivity may reduce analysts' influence, since policymakers usually ignore the inconvenient fact.[^4] The ideal survives in myths and slogans such as "speaking truth to power",[^5] and it rests on an idealized view of science that scientists themselves have revised.[^6] He proposes aiming at objectivity rather than claiming it.[^7]
+Stephen Marrin argues that ICD 203 sets an unattainable standard by requiring analysts to perform their functions with objectivity.[^1] The standard descends from [[Sherman Kent]] and the 1940s hope of making social science a science.[^2] In practice bias cannot be eliminated, and analysis has a built-in bias toward warning.[^3] Even if attainable, objectivity may reduce analysts' influence, since policymakers usually ignore the inconvenient fact.[^4] The ideal survives in myths and slogans such as "speaking truth to power",[^5] and it rests on an idealized view of science that scientists themselves have revised.[^6] He proposes aiming at objectivity rather than claiming it.[^7]
 
 ## Main Points
 - The standard, its history, and its limits: [[Analytic Objectivity]].

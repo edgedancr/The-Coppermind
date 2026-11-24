@@ -9,7 +9,7 @@ drafted_on: 2026-11-19
 verified_on:
 ---
 ## Executive Summary
-ICD 203 establishes the Intelligence Community's analytic standards, states analysts' responsibility to strive for excellence, integrity, and rigor, and sets out the role of the ODNI Analytic Ombuds.[^1] Dated 2 January 2015, it supersedes the 2007 version.[^2] It applies across the IC, though not to purely law enforcement information.[^3] The standards serve as criteria for evaluating products, a foundation for training, a common professional ethic, and a safeguard for privacy.[^4] Every analytic product must meet five standards, the last of which contains nine tradecraft standards.[^5] The directive then assigns duties for evaluating products, hearing analysts' concerns, and training.[^6]
+ICD 203 establishes the [[United States Intelligence Community|Intelligence Community]]'s analytic standards, states analysts' responsibility to strive for excellence, integrity, and rigor, and sets out the role of the ODNI Analytic Ombuds.[^1] Dated 2 January 2015, it supersedes the 2007 version.[^2] It applies across the IC, though not to purely law enforcement information.[^3] The standards serve as criteria for evaluating products, a foundation for training, a common professional ethic, and a safeguard for privacy.[^4] Every analytic product must meet five standards, the last of which contains nine tradecraft standards.[^5] The directive then assigns duties for evaluating products, hearing analysts' concerns, and training.[^6]
 
 ## Main Points
 - The five standards and nine tradecraft standards: [[ICD 203 Analytic Standards]].[^5]

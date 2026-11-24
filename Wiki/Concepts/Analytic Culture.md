@@ -19,7 +19,7 @@ drafted_on: 2026-11-19
 verified_on:
 ---
 > [!summary]
-> Analytic culture is the set of norms, rewards, and habits that shape how intelligence analysts actually work. Rob Johnston, an anthropologist who began fieldwork in the Intelligence Community four days after 9/11, built his 2005 study on 489 interviews, focus groups, and observation.[^1] He concluded that ==one cannot separate the cognitive aspects of intelligence analysis from its cultural context==.[^2] Gregory Treverton's foreword sums up the findings: no baseline analytic method, a bias toward confirming earlier views, and a process driven by current intelligence.[^3]
+> Analytic culture is the set of norms, rewards, and habits that shape how intelligence analysts actually work. [[Rob Johnston]], an anthropologist who began fieldwork in the [[United States Intelligence Community|Intelligence Community]] four days after [[September 11 Attacks (2001)|9/11]], built his 2005 study on 489 interviews, focus groups, and observation.[^1] He concluded that ==one cannot separate the cognitive aspects of [[Intelligence Analysis|intelligence analysis]] from its cultural context==.[^2] Gregory Treverton's foreword sums up the findings: no baseline analytic method, a bias toward confirming earlier views, and a process driven by current intelligence.[^3]
 
 ## Key Points
 **Johnston's findings**[^4]

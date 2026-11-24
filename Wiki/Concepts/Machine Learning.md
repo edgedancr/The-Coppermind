@@ -15,8 +15,8 @@ verified_on:
 
 ## Key Points
 **Two types of problems**[^1]
-- **Classification** (*What is it? What are its qualities and categories?*): decision trees, ChatGPT, email spam detection, fraud detection. Old-fashioned AI needed far more hand-written rules than is practical to replicate what modern LLMs can do.
-- **Regression** (*How much? What are its quantities and measurements?*): linear regression, neural networks, price forecasting, weather forecasting.
+- **Classification** (*What is it? What are its qualities and categories?*): decision trees, ChatGPT, email spam detection, fraud detection. Old-fashioned AI needed far more hand-written rules than is practical to replicate what modern [[Large Language Model|LLMs]] can do.
+- **Regression** (*How much? What are its quantities and measurements?*): linear regression, [[Neural Network|neural networks]], price forecasting, weather forecasting.
 
 **Learning methods**[^1][^2]
 
@@ -36,7 +36,7 @@ verified_on:
 
 **Other points**[^1]
 - IBM's explainer: with machine learning, "I don't have to program it"; the machine is given lots of information and discovers patterns in it. More training data makes its predictions more confident, and it is especially good at prediction and at spotting outliers, which makes it useful in cybersecurity. It became popular in the 2010s.[^3]
-- LLMs are ML with a very large number of parameters.
+- LLMs are ML with a very large number of [[Parameter|parameters]].
 - AI uses both example and enthymeme (inductive and deductive) reasoning.
 
 > [!todo] Gap in my notes

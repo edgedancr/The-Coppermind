@@ -17,7 +17,7 @@ verified_on:
 
 ## Key Points
 **Goals**[^2]
-- Beijing wants AI to advance economic development and military capability. Its AI discourse focuses on economic and industrial applications, not the "race to AGI" framing sometimes used in Washington.
+- Beijing wants AI to advance economic development and military capability. Its AI discourse focuses on economic and industrial applications, not the "race to [[Artificial General Intelligence|AGI]]" framing sometimes used in Washington.
 - By 2030, it aims for AI to be a $100 billion industry that creates more than $1 trillion of added value in other industries, upgrading sectors such as health care, manufacturing, and agriculture, and powering robotics, autonomous vehicles, and unmanned systems.
 
 **State support at each layer**[^3]

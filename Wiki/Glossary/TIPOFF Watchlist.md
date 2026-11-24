@@ -19,7 +19,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **TIPOFF:** the State Department's watchlist of known and suspected terrorists, some 60,000 names before 9/11.[^1] The 9/11 Commission found that the CIA did not put Khalid al Mihdhar on it after the January 2000 Kuala Lumpur meeting; he and Nawaf al Hazmi were added on August 24, 2001.[^2]
+> **TIPOFF:** the State Department's watchlist of known and suspected terrorists, some 60,000 names before [[September 11 Attacks (2001)|9/11]].[^1] The 9/11 Commission found that the CIA did not put Khalid al Mihdhar on it after the January 2000 Kuala Lumpur meeting; he and Nawaf al Hazmi were added on August 24, 2001.[^2]
 
 **Used in:** [[Late Leads Before September 11 (2001)]], [[Terrorist Travel]]; compare [[Layered Aviation Security]]
 

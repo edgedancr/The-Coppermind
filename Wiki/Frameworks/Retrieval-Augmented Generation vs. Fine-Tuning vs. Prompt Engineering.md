@@ -25,7 +25,7 @@ verified_on:
 	- *Strengths:* up-to-date and domain-specific information.
 	- *Costs:* latency from the retrieval step on every query, and the processing and infrastructure for embedding documents and storing them in a database.
 2. **Fine-tuning**[^3]
-	- *How:* further supervised training of an existing model on a focused dataset, adjusting its weights.
+	- *How:* further supervised training of an existing model on a focused dataset, adjusting its [[Parameter|weights]].
 	- *Strengths:* deep domain expertise; faster at inference; no vector database.
 	- *Costs:* thousands of high-quality examples, heavy GPU computing, retraining to update, and [[Catastrophic Forgetting|catastrophic forgetting]].
 3. **Prompt engineering**[^4]

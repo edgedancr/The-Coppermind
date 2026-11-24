@@ -25,11 +25,11 @@ verified_on:
 2. **Products** must be tailored to scope, mission, and the user's perspective (Lowenthal)[^3]
 	- *Scope:* strategic (largest scope, long-term), operational (regional, mid-term), tactical (line-of-sight, immediate), and technical (threat capabilities, performance, and vulnerabilities; engineering data). See [[Levels of Intelligence]].
 	- *"Good" intelligence:* timely, tailored to the user, digestible (succinct and clear), and stating what is known and unknown.
-	- *Missions:* counterintelligence, [[Denial and Deception|denial and deception]], allied collaboration, and [[Covert Action|covert operations]].
+	- *Missions:* [[Counterintelligence|counterintelligence]], [[Denial and Deception|denial and deception]], allied collaboration, and [[Covert Action|covert operations]].
 3. **Process** (Lowenthal)[^4]
 	- *Cycle:* tasking, collection, processing, exploitation and analysis, and dissemination. See [[Tasking, Collection, Processing, Exploitation, and Dissemination]] and [[Intelligence Collection Disciplines]].
-	- *Classification:* Secret, Top Secret, and SCI compartments; need to know; ORCON and law-enforcement-sensitive markings. See [[Security Classification]].
-4. **Organization:** the U.S. Intelligence Community, formalized in [[Executive Order 12333]]: 17 agencies plus the DNI, with functional managers for HUMINT, GEOINT, MASINT, and SIGINT, and the CIA, DIA, and State Department as all-source producers (Lowenthal).[^5] See [[Intelligence Community Elements and Missions]].
+	- *Classification:* Secret, Top Secret, and SCI compartments; need to know; [[Originator Controlled|ORCON]] and law-enforcement-sensitive markings. See [[Security Classification]].
+4. **Organization:** the U.S. [[United States Intelligence Community|Intelligence Community]], formalized in [[Executive Order 12333]]: 17 agencies plus the [[Director of National Intelligence|DNI]], with functional managers for HUMINT, GEOINT, MASINT, and SIGINT, and the CIA, DIA, and State Department as all-source producers (Lowenthal).[^5] See [[Intelligence Community Elements and Missions]].
 5. **Users:** policymakers, law enforcement, diplomats, and the military, at national, state, local, tribal, and international levels.[^6]
 6. **Persistent themes** from history (Gordon Middleton), in four categories: organization, people, process, and technology.[^7] See [[Themes in U.S. Intelligence]].
 	- *Moral and ethical principles* are required because intelligence needs powerful tools and authority, and because of "the inclination of human nature to use power for selfish ends." Its guides: Scripture (love of neighbor and enemy), "malevolent empathy (Dell Tacket)" and just war, IC directives and agency regulations, and the Constitution, U.S. law, and international conventions. See [[Just War Theory]].

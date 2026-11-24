@@ -24,7 +24,7 @@ verified_on:
 ## Key Points
 **Hossenfelder**[^2]
 - Image and video generators work well within their training examples but produce "garbage" beyond them, like failed attempts to get Veo 3 to show Jupiter removing asteroids with a vacuum cleaner.
-- LLMs are good at summarizing, drafting emails, and producing things similar to what exists, but struggle with anything new, which she calls the biggest obstacle to using them in science.
+- [[Large Language Model|LLMs]] are good at summarizing, drafting emails, and producing things similar to what exists, but struggle with anything new, which she calls the biggest obstacle to using them in science.
 - She also calls the models "purpose bound": trained to find patterns in particular types of data, not an abstract thinking device usable for any purpose.[^3]
 
 **[[Richard Sutton]]**[^1]

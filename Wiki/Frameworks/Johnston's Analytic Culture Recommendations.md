@@ -23,13 +23,13 @@ developed_by:
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on: 2026-11-20
+verified_on: 2026-11-23
 ---
 > [!summary]
 > Rob Johnston's 2005 ethnographic study, *Analytic Culture in the US Intelligence Community*, ends with recommendations that a course handout sums up in five points.[^1] The book itself starts from one structural problem: current reporting competes with [[Indications and Warning|indications and warning]] (I&W) intelligence for time and resources.[^2] It closes with the warning that ==culture and product "are inseparable"==, so an organization must manage its culture "or to be managed by it".[^3]
 
 ## Key Points
-1. **Improve organizational socialization:** give recruits accurate career information and realistic job previews; improve screening with cognitive measures, structured and panel interviews, and situational exercises; and expand degree programs in intelligence analysis.[^4] See [[Anticipatory Socialization]].
+1. **Improve organizational socialization:** give recruits accurate career information and realistic job previews; improve screening with cognitive measures, structured and panel interviews, and situational exercises; and expand degree programs in [[Intelligence Analysis|intelligence analysis]].[^4] See [[Anticipatory Socialization]].
 2. **Recognize that current reporting dominates:** current intelligence brings face time with the policymakers who fund the community, while in-depth warning research pays off only in the abstract and successful warnings are taken for granted.[^2] Johnston asks whether reporting and warning should be separate career tracks.[^5] See [[Current vs. Long-Term Intelligence]].
 3. **Build a performance improvement infrastructure:** measure performance, set standards, find the gaps, intervene, and measure again, supported by research programs.[^6] See [[Performance Improvement Infrastructure]].
 4. **Make training effective:** formal basic and advanced training is the best route to consistent methods, but agencies' programs differ and rarely evaluate student performance;[^7] he wants measures before and after each course.[^8]

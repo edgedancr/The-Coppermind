@@ -19,11 +19,11 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> The 9/11 Commission recommended replacing the Director of Central Intelligence (DCI) with a **National Intelligence Director** with two jobs: overseeing national intelligence centers, and managing the national intelligence program and the agencies that contribute to it.[^1] Intro to Intelligence's grammar summaries note that the Intelligence Reform and Terrorism Prevention Act of 2004 created a Director of National Intelligence (DNI) separate from any intelligence agency.[^2]
+> The 9/11 Commission recommended replacing the Director of Central Intelligence (DCI) with a **National Intelligence Director** with two jobs: overseeing national intelligence centers, and managing the [[National Intelligence Program|national intelligence program]] and the agencies that contribute to it.[^1] Intro to Intelligence's grammar summaries note that the Intelligence Reform and Terrorism Prevention Act of 2004 created a Director of National Intelligence (DNI) separate from any intelligence agency.[^2]
 
 ## Key Points
 **The problem the Commission found**
-- **Too many jobs:** the DCI ran the CIA, managed the Intelligence Community, and served as the government's analyst in chief; ==no recent DCI "has been able to do all three effectively,"== and community management usually lost out.[^3]
+- **Too many jobs:** the DCI ran the CIA, managed the [[United States Intelligence Community|Intelligence Community]], and served as the government's analyst in chief; ==no recent DCI "has been able to do all three effectively,"== and community management usually lost out.[^3]
 - **Limited power:** the DCI's power over the "loose, confederated" community was limited, and his real authority was "directly proportional to his personal closeness to the president".[^4]
 - **Three missing authorities:** control over the purse strings, the ability to hire or fire senior managers, and the ability to set standards for information infrastructure and personnel.[^5]
 - **Six problems:** structural barriers to joint work; no common standards across the foreign-domestic divide; divided management of national capabilities; a weak capacity to set priorities and move resources; too many jobs; and a community "too complex and secret".[^6]

@@ -19,7 +19,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> **Memorandum of Notification (MON):** a legal document authorizing a covert action, such as the 1998 draft authorizing a capture operation against Bin Ladin;[^1] the CIA must bring presidentially authorized covert action findings and memoranda of notification to the congressional intelligence committees.[^2]
+> **Memorandum of Notification (MON):** a legal document authorizing a covert action, such as the 1998 draft authorizing a capture operation against [[Usama Bin Ladin|Bin Ladin]];[^1] the CIA must bring presidentially authorized covert action findings and memoranda of notification to the congressional intelligence committees.[^2]
 
 **Used in:** [[Covert Action Authorities Against Bin Ladin]], [[Tarnak Farms Capture Plan (1998)]]
 

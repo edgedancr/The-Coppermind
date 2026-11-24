@@ -20,13 +20,13 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> In the spring and summer of 2001, terrorist threat reporting rose to its highest level since the millennium alert; DCI George Tenet told the 9/11 Commission that "the system was blinking red".[^1] The Commission found that ==the attacks "fell into the void between the foreign and domestic threats"==: agencies abroad acted on the warnings, while domestic agencies "never mobilized".[^2]
+> In the spring and summer of 2001, terrorist threat reporting rose to its highest level since the [[Millennium Alert (1999–2000)|millennium alert]]; DCI George Tenet told the 9/11 Commission that "the system was blinking red".[^1] The Commission found that ==the attacks "fell into the void between the foreign and domestic threats"==: agencies abroad acted on the warnings, while domestic agencies "never mobilized".[^2]
 
 ## What Happened
-- **The drumbeat (spring):** reports to top officials warned that Bin Ladin was planning multiple operations, and in late May of a possible plot to hijack an aircraft or storm an embassy to free prisoners.[^3]
+- **The drumbeat (spring):** reports to top officials warned that [[Usama Bin Ladin|Bin Ladin]] was planning multiple operations, and in late May of a possible plot to hijack an aircraft or storm an embassy to free prisoners.[^3]
 - **The peak (June–July):** a late-June advisory warned of a high probability of near-term "spectacular" attacks; on June 28 Richard Clarke wrote that attack planning "had reached a crescendo" and that a major attack was likely in July.[^4] Most reports pointed overseas, to Saudi Arabia, Israel, Bahrain, Kuwait, Yemen, and possibly Rome.[^5]
 - **Responses abroad:** U.S. forces in six countries went to the highest protection level, the Fifth Fleet left Bahrain, the embassy in Yemen closed, and disruption operations ran in 20 countries.[^6]
-- **The August 6 PDB:** "Bin Ladin Determined to Strike in US," the 36th [[President's Daily Brief]] item on Bin Ladin or al-Qaeda that year and the first devoted to an attack in the United States.[^7] The Commission found no further discussion among the President and his top advisers of a domestic al-Qaeda attack before 9/11.[^8]
+- **The August 6 PDB:** "Bin Ladin Determined to Strike in US," the 36th [[President's Daily Brief]] item on Bin Ladin or [[Al-Qaeda|al-Qaeda]] that year and the first devoted to an attack in the United States.[^7] The Commission found no further discussion among the President and his top advisers of a domestic al-Qaeda attack before 9/11.[^8]
 
 ## What Went Wrong
 - **Few specifics:** the threats "contained few specifics regarding time, place, method, or target," and most pointed overseas.[^9]

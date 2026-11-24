@@ -18,10 +18,10 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on: 2026-11-21
+verified_on: 2026-11-23
 ---
 > [!summary]
-> **Economic intelligence:** the Intelligence Community supports the economic domain by conducting foreign economic espionage, monitoring threats to the supply chain, forecasting major economic shifts, and monitoring competition for materials, oil, and natural gas.[^1] **Financial intelligence (FININT)** is the part of it that follows money flows, especially from illicit or illegal activity; because money now moves mostly digitally, FININT often shades into cyber intelligence.[^2]
+> **Economic intelligence:** the [[United States Intelligence Community|Intelligence Community]] supports the economic domain by conducting foreign economic espionage, monitoring threats to the supply chain, forecasting major economic shifts, and monitoring competition for materials, oil, and natural gas.[^1] **Financial intelligence (FININT)** is the part of it that follows money flows, especially from illicit or illegal activity; because money now moves mostly digitally, FININT often shades into cyber intelligence.[^2]
 
 **Used in:** [[Al-Qaeda Financing]], none yet; compare [[Strengths and Weaknesses of the Collection Disciplines]], [[Intelligence Collection Disciplines]] (FININT), [[Hawala]]
 

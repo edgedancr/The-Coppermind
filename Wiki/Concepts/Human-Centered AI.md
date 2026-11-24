@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - HCAI
 courses:
@@ -10,12 +10,12 @@ sources:
   - "[[SRC - What Is Human-Centered AI]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-11
+verified_on: 2026-11-23
 ---
 > [!summary]
 > Human-centered AI (HCAI) is the approach of building AI to amplify human abilities rather than replace them. SAIL quoted IBM's 2022 definition:[^1]
 
-> "Human-Centered AI (HCAI) is an emerging discipline intent on creating AI systems that amplify and augment rather than displace human abilities. HCAI seeks to preserve human control in a way that ensures artificial intelligence meets our needs while also operating transparently, delivering equitable outcomes, and respecting privacy." (IBM, 2022)
+> "Human-Centered AI (HCAI) is an emerging discipline intent on creating AI systems that amplify and augment rather than displace human abilities. HCAI seeks to preserve human control in a way that ensures [[Artificial Intelligence|artificial intelligence]] meets our needs while also operating transparently, delivering equitable outcomes, and respecting privacy." (IBM, 2022)
 
 ## Key Points
 - Work as a human–AI team: ==augmentation, not abdication==.[^1]

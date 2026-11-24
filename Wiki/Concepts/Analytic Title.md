@@ -25,7 +25,7 @@ verified_on:
 - **Descriptive vs. analytic:** "Assessing the Political Strengths and Weaknesses of President John Doe" only names a topic; "President John Doe Struggling to Assert Power" makes a judgment.[^1]
 - **Working title first, final title last:** a working title focuses the paper from the start, and the writer refines it once the paper is done.[^1] The titles handout gives the same advice,[^3] and the BLUF handout says to write the title last.[^2]
 - **Shorten it:** "Significant Local Opposition to Extremists in Antarctica" becomes "Residents Oppose Extremists in Antarctica".[^4]
-- **Accurate, brief, and clear:** "Cloak of Mist: The Keys To Disappearing" tells a busy reader nothing about its subject; "The Keys to Disappearing: Essential Tools for Covert Agent Tradecraft" does.[^2] A wordy title about covert action becomes "Covert Action: The Lessons of Past Failures and Successes".[^5]
+- **Accurate, brief, and clear:** "Cloak of Mist: The Keys To Disappearing" tells a busy reader nothing about its subject; "The Keys to Disappearing: Essential Tools for Covert Agent Tradecraft" does.[^2] A wordy title about [[Covert Action|covert action]] becomes "Covert Action: The Lessons of Past Failures and Successes".[^5]
 - **The titles handout's checklist**:[^6]
 	- State the subject and scope accurately, and name the key variables.
 	- Avoid abbreviations and constructions such as "study of" or "analysis of."

@@ -10,13 +10,13 @@ sources:
   - "[[SRC - AI and Biblical Thinking (Bible Study Fellowship)]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-21
-verified_on: 2026-11-21
+verified_on: 2026-11-23
 ---
 > [!summary]
 > John Lennox, called "Professor Lennox" in the interview, speaks "as a Christian" about AI.[^1] He says he wrote a book on AI after realizing that some of the more speculative AGI scenarios "are very parallel to what scripture talks about when it talks about the future," and that he has "just written a big book" on the Book of Revelation.[^2] He appears in the Coppermind for a Bible Study Fellowship interview on AI, a resource for Intro to Intelligence.
 
 ## Key Ideas and Contributions
-- **Machines only simulate intelligence:** he calls "artificial intelligence," "machine intelligence," and "machine learning" anthropomorphisms, "risky because these machines are not intelligent."[^1] See [[Intelligence vs. Consciousness]].
+- **Machines only simulate intelligence:** he calls "[[Artificial Intelligence|artificial intelligence]]," "machine intelligence," and "[[Machine Learning|machine learning]]" anthropomorphisms, "risky because these machines are not intelligent."[^1] See [[Intelligence vs. Consciousness]].
 - **AI worship as idolatry:** AI seems omnipresent and omniscient, and treating it as a god gives people "an alternate god"; =="from a Christian perspective, that is sheer idolatry."==[^1] See [[AI Idolatry]].
 - **Against transhumanism:** he reads Yuval Noah Harari's *Homo Deus* as a drive to make humans into gods, and answers that physical death "was solved 20 centuries ago when God raised Jesus from the dead."[^1][^2] See [[Transhumanism]].
 - **AGI needs consciousness:** "We don't even know what consciousness is, let alone build it," so without it there is no AGI "in the fullest sense of the word."[^1] See [[Artificial General Intelligence]].

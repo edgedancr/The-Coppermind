@@ -19,7 +19,7 @@ drafted_on: 2026-11-18
 verified_on:
 ---
 > [!summary]
-> The "planes operation" was al-Qaeda's name for the 9/11 plot.[^1] [[Khalid Sheikh Mohammed]] (KSM), whom the 9/11 Commission calls its principal architect, proposed to Bin Ladin in 1996 an operation to train pilots who would crash planes into buildings in the United States; Bin Ladin approved it in late 1998 or early 1999.[^2]
+> The "planes operation" was [[Al-Qaeda|al-Qaeda]]'s name for the 9/11 plot.[^1] [[Khalid Sheikh Mohammed]] (KSM), whom the 9/11 Commission calls its principal architect, proposed to [[Usama Bin Ladin|Bin Ladin]] in 1996 an operation to train pilots who would crash planes into buildings in the United States; Bin Ladin approved it in late 1998 or early 1999.[^2]
 
 ## Key Points
 - **Origins:** KSM and his nephew Ramzi Yousef reasoned that striking the U.S. economy would best influence U.S. policy, and began thinking of aircraft as weapons during their 1995 Manila air ("Bojinka") plot.[^3] KSM's original plan, ten hijacked aircraft with KSM landing the last to make a speech, struck the Commission as "theater".[^1]
