@@ -1,8 +1,9 @@
 ---
 type: schema
-status: draft
+status: verified
 owner: Harrison Nickles
 updated: 2026-11-22
+verified_on: 2026-11-23
 ---
 How scans of my handwritten notes become class notes in the Tinmind, and how I check them. Read this file for any task I say is about the Tinmind. The permissions are in `_AGENTS.md`; the review tool is [[Nicrosil]]'s **Transcription queue**.
 

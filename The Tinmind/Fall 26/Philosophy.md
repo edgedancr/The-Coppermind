@@ -8,4 +8,4 @@ transcription: draft
 scan_pages:
   - IMG_0861.jpg
 ---
-- Library-SC
+

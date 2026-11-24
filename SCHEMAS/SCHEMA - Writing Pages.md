@@ -2,8 +2,8 @@
 type: schema
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-20
-verified_on: 2026-11-20
+updated: 2026-11-23
+verified_on: 2026-11-23
 ---
 How to write a page in `Wiki/`, a source card, or (for me) a perspective: what to name it, what goes in its properties, how it links, how it cites, whose voice it is in, and how it reads. Any agent drafting or editing a page reads the sections the edit touches.
 
@@ -75,7 +75,13 @@ Read each one as a sentence: "this page ___ the target." The types are listed in
 3. **Typed links say how two ideas relate; plain links in the text say "see also."** A link that only means "see also" or "compare" stays in the page text ("Used in:", "See", "Compare") and does not also go in `related`.
 4. **Choose the type in table order.** Try each type from the top, and use `related` only when none fits. Every proposed `related` link names the closest type and says why it doesn't fit.
 5. **When a "Sources disagree" callout sets a claim on one page against a claim on another page,** the agent also proposes a `contradicts` link between the two pages.
-6. **Glossary terms and the concept pages that use them link to each other in the page text:** a glossary term's "Used in:" line names the concept pages, and a concept page links a glossary term on first use. Add a typed link only when a type fits, and only on one of the two pages (rule 1).
+6. **Link the first mention of every page that exists.** The first time a page names an idea, person, case, framework, or workflow that has its own page in `Wiki/`, by its title or any of its aliases (plurals and short forms included), that mention is a link. This holds on every type of page, for every type of target: glossary terms, concepts, frameworks, case studies, people, and workflows alike, not only glossary terms in concept pages. The summary callout counts as text, so a name there is the first mention; footnote definitions don't (they are citations), and a page never links to itself.
+   - **Link the words as they are written.** Use display text when they differ from the title, so the sentence doesn't change: `[[Large Language Model|LLMs]]`, `[[Usama Bin Ladin|Bin Ladin]]`.
+   - **Later mentions on the same page stay plain.**
+   - **Same words, different thing: leave it plain.** "The Wall Street Journal" is not [[The Wall (FBI)]].
+   - **A glossary term's "Used in:" line still names the concept and framework pages where it matters.**
+   - These are "see also" links (rule 3). Add a typed link only when a type fits, and only on one of the two pages (rule 1).
+   - Pages created before a link target existed get the link from the ingest that creates the target ([[SCHEMA - Ingest#5. Backfill links to the new pages]]).
 7. **Link to a page that doesn't exist yet only if the agent is proposing to create it** in the same operation. Otherwise use plain text.
 8. **Links inside original source files are left alone**, even if they point to notes outside this vault.
 

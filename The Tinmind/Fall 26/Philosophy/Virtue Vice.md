@@ -47,4 +47,5 @@ semester: "Fall 26"
 	- The self-lover gratifies the most controlling part of himself.
 - Bk 9.9 (pg. 345-347)
 	- Having friends seems to be the greatest external good.
+	- The solitary person's lie is hard since it is hard to be continuously active all by himself.
 	- 
