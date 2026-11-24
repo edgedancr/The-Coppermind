@@ -1,9 +1,12 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]", "[[SRC - The 9-11 Commission Report]]"]
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +19,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **National Security Act of 1947:** the law that created the modern U.S. national security apparatus: the National Security Council, the Joint Chiefs of Staff, and a CIA chartered to "perform such other functions" as directed.[^1] The 9/11 Commission Report notes that FBI lobbying and fears of creating a U.S. Gestapo led to the FBI's being given internal security and counterespionage, while the CIA was accorded "no police, subpoena, or law enforcement powers or internal security functions".[^2]

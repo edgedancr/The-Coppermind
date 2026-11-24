@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - Positional Encodings
 courses:
@@ -11,7 +11,7 @@ part_of:
   - "[[Transformer]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **Positional encoding:** information about each token's position, added to its [[Embedding|embedding]] so the [[Transformer|transformer]] can use word order, since it has no recurrence to track it.[^1] The original paper used sine and cosine waves of different frequencies, and found learned positional embeddings gave nearly identical results.[^1]

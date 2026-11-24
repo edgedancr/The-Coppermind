@@ -1,11 +1,15 @@
 ---
 type: glossary
-status: draft
-aliases: ["ORCON"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]"]
+status: verified
+aliases:
+  - ORCON
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 type_of: []
-part_of: ["[[Security Classification]]"]
+part_of:
+  - "[[Security Classification]]"
 example_of: []
 causes: []
 counters: []
@@ -16,7 +20,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **ORCON:** a classification marking reflecting an agency's "ownership" of its data: further distributing the intelligence, or including it in another document, must be approved by the originating agency.[^1] It has since been supplemented by Mike McConnell's recommendation of a "responsibility to provide"; the course's summary notes that ORCON may slow the flow of shared intelligence while protecting sources and methods.[^2]

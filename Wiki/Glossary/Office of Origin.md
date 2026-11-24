@@ -1,9 +1,11 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +18,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **Office of origin:** the FBI system that puts a single field office in charge of an entire investigation. Because the New York Field Office indicted [[Usama Bin Ladin|Bin Ladin]] before the East Africa bombings, it became the office of origin for all Bin Ladin cases, and other field offices were often reluctant to spend energy on matters they did not control and received no credit for.[^1]

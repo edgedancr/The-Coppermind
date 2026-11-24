@@ -1,9 +1,13 @@
 ---
 type: glossary
-status: draft
-aliases: ["Automatic Selectee List", "No-Fly and Automatic Selectee Lists"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+status: verified
+aliases:
+  - Automatic Selectee List
+  - No-Fly and Automatic Selectee Lists
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +20,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **No-fly and automatic selectee lists:** government orders, enforced by air carriers, that stop certain known and suspected terrorists from boarding commercial flights or send them to secondary screening; they include only people the government believes pose a direct threat of attacking aviation.[^1] On [[September 11 Attacks (2001)|9/11]] the FAA's no-fly list held just 12 names, including [[Khalid Sheikh Mohammed]]'s, while government watchlists held many thousands;[^2] the 9/11 Commission recommended that the TSA run this screening using the larger set of watchlists.[^3]

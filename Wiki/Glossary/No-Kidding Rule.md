@@ -1,11 +1,15 @@
 ---
 type: glossary
-status: draft
-aliases: ["No-Kidding Test"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Analytic Writing Guide (Kaiser and Pherson)]]"]
+status: verified
+aliases:
+  - No-Kidding Test
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Analytic Writing Guide (Kaiser and Pherson)]]"
 type_of: []
-part_of: []
+part_of:
+  - "[[Economizing on Words]]"
 example_of: []
 causes: []
 counters: []
@@ -16,7 +20,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **No-kidding rule:** Kaiser and Pherson's test for cutting the obvious: read each sentence from a "no-kidding" perspective, and if it draws that response, it can probably be deleted with little loss to the reader.[^1] It applies to factual and analytic sentences alike.[^1]

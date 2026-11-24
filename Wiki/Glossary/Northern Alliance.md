@@ -1,9 +1,11 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases: []
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +18,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **Northern Alliance:** the anti-Taliban forces in northeastern Afghanistan led by Ahmed Shah Massoud, perhaps the CIA's best capture option in 1999, though by December the CIA rated the chance he would act against [[Usama Bin Ladin|Bin Ladin]] at under 15 percent.[^1] Massoud was assassinated by [[Al-Qaeda|al-Qaeda]] operatives disguised as journalists on September 9, 2001.[^2]

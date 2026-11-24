@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - Pretraining
 courses:
@@ -13,7 +13,7 @@ related:
   - "[[Reinforcement Learning with Human Feedback]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **Pre-training:** the first stage of training a [[Large Language Model|large language model]], in which it learns to autocomplete passages from an enormous amount of text, typically pulled from the internet,[^1].[^2] Because autocompleting internet text is a different goal from being a good AI assistant, chatbots get further training afterward.[^3]

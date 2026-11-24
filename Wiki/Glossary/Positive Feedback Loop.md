@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - Feedback Loop
   - AI Feedback Loop
@@ -12,7 +12,7 @@ part_of:
   - "[[Algorithmic Bias]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **Positive feedback loop:** when an algorithm influences the data it later receives, which Crash Course AI says basically means "amplifying what happened in the past," whether or not that amplification is good.[^1] Its examples are [[PredPol]][^1] and the hypothetical hiring system "HireMe!".[^2]

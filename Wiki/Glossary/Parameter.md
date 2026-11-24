@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - Parameters
   - Weights
@@ -14,7 +14,7 @@ part_of:
   - "[[Neural Network]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **Parameter:** one of the continuous values, also called weights, that entirely determine how a model behaves; changing them changes its predictions.[^1] In a [[Neural Network|neural network]], each connection has a **weight**, and each neuron a **bias** that sets how high the weighted sum must be before it becomes meaningfully active.[^2] 3Blue1Brown's small digit network has about 13,000;[^3] large language models have hundreds of billions.[^1]

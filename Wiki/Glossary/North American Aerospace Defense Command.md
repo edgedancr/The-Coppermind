@@ -1,9 +1,12 @@
 ---
 type: glossary
-status: draft
-aliases: ["NORAD"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+status: verified
+aliases:
+  - NORAD
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +19,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **North American Aerospace Defense Command (NORAD):** the command responsible for defending U.S. airspace, working with the FAA in the event of a hijacking.[^1] The 9/11 Commission found it had construed that mission as facing threats from outside the country, so its scenarios considered hijacked aircraft only if they came from overseas.[^2]

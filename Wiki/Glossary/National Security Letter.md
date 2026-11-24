@@ -1,9 +1,12 @@
 ---
 type: glossary
-status: draft
-aliases: ["NSL"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]"]
+status: verified
+aliases:
+  - NSL
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +19,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **National security letter (NSL):** a type of administrative subpoena: an investigative technique that requires "recipients to turn over records and data pertaining to individuals," with a gag order that bars the recipient from revealing its contents or even that it exists.[^1]

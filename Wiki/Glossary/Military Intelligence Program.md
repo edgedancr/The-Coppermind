@@ -1,9 +1,12 @@
 ---
 type: glossary
-status: draft
-aliases: ["MIP"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]"]
+status: verified
+aliases:
+  - MIP
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +19,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **Military Intelligence Program (MIP):** the budget program that funds Department of Defense intelligence programs supporting tactical military operations.[^1] In the course's answer on congressional oversight, the House Armed Services Committee oversees the MIP agencies.[^2]
