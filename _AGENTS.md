@@ -1,23 +1,22 @@
-# The Coppermind: start here
 
 This folder is the Coppermind, Harrison Nickles's personal LLM wiki: an Obsidian vault of Markdown pages. It runs on one rule: **Harrison designs, the AI drafts, Harrison verifies.** Nothing becomes part of the wiki as final until he has reviewed and approved it.
 
-**This is the only file you read every time.** It holds the rules that apply to every task and tells you which rule files in `SCHEMAS/` your task needs. Read those, and only those. Where this file, a rule file, and an instruction in chat disagree, ask Harrison before acting.
+**This is the only file you read every time.** It holds the rules framework that apply to every task and tells you which rule files in `SCHEMAS/` your task needs. Read those, and only those. Where this file, a rule file, and an instruction in chat disagree, ask Harrison before acting.
 
 ## Which rule files to read
 
-| The task | Also read (all in `SCHEMAS/`) |
-|---|---|
-| Answering a question from the wiki (query) | `SCHEMA - Query.md` |
-| Ingesting a source | `SCHEMA - Ingest.md` and `SCHEMA - Writing Pages.md` |
-| Drafting or editing a wiki page or source card outside an ingest | `SCHEMA - Writing Pages.md` (only the sections the edit touches) |
-| Changing a verified page, or marking a page verified when told to | `SCHEMA - Review.md` |
-| A health check | `SCHEMA - Health Check.md` |
-| Changing a rule file, a template, a tool in `Tools/`, or the Nicrosil plugin (any file in its folder, even a one-line style tweak) | `SCHEMA - Changes.md` |
-| Archiving the log, fixing the index, or anything about git | `SCHEMA - Index and Log.md` |
-| Any task Harrison says is about the Tinmind (transcribing scans of his handwritten notes, a class note, a course file) | `SCHEMA - Transcription.md` |
-| Moving the vault to another tool, or testing an export | `SCHEMA - Export.md` |
-| Understanding the vault's layout and what each folder is for | `SCHEMA.md` |
+| The task                                                                                                                           | Also read (all in `SCHEMAS/`)                                    |
+| ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Answering a question from the wiki (query)                                                                                         | `SCHEMA - Query.md`                                              |
+| Ingesting a source                                                                                                                 | `SCHEMA - Ingest.md` and `SCHEMA - Writing Pages.md`             |
+| Drafting or editing a wiki page or source card outside an ingest                                                                   | `SCHEMA - Writing Pages.md` (only the sections the edit touches) |
+| Changing a verified page, or marking a page verified when told to                                                                  | `SCHEMA - Review.md`                                             |
+| A health check                                                                                                                     | `SCHEMA - Health Check.md`                                       |
+| Changing a rule file, a template, a tool in `Tools/`, or the Nicrosil plugin (any file in its folder, even a one-line style tweak) | `SCHEMA - Changes.md`                                            |
+| Archiving the log, fixing the index, or anything about git                                                                         | `SCHEMA - Index and Log.md`                                      |
+| Any task Harrison says is about the Tinmind (transcribing scans of his handwritten notes, a class note, a course file)             | `SCHEMA - Transcription.md`                                      |
+| Moving the vault to another tool, or testing an export                                                                             | `SCHEMA - Export.md`                                             |
+| Understanding the vault's layout and what each folder is for                                                                       | `SCHEMA.md`                                                      |
 
 More than one row can apply. Don't read anything in `_changelogs/` (the rules' changelog and Nicrosil's) unless you are adding a line to one or are asked about the history.
 

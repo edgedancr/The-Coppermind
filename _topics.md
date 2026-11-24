@@ -1,4 +1,4 @@
-The major topics of the Coppermind. Nicrosil's atlas draws one circle for each topic below and works out which topic every other page belongs to from the links between pages, so pages carry no topic property and the atlas redraws itself as the wiki changes.
+The major topics of the Coppermind. Nicrosil's atlas draws one circle for each topic below and works out which topic every other page belongs to from the links between pages, so the atlas redraws itself as the wiki changes.
 
 - **Each topic** is a `##` heading (its name on the atlas), one line saying what it covers, and a list of **anchor pages**: the two to six pages at its center. Anchors are pinned to their topic; every other page joins the topic it is most closely linked to.
 - **To move a page** into a different topic, list it as an anchor there. A page listed under two topics stays in the first.
