@@ -318,6 +318,33 @@ function groupRank(g) {
 }
 
 /** Order drafts for review. Skipped pages go to the end, in the order they were skipped. */
+/** The line a typed link adds to `changes_since_verified` on a verified page (4.1.0). The target is plain text, not a [[link]], so it isn't read as a second link. */
+function typedLinkNote(date, type, name) {
+  return `${date}: Added typed link ${type} → ${name} (Add typed link button)`;
+}
+
+/** The Wiki pages that match what was typed, best first, at most 8: exact name, name start, a word's start, anywhere in the name, then an alias. Nothing for an empty box. */
+function rankTargets(targets, query) {
+  const s = String(query || "").trim().toLowerCase();
+  if (!s) return [];
+  const rows = [];
+  for (const t of targets) {
+    const n = t.name.toLowerCase();
+    let rank = -1, alias = "";
+    if (n === s) rank = 0;
+    else if (n.startsWith(s)) rank = 1;
+    else if (n.split(/[\s\-–—(]+/).some((w) => w.startsWith(s))) rank = 2;
+    else if (n.includes(s)) rank = 3;
+    else {
+      const a = t.aliases.find((x) => x.toLowerCase().includes(s));
+      if (a) { rank = 4; alias = a; }
+    }
+    if (rank >= 0) rows.push({ t, rank, alias });
+  }
+  rows.sort((a, b) => a.rank - b.rank || a.t.name.localeCompare(b.t.name));
+  return rows.slice(0, 8);
+}
+
 /** The `changes_since_verified` property as a list of plain strings (it may be a list or a single string). */
 function changeLines(v) {
   if (v === undefined || v === null || v === "") return [];
@@ -4039,12 +4066,12 @@ module.exports = class Nicrosil extends Plugin {
     document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-agents-leaf, .cm-topics-leaf, .cm-tinnote-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => { e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-agents-leaf", "cm-topics-leaf", "cm-tinnote-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"); e.style.removeProperty("--cm-log-title"); });
     document.querySelectorAll(".cm-dashboard-tab").forEach((e) => e.classList.remove("cm-dashboard-tab"));
     document.body.classList.remove("cm-quiet");
-    document.querySelectorAll(".cm-propstrip, .cm-ratebar, .cm-mytake").forEach((e) => e.remove());
+    document.querySelectorAll(".cm-propstrip, .cm-ratebar, .cm-mytake, .cm-typedbar").forEach((e) => e.remove());
     this.stripObservers.forEach((o) => o.disconnect());
     this.stripObservers.clear();
     this.popObservers.forEach((o) => o.disconnect());
     this.popObservers.clear();
-    this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view && l.view.containerEl) { l.view.containerEl.classList.remove("cm-strip-leaf", "cm-props-open"); l.view.containerEl.querySelectorAll(".cm-propstrip, .cm-ratebar, .cm-mytake").forEach((e) => e.remove()); l.view.__cmStripObs = null; } });
+    this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view && l.view.containerEl) { l.view.containerEl.classList.remove("cm-strip-leaf", "cm-props-open"); l.view.containerEl.querySelectorAll(".cm-propstrip, .cm-ratebar, .cm-mytake, .cm-typedbar").forEach((e) => e.remove()); l.view.__cmStripObs = null; } });
   }
 
   async persist() {
@@ -5073,7 +5100,7 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   removeStrips(view) {
-    view.containerEl.querySelectorAll(".cm-propstrip, .cm-ratebar, .cm-mytake").forEach((e) => e.remove());
+    view.containerEl.querySelectorAll(".cm-propstrip, .cm-ratebar, .cm-mytake, .cm-typedbar").forEach((e) => e.remove());
     if (view.__cmStripObs) { view.__cmStripObs.disconnect(); this.stripObservers.delete(view.__cmStripObs); view.__cmStripObs = null; }
   }
 
@@ -5128,6 +5155,14 @@ module.exports = class Nicrosil extends Plugin {
       if (!back || p.__cmFile !== file || !nx || !(nx.classList.contains("inline-title") || nx.classList.contains("cm-propstrip") || nx.classList.contains("metadata-container"))) p.remove();
     });
     metas.forEach((meta) => {
+      // The Add typed link button sits at the end of the open Properties block, on pages in Wiki/ (4.1.0).
+      let tbar = meta.querySelector(":scope > .cm-typedbar");
+      if (inPreview || !/^Wiki\//.test(file.path)) { if (tbar) tbar.remove(); }
+      else {
+        if (!tbar) { tbar = document.createElement("div"); tbar.className = "cm-typedbar"; meta.appendChild(tbar); }
+        if (tbar.__cmFile !== file) { tbar.__cmFile = file; tbar.__open = false; this.drawTypedBar(tbar, file); }
+        else if (tbar.__refresh) tbar.__refresh();
+      }
       if (back) {
         const anchor = meta.parentElement.querySelector(":scope > .inline-title") || (meta.previousElementSibling && meta.previousElementSibling.classList.contains("cm-propstrip") ? meta.previousElementSibling : meta);
         let pill = anchor.previousElementSibling;
@@ -6266,6 +6301,155 @@ module.exports = class Nicrosil extends Plugin {
       use.addEventListener("click", (e) => { e.stopPropagation(); this.setRating(file, "both", proposed); });
     }
     if (proposed === undefined) this.proposedRating(file).then((p) => { if (host.isConnected) this.drawRatingButtons(host, file, p); });
+  }
+
+  /* --- Add typed link (4.1.0) --- */
+
+  /** The Wiki pages a typed link can point to, other than the page itself: { file, name, aliases }. */
+  typedTargets(file) {
+    const out = [];
+    for (const f of this.app.vault.getMarkdownFiles()) {
+      if (!f.path.startsWith("Wiki/") || f.path === file.path) continue;
+      const a = this.fm(f).aliases;
+      const aliases = (a === undefined || a === null ? [] : [].concat(a)).map((x) => String(x).trim()).filter(Boolean);
+      out.push({ file: f, name: f.basename, aliases });
+    }
+    return out;
+  }
+
+  /**
+   * Adds [[target]] to the typed-link property `type`. A link already under that type is left alone ("duplicate").
+   * On a verified page the same edit sets status: draft, keeps verified_on and adds a changes_since_verified line, as SCHEMA - Review rule 8 says ("reset").
+   * `other` lists the other typed properties that already link to the target, so the caller can say so.
+   */
+  async addTypedLink(file, type, target) {
+    const link = `[[${this.app.metadataCache.fileToLinktext(target, file.path)}]]`;
+    const other = [];
+    let outcome = "added";
+    await this.app.fileManager.processFrontMatter(file, (f) => {
+      const list = (k) => (f[k] === undefined || f[k] === null || f[k] === "" ? [] : [].concat(f[k]).flat(3));
+      const hits = (k) => list(k).filter((v) => {
+        const m = /\[\[([^\]|#]+)/.exec(String(v));
+        const dest = m && this.app.metadataCache.getFirstLinkpathDest(m[1].trim(), file.path);
+        return dest && dest.path === target.path;
+      });
+      if (hits(type).length) { outcome = "duplicate"; return; }
+      for (const k of Object.keys(REL_TYPES)) if (k !== type && hits(k).length) other.push(k);
+      f[type] = [...list(type), link];
+      if (f.status === "verified") {
+        f.status = "draft";
+        f.changes_since_verified = [...changeLines(f.changes_since_verified), typedLinkNote(today(), type, target.basename)];
+        outcome = "reset";
+      }
+    });
+    return { outcome, other };
+  }
+
+  /**
+   * The button under the properties, and the row it opens: "This page [type] [search for a page] Add". Enter adds and keeps the row open for the next link; Esc closes it.
+   * Drawn once per page, not on every redraw of the note, so what is being typed isn't lost.
+   */
+  drawTypedBar(host, file) {
+    host.empty();
+    host.__refresh = null;
+    if (!host.__open) {
+      const b = host.createEl("button", { cls: "cm-typed-open", attr: { type: "button", title: "Add a typed link to this page" } });
+      setIcon(b.createSpan({ cls: "cm-typed-ico" }), "plus");
+      b.createSpan({ text: "Add typed link" });
+      b.addEventListener("click", (e) => {
+        e.stopPropagation();
+        host.__open = true;
+        this.drawTypedBar(host, file);
+        const i = host.querySelector(".cm-typed-input");
+        if (i) i.focus();
+      });
+      return;
+    }
+    const targets = this.typedTargets(file);
+    const box = host.createDiv({ cls: "cm-typed-box" });
+    box.createSpan({ cls: "cm-typed-lbl", text: "This page" });
+    const sel = box.createEl("select", { cls: "dropdown cm-typed-type", attr: { "aria-label": "Link type" } });
+    for (const [k, v] of Object.entries(REL_TYPES)) { const o = sel.createEl("option", { text: k, value: k }); o.title = v.out; }
+    sel.value = this.lastTypedType && REL_TYPES[this.lastTypedType] ? this.lastTypedType : "supports";
+    sel.addEventListener("change", () => { this.lastTypedType = sel.value; });
+    const find = box.createDiv({ cls: "cm-typed-find" });
+    const input = find.createEl("input", { cls: "cm-typed-input", attr: { type: "text", placeholder: "Search pages", "aria-label": "Page to link to", autocomplete: "off", spellcheck: "false" } });
+    const list = find.createDiv({ cls: "cm-typed-list" });
+    const add = box.createEl("button", { cls: "cm-mini mod-cta", text: "Add", attr: { type: "button" } });
+    const cancel = box.createEl("button", { cls: "cm-mini", text: "Cancel", attr: { type: "button" } });
+    const msg = host.createDiv({ cls: "cm-typed-msg" });
+    let rows = [], active = 0, chosen = null;
+    const note = (text, kind) => { msg.setText(text || ""); msg.dataset.k = kind || ""; msg.className = "cm-typed-msg" + (kind ? " is-" + kind : ""); };
+    const idle = () => { const v = this.fm(file).status === "verified"; note(v ? "This page is verified. Adding a link sets its status back to draft." : "", v ? "warn" : ""); };
+    host.__refresh = () => { if (!msg.dataset.k || msg.dataset.k === "warn") idle(); };
+    const close = () => { host.__open = false; this.drawTypedBar(host, file); };
+    const mark = () => list.querySelectorAll(".cm-typed-item").forEach((el, i) => el.classList.toggle("is-active", i === active));
+    const pick = (r) => { chosen = r.t; input.value = r.t.name; list.removeClass("is-open"); idle(); };
+    const showList = () => {
+      rows = rankTargets(targets, input.value);
+      active = 0;
+      list.empty();
+      rows.forEach((r) => {
+        const it = list.createDiv({ cls: "cm-typed-item" });
+        it.createSpan({ cls: "cm-typed-name", text: r.alias ? `${r.alias} → ${r.t.name}` : r.t.name });
+        it.createSpan({ cls: "cm-typed-grp", text: r.t.file.parent && r.t.file.parent.name !== "Wiki" ? r.t.file.parent.name : "" });
+        it.addEventListener("mousedown", (e) => { e.preventDefault(); pick(r); });
+      });
+      mark();
+      list.toggleClass("is-open", rows.length > 0);
+    };
+    const submit = async () => {
+      let t = chosen;
+      if (!t) {
+        const s = input.value.trim().toLowerCase();
+        t = s ? targets.find((x) => x.name.toLowerCase() === s) || targets.find((x) => x.aliases.some((a) => a.toLowerCase() === s)) : null;
+      }
+      if (!t) {
+        note(input.value.trim() ? "No Wiki page by that name. Pick one from the list." : "Pick a page first", "err");
+        input.focus();
+        return;
+      }
+      add.disabled = true;
+      try {
+        const res = await this.addTypedLink(file, sel.value, t.file);
+        if (res.outcome === "duplicate") note(`“${t.name}” is already under ${sel.value}.`, "err");
+        else {
+          let text = `Added ${sel.value} → ${t.name}.`;
+          if (res.other.length) text += ` It is also under ${res.other.join(", ")}.`;
+          if (res.outcome === "reset") text += " Status is now draft.";
+          note(text, "ok");
+          new Notice(text, 6000);
+          chosen = null;
+          input.value = "";
+          list.removeClass("is-open");
+        }
+      } catch (e) {
+        console.error("Nicrosil: couldn't add the typed link", e);
+        note(`Couldn't add the link: ${e.message}`, "err");
+      }
+      add.disabled = false;
+      input.focus();
+    };
+    input.addEventListener("input", () => { chosen = null; if (msg.dataset.k !== "warn") idle(); showList(); });
+    input.addEventListener("blur", () => list.removeClass("is-open"));
+    input.addEventListener("keydown", (e) => {
+      e.stopPropagation();
+      const open = list.hasClass("is-open");
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        if (!open) showList();
+        else if (rows.length) { active = (active + (e.key === "ArrowDown" ? 1 : rows.length - 1)) % rows.length; mark(); }
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        if (open && rows[active]) pick(rows[active]); else submit();
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        if (open) list.removeClass("is-open"); else close();
+      }
+    });
+    add.addEventListener("click", submit);
+    cancel.addEventListener("click", close);
+    idle();
   }
 
   async verify(file) {

@@ -14,12 +14,12 @@ related:
   - "[[SCHEMA]]"
 drafted_by: Claude (claude-sonnet-5-5, claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-23
+verified_on: 2026-11-24
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, records schema changes, and runs the Tinmind, my own class notes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v4.0.1**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v4.1.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## Turn it on (once per computer)
 **Settings → Community plugins**, refresh, switch on **Nicrosil**. After an update, switch it off and on (or restart Obsidian). The plugin files are in git, so another computer gets them with a pull, but the on/off setting is local.
@@ -90,6 +90,8 @@ The Dashboard search box shows suggestions as I type over wiki pages, source car
 
 ## The properties strip
 On every note except the Dashboard, the Tinmind page, the index and the logs, a one-line strip of **type**, **status** and a date replaces the Properties block; click to open the real one (collapsed again each time a note opens). Link hover previews show it too, except for links to a spot on their own page.
+
+On pages in `Wiki/`, the open Properties block ends with an **Add typed link** button. It opens one row, "This page [type] [page]": choose one of the ten link types, search for a Wiki page (aliases count), and press **Add** or Enter. The link goes into that type's property, and Enter keeps the row open for the next link. A link already under the same type is refused. On a verified page the same edit sets `status: draft`, keeps `verified_on` and adds a `changes_since_verified` line, like any change to a verified page.[^2][^3]
 
 ## Gradient styles
 - **Coppermind Gradient Style (CGS):** copper to teal. For the Dashboard's name, verified page titles, panel headings, the index's section headings, and the titles of the Index, `_AGENTS` and each month's log.
