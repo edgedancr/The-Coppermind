@@ -12,105 +12,93 @@ courses:
 sources: []
 related:
   - "[[SCHEMA]]"
-drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5; larger file-list button name and index letter headings and jump bar, the flat relations map, the trimmed guide body, and the changelog moved to its own file, by claude-sonnet-5-5; Coppermind Gradient Style section by claude-sonnet-5-5; the Tinmind (notes dashboard, semester switcher, hero, button, mode) and the Tinmind Gradient Style by claude-sonnet-5-5; trimmed to what Nicrosil does and brought to v3.0.0 by claude-sonnet-5-5; Tinmind course tree and course pages by claude-sonnet-5-5; mode button, dashboard status bar and the dashboards' Ledger look by claude-sonnet-5-5; the Notebook by claude-sonnet-5-5; transcription queue by claude-sonnet-5-5; buttons kept full size by claude-sonnet-5-5); the transcription queue's Rename button by claude-sonnet-5-5; the transcription queue as a locked split by claude-sonnet-5-5; the atlas and the Lens by claude-opus-5-5
+drafted_by: Claude (claude-sonnet-5-5, claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-23
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, records schema changes, and runs the Tinmind, my own class notes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v3.30.3**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v4.0.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## Turn it on (once per computer)
-1. In Obsidian: **Settings → Community plugins**, click the refresh icon next to "Installed plugins," and switch on **Nicrosil**.
-2. After an update, switch it off and on again (or restart Obsidian).
-3. The plugin files are tracked in git, so a second computer gets them with a pull. Switch it on there too, since the on/off setting is local.
+**Settings → Community plugins**, refresh, switch on **Nicrosil**. After an update, switch it off and on (or restart Obsidian). The plugin files are in git, so another computer gets them with a pull, but the on/off setting is local.
 
 ## Review tools
-They work on pages in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/`, the rule files in `SCHEMAS/`, and root-level files, that have a `status` property.
+They work on pages with a `status` property in `Wiki/`, `Perspectives/`, `Sources/Source Cards/`, `SCHEMAS/`, and the vault root.
 
-- **Review queue (right sidebar).** `Alt+Q` or its button. It shows a progress bar, a card for the open page with its flags and **Verify**, **Skip**, and **Reject**, and every draft in review order with flag badges: **A** accuracy check, **G** gap, **Q** question ("Whose view is this?"), **W** unsourced warning, **✓** no flags.
-- **Changed since verified** (badge **R**). Verified pages the AI changed at my request, each showing its `changes_since_verified` lines. A line ending in `[[#Heading]]` is clickable and goes to that spot; `Ctrl+click` opens the page in a new tab.
-- **Resolve buttons on flags.** Each flag callout gets **Resolve** in Reading view. In editing view, use the sidebar card or `Alt+F`.
+- **Review queue (right sidebar).** `Alt+Q`. A progress bar, a card for the open page with its flags and **Verify**, **Skip**, **Reject**, and every draft in review order with flag badges: **A** accuracy check, **G** gap, **Q** question ("Whose view is this?"), **W** unsourced warning, **✓** no flags.
+- **Changed since verified** (badge **R**). Verified pages the AI changed at my request, with their `changes_since_verified` lines. A line ending in `[[#Heading]]` is clickable and goes to that spot.
+- **Resolve** on flag callouts: a button in Reading view; in editing view use the sidebar card or `Alt+F`.
 
 ### A review session
-1. Pull first (see [[Setting Up Git for the Coppermind]]).
-2. On the [[_dashboard|Dashboard]], click **Open next draft**, or press `Alt+N`.
-3. Read the page and check it against the sources it cites.
-4. **Resolve each flag.** If a claim needs correcting, edit the page text first. Then click **Resolve** and write what I decided. The callout is removed, and my decision is written into the log when I verify (or reject) the page.
-5. **Decide:**
-   - **Verify** (`Alt+V`): optionally note what I changed and why, then `Ctrl+Enter`. The page gets `status: verified` and `verified_on`, and the log gets an entry listing any flags I resolved. If flags are still open, I have to tick a box to verify anyway, and the log records them.
-     - If the page has a `changes_since_verified` property, Verify deletes it, and the log keeps the record.[^2]
-   - **Skip** (`Alt+S`): moves the page to the end of the queue for this session and opens the next one.
-   - **Reject** (`Alt+R`): write the reason (required), then `Ctrl+Enter`. The reason is logged, the page is removed from the index, and the page is deleted.[^1] The dialog lists pages that link to it, so I can fix those links afterward.
-6. After Verify or Reject, the next draft opens automatically (can be turned off).
-7. When finished, commit and push. A page is only "saved as final" once it is verified **and** committed.
+1. Pull first ([[Setting Up Git for the Coppermind]]), then **Open next draft** on the [[_dashboard|Dashboard]] or `Alt+N`.
+2. Check the page against its cited sources.
+3. **Resolve each flag**: fix the page text first if needed, then click **Resolve** and write what I decided. The callout is removed, and the decision goes into the log when I verify or reject.
+4. **Decide:**
+   - **Verify** (`Alt+V`; optional note, `Ctrl+Enter`): sets `status: verified` and `verified_on`, deletes `changes_since_verified` (the log keeps it),[^2] and logs the entry with any resolved flags. With flags still open I must tick a box to verify anyway, and the log records them.
+   - **Skip** (`Alt+S`): moves the page to the end of the queue for this session.
+   - **Reject** (`Alt+R`; reason required, `Ctrl+Enter`): logs the reason, removes the page from the index, and deletes the page.[^1] The dialog lists pages that link to it.
+5. The next draft then opens automatically (can be turned off). When finished, commit and push: a page is "saved as final" only when verified **and** committed.
 
 ## The Dashboard
-[[_dashboard|Dashboard]] is the page the vault opens on (`_dashboard.md`, hidden from the file list unless the eye button is on). The **The Coppermind** button above the file list and `Alt+D` open it, always in Reading view. Each section is a block in the note, so a section can be moved or deleted by editing the note. It has:
-- **Header** (`coppermind-hero`): logo, name, tagline, and the search box ([[#Search]]).
-- **Six link cards** (`coppermind-nav`): Index, Log (newest month's file), Atlas, Schema, Triage, and Agents (`_AGENTS`). `Ctrl+click` or middle-click opens a card's page in a new tab; the Atlas card opens its own tab.
-- **Review progress** (`coppermind-dashboard`): verified count and percentage, drafts and open flags, and **Open next draft**. Under it: a **health check card** (days since the last health check, read from the report names in `Health Checks/`; click opens the latest report), the **Changed since verified** list, and folded lists of pages with open flags and of stale drafts.
-- **Recent activity** (`coppermind-activity`): the last six log entries; click one to open the page it names.
+[[_dashboard|Dashboard]] (`_dashboard.md`) is the page the vault opens on; the **The Coppermind** button and `Alt+D` open it, always in Reading view. Its sections are blocks in the note and can be moved or deleted by editing it. It has:
+- **Header:** the search box ([[#Search]]).
+- **Link cards:** Index, Log (newest month), Atlas (own tab), Schema, Triage, Agents (`_AGENTS`).
+- **Review progress:** verified count and percentage, drafts and open flags, **Open next draft**; a **health check card** (days since the last health check, from report names in `Health Checks/`; click opens the latest report); the **Changed since verified** list; folded lists of pages with open flags and of stale drafts.
+- **Recent activity:** the last six log entries; click opens the page named.
 
 ## The Tinmind
-The **Tinmind** is my own class notes, in `The Tinmind/`, kept apart from the wiki. Nicrosil gives it eight things.
-- **A button.** **The Tinmind**, under **The Coppermind** above the file list, opens the Tinmind Dashboard (`Ctrl+click` or middle-click: new tab).
-- **A dashboard.** `The Tinmind/Tinmind Dashboard` has a hero and one block, `coppermind-classes`. Each class notes file has `type: class-notes`, a `course`, a `semester` (such as `Fall 26`), a `current` flag and an `order`. The page title is the picked semester; clicking it opens a menu of every semester, oldest first, and the cards under it are that semester's courses. Each card shows the note count and the newest date in a note's name (`28 notes · last 11-17`, or `No notes yet`), counted from file names, never from note contents. The pick is saved; until one is made, the semester marked `current: true` shows. To add a course, make its notes file with those properties. Properties are hidden on every note in `The Tinmind/`.
-- **A search box.** At the right of the Tinmind page's hero. It searches every note under `The Tinmind/` by title, alias and text, and every heading in them: a heading is its own card, marked **Heading**, naming its note and where that sits (such as `Fall 26 › SAIL`), and opening it jumps to that heading. Clicking or arrow keys and `Enter` open a result; `Ctrl+Enter` opens it in a new tab; `Esc` closes the list, and again clears the box. It reads in the background and keeps nothing on disk; it never changes a note.
-- **A mode.** Clicking the button switches the whole app to the Tinmind's colors and closes the right sidebar, so the review queue and the Lens are gone (`Alt+Q` and `Alt+L` only show a note). **The Coppermind** or `Alt+D` switches back and reopens the sidebar if it was open. The mode is not remembered: Obsidian always opens in the Coppermind's mode.
-- **A course tree.** In the mode, the file list shows the semester's courses instead of folders, under a copy of the dashboard's semester switcher (same pick). A course is its notes file plus the same-named folder (`Fall 26/SAIL.md` and `Fall 26/SAIL/`). Right-click a course and choose **Delete course** to send its page and its folder to the trash, after a question that says how many files are in it (the Notebook can't be deleted this way). Opening a course lists the folder's notes and sub-folders, then the course page's headings. Click to open; middle-click or `Ctrl+click` for a new tab. Hover a course for **+** (new note) and **...**; right-click or **...** on a note or folder to **Rename** or **Delete** (deletes go to the trash and ask first). **New course** makes a course page for the semester showing, with the properties above. **New semester** asks for a season and year (it suggests the next one), makes the folder and switches to it. **All Class Notes**, a table of every class notes file, has its own row at the bottom. A new note's name starts as the course and today's date (`SAIL 11-22-26`) and can be changed before creating; it gets `type: course-note`, the course and semester (hidden properties), and opens in editing view. A note inside a course shows a pill with the course's name above its title that links to the course page (drawn from the note's folder, so the note has no link line). Course pages have no link back to the dashboard.
-- **A course page.** A class notes file also shows a panel under its properties with the same list, drawn as an open tree: a **Notes** heading with a rule running out to the right, **New note** and **New folder** as text links on the right of it, and the notes below, with an open folder's notes under a lilac guide line. It is drawn on screen; the file is not changed. Nicrosil makes folders and notes only when I ask, and reads only folder names and headings (the search box above is the one place it reads what the notes say). Not covered: renaming or deleting a course or semester, and reordering notes (they sort by name).
-- **A Notebook.** A place for notes that aren't for a class. `The Tinmind/Notebook` has `type: notebook` and no semester, so it shows on the Tinmind Dashboard whichever semester is picked, as a link in the row under the hero (not a course card), and it has its own row in the course tree. It works like a course: notes sit in `Notebook/` next to the page (made with the first note), topic folders are allowed, and its page has the same panel. A note's name starts as `Notebook` and today's date; its only property is `type: notebook-note`, and its pill says Notebook. The card has a **Quick note** button that makes a note without asking for a name and opens it ready to type. No counts, nothing sorts notes into courses, and the Notebook is not in **All Class Notes**.
-- **A transcription queue.** `Alt+T`, the scan button in the tab bar (Tinmind mode), or the **Transcriptions** link in the row under the hero on the Tinmind Dashboard (shown while there are notes to review or scans waiting) opens it in the main area as a locked split: the scan on the left, and the note on the right in an ordinary Obsidian editor (Live Preview, spellcheck and my other plugins all work), so I edit a transcription the way I edit any note. Both panes have no tabs, every other pane in the main area is hidden while the queue is open, and **Close** in the review bar closes both and brings the others back; opening another page in the main area (the Dashboard, say) also closes it. It lists every note with `transcription: draft` in its properties ([[SCHEMA - Transcription]]), in the order its scans were photographed, and says how many scans in `Sources/Scans/` no note lists yet. The review bar across the top of the note has two rows: the note picker with **◀** and **▶** on the first, and on the second the note's course folder and the unsure words at the left and **Verify**, **Skip**, **Discard transcription** and **Close** at the right. The left side holds the scan pages (a tab for each, zoom **−**, **+** and **Fit**), with what still needs me under the scan. A drawing flag (`> [!drawing]`) offers **Show on scan**; **Keep screenshot** (drag a box over the scan, or take **Whole page**; the crop is saved as a JPEG in `_attachments/Tinmind/` and embedded in place of the flag); **Recreate** (the flag becomes `> [!recreate]` and the scan stays until the recreated drawing, marked `%% recreated: ... %%`, is checked with **Looks right**); and **Leave out**. These buttons make their change in the editor, so Obsidian's own undo works on it. Unsure words (`[?word?]` and `[??]`) are counted in the bar, with **Next unsure word** (selects the next one in the note and scrolls to it) and **Accept the guess**. **Verify** is off while a drawing is undecided, waiting to be recreated or waiting to be checked. It asks first (and again if unsure words remain), then removes `transcription` and `scan_pages` from the note, moves its scans to the trash (a scan another unverified note still lists stays), and adds a `verify` entry to the log. **Discard transcription** deletes the draft, keeps the scans and logs my reason. **Skip** moves on. There are no **Open note** or **Rename** buttons any more, because the note is already open in an editor and its title can be edited there. If the right pane is moved to a note that isn't waiting, the bar says so and offers **Back to** the note I was checking; opening another waiting note there makes the queue follow it. The queue works in either mode; only its tab-bar button is limited to the Tinmind's.
+My own class notes, in `The Tinmind/`, kept apart from the wiki.
+- **Mode.** The **The Tinmind** button (or the mode button) opens the Tinmind Dashboard and switches the app to the Tinmind's colors with the right sidebar closed, so the review queue and Lens are unavailable. **The Coppermind** or `Alt+D` switches back. Not remembered: Obsidian opens in the Coppermind's mode.
+- **Dashboard.** `The Tinmind/Tinmind Dashboard` shows the picked semester's courses as cards: note count and newest date, counted from note file names only. A class notes file has `type: class-notes`, `course`, `semester` (`Fall 26`), `current` and `order`; to add a course, make that file. The semester is picked from a menu in the page title; the pick is saved, and until then the one marked `current: true` shows. Properties are hidden on every note in `The Tinmind/`.
+- **Search.** Searches every note under `The Tinmind/` by title, alias, text and heading (a heading is its own result and jumps to it). Read-only.
+- **Course tree.** In the mode the file list shows the semester's courses (a course is its notes file plus a same-named folder: `Fall 26/SAIL.md`, `Fall 26/SAIL/`) under the same semester switcher. Opening a course lists its notes, sub-folders and the page's headings. It offers new note, **Rename** and **Delete** (to the trash, after asking), **New course**, **Delete course** (page and folder, after a file count; not the Notebook), **New semester** (suggests the next one, makes the folder, switches to it), and an **All Class Notes** table. A new note is named course + date (`SAIL 11-22-26`, editable first), gets `type: course-note` with hidden course and semester properties, opens in editing view, and shows a pill linking to its course page.
+- **Course page.** Shows a panel of the course's notes and folders with **New note** and **New folder**. Display only; Nicrosil makes files only when I ask, and reads only folder names and headings. Not covered: renaming or deleting a semester, renaming a course, reordering notes (sorted by name).
+- **Notebook.** For notes that aren't for a class. `The Tinmind/Notebook` (`type: notebook`, no semester) is linked from the Tinmind Dashboard under every semester, has its own tree row, and works like a course (notes in `Notebook/`, topic folders allowed, same panel) but with no counts and not in **All Class Notes**. Its notes are named `Notebook` + date with only `type: notebook-note`. **Quick note** makes a note without asking for a name and opens it ready to type.
+- **Transcription queue.** `Alt+T`, the tab-bar scan button (Tinmind mode), or the **Transcriptions** link on the Tinmind Dashboard opens a locked split: the scan on the left, the note in an ordinary Obsidian editor on the right. **Close** (or opening another page in the main area) closes it. It works in either mode. It lists every note with `transcription: draft` ([[SCHEMA - Transcription]]) in photographed order, and how many scans in `Sources/Scans/` no note lists yet. If the right pane moves to a note that isn't waiting, the bar offers **Back to** the one I was checking.
+  - **Scan side:** a tab per scan page, zoom, and what still needs me.
+  - **Drawing flags** (`> [!drawing]`): **Show on scan**; **Keep screenshot** (drag a box or take **Whole page**; saved as a JPEG in `_attachments/Tinmind/` and embedded in place of the flag); **Recreate** (becomes `> [!recreate]`; the scan stays until the recreated drawing, marked `%% recreated: ... %%`, is checked with **Looks right**); **Leave out**. These edit the note, so Obsidian's undo works.
+  - **Unsure words** (`[?word?]`, `[??]`): counted in the bar, with **Next unsure word** and **Accept the guess**.
+  - **Verify** is off while a drawing is undecided, waiting to be recreated or checked. It asks first (and again if unsure words remain), removes `transcription` and `scan_pages` from the note, trashes its scans (a scan another unverified note lists stays), and logs a `verify` entry. **Discard transcription** deletes the draft, keeps the scans and logs my reason. **Skip** moves on.
 
 ## Search
-The search box on the [[_dashboard|Dashboard]] shows suggestion cards as I type, over wiki pages, source cards, and perspectives (not raw class notes or readings). It only reads; it never changes a page.
-- Open a result with a click, or arrow keys and `Enter`; `Ctrl+Enter` opens it in a new tab.
-- Each card shows the title, type, status, any alias that matched, and a snippet. More load on scroll, and a line at the bottom gives the match count.
-- `Esc` closes the list; pressing it again clears the box.
-- It stays current as pages are created, edited, renamed, or deleted.
+The Dashboard search box shows suggestions as I type over wiki pages, source cards and perspectives (not class notes or readings), each with title, type, status, matched alias and a snippet, plus a match count. Click, or arrows and `Enter`, opens one; `Ctrl+Enter` opens it in a new tab; `Esc` closes the list, again clears the box. Read-only, and it stays current as pages change.
 
 ## The index and the log
-- **Index:** [[_index|index]] lists every page under its type, alphabetically, with a count per type, a total, and a **Jump to** line. Concepts and Glossary are split under A–Z letter headings. When I verify a page, Nicrosil only checks that it is listed. When I reject one, its line is removed and the counts, letter headings and jump links are rebuilt.
-- **Log:** Nicrosil adds the entry for each verify and reject to the top of the current month's log file (newest first, old entries never rewritten). The log opens with every entry folded, which needs Obsidian's **Fold heading** option (Settings → Editor).
-- **One log file per month:** in `_logs/`, named `_log MM-YY` (`_log 11-26` is November 2026). The first time Obsidian opens in a new month, Nicrosil creates that month's file with its header.[^5]
+- **Index:** [[_index|index]] lists every page under its type, alphabetically, with counts, a total and a **Jump to** line; Concepts and Glossary are split by letter. Verify only checks that the page is listed. Reject removes its line and rebuilds the counts, letter headings and jump links.
+- **Log:** Nicrosil adds each verify and reject entry at the top of the current month's file (newest first, old entries never rewritten). The log opens folded, which needs Obsidian's **Fold heading** option.
+- **One file per month** in `_logs/`, named `_log MM-YY`. The first time Obsidian opens in a new month, Nicrosil creates it with its header.[^5]
 
 ## The Lens
-`Alt+L` or its button opens it in the right sidebar. It follows the open page when that is a wiki page, a perspective or a source card, and changes no file:
-- **Trail:** the pages opened before this one while the Lens was open. Click one to go back to it.
-- **Header:** the page's status and its topic on the atlas. Click the topic to show the page in the atlas.
-- **A map** with the page in the middle: pages that link to it on the left, pages it links to on the right (up to six a side, typed links first; **Enlarge** shows all). Typed links are colored by relationship type (legend); plain links, in the text or in properties such as `sources`, are "see also" links and drawn dashed. A page's outline shows its status. Click a page to open it (`Ctrl+click`: new tab).
-- **Two steps away, not linked yet:** up to six pages that at least two of this page's neighbors are linked with but this page isn't, best first, each with the neighbors that join them. Summaries, guides and prompts are left out. They are links worth checking, not links to add without reading.
-- **Two lists:** "This page…" (outgoing) and "Pointing at this page…" (incoming, worked out from other pages, since each relationship is stored once),[^3] grouped by type, with plain links last as **Links to** and **Linked from** (folded when long).
+`Alt+L`. Right sidebar; follows the open wiki page, perspective or source card; changes no file.
+- **Trail:** pages opened while the Lens was open; click to go back.
+- **Header:** the page's status and atlas topic (click shows it in the atlas).
+- **Map:** the page in the middle, pages linking to it on the left, pages it links to on the right (six a side, typed links first; **Enlarge** shows all). Typed links are colored by relationship type; plain links (in text or in properties such as `sources`) are "see also" and dashed. Click opens a page; `Ctrl+click` a new tab.
+- **Two steps away, not linked yet:** up to six pages that at least two of this page's neighbors link with but this page doesn't, best first, with the neighbors joining them (summaries, guides and prompts excluded). Links worth checking, not to add unread.
+- **Two lists:** outgoing ("This page…") and incoming ("Pointing at this page…", worked out from other pages since each relationship is stored once),[^3] grouped by type, with plain links last.
 
 ## The atlas
-`Alt+M` or the Atlas card opens it in its own tab. It reads the links and [[_topics]], and changes no file.
-- **Topics.** Each topic in `_topics.md` is a circle, and its anchor pages are pinned to it. Every other page in `Wiki/` and `Perspectives/` joins the topic its links tie it to most closely: Nicrosil spreads out from each topic's anchors along the links (a typed link counts double) and puts each page with the topic that reaches it most strongly. Pages with no path of links to any anchor sit in a dashed **No topic yet** circle. Nothing is written on the pages. The atlas works this out again when links, pages or the topic list change; otherwise the layout stays the same.
-- **The whole wiki.** Bands between circles show how many links join two topics. Each dot is a page, sized by how many pages link to it and colored by page type (or by status with **Status**; it opens on Type); anchors have a ring. The side panel gives the counts and lists the topics.
-- **A topic.** Click its circle to zoom in. Its links are drawn, its anchors and busiest pages are named, and the side panel shows its description, status, anchors, most-linked pages, the topics it links with most, the topics it never links with, and pages that are almost in another topic (candidates for an anchor there, or for a link).
-- **A page.** Click a dot, or find the page with the search box, to trace it: its links are drawn in their colors and everything else fades. The side panel lists its links by type, its topic, and **Open page**. Double-click or `Ctrl+click` a dot to open the page.
-- **Moving around.** Scroll to zoom, drag to pan, and `Esc` or the path at the top goes back a level; clicking **Atlas** at the top left goes straight back to the whole wiki. The atlas eases in when it first opens, and glides to fit the space whenever that changes (a sidebar closing, a resized window), unless I have zoomed or panned myself since I last picked something. **Edit topics** opens `_topics.md`. **Show this page in the atlas** (command palette) opens it on the page I'm reading.
-- **Sidebars.** While the atlas is the page in front, both sidebars are closed so it has the room. When another page comes to the front, or the atlas is closed, each sidebar that was open opens again (the right one stays closed in the Tinmind's mode). A sidebar I open myself in the meantime is left alone, and working in one (the Lens, say) doesn't count as leaving the atlas.
+`Alt+M` or the Atlas card, in its own tab. Reads the links and [[_topics]]; changes no file.
+- **Topics.** Each topic in `_topics.md` is a circle with its anchor pages pinned. Every other page in `Wiki/` and `Perspectives/` joins the topic that reaches it most strongly by spreading out from the anchors along links (a typed link counts double). Pages with no link path to an anchor sit in **No topic yet**. Nothing is written on pages. It recomputes when links, pages or the topic list change.
+- **Whole wiki.** Bands show how many links join two topics. Dots are pages, sized by incoming links, colored by type (or by status with **Status**), anchors ringed. The side panel gives counts and lists topics.
+- **A topic** (click): its links, anchors and busiest pages; the side panel adds its description, status, most-linked pages, topics it links with most and never links with, and pages almost in another topic (candidates for an anchor or a link there).
+- **A page** (click a dot, or search): its links in their colors, the rest faded; the side panel lists links by type, its topic, and **Open page**. Double-click or `Ctrl+click` opens it.
+- **Navigation.** Scroll zooms, drag pans, `Esc` or the top path goes up a level, **Atlas** returns to the whole wiki. The view refits when its space changes unless I have zoomed or panned since my last pick. **Edit topics** opens `_topics.md`; **Show this page in the atlas** (command palette) opens it on the current page.
+- **Sidebars** close while the atlas is in front and reopen when it isn't (the right one stays closed in the Tinmind's mode). A sidebar I open myself is left alone.
 - **The topic list is mine.** The agent checks it at each ingest ([[SCHEMA - Ingest#6. Check the topic list]]). Anchors that aren't pages are listed in the side panel.
 
 ## The properties strip
-On every note except the Dashboard, the Tinmind page, the index and the logs, Nicrosil replaces the Properties block with a one-line strip showing **type**, **status**, and a date. Click it to open the real block; each note starts collapsed again when opened. The link hover preview shows the same strip, except when the link points at a spot on its own page (a footnote, a heading or a block), which gets no strip.
+On every note except the Dashboard, the Tinmind page, the index and the logs, a one-line strip of **type**, **status** and a date replaces the Properties block; click to open the real one (collapsed again each time a note opens). Link hover previews show it too, except for links to a spot on their own page.
 
 ## Gradient styles
-Two named title styles, each a gradient with a glow in the font Almendra SC:
-- **Coppermind Gradient Style (CGS):** copper to teal. Used for the Dashboard's name, verified page titles, panel headings, the index's section headings, and the titles of the Index, `_AGENTS` and each month's log.
-- **Tinmind Gradient Style (TGS):** grey to lilac. Used for the Tinmind page's title and button and every note title in `The Tinmind/`. In the Tinmind mode it replaces the CGS everywhere.
+- **Coppermind Gradient Style (CGS):** copper to teal. For the Dashboard's name, verified page titles, panel headings, the index's section headings, and the titles of the Index, `_AGENTS` and each month's log.
+- **Tinmind Gradient Style (TGS):** grey to lilac. For the Tinmind page's title and button and every note title in `The Tinmind/`; in the Tinmind mode it replaces the CGS everywhere.
 
-Both are defined once in the plugin's `styles.css` as CSS variables (`--cm-gradient*`, `--cm-tin-gradient*`). To style a new title, add the class `cm-gradient-style` or `cm-tin-gradient-style`. Exact colors are in [[Nicrosil Changelog]]. Small animations (title glows, flag pulses, map sparks) do not affect function and turn off under the system's reduce-motion setting.
+To style a new title, add the class `cm-gradient-style` or `cm-tin-gradient-style`. Colors and fonts are in `styles.css`.
 
 ## Logging a schema change
-Every change to the rules (`_AGENTS.md` or a file in `SCHEMAS/`) needs a line in [[Schema Changelog]].[^4] Nicrosil adds it:
-1. On any page in `SCHEMAS/`, click the pen button in the page header, or run **Log a schema change** from the command palette.
-2. Enter the new version in the form `4.2` and a description. The version must be newer than the current one and not already in the changelog.
-3. Nicrosil adds the dated line at the top of the changelog, updates its `updated` property, then sets `version` and `updated` on [[SCHEMA]], which holds the rulebook's version.
-
-It does not touch `status`, `verified_on`, or the log. After a schema change, each changed rule file goes back to `draft` with a change note,[^1] and the log entry is still mine to add.
+Every change to the rules (`_AGENTS.md` or a file in `SCHEMAS/`) needs a line in [[Schema Changelog]].[^4] On any page in `SCHEMAS/`, click the pen button in the page header or run **Log a schema change**, then enter the new version (such as `4.2`, newer than the current one and not already in the changelog) and a description. Nicrosil adds the dated line at the top of the changelog, updates its `updated` property, and sets `version` and `updated` on [[SCHEMA]]. It does not touch `status`, `verified_on` or the log: each changed rule file goes back to `draft` with a change note,[^1] and the log entry is still mine to add.
 
 ## Hotkeys and buttons
 | Key | Action |
@@ -128,55 +116,55 @@ It does not touch `status`, `verified_on`, or the log. After a schema change, ea
 | `Alt+Shift+D` | Switch between the Coppermind and the Tinmind, and bring the file list back |
 | `Alt+E` | Show the file list (the way back from the sidebar's search tab) |
 | `Ctrl+Enter` | Confirm a dialog |
-| `Ctrl+click` or middle-click | Open a card, a button, a search result or a queue page in a new tab |
+| `Ctrl+click` or middle-click | Open a card, button, search result or queue page in a new tab |
 
 Change them in **Settings → Hotkeys** (search "Nicrosil"). **Log a schema change** and **Show this page in the atlas** have no default hotkey. Nicrosil also adds:
-- **The Coppermind** and **The Tinmind** buttons above the file list: open the Dashboard and the Tinmind page, and switch the mode ([[#The Tinmind]]).
-- **Left sidebar tab bar buttons** (shown while the Files tab is open; the Files, Search and Bookmarks icons and Obsidian's far-left ribbon are hidden, so other plugins' ribbon icons are hidden too; `Ctrl+Shift+F` still opens search):
-  - **Collapse button** (Obsidian's own, first); the **Toggle left sidebar** command is also in the command palette.
-  - **Mode button** (both modes): shows the current mode's logo; click to switch to the other mode ([[#The Tinmind]]). Opens no page.
-  - **Eye button** (Coppermind mode only, since the Tinmind replaces the file list): shows or hides files and folders whose names start with an underscore. Hidden each time Obsidian opens. The file list's own toolbar is hidden; those actions are still in the command palette and right-click menu.
-  - **Review queue** and **Lens** buttons (Coppermind mode only), and the **Transcription queue** button (Tinmind mode only).
-  - **Two git buttons** (both modes): an up arrow runs Obsidian Git's **Commit-and-sync** (commit everything, pull if Obsidian Git is set to pull before pushing, push, with its usual message); a down arrow runs **Pull**. Same as the Source Control panel's buttons; Obsidian Git's notices report the result, and the button says so if Obsidian Git is off.
-- A **status-bar counter** of verified pages (for example, `12/60 verified`).
+- **The Coppermind** and **The Tinmind** buttons above the file list (open the Dashboard or Tinmind page and switch mode).
+- **Left sidebar tab bar buttons**, shown with the Files tab. Obsidian's ribbon and the Files, Search and Bookmarks icons are hidden (so other plugins' ribbon icons too); `Ctrl+Shift+F` still opens search.
+  - **Collapse button** (Obsidian's own, first); **Toggle left sidebar** is also in the command palette.
+  - **Mode button** (both modes): switches mode, opens no page.
+  - **Eye button** (Coppermind mode): shows or hides files and folders starting with an underscore; hidden on each start. The file list's own toolbar is hidden; its actions remain in the command palette and right-click menu.
+  - **Review queue** and **Lens** (Coppermind mode); **Transcription queue** (Tinmind mode).
+  - **Two git buttons** (both modes): up arrow runs Obsidian Git's **Commit-and-sync**, down arrow runs **Pull**. Obsidian Git's notices report the result; the button says so if Obsidian Git is off.
+- A **status-bar counter** of verified pages (`12/60 verified`).
 
 ## Settings
 In **Settings → Nicrosil**:
-- **Open the next draft after verifying or rejecting** (on by default).
-- **Play an animation when I verify a page** (on by default). With the setting above off, only the check and sparks play.
-- **Close the extra sidebar panels on startup** (on by default): closes Backlinks, Outgoing links, Tags, All properties and Outline each start. They can still be opened from the command palette.
-- **Close the other tabs on startup** (on by default): when Obsidian starts, keeps only the Dashboard open in the main area and closes every other tab, so a page left open last time doesn't come back in the wrong mode. Reloading the plugin during a session doesn't do this.
-- **Open pages in Reading view:** "Verified pages only" (default), "Every page", or "Off". Switching a page to editing myself keeps it that way until that tab opens a different page. A new empty note always opens ready to type. Notes in `The Tinmind/` always open in editing view; only the Tinmind Dashboard opens in Reading view.
-- **Days between health checks** (14 by default): how long before the Dashboard's health check card calls the check overdue.
-- **Queue order:** clean pages first (default), flagged pages first, by page type, or A to Z.
+- **Open the next draft after verifying or rejecting** (on).
+- **Play an animation when I verify a page** (on). With the setting above off, only the check and sparks play.
+- **Close the extra sidebar panels on startup** (on): Backlinks, Outgoing links, Tags, All properties, Outline. Still openable from the command palette.
+- **Close the other tabs on startup** (on): keeps only the Dashboard open, so a page left open doesn't come back in the wrong mode. Reloading the plugin mid-session doesn't do this.
+- **Open pages in Reading view:** "Verified pages only" (default), "Every page", or "Off". Switching a page to editing myself holds until that tab opens a different page. A new empty note opens ready to type. Notes in `The Tinmind/` open in editing view; only the Tinmind Dashboard opens in Reading view.
+- **Days between health checks** (14): when the Dashboard's health check card calls the check overdue.
+- **Queue order:** clean pages first (default), flagged first, by page type, or A to Z.
 
 ## What it will not do
-- **It never verifies on its own.** Every change starts with my click or keypress.
-- **It never deletes a scan on its own.** A scan goes to the trash only when I click **Verify** in the transcription queue and confirm; discarding a transcription keeps its scans, and Obsidian's trash setting decides whether a trashed scan can be recovered.
-- **It does not run git itself.** The two git buttons only run Obsidian Git's own Commit-and-sync and Pull commands when I click one.
-- **It will not verify a source card with a blank `reliability` rating.** Ratings are always item by item.[^1]
-- **It does not touch verified pages.** If a verified page's content changes, it goes back to `draft` and needs checking again.
-- **It cannot undo a verify or a resolved flag.** To undo a verify, set `status: draft` by hand, change the index line back, and add a correction to the log (past entries are never rewritten). To undo a resolved flag, restore the callout from git before verifying.
-- **Skips last only until Obsidian restarts.**
+- **Verify on its own.** Every change starts with my click or keypress.
+- **Delete a scan on its own.** A scan is trashed only when I click **Verify** in the transcription queue and confirm; Obsidian's trash setting decides whether it can be recovered.
+- **Run git itself.** The git buttons only run Obsidian Git's commands when I click.
+- **Verify a source card with a blank `reliability` rating.**[^1]
+- **Touch verified pages.** If a verified page's content changes, it goes back to `draft`.
+- **Undo a verify or a resolved flag.** To undo a verify, set `status: draft` by hand, fix the index line, and add a correction to the log. To undo a resolved flag, restore the callout from git before verifying.
+- **Keep skips past a restart.**
 
 ## Troubleshooting
-- **No buttons or sidebar:** the plugin is off, or the page is outside the folders above. In the Tinmind mode the right sidebar is closed on purpose; click **The Coppermind**.
-- **No Resolve button on a callout:** switch to Reading view, or use the sidebar card or `Alt+F`.
-- **Resolved flags waiting to be logged:** they are stored in the plugin's `data.json`, which git syncs. If I resolve flags on one computer, push before verifying that page on the other.
-- **"It wasn't in _index.md":** the page's entry is missing or renamed. Fix its line in [[_index|index]] by hand.
-- **Properties look reformatted after verifying:** Obsidian rewrites properties when a plugin edits them. The content is the same.
-- **Merge conflict in `_index.md` or a log file:** two computers verified pages before syncing. Pull before a review session and push after.
-- **A hotkey does nothing after an update:** switch Nicrosil off and on again, then check **Settings → Hotkeys**.
+- **No buttons or sidebar:** the plugin is off, or the page is outside the folders above. In the Tinmind mode the right sidebar is closed on purpose.
+- **No Resolve button:** switch to Reading view, or use the sidebar card or `Alt+F`.
+- **Resolved flags waiting to be logged** are stored in the plugin's `data.json`, which git syncs. If I resolve flags on one computer, push before verifying on the other.
+- **"It wasn't in _index.md":** the page's entry is missing or renamed; fix its line in [[_index|index]] by hand.
+- **Properties look reformatted after verifying:** Obsidian rewrites them when a plugin edits them; content is the same.
+- **Merge conflict in `_index.md` or a log file:** two computers verified before syncing. Pull before a review session, push after.
+- **A hotkey does nothing after an update:** switch Nicrosil off and on, then check **Settings → Hotkeys**.
 
 ## Keeping this guide current
-This guide describes what the plugin does today. Whenever Nicrosil is updated:
-1. Change the version number near the top of the page and in the plugin's `manifest.json`.
-2. Update the matching section, and the hotkey table if anything was added, removed, or renamed.
+Whenever Nicrosil is updated:
+1. Bump the version here and in the plugin's `manifest.json`.
+2. Update the matching section (and the hotkey table if a key changed) only for a functional change; design tweaks need no sentence here.
 3. Add a line at the top of [[Nicrosil Changelog]].
-4. The change makes this page a changed page, so it goes back to `draft` until I verify it.[^1]
+4. This page goes back to `draft` until I verify it.[^1]
 5. Log it as a `tool` entry ([[SCHEMA - Changes#Nicrosil and other tools]]).
 
-Keep the body of this guide to what each part does. Details of how something looks (corners, fonts, colors, animations, positions) and the history of each change go only in [[Nicrosil Changelog]]; an AI that needs a design or position detail reads the plugin itself. These steps apply to **every** change to a file in the plugin's folder, even a one-line style tweak, and are done in the same edit without being asked. Read the changelog only to add a line or to look up when something changed.
+Keep this guide to what each part does. How something looks (corners, fonts, colors, animations, positions) and the history of each change go only in [[Nicrosil Changelog]]; an AI that needs a detail reads the plugin itself. These steps apply to **every** change to a plugin file, even a one-line style tweak, and are done in the same edit without being asked.
 
 ## Footnotes
 [^1]: [[SCHEMA - Review|Schema: Review]]
