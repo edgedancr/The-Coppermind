@@ -30,7 +30,6 @@ semester: "Fall 26"
 	- Each man ultimately wishes the most good for himself.
 	- A flatterer pretends to love more than he is loved.
 	- Real friendship consists in loving others, rather than being loved.
-	- The erotic lover assumes that he will be loved as much as he loves.
 - Bk 9.4 (pg. 341-342)
 	- The excellent person does good things for himself because they are good, and treats himself as one of his friends.
 	- The excellent person finds it pleasant to spend time with himself. 

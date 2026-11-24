@@ -2556,6 +2556,8 @@ class WikiMapView extends ItemView {
     this.gEdges = svgEl(svg, "g", { class: "cm-at-edges" });
     this.gDots = svgEl(svg, "g", { class: "cm-at-dots" });
     this.gLabels = svgEl(svg, "g", { class: "cm-at-labels" });
+    // the topic names go last, so they are always drawn on top of the dots and page labels
+    this.gNames = svgEl(svg, "g", { class: "cm-at-names" });
 
     // bands between topics: from rim to rim, bowed a little, as wide as the links between them
     this.bandEls = [];
@@ -2574,12 +2576,15 @@ class WikiMapView extends ItemView {
 
     // topic circles and their names
     this.topicEls = new Map();
+    this.nameEls = new Map();
     for (const g of d.groups) {
       const el = svgEl(this.gTopics, "g", { class: "cm-at-topic" + (g.key < 0 ? " is-none" : ""), tabindex: 0, role: "button", "aria-label": `${this.topicName(g.key)}, ${g.members.length} pages` });
       svgEl(el, "circle", { cx: g.x, cy: g.y, r: g.r, class: "cm-at-disc", fill: g.key < 0 ? "url(#cm-at-fill-none)" : "url(#cm-at-fill)" });
       // the name above the circle, on two lines when it is long
       const lines = wrapWords(this.topicName(g.key), 18);
-      const tx = svgEl(el, "text", { x: g.x, y: g.y - g.r - 8, "text-anchor": "middle", class: "cm-at-tname" });
+      const nm = svgEl(this.gNames, "g", { class: "cm-at-topicname" + (g.key < 0 ? " is-none" : "") });
+      this.nameEls.set(g.key, nm);
+      const tx = svgEl(nm, "text", { x: g.x, y: g.y - g.r - 8, "text-anchor": "middle", class: "cm-at-tname" });
       lines.forEach((ln, i) => svgEl(tx, "tspan", { x: g.x, dy: i ? "1.15em" : `${-(lines.length - 1) * 1.15}em` }, ln));
       svgEl(el, "title", {}, `${this.topicName(g.key)}: ${g.members.length} pages`);
       el.addEventListener("click", (e) => { if (this.dragged) return; e.stopPropagation(); this.st.topic = g.key; this.st.focus = null; this.apply(); });
@@ -2749,6 +2754,7 @@ class WikiMapView extends ItemView {
     this.svg.toggleClass("is-tracing", !!focus);
 
     for (const [k, el] of this.topicEls) el.toggleClass("is-active", k === tkey);
+    for (const [k, el] of this.nameEls) el.toggleClass("is-active", k === tkey);
     for (const b of this.bandEls) {
       b.el.toggleClass("is-lit", !focus && tkey !== null && (b.a === tkey || b.b === tkey));
       b.el.toggleClass("is-faded", !!focus || (tkey !== null && b.a !== tkey && b.b !== tkey));

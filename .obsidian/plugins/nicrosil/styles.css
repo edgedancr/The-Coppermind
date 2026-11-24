@@ -1592,9 +1592,9 @@ body.cm-tin-mode .workspace-tabs:has(> .workspace-tab-header-container .workspac
 .cm-at-topic.is-active { cursor: default; }
 .cm-at-topic.is-active .cm-at-disc { stroke: #86d2c1; stroke-opacity: .7; }
 .cm-at-svg.is-zoomed .cm-at-topic:not(.is-active) .cm-at-disc { fill-opacity: .4; stroke-opacity: .4; }
-.cm-at-svg.is-zoomed .cm-at-topic:not(.is-active) .cm-at-tname { fill: #6b6257; }
+.cm-at-svg.is-zoomed .cm-at-topicname:not(.is-active) .cm-at-tname { fill: #6b6257; }
 .cm-at-tname { font-family: Georgia, "Times New Roman", serif; font-variant: small-caps; font-size: calc(15px * var(--k, 1)); fill: #ecdcc4; letter-spacing: .12em; paint-order: stroke; stroke: #15110e; stroke-width: calc(4px * var(--k, 1)); stroke-linejoin: round; pointer-events: none; }
-.cm-at-topic.is-none .cm-at-tname { fill: var(--text-muted); }
+.cm-at-topicname.is-none .cm-at-tname { fill: var(--text-muted); }
 .cm-at-tcount { font-size: calc(10px * var(--k, 1)); fill: var(--text-faint); pointer-events: none; }
 .cm-at-svg.is-zoomed .cm-at-tcount { display: none; }
 .cm-at-dot { stroke: #15110e; stroke-width: calc(1px * var(--k, 1)); cursor: pointer; }
