@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - Alignment
 courses:
@@ -15,7 +15,7 @@ related:
   - "[[Gradual Loss of Control]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-23
+verified_on: 2026-11-24
 ---
 > [!summary]
 > AI alignment means ==systems doing what we intend, even under pressure==.[^1] SAIL described good alignment as human values, system goals, technology, models, and outcomes all working together.[^1]
