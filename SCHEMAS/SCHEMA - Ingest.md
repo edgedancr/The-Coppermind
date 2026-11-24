@@ -1,13 +1,9 @@
 ---
 type: schema
-status: draft
+status: verified
 owner: Harrison Nickles
 updated: 2026-11-23
 verified_on: 2026-11-23
-changes_since_verified:
-  - "2026-11-23: new step 6, Check the topic list: read `_topics.md`, add a topic or an anchor when the ingest calls for one, propose any other change (Harrison asked for a topic list the agent keeps current and Nicrosil's atlas draws) [[#6. Check the topic list]]"
-  - "2026-11-23: Source card renumbered from step 6 to step 7 [[#7. Source card]]"
-  - "2026-11-23: report section C ends with the topic list's changes, or says there were none [[#The report]]"
 ---
 How a source becomes wiki pages. Read this with [[SCHEMA - Writing Pages]], which covers naming, properties, links, citations, attribution, and style.
 

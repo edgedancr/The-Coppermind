@@ -1,12 +1,10 @@
 ---
 type: schema
-version: 11.0
-status: draft
+version: 11
+status: verified
 owner: Harrison Nickles
 updated: 2026-11-23
-verified_on: 2026-11-22
-changes_since_verified:
-  - "2026-11-23: `_topics.md` added to the folder layout and to the files that are not wiki pages, with a new Topics bullet under The other files (the topic list Nicrosil's atlas draws from) [[#Files that are not wiki pages]]"
+verified_on: 2026-11-23
 ---
 This is the overview of the Coppermind's rules: what the wiki is for, how it is laid out, and which rule file covers what. It is the rulebook for my personal LLM wiki. The Coppermind follows the SAIL version of the LLM-wiki pattern, not Karpathy's original: **I design, the AI drafts, I verify.** Nothing becomes part of the wiki as final until I have reviewed and approved it.
 

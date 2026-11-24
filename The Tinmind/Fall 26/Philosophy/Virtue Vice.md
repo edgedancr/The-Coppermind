@@ -26,7 +26,7 @@ semester: "Fall 26"
 	- The virtue is almost like friendship, except for you don't have to be fond of the person.
 	- Being overly people pleasing would stem from an excess in friendship, making you a roundabout flatterer, even if you didn't mean to be.
 - Bk 8.8 (pg. 333)
-	- By wishing the most good for a friend, you would necessarily isolate them from you do to their status. 
+	- By wishing the most good for a friend, you would necessarily isolate them from you due to their status. 
 	- Each man ultimately wishes the most good for himself.
 	- A flatterer pretends to love more than he is loved.
 	- Real friendship consists in loving others, rather than being loved.

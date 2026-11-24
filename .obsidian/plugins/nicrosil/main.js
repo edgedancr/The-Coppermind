@@ -2398,7 +2398,7 @@ class WikiMapView extends ItemView {
   constructor(leaf, plugin) {
     super(leaf);
     this.plugin = plugin;
-    this.st = { topic: null, focus: null, color: "state" };
+    this.st = { topic: null, focus: null, color: "type" };
     this.vb = null;
     this.raf = 0;
     this.token = 0;
@@ -2417,14 +2417,9 @@ class WikiMapView extends ItemView {
       if (e.key === "Escape" && !(e.target instanceof HTMLInputElement)) { this.back(); e.preventDefault(); }
     });
   }
-  async onClose() { cancelAnimationFrame(this.raf); this.containerEl.children[1].empty(); }
-  /** The tab was resized or shown: fit the view again if it was drawn while hidden, and keep text and lines their size. */
-  onResize() {
-    if (!this.svg || !this.vb) return;
-    const r = this.svg.getBoundingClientRect();
-    if (!r.width) return;
-    if (this.drawnHidden) { this.drawnHidden = false; this.drawSvgBounds(); this.apply(true); } else this.setVb(this.vb);
-  }
+  async onClose() { cancelAnimationFrame(this.raf); clearTimeout(this.refitTimer); if (this.ro) this.ro.disconnect(); this.containerEl.children[1].empty(); }
+  /** The tab was resized or shown (a sidebar closing, say): glide to the view that fits the new space. */
+  onResize() { this.rectCache = null; this.refit(); }
 
   go(path, newTab) {
     if (!path) return;
@@ -2474,11 +2469,23 @@ class WikiMapView extends ItemView {
     this.side = main.createDiv({ cls: "cm-at-side" });
     this.drawSvg();
     this.apply(true);
+    if (!this.introDone) {
+      // the first time the atlas opens it eases in from a wider view, so it settles into place
+      this.introDone = true;
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const f = this.vb, w = f.w * 1.5, h = f.h * 1.5;
+        this.setVb({ x: f.x - (w - f.w) / 2, y: f.y - (h - f.h) / 2, w, h });
+        window.requestAnimationFrame(() => this.glide(f, false));
+      }
+    }
   }
 
   drawBar(root) {
     const bar = root.createDiv({ cls: "cm-at-bar" });
-    bar.createDiv({ cls: "cm-at-title", text: "Atlas" });
+    const title = bar.createDiv({ cls: "cm-at-title", text: "Atlas", attr: { role: "button", tabindex: "0", title: "Back to the whole wiki" } });
+    const home = () => { this.st.topic = null; this.st.focus = null; this.apply(); };
+    title.addEventListener("click", home);
+    title.addEventListener("keydown", (e) => { if (e.key === "Enter") home(); });
     this.crumbs = bar.createDiv({ cls: "cm-at-crumbs" });
     bar.createDiv({ cls: "cm-at-gap" });
     const sw = bar.createDiv({ cls: "cm-at-search" });
@@ -2510,7 +2517,7 @@ class WikiMapView extends ItemView {
     });
     input.addEventListener("blur", () => { list.removeClass("is-open"); });
     const seg = bar.createDiv({ cls: "cm-at-seg", attr: { role: "group", "aria-label": "Color the dots by" } });
-    [["state", "Status"], ["type", "Type"]].forEach(([id, label]) => {
+    [["type", "Type"], ["state", "Status"]].forEach(([id, label]) => {
       const b = seg.createEl("button", { text: label, cls: this.st.color === id ? "is-active" : "" });
       b.addEventListener("click", () => { this.st.color = id; seg.querySelectorAll("button").forEach((x) => x.toggleClass("is-active", x === b)); this.paintDots(); this.drawKey(); });
     });
@@ -2532,6 +2539,7 @@ class WikiMapView extends ItemView {
     const d = this.data;
     this.stage.empty();
     const svg = this.svg = svgEl(this.stage, "svg", { class: "cm-at-svg", role: "img", "aria-label": "Atlas of the wiki's topics" });
+    this.rectCache = null; this.kSet = 0;
     const defs = svgEl(svg, "defs");
     const fill = svgEl(defs, "radialGradient", { id: "cm-at-fill", cx: 0.5, cy: 0.42, r: 0.62 });
     svgEl(fill, "stop", { offset: "0%", style: "stop-color: #b87333; stop-opacity: .17" });
@@ -2539,9 +2547,6 @@ class WikiMapView extends ItemView {
     const fillNone = svgEl(defs, "radialGradient", { id: "cm-at-fill-none", cx: 0.5, cy: 0.45, r: 0.6 });
     svgEl(fillNone, "stop", { offset: "0%", style: "stop-color: #8a8178; stop-opacity: .12" });
     svgEl(fillNone, "stop", { offset: "100%", style: "stop-color: #8a8178; stop-opacity: .03" });
-    // topic names: the Coppermind Gradient Style's colors (SVG text can't use the CSS gradient)
-    const tg = svgEl(defs, "linearGradient", { id: "cm-at-tgrad", x1: 0, y1: 0, x2: 1, y2: 0 });
-    [["0%", "#d99a62"], ["21%", "#f6d3a8"], ["32%", "#d99a62"], ["100%", "#86d2c1"]].forEach(([o, c]) => svgEl(tg, "stop", { offset: o, style: `stop-color: ${c}` }));
     for (const [t, info] of Object.entries(LINK_TYPES)) {
       const m = svgEl(defs, "marker", { id: `cm-at-arrow-${t}`, viewBox: "0 0 8 8", refX: 7, refY: 4, markerWidth: 5, markerHeight: 5, orient: "auto-start-reverse" });
       svgEl(m, "path", { d: "M0,0 L8,4 L0,8 z", fill: info.color });
@@ -2562,7 +2567,7 @@ class WikiMapView extends ItemView {
       const x1 = A.x + ux * A.r, y1 = A.y + uy * A.r, x2 = B.x - ux * B.r, y2 = B.y - uy * B.r;
       const mx = (x1 + x2) / 2 - uy * dist * 0.08, my = (y1 + y2) / 2 + ux * dist * 0.08;
       const p = svgEl(this.gBands, "path", { d: `M${x1},${y1} Q${mx},${my} ${x2},${y2}`, class: "cm-at-band" });
-      p.style.strokeWidth = String(Math.min(16, 1.2 + 1.5 * Math.sqrt(n)));
+      p.style.strokeWidth = `calc(${Math.min(16, 1.2 + 1.5 * Math.sqrt(n))}px * var(--k, 1))`;
       svgEl(p, "title", {}, `${this.topicName(a)} ↔ ${this.topicName(b)}: ${n} link${n === 1 ? "" : "s"}`);
       this.bandEls.push({ a, b, el: p });
     }
@@ -2608,26 +2613,28 @@ class WikiMapView extends ItemView {
 
     this.key = this.stage.createDiv({ cls: "cm-at-key" });
     this.drawKey();
-    this.hint = this.stage.createDiv({ cls: "cm-at-hint", text: "Click a topic to look inside · click a dot to trace it · double-click to open · scroll to zoom, drag to pan · Esc goes back" });
 
     // zoom with the wheel around the pointer; drag to pan; a click on empty space goes back to the whole wiki
     svg.addEventListener("wheel", (e) => {
       e.preventDefault();
       const pt = this.toSvg(e.clientX, e.clientY), f = Math.exp(e.deltaY * 0.0015), vb = this.vb;
       const w = Math.max(60, Math.min(this.full.w * 2, vb.w * f)), h = w * (vb.h / vb.w), k = w / vb.w;
-      this.setVb({ x: pt.x - (pt.x - vb.x) * k, y: pt.y - (pt.y - vb.y) * k, w, h });
+      cancelAnimationFrame(this.raf);
+      this.userView = true;
+      this.queueVb({ x: pt.x - (pt.x - vb.x) * k, y: pt.y - (pt.y - vb.y) * k, w, h });
     }, { passive: false });
     svg.addEventListener("pointerdown", (e) => {
       if (e.button !== 0) return;
+      this.rectCache = null;
       const start = { x: e.clientX, y: e.clientY, vb: { ...this.vb } };
-      const scale = this.vb.w / (svg.getBoundingClientRect().width || 1);
+      const scale = this.vb.w / (this.svgRect().width || 1);
       this.dragged = false;
       const move = (ev) => {
         const dx = ev.clientX - start.x, dy = ev.clientY - start.y;
         if (!this.dragged && Math.hypot(dx, dy) < 4) return;
-        this.dragged = true; svg.addClass("is-panning");
+        this.dragged = true; this.userView = true; svg.addClass("is-panning");
         cancelAnimationFrame(this.raf);
-        this.setVb({ ...start.vb, x: start.vb.x - dx * scale, y: start.vb.y - dy * scale });
+        this.queueVb({ ...start.vb, x: start.vb.x - dx * scale, y: start.vb.y - dy * scale });
       };
       const up = () => {
         window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up);
@@ -2638,20 +2645,26 @@ class WikiMapView extends ItemView {
     });
     svg.addEventListener("click", () => { if (this.dragged) return; if (this.st.focus || this.st.topic !== null) { this.st.focus = null; this.st.topic = null; this.apply(); } });
     this.drawSvgBounds();
+    // the stage changes size when a sidebar opens or closes or the window is resized: fit the view to the new space
+    if (this.ro) this.ro.disconnect();
+    if (typeof ResizeObserver !== "undefined") {
+      let last = 0;
+      this.ro = new ResizeObserver(() => { this.rectCache = null; const w = this.stage.clientWidth; if (Math.abs(w - last) > 2) { last = w; this.refit(); } });
+      this.ro.observe(this.stage);
+    }
   }
 
   /** The box that shows the whole wiki, with room for the topic names above the circles. */
   drawSvgBounds() {
     const d = this.data;
-    this.drawnHidden = !this.stage.clientWidth;
     let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
-    // a topic's name can be wider than its circle: allow about 8px a letter at the size the whole map is drawn
+    // a topic's name can be wider than its circle: allow about 9.5px a letter at the size the whole map is drawn
     let k0 = 1;
     for (let pass = 0; pass < 2; pass++) {
       x0 = Infinity; y0 = Infinity; x1 = -Infinity; y1 = -Infinity;
       for (const g of d.groups) {
         const lines = wrapWords(this.topicName(g.key), 18);
-        const half = Math.max(g.r, (Math.max(...lines.map((l) => l.length)) * 8 * k0) / 2);
+        const half = Math.max(g.r, (Math.max(...lines.map((l) => l.length)) * 9.5 * k0) / 2);
         x0 = Math.min(x0, g.x - half); x1 = Math.max(x1, g.x + half); y0 = Math.min(y0, g.y - g.r - (10 + 18 * lines.length) * k0); y1 = Math.max(y1, g.y + g.r);
       }
       k0 = (x1 - x0) / Math.max(400, this.stage.clientWidth || 1000);
@@ -2662,17 +2675,36 @@ class WikiMapView extends ItemView {
   }
 
   toSvg(cx, cy) {
-    const r = this.svg.getBoundingClientRect(), vb = this.vb;
+    const r = this.svgRect(), vb = this.vb;
     const s = Math.max(vb.w / (r.width || 1), vb.h / (r.height || 1)); // preserveAspectRatio "meet": the larger scale wins
     return { x: vb.x + vb.w / 2 + (cx - r.left - r.width / 2) * s, y: vb.y + vb.h / 2 + (cy - r.top - r.height / 2) * s };
+  }
+  /** The size of the svg on screen, measured once and again only when the space changes (measuring on every move forces a layout). */
+  svgRect() {
+    if (!this.rectCache) { const r = this.svg.getBoundingClientRect(); this.rectCache = { left: r.left, top: r.top, width: r.width, height: r.height }; }
+    return this.rectCache;
   }
   setVb(v) {
     this.vb = v;
     this.svg.setAttribute("viewBox", `${v.x} ${v.y} ${v.w} ${v.h}`);
-    // labels and lines keep their size on screen as the view zooms
-    const r = this.svg.getBoundingClientRect();
+    // labels and lines keep their size on screen as the view zooms; a pan doesn't change it, so then nothing is restyled
+    const r = this.svgRect();
     const s = Math.max(v.w / (r.width || 800), v.h / (r.height || 600));
-    this.svg.style.setProperty("--k", String(s));
+    if (!this.kSet || Math.abs(s - this.kSet) > this.kSet * 1e-4) { this.kSet = s; this.svg.style.setProperty("--k", String(s)); }
+  }
+  /** While the view moves the dashed links are drawn solid (dashing is the slowest thing to redraw); they are dashed again a moment after it stops. */
+  moving() {
+    if (!this.svg) return;
+    this.svg.addClass("is-moving");
+    clearTimeout(this.movingTimer);
+    this.movingTimer = window.setTimeout(() => { if (this.svg) this.svg.removeClass("is-moving"); }, 180);
+  }
+  /** For the wheel and the drag: remember the view now and draw it once a frame, however many events came in. */
+  queueVb(v) {
+    this.vb = v;
+    this.moving();
+    if (this.queued) return;
+    this.queued = window.requestAnimationFrame(() => { this.queued = 0; if (this.svg && this.svg.isConnected && this.vb) this.setVb(this.vb); });
   }
   glide(to, now) {
     cancelAnimationFrame(this.raf);
@@ -2681,6 +2713,7 @@ class WikiMapView extends ItemView {
     const t0 = performance.now(), dur = 380;
     const step = (t) => {
       const u = Math.min(1, (t - t0) / dur), e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+      this.moving();
       this.setVb({ x: from.x + (to.x - from.x) * e, y: from.y + (to.y - from.y) * e, w: from.w + (to.w - from.w) * e, h: from.h + (to.h - from.h) * e });
       if (u < 1) this.raf = requestAnimationFrame(step);
     };
@@ -2707,6 +2740,7 @@ class WikiMapView extends ItemView {
   /** Puts the view in line with this.st: what is lit, dimmed and labeled, which links are drawn, the side panel and the zoom. */
   apply(now = false) {
     const d = this.data, st = this.st;
+    this.userView = false; // picking something fits it; zooming or panning by hand sets this again
     const focus = st.focus ? d.nodes.get(st.focus) : null;
     const tkey = focus ? d.topic.get(focus.path) : st.topic;
     const near = new Set();
@@ -2744,6 +2778,8 @@ class WikiMapView extends ItemView {
 
     // links between pages: the traced page's, or those of the open topic (none on the whole-wiki view, where the bands stand for them)
     this.gEdges.empty();
+    // a topic has hundreds of links: those of one kind share one path, so the browser has a few shapes to draw and not hundreds
+    const merged = new Map();
     const line = (e, cls) => {
       const a = d.pos.get(e.from), b = d.pos.get(e.to);
       if (!a || !b) return;
@@ -2752,9 +2788,11 @@ class WikiMapView extends ItemView {
       const x2 = b.x - (dx / dist) * rb, y2 = b.y - (dy / dist) * rb;
       const mx = (a.x + x2) / 2 - (dy / dist) * dist * 0.1, my = (a.y + y2) / 2 + (dx / dist) * dist * 0.1;
       const info = LINK_TYPES[e.type];
-      const p = svgEl(this.gEdges, "path", { d: `M${a.x},${a.y} Q${mx},${my} ${x2},${y2}`, class: `cm-at-edge ${cls}` + (e.type === "see" ? " is-see" : "") });
+      const dd = `M${a.x.toFixed(1)},${a.y.toFixed(1)} Q${mx.toFixed(1)},${my.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}`;
+      if (cls !== "is-trace") { const k = cls + "|" + e.type; merged.set(k, (merged.get(k) || "") + dd); return; }
+      const p = svgEl(this.gEdges, "path", { d: dd, class: `cm-at-edge ${cls}` + (e.type === "see" ? " is-see" : "") });
       p.style.stroke = info.color;
-      if (cls === "is-trace") p.setAttribute("marker-end", `url(#cm-at-arrow-${e.type})`);
+      p.setAttribute("marker-end", `url(#cm-at-arrow-${e.type})`);
     };
     if (focus) { focus.out.forEach((e) => line(e, "is-trace")); focus.inn.forEach((e) => line(e, "is-trace")); }
     else if (tkey !== null) {
@@ -2763,14 +2801,29 @@ class WikiMapView extends ItemView {
         if (ta === tkey && tb === tkey) line(e, "is-inside");
         else if (ta === tkey || tb === tkey) line(e, "is-across");
       }
+      for (const [k, dd] of merged) {
+        const [cls, type] = k.split("|");
+        const p = svgEl(this.gEdges, "path", { d: dd, class: `cm-at-edge ${cls}` + (type === "see" ? " is-see" : "") });
+        p.style.stroke = LINK_TYPES[type].color;
+      }
     }
     this.drawCrumbs(tkey, focus);
     this.drawSide(tkey, focus);
 
-    // zoom: the traced page and its neighbors, the open topic, or the whole wiki
+    this.glide(this.fitBox(), now || !this.vb);
+  }
+
+  /** The view that shows what is open (the traced page and its neighbors, the open topic, or the whole wiki) at the shape of the space it has now. */
+  fitBox() {
+    const d = this.data, st = this.st;
+    const focus = st.focus ? d.nodes.get(st.focus) : null;
+    const tkey = focus ? d.topic.get(focus.path) : st.topic;
     let box = this.full;
     if (focus) {
       let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+      const near = new Set([focus.path]);
+      for (const e of focus.out) near.add(e.to);
+      for (const e of focus.inn) near.add(e.from);
       near.forEach((p) => { const q = d.pos.get(p); if (q) { x0 = Math.min(x0, q.x); x1 = Math.max(x1, q.x); y0 = Math.min(y0, q.y); y1 = Math.max(y1, q.y); } });
       const w = Math.max(220, x1 - x0 + 120), h = Math.max(160, y1 - y0 + 120);
       box = { x: (x0 + x1) / 2 - w / 2, y: (y0 + y1) / 2 - h / 2, w, h };
@@ -2778,11 +2831,29 @@ class WikiMapView extends ItemView {
       const g = this.group(tkey);
       if (g) { const s = g.r * 1.25; box = { x: g.x - s, y: g.y - s - 18, w: 2 * s, h: 2 * s + 18 }; }
     }
-    const r = this.svg.getBoundingClientRect();
+    const r = this.svgRect();
     const asp = r.width && r.height ? r.width / r.height : 1.5;
     if (box.w / box.h < asp) { const w = box.h * asp; box = { ...box, x: box.x - (w - box.w) / 2, w }; }
     else { const h = box.w / asp; box = { ...box, y: box.y - (h - box.h) / 2, h }; }
-    this.glide(box, now || !this.vb);
+    return box;
+  }
+
+  /**
+   * The space the atlas has changed (a sidebar opened or closed, the window was resized): glide to the view that fits it,
+   * unless I have zoomed or panned myself since I last picked something. Waits for the resizing to settle, so it glides once.
+   */
+  refit() {
+    clearTimeout(this.refitTimer);
+    this.refitTimer = window.setTimeout(() => {
+      if (!this.svg || !this.svg.isConnected || !this.data) return;
+      this.rectCache = null;
+      const r = this.svgRect();
+      if (!r.width || !r.height) return;
+      this.drawSvgBounds();          // the whole-wiki box depends on the width (topic names), so work it out again
+      if (!this.vb) { this.apply(true); return; }
+      if (this.userView) { this.setVb(this.vb); return; }
+      this.glide(this.fitBox(), false);
+    }, 140);
   }
 
   drawCrumbs(tkey, focus) {
@@ -2792,7 +2863,7 @@ class WikiMapView extends ItemView {
       const s = c.createSpan({ cls: "cm-at-crumb" + (last ? " is-last" : ""), text });
       if (!last) { s.setAttr("role", "button"); s.setAttr("tabindex", "0"); s.addEventListener("click", fn); s.addEventListener("keydown", (e) => { if (e.key === "Enter") fn(); }); }
     };
-    const levels = [["Whole wiki", () => { this.st.topic = null; this.st.focus = null; this.apply(); }]];
+    const levels = [["Wiki", () => { this.st.topic = null; this.st.focus = null; this.apply(); }]];
     if (tkey !== null && tkey !== undefined) levels.push([this.topicName(tkey), () => { this.st.topic = tkey; this.st.focus = null; this.apply(); }]);
     if (focus) levels.push([focus.name, () => {}]);
     levels.forEach(([t, fn], i) => { if (i) c.createSpan({ cls: "cm-at-sep", text: "›" }); step(t, fn, i === levels.length - 1); });
@@ -3888,8 +3959,9 @@ module.exports = class Nicrosil extends Plugin {
     this.registerEvent(this.app.workspace.on("active-leaf-change", (leaf) => {
       this.syncDashboardLeaves(false);
       this.enforceReading(leaf);
+      this.syncAtlasSidebars();
     }));
-    this.registerEvent(this.app.workspace.on("layout-change", () => { this.syncSchemaButtons(); this.syncHomeButtons(); this.syncDashboardLeaves(false); }));
+    this.registerEvent(this.app.workspace.on("layout-change", () => { this.syncSchemaButtons(); this.syncHomeButtons(); this.syncDashboardLeaves(false); this.syncAtlasSidebars(); }));
     this.registerEvent(this.app.workspace.on("hover-link", (e) => {
       try {
         const lt = String(e.linktext || "").split("#")[0].split("|")[0];
@@ -3929,6 +4001,7 @@ module.exports = class Nicrosil extends Plugin {
       this.searchIndex.start();
       this.tinIndex.start();
       this.syncSchemaButtons(); this.syncHomeButtons();
+      this.syncAtlasSidebars();
       await this.migrateHome();
       await this.migrateTinDashboard();
       await this.migrateTinBacklinks();
@@ -3949,6 +4022,7 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   onunload() {
+    this.restoreAtlasSidebars();
     clearTimeout(this.dashIntroTimer);
     clearTimeout(this.indexTimer);
     document.querySelectorAll(".cm-schema-log-btn, .cm-respond-btn").forEach((e) => e.remove());
@@ -3956,7 +4030,7 @@ module.exports = class Nicrosil extends Plugin {
     document.querySelectorAll(".cm-resolve-btn, .cm-home-btn, .cm-underscore-btn, .cm-mode-btn, .cm-git-btn, .cm-panel-btn").forEach((e) => e.remove());
     document.body.classList.remove("cm-hide-underscore");
     document.body.classList.remove("cm-on-dashboard", "cm-on-tin", "cm-tin-mode");
-    document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-agents-leaf, .cm-tinnote-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => { e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-agents-leaf", "cm-tinnote-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"); e.style.removeProperty("--cm-log-title"); });
+    document.querySelectorAll(".cm-dashboard-leaf, .cm-log-leaf, .cm-agents-leaf, .cm-topics-leaf, .cm-tinnote-leaf, .cm-noprops-leaf, .cm-strip-leaf, .cm-props-open, .cm-st-verified, .cm-st-draft").forEach((e) => { e.classList.remove("cm-dashboard-leaf", "cm-log-leaf", "cm-agents-leaf", "cm-topics-leaf", "cm-tinnote-leaf", "cm-noprops-leaf", "cm-strip-leaf", "cm-props-open", "cm-st-verified", "cm-st-draft"); e.style.removeProperty("--cm-log-title"); });
     document.querySelectorAll(".cm-dashboard-tab").forEach((e) => e.classList.remove("cm-dashboard-tab"));
     document.body.classList.remove("cm-quiet");
     document.querySelectorAll(".cm-propstrip, .cm-ratebar, .cm-mytake").forEach((e) => e.remove());
@@ -4929,6 +5003,7 @@ module.exports = class Nicrosil extends Plugin {
       if (leaf.tabHeaderEl) leaf.tabHeaderEl.classList.toggle("cm-dashboard-tab", isDash); // the Dashboard's tab shows the logo, not the file name
       view.containerEl.classList.toggle("cm-tinnote-leaf", !!view.file && path.startsWith(NOTES_DIR) && !isTin); // every note in the Tinmind: its title in the Tinmind Gradient Style (3.3.0)
       view.containerEl.classList.toggle("cm-log-leaf", isLog);
+      view.containerEl.classList.toggle("cm-topics-leaf", path === TOPICS_PATH); // its file name in the Coppermind Gradient Style (3.30.0)
       view.containerEl.classList.toggle("cm-agents-leaf", path === "_AGENTS.md"); // its title reads AGENTS in the Coppermind Gradient Style (2.18.2)
       const logM = /^_logs\/_log (\d{2}-\d{2})\.md$/.exec(path); // a log's title reads "Log 11-26" (the theme draws it from --cm-log-title)
       if (logM) view.containerEl.style.setProperty("--cm-log-title", `"Log ${logM[1]}"`); else view.containerEl.style.removeProperty("--cm-log-title");
@@ -6013,6 +6088,35 @@ module.exports = class Nicrosil extends Plugin {
     }
     this.atlasCache = { key, nodes, edges, adj, topics, topic, score, groups, pos: lay.pos, pairs, anchorSet, missing, hasFile: text !== null };
     return this.atlasCache;
+  }
+
+  /**
+   * While the atlas is the page in front, both sidebars are closed so it has the room (3.30.0); when another page in the main
+   * area comes to the front, or the atlas is closed, each sidebar that was open opens again. What was open is kept in
+   * `settings.atlasSidebars`, so it survives a restart with the atlas still open. A sidebar I open myself meanwhile is left as I
+   * set it, and working in a sidebar (the Lens, say) isn't leaving the atlas: the main area's front page is still the atlas.
+   */
+  syncAtlasSidebars() {
+    const ws = this.app.workspace;
+    const front = ws.getMostRecentLeaf ? ws.getMostRecentLeaf(ws.rootSplit) : null;
+    const onAtlas = !!(front && front.view instanceof WikiMapView);
+    const saved = this.settings.atlasSidebars;
+    if (onAtlas && !saved) {
+      const open = (s) => !!s && !s.collapsed;
+      this.settings.atlasSidebars = { left: open(ws.leftSplit), right: open(ws.rightSplit) };
+      this.persist();
+      if (open(ws.leftSplit)) ws.leftSplit.collapse();
+      if (open(ws.rightSplit)) ws.rightSplit.collapse();
+    } else if (!onAtlas && saved) this.restoreAtlasSidebars();
+  }
+
+  restoreAtlasSidebars() {
+    const ws = this.app.workspace, saved = this.settings && this.settings.atlasSidebars;
+    if (!saved) return;
+    delete this.settings.atlasSidebars;
+    this.persist();
+    if (saved.left && ws.leftSplit && ws.leftSplit.collapsed) ws.leftSplit.expand();
+    if (saved.right && !this.settings.tinmindMode && ws.rightSplit && ws.rightSplit.collapsed) ws.rightSplit.expand(); // the Tinmind's mode keeps the right sidebar closed
   }
 
   /* --- navigation --- */

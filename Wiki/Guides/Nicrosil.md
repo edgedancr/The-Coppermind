@@ -1,6 +1,6 @@
 ---
 type: guide
-status: draft
+status: verified
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -15,16 +15,11 @@ related:
 drafted_by: Claude (claude-sonnet-5-5; review queue, flags, hotkeys and dashboard added by claude-opus-5-5; Dashboard page and home button by claude-sonnet-5-5; rewritten as the full Nicrosil guide by claude-sonnet-5-5; quiet Dashboard by claude-opus-5-5; relations map glow, Reading view on open, health check card, clickable change lines, the restyled map and hierarchy and the hover-preview strip by claude-sonnet-5-5; SCHEMAS folder and monthly log by claude-opus-5-5; larger file-list button name and index letter headings and jump bar, the flat relations map, the trimmed guide body, and the changelog moved to its own file, by claude-sonnet-5-5; Coppermind Gradient Style section by claude-sonnet-5-5; the Tinmind (notes dashboard, semester switcher, hero, button, mode) and the Tinmind Gradient Style by claude-sonnet-5-5; trimmed to what Nicrosil does and brought to v3.0.0 by claude-sonnet-5-5; Tinmind course tree and course pages by claude-sonnet-5-5; mode button, dashboard status bar and the dashboards' Ledger look by claude-sonnet-5-5; the Notebook by claude-sonnet-5-5; transcription queue by claude-sonnet-5-5; buttons kept full size by claude-sonnet-5-5); the transcription queue's Rename button by claude-sonnet-5-5; the transcription queue as a locked split by claude-sonnet-5-5; the atlas and the Lens by claude-opus-5-5
 drafted_on: 2026-11-11
 verified_on: 2026-11-23
-changes_since_verified:
-  - "2026-11-23: version 3.28.0 → 3.29.0 (the atlas and the Lens)"
-  - "2026-11-23: the relations panel is now the Lens: plain links as well as typed ones, the page's topic, pages two steps away that it doesn't link with, and a trail (Harrison asked for the lens view on each page) [[#The Lens]]"
-  - "2026-11-23: the wiki map is now the atlas, drawn from the topic list in `_topics.md`; its Hierarchy and Map views are gone (Harrison asked to replace both) [[#The atlas]]"
-  - "2026-11-23: the new names in the Dashboard's link cards and the Tinmind mode, and in the hotkey table and sidebar buttons, plus the Show this page in the atlas command [[#Hotkeys and buttons]]"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, records schema changes, and runs the Tinmind, my own class notes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v3.29.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v3.30.3**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## Turn it on (once per computer)
 1. In Obsidian: **Settings → Community plugins**, click the refresh icon next to "Installed plugins," and switch on **Nicrosil**.
@@ -90,12 +85,13 @@ The search box on the [[_dashboard|Dashboard]] shows suggestion cards as I type,
 - **Two lists:** "This page…" (outgoing) and "Pointing at this page…" (incoming, worked out from other pages, since each relationship is stored once),[^3] grouped by type, with plain links last as **Links to** and **Linked from** (folded when long).
 
 ## The atlas
-`Alt+M` or the Atlas card opens it in its own tab. It replaced the wiki map's Hierarchy and Map views in 3.29.0. It reads the links and [[_topics]], and changes no file.
+`Alt+M` or the Atlas card opens it in its own tab. It reads the links and [[_topics]], and changes no file.
 - **Topics.** Each topic in `_topics.md` is a circle, and its anchor pages are pinned to it. Every other page in `Wiki/` and `Perspectives/` joins the topic its links tie it to most closely: Nicrosil spreads out from each topic's anchors along the links (a typed link counts double) and puts each page with the topic that reaches it most strongly. Pages with no path of links to any anchor sit in a dashed **No topic yet** circle. Nothing is written on the pages. The atlas works this out again when links, pages or the topic list change; otherwise the layout stays the same.
-- **The whole wiki.** Bands between circles show how many links join two topics. Each dot is a page, sized by how many pages link to it and colored by status (or by page type with **Type**); anchors have a ring. The side panel gives the counts and lists the topics.
+- **The whole wiki.** Bands between circles show how many links join two topics. Each dot is a page, sized by how many pages link to it and colored by page type (or by status with **Status**; it opens on Type); anchors have a ring. The side panel gives the counts and lists the topics.
 - **A topic.** Click its circle to zoom in. Its links are drawn, its anchors and busiest pages are named, and the side panel shows its description, status, anchors, most-linked pages, the topics it links with most, the topics it never links with, and pages that are almost in another topic (candidates for an anchor there, or for a link).
 - **A page.** Click a dot, or find the page with the search box, to trace it: its links are drawn in their colors and everything else fades. The side panel lists its links by type, its topic, and **Open page**. Double-click or `Ctrl+click` a dot to open the page.
-- **Moving around.** Scroll to zoom, drag to pan, and `Esc` or the path at the top goes back a level. **Edit topics** opens `_topics.md`. **Show this page in the atlas** (command palette) opens it on the page I'm reading.
+- **Moving around.** Scroll to zoom, drag to pan, and `Esc` or the path at the top goes back a level; clicking **Atlas** at the top left goes straight back to the whole wiki. The atlas eases in when it first opens, and glides to fit the space whenever that changes (a sidebar closing, a resized window), unless I have zoomed or panned myself since I last picked something. **Edit topics** opens `_topics.md`. **Show this page in the atlas** (command palette) opens it on the page I'm reading.
+- **Sidebars.** While the atlas is the page in front, both sidebars are closed so it has the room. When another page comes to the front, or the atlas is closed, each sidebar that was open opens again (the right one stays closed in the Tinmind's mode). A sidebar I open myself in the meantime is left alone, and working in one (the Lens, say) doesn't count as leaving the atlas.
 - **The topic list is mine.** The agent checks it at each ingest ([[SCHEMA - Ingest#6. Check the topic list]]). Anchors that aren't pages are listed in the side panel.
 
 ## The properties strip
