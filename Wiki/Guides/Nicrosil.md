@@ -17,11 +17,16 @@ drafted_on: 2026-11-11
 verified_on: 2026-11-24
 changes_since_verified:
   - "2026-11-24: Added the Query mode section (the search bar's Query switch, the query tab, Save to Analyses), the Claude Code setting, and version 4.2.0"
+  - "2026-11-24: Query mode bar restyled (version 4.3.0); no change to what it does"
+  - "2026-11-24: Fixed gray fills on the query controls (version 4.3.1); no change to what they do"
+  - "2026-11-24: Query controls take the CGS glow, the bar stays flat when clicked, and the selected choice stays lit (version 4.3.2); no change to what they do"
+  - "2026-11-24: Coppermind Dashboard spacing tightened so more fits on a laptop screen (version 4.3.3); no change to what anything does"
+  - "2026-11-24: More space above the Dashboard hero (version 4.3.4); no change to what anything does"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, records schema changes, and runs the Tinmind, my own class notes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v4.2.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v4.3.4**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## Turn it on (once per computer)
 **Settings → Community plugins**, refresh, switch on **Nicrosil**. After an update, switch it off and on (or restart Obsidian). The plugin files are in git, so another computer gets them with a pull, but the on/off setting is local.

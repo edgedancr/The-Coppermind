@@ -3519,14 +3519,15 @@ class SearchBlock extends MarkdownRenderChild {
     const bar = el.createDiv({ cls: "cm-search-bar" });
     // Query mode (4.2.0): the Coppermind's bar only, and only on a computer, gets a Search / Query switch in place of the search icon
     this.canQuery = !this.opts.tin && !Platform.isMobile;
+    if (this.canQuery) el.addClass("has-qswitch");
     if (this.canQuery) {
       const sw = bar.createDiv({ cls: "cm-qswitch", attr: { role: "group", "aria-label": "Search or query" } });
       this.swSearch = sw.createEl("button", { cls: "cm-qswitch-btn", attr: { type: "button", "aria-label": "Keyword search" } });
       setIcon(this.swSearch.createSpan(), "search");
-      this.swSearch.appendText("Search");
+      this.swSearch.createSpan({ cls: "cm-qtxt", text: "Search" });
       this.swQuery = sw.createEl("button", { cls: "cm-qswitch-btn", attr: { type: "button", "aria-label": "Ask Claude (query mode)" } });
       setIcon(this.swQuery.createSpan(), "sparkles");
-      this.swQuery.appendText("Query");
+      this.swQuery.createSpan({ cls: "cm-qtxt", text: "Query" });
       this.swSearch.addEventListener("click", () => this.setMode("search"));
       this.swQuery.addEventListener("click", () => this.setMode("query"));
     } else setIcon(bar.createSpan({ cls: "cm-search-icon" }), "search");
@@ -3535,7 +3536,7 @@ class SearchBlock extends MarkdownRenderChild {
     setIcon(this.clearBtn, "x");
     if (this.canQuery) {
       this.askBtn = bar.createEl("button", { cls: "cm-qask", attr: { type: "button" } });
-      this.askBtn.appendText("Ask");
+      this.askBtn.createSpan({ cls: "cm-qtxt", text: "Ask" });
       setIcon(this.askBtn.createSpan(), "arrow-right");
       this.askBtn.addEventListener("click", () => this.ask());
       this.qOpts = el.createDiv({ cls: "cm-qopts" });
@@ -3587,11 +3588,14 @@ class SearchBlock extends MarkdownRenderChild {
     const st = this.plugin.settings;
     const group = (label, list, key, def) => {
       const g = box.createDiv({ cls: "cm-qgroup" });
-      g.createDiv({ cls: "cm-qlabel", text: label });
+      const lb = g.createDiv({ cls: "cm-qlabel" });
+      lb.createSpan({ text: label });
+      lb.createSpan({ cls: "cm-qrule" });
       const row = g.createDiv({ cls: "cm-qseg", attr: { role: "group", "aria-label": label } });
       const cur = st[key] || def;
       for (const [k, name] of list) {
-        const b = row.createEl("button", { cls: "cm-qseg-btn" + (k === cur ? " is-on" : ""), text: name, attr: { type: "button", "aria-pressed": String(k === cur) } });
+        const b = row.createEl("button", { cls: "cm-qseg-btn" + (k === cur ? " is-on" : ""), attr: { type: "button", "aria-pressed": String(k === cur) } });
+        b.createSpan({ cls: "cm-qtxt", text: name });
         b.addEventListener("click", () => { st[key] = k; this.plugin.persist(); this.drawQueryOptions(); });
       }
       return g;
@@ -3611,6 +3615,7 @@ class SearchBlock extends MarkdownRenderChild {
     const u = this.plugin.settings.lastUsage;
     const head = el.createDiv({ cls: "cm-qlabel cm-qusage-head" });
     head.createSpan({ text: "Usage" });
+    head.createSpan({ cls: "cm-qrule" });
     const link = head.createEl("a", { cls: "cm-qusage-link", text: "View usage ↗", attr: { href: USAGE_URL } });
     link.addEventListener("click", (e) => { e.preventDefault(); window.open(USAGE_URL); });
     if (u && Number.isFinite(u.pct)) {

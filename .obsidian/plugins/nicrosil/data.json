@@ -36,10 +36,10 @@
     "tinSemesters": [
       "Spring 27"
     ],
-    "searchMode": "query",
-    "queryDepth": "quick",
-    "queryModel": "haiku",
-    "queryEffort": "low",
+    "searchMode": "search",
+    "queryDepth": "standard",
+    "queryModel": "sonnet",
+    "queryEffort": "medium",
     "lastRun": {
       "tokens": 69188,
       "at": 1795566218340
