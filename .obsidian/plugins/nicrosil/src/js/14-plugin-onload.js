@@ -23,6 +23,8 @@ module.exports = class Nicrosil extends Plugin {
     this.registerView(REL_VIEW_TYPE, (leaf) => new RelationsView(leaf, this));
     this.registerView(MAP_VIEW_TYPE, (leaf) => new WikiMapView(leaf, this));
     this.registerView(QUERY_VIEW_TYPE, (leaf) => new QueryView(leaf, this));
+    this.registerView(TRIAGE_VIEW_TYPE, (leaf) => new TriageView(leaf, this));
+    this.registerView(INGEST_VIEW_TYPE, (leaf) => new IngestView(leaf, this));
     this.addSettingTab(new ReviewSettings(this.app, this));
     this.registerCommands();
 
@@ -69,8 +71,9 @@ module.exports = class Nicrosil extends Plugin {
       this.syncDashboardLeaves(false);
       this.enforceReading(leaf);
       this.syncAtlasSidebars();
+      this.syncTriageSidebar();
     }));
-    this.registerEvent(this.app.workspace.on("layout-change", () => { this.syncSchemaButtons(); this.syncHomeButtons(); this.syncDashboardLeaves(false); this.syncAtlasSidebars(); }));
+    this.registerEvent(this.app.workspace.on("layout-change", () => { this.syncSchemaButtons(); this.syncHomeButtons(); this.syncDashboardLeaves(false); this.syncAtlasSidebars(); this.syncTriageSidebar(); }));
     this.registerEvent(this.app.workspace.on("hover-link", (e) => {
       try {
         const lt = String(e.linktext || "").split("#")[0].split("|")[0];
@@ -111,6 +114,7 @@ module.exports = class Nicrosil extends Plugin {
       this.tinIndex.start();
       this.syncSchemaButtons(); this.syncHomeButtons();
       this.syncAtlasSidebars();
+      this.syncTriageSidebar();
       await this.migrateHome();
       await this.migrateTinDashboard();
       await this.migrateTinBacklinks();
@@ -132,6 +136,7 @@ module.exports = class Nicrosil extends Plugin {
 
   onunload() {
     this.restoreAtlasSidebars();
+    this.restoreTriageSidebar();
     clearTimeout(this.dashIntroTimer);
     clearTimeout(this.indexTimer);
     document.querySelectorAll(".cm-schema-log-btn, .cm-respond-btn").forEach((e) => e.remove());
@@ -195,5 +200,12 @@ module.exports = class Nicrosil extends Plugin {
     this.addCommand({ id: "open-relations", name: "Open the Lens", hotkeys: [{ modifiers: ["Alt"], key: "l" }], callback: () => this.activateRelations() });
     this.addCommand({ id: "open-queue", name: "Open the review queue", hotkeys: [{ modifiers: ["Alt"], key: "q" }], callback: () => this.activateView() });
     this.addCommand({ id: "open-transcription-queue", name: "Open the transcription queue", hotkeys: [{ modifiers: ["Alt"], key: "t" }], callback: () => this.activateTranscribe() });
+    this.addCommand({ id: "open-triage", name: "Open Triage (the sources waiting in Ingestion/Raw)", hotkeys: [{ modifiers: ["Alt"], key: "i" }], callback: () => this.activateTriage() });
+    // Triage keeps itself current: a file added, removed, renamed or changed in Raw (or a text copy in Sources/) redraws it.
+    this.scheduleTriageRefresh = debounce(() => this.refreshTriage(), 300, true);
+    const forTriage = (p) => typeof p === "string" && (p.startsWith(RAW_DIR) || p.startsWith("Sources/"));
+    ["create", "delete", "modify"].forEach((ev) => this.registerEvent(this.app.vault.on(ev, (f) => { if (f && forTriage(f.path)) this.scheduleTriageRefresh(); })));
+    this.registerEvent(this.app.vault.on("rename", (f, old) => { if ((f && forTriage(f.path)) || forTriage(old)) this.scheduleTriageRefresh(); }));
+    this.app.workspace.onLayoutReady(() => this.clearIngestStage());
   }
 

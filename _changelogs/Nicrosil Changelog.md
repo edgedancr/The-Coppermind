@@ -4,6 +4,9 @@ updated: 2026-11-24
 ---
 The changelog of [[Nicrosil]], newest first. It lives here in `_changelogs/`, outside the guide, so an agent reading the guide doesn't also read all of this. Read it only to add a line for a new version or to look up when something changed. Past lines are never rewritten; a correction goes in a new line. How something looks belongs in these lines, in a few words, not in the guide's body. From 4.3.5 on, each line is at most two sentences and covers one session's changes; code details are in git ([[SCHEMA - Changes#Nicrosil and other tools]]).
 
+- **4.4.1:** The usage meter under the Dashboard's query bar now shows your plan usage as a percent, using the limit window closest to full. Before, it only showed the last query's token count.
+- **4.4.0:** The Triage card now opens a Triage dashboard that lists every source in Ingestion/Raw as it arrives, marks which need a text copy, and ingests the ones I pick through Claude Code with a model, effort and mode I choose. Each source gets its own ingest tab, where a plan shows as a board of drafts to tick and questions to answer, and the right sidebar closes while Triage is in front and opens again when I leave.
+
 - **4.3.5:** The code and styles are now kept as feature parts in `src/` and built into `main.js` and `styles.css` with `build.py`, so an agent opens only the part it needs. Nothing Nicrosil does or shows has changed.
 
 - **4.3.4:** More space above the Dashboard hero. The hero's top padding goes from 6px to 12px, the logo goes back to its full 84px, and the Dashboard tab drops its custom top margin, so Obsidian's default applies. Nothing else changes.

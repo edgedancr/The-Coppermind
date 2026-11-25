@@ -136,20 +136,40 @@ function describeToolUse(name, input) {
   if (name === "Read") return { text: `Read ${short(i.file_path || i.path)}`, page: /\/Wiki\//.test("/" + String(i.file_path || "").replace(/\\/g, "/")) };
   if (name === "Glob") return { text: `Listed files matching ${i.pattern || "…"}`, page: false };
   if (name === "Grep") return { text: `Searched for “${i.pattern || "…"}”${i.path ? ` in ${short(i.path)}` : ""}`, page: false };
+  if (name === "Write") return { text: `Wrote ${short(i.file_path)}`, page: true };
+  if (name === "Edit") return { text: `Edited ${short(i.file_path)}`, page: true };
+  if (name === "Bash") return { text: i.description ? String(i.description) : `Ran ${String(i.command || "a command").slice(0, 70)}`, page: false };
   return { text: `Used ${name}`, page: false };
 }
 
 /** Usage percent (0–100) from a stream-json event, if the event carries one; null otherwise.
- *  Untested guess at the field names: Claude Code's rate limit events are read loosely, so a missing field just means no meter. */
+ *  On a Claude.ai login the rate limit event lists every window in `unifiedWindows` ({ five_hour: { utilization, resetsAt }, seven_day: ... }, utilization 0–1),
+ *  even while the status is "allowed". The window closest to its limit wins, since that is the one that stops a run.
+ *  The older top-level `utilization` field is still read as a fallback: Claude Code only fills it once a window nears its limit. */
 function usageFromEvent(ev) {
   if (!ev || typeof ev !== "object" || !/rate.?limit/i.test(String(ev.type || ""))) return null;
   const info = ev.rate_limit_info || ev.rateLimitInfo || ev;
+  const toPct = (v) => {
+    if (v == null) return null;
+    const n = Number(v);
+    if (!Number.isFinite(n)) return null;
+    const pct = n <= 1 ? n * 100 : n;
+    return pct >= 0 && pct <= 100 ? pct : null;
+  };
+  const windows = info.unifiedWindows || info.unified_windows;
+  if (windows && typeof windows === "object") {
+    let best = null;
+    for (const [kind, w] of Object.entries(windows)) {
+      if (!w || typeof w !== "object") continue;
+      const pct = toPct(w.utilization);
+      if (pct !== null && (!best || pct > best.pct)) best = { pct, kind, resetsAt: w.resetsAt || w.resets_at || null };
+    }
+    if (best) return { pct: Math.round(best.pct), kind: best.kind, resetsAt: best.resetsAt };
+  }
   for (const [k, v] of Object.entries(info)) {
     if (!/utiliz|percent|used/i.test(k)) continue;
-    const n = Number(v);
-    if (!Number.isFinite(n)) continue;
-    const pct = n <= 1 ? n * 100 : n;
-    if (pct >= 0 && pct <= 100) return { pct: Math.round(pct), kind: String(info.rateLimitType || info.rate_limit_type || ""), resetsAt: info.resetsAt || info.resets_at || null };
+    const pct = toPct(v);
+    if (pct !== null) return { pct: Math.round(pct), kind: String(info.rateLimitType || info.rate_limit_type || ""), resetsAt: info.resetsAt || info.resets_at || null };
   }
   return null;
 }
@@ -225,7 +245,8 @@ class QueryView extends ItemView {
   run(question, followUp) {
     const w = this.wrap;
     w.empty();
-    this.drawHeader(w, followUp ? "Working on your follow-up" : "Reading the wiki");
+    const ui = this.ui(followUp);
+    this.drawHeader(w, ui.label);
     const card = w.createDiv({ cls: "cm-query-card is-working" });
     const bg = card.createDiv({ cls: "cm-hero-bg" });
     bg.setAttr("aria-hidden", "true");
@@ -235,15 +256,15 @@ class QueryView extends ItemView {
       s.style.setProperty("--d", `${7 + i}s`);
       s.style.animationDelay = `-${i * 2}s`;
     }
-    card.createDiv({ cls: "cm-query-working cm-gradient-style", text: followUp ? "Thinking it through…" : "Reading the wiki…" });
-    card.createDiv({ cls: "cm-query-sub", text: "Claude answers from your pages first. Nothing is saved until you press Save to Analyses." });
+    card.createDiv({ cls: "cm-query-working cm-gradient-style", text: ui.working });
+    card.createDiv({ cls: "cm-query-sub", text: ui.sub });
     const steps = card.createDiv({ cls: "cm-query-steps" });
     const bar = card.createDiv({ cls: "cm-progress" }).createDiv({ cls: "cm-progress-fill" });
     bar.style.width = "4%";
     const foot = card.createDiv({ cls: "cm-query-foot" });
     const elapsed = foot.createSpan({ text: "Elapsed 0:00" });
-    foot.createSpan({ text: "The bar is an estimate: pages read against the depth's guide" });
-    const cancel = w.createEl("button", { cls: "cm-query-cancel", text: "Cancel query" });
+    foot.createSpan({ text: ui.foot });
+    const cancel = w.createEl("button", { cls: "cm-query-cancel", text: ui.cancel });
     cancel.addEventListener("click", () => { this.stop(); this.cancelled(followUp); });
 
     const started = Date.now();
@@ -264,7 +285,7 @@ class QueryView extends ItemView {
 
     let child;
     try {
-      child = this.plugin.spawnClaude(claudeArgs({ model: this.q.model, effort: this.q.effort, sessionId: followUp ? null : this.sessionId, resume: followUp ? this.sessionId : null }));
+      child = this.plugin.spawnClaude(this.argsFor({ model: this.q.model, effort: this.q.effort, sessionId: followUp ? null : this.sessionId, resume: followUp ? this.sessionId : null }));
     } catch (e) {
       this.stop();
       return this.failed(String(e && e.message || e), followUp);
@@ -291,7 +312,7 @@ class QueryView extends ItemView {
               const d = describeToolUse(c.name, c.input);
               if (d.page) pagesRead++;
               step(d.text);
-              const cap = QUERY_DEPTH_CAP[this.q.depth] || 8;
+              const cap = ui.cap;
               bar.style.width = `${Math.min(90, 8 + (pagesRead / cap) * 80)}%`;
             } else if (c.type === "text" && c.text) lastText = c.text;
           }
@@ -316,8 +337,24 @@ class QueryView extends ItemView {
       if (resultEv && !resultEv.is_error && (resultEv.result || lastText)) this.answered(question, resultEv.result || lastText, followUp, resultEv);
       else this.failed((resultEv && (resultEv.result || resultEv.subtype)) || errText.trim() || `Claude Code stopped (exit code ${code}).`, followUp);
     });
-    child.stdin.end(buildQueryPrompt({ question, depth: this.q.depth, followUp }));
+    child.stdin.end(this.promptFor(question, followUp));
   }
+
+  /** The words on the working card, and the page count the bar measures against (4.4.0: hooks, so the ingest tab can reuse run()). */
+  ui(followUp) {
+    return {
+      label: followUp ? "Working on your follow-up" : "Reading the wiki",
+      working: followUp ? "Thinking it through…" : "Reading the wiki…",
+      sub: "Claude answers from your pages first. Nothing is saved until you press Save to Analyses.",
+      foot: "The bar is an estimate: pages read against the depth's guide",
+      cancel: "Cancel query",
+      cap: QUERY_DEPTH_CAP[this.q.depth] || 8,
+    };
+  }
+  argsFor(o) { return claudeArgs(o); }
+  answerLabel() { return this.saved ? "Saved to Analyses" : "Draft, not saved"; }
+  metaMissingNote() { return "Claude didn't end with the metadata block, so the title, summary and log details are partly blank. Fill them in before saving."; }
+  promptFor(question, followUp) { return buildQueryPrompt({ question, depth: this.q.depth, followUp }); }
 
   drawHeader(w, label) {
     const head = w.createDiv({ cls: "cm-query-head" });
@@ -366,13 +403,13 @@ class QueryView extends ItemView {
     const last = this.turns[this.turns.length - 1];
     const layout = w.createDiv({ cls: "cm-query-layout" });
     const main = layout.createDiv({ cls: "cm-query-main" });
-    const head = this.drawHeader(main, this.saved ? "Saved to Analyses" : "Draft, not saved");
+    const head = this.drawHeader(main, this.answerLabel());
     if (last.meta.question_type || last.meta.depth) {
       const chips = head.querySelector(".cm-query-chips");
       if (last.meta.question_type) chips.createSpan({ cls: "cm-query-chip is-type", text: String(last.meta.question_type) });
     }
     if (note) main.createDiv({ cls: "cm-query-note", text: note });
-    if (!metaOk) main.createDiv({ cls: "cm-query-note", text: "Claude didn't end with the metadata block, so the title, summary and log details are partly blank. Fill them in before saving." });
+    if (!metaOk) main.createDiv({ cls: "cm-query-note", text: this.metaMissingNote() });
     if (last.meta.existing_analysis) {
       const n = main.createDiv({ cls: "cm-query-note" });
       n.appendText("Claude found an earlier analysis of this question: ");

@@ -41,9 +41,11 @@
     "queryModel": "sonnet",
     "queryEffort": "medium",
     "lastRun": {
-      "tokens": 69188,
-      "at": 1795566218340
-    }
+      "tokens": 173367,
+      "at": 1795589578681
+    },
+    "ingestMode": "plan",
+    "ingestModel": "haiku"
   },
   "resolved": {}
 }

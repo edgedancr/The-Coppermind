@@ -1848,3 +1848,147 @@ body.cm-quiet .cm-qstats-line { font-size: 0.98em; white-space: nowrap; overflow
 body.cm-quiet .cm-qbar { margin: 10px 0 8px; }
 body.cm-quiet .cm-qstats-sub { font-size: 0.86em; }
 body.cm-quiet .cm-qstats .cm-qnext { height: 40px; padding: 0 20px; }
+/* ---------- 4.4.0: the Triage dashboard and the ingest tab, in the Ledger look (sharp corners, hairline rules, the CGS glow on numbers, choices and the Ingest button) ---------- */
+.cm-tri-view { padding: 0 !important; background: var(--cm-bg-gradient); }
+.cm-tri { --t-rule: rgba(246, 211, 168, 0.22); --t-soft: rgba(246, 211, 168, 0.12); --t-ink: #f0e3d0; --t-mute: #c9b59a;
+  --t-glow: 0 0 12px rgba(217, 138, 74, 0.5), 0 0 18px rgba(95, 174, 158, 0.35);
+  max-width: 1280px; margin: 0 auto; padding: 34px 40px 40px; display: flex; flex-direction: column; gap: 22px; height: 100%; box-sizing: border-box; color: var(--t-ink); }
+.cm-tri-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--t-rule); }
+.cm-tri-title { margin: 0; font-size: 2.9em; line-height: 1; }
+.cm-tri-watch { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: var(--font-ui-small); color: var(--t-mute); }
+.cm-tri-pulse { width: 7px; height: 7px; flex: none; background: var(--cm-patina); animation: cm-tri-pulse 1.8s infinite; }
+@keyframes cm-tri-pulse { 0% { box-shadow: 0 0 0 0 rgba(95, 174, 158, 0.7); } 100% { box-shadow: 0 0 0 8px rgba(95, 174, 158, 0); } }
+.cm-tri-stats { display: flex; }
+.cm-tri-stat { padding: 0 24px; border-left: 1px solid var(--t-rule); }
+.cm-tri-stat:last-child { padding-right: 0; }
+.cm-tri-num { font-family: var(--cm-gradient-font); font-size: 2em; line-height: 1.1; }
+.cm-tri-num.is-amber { color: var(--cm-amber); filter: drop-shadow(0 0 8px rgba(224, 168, 70, 0.45)); }
+.cm-tri-statlabel { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t-mute); }
+.cm-tri-body { display: flex; flex-wrap: wrap; gap: 36px; flex: 1; min-height: 0; }
+.cm-tri-main { flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; min-height: 0; }
+.cm-tri-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--t-rule); }
+.cm-tri-tabs { display: flex; flex-wrap: wrap; }
+.cm-tri-acts { display: flex; gap: 14px; }
+.cm-tri-list { flex: 1; min-height: 0; overflow-y: auto; }
+.cm-tri-empty { padding: 26px 6px; color: var(--t-mute); font-style: italic; }
+.cm-tri-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.cm-tri-name { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cm-tri-meta { font-size: var(--font-ui-smaller); color: var(--t-mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cm-tri-box { width: 13px; height: 13px; flex: none; border: 1px solid var(--cm-copper); }
+.cm-tri-chip { flex: none; font-size: 10px; font-weight: 600; line-height: 1; padding: 3px 6px; border-radius: 3px; color: #1c1815; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.03em; }
+.cm-tri-chip.is-ready { background: var(--cm-patina); }
+.cm-tri-chip.is-convert { background: var(--cm-copper); color: #fff; }
+.cm-tri-chip.is-image { background: var(--cm-amber); }
+.cm-tri-chip.is-unknown { background: var(--cm-plum); }
+.cm-tri-chip.is-empty { background: var(--cm-rust); color: #fff; }
+.cm-tri-chip.is-new { background: #86d2c1; }
+.cm-tri-chip.is-insources { background: transparent; color: var(--cm-plum); box-shadow: inset 0 0 0 1px var(--cm-plum); }
+.cm-tri-side { flex: 1 1 300px; min-width: 280px; max-width: 360px; display: flex; flex-direction: column; gap: 8px; padding-left: 28px; border-left: 1px solid var(--t-rule); }
+.cm-tri-qtitle { margin: 0 0 4px; font-size: 1.5em; }
+.cm-tri-queue { display: flex; flex-direction: column; max-height: 260px; overflow-y: auto; }
+.cm-tri-qrow { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--t-soft); }
+.cm-tri-qn { width: 16px; flex: none; font-family: var(--cm-gradient-font); color: #86d2c1; }
+.cm-tri-qtext { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.cm-tri-qname { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cm-tri-flabel { margin-top: 10px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t-mute); }
+.cm-tri-seg { display: flex; }
+.cm-tri-seg.is-off { opacity: 0.4; }
+.cm-tri-hint { font-size: var(--font-ui-smaller); color: var(--t-mute); line-height: 1.45; }
+.cm-tri-note { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--t-soft); font-size: var(--font-ui-small); color: var(--t-mute); line-height: 1.55; }
+.cm-tri-grow { flex: 1; min-height: 12px; }
+.cm-tri-input { width: 100%; border-radius: 0 !important; }
+/* buttons: Obsidian's own button rule outranks bare classes (see 4.3.1), so each names the view and the button, and fills are set with !important */
+.cm-tri-view button.cm-tri-row { display: flex; align-items: center; gap: 14px; width: 100%; height: auto; padding: 10px 6px; text-align: left; font-size: var(--font-ui-medium); color: var(--t-ink);
+  border: 0; border-bottom: 1px solid var(--t-soft); border-radius: 0; background: transparent !important; box-shadow: none !important; cursor: pointer; }
+.cm-tri-view button.cm-tri-row:hover { background: rgba(184, 115, 51, 0.08) !important; }
+.cm-tri-view button.cm-tri-row.is-on { background: rgba(184, 115, 51, 0.13) !important; }
+.cm-tri-view button.cm-tri-row.is-on .cm-tri-box { border-color: transparent; background: linear-gradient(135deg, #d99a62, #86d2c1); box-shadow: 0 0 8px rgba(217, 138, 74, 0.6); }
+.cm-tri-view button.cm-tri-row.is-off { opacity: 0.5; cursor: not-allowed; }
+.cm-tri-view button.cm-tri-tab, .cm-tri-view button.cm-tri-segbtn { height: auto; padding: 6px 14px; margin-right: -1px; font-size: var(--font-ui-small); color: var(--t-ink);
+  border: 1px solid rgba(184, 115, 51, 0.45); border-radius: 0; background: transparent !important; box-shadow: none !important; }
+.cm-tri-view button.cm-tri-segbtn { flex: 1; padding: 7px 6px; }
+.cm-tri-view button.cm-tri-tab:hover, .cm-tri-view button.cm-tri-segbtn:hover:not([disabled]) { border-color: var(--cm-copper); }
+.cm-tri-view button.cm-tri-tab.is-on, .cm-tri-view button.cm-tri-segbtn.is-on { position: relative; z-index: 1; color: #f6d3a8; border-color: #d99a62; background: rgba(184, 115, 51, 0.2) !important; box-shadow: var(--t-glow) !important; }
+.cm-tri-view button.cm-tri-segbtn[disabled] { cursor: not-allowed; }
+.cm-tri-tabn { margin-left: 6px; color: var(--t-mute); }
+.cm-tri-view button.cm-tri-link { height: auto; padding: 0; border: 0; background: transparent !important; box-shadow: none !important; color: #86d2c1; font-size: var(--font-ui-small); }
+.cm-tri-view button.cm-tri-link.is-mute { color: var(--t-mute); }
+.cm-tri-view button.cm-tri-link:hover { text-shadow: 0 0 10px rgba(134, 210, 193, 0.7); }
+.cm-tri-view button.cm-tri-qx { width: 24px; height: 24px; padding: 0; border: 0; border-radius: 0; background: transparent !important; box-shadow: none !important; color: var(--t-mute); }
+.cm-tri-view button.cm-tri-qx svg { width: 14px; height: 14px; }
+.cm-tri-view button.cm-tri-go { height: 46px; border: 0; border-radius: 0; font-weight: 600; font-size: var(--font-ui-medium); color: #1c1815;
+  background: linear-gradient(100deg, #d99a62, #f6d3a8 30%, #86d2c1) !important; box-shadow: 0 0 18px rgba(217, 138, 74, 0.4), 0 0 30px rgba(95, 174, 158, 0.2) !important; }
+.cm-tri-view button.cm-tri-go:hover:not([disabled]) { box-shadow: 0 0 24px rgba(217, 138, 74, 0.6), 0 0 40px rgba(95, 174, 158, 0.3) !important; }
+.cm-tri-view button.cm-tri-one { height: 40px; border: 1px solid rgba(184, 115, 51, 0.45); border-radius: 0; color: var(--t-ink); background: transparent !important; box-shadow: none !important; }
+.cm-tri-view button.cm-tri-one:hover:not([disabled]) { border-color: var(--cm-copper); box-shadow: 0 0 12px rgba(184, 115, 51, 0.3) !important; }
+.cm-tri-view button[disabled].cm-tri-go, .cm-tri-view button[disabled].cm-tri-one { opacity: 0.45; cursor: not-allowed; }
+/* the ingest tab: Query mode's layout, plus the page links and the Approve button */
+.cm-ing-pages { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
+.cm-ing-quick { margin-top: 22px; }
+.cm-query-view button.cm-ing-next { margin-top: 8px; border: 1px solid #86d2c1; background: transparent !important; color: #9be0cf; }
+/* ---------- 4.4.0: the ingest plan board: fine CGS lines (copper fading to teal) instead of boxes, outlined tags, and the glow on what is chosen ---------- */
+.cm-plan { --p-line: linear-gradient(90deg, rgba(217, 154, 98, 0.55), rgba(134, 210, 193, 0.3) 60%, transparent); --p-mute: #c9b59a;
+  --p-glow: 0 0 10px rgba(217, 138, 74, 0.45), 0 0 18px rgba(95, 174, 158, 0.3); }
+.cm-plan .cm-query-head { padding-bottom: 16px; background: var(--p-line) left bottom / 100% 1px no-repeat; }
+.cm-plan-steps { display: flex; align-items: center; gap: 8px; margin-top: 14px; font-size: var(--font-ui-smaller); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint); }
+.cm-plan-step.is-done { color: #9be0cf; }
+.cm-plan-step.is-now { background: var(--cm-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; filter: var(--cm-gradient-glow); font-weight: 600; }
+.cm-plan-stepline { width: 22px; height: 1px; background: linear-gradient(90deg, rgba(217, 154, 98, 0.5), rgba(134, 210, 193, 0.5)); }
+.cm-plan-layout { display: flex; flex-wrap: wrap; gap: 40px; margin-top: 20px; align-items: flex-start; }
+.cm-plan-main { flex: 999 1 540px; min-width: 0; }
+.cm-plan-count { font-size: var(--font-ui-small); color: var(--p-mute); font-style: italic; }
+.cm-plan-group { margin: 26px 0 4px; padding-bottom: 6px; font-size: 1.3em; background-image: var(--cm-gradient); }
+.cm-plan-group::after { content: ""; display: block; height: 1px; margin-top: 6px; width: 100%; background: var(--p-line); -webkit-text-fill-color: initial; }
+.cm-plan-row { position: relative; display: flex; gap: 14px; align-items: flex-start; padding: 13px 4px 13px 14px; transition: opacity 0.2s; }
+.cm-plan-row::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 1px; background: linear-gradient(180deg, #d99a62, #86d2c1); box-shadow: var(--p-glow); transition: opacity 0.2s; }
+.cm-plan-row::after { content: ""; position: absolute; left: 14px; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, rgba(246, 211, 168, 0.14), transparent 85%); }
+.cm-plan-row:hover .cm-plan-title { text-shadow: 0 0 12px rgba(217, 138, 74, 0.55); }
+.cm-plan-row.is-off { opacity: 0.42; }
+.cm-plan-row.is-off::before { opacity: 0; }
+.cm-plan-row.is-off .cm-plan-title { text-decoration: line-through; text-decoration-color: rgba(217, 154, 98, 0.6); }
+.cm-plan-check { appearance: none; -webkit-appearance: none; flex: none; width: 14px; height: 14px; margin: 3px 0 0; border: 1px solid #b87333; border-radius: 0; background: transparent; cursor: pointer; }
+.cm-plan-check:checked { border-color: transparent; background: linear-gradient(135deg, #d99a62, #86d2c1); box-shadow: var(--p-glow); }
+.cm-plan-check:focus-visible { outline: 1px solid #86d2c1; outline-offset: 2px; }
+.cm-plan-body { flex: 1; min-width: 0; }
+.cm-plan-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
+.cm-plan-title { font-weight: 600; cursor: pointer; transition: text-shadow 0.2s; }
+.cm-plan-grow { flex: 1; }
+.cm-plan-from { font-size: var(--font-ui-smaller); color: var(--p-mute); }
+.cm-plan-kind { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1; padding: 3px 7px; border: 1px solid currentColor; border-radius: 0; background: transparent; }
+.cm-plan-kind.is-card { color: var(--cm-plum); }
+.cm-plan-kind.is-summary { color: #e8a974; }
+.cm-plan-kind.is-new { color: #86d2c1; }
+.cm-plan-kind.is-update, .cm-plan-kind.is-verified { color: var(--cm-amber); }
+.cm-plan-kind.is-other { color: var(--p-mute); }
+.cm-plan-summary { margin-top: 4px; font-size: var(--font-ui-small); color: var(--p-mute); line-height: 1.5; }
+.cm-plan-add { position: relative; margin-top: 8px; padding: 2px 0 2px 14px; font-size: var(--font-ui-small); line-height: 1.5; }
+.cm-plan-add::before { content: "+"; position: absolute; left: 0; color: #86d2c1; text-shadow: 0 0 8px rgba(134, 210, 193, 0.7); }
+.cm-plan-text { margin-top: 28px; font-size: var(--font-ui-small); color: var(--p-mute); }
+.cm-plan-text summary { cursor: pointer; }
+.cm-plan-text summary:hover { color: #9be0cf; }
+.cm-plan-side { flex: 1 1 260px; min-width: 240px; max-width: 340px; position: sticky; top: 16px; padding-left: 26px; }
+.cm-plan-side::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, rgba(217, 154, 98, 0.55), rgba(134, 210, 193, 0.3) 60%, transparent); }
+.cm-plan-shead { margin: 4px 0 2px; padding-bottom: 7px; font-family: var(--cm-gradient-font); font-size: 1.15em; color: #e8b07a; background: var(--p-line) left bottom / 100% 1px no-repeat; }
+.cm-plan-shead.is-amber { color: var(--cm-amber); text-shadow: 0 0 10px rgba(224, 168, 70, 0.4); background-image: linear-gradient(90deg, rgba(224, 168, 70, 0.6), transparent); }
+.cm-plan-shead + * { margin-top: 10px; }
+.cm-plan-side > .cm-plan-shead:not(:first-child) { margin-top: 26px; }
+.cm-plan-q { padding: 10px 0 12px; line-height: 1.5; font-size: var(--font-ui-small); }
+.cm-plan-opts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.cm-plan-skips { margin: 0; padding-left: 16px; font-size: var(--font-ui-small); color: var(--p-mute); line-height: 1.7; }
+.cm-plan-notes { margin-top: 18px; font-size: var(--font-ui-smaller); color: var(--p-mute); line-height: 1.55; font-style: italic; }
+.cm-plan-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 34px; padding-top: 16px; background: var(--p-line) left top / 100% 1px no-repeat; }
+.cm-plan-footnote { flex: 1 1 220px; font-size: var(--font-ui-smaller); color: var(--p-mute); }
+.cm-query-view input.cm-plan-input { flex: 0 1 300px; height: 38px; border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; padding: 0 4px;
+  border-bottom: 1px solid transparent !important; border-image: linear-gradient(90deg, rgba(217, 154, 98, 0.7), rgba(134, 210, 193, 0.5)) 0 0 1 0 !important; }
+.cm-query-view input.cm-plan-input:focus { border-image: linear-gradient(90deg, #d99a62, #86d2c1) 0 0 1 0 !important; }
+/* buttons name the view so Obsidian's own button rule doesn't win (see 4.3.1) */
+.cm-query-view button.cm-plan-opt, .cm-query-view button.cm-plan-adjust { height: 32px; padding: 0 14px; border: 1px solid rgba(217, 154, 98, 0.45); border-radius: 0; background: transparent !important; box-shadow: none !important; color: var(--text-normal); font-size: var(--font-ui-small); }
+.cm-query-view button.cm-plan-adjust { height: 40px; }
+.cm-query-view button.cm-plan-opt:hover, .cm-query-view button.cm-plan-adjust:hover { border-color: #d99a62; box-shadow: 0 0 12px rgba(217, 138, 74, 0.3) !important; }
+.cm-query-view button.cm-plan-opt.is-on { border-color: #86d2c1; color: #9be0cf; box-shadow: var(--p-glow) !important; }
+.cm-query-view button.cm-plan-approve { position: relative; height: 42px; padding: 0 22px; border-radius: 0; font-weight: 600; font-size: var(--font-ui-medium); color: #f6d3a8;
+  border: 1px solid transparent; background: linear-gradient(#1f1a16, #1f1a16) padding-box, linear-gradient(100deg, #d99a62, #f6d3a8 35%, #86d2c1) border-box !important;
+  box-shadow: 0 0 16px rgba(217, 138, 74, 0.35), 0 0 28px rgba(95, 174, 158, 0.2) !important; text-shadow: 0 0 10px rgba(217, 138, 74, 0.5); }
+.cm-query-view button.cm-plan-approve:hover:not([disabled]) { box-shadow: 0 0 22px rgba(217, 138, 74, 0.55), 0 0 38px rgba(95, 174, 158, 0.32) !important; }
+.cm-query-view button.cm-plan-approve[disabled] { opacity: 0.4; cursor: not-allowed; }
+.cm-query-view button.cm-plan-next { width: 100%; margin-top: 22px; height: 38px; }

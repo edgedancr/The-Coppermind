@@ -55,20 +55,3 @@ The files Col. Middleton supplied for Intro to Intelligence, triaged on 2026-11-
 
 ### Section 13: Government and speech
 - `[ ]` 12 - Missouri v. Biden opinion (note on its card: reversed on standing in *Murthy v. Missouri*, 2024), 12 - Twitter Files Reveal an Existential Threat (Imprimis)
-
----
-
-### My call (not yet decided)
-- 3 - IC Orgs Weaknesses-Critiques: appears to be AI-generated (it opens with a prompt); usable only with a low rating.
-- 12 - Zuboff Ch. 4 Summary: an AI prompt followed by a summary; the Ch. 3 adaptation is better.
-- 9 - Shariah: The Threat to America (Team B Report): an advocacy report with widely disputed conclusions.
-- 5 - In the Light of Christ (Charlie Kirk's death), 9 - Bible and Constitution chart: worldview material with little intelligence content.
-- 14 - Hamel - Go Ahead Revolt: a business-book chapter on innovation.
-- Image-only slide decks the agent couldn't read: 5a - JWT Intelligence Ethics and Modern Warfare, 6 - LE vs IC Culture, 6 - Polygraph Briefing, 7 - Black Box. They can be rendered and OCR'd to assess them.
-- Truth-Lies of the Polygraph (guest lecturer's flyer, scan): small, but would add to [[Polygraph Examination]].
-
-### Not adding
-- **Course logistics:** 1 - AI Permitted Landscape (course AI policy), 2 - Bloom Taxonomy Expectations, Bio Sketch Feedback, 11 - Final Exam Addendum, 3 - Rules of Thumb - Writing in the PHC Core.
-- **Personal or private:** Resume-Diehl (personal contact information), 12 - CENTCOM intel distortions (personal email).
-- **No content to ingest:** Diehl Bibliography (reading list), 12 - The Future of Intelligence Panel (only a link; ingest the transcript if I get one), Poly-Helps (polygraph form), 2 - Rank and Insignia and 8 - Treasury Dept Intel Offices (charts), 10 - Wohlstetter Foreword slides and 2 - Info Model slide (image-only; covered elsewhere).
-- **Duplicates still in the folder:** 11 - Intelligence Def in 7 Points Middleton Nov2025 (older version of Oct2026), 9 - Thomas - Dialectical Versus Empirical Thinking (same as the week 8 copy).

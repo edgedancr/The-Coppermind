@@ -32,6 +32,7 @@ Obsidian loads only `main.js` and `styles.css` in the folder above. Both are **b
 | `js/11-search-box.js` | The search index and the Dashboard search box |
 | `js/12-schema-changelog-tinmind-helpers.js` | Schema changelog helpers, Tinmind prompt dialogs, the Log a schema change dialog |
 | `js/13-query-mode-view.js` | Query mode: the prompt, reply parsing, Analysis page, query log entries, the query tab (`QueryView`) |
+| `js/13b-triage-ingest-view.js` | The Triage dashboard (`TriageView`), its Raw list (`triageEntries`), and the ingest tab (`IngestView`, built on `QueryView`) |
 | `js/14-plugin-onload.js` | Start of the plugin class: `onload`, `onunload`, `persist`, `registerCommands` |
 | `js/15-plugin-file-list-button-schema-log.js` | The Coppermind and Tinmind buttons, Tinmind mode, git and mode buttons, hidden `_` folders, schema buttons |
 | `js/16-plugin-respond-state.js` | Respond to a page and "My take"; Log a schema change actions; refresh, queue state, renames |
@@ -42,6 +43,7 @@ Obsidian loads only `main.js` and `styles.css` in the folder above. Both are **b
 | `js/21-plugin-typed-links.js` | The Add typed link button; Verify (with its animations) and Reject |
 | `js/22-plugin-flags-files.js` | Resolving flags; keeping `_index.md` up to date; the month's log file |
 | `js/23-plugin-transcription.js` | Opening and running the transcription queue |
+| `js/23b-plugin-triage-ingest.js` | Opening Triage, ingest runs and batches, staging the chosen file in `Ingestion/.selected/` |
 | `js/24-plugin-query-mode-exports.js` | Query mode actions (running Claude Code, Save to Analyses, log); end of the class; test exports |
 | `css/01-base-gradient-styles-queue-dialogs.css` | Fonts, variables, the CGS and TGS classes, status bar, queue, dialogs |
 | `css/02-logo-dashboard-index-search-relations.css` | Logo, Dashboard page, index and log pages, properties strip, search box, schema dialog, relations |
@@ -52,4 +54,4 @@ Obsidian loads only `main.js` and `styles.css` in the folder above. Both are **b
 | `css/07-dashboard-cards-ledger-notebook-sidebar.css` | Dashboard cards, the Ledger look, Notebook, semester title, git buttons, ribbon, hover previews |
 | `css/08-transcription-queue-shelf-tinmind-search.css` | Transcription queue, Tinmind shelf, course notes panel, Tinmind search |
 | `css/09-atlas-lens-typed-links.css` | Atlas, Lens (3.29.0), atlas buttons, Add typed link |
-| `css/10-query-mode-and-later.css` | Query mode (4.2.0 onward) and every style added since |
+| `css/10-query-mode-and-later.css` | Query mode (4.2.0 onward), Triage and ingest tabs (4.4.0), and every style added since |

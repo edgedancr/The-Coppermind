@@ -14,7 +14,7 @@ related:
   - "[[SCHEMA]]"
 drafted_by: Claude (claude-sonnet-5-5, claude-opus-5-5)
 drafted_on: 2026-11-11
-verified_on: 2026-11-24
+verified_on: 2026-11-25
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, records schema changes, and runs the Tinmind, my own class notes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
@@ -44,7 +44,7 @@ They work on pages with a `status` property in `Wiki/`, `Perspectives/`, `Source
 ## The Dashboard
 [[_dashboard|Dashboard]] (`_dashboard.md`) is the page the vault opens on; the **The Coppermind** button and `Alt+D` open it, always in Reading view. Its sections are blocks in the note and can be moved or deleted by editing it. It has:
 - **Header:** the search box ([[#Search]]).
-- **Link cards:** Index, Log (newest month), Atlas (own tab), Schema, Triage, Agents (`_AGENTS`).
+- **Link cards:** Index, Log (newest month), Atlas (own tab), Schema, Triage (the Triage dashboard, [[#Triage and ingest]]), Agents (`_AGENTS`).
 - **Review progress:** verified count and percentage, drafts and open flags, **Open next draft**; a **health check card** (days since the last health check, from report names in `Health Checks/`; click opens the latest report); the **Changed since verified** list; folded lists of pages with open flags and of stale drafts.
 - **Recent activity:** the last six log entries; click opens the page named.
 
@@ -75,6 +75,19 @@ The Dashboard's search bar has a **Search / Query** switch (on a computer only; 
 - **Follow-ups** continue the same Claude Code session on that computer; Save files the newest answer.
 - **Setup, once per computer:** install Claude Code and sign in by running `claude` in a terminal. Nicrosil only starts that program, and Claude Code keeps its own sign-in. If `ANTHROPIC_API_KEY` is set, Claude Code bills the API instead of my plan; the query tab says so when that happens.
 - **The usage meter** shows a percent only if Claude Code reports one during a query; otherwise it shows the last query's tokens.
+
+## Triage and ingest
+**Triage** (`Alt+I`, or the Triage card on the Dashboard; on a computer only) lists every source in `Ingestion/Raw/`, newest first, and updates itself when a file is added, removed or renamed there. Nicrosil reads only each file's name, type, size and date; it never opens a file, and Claude never sees the list.
+
+- **Each source** shows a status from its type: **Text copy ready** (a `(text).md` copy is in Raw or `Sources/`), **Already text** (`.md`, `.txt`), **Needs text copy** (a PDF or Office or web file without one), **Image**, **Unknown type**, or **Empty file** (0 bytes, can't be picked). **New** marks files added in the last day, and **Already in Sources** a file whose name is already there. Filters: All, Text ready, Needs work, New.
+- **Pick sources** by clicking them (or **Select all shown**). The **Ingest queue** lists them in list order. Choose **Model**, **Effort** (Haiku has none) and **Mode**, **Plan first** or **Draft directly** (the MODE input of [[SCHEMA - Ingest#The ingest operation]]), and optionally one **What matters** note for the run. The choices are remembered.
+- **Ingest as a batch** opens one ingest tab per source, each starting when the one before it has given its plan or report. **One at a time** opens the first; a **Start next** button in its tab opens the next when I'm ready.
+- **An ingest tab** works like a query tab: the steps while Claude works, then its report, with links to the pages. In plan-first mode **Approve the plan** tells Claude to draft; the reply box adjusts the plan or answers its questions in the same session. The side panel lists the pages created and appended, the source card, where the source was copied, the number of flags, and **Open the review queue**.
+- **The plan board.** In plan-first mode the plan comes back as cards: the proposed drafts grouped as Source, New pages and Updates to existing pages, each with its type, a line on what it holds, where in the source it comes from, what an update adds, and a mark on updates to verified pages. Untick a draft to leave it out. The side lists Claude's questions with answer buttons, what it skipped, and its notes. **Approve and draft** sends the go-ahead with the drafts left out and my answers; **Adjust the plan** sends what I type instead. Claude's plan as text is folded under the cards, and a plan without the cards' data is shown as text, as before.
+- **What Claude can do in an ingest:** Nicrosil copies the one chosen file, unchanged, to the hidden `Ingestion/.selected/` folder, and Claude reads it there; `Ingestion/Raw/` stays closed to it. Claude follows [[SCHEMA - Ingest]]: it copies the source into `Sources/`, makes the text copy with `Tools/source-to-text`, drafts the pages and source card, and adds the `ingest` log entry. It can write only where an ingest writes (not `SCHEMAS/`, `_AGENTS.md`, `_index.md`, `Perspectives/`, `The Tinmind/`, `Ingestion/`, `Tools/`, templates or changelogs) and run only the copy, folder, text-copy and health-check commands. Every page it writes is a draft.
+- **The staged copy** is removed when the drafts are written or the tab is closed, and any left over at startup. The original stays in Raw for me to delete.
+- **The right sidebar** closes while the Triage tab is the page in front, like the atlas, and opens again when I go to another page or close the tab. A sidebar I open myself meanwhile is left alone.
+- **`Ingestion/Triage.md`** is no longer opened by the Triage card; the file itself is unchanged.
 
 ## The index and the log
 - **Index:** [[_index|index]] lists every page under its type, alphabetically, with counts, a total and a **Jump to** line; Concepts and Glossary are split by letter. Verify only checks that the page is listed. Reject removes its line and rebuilds the counts, letter headings and jump links.
@@ -124,6 +137,7 @@ Every change to the rules (`_AGENTS.md` or a file in `SCHEMAS/`) needs a line in
 | `Alt+Q` | Open the review queue |
 | `Alt+L` | Open the Lens |
 | `Alt+T` | Open the transcription queue |
+| `Alt+I` | Open Triage |
 | `Alt+M` | Open the atlas |
 | `Alt+D` | Go to the Dashboard |
 | `Alt+Shift+D` | Switch between the Coppermind and the Tinmind, and bring the file list back |

@@ -273,7 +273,7 @@
       { icon: "scroll-text", title: "Log", sub: "Every change and decision", go: (newTab) => { const f = this.latestLogFile(); if (f) this.app.workspace.getLeaf(newTab ? "tab" : false).openFile(f); else new Notice("There is no log file yet."); } },
       { icon: "network", title: "Atlas", sub: "The wiki's topics and how they connect", go: () => this.activateWikiMap() },
       { icon: "book-open", title: "Schema", sub: "The rulebook", go: open("SCHEMA") },
-      { icon: "list-checks", title: "Triage", sub: "Sources waiting to be ingested", go: open("Ingestion/Triage") }, // sits under Wiki map (first column)
+      { icon: "list-checks", title: "Triage", sub: "Sources waiting in Raw, ready to ingest", go: () => this.activateTriage() }, // sits under Wiki map (first column)
       { icon: "bot", title: "Agents", sub: "The rules every agent reads first", go: open("_AGENTS"), under: true }, // sits under Schema (second column); the Tinmind has its own button in the file list
     ];
     this.drawNavCards(el, cards);

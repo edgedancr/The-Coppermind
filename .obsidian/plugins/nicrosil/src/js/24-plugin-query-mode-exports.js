@@ -80,4 +80,5 @@ module.exports.__test = {
   cleanNoteName, scanPath, scanNames, scanKey, splitNote, parseDrawings, parseRechecks, findUnsure, acceptGuess, keepDrawing, recreateDrawing, leaveOutDrawing, clearRecheck, transcribeVerifyLogEntry,
   parseTopics, assignTopics, layoutAtlas, suggestLinks, pageState,
   buildQueryPrompt, parseQueryReply, analysisPage, queryLogEntry, queryFiledLogEntry, describeToolUse, usageFromEvent, claudeArgs, winQuote,
+  triageEntries, fileSize, addedWhen, parseIngestPlan,
 };
