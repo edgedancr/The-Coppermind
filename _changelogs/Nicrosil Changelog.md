@@ -4,7 +4,7 @@ updated: 2026-11-24
 ---
 The changelog of [[Nicrosil]], newest first. It lives here in `_changelogs/`, outside the guide, so an agent reading the guide doesn't also read all of this. Read it only to add a line for a new version or to look up when something changed. Past lines are never rewritten; a correction goes in a new line. How something looks (corners, fonts, colors, animations) belongs in these lines, not in the guide's body.
 
-- **4.3.4:** More space above the Dashboard hero. The hero's top padding goes from 6px to 18px, the logo goes back to its full 84px, and the Dashboard tab drops its custom top margin, so Obsidian's default applies. Nothing else changes.
+- **4.3.4:** More space above the Dashboard hero. The hero's top padding goes from 6px to 12px, the logo goes back to its full 84px, and the Dashboard tab drops its custom top margin, so Obsidian's default applies. Nothing else changes.
 
 - **4.3.3:** The Coppermind Dashboard fits more on a laptop screen. Only vertical spacing changed, so the layout and look are the same. The search bar is 48px instead of 56px, the link rows have about 16px less padding, the review strip has less padding, a 60px number instead of 72px, and a middle line that stays on one line (it wrapped before). The top spacing it removed is what 4.3.4 puts back.
 

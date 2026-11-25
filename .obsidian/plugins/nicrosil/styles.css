@@ -1834,8 +1834,8 @@ body.cm-quiet .cm-hero .cm-search.has-qswitch .cm-search-bar:focus-within { bord
 .cm-search button.cm-qask:hover, .cm-search button.cm-qask:active { background: rgba(217, 154, 98, 0.08) !important; box-shadow: 0 0 10px rgba(232, 154, 90, 0.5), 0 0 16px rgba(120, 210, 192, 0.4) !important; }
 .cm-search button.cm-qswitch-btn:focus-visible, .cm-search button.cm-qseg-btn:focus-visible, .cm-search button.cm-qask:focus-visible { outline: 1px solid #d99a62; outline-offset: -3px; }
 
-/* 4.3.3: the Coppermind Dashboard fits more on a laptop screen. Only the vertical spacing is tightened (the layout, type sizes and look are the same): slimmer link rows, a shorter search bar, a smaller review number, and a review strip whose middle line no longer wraps. 4.3.4 puts back some space above the hero: its top padding is 18px (it was 6px), the logo keeps its full 84px height, and the Dashboard tab uses Obsidian's default top margin again. */
-body.cm-quiet .cm-hero { padding: 18px 0 4px; margin: 0 0 6px; }
+/* 4.3.3: the Coppermind Dashboard fits more on a laptop screen. Only the vertical spacing is tightened (the layout, type sizes and look are the same): slimmer link rows, a shorter search bar, a smaller review number, and a review strip whose middle line no longer wraps. 4.3.4 puts back some space above the hero: its top padding is 12px (it was 6px), the logo keeps its full 84px height, and the Dashboard tab uses Obsidian's default top margin again. */
+body.cm-quiet .cm-hero { padding: 12px 0 4px; margin: 0 0 6px; }
 body.cm-quiet .cm-logo-hero { height: 84px; transform: none; }
 body.cm-quiet .cm-hero-search { margin-top: 6px; }
 body.cm-quiet .cm-hero .cm-search-bar { height: 48px; }
