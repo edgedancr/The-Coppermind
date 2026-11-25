@@ -1,6 +1,6 @@
 ---
 type: guide
-status: verified
+status: draft
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -15,11 +15,13 @@ related:
 drafted_by: Claude (claude-sonnet-5-5, claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-24
+changes_since_verified:
+  - "2026-11-24: Added the Query mode section (the search bar's Query switch, the query tab, Save to Analyses), the Claude Code setting, and version 4.2.0"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, records schema changes, and runs the Tinmind, my own class notes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v4.1.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+This guide describes Nicrosil **v4.2.0**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## Turn it on (once per computer)
 **Settings → Community plugins**, refresh, switch on **Nicrosil**. After an update, switch it off and on (or restart Obsidian). The plugin files are in git, so another computer gets them with a pull, but the on/off setting is local.
@@ -64,6 +66,17 @@ My own class notes, in `The Tinmind/`, kept apart from the wiki.
 
 ## Search
 The Dashboard search box shows suggestions as I type over wiki pages, source cards and perspectives (not class notes or readings), each with title, type, status, matched alias and a snippet, plus a match count. Click, or arrows and `Enter`, opens one; `Ctrl+Enter` opens it in a new tab; `Esc` closes the list, again clears the box. Read-only, and it stays current as pages change.
+
+## Query mode
+The Dashboard's search bar has a **Search / Query** switch (on a computer only; the Tinmind's bar has none). In **Query**, the bar asks the wiki a question through Claude Code instead of matching keywords. Under it are **Model** (Haiku, Sonnet, Opus), **Effort** (Low to Max; Haiku has none), **Depth** (Quick, Standard, Deep, as in [[SCHEMA - Query#Depth]]), and a **Usage** meter with a link to the usage page. The switch and the three choices are remembered.
+
+- **Ask** (or Enter) opens a new tab. While Claude works, it lists each step (rules read, searches, pages read), the elapsed time and an estimated progress bar; **Cancel query** stops it, and nothing is logged.
+- **The answer** comes back in the Analysis template's sections, with links that open the pages. Claude has read-only tools and can't open `Ingestion/Raw/`, `The Tinmind/`, `.obsidian/` or `.git/`, so it can't file or log anything itself.
+- **Nicrosil logs every answer** as a `query` entry (model, effort, depth, pages used, "not filed back yet").
+- **Save to Analyses** writes the answer to `Wiki/Analyses/` as a draft, with its properties and summary callout filled in from what Claude returned, the file name and **Ask again if** line I can edit first, and a second `query` entry saying it was filed back. It refuses a name already taken. **Copy** copies the answer; **Discard** closes the tab.
+- **Follow-ups** continue the same Claude Code session on that computer; Save files the newest answer.
+- **Setup, once per computer:** install Claude Code and sign in by running `claude` in a terminal. Nicrosil only starts that program, and Claude Code keeps its own sign-in. If `ANTHROPIC_API_KEY` is set, Claude Code bills the API instead of my plan; the query tab says so when that happens.
+- **The usage meter** shows a percent only if Claude Code reports one during a query; otherwise it shows the last query's tokens.
 
 ## The index and the log
 - **Index:** [[_index|index]] lists every page under its type, alphabetically, with counts, a total and a **Jump to** line; Concepts and Glossary are split by letter. Verify only checks that the page is listed. Reject removes its line and rebuilds the counts, letter headings and jump links.
@@ -139,6 +152,7 @@ In **Settings → Nicrosil**:
 - **Open pages in Reading view:** "Verified pages only" (default), "Every page", or "Off". Switching a page to editing myself holds until that tab opens a different page. A new empty note opens ready to type. Notes in `The Tinmind/` open in editing view; only the Tinmind Dashboard opens in Reading view.
 - **Days between health checks** (14): when the Dashboard's health check card calls the check overdue.
 - **Queue order:** clean pages first (default), flagged first, by page type, or A to Z.
+- **Claude Code for query mode:** blank finds Claude Code by itself; or enter its path. **Test** shows the version it found.
 
 ## What it will not do
 - **Verify on its own.** Every change starts with my click or keypress.

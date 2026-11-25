@@ -23,17 +23,27 @@
       "The Tinmind/Notebook.md": false,
       "The Tinmind/Notebook": true,
       "The Tinmind/Fall 26/Philosophy": true,
-      "The Tinmind/Fall 26/Chinese I.md": false,
+      "The Tinmind/Fall 26/Chinese I.md": true,
       "The Tinmind/Fall 26/Intro to Intelligence": true,
       "The Tinmind/Fall 26/SAIL.md": false,
-      "The Tinmind/Fall 26/SAIL": true
+      "The Tinmind/Fall 26/SAIL": true,
+      "The Tinmind/Fall 26/Chinese I": true,
+      "The Tinmind/Fall 26/Chinese I/Vocab by Lesson": true
     },
     "tinBacklinksRemoved": true,
     "tinHubsRenamed": true,
     "tinCourseLinksRemoved": true,
     "tinSemesters": [
       "Spring 27"
-    ]
+    ],
+    "searchMode": "query",
+    "queryDepth": "quick",
+    "queryModel": "haiku",
+    "queryEffort": "low",
+    "lastRun": {
+      "tokens": 69188,
+      "at": 1795566218340
+    }
   },
   "resolved": {}
 }

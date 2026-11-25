@@ -26,13 +26,13 @@ semester: "Fall 26"
 - 太了 — Too, extremely （add adjective in between)
 - 谢谢 — Thanks
 - 喜欢 — to like
-- 才 — dish, cuisine
+- 菜 — dish, cuisine
 - 还是 — or
 - 可是 — but
 - 我们 —we, us
 - 点 — o'clock 
 - 办 — half, half an hour
-- 网上 — evening, night
+- 晚上 — evening, night
 - 见 — to see
 - 再见 — goodbye, see you again
 - 在 — again
