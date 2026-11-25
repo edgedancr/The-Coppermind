@@ -1,0 +1,186 @@
+/* ---------- Dashboard cards: the spine (3.7.0) ---------- */
+/* Every card on the Coppermind Dashboard and the Tinmind Dashboard: a flat, square card with a gradient bar on its left edge. On hover the bar widens and the title takes the page's gradient (copper to teal on the Coppermind, grey to lilac on the Tinmind). */
+:root { --cm-spine: linear-gradient(180deg, #f6d3a8, #d99a62 45%, #86d2c1); --cm-spine-wash: rgba(184, 115, 51, 0.09); }
+.cm-tin-leaf { --cm-spine: linear-gradient(180deg, #f1f0f8, #b0b0bd 45%, #b8a3f2); --cm-spine-wash: rgba(184, 163, 242, 0.09); }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard {
+  position: relative; overflow: hidden; border-radius: 0; box-shadow: none; transform: none;
+  background: var(--background-primary-alt); border: 1px solid var(--background-modifier-border); border-left: 0;
+  padding: 13px 14px 12px 18px; display: block; transition: background 0.15s, border-color 0.15s;
+}
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--cm-spine); transition: width 0.15s; }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard::after { display: none; }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard:last-child:nth-child(3n+1) { grid-column: auto; }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard-icon { display: none; }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard-title { margin: 0; width: fit-content; max-width: 100%; font-size: 1.1em; font-weight: 500; color: var(--text-normal); white-space: normal; }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard-sub { margin: 3px 0 0; color: var(--text-muted); white-space: normal; }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard:hover, :is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard:focus-visible { transform: none; box-shadow: none; outline: none; background: color-mix(in srgb, var(--background-primary-alt) 100%, transparent) linear-gradient(var(--cm-spine-wash), var(--cm-spine-wash)); border-color: var(--background-modifier-border-hover); }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard:hover::before, :is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard:focus-visible::before { width: 6px; }
+:is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard:hover .cm-navcard-title, :is(.cm-nav, body.cm-quiet .cm-nav.is-quiet) .cm-navcard:focus-visible .cm-navcard-title {
+  background: var(--cm-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+}
+@media (prefers-reduced-motion: reduce) { .cm-navcard, .cm-navcard::before { transition: none !important; } }
+
+/* ---------- 3.9.0: the Dashboards' "Ledger" look ---------- */
+/* One look for the search box, the link cards, the review box, the health check card, the folded lists and Recent activity, on the Coppermind Dashboard and the Tinmind's: sharp corners, hairline rules instead of boxes, and the gradient glow kept for the numbers, bars, buttons and hover. The page background is unchanged. The colors are variables, so the Tinmind's pages (and its mode) swap copper and teal for grey and lilac. */
+body.cm-quiet {
+  --d-ink: #f0e3d0; --d-mute: #c9b59a; --d-rule: rgba(246, 211, 168, 0.22); --d-track: rgba(246, 211, 168, 0.16);
+  --d-a: #d99a62; --d-b: #86d2c1; --d-h2: #ecc59a;
+  --d-bar: linear-gradient(90deg, #d99a62, #86d2c1);
+  --d-glow: 0 0 12px rgba(217, 138, 74, 0.5), 0 0 18px rgba(95, 174, 158, 0.35);
+  --d-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m13 6 6 6-6 6'/%3E%3C/svg%3E");
+}
+body.cm-tin-mode, .cm-tin-leaf {
+  --d-ink: #ebe9f3; --d-mute: #b9b6c8; --d-rule: rgba(184, 163, 242, 0.26); --d-track: rgba(184, 163, 242, 0.16);
+  --d-a: #b0b0bd; --d-b: #b8a3f2; --d-h2: #dcd9ea;
+  --d-bar: linear-gradient(90deg, #b0b0bd, #b8a3f2);
+  --d-glow: 0 0 12px rgba(175, 170, 200, 0.45), 0 0 18px rgba(170, 135, 240, 0.32);
+}
+
+/* search box: an underline, with the glow on focus */
+body.cm-quiet .cm-hero .cm-search-bar {
+  height: 56px; padding: 0 4px;
+  border: 0 !important; border-bottom: 1px solid var(--d-rule) !important; border-radius: 0 !important;
+  background: transparent !important; box-shadow: none !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+body.cm-quiet .cm-hero .cm-search-bar:hover:not(:focus-within) { border-bottom-color: var(--d-a) !important; box-shadow: none !important; }
+body.cm-quiet .cm-hero .cm-search-bar:focus-within { background: transparent !important; border-bottom-color: var(--d-b) !important; box-shadow: 0 12px 20px -14px var(--d-b) !important; }
+body.cm-quiet .cm-hero .cm-search-bar .cm-search-input { font-family: 'Alegreya', Georgia, serif; font-size: 1.3em; color: var(--d-ink); }
+body.cm-quiet .cm-hero .cm-search-bar .cm-search-input::placeholder { color: var(--d-mute); opacity: 1; }
+body.cm-quiet .cm-hero .cm-search-icon svg { width: 20px; height: 20px; color: var(--d-a); }
+
+/* link cards: ruled rows in two columns, with an arrow */
+body.cm-quiet .cm-nav.is-quiet { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; row-gap: 0; margin-top: 10px; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 2px 16px;
+  margin: 0; padding: 19px 4px 17px; overflow: visible;
+  background: none; border: 0; border-bottom: 1px solid var(--d-rule); border-radius: 0; box-shadow: none; transform: none;
+}
+body.cm-quiet .cm-nav.is-quiet .cm-navcard::before { display: none; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard::after {
+  content: ""; display: block; position: static; inset: auto; grid-column: 2; grid-row: 1 / 3; align-self: center;
+  width: 18px; height: 18px; opacity: 1; background: var(--d-a);
+  -webkit-mask: var(--d-arrow) center / contain no-repeat; mask: var(--d-arrow) center / contain no-repeat;
+  transition: transform 0.15s, background 0.15s;
+}
+body.cm-quiet .cm-nav.is-quiet .cm-navcard-title { grid-column: 1; grid-row: 1; font-size: 1.25em; font-weight: 600; color: var(--d-ink); white-space: normal; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard-sub { grid-column: 1; grid-row: 2; margin: 0; font-size: 0.92em; color: var(--d-mute); white-space: normal; overflow: visible; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard:hover, body.cm-quiet .cm-nav.is-quiet .cm-navcard:focus-visible { background: none; border-color: transparent; border-bottom-color: var(--d-rule); box-shadow: none; transform: none; outline: none; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard:hover::after, body.cm-quiet .cm-nav.is-quiet .cm-navcard:focus-visible::after { transform: translateX(4px); background: var(--d-b); }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard:hover .cm-navcard-title, body.cm-quiet .cm-nav.is-quiet .cm-navcard:focus-visible .cm-navcard-title { filter: var(--cm-gradient-glow); }
+@media (max-width: 600px) { body.cm-quiet .cm-nav.is-quiet { grid-template-columns: 1fr; } }
+
+/* section headings */
+body.cm-quiet .coppermind-dashboard h2 {
+  font-family: var(--cm-gradient-font); font-size: 1.5em; font-weight: 400; font-variant: normal; text-transform: none; letter-spacing: 0.05em;
+  color: var(--d-h2); margin: 44px 0 12px; padding-bottom: 8px; border: 0;
+  background: linear-gradient(90deg, var(--d-a), color-mix(in srgb, var(--d-b) 50%, transparent) 55%, transparent) left bottom / 100% 1px no-repeat;
+}
+
+/* review box: the number, the line with its bar, and the button, in one ruled strip */
+body.cm-quiet .cm-qstats {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; column-gap: 36px;
+  margin: 30px 0 0; padding: 26px 4px 24px; border: 0; border-bottom: 1px solid var(--d-rule); border-radius: 0;
+  background: linear-gradient(90deg, var(--d-a), var(--d-b) 60%, transparent) top / 100% 2px no-repeat;
+}
+body.cm-quiet .cm-q-big {
+  font-family: var(--cm-gradient-font); font-size: 72px; font-weight: 400; line-height: 1; width: fit-content;
+  background: var(--cm-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  filter: var(--cm-gradient-glow);
+}
+body.cm-quiet .cm-q-of { margin-top: 4px; font-size: 0.95em; color: var(--d-mute); }
+body.cm-quiet .cm-qstats-line { font-size: 1.05em; line-height: 1.4; color: var(--d-ink); }
+body.cm-quiet .cm-q-verified { font-family: inherit; font-size: inherit; font-weight: 600; margin: 0; color: inherit; }
+body.cm-quiet .cm-qbar { height: 6px; margin: 12px 0 10px; border-radius: 0; background: var(--d-track); overflow: visible; }
+body.cm-quiet .cm-qbar-fill { border-radius: 0; background: var(--d-bar); box-shadow: var(--d-glow); }
+body.cm-quiet .cm-qstats-sub { font-size: 0.9em; color: var(--d-mute); }
+body.cm-quiet .cm-qstats .cm-qnext { margin: 0; height: 44px; padding: 0 24px; }
+
+/* health check card: a ruled row, no box */
+body.cm-quiet .cm-hc { margin: 0; padding: 16px 4px 14px; border: 0; border-bottom: 1px solid var(--d-rule); border-radius: 0; background: none; }
+body.cm-quiet .cm-hc.is-link:hover, body.cm-quiet .cm-hc.is-link:focus-visible { background: rgba(246, 211, 168, 0.05); outline: none; }
+body.cm-quiet .cm-hc-title { font-size: 1.05em; color: var(--d-ink); }
+body.cm-quiet .cm-hc-track { height: 4px; border-radius: 0; background: var(--d-track); }
+body.cm-quiet .cm-hc-fill { border-radius: 0; }
+body.cm-quiet .cm-hc-sub { font-size: 0.88em; color: var(--d-mute); }
+
+/* the folded lists under the review box: ruled rows with a chevron */
+body.cm-quiet .cm-dash-details { margin: 0; border-bottom: 1px solid var(--d-rule); }
+body.cm-quiet .cm-dash-details > summary { display: flex; align-items: center; gap: 10px; padding: 14px 4px; font-size: 1em; color: var(--d-ink); list-style: none; }
+body.cm-quiet .cm-dash-details > summary::-webkit-details-marker { display: none; }
+body.cm-quiet .cm-dash-details > summary::before {
+  content: ""; width: 7px; height: 7px; flex: none; margin: 0 4px 0 2px;
+  border-right: 1.5px solid var(--d-a); border-bottom: 1.5px solid var(--d-a); transform: rotate(-45deg); transition: transform 0.15s;
+}
+body.cm-quiet .cm-dash-details[open] > summary { color: var(--d-ink); }
+body.cm-quiet .cm-dash-details[open] > summary::before { transform: rotate(45deg); }
+body.cm-quiet .cm-dash-details > :not(summary) { margin-left: 4px; margin-right: 4px; margin-bottom: 12px; }
+
+/* recent activity: ruled rows */
+body.cm-quiet .cm-act-row { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 12px; padding: 13px 4px; border-radius: 0; border-bottom: 1px solid var(--d-rule); }
+body.cm-quiet .cm-act-row:hover, body.cm-quiet .cm-act-row:focus-visible { background: rgba(246, 211, 168, 0.05); }
+body.cm-quiet .cm-act-icon svg { width: 15px; height: 15px; color: var(--d-a); }
+body.cm-quiet .cm-act-rejected svg { color: var(--cm-rust); }
+body.cm-quiet .cm-act-text { font-size: 1em; color: var(--d-ink); min-width: 0; }
+body.cm-quiet .cm-act-date { font-size: 0.88em; color: var(--d-mute); font-variant-numeric: tabular-nums; }
+
+/* ---------- 3.10.0: the Notebook ---------- */
+/* The Notebook card's Quick note button: a small text button under the card's line (third row of the card), muted, with the plus icon; it turns the page's teal/lilac on hover. */
+.cm-navcard-act { display: inline-flex; align-items: center; gap: 4px; width: fit-content; margin-top: 8px; font-size: 0.88em; color: var(--text-muted); cursor: pointer; }
+.cm-navcard-act-icon { display: inline-flex; }
+.cm-navcard-act-icon svg { width: 14px; height: 14px; }
+.cm-navcard-act:hover, .cm-navcard-act:focus-visible { color: var(--text-normal); text-decoration: underline; outline: none; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard-act { grid-column: 1; grid-row: 3; margin-top: 6px; color: var(--d-mute); }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard-act:hover, body.cm-quiet .cm-nav.is-quiet .cm-navcard-act:focus-visible { color: var(--d-b); }
+/* The Notebook's row in the Tinmind's course tree, under the semester's courses */
+.cm-tin-pin { margin-top: 6px; }
+
+/* ---------- 3.11.0: the semester title ---------- */
+/* The Tinmind Dashboard's semester switcher is the section's title: the picked semester in the Tinmind Gradient Style (Almendra SC, 2.2em, weight 400, with the glow) and a lilac chevron that turns over when the menu is open. The menu is a row of the other semesters in Alegreya, the picked one underlined in lilac. */
+.cm-sem-title { margin: 0 0 14px; }
+.cm-sem-head { display: inline-flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; outline: none; }
+.cm-sem-value { font-family: var(--cm-gradient-font); font-weight: 400; font-size: 2.2em; line-height: 1.1; letter-spacing: 0.02em; background: var(--cm-tin-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; filter: var(--cm-tin-gradient-glow); }
+.cm-sem-chev { display: inline-flex; color: #b8a3f2; transition: transform 0.15s, color 0.15s; }
+.cm-sem-chev svg { width: 20px; height: 20px; }
+.cm-sem-head.is-open .cm-sem-chev { transform: rotate(180deg); }
+.cm-sem-head:hover .cm-sem-chev, .cm-sem-head:focus-visible .cm-sem-chev { color: #f1f0f8; }
+.cm-sem-menu { display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 8px; }
+.cm-sem-item { font-family: 'Alegreya', Georgia, serif; font-size: 1.15em; color: var(--d-mute, #b9b6c8); padding-bottom: 2px; border-bottom: 1px solid transparent; cursor: pointer; outline: none; }
+.cm-sem-item:hover, .cm-sem-item:focus-visible { color: var(--d-ink, #ebe9f3); }
+.cm-sem-item.is-on { color: var(--d-ink, #ebe9f3); border-bottom-color: #b8a3f2; }
+@media (prefers-reduced-motion: reduce) { .cm-sem-chev { transition: none; } }
+
+/* 3.11.1: the same switcher, small, at the top of the Tinmind's course tree (under the Tinmind button): the title at 1.5em, a 16px chevron, a tighter menu in the file list's size. */
+.cm-sem-title.is-side { margin: 4px 6px 10px; }
+.cm-sem-title.is-side .cm-sem-head { gap: 8px; }
+.cm-sem-title.is-side .cm-sem-value { font-size: 1.5em; }
+.cm-sem-title.is-side .cm-sem-chev svg { width: 16px; height: 16px; }
+.cm-sem-title.is-side .cm-sem-menu { gap: 4px 16px; margin-top: 6px; }
+.cm-sem-title.is-side .cm-sem-item { font-size: 1em; }
+
+/* ---------- 3.12.0: the git buttons ---------- */
+/* Two icon buttons in the left sidebar's tab bar, right after the mode button, with the tab bar's own icon look (clickable-icon). Like the mode button they show while the Files tab is open, in both modes. */
+.cm-git-btn { display: none; align-self: center; flex: 0 0 auto; margin-left: 2px; }
+.workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="file-explorer"].is-active) .cm-git-btn { display: flex; }
+
+/* ---------- 3.13.0: no far-left ribbon, no Files icon ---------- */
+/* The ribbon (the narrow icon strip at the far left) is hidden in both modes, and so is the Files icon in the left sidebar's tab bar, which is never switched away from. The tab bar then holds only Nicrosil's buttons. The review queue and relations buttons, which used to be ribbon icons, are in the tab bar now, before the git buttons, and show only in the Coppermind's mode (the Tinmind has neither panel). */
+body .workspace-ribbon.side-dock-ribbon.mod-primary, body .workspace-ribbon.mod-left { display: none !important; }
+.workspace-split.mod-left-split .workspace-tab-header[data-type="file-explorer"] { display: none; }
+.cm-panel-btn { display: none; align-self: center; flex: 0 0 auto; margin-left: 2px; }
+.workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="file-explorer"].is-active) .cm-panel-btn { display: flex; }
+body.cm-tin-mode .workspace-tabs .cm-panel-btn { display: none !important; }
+/* 3.13.3: the left sidebar's tab bar is one left-justified row with even spacing; the sidebar's collapse button is first. */
+.workspace-split.mod-left-split .workspace-tab-header-container { justify-content: flex-start; gap: 3px; }
+.workspace-split.mod-left-split .workspace-tab-header-container > .sidebar-toggle-button { order: -1; margin: 0; }
+.workspace-split.mod-left-split .workspace-tab-header-container-inner { gap: 3px; flex: 0 0 auto; }
+.workspace-split.mod-left-split .workspace-tab-header-container-inner > :is(.cm-mode-btn, .cm-underscore-btn, .cm-panel-btn, .cm-git-btn) { margin: 0; }
+/* ---------- Hover previews: gradient outline (3.15.0) ---------- */
+/* The popup that opens when the pointer rests on a link gets a 1.5px outline in the current gradient style: --cm-gradient is the Coppermind Gradient Style (copper to teal), and body.cm-tin-mode swaps it for the Tinmind Gradient Style (grey to lilac), so one rule serves both modes. The fill stays the page color (--background-primary); the gradient shows only in the border, sized to the whole box (background-origin: border-box) so its edges don't seam. */
+body .popover.hover-popover {
+  border: 1.5px solid transparent;
+  background-image: linear-gradient(var(--background-primary), var(--background-primary)), var(--cm-gradient);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+

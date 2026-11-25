@@ -1,0 +1,221 @@
+/* Review queue header and progress bar (2.0.0) */
+.cm-queue h4 {
+  font-size: 1.55em; line-height: 1.15; letter-spacing: 0.02em; margin: 6px 0 12px;
+  background: var(--cm-gradient);
+  background-size: 230% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  animation: cm-shimmer 10s ease-in-out infinite alternate;
+}
+.cm-queue .cm-progress { height: 14px; border-radius: 2px; overflow: visible; background: rgba(184, 115, 51, 0.2); box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5); }
+.cm-queue .cm-progress-fill { border-radius: 2px; min-width: 6px; background: linear-gradient(90deg, #b87333, #d98a4a 45%, #5fae9e 100%); box-shadow: 0 0 8px 1px rgba(120, 190, 150, 0.5), 0 0 18px 2px rgba(184, 115, 51, 0.35); }
+.cm-queue .cm-progress-label { margin: 8px 0 12px; }
+@media (prefers-reduced-motion: reduce) { .cm-queue h4 { animation: none !important; } }
+
+/* Review queue list (2.2.0) */
+.cm-queue .cm-list-head { display: flex; align-items: center; gap: 8px; margin: 14px 0 8px; color: var(--cm-copper); font-weight: 600; letter-spacing: 0.08em; }
+.cm-queue .cm-list-head::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(184, 115, 51, 0.6), rgba(95, 174, 158, 0.25), transparent); }
+.cm-queue .cm-group { display: flex; align-items: center; gap: 8px; margin: 12px 0 5px; font-size: var(--font-ui-smaller); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+.cm-queue .cm-group::after { content: ""; flex: 1; height: 1px; background: rgba(184, 115, 51, 0.25); }
+.cm-queue .cm-row {
+  position: relative; margin-bottom: 5px; padding: 7px 10px 7px 12px; border-radius: 6px; border: 1px solid rgba(184, 115, 51, 0.16);
+  background: linear-gradient(160deg, rgba(42, 36, 32, 0.9), rgba(30, 25, 21, 0.9)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+.cm-queue .cm-row::before { content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 3px; border-radius: 0 2px 2px 0; background: rgba(184, 115, 51, 0.55); }
+.cm-queue .cm-row.has-flags::before { background: var(--cm-amber); }
+.cm-queue .cm-row.has-changes::before { background: var(--cm-rust); }
+.cm-queue .cm-row:hover { background: linear-gradient(160deg, rgba(54, 45, 38, 0.95), rgba(36, 30, 25, 0.95)); border-color: rgba(217, 138, 74, 0.55); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 4px 14px -6px rgba(217, 138, 74, 0.5); }
+.cm-queue .cm-row.is-current { background: linear-gradient(160deg, rgba(184, 115, 51, 0.3), rgba(30, 25, 21, 0.92)); border-color: var(--cm-copper); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 0 14px -2px rgba(184, 115, 51, 0.5); }
+.cm-queue .cm-row.is-current::before { background: #86d2c1; box-shadow: 0 0 8px #5fae9e; }
+.cm-queue .cm-row-name { font-weight: 500; color: var(--text-normal); line-height: 1.3; }
+.cm-queue .cm-row-group { display: block; margin: 2px 0 0; font-size: 10px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); }
+.cm-queue .cm-verified .cm-row::before { background: rgba(95, 174, 158, 0.6); }
+.cm-queue .cm-verified summary { color: var(--cm-patina); font-weight: 600; margin: 12px 0 6px; cursor: pointer; }
+
+/* The slow background drift sets "animation" on .view-content, so these need to be more specific to run (2.2.1) */
+.workspace-leaf-content[data-type="markdown"] .view-content.cm-vf-out { animation: cm-vf-out 0.62s cubic-bezier(0.5, 0, 0.9, 0.4) forwards; }
+.workspace-leaf-content[data-type="markdown"] .view-content.cm-vf-in { animation: cm-vf-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
+@media (prefers-reduced-motion: reduce) { .view-content.cm-page-in > * { animation: none !important; } .view-content.cm-page-pre > * { opacity: 1; } }
+
+/* Verification card fills the full width (2.3.0) */
+.cm-ring-card.cm-wide { padding: 22px 24px; }
+.cm-ring-card.cm-wide .cm-ring-body { justify-content: center; gap: 44px; }
+.cm-ring-card.cm-wide .cm-ring-wrap { width: 168px; height: 168px; }
+.cm-ring-card.cm-wide .cm-ring { width: 168px; height: 168px; }
+.cm-ring-card.cm-wide .cm-ring-burst .cm-vf-ring, .cm-ring-card.cm-wide .cm-ring-wrap .cm-vf-ring { width: 168px; height: 168px; margin: -84px 0 0 -84px; }
+.cm-ring-card.cm-wide .cm-ring-big { font-size: 2.4em; }
+.cm-ring-card.cm-wide .cm-ring-side { gap: 8px; }
+.cm-ring-card.cm-wide .cm-ring-side .cm-sub { font-size: var(--font-ui-medium, 15px); }
+.cm-ring-card.cm-wide .cm-ring-side button { margin-top: 8px; padding: 8px 22px; height: auto; font-size: var(--font-ui-medium, 15px); }
+@media (max-width: 600px) { .cm-ring-card.cm-wide .cm-ring-body { gap: 20px; } .cm-ring-card.cm-wide .cm-ring-wrap, .cm-ring-card.cm-wide .cm-ring { width: 120px; height: 120px; } }
+
+/* ---------- Left sidebar: a softer version of the note background ---------- */
+/* The file explorer used the flat near-black secondary color, which clashed with the copper and teal glow
+   on the notes and the review queue. This paints the whole left sidebar with the same two glows at a lower
+   strength, on a base that is a little warmer than before, and makes the layers inside it see-through.
+   To dial it up or down, change the alpha numbers (0.16 and 0.11). */
+.theme-dark .workspace-split.mod-left-split {
+  background:
+    radial-gradient(460px 380px at 0% 0%, rgba(214, 120, 48, 0.16), transparent 70%),
+    radial-gradient(460px 400px at 100% 100%, rgba(70, 170, 140, 0.11), transparent 70%),
+    linear-gradient(170deg, #1d1713 0%, #191512 55%, #161a17 100%) !important;
+}
+.theme-dark .workspace-split.mod-left-split .workspace-tabs,
+.theme-dark .workspace-split.mod-left-split .workspace-tab-container,
+.theme-dark .workspace-split.mod-left-split .workspace-leaf,
+.theme-dark .workspace-split.mod-left-split .workspace-leaf-content,
+.theme-dark .workspace-split.mod-left-split .view-content,
+.theme-dark .workspace-split.mod-left-split .nav-header,
+.theme-dark .workspace-split.mod-left-split .nav-files-container,
+.theme-dark .workspace-split.mod-left-split .workspace-sidedock-vault-profile {
+  background: transparent !important;
+}
+
+/* ---------- Right sidebar: the same glow, mirrored ---------- */
+/* Same idea as the left sidebar. The teal sits at the top-left so it continues the teal at the top-right
+   of the page next to it. To dial it up or down, change the alpha numbers (0.11 and 0.16). */
+.theme-dark .workspace-split.mod-right-split {
+  background:
+    radial-gradient(460px 380px at 0% 0%, rgba(70, 170, 140, 0.11), transparent 70%),
+    radial-gradient(460px 400px at 100% 100%, rgba(214, 120, 48, 0.16), transparent 70%),
+    linear-gradient(170deg, #161a17 0%, #191512 45%, #1d1713 100%) !important;
+}
+.theme-dark .workspace-split.mod-right-split .workspace-tabs,
+.theme-dark .workspace-split.mod-right-split .workspace-tab-container,
+.theme-dark .workspace-split.mod-right-split .workspace-leaf,
+.theme-dark .workspace-split.mod-right-split .workspace-leaf-content,
+.theme-dark .workspace-split.mod-right-split .view-content {
+  background: transparent !important;
+}
+
+/* ---------- File list: the open file (2.4.2) ---------- */
+/* A soft copper highlight that fades toward teal, and a name that shades from teal to pale copper. */
+.theme-dark .nav-file-title.is-active,
+.theme-dark .nav-folder-title.is-active {
+  background: linear-gradient(90deg, rgba(184, 115, 51, 0.30), rgba(184, 115, 51, 0.14) 55%, rgba(95, 174, 158, 0.12)) !important;
+}
+.theme-dark .nav-file-title.is-active .nav-file-title-content,
+.theme-dark .nav-folder-title.is-active .nav-folder-title-content {
+  background: linear-gradient(90deg, #8fd6c5 0%, #bcd6bd 55%, #e6c193 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+}
+
+/* ---------- Quiet dashboard (2.4.0) ---------- */
+/* Turned on by the "Dashboard style: Quiet" setting (body.cm-quiet). Color only where it means something:
+   copper for links and actions, teal for verified. Fewer boxes, borders, and effects; the background glow stays. */
+
+/* section headings: small serif capitals, a plain rule */
+body.cm-quiet .coppermind-dashboard h2 {
+  font-variant: small-caps; text-transform: none; letter-spacing: 0.05em; font-size: 1.25em; font-weight: 600;
+  color: var(--h2-color, #dca06a); background: none; border-bottom: 1px solid var(--background-modifier-border);
+  padding-bottom: 3px; margin: 1.8em 0 0.5em;
+}
+
+/* hero: no box, no sparks, no shimmer; smaller and left-aligned */
+body.cm-quiet .cm-hero { background: none; border: none; box-shadow: none; border-radius: 0; padding: 14px 0 4px; margin: 0 0 6px; column-gap: 16px; }
+body.cm-quiet .cm-hero-bg { display: none; }
+body.cm-quiet .cm-hero-title { font-family: var(--cm-gradient-font); justify-self: start; width: fit-content; background: var(--cm-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; animation: none; font-size: 2.4em; letter-spacing: 0.03em; filter: var(--cm-gradient-glow); }
+body.cm-quiet .cm-hero-tagline { font-size: 0.95em; }
+body.cm-quiet .cm-logo-hero { animation: none; filter: none; transform: scale(0.8); transform-origin: left center; }
+body.cm-quiet .cm-hero.is-intro { animation: none; }
+body.cm-quiet .cm-hero-search { margin-top: 14px; }
+body.cm-quiet .cm-hero .cm-search-bar { height: 44px; border-radius: 6px; border-color: var(--background-modifier-border); background: rgba(16, 12, 9, 0.45); box-shadow: none; }
+body.cm-quiet .cm-hero .cm-search-bar:focus-within { border-color: var(--cm-copper); box-shadow: none; }
+body.cm-quiet .cm-search-results { border-radius: 6px; }
+body.cm-quiet .cm-search-card { border-radius: 4px; }
+
+/* where to start: a two-column list of text links, like a table of contents */
+body.cm-quiet .cm-nav.is-quiet { grid-template-columns: 1fr 1fr; column-gap: 36px; row-gap: 0; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard {
+  background: none; border: none; border-bottom: 1px solid var(--background-modifier-border); border-radius: 0;
+  box-shadow: none; padding: 10px 2px 9px; overflow: visible; transform: none; transition: none;
+  display: flex; align-items: baseline; gap: 12px; animation: none;
+}
+body.cm-quiet .cm-nav.is-quiet .cm-navcard::after { display: none; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard:last-child:nth-child(3n+1) { grid-column: auto; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard-title { margin: 0; font-size: 1.1em; color: var(--text-normal); white-space: nowrap; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard-sub { margin: 0; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard:hover, body.cm-quiet .cm-nav.is-quiet .cm-navcard:focus-visible { transform: none; box-shadow: none; border-color: var(--background-modifier-border); outline: none; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard:hover .cm-navcard-title, body.cm-quiet .cm-nav.is-quiet .cm-navcard:focus-visible .cm-navcard-title { color: var(--cm-copper); }
+@media (max-width: 600px) { body.cm-quiet .cm-nav.is-quiet { grid-template-columns: 1fr; } }
+
+/* review progress: one line of text above a thin bar */
+body.cm-quiet .cm-qstats { margin: 4px 0 14px; }
+body.cm-quiet .cm-qstats-line { font-size: 1.02em; color: var(--text-normal); }
+body.cm-quiet .cm-q-verified { color: var(--cm-patina); font-variant-numeric: tabular-nums; }
+body.cm-quiet .cm-qbar { height: 4px; margin: 8px 0 6px; border-radius: 2px; background: rgba(184, 115, 51, 0.2); overflow: hidden; }
+body.cm-quiet .cm-qbar-fill { height: 100%; background: var(--cm-patina); border-radius: 2px; }
+body.cm-quiet .cm-qstats-sub { font-size: var(--font-ui-smaller); color: var(--text-muted); }
+
+/* pages by type: no card box, thinner bars */
+body.cm-quiet .cm-gcard { background: none; border: none; border-radius: 0; box-shadow: none; padding: 2px 0; }
+body.cm-quiet .cm-gcard-title { font-family: "Segoe UI", system-ui, sans-serif; font-variant: small-caps; text-transform: none; letter-spacing: 0.04em; font-size: 1em; color: var(--text-muted); margin-bottom: 6px; }
+body.cm-quiet .cm-tbar { height: 6px; border-radius: 3px; }
+body.cm-quiet .cm-tbar-fill { border-radius: 3px; }
+
+/* recent activity: no slide on hover; icon colors only for verified and rejected */
+body.cm-quiet .cm-act-row { border-radius: 3px; }
+body.cm-quiet .cm-act-row:hover { transform: none; }
+body.cm-quiet .cm-act-ingest svg, body.cm-quiet .cm-act-setup svg { color: var(--text-muted); }
+
+/* the reference callouts: smaller corners */
+body.cm-quiet .coppermind-dashboard .callout { border-radius: 4px; }
+
+/* ---------- Quiet dashboard, round 2 (2.4.1) ---------- */
+/* Where to start: small, sharp-cornered cards instead of plain rows */
+body.cm-quiet .cm-nav.is-quiet { column-gap: 12px; row-gap: 10px; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard {
+  background: rgba(20, 15, 12, 0.5); border: 1px solid var(--background-modifier-border); border-left: 2px solid var(--cm-copper);
+  border-radius: 4px; padding: 12px 14px; flex-direction: column; align-items: flex-start; gap: 2px;
+  transition: border-color 0.15s, background 0.15s;
+}
+body.cm-quiet .cm-nav.is-quiet .cm-navcard-sub { white-space: normal; }
+body.cm-quiet .cm-nav.is-quiet .cm-navcard:hover, body.cm-quiet .cm-nav.is-quiet .cm-navcard:focus-visible {
+  background: rgba(184, 115, 51, 0.08); border-color: rgba(184, 115, 51, 0.55); border-left-color: var(--cm-copper);
+}
+
+/* Review progress: the stats line sits in a card, larger, with a glowing copper-to-teal bar */
+body.cm-quiet .cm-qstats {
+  margin: 6px 0 16px; padding: 18px 20px 16px; border-radius: 4px;
+  background: rgba(20, 15, 12, 0.5); border: 1px solid var(--background-modifier-border);
+}
+body.cm-quiet .cm-qstats-line { font-size: 1.15em; line-height: 1.5; }
+body.cm-quiet .cm-qstats .cm-qnext { margin-top: 14px; }
+body.cm-quiet .cm-q-verified { font-family: "Segoe UI", system-ui, sans-serif; font-size: 1.9em; line-height: 1; margin-right: 4px; }
+body.cm-quiet .cm-qbar { height: 8px; margin: 14px 0 10px; border-radius: 4px; background: rgba(184, 115, 51, 0.16); overflow: visible; }
+body.cm-quiet .cm-qbar-fill {
+  border-radius: 4px; background: linear-gradient(90deg, var(--cm-copper), var(--cm-patina));
+  box-shadow: 0 0 10px rgba(184, 115, 51, 0.45), 0 0 14px rgba(95, 174, 158, 0.35);
+}
+
+/* ---------- Review queue, plainer and smaller (2.4.3) ---------- */
+/* Rows are flat and compact: no inner highlight line, no hover glow, small corners. The progress bar and
+   the title gradient are unchanged. */
+.cm-queue .cm-row {
+  margin-bottom: 3px; padding: 4px 8px 4px 10px; border-radius: 3px; border: 1px solid rgba(184, 115, 51, 0.12);
+  background: linear-gradient(90deg, rgba(184, 115, 51, 0.07), rgba(95, 174, 158, 0.03)); box-shadow: none;
+}
+.cm-queue .cm-row::before { top: 4px; bottom: 4px; width: 2px; border-radius: 0; }
+.cm-queue .cm-row:hover { background: linear-gradient(90deg, rgba(184, 115, 51, 0.14), rgba(95, 174, 158, 0.06)); border-color: rgba(184, 115, 51, 0.35); box-shadow: none; }
+.cm-queue .cm-row.is-current { background: linear-gradient(90deg, rgba(184, 115, 51, 0.24), rgba(95, 174, 158, 0.09)); border-color: rgba(184, 115, 51, 0.6); box-shadow: none; }
+.cm-queue .cm-row.is-current::before { background: #86d2c1; box-shadow: none; }
+.cm-queue .cm-row-name { font-size: 0.92em; font-weight: 400; }
+.cm-queue .cm-row-group { font-size: 9px; letter-spacing: 0.06em; }
+.cm-queue .cm-group { margin: 9px 0 4px; }
+.cm-queue .cm-badge { font-size: 9px; padding: 2px 4px; }
+
+/* The "Reviewing" card */
+.cm-queue .cm-card { border-radius: 3px; padding: 8px 10px; margin-bottom: 8px; border-color: rgba(184, 115, 51, 0.45); background: linear-gradient(90deg, rgba(184, 115, 51, 0.1), rgba(95, 174, 158, 0.04)); box-shadow: none; }
+.cm-queue .cm-card-title { font-size: 0.95em; margin-bottom: 4px; }
+.cm-queue .cm-card-buttons { margin-top: 6px; }
+.cm-queue .cm-card-buttons button { border-radius: 3px; padding: 3px 8px; height: auto; box-shadow: none; }
+
+/* ---------- Verify animation: just a gradient check, no orb (2.4.4) ---------- */
+/* The badge itself is the gradient, cut into the shape of a check mark, with a soft glow around it. */
+.cm-vf-badge {
+  background: linear-gradient(135deg, #f0b27a 0%, #d98a4a 35%, #86d2c1 100%) !important;
+  box-shadow: none !important; border-radius: 0 !important;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center / 62% no-repeat; mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center / 62% no-repeat;
+  filter: drop-shadow(0 0 10px rgba(224, 150, 80, 0.55)) drop-shadow(0 0 18px rgba(95, 174, 158, 0.4));
+}
+.cm-vf-badge svg { display: none; }
+

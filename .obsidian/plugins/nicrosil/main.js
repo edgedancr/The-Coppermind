@@ -1,3 +1,4 @@
+// BUILT FILE: do not edit. Edit the parts in src/js/ and run `python build.py` (see src/README.md).
 "use strict";
 /*
  * Nicrosil (the version is in manifest.json; the full guide is Wiki/Guides/Nicrosil.md)

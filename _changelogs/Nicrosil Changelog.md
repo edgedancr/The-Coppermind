@@ -2,7 +2,9 @@
 type: changelog
 updated: 2026-11-24
 ---
-The changelog of [[Nicrosil]], newest first. It lives here in `_changelogs/`, outside the guide, so an agent reading the guide doesn't also read all of this. Read it only to add a line for a new version or to look up when something changed. Past lines are never rewritten; a correction goes in a new line. How something looks (corners, fonts, colors, animations) belongs in these lines, not in the guide's body.
+The changelog of [[Nicrosil]], newest first. It lives here in `_changelogs/`, outside the guide, so an agent reading the guide doesn't also read all of this. Read it only to add a line for a new version or to look up when something changed. Past lines are never rewritten; a correction goes in a new line. How something looks belongs in these lines, in a few words, not in the guide's body. From 4.3.5 on, each line is at most two sentences and covers one session's changes; code details are in git ([[SCHEMA - Changes#Nicrosil and other tools]]).
+
+- **4.3.5:** The code and styles are now kept as feature parts in `src/` and built into `main.js` and `styles.css` with `build.py`, so an agent opens only the part it needs. Nothing Nicrosil does or shows has changed.
 
 - **4.3.4:** More space above the Dashboard hero. The hero's top padding goes from 6px to 12px, the logo goes back to its full 84px, and the Dashboard tab drops its custom top margin, so Obsidian's default applies. Nothing else changes.
 

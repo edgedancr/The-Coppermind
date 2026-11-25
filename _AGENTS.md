@@ -30,7 +30,7 @@ More than one row can apply. Don't read anything in `_changelogs/` (the rules' c
 
 | Location | The agent may | The agent may not |
 |---|---|---|
-| `Sources/` (original files) | Read | Edit, rename, move, or delete |
+| `Sources/` (original files) | Read; make a text copy of an original beside it, `<name> (text).md`, with `Tools/source-to-text/` (see `SCHEMA - Ingest.md`, Orient) | Edit, rename, move, or delete an original |
 | `Sources/Scans/` (shrunk photos of his handwritten notes, waiting for transcription) | Read; make shrunk copies of his originals when he asks | Edit, rename, move, or delete a scan (Nicrosil deletes one when he verifies its transcription) |
 | `Sources/Source Cards/` | Create and edit as drafts | Set the final reliability rating |
 | `Wiki/` | Create and edit drafts | Mark a page verified without Harrison's explicit instruction |
@@ -74,7 +74,9 @@ The agent never deletes anything except a draft it created that Harrison rejecte
 
   Operations: `setup`, `ingest`, `query`, `health-check`, `transcribe`, `verify`, `schema`, `tool`. If Harrison revises or rejects something without saying why, ask him for a one-sentence reason and record it.
 
-**Nicrosil.** Any edit to a file in `.obsidian/plugins/nicrosil/`, even a one-line style tweak, is a tool change. Read `SCHEMA - Changes.md` before you start. In the same edit, without being asked, bump the version in `manifest.json` and the Nicrosil guide, update the guide (if the change requires new wording in the guide), add a line at the top of `_changelogs/Nicrosil Changelog.md` (not in the guide), and log it as `tool`.
+  **Keep entries short.** **Think** and **Calculate** are one line each, about 40 words at most; **Verify** lists pages as above. Details belong in the pages, the report, the changelog or git, not in the log.
+
+**Nicrosil.** Any edit to a file in `.obsidian/plugins/nicrosil/`, even a one-line style tweak, is a tool change. Read `SCHEMA - Changes.md` before you start. Its code and styles are edited in the parts in `src/` (see `src/README.md`) and built into `main.js` and `styles.css` with `python build.py`; never edit or read the built files whole. Without being asked, each session's changes share one version: bump `manifest.json` once, keep one line at the top of `_changelogs/Nicrosil Changelog.md` and one `tool` log entry for the session, and update the Nicrosil guide only where what Nicrosil does has changed.
 
 ## How to talk to Harrison
 
@@ -94,5 +96,7 @@ These rules cover how you explain things and talk with him in chat, in every tas
 - **Never read a log file whole.** They are long. To add an entry, read only the first 15 or so lines of the current month's file and insert the entry under the header's closing `---` line, above the newest entry (don't append to the end). If there is no file for the current month yet, create it by copying the header of the latest one (Nicrosil normally does this when Obsidian opens). To look something up, search the `### [date] operation | Subject` headings across `_logs/`.
 - **Find existing pages by searching**, not by reading `_index.md`: search file names and `aliases:` lines in `Wiki/` and `Sources/Source Cards/`. Without a shell or search tool, list the folders, or read the index.
 - **In `Ingestion/Triage.md`, read only the batch you are working on.**
-- **Read the `Nicrosil` guide or the plugin's code only when working on Nicrosil**, and a page's template only when drafting that type of page.
+- **Read the `Nicrosil` guide or the plugin's code only when working on Nicrosil**, and a page's template only when drafting that type of page. For the code, search `.obsidian/plugins/nicrosil/src/` and read only the lines you need; never read `main.js` or `styles.css` (built files, about 100k and 40k tokens).
+- **Never list the vault recursively.** List one folder at a time, and never list `.git/` or `Sources/Scans/` recursively: one recursive listing of the vault is about 55k tokens.
+- **Read a source's text copy, not the original,** when it has one (`<name> (text).md` beside it), and only the part in scope: for class notes, the date heading being ingested; for a long text copy, the `## Page` headings in range. Look at the original only to check a quote or a figure.
 - **For a health check, run `Tools/health-check/coppermind_check.py` first**; it does the mechanical checks so you don't have to read every page for them.

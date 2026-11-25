@@ -2,8 +2,8 @@
 type: schema
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-23
-verified_on: 2026-11-23
+updated: 2026-11-24
+verified_on: 2026-11-24
 ---
 How a source becomes wiki pages. Read this with [[SCHEMA - Writing Pages]], which covers naming, properties, links, citations, attribution, and style.
 
@@ -21,6 +21,8 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 
 ### 1. Orient
 - If I attached the source and it isn't in `Sources/` yet, copy it unchanged into the right subfolder and tell me where it went. A source I name in `Ingestion/Raw/` is handled the same way; leave the original in `Raw/` and tell me I can delete it ([[#Raw sources]]).
+- **Read text, not page images.** If the source is a PDF, a Word, PowerPoint or Excel file, or a saved web page, and has no text copy beside it yet (`<name> (text).md`), make one with `python Tools/source-to-text/source_to_text.py "<path to the source in Sources/>"`. It reads the PDF's own text, uses OCR on scanned pages, and puts a `## Page N` heading before each PDF page. Read the copy instead of the original. Cite the original, never the copy ([[SCHEMA - Writing Pages#Citations]]), and check a quote or figure against the original, because OCR can garble words. Say in the report if a copy had to be made, or if OCR pages look garbled.
+- **Read only the part in scope.** For class notes, find the date heading being ingested and read from it to the next date heading, not the whole file. For a text copy, read the `## Page` or `## Slide` headings in range. Read the rest of a source only if SCOPE says so.
 - Read the source's card in `Sources/Source Cards/` if it has one (check Ingest Progress so nothing is ingested twice), and every existing page this source is likely to touch.
 - Find those pages by searching file names and `aliases:` lines in `Wiki/`, not just exact names. Read `_index.md` whole only if you can't search.
 
@@ -58,6 +60,7 @@ Check each idea against the wiki:
 Pages written before a page existed name it without linking to it, and nothing else goes back for them. So once the new pages are drafted, link to them from the pages that already mention them.
 - **What to search for:** the title and every alias of each page this ingest created, and each alias this ingest added to an existing page.
 - **Where:** every page in `Wiki/`, as whole words, plurals included. Skip pages that already link to the target, footnote definitions, source files, and, as always, `Ingestion/Raw/` and `The Tinmind/`.
+- **Let the script search.** Run `python Tools/health-check/coppermind_check.py --unlinked "New Page" "Other New Page" "Existing Page=new alias"`: it searches as above and lists, for each target, the first unlinked mention on each page with its line. Read only those lines, and check each one names the target before linking it. Without a shell, do the search by hand.
 - **What to change:** on each page found, link the first mention only, following [[SCHEMA - Writing Pages#Linking rules]] rule 6: wrap the words already there in a link, with display text if they differ from the title, and change no other wording. If the words name something else ("The Wall Street Journal" is not [[The Wall (FBI)]]), leave them.
 - **Links only.** A backfill adds plain links in the text and nothing else: no new content, no typed links, no new `sources`. A relation that deserves a typed link goes in report section D as a proposal, under the usual rules.
 - **Drafts:** edit them directly. A draft under re-review (one with `verified_on`) gets a `changes_since_verified` line like a verified page.

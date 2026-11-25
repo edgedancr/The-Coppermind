@@ -1,6 +1,6 @@
 ---
 type: guide
-status: draft
+status: verified
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -15,18 +15,11 @@ related:
 drafted_by: Claude (claude-sonnet-5-5, claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-24
-changes_since_verified:
-  - "2026-11-24: Added the Query mode section (the search bar's Query switch, the query tab, Save to Analyses), the Claude Code setting, and version 4.2.0"
-  - "2026-11-24: Query mode bar restyled (version 4.3.0); no change to what it does"
-  - "2026-11-24: Fixed gray fills on the query controls (version 4.3.1); no change to what they do"
-  - "2026-11-24: Query controls take the CGS glow, the bar stays flat when clicked, and the selected choice stays lit (version 4.3.2); no change to what they do"
-  - "2026-11-24: Coppermind Dashboard spacing tightened so more fits on a laptop screen (version 4.3.3); no change to what anything does"
-  - "2026-11-24: More space above the Dashboard hero (version 4.3.4); no change to what anything does"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, records schema changes, and runs the Tinmind, my own class notes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
 
-This guide describes Nicrosil **v4.3.4**. Its folder is `.obsidian/plugins/nicrosil/`. When the plugin changes, this guide changes with it (see [[#Keeping this guide current]]).
+Its folder is `.obsidian/plugins/nicrosil/`. The current version is in the plugin's `manifest.json` and at the top of [[Nicrosil Changelog]]. When what the plugin does changes, this guide changes with it (see [[#Keeping this guide current]]).
 
 ## Turn it on (once per computer)
 **Settings → Community plugins**, refresh, switch on **Nicrosil**. After an update, switch it off and on (or restart Obsidian). The plugin files are in git, so another computer gets them with a pull, but the on/off setting is local.
@@ -115,7 +108,7 @@ On pages in `Wiki/`, the open Properties block ends with an **Add typed link** b
 - **Coppermind Gradient Style (CGS):** copper to teal. For the Dashboard's name, verified page titles, panel headings, the index's section headings, and the titles of the Index, `_AGENTS` and each month's log.
 - **Tinmind Gradient Style (TGS):** grey to lilac. For the Tinmind page's title and button and every note title in `The Tinmind/`; in the Tinmind mode it replaces the CGS everywhere.
 
-To style a new title, add the class `cm-gradient-style` or `cm-tin-gradient-style`. Colors and fonts are in `styles.css`.
+To style a new title, add the class `cm-gradient-style` or `cm-tin-gradient-style`. Colors and fonts are in the plugin's `src/css/` parts, which are built into `styles.css`.
 
 ## Logging a schema change
 Every change to the rules (`_AGENTS.md` or a file in `SCHEMAS/`) needs a line in [[Schema Changelog]].[^4] On any page in `SCHEMAS/`, click the pen button in the page header or run **Log a schema change**, then enter the new version (such as `4.2`, newer than the current one and not already in the changelog) and a description. Nicrosil adds the dated line at the top of the changelog, updates its `updated` property, and sets `version` and `updated` on [[SCHEMA]]. It does not touch `status`, `verified_on` or the log: each changed rule file goes back to `draft` with a change note,[^1] and the log entry is still mine to add.
@@ -178,14 +171,13 @@ In **Settings → Nicrosil**:
 - **A hotkey does nothing after an update:** switch Nicrosil off and on, then check **Settings → Hotkeys**.
 
 ## Keeping this guide current
-Whenever Nicrosil is updated:
-1. Bump the version here and in the plugin's `manifest.json`.
-2. Update the matching section (and the hotkey table if a key changed) only for a functional change; design tweaks need no sentence here.
-3. Add a line at the top of [[Nicrosil Changelog]].
-4. This page goes back to `draft` until I verify it.[^1]
-5. Log it as a `tool` entry ([[SCHEMA - Changes#Nicrosil and other tools]]).
+The code is edited in the parts in the plugin's `src/` folder and built into `main.js` and `styles.css` with `python build.py`; `src/README.md` says what each part holds. Whenever Nicrosil is updated ([[SCHEMA - Changes#Nicrosil and other tools]]):
+1. Bump the version in the plugin's `manifest.json`, once per session.
+2. Add one line at the top of [[Nicrosil Changelog]] for the session, at most two sentences.
+3. Log it as one `tool` entry for the session.
+4. Only if what Nicrosil does has changed: update the matching section here (and the hotkey table if a key changed). This page then goes back to `draft` until I verify it.[^1] A fix or a change in looks needs nothing here.
 
-Keep this guide to what each part does. How something looks (corners, fonts, colors, animations, positions) and the history of each change go only in [[Nicrosil Changelog]]; an AI that needs a detail reads the plugin itself. These steps apply to **every** change to a plugin file, even a one-line style tweak, and are done in the same edit without being asked.
+Keep this guide to what each part does. How something looks and the history of each change go only in [[Nicrosil Changelog]]; an AI that needs a detail searches the plugin's `src/` parts. These steps apply to **every** change to a plugin file, even a one-line style tweak, and are done without being asked.
 
 ## Footnotes
 [^1]: [[SCHEMA - Review|Schema: Review]]

@@ -1,0 +1,165 @@
+/* Dashboard: days since the last health check */
+.cm-hc { --hc: var(--cm-patina); margin: 2px 0 16px; padding: 10px 14px 9px; border: 1px solid var(--background-modifier-border); border-left: 3px solid var(--hc); border-radius: 8px; background: rgba(16, 12, 9, 0.35); transition: border-color .25s, background .25s; }
+.cm-hc.is-link { cursor: pointer; }
+.cm-hc.is-link:hover, .cm-hc.is-link:focus-visible { border-color: var(--hc); outline: none; }
+.cm-hc-soon { --hc: var(--cm-amber); }
+.cm-hc-overdue, .cm-hc-none { --hc: #e5584c; background: rgba(229, 88, 76, 0.08); }
+.cm-hc-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.cm-hc-title { font-family: "Segoe UI", system-ui, sans-serif; font-variant: small-caps; letter-spacing: 0.04em; color: var(--text-muted); }
+.cm-hc-verdict { color: var(--hc); font-weight: 600; font-variant-numeric: tabular-nums; }
+.cm-hc-track { height: 6px; margin: 8px 0 6px; border-radius: 3px; background: rgba(184, 115, 51, 0.2); overflow: hidden; }
+.cm-hc-fill { height: 100%; border-radius: 3px; background: var(--hc); box-shadow: 0 0 8px var(--hc); transition: width .9s cubic-bezier(.2, .8, .3, 1); }
+.cm-hc-overdue .cm-hc-fill, .cm-hc-none .cm-hc-fill { animation: cm-hc-alert 1.8s ease-in-out infinite; }
+.cm-hc-overdue .cm-hc-verdict, .cm-hc-none .cm-hc-verdict { text-shadow: 0 0 8px rgba(229, 88, 76, 0.55); }
+.cm-hc-sub { font-size: var(--font-ui-smaller); color: var(--text-muted); }
+@keyframes cm-hc-alert { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+@media (prefers-reduced-motion: reduce) { .cm-hc-fill { animation: none !important; transition: none; } }
+
+/* ---- Relations panel: crisp and flat (2.7.3). Same look as the wiki map: sharp 2px corners, no glows, no flowing dots, no halo, no dotted backdrop. ---- */
+/* same serif as the Review queue header; the gradient and glow are shared with it, see the end of this file */
+.cm-rel-title { font-family: "Segoe UI", system-ui, sans-serif; font-size: 1.3em; line-height: 1.15; letter-spacing: 0.02em; }
+.cm-rel-status { border-radius: 2px; }
+.cm-rel-map { border: 1px solid rgba(184, 115, 51, .35); border-radius: 2px; background: #171310; box-shadow: none; }
+.cm-rel-box { fill: #1f1a16; rx: 2px; ry: 2px; filter: none; transition: fill .15s, stroke-width .15s; }
+.cm-rel-box-verified { stroke-width: 1.2; filter: none; }
+.cm-rel-box-draft { stroke-width: 1.2; filter: none; }
+/* the open page: a thin copper-to-teal gradient outline with a faint glow in both colors (gradient #cm-rel-og is defined in main.js; plain copper if it is missing) */
+.cm-rel-box-center { fill: #221c17; rx: 2px; ry: 2px; stroke: url(#cm-rel-og) var(--cm-copper); stroke-dasharray: none; stroke-width: 1; filter: drop-shadow(0 0 3px rgba(217, 138, 74, .35)) drop-shadow(0 0 4px rgba(95, 174, 158, .28)); }
+.cm-rel-node:not(.is-center):hover .cm-rel-box, .cm-rel-node:focus .cm-rel-box { fill: #2a221b; stroke-width: 1.7; filter: none; }
+.cm-rel-node, .cm-rel-edge { animation: none; }
+.cm-rel-node:not(.is-center):hover { transform: none; }
+.cm-rel-edge { stroke-width: 1.2; filter: none; }
+.cm-rel-edge.is-hl { stroke-width: 1.8; }
+.cm-rel-flow, .cm-rel-halo { display: none; }
+.cm-rel-center-label { fill: #f6d3a8; filter: none; }
+.cm-rel-swatch { border-radius: 0; box-shadow: none; }
+.cm-rel-item { border-radius: 2px; }
+.cm-rel-dot { border-radius: 1px; }
+
+/* ---- Review queue and relations panel headers: still, glowing gradient like the Dashboard name (2.7.3). No shimmer. ---- */
+.cm-queue h4, .cm-rel-title {
+  width: fit-content; max-width: 100%;
+  font-family: var(--cm-gradient-font); font-weight: 400; letter-spacing: 0.02em;
+  background: var(--cm-gradient); background-size: 100% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  animation: none !important;
+  filter: var(--cm-gradient-glow);
+}
+
+/* ---- File list: folders and files whose names start with "_" are hidden unless the eye button in its toolbar is on (2.7.5). The plugin adds cm-hide-underscore to the page on load. ---- */
+body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-folder:has(> .nav-folder-title[data-path^="_"]),
+body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-folder:has(> .nav-folder-title[data-path*="/_"]),
+body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-file:has(> .nav-file-title[data-path^="_"]),
+body.cm-hide-underscore .workspace-leaf-content[data-type="file-explorer"] .nav-file:has(> .nav-file-title[data-path*="/_"]) { display: none; }
+.cm-underscore-btn.is-active { color: var(--text-accent); }
+/* 3.4.0: the file list's own toolbar (new note, new folder, sort, auto-reveal, collapse, and the eye) is gone, so the Coppermind button and the files sit at the top. The eye lives in the sidebar's tab bar instead, at the right end, and shows only while the Files tab is the open one (never in Tinmind mode, where the file list is replaced). */
+.workspace-leaf-content[data-type="file-explorer"] > .nav-header { display: none; }
+/* 3.4.1: the left sidebar's tab bar keeps only the Files icon, with the eye right next to it; the Search and Bookmarks icons are hidden (Ctrl+Shift+F and the bookmarks command still work) */
+.workspace-split.mod-left-split .workspace-tab-header[data-type="search"],
+.workspace-split.mod-left-split .workspace-tab-header[data-type="bookmarks"] { display: none; }
+.cm-underscore-btn { display: none; align-self: center; flex: 0 0 auto; margin-left: 2px; }
+.workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="file-explorer"].is-active) .cm-underscore-btn { display: flex; }
+body.cm-tin-mode .cm-underscore-btn { display: none; }
+/* 3.8.0: the mode button, right after the eye. It shows while the Files tab is open, in both modes, and is drawn like the eye: the tab bar's own icon color, no gradient. */
+.cm-mode-btn { display: none; align-self: center; flex: 0 0 auto; margin-left: 2px; }
+.workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="file-explorer"].is-active) .cm-mode-btn { display: flex; }
+.cm-mode-btn .cm-mode-logo { height: calc(var(--icon-size, 18px) - 1px); width: auto; background: currentColor; }
+
+/* 3.8.1: no status bar (word count, the verified counter) while a dashboard is the open page. */
+body.cm-on-dashboard .status-bar,
+body.cm-on-tin .status-bar { display: none; }
+
+/* Open next draft buttons (2.11.1): sharp corners, copper-to-teal gradient outline, glow (same as the index jump chips) */
+button.cm-gbtn.mod-cta {
+  border: 1px solid transparent !important;
+  border-radius: 2px !important;
+  background: linear-gradient(#221c17, #221c17) padding-box, linear-gradient(135deg, #d98a4a, #5fae9e) border-box !important;
+  box-shadow: 0 0 5px rgba(217,138,74,.3), 0 0 8px rgba(95,174,158,.22) !important;
+  color: #f1d3ae !important;
+  font-weight: 600;
+  letter-spacing: .02em;
+  padding: 7px 18px;
+  height: auto;
+  cursor: pointer;
+  transition: background .15s, box-shadow .15s, color .15s;
+}
+button.cm-gbtn.mod-cta:hover:not(:disabled) {
+  background: linear-gradient(#2a221b, #2a221b) padding-box, linear-gradient(135deg, #e89a5a, #78d2c0) border-box !important;
+  box-shadow: 0 0 7px rgba(232,154,90,.5), 0 0 12px rgba(120,210,192,.38) !important;
+  color: #fff0dc !important;
+}
+button.cm-gbtn.mod-cta:active:not(:disabled) { transform: translateY(1px); }
+button.cm-gbtn.mod-cta:disabled {
+  background: linear-gradient(#1c1815, #1c1815) padding-box, linear-gradient(135deg, #6b5340, #4a6b64) border-box !important;
+  box-shadow: none !important;
+  color: #7d7266 !important;
+  cursor: default;
+  opacity: .8;
+}
+
+/* Relations map outline (2.11.3): the whole map box gets the same look as the Open next draft buttons: sharp 2px corners, a copper-to-teal gradient outline on the dark fill, and a soft glow in both colors, instead of the plain copper line. */
+.cm-rel-map {
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: linear-gradient(#171310, #171310) padding-box, linear-gradient(135deg, #d98a4a, #5fae9e) border-box;
+  box-shadow: 0 0 5px rgba(217,138,74,.3), 0 0 8px rgba(95,174,158,.22);
+}
+
+/* Relations map expand button (2.12.0): reuses the gradient button style; centered under the map. */
+.cm-rel-expand { display: block; margin: 8px auto 4px; }
+
+/* Enlarged relations map (2.13.0): a wide window; the map scales up with it and the window scrolls when there are many pages. */
+.modal.cm-rel-modal { width: min(920px, 92vw); max-width: 92vw; }
+.cm-rel-modal .modal-content { max-height: 75vh; overflow-y: auto; }
+
+/* Legend chip lit while its page card is hovered (2.13.1): sharp 2px outline and glow in the relationship's own color. */
+.cm-rel-chip { padding: 1px 5px; border-radius: 2px; transition: color .15s, background .15s, box-shadow .15s; }
+.cm-rel-chip.is-hl { color: #f6d3a8; background: color-mix(in srgb, var(--c) 16%, transparent); box-shadow: 0 0 0 1px var(--c), 0 0 8px color-mix(in srgb, var(--c) 55%, transparent); }
+.cm-rel-chip.is-hl .cm-rel-swatch { box-shadow: 0 0 6px var(--c); }
+
+/* Dashboard search bar (2.13.2): the same look as the other gradient boxes (sharp 2px corners, copper-to-teal gradient outline on a dark fill, soft glow that brightens on hover and focus), and the same font as the titles of the Dashboard's link cards. */
+.cm-hero .cm-search-bar, body.cm-quiet .cm-hero .cm-search-bar {
+  border: 1px solid transparent !important;
+  border-radius: 2px !important;
+  background: linear-gradient(#1a1511, #1a1511) padding-box, linear-gradient(135deg, #d98a4a, #5fae9e) border-box !important;
+  box-shadow: 0 0 5px rgba(217,138,74,.3), 0 0 8px rgba(95,174,158,.22) !important;
+}
+.cm-hero .cm-search-bar:hover:not(:focus-within), body.cm-quiet .cm-hero .cm-search-bar:hover:not(:focus-within) {
+  box-shadow: 0 0 7px rgba(232,154,90,.5), 0 0 12px rgba(120,210,192,.38) !important;
+}
+.cm-hero .cm-search-bar:focus-within, body.cm-quiet .cm-hero .cm-search-bar:focus-within {
+  background: linear-gradient(#221b15, #221b15) padding-box, linear-gradient(135deg, #e89a5a, #78d2c0) border-box !important;
+  box-shadow: 0 0 7px rgba(232,154,90,.5), 0 0 12px rgba(120,210,192,.38) !important;
+}
+.cm-hero .cm-search-bar .cm-search-input { font-family: "Segoe UI", system-ui, sans-serif; font-size: 1.1em; }
+
+/* ---- source card rating buttons (reliability A–F, credibility 1–6) ---- */
+.cm-ratebar { margin: -8px 0 14px -4px; }
+.cm-props-open .cm-ratebar { margin-top: 8px; }
+.cm-ratebar-card { margin: 8px 0 4px; }
+.cm-rate { display: flex; flex-direction: column; gap: 6px; font-size: var(--font-ui-smaller); }
+.cm-rate-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cm-rate-label { width: 66px; flex: none; color: var(--text-faint); }
+.cm-rate-group { display: flex; gap: 3px; }
+.cm-rate-btn { all: unset; box-sizing: border-box; min-width: 26px; height: 24px; display: inline-flex; align-items: center; justify-content: center; padding: 0 6px; border: 1px solid var(--background-modifier-border); border-radius: 4px; font-size: var(--font-ui-smaller); font-weight: 600; color: var(--text-muted); cursor: pointer; user-select: none; }
+.cm-rate-btn:hover { background: var(--cm-copper-soft); color: var(--text-normal); }
+.cm-rate-btn:focus-visible { outline: 2px solid var(--cm-copper); outline-offset: 1px; }
+.cm-rate-btn.is-proposed { border-style: dashed; border-color: var(--cm-copper); color: var(--cm-copper); }
+.cm-rate-btn.is-on { background: var(--cm-copper); border-color: var(--cm-copper); color: #fff; }
+.cm-rate-foot { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 22px; }
+.cm-rate-sum { color: var(--text-muted); }
+.cm-rate-sum.is-empty { color: var(--text-faint); font-style: italic; }
+
+/* Triage link sits under the Schema link, in the second column */
+body.cm-quiet .cm-nav.is-quiet .cm-navcard.cm-navcard-under { grid-column: 2; }
+
+/* ---- "My take": links to the perspectives that respond to a page ---- */
+.cm-mytake { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin: -6px 0 14px -4px; padding: 0 2px; font-size: var(--font-ui-smaller); }
+.cm-props-open .cm-mytake { margin-top: 8px; }
+.cm-mytake-label { color: var(--text-faint); text-transform: uppercase; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; }
+.cm-mytake-link { color: var(--cm-copper); text-decoration: none; cursor: pointer; }
+.cm-mytake-link:hover { text-decoration: underline; }
+.cm-mytake-draft { font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 1px 5px; border-radius: 3px; background: rgba(224, 168, 70, 0.16); color: var(--cm-amber); }
+
+/* The Tinmind dashboard: the semester switcher above the course cards */
+

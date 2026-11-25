@@ -1,0 +1,185 @@
+/* ---------- The Tinmind hero (2.16.0) ---------- */
+/* The Tinmind page (The Tinmind/Tinmind Dashboard) has its own grey-to-lilac colors and a hero in place of the file name. The gradient, glow, background and accents are variables set on the page's pane, so everything on it follows. */
+body { --cm-tin-mask: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 354.32596 500.00198%22%3E%3Cpath transform=%22translate(142.43649 -23.789754)%22 d=%22m 58.419513,238.52375 c -38.537,-28.428 -83.445,-58.578 -83.445,-58.578 h -48.223 c 0,0 65.3299999,43.357 115.271,81.559 l -184.459003,258.092 h 38.787 l 169.025003,-239.599 c 9.814,8.091 18.115,15.472 23.861,21.552 7.547,8.01 14.675997,16.061 21.382997,24.111 l -129.147997,193.936 h 29.143 l 117.491997,-171.627 c 24.19696,32.62 41.81096,64.45 54.42996,91.915 1.344,2.852 2.602,5.659 3.857,8.428 19.5,44.532 25.496,75.479 25.496,75.479 V 23.789754 L 58.419513,238.52375 z m 111.538957,128.483 c -8.178,-13.963 -17.021,-28.391 -26.12496,-42.018 l 26.12496,-38.115 v 80.133 z m 0,-130.452 -43.06296,64.659 c -7.424,-9.771 -14.844,-18.406 -21.932,-25.326 -5.491997,-5.325 -13.546997,-12.036 -22.981997,-19.456 l 87.976957,-124.708 v 104.831 z%22/%3E%3C/svg%3E"); }
+.cm-tin-leaf {
+  --cm-gradient: var(--cm-tin-gradient);
+  --cm-gradient-glow: var(--cm-tin-gradient-glow);
+  --cm-bg-gradient:
+    radial-gradient(520px 300px at 8% -8%, rgba(165, 160, 185, 0.28), transparent 62%),
+    radial-gradient(480px 320px at 100% 4%, rgba(150, 115, 230, 0.24), transparent 60%),
+    radial-gradient(600px 400px at 50% 112%, rgba(140, 130, 175, 0.18), transparent 60%),
+    linear-gradient(160deg, #211f29 0%, #1a1920 46%, #1a1824 100%);
+  --cm-copper: #b8a3f2;
+  --cm-copper-soft: rgba(184, 163, 242, 0.12);
+  --cm-patina: #b0b0bd;
+  --text-muted: #aeabbc;
+}
+.cm-tin-leaf .inline-title { display: none !important; }
+.cm-logo-tin {
+  aspect-ratio: 354.32596 / 500.00198;
+  background: linear-gradient(160deg, #f1f0f8 0%, #b0b0bd 55%, #8f86b4 100%);
+  -webkit-mask: var(--cm-tin-mask) center / contain no-repeat;
+  mask: var(--cm-tin-mask) center / contain no-repeat;
+}
+
+/* ---------- Tinmind button, hidden path and properties (2.17.0) ---------- */
+/* The Tinmind page, like the Dashboard, shows no properties and no file path above the page. */
+.cm-tin-leaf .metadata-container, .cm-tin-leaf .frontmatter-container, .cm-tin-leaf .cm-propstrip { display: none !important; }
+.cm-tin-leaf .view-header-title-container { visibility: hidden; }
+body.cm-on-tin .workspace-leaf-content[data-type="file-properties"] .view-content { display: none !important; }
+/* the button under the Coppermind one in the file list: the same button in the Tinmind's colors and logo */
+.cm-tin-btn {
+  --cm-gradient: var(--cm-tin-gradient);
+  background: linear-gradient(135deg, rgba(176, 176, 189, 0.28), rgba(184, 163, 242, 0.22)) padding-box, linear-gradient(160deg, #2a2832, #1d1b24) padding-box, linear-gradient(135deg, rgba(210, 208, 226, 0.9), rgba(184, 163, 242, 0.8)) border-box;
+  margin-top: 0;
+}
+.cm-tin-btn:hover, .cm-tin-btn:focus-visible { background: linear-gradient(135deg, rgba(176, 176, 189, 0.42), rgba(184, 163, 242, 0.36)) padding-box, linear-gradient(160deg, #2a2832, #1d1b24) padding-box, linear-gradient(135deg, #e6e4f2, #b8a3f2) border-box; box-shadow: 0 0 12px rgba(175, 170, 200, 0.3), 0 0 14px rgba(170, 135, 240, 0.25); outline: none; }
+.cm-tin-btn .cm-home-logo { width: 18px; height: 26px; filter: drop-shadow(0 1px 3px rgba(175, 170, 200, 0.45)); }
+.cm-tin-btn .cm-home-name { filter: var(--cm-tin-gradient-glow); }
+body.cm-on-tin .cm-tin-btn { box-shadow: inset 0 0 10px rgba(175, 170, 200, 0.25), inset 0 0 14px rgba(170, 135, 240, 0.18); }
+
+/* ---------- Tinmind mode (2.18.0) ---------- */
+/* While the body has cm-tin-mode (set by Nicrosil when The Tinmind is opened from its button or card; cleared when the Dashboard is opened), the whole app swaps the Coppermind's copper and teal for the Tinmind's grey and lilac. The theme's colors are set on .theme-dark in the coppermind.css snippet, and body.theme-dark.cm-tin-mode is more specific, so these win without touching it. */
+body.theme-dark.cm-tin-mode {
+  --background-primary: #1a1920;
+  --background-primary-alt: #25222e;
+  --background-secondary: #15141a;
+  --background-secondary-alt: #111016;
+  --background-modifier-border: #363344;
+  --background-modifier-hover: rgba(184, 163, 242, 0.12);
+  --background-modifier-active-hover: rgba(184, 163, 242, 0.2);
+  --text-normal: #e6e4ee;
+  --text-muted: #aeabbc;
+  --text-faint: #8b8898;
+  --text-accent: #b8a3f2;
+  --text-accent-hover: #cdbdf7;
+  --text-selection: rgba(184, 163, 242, 0.3);
+  --text-highlight-bg: rgba(184, 163, 242, 0.28);
+  --interactive-accent: #9a86e0;
+  --interactive-accent-hover: #b8a3f2;
+  --link-color: #b8a3f2;
+  --link-unresolved-color: #8a809f;
+  --h1-color: #f1f0f8;
+  --h2-color: #dcd9ea;
+  --h3-color: #c9c6d9;
+  --h4-color: #b8b5c8;
+  --h5-color: #a9a6b8;
+  --h6-color: #aeabbc;
+  --code-background: #121116;
+  --callout-color-patina: 184, 163, 242;
+}
+body.cm-tin-mode {
+  --cm-gradient: var(--cm-tin-gradient);
+  --cm-gradient-glow: var(--cm-tin-gradient-glow);
+  --cm-draft-gradient: linear-gradient(100deg, rgba(150, 146, 170, 0.9) 0%, rgba(128, 124, 148, 0.9) 55%, rgba(108, 105, 128, 0.9) 100%);
+  --cm-draft-glow: drop-shadow(0 0 7px rgba(175, 170, 200, 0.35));
+  --cm-bg-gradient:
+    radial-gradient(520px 300px at 8% -8%, rgba(165, 160, 185, 0.28), transparent 62%),
+    radial-gradient(480px 320px at 100% 4%, rgba(150, 115, 230, 0.24), transparent 60%),
+    radial-gradient(600px 400px at 50% 112%, rgba(140, 130, 175, 0.18), transparent 60%),
+    linear-gradient(160deg, #211f29 0%, #1a1920 46%, #1a1824 100%);
+  --cm-copper: #b8a3f2;
+  --cm-copper-soft: rgba(184, 163, 242, 0.12);
+  --cm-patina: #b0b0bd;
+}
+/* the sidebars and the open file in the file list */
+body.theme-dark.cm-tin-mode .workspace-split.mod-left-split {
+  background:
+    radial-gradient(460px 380px at 0% 0%, rgba(165, 160, 185, 0.16), transparent 70%),
+    radial-gradient(460px 400px at 100% 100%, rgba(150, 115, 230, 0.12), transparent 70%),
+    linear-gradient(170deg, #1d1b24 0%, #191820 55%, #181722 100%) !important;
+}
+body.theme-dark.cm-tin-mode .workspace-split.mod-right-split {
+  background:
+    radial-gradient(460px 380px at 0% 0%, rgba(150, 115, 230, 0.12), transparent 70%),
+    radial-gradient(460px 400px at 100% 100%, rgba(165, 160, 185, 0.16), transparent 70%),
+    linear-gradient(170deg, #181722 0%, #191820 45%, #1d1b24 100%) !important;
+}
+body.theme-dark.cm-tin-mode .nav-file-title.is-active,
+body.theme-dark.cm-tin-mode .nav-folder-title.is-active {
+  background: linear-gradient(90deg, rgba(184, 163, 242, 0.30), rgba(184, 163, 242, 0.14) 55%, rgba(176, 176, 189, 0.12)) !important;
+}
+body.theme-dark.cm-tin-mode .nav-file-title.is-active .nav-file-title-content,
+body.theme-dark.cm-tin-mode .nav-folder-title.is-active .nav-folder-title-content {
+  background: linear-gradient(90deg, #c9bdf3 0%, #dcd9ea 55%, #f1f0f8 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+}
+/* small things the theme colors by hand */
+body.cm-tin-mode .tag { --tag-background: rgba(184, 163, 242, 0.14); --tag-border-color: rgba(184, 163, 242, 0.35); }
+body.cm-tin-mode .callout[data-callout="info"] { --callout-color: 176, 176, 189; }
+body.cm-tin-mode .callout[data-callout="question"] { --callout-color: 184, 163, 242; }
+/* the Coppermind button keeps its copper in either mode, so it still says where it goes */
+body.cm-tin-mode .cm-home-btn:not(.cm-tin-btn) { --cm-gradient: linear-gradient(100deg, #d99a62 0%, #f6d3a8 21%, #d99a62 32%, #86d2c1 100%); }
+
+/* ---------- _AGENTS title (2.18.2) ---------- */
+/* The file name (_AGENTS) is replaced by AGENTS in the Coppermind Gradient Style, the same way the Index and the logs are in the coppermind.css snippet: the real title is hidden (font-size 0) and not clickable, so the file can't be renamed by accident. */
+.cm-agents-leaf .inline-title {
+  font-size: 0; line-height: 1; pointer-events: none; user-select: none;
+}
+.cm-agents-leaf .inline-title::before {
+  content: "AGENTS";
+  display: inline-block;
+  font-family: var(--cm-gradient-font);
+  font-size: calc(var(--font-text-size, 16px) * 1.9); /* not em: the real title is font-size 0, so em would give 0 */
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  background: var(--cm-gradient);
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  filter: var(--cm-gradient-glow);
+}
+
+/* ---------- The Tinmind's course tree and course pages (3.1.0) ---------- */
+/* In Tinmind mode the file list's own tree is replaced by the course tree under the two buttons. */
+.cm-tin-side { display: none; }
+body.cm-tin-mode .workspace-leaf-content[data-type="file-explorer"] .cm-tin-side { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 0 6px 12px; }
+body.cm-tin-mode .workspace-leaf-content[data-type="file-explorer"] .nav-header,
+body.cm-tin-mode .workspace-leaf-content[data-type="file-explorer"] .nav-files-container { display: none; }
+.cm-tin-list { display: flex; flex-direction: column; gap: 1px; }
+.cm-tin-foot { display: flex; flex-direction: column; gap: 1px; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--background-modifier-border); }
+.cm-tin-row { display: flex; align-items: center; gap: 4px; padding: 3px 6px; border-radius: 4px; cursor: pointer; color: var(--text-muted); font-size: var(--font-ui-small); line-height: 1.35; min-height: 26px; }
+.cm-tin-row:hover { background: var(--background-modifier-hover); color: var(--text-normal); }
+.cm-tin-row.is-active { background: var(--background-modifier-hover); color: var(--text-normal); box-shadow: inset 2px 0 0 #b8a3f2; }
+.cm-tin-chev { width: 14px; height: 14px; flex: 0 0 14px; display: inline-flex; align-items: center; justify-content: center; opacity: 0.6; }
+.cm-tin-chev svg, .cm-tin-icon svg { width: 14px; height: 14px; }
+.cm-tin-icon { flex: 0 0 14px; display: inline-flex; align-items: center; opacity: 0.75; }
+.cm-tin-label { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cm-tin-course { color: var(--text-normal); font-weight: 600; margin-top: 4px; }
+.cm-tin-heading { font-size: var(--font-ui-smaller); }
+.cm-tin-plus, .cm-tin-more { flex: 0 0 auto; width: 20px; height: 20px; padding: 2px; display: inline-flex; align-items: center; justify-content: center; opacity: 0; }
+.cm-tin-row:hover .cm-tin-plus, .cm-tin-row:hover .cm-tin-more { opacity: 0.8; }
+.cm-tin-plus svg, .cm-tin-more svg { width: 14px; height: 14px; }
+.cm-tin-plus:hover, .cm-tin-more:hover { opacity: 1 !important; }
+.cm-tin-label2 { margin: 6px 0 2px; color: var(--text-faint); font-size: var(--font-ui-smaller); text-transform: uppercase; letter-spacing: 0.04em; }
+.cm-tin-empty { color: var(--text-faint); font-size: var(--font-ui-smaller); padding: 3px 6px; }
+.cm-tin-empty a { cursor: pointer; }
+.cm-tin-add { color: var(--text-muted); }
+.cm-tin-input { width: 100%; margin: 8px 0 14px; }
+/* the course page's panel: the same tree, under the page's properties */
+.cm-hub { margin: 14px 0 18px; padding: 12px 14px; border: 1px solid var(--background-modifier-border); border-radius: 6px; background: var(--background-secondary); }
+.cm-hub-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.cm-hub-title { font-weight: 400; background: var(--cm-tin-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+.cm-hub-btns { display: flex; gap: 6px; }
+.cm-hub-btns button { height: var(--input-height, 30px); }
+.cm-hub .cm-tin-row { min-height: 28px; }
+.cm-tin-leaf .cm-hub, .cm-dashboard-leaf .cm-hub { display: none !important; }
+
+/* ---------- Titles of the Tinmind's notes (3.3.0) ---------- */
+/* Every note in The Tinmind (course pages, the notes inside a course, new notes) has its title in the Tinmind Gradient Style, whatever its status. The Tinmind Dashboard has the hero instead. */
+.cm-tinnote-leaf .inline-title {
+  font-family: var(--cm-gradient-font); font-weight: 400; letter-spacing: 0.02em;
+  background: var(--cm-tin-gradient);
+  background-size: var(--cm-title-w, 14em) 100%; background-repeat: no-repeat; /* --cm-title-w: the title's own text width, set by Nicrosil, so the gradient runs across the words */
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  filter: var(--cm-tin-gradient-glow);
+  animation: none;
+}
+
+/* ---------- The pill that goes back to the course page (3.6.0) ---------- */
+/* Above the title of a note inside a course: the course's name with an arrow, outlined in the Tinmind's lilac. */
+.cm-backpill { display: flex; align-items: center; gap: 6px; width: fit-content; max-width: 100%; margin: 0 0 12px; padding: 4px 12px 4px 9px; border: 0.5px solid #8f86b8; border-radius: 999px; font-size: var(--font-ui-small); line-height: 1.4; color: #d9d3f3; cursor: pointer; user-select: none; transition: background 0.15s, border-color 0.15s; }
+.cm-backpill:hover, .cm-backpill:focus-visible { background: #2e2a45; border-color: #b8a3f2; outline: none; }
+.cm-backpill-icon { display: inline-flex; color: #b8a3f2; }
+.cm-backpill-icon svg { width: 15px; height: 15px; }
+@media (prefers-reduced-motion: reduce) { .cm-backpill { transition: none; } }
+

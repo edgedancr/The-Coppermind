@@ -2,8 +2,8 @@
 type: schema
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-22
-verified_on: 2026-11-22
+updated: 2026-11-24
+verified_on: 2026-11-24
 ---
 How the index, the log, and git work. The everyday parts (the index rule and the log entry format) are in `_AGENTS.md`; this file has the rest.
 
@@ -23,10 +23,11 @@ How the index, the log, and git work. The everyday parts (the index rule and the
 
 - **Newest first.** A new entry goes at the top, under the header's closing `---` line and above the newest entry. Past entries are never rewritten. Corrections go in a new entry.
 - **Every ingest, query, health check, transcription, verification, schema change, and tool change gets an entry**, in the format in `_AGENTS.md`.
+- **Entries are short.** **Think** and **Calculate** are one line each, about 40 words at most; **Verify** lists pages and decisions as the format shows. What was drafted, changed or found is in the pages, the ingest report, the health check report, a changelog or git, so the entry names it instead of retelling it. Every agent searches these entries, so each extra line is paid for many times.
 - **Operations:** `setup`, `ingest`, `query`, `health-check`, `transcribe`, `verify`, `schema`, `tool`.
   - `transcribe` is for a batch of scans the agent turned into Tinmind notes ([[SCHEMA - Transcription]]): one entry per batch. The Verify part stays empty, because [[Nicrosil]]'s Transcription queue logs each transcription I verify (or discard) as its own `verify` entry.
-  - `schema` is for changes to the rule files, `_AGENTS.md`, and the templates.
-  - `tool` is for changes to anything in `Tools/` and to Nicrosil. A tool entry is short: what changed and the new version in two or three bullets, and what to check. The details belong in the tool's changelog ([[Nicrosil Changelog]]) or README, not in the log.
+  - `schema` is for changes to the rule files, `_AGENTS.md`, and the templates: one entry per session, for the session's version ([[SCHEMA - Changes#Changing the rules]]).
+  - `tool` is for changes to anything in `Tools/` and to Nicrosil: one entry per session, naming the new version and what to check. The details belong in the tool's changelog ([[Nicrosil Changelog]]), its README, or git, not in the log.
 - **A `health-check` entry links to its report** (`Health Check YYYY-MM-DD`) and gives the counts, instead of repeating each flag.
 - **If I revise or reject something without saying why, the agent asks me for a one-sentence reason** and records it. Corrections are the best evidence of my learning, so they should be recorded well.
 - Entries use `###` headings, so a folded log reads as a short list. Nicrosil folds them when the log opens in editing view.

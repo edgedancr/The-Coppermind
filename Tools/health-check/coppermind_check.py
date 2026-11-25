@@ -7,6 +7,10 @@ Run from the vault's top folder (or pass the vault's path):
     python Tools/health-check/coppermind_check.py
     python Tools/health-check/coppermind_check.py --out "check.md"
     python Tools/health-check/coppermind_check.py path/to/vault --full
+    python Tools/health-check/coppermind_check.py --unlinked "New Page" "Old Page=new alias"
+
+`--unlinked` is for an ingest's link backfill (SCHEMAS/SCHEMA - Ingest.md, step 5), not the health check:
+it lists the first unlinked mention of each named page on every other page in Wiki/, and nothing else.
 
 It reads files and never changes any. It needs only Python 3.8 or newer, with no extra packages.
 It prints a Markdown report: one row per health check (the same rows as the Health Check Report
@@ -616,19 +620,103 @@ def report(R, info, today, full):
     return "\n".join(out) + "\n"
 
 
+# ---------- link backfill (--unlinked) ----------
+
+def mention_pattern(term):
+    """A whole-word pattern for a title or alias, plurals included. All-capital terms (ACH) match their case only."""
+    words = [re.escape(w) for w in term.split()]
+    if not words:
+        return None
+    last = words[-1]
+    if term[-1:].isalpha():
+        if term.endswith("y") and not term.isupper():
+            last = last[:-1] + "(?:y|ies)"
+        else:
+            last = last + "(?:s|es|'s)?"
+    body = r"[\s\-]+".join(words[:-1] + [last])
+    flags = 0 if term.isupper() else re.I
+    return re.compile(r"(?<![\w\[|#])" + body + r"(?![\w\]])", flags)
+
+
+def unlinked_report(v, specs):
+    """The first unlinked mention of each named page on every other page in Wiki/: the search half of the backfill."""
+    wiki = sorted(p for p in v.pages if p.startswith("Wiki/") and p.endswith(".md"))
+    out = ["Unlinked mentions for the link backfill (SCHEMA - Ingest, step 5). Each line is the first mention on that page; "
+           "check each one means the target before linking it, and change no other words.", ""]
+    for spec in specs:
+        page_name, _, only = spec.partition("=")
+        target = v.resolve(page_name.strip())
+        if not target or target not in v.pages:
+            out += [f"## {page_name.strip()}", "", "- No page with this name.", ""]
+            continue
+        fm = v.pages[target]["fm"]
+        title = name(target)
+        if only.strip():
+            terms = [only.strip()]
+        else:
+            terms = [title] + [a for a in as_list(fm.get("aliases")) if a.strip()]
+            short = re.sub(r"\s*\([^)]*\)$", "", title).strip()     # "Leak (Intelligence)" is mentioned as "Leak"
+            if short and short != title:
+                terms.append(short)
+        pats = [(t, mention_pattern(t)) for t in dict.fromkeys(terms)]
+        pats = [(t, p) for t, p in pats if p]
+        hits = []
+        for p in wiki:
+            if p == target:
+                continue
+            pg = v.pages[p]
+            links_here = False
+            for m in LINK_RE.finditer(pg["text"]):
+                if v.resolve(parse_link(m.group(2))[0], p) == target:
+                    links_here = True
+                    break
+            if links_here:
+                continue
+            lines = pg["clean"].split("\n")
+            first = None
+            for i, line in enumerate(lines):
+                if re.match(r"^\[\^[^\]\s]+\]:", line):          # footnote definitions are citations
+                    continue
+                masked = LINK_RE.sub(lambda m: " " * len(m.group(0)), line)   # words already inside a link
+                for t, pat in pats:
+                    m = pat.search(masked)
+                    if m and (first is None or (i, m.start()) < first[:2]):
+                        first = (i, m.start(), m.group(0), t, line)
+                if first and first[0] == i:
+                    break
+            if first:
+                i, col, words, t, line = first
+                where = " (in a heading)" if line.lstrip().startswith("#") else ""
+                snippet = line.strip()
+                if len(snippet) > 140:
+                    start = max(0, line.find(words) - 60)
+                    snippet = "…" + line[start:start + 140].strip() + "…"
+                hits.append(f"- [[{name(p)}]], line {i + (pg['fm_lines'] + 2 if pg['fm_text'] else 1)}{where}: \"{words}\" (matches \"{t}\") — {snippet}")
+        out += [f"## {title}", "", f"Searched for: " + ", ".join(f'"{t}"' for t, _ in pats) + f". {len(hits)} page(s).", ""]
+        out += hits or ["- None found."]
+        out.append("")
+    return "\n".join(out) + "\n"
+
+
 def main():
     ap = argparse.ArgumentParser(description="Run the Coppermind's mechanical health checks.")
     ap.add_argument("vault", nargs="?", default=".", help="the vault's top folder (default: the current folder)")
     ap.add_argument("--out", help="also write the report to this file")
     ap.add_argument("--full", action="store_true", help="list every finding, not just the first 40 of each kind")
+    ap.add_argument("--unlinked", nargs="+", metavar="PAGE",
+                    help="for an ingest's link backfill: list unlinked mentions of these pages (title and aliases) "
+                         "in Wiki/; write \"Page=alias\" to search for one alias only")
     ap.add_argument("--today", help=argparse.SUPPRESS)
     a = ap.parse_args()
     root = os.path.abspath(a.vault)
     if not os.path.isdir(os.path.join(root, "Wiki")):
         sys.exit(f"{root} doesn't look like the Coppermind (no Wiki/ folder). Run this from the vault's top folder.")
     today = a.today or dt.date.today().isoformat()
-    R, info = run(root, today, a.full)
-    text = report(R, info, today, a.full)
+    if a.unlinked:
+        text = unlinked_report(Vault(root), a.unlinked)
+    else:
+        R, info = run(root, today, a.full)
+        text = report(R, info, today, a.full)
     if a.out:
         with open(a.out, "w", encoding="utf-8") as f:
             f.write(text)

@@ -20,7 +20,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5; Tinmind, health check, query depth and Nicrosil updates by claude-sonnet-5-5)
 drafted_on: 2026-11-17
-verified_on: 2026-11-22
+verified_on: 2026-11-24
 ---
 > [!summary]
 > Which Claude model to pick for each kind of Coppermind and Tinmind work: ingesting sources, health checks, queries, editing pages, transcribing scans of my handwriting, and building tools. ==Opus is the default for anything that needs judgment about sources, attribution, links, or reading my handwriting faithfully; Sonnet handles routine and tool-building work; Haiku handles mechanical chores; Fable is the escalation for the largest, longest jobs.== No model replaces my verify step.[^1]
@@ -106,8 +106,8 @@ verified_on: 2026-11-22
 - **Small plugin or Dashboard changes, CSS, a new hotkey:** Sonnet. This is what built Nicrosil.[^4][^12]
 - **A new feature with many moving parts**, or a bug Sonnet has tried and failed to fix: Opus.
 - **A ground-up rebuild** of Nicrosil or a tool in `Tools/`: Fable.
-- **Every Nicrosil change, even a one-line style tweak, comes with bookkeeping:** the version in `manifest.json` and the guide, a line in the changelog, the guide's affected sections, and a `tool` log entry, all in the same edit.[^20] A model that skips them is what the 2026-11-19 rule was written to stop,[^21] so I check all four were done, whichever model made the change.
-- Whichever model builds it, I test it in Obsidian before relying on it, in the Coppermind's mode and the Tinmind's, because Nicrosil now has both,[^19] and the guide that describes it[^12] gets updated in the same session.
+- **Every Nicrosil session, even one with a single style tweak, comes with bookkeeping:** one version bump in `manifest.json`, one line in the changelog and one `tool` log entry for the session, and the guide's sections only when what Nicrosil does has changed; the code is edited in the plugin's `src/` parts and built with `build.py`.[^20] A model that skips them is what the 2026-11-19 rule was written to stop,[^21] so I check they were done, whichever model made the change.
+- Whichever model builds it, I test it in Obsidian before relying on it, in the Coppermind's mode and the Tinmind's, because Nicrosil now has both,[^19] and when what it does changes, the guide that describes it[^12] is updated in the same session.
 
 ## Steps: choosing for a session
 1. Find the task in the table above and start with the default.

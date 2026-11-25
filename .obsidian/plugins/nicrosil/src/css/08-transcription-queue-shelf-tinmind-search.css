@@ -1,0 +1,146 @@
+/* ---------- 3.28.0: the transcription queue as a locked split ---------- */
+/* The queue is two panes with no tabs. Left: the scan (type nicrosil-transcribe), with what still needs me under it. Right: the note in an ordinary Obsidian editor, with the review bar across its top. Every other pane in the main area is hidden while the queue is open (cm-tr-hidden) and the two panes lose their tab strip and view header (cm-tr-locked). Everything is in the Tinmind Gradient Style: the gradient and its glow on the title, flat square panels with hairline borders over the Tinmind's soft grey and lilac glows, Alegreya in the note picker, lilac underlines for tabs, and a gradient-outlined Verify. Colors come from the three --cm-tr-* variables. */
+.workspace-tabs.cm-tr-hidden { display: none !important; }
+.workspace-tabs.cm-tr-locked > .workspace-tab-header-container { display: none; }
+.workspace-tabs.cm-tr-locked .view-header { display: none; }
+.view-content.cm-tr, .cm-tr-bar {
+  --cm-tr-line: rgba(176, 176, 189, 0.22);
+  --cm-tr-panel: rgba(29, 29, 37, 0.78);
+  --cm-tr-lilac: #b8a3f2;
+}
+.view-content.cm-tr {
+  display: flex; flex-direction: column; align-items: stretch; height: 100%; padding: 0; gap: 0; overflow: hidden;
+  background:
+    radial-gradient(520px 300px at 8% -8%, rgba(165, 160, 185, 0.22), transparent 62%),
+    radial-gradient(480px 320px at 100% 4%, rgba(150, 115, 230, 0.18), transparent 60%),
+    radial-gradient(600px 400px at 50% 112%, rgba(140, 130, 175, 0.14), transparent 60%),
+    var(--background-primary);
+}
+.cm-tr-count, .cm-tr-waiting, .cm-tr-where, .cm-tr-file, .cm-tr-zlabel { color: var(--text-muted); font-size: 12px; }
+.cm-tr-waiting { margin-left: 4px; }
+.cm-tr-where, .cm-tr-file, .cm-tr-zlabel { font-size: 11px; }
+.cm-tr-zlabel { min-width: 34px; text-align: center; }
+.cm-tr-file { color: var(--cm-tr-lilac); border-bottom: 1px solid var(--cm-tr-lilac); padding-bottom: 1px; }
+
+/* the queue's buttons: square, hairline, transparent; lilac on hover */
+.view-content.cm-tr button, .cm-tr-bar button { border-radius: 0; background: transparent; border: 1px solid var(--cm-tr-line); box-shadow: none; min-height: 28px; }
+.view-content.cm-tr button:hover:not(:disabled), .cm-tr-bar button:hover:not(:disabled) { border-color: var(--cm-tr-lilac); background: rgba(184, 163, 242, 0.08); }
+.view-content.cm-tr button.cm-mini, .cm-tr-bar button.cm-mini { min-width: 32px; }
+.cm-tr-bar button:disabled { opacity: 0.5; }
+
+/* the empty state */
+.cm-tr-head { display: flex; align-items: center; gap: 12px; padding: 18px 26px 12px; border-bottom: 1px solid var(--cm-tr-line); }
+.cm-tr-head h4.cm-tin-gradient-style { font-size: 2em; line-height: 1.1; margin: 0 8px 0 0; }
+.cm-tr-head .cm-tr-x { margin-left: auto; }
+.cm-tr-empty { display: flex; flex-direction: column; gap: 6px; max-width: 520px; margin: 18px 26px; padding: 14px 16px; border: 1px solid var(--cm-tr-line); background: var(--cm-tr-panel); }
+
+/* left: the scan */
+.cm-tr-scan { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.cm-tr-scanbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex: 0 0 auto; flex-wrap: wrap; padding: 8px 12px; border-bottom: 1px solid var(--cm-tr-line); background: var(--cm-tr-panel); }
+.cm-tr-tabs, .cm-tr-zoom { display: flex; align-items: center; gap: 4px; }
+.cm-tr .cm-tr-tabs button.cm-mini, .cm-tr .cm-tr-tabs button.cm-mini:hover, .cm-tr .cm-tr-tabs button.cm-mini.is-on { background: transparent; box-shadow: none; border: 0; border-bottom: 1px solid transparent; min-width: 0; min-height: 0; padding: 4px 0; margin-right: 10px; color: var(--text-muted); }
+.cm-tr .cm-tr-tabs button.cm-mini.is-on { color: var(--text-normal); border-bottom-color: var(--cm-tr-lilac); }
+.cm-tr-scanview { flex: 1 1 auto; min-height: 0; overflow: auto; background: rgba(18, 18, 23, 0.9); padding: 12px; }
+.cm-tr-imgwrap { position: relative; margin: 0 auto; }
+.cm-tr-img { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
+.cm-tr-missing { padding: 16px; }
+.cm-tr-cropbar { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; flex-wrap: wrap; padding: 6px 12px; border-bottom: 1px solid var(--cm-tr-line); background: rgba(184, 163, 242, 0.08); }
+.cm-tr-croplayer { position: absolute; inset: 0; cursor: crosshair; touch-action: none; }
+.cm-tr-cropbox { position: absolute; border: 2px solid var(--cm-tr-lilac); background: rgba(184, 163, 242, 0.18); pointer-events: none; }
+
+/* left, under the scan: what still needs me */
+.cm-tr-checks { flex: 0 1 auto; max-height: 42%; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border-top: 1px solid var(--cm-tr-line); background: var(--cm-tr-panel); }
+.cm-tr-trayhead { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.cm-tr-trayhead button.cm-mini { min-height: 24px; font-size: 11px; }
+.cm-tr-checkhead { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-muted); }
+.cm-tr-card { display: flex; flex-direction: column; gap: 4px; padding: 6px 8px; border: 1px solid rgba(224, 149, 63, 0.35); background: rgba(224, 149, 63, 0.07); }
+.cm-tr-card.cm-tr-recreate { background: rgba(91, 143, 217, 0.07); border-color: rgba(91, 143, 217, 0.35); }
+.cm-tr-card.cm-tr-recheck { background: rgba(76, 175, 122, 0.07); border-color: rgba(76, 175, 122, 0.35); }
+.cm-tr-cardtop { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.cm-tr-cardtitle { font-weight: 600; }
+.cm-tr-cardkind { color: var(--text-muted); font-size: 11px; }
+.cm-tr-cardbody { font-size: 12px; color: var(--text-muted); }
+.cm-tr-cardbtns { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* right: the review bar across the top of the note */
+.cm-tr-bar { flex: 0 0 auto; display: flex; flex-direction: column; gap: 6px; padding: 8px 14px; border-bottom: 1px solid var(--cm-tr-line); background: radial-gradient(420px 160px at 100% -20%, rgba(150, 115, 230, 0.16), transparent 70%), var(--cm-tr-panel); }
+.cm-trb-top, .cm-trb-sub { display: flex; align-items: center; gap: 8px 10px; flex-wrap: wrap; }
+.cm-trb-top { row-gap: 8px; }
+.cm-trb-title.cm-tin-gradient-style { font-size: 1.35em; line-height: 1.1; margin: 0 4px 0 0; }
+.cm-trb-actions { margin-left: auto; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.cm-trb-unsure { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cm-tr-select { font-family: 'Alegreya', Georgia, serif; font-size: 1.2em; background-color: transparent; background-image: none !important; -webkit-appearance: none; appearance: none; padding: 0 6px; min-height: 28px; min-width: 200px; max-width: 100%; width: auto; flex: 0 1 auto; text-overflow: ellipsis; border: 0; border-bottom: 1px solid #6f6b88; border-radius: 0; box-shadow: none; }
+.cm-tr-select:focus, .cm-tr-select:hover { border-bottom-color: var(--cm-tr-lilac); box-shadow: none; }
+.cm-tr-select::after, .cm-tr-select::before { content: none !important; }
+.cm-tr-bar button.mod-cta { min-height: 32px; padding: 0 20px; color: #f1f0f8; font-weight: 600; border: 1.5px solid transparent; background: linear-gradient(#1d1d25, #1d1d25) padding-box, var(--cm-tin-gradient) border-box; box-shadow: 0 0 14px rgba(170, 135, 240, 0.28); }
+.cm-tr-bar button.mod-cta:hover:not(:disabled) { background: linear-gradient(#26242f, #26242f) padding-box, var(--cm-tin-gradient) border-box; }
+.cm-tr-bar button.mod-cta:disabled { opacity: 0.55; box-shadow: none; }
+.cm-tr-bar button.cm-danger { color: #f08a7e; border-color: rgba(240, 138, 126, 0.4); }
+.cm-tr-bar button.cm-danger:hover { border-color: #f08a7e; background: rgba(240, 138, 126, 0.08); }
+
+/* the note beside the scan keeps Obsidian's own editor; it only loses the padding that would leave a band under the bar */
+.workspace-tabs.cm-tr-locked .workspace-leaf-content[data-type="markdown"] > .view-content { flex: 1 1 auto; min-height: 0; }
+
+/* The transcription button in the left sidebar's tab bar belongs to the Tinmind: it shows in the Tinmind's mode only (the other panel buttons show in the Coppermind's). */
+body:not(.cm-tin-mode) .workspace-tabs .cm-panel-btn.cm-tr-btn { display: none !important; }
+body.cm-tin-mode .workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="file-explorer"].is-active) .cm-panel-btn.cm-tr-btn { display: flex !important; }
+
+/* ---------- 3.19.0: the shelf on the Tinmind Dashboard ---------- */
+/* The Notebook and Transcriptions as text links under the hero, above the semester title. The two words are in the Tinmind Gradient Style (grey to lilac with its glow); the icons are the gradient's grey. A hairline runs under the row. */
+.cm-shelf { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 26px; margin: 0 0 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(176, 176, 189, 0.22); }
+.cm-shelf button { background: transparent; box-shadow: none; border: 0; border-radius: 0; height: auto; min-height: 44px; padding: 0; cursor: pointer; }
+.cm-shelf-link { display: inline-flex; align-items: center; gap: 9px; }
+.cm-shelf-icon { display: inline-flex; color: #b0b0bd; }
+.cm-shelf-icon svg { width: 18px; height: 18px; }
+.cm-shelf-text.cm-tin-gradient-style { display: inline-block; font-size: 1.45em; line-height: 1.2; padding-bottom: 1px; }
+.cm-shelf-link:hover .cm-shelf-text, .cm-shelf-link:focus-visible .cm-shelf-text { text-decoration: underline; text-decoration-color: #b8a3f2; text-underline-offset: 4px; }
+.cm-shelf-link:focus-visible, .cm-shelf-quick:focus-visible { outline: 1px solid #b8a3f2; outline-offset: 2px; }
+.cm-shelf-quick { display: inline-flex; align-items: center; gap: 4px; font-size: 0.88em; color: var(--text-muted); }
+.cm-shelf-quick-icon { display: inline-flex; }
+.cm-shelf-quick-icon svg { width: 14px; height: 14px; }
+.cm-shelf-quick:hover, .cm-shelf-quick:focus-visible { color: var(--text-normal); text-decoration: underline; }
+.cm-shelf-sep { width: 1px; height: 22px; background: rgba(176, 176, 189, 0.22); }
+.cm-shelf-sub { color: var(--text-muted); font-size: 0.88em; }
+
+/* ---------- The course page's notes panel, open tree (3.25.0) ---------- */
+/* No box: a section heading in the Tinmind Gradient Style with a hairline running out to the right, "New note" and "New folder" as text links, and the notes below in Alegreya with an open folder's notes under a lilac guide line. The sidebar's tree keeps its own look. */
+.cm-tin-nest { display: flex; flex-direction: column; gap: 1px; }
+.cm-hub { margin: 14px 0 18px; padding: 0; border: 0; border-radius: 0; background: transparent; }
+.cm-hub-head { display: flex; align-items: center; justify-content: flex-start; gap: 16px; margin-bottom: 6px; flex-wrap: nowrap; }
+.cm-hub-title.cm-tin-gradient-style { flex: none; font-size: 1.65em; line-height: 1.15; margin: 0; padding-bottom: 1px; }
+.cm-hub-rule { flex: 1 1 24px; min-width: 24px; height: 1px; background: linear-gradient(90deg, rgba(176, 176, 189, 0.45), rgba(184, 163, 242, 0.05)); }
+.cm-hub-btns { display: flex; align-items: center; gap: 16px; flex: none; }
+.cm-hub-btns button.cm-hub-act { display: inline-flex; align-items: center; gap: 7px; height: auto; min-height: 44px; padding: 0; background: transparent; box-shadow: none; border: 0; border-radius: 0; color: var(--text-muted); font-family: 'Alegreya', Georgia, serif; font-size: 1.05em; cursor: pointer; }
+.cm-hub-act-icon { display: inline-flex; color: #b0b0bd; }
+.cm-hub-act-icon svg { width: 16px; height: 16px; }
+.cm-hub-btns button.cm-hub-act:hover, .cm-hub-btns button.cm-hub-act:focus-visible { color: var(--text-normal); text-decoration: underline; text-decoration-color: #b8a3f2; text-underline-offset: 4px; }
+.cm-hub-btns button.cm-hub-act:focus-visible { outline: 1px solid #b8a3f2; outline-offset: 2px; }
+.cm-hub-sep { width: 1px; height: 22px; background: rgba(176, 176, 189, 0.22); }
+.cm-hub .cm-tin-row { gap: 12px; min-height: 44px; padding: 3px 0 3px 4px !important; border-radius: 0; background: transparent; box-shadow: none; color: #e0deee; font-family: 'Alegreya', Georgia, serif; font-size: 1.12em; }
+.cm-hub .cm-tin-row:hover { background: transparent; color: #f1f0f8; }
+.cm-hub .cm-tin-row:hover .cm-tin-label { text-decoration: underline; text-decoration-color: #b8a3f2; text-underline-offset: 4px; }
+.cm-hub .cm-tin-row.is-active { background: transparent; box-shadow: none; }
+.cm-hub .cm-tin-chev { width: 16px; height: 16px; flex: 0 0 16px; opacity: 1; color: #a6a3b8; }
+.cm-hub .cm-tin-icon { flex: 0 0 18px; opacity: 1; color: #b0b0bd; }
+.cm-hub .cm-tin-chev svg { width: 16px; height: 16px; }
+.cm-hub .cm-tin-icon svg { width: 18px; height: 18px; }
+.cm-hub .cm-tin-row.is-open .cm-tin-chev { color: #b8a3f2; }
+.cm-hub .cm-tin-row.is-open .cm-tin-icon { color: #c9b8f5; }
+.cm-hub .cm-tin-nest { margin-left: 11px; padding-left: 22px; border-left: 1px solid rgba(184, 163, 242, 0.4); }
+.cm-hub .cm-tin-label2 { padding-left: 4px !important; font-family: 'Alegreya', Georgia, serif; color: #c9b8f5; letter-spacing: 0.1em; }
+.cm-hub .cm-tin-empty { padding-left: 4px !important; font-family: 'Alegreya', Georgia, serif; font-size: 1.05em; }
+
+/* ---------- The Tinmind's search box (3.26.0) ---------- */
+/* At the right of the hero, level with the title. Its suggestions open wider than the box, ending at the box's right edge. Everything else about it comes from the Coppermind's search styles and the Tinmind's colors. */
+.cm-tin-hero { grid-template-columns: auto 1fr minmax(240px, 340px); }
+.cm-tin-hero .cm-hero-search.cm-tin-hero-search { grid-column: 3; grid-row: 1; margin-top: 0; align-self: center; }
+.cm-tin-hero .cm-search-results { left: auto; right: 0; width: min(620px, calc(100vw - 56px)); }
+@media (max-width: 760px) {
+  .cm-tin-hero { grid-template-columns: auto 1fr; }
+  .cm-tin-hero .cm-hero-search.cm-tin-hero-search { grid-column: 1 / -1; grid-row: auto; margin-top: 10px; }
+  .cm-tin-hero .cm-search-results { left: 0; width: auto; }
+}
+
+/* ---------- 3.27.0: the mode button also shows while the left sidebar is on its Search tab, so there is a way back to the file list ---------- */
+.workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="search"].is-active) .cm-mode-btn { display: flex; }
+

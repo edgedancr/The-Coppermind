@@ -2,8 +2,8 @@
 type: schema
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-23
-verified_on: 2026-11-23
+updated: 2026-11-24
+verified_on: 2026-11-24
 ---
 How to write a page in `Wiki/`, a source card, or (for me) a perspective: what to name it, what goes in its properties, how it links, how it cites, whose voice it is in, and how it reads. Any agent drafting or editing a page reads the sections the edit touches.
 
@@ -94,6 +94,7 @@ Read each one as a sentence: "this page ___ the target." The types are listed in
    - Other sources: a link to the source card plus a page, section, or timestamp.
    - **Keep the class-notes display text in the form `<Course> notes, M/D/YY`** (`SAIL notes, 10/20/26`, `Intro notes, 10/20/26`) so citations read the same everywhere.
    - Web pages used only for a guide about the Coppermind's own tools (not course content) may be cited by URL directly in the footnote, without a source card.
+   - **Cite the original, never its text copy.** A source's `<name> (text).md` copy is only for reading ([[SCHEMA - Ingest#1. Orient]]). Its `## Page N` heading is page N of the PDF, so a claim read there is cited as `[[<name>.pdf#page=N|...]]`.
 2. **How footnotes are written.**
    - **IDs are numbers** (`[^1]`, `[^2]`, …), in order of first use when a page is drafted. When adding to an existing page, use the next unused number; Obsidian shows them in order anyway, so existing footnotes are never renumbered.
    - **Definitions go in a `## Footnotes` section, the last section of the page**, one per line: `[^1]: <citation>`.

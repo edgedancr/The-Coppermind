@@ -1,10 +1,10 @@
 ---
 type: schema
-version: 11
+version: 12
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-23
-verified_on: 2026-11-23
+updated: 2026-11-24
+verified_on: 2026-11-24
 ---
 This is the overview of the Coppermind's rules: what the wiki is for, how it is laid out, and which rule file covers what. It is the rulebook for my personal LLM wiki. The Coppermind follows the SAIL version of the LLM-wiki pattern, not Karpathy's original: **I design, the AI drafts, I verify.** Nothing becomes part of the wiki as final until I have reviewed and approved it.
 
@@ -64,7 +64,7 @@ The Coppermind/
 ├── Sources/
 │   ├── Class Notes/        Copies of my course notes (one file per course)
 │   ├── My Work/            My assignments, papers, analyses
-│   ├── Readings/           Articles, books, course documents, media
+│   ├── Readings/           Articles, books, course documents, media, and a "(text)" copy of each PDF, Office file or saved web page for agents to read
 │   ├── Scans/              Shrunk photos of my handwritten notes waiting to be transcribed (kept in git; Nicrosil deletes a scan when I verify its transcription)
 │   └── Source Cards/       One "SRC - " card per source
 ├── Wiki/
