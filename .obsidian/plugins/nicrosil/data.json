@@ -49,23 +49,23 @@
     "ingestMode": "plan",
     "ingestModel": "haiku",
     "lastUsage": {
-      "pct": 36,
+      "pct": 38,
       "kind": "five_hour",
-      "resetsAt": "2026-11-26T08:39:59.601264+00:00",
+      "resetsAt": "2026-11-26T08:40:00.779332+00:00",
       "windows": [
         {
           "kind": "five_hour",
-          "pct": 36,
-          "resetsAt": "2026-11-26T08:39:59.601264+00:00"
+          "pct": 38,
+          "resetsAt": "2026-11-26T08:40:00.779332+00:00"
         },
         {
           "kind": "seven_day",
           "pct": 32,
-          "resetsAt": "2026-12-01T00:59:59.601282+00:00"
+          "resetsAt": "2026-12-01T01:00:00.779351+00:00"
         }
       ],
       "source": "live",
-      "at": 1795675105535
+      "at": 1795675779527
     },
     "photosDir": "C:\\Users\\harri\\Downloads\\test",
     "shrunkPhotos": [
