@@ -8,6 +8,7 @@
     "readMode": "verified",
     "healthDays": 14,
     "autoIndex": true,
+    "liveUsage": true,
     "milestone": 25,
     "tinmindSemester": "Fall 26",
     "tinmindMode": false,
@@ -23,12 +24,13 @@
       "The Tinmind/Notebook.md": false,
       "The Tinmind/Notebook": true,
       "The Tinmind/Fall 26/Philosophy": true,
-      "The Tinmind/Fall 26/Chinese I.md": true,
+      "The Tinmind/Fall 26/Chinese I.md": false,
       "The Tinmind/Fall 26/Intro to Intelligence": true,
       "The Tinmind/Fall 26/SAIL.md": false,
       "The Tinmind/Fall 26/SAIL": true,
       "The Tinmind/Fall 26/Chinese I": true,
-      "The Tinmind/Fall 26/Chinese I/Vocab by Lesson": true
+      "The Tinmind/Fall 26/Chinese I/Vocab by Lesson": false,
+      "The Tinmind/Fall 26/Chinese I/Study Guides": false
     },
     "tinBacklinksRemoved": true,
     "tinHubsRenamed": true,
@@ -41,11 +43,40 @@
     "queryModel": "sonnet",
     "queryEffort": "medium",
     "lastRun": {
-      "tokens": 173367,
-      "at": 1795589578681
+      "tokens": 36005,
+      "at": 1795673005054
     },
     "ingestMode": "plan",
-    "ingestModel": "haiku"
+    "ingestModel": "haiku",
+    "lastUsage": {
+      "pct": 36,
+      "kind": "five_hour",
+      "resetsAt": "2026-11-26T08:39:59.601264+00:00",
+      "windows": [
+        {
+          "kind": "five_hour",
+          "pct": 36,
+          "resetsAt": "2026-11-26T08:39:59.601264+00:00"
+        },
+        {
+          "kind": "seven_day",
+          "pct": 32,
+          "resetsAt": "2026-12-01T00:59:59.601282+00:00"
+        }
+      ],
+      "source": "live",
+      "at": 1795675105535
+    },
+    "photosDir": "C:\\Users\\harri\\Downloads\\test",
+    "shrunkPhotos": [
+      "IMG_0742.JPG"
+    ],
+    "lastShrinkAt": 1795672859876.9763,
+    "trEffort": "low",
+    "trCourse": "Spring 26|Euclidean Geometry",
+    "trShrink": true,
+    "trModel": "sonnet",
+    "trRuns": {}
   },
   "resolved": {}
 }

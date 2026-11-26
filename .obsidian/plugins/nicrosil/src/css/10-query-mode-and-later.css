@@ -261,3 +261,19 @@ body.cm-quiet .cm-qstats .cm-qnext { height: 40px; padding: 0 20px; }
 .cm-query-view button.cm-plan-approve:hover:not([disabled]) { box-shadow: 0 0 22px rgba(217, 138, 74, 0.55), 0 0 38px rgba(95, 174, 158, 0.32) !important; }
 .cm-query-view button.cm-plan-approve[disabled] { opacity: 0.4; cursor: not-allowed; }
 .cm-query-view button.cm-plan-next { width: 100%; margin-top: 22px; height: 38px; }
+.cm-qusage .cm-qusage-reset { margin: 4px 0 14px; font-size: 11px; }
+/* 4.6.3: a small Usage button (Query options, Triage, ingest tabs); the meter opens as a popover only on a click, in the copper-to-teal CGS. */
+.cm-qline { display: flex; align-items: center; gap: 26px; }
+.cm-usagewrap { position: relative; flex: none; }
+.cm-usagewrap button.cm-usagebtn { height: auto; margin: 0; padding: 3px 12px; border: 1px solid rgba(184, 115, 51, 0.45); border-radius: 0; background: transparent; box-shadow: none; color: #b3a89d; font-size: 12px; font-weight: 400; letter-spacing: 0.04em; cursor: pointer; }
+.cm-usagewrap button.cm-usagebtn:hover, .cm-usagewrap button.cm-usagebtn.is-on { background: rgba(184, 115, 51, 0.08); border-color: #d99a62; color: var(--text-normal); box-shadow: none; }
+.cm-usagewrap button.cm-usagebtn:focus-visible { outline: 1px solid #d99a62; outline-offset: 2px; }
+.cm-usagewrap .cm-usagepop { position: absolute; top: calc(100% + 8px); left: 0; z-index: 30; flex: none; width: 280px; min-width: 0; max-width: 80vw; padding: 12px 14px; background: var(--background-primary, #1b1b1f); border: 1px solid rgba(184, 115, 51, 0.4); box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5); }
+.cm-usagewrap.cm-qusagewrap { margin-top: 0; }
+.cm-usagewrap.cm-qusagewrap .cm-usagepop { left: auto; right: 0; }
+.cm-usagewrap.is-up .cm-usagepop { top: auto; bottom: calc(100% + 8px); }
+.cm-tri-side .cm-tri-grow { display: flex; align-items: flex-end; min-height: 30px; }
+.cm-tri-side .cm-usagewrap.is-up { position: static; }
+.cm-tri-side .cm-tri-grow { position: relative; }
+.cm-tri-side .cm-usagewrap.is-up .cm-usagepop { left: 0; right: 0; width: auto; max-width: none; }
+.cm-query-chips .cm-ingest-usagewrap { margin-left: 6px; align-self: center; }

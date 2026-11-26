@@ -147,7 +147,7 @@ class SearchBlock extends MarkdownRenderChild {
     }
   }
 
-  /** The Model, Effort and Depth switches and the usage meter, under the bar in query mode. */
+  /** The Model, Effort and Depth switches and the Usage button, under the bar in query mode. */
   drawQueryOptions() {
     const box = this.qOpts;
     box.empty();
@@ -157,44 +157,26 @@ class SearchBlock extends MarkdownRenderChild {
       const lb = g.createDiv({ cls: "cm-qlabel" });
       lb.createSpan({ text: label });
       lb.createSpan({ cls: "cm-qrule" });
-      const row = g.createDiv({ cls: "cm-qseg", attr: { role: "group", "aria-label": label } });
+      const line = g.createDiv({ cls: "cm-qline" });
+      const row = line.createDiv({ cls: "cm-qseg", attr: { role: "group", "aria-label": label } });
       const cur = st[key] || def;
       for (const [k, name] of list) {
         const b = row.createEl("button", { cls: "cm-qseg-btn" + (k === cur ? " is-on" : ""), attr: { type: "button", "aria-pressed": String(k === cur) } });
         b.createSpan({ cls: "cm-qtxt", text: name });
         b.addEventListener("click", () => { st[key] = k; this.plugin.persist(); this.drawQueryOptions(); });
       }
+      g.line = line;
       return g;
     };
     group("Model", QUERY_MODELS, "queryModel", "sonnet");
     const eff = group("Effort", QUERY_EFFORTS, "queryEffort", "medium");
     if ((st.queryModel || "sonnet") === "haiku") { eff.addClass("is-off"); eff.setAttr("title", "Haiku runs without an effort setting"); }
-    group("Depth", QUERY_DEPTHS, "queryDepth", "standard");
-    this.usageEl = box.createDiv({ cls: "cm-qusage" });
-    this.drawUsage();
+    const depth = group("Depth", QUERY_DEPTHS, "queryDepth", "standard");
+    mountUsageButton(this, depth.line, { cls: "cm-qusagewrap" }); // 4.6.3: a Usage button to the right of Depth; the meter opens only on a click
   }
 
   drawUsage() {
-    const el = this.usageEl;
-    if (!el) return;
-    el.empty();
-    const u = this.plugin.settings.lastUsage;
-    const head = el.createDiv({ cls: "cm-qlabel cm-qusage-head" });
-    head.createSpan({ text: "Usage" });
-    head.createSpan({ cls: "cm-qrule" });
-    const link = head.createEl("a", { cls: "cm-qusage-link", text: "View usage ↗", attr: { href: USAGE_URL } });
-    link.addEventListener("click", (e) => { e.preventDefault(); window.open(USAGE_URL); });
-    if (u && Number.isFinite(u.pct)) {
-      const row = el.createDiv({ cls: "cm-qusage-row" });
-      row.createSpan({ text: u.kind ? u.kind.replace(/_/g, " ") : "Plan limit" });
-      row.createSpan({ cls: "cm-qusage-pct", text: `${u.pct}%` });
-      const fill = el.createDiv({ cls: "cm-progress" }).createDiv({ cls: "cm-progress-fill" });
-      fill.style.width = `${u.pct}%`;
-      el.createDiv({ cls: "cm-qusage-note", text: `As of ${new Date(u.at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}, from the last query` });
-    } else {
-      const r = this.plugin.settings.lastRun;
-      el.createDiv({ cls: "cm-qusage-note", text: r ? `Last query used about ${Math.round(r.tokens / 1000)}k tokens. Claude Code didn't report a usage percent.` : "Shows after your first query, if Claude Code reports it." });
-    }
+    redrawUsage(this);
   }
 
   /** Sends the question in the box to a new query tab. */

@@ -15,6 +15,7 @@ const QUERY_DEPTH_CAP = { quick: 3, standard: 8, deep: 15 }; // SCHEMA - Query's
 const QUERY_TYPES = ["lookup", "compare", "synthesis", "disagreement", "gap"];
 const QUERY_DENY = ["Read(./Ingestion/Raw/**)", "Read(./The Tinmind/**)", "Read(./.obsidian/**)", "Read(./.git/**)"];
 const USAGE_URL = "https://claude.ai/settings/usage";
+const USAGE_API_URL = "https://api.anthropic.com/api/oauth/usage"; // what the live usage meter asks; Anthropic does not document it (4.5.0)
 const QUERY_SECTIONS = ["Answer", "Confidence", "Supporting Evidence", "Counter-Evidence", "Outside Knowledge", "Gaps and Uncertainties", "Pages Used", "Footnotes"];
 
 /** The message Nicrosil sends Claude for a new question (or a follow-up, with `followUp` set). */
@@ -172,6 +173,139 @@ function usageFromEvent(ev) {
     if (pct !== null) return { pct: Math.round(pct), kind: String(info.rateLimitType || info.rate_limit_type || ""), resetsAt: info.resetsAt || info.resets_at || null };
   }
   return null;
+}
+
+/** Plan usage from the body of Anthropic's usage service: { five_hour: { utilization, resets_at }, seven_day: ..., seven_day_sonnet: ... }, utilization a percent (0–100, can pass 100).
+ *  Returns { pct, kind, resetsAt, windows } with the window closest to full on top, or null when the body holds no window. */
+function usageFromApi(body) {
+  if (!body || typeof body !== "object") return null;
+  const windows = [];
+  for (const kind of ["five_hour", "seven_day", "seven_day_sonnet", "seven_day_opus"]) {
+    const w = body[kind];
+    if (!w || typeof w !== "object" || w.utilization == null) continue;
+    const n = Number(w.utilization);
+    if (!Number.isFinite(n) || n < 0) continue;
+    windows.push({ kind, pct: Math.round(n), resetsAt: w.resets_at || null });
+  }
+  if (!windows.length) return null;
+  const top = windows.reduce((a, b) => (b.pct > a.pct ? b : a));
+  return { pct: top.pct, kind: top.kind, resetsAt: top.resetsAt, windows };
+}
+
+/** Claude Code's saved sign-in (the text of `.credentials.json`): { token } when it can be used, { error: "missing" | "expired" } when not. */
+function parseClaudeLogin(text, now) {
+  let j;
+  try { j = JSON.parse(text); } catch (e) { return { error: "missing" }; }
+  const o = j && j.claudeAiOauth;
+  if (!o || typeof o.accessToken !== "string" || !o.accessToken) return { error: "missing" };
+  const exp = Number(o.expiresAt);
+  if (Number.isFinite(exp) && exp > 0 && exp < now + 30000) return { error: "expired" };
+  return { token: o.accessToken };
+}
+
+const USAGE_LABELS = { five_hour: "5 hour", seven_day: "7 day", seven_day_sonnet: "7 day Sonnet", seven_day_opus: "7 day Opus" };
+function usageLabel(kind) { return USAGE_LABELS[kind] || String(kind || "Plan limit").replace(/_/g, " "); }
+
+/** Why the live usage meter is paused, shown under the meter. */
+const USAGE_STATE_TEXT = {
+  off: "Live usage is off in Nicrosil's settings.",
+  missing: "Live usage is paused: Claude Code's sign-in wasn't found. Run claude once and sign in.",
+  expired: "Live usage is paused: Claude Code's sign-in has expired. It renews the next time Claude Code runs.",
+  slow: "Live usage is paused: Anthropic asked for fewer requests. Trying again soon.",
+  offline: "Live usage is paused: couldn't reach Anthropic. Trying again soon.",
+  changed: "Live usage is paused: Anthropic's usage reply wasn't what Nicrosil expects.",
+  error: "Live usage is paused: Anthropic's usage service gave an error. Trying again soon.",
+};
+
+/** "resets in 2 h 10 min" for a reset time given as an ISO string or as epoch seconds or milliseconds; "" when it can't be read or has passed. */
+function resetText(resetsAt, now) {
+  const t = typeof resetsAt === "number" ? (resetsAt < 1e12 ? resetsAt * 1000 : resetsAt) : Date.parse(resetsAt || "");
+  if (!Number.isFinite(t)) return "";
+  const mins = Math.round((t - now) / 60000);
+  if (mins <= 0) return "";
+  const d = Math.floor(mins / 1440), h = Math.floor((mins % 1440) / 60), m = mins % 60;
+  return "resets in " + (d ? (h ? `${d} d ${h} h` : `${d} d`) : h ? (m ? `${h} h ${m} min` : `${h} h`) : `${m} min`);
+}
+
+/** Draws the usage meter into `el`: the Dashboard's Query switch, the Triage sidebar and each ingest tab all show this same one (4.5.0). */
+function drawUsageMeter(el, plugin) {
+  el.empty();
+  const u = plugin.settings.lastUsage;
+  const head = el.createDiv({ cls: "cm-qlabel cm-qusage-head" });
+  head.createSpan({ text: "Usage" });
+  head.createSpan({ cls: "cm-qrule" });
+  const link = head.createEl("a", { cls: "cm-qusage-link", text: "View usage ↗", attr: { href: USAGE_URL } });
+  link.addEventListener("click", (e) => { e.preventDefault(); window.open(USAGE_URL); });
+  const stateText = USAGE_STATE_TEXT[plugin.usageState] || "";
+  if (u && Number.isFinite(u.pct)) {
+    const rows = Array.isArray(u.windows) && u.windows.length ? u.windows : [u];
+    for (const w of rows) {
+      const row = el.createDiv({ cls: "cm-qusage-row" });
+      row.createSpan({ text: usageLabel(w.kind) });
+      row.createSpan({ cls: "cm-qusage-pct", text: `${w.pct}%` });
+      const fill = el.createDiv({ cls: "cm-progress" }).createDiv({ cls: "cm-progress-fill" });
+      fill.style.width = `${Math.min(100, w.pct)}%`;
+      const reset = resetText(w.resetsAt, Date.now());
+      if (reset) el.createDiv({ cls: "cm-qusage-note cm-qusage-reset", text: reset });
+    }
+    const when = new Date(u.at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+    el.createDiv({ cls: "cm-qusage-note", text: u.source === "live" ? `Updated ${when}` : `As of ${when}, from the last query` });
+    if (stateText) el.createDiv({ cls: "cm-qusage-note", text: stateText });
+  } else {
+    const r = plugin.settings.lastRun;
+    el.createDiv({ cls: "cm-qusage-note", text: stateText || (r ? `Last query used about ${Math.round(r.tokens / 1000)}k tokens. Claude Code didn't report a usage percent.` : "Shows after your first query, if Claude Code reports it.") });
+  }
+}
+
+/** Draws the meter again if its popover is open on `view` (4.6.3). */
+function redrawUsage(view) {
+  if (view.usagePop && view.usagePop.isConnected) drawUsageMeter(view.usagePop, view.plugin);
+}
+
+/** A small Usage button in `host` that opens the meter as a popover under or over it, only while clicked (4.6.3). Used by the Query options, Triage and the ingest tabs; the transcription tray has its own (4.6.2).
+ * `view` keeps the open state, so it survives the page redrawing. `o.up` opens the popover upward. The button is left out on mobile, where the meter has no live figures. */
+function mountUsageButton(view, host, o) {
+  o = o || {};
+  view.usagePop = null;
+  if (Platform.isMobile) return null;
+  const wrap = host.createDiv({ cls: "cm-usagewrap" + (o.cls ? " " + o.cls : "") + (o.up ? " is-up" : "") });
+  const btn = wrap.createEl("button", { cls: "cm-usagebtn" + (view.usageOpen ? " is-on" : ""), text: "Usage", attr: { type: "button", "aria-label": "Show how much of my plan I have used", "aria-expanded": view.usageOpen ? "true" : "false" } });
+  view.usageWrap = wrap;
+  view.usageBtn = btn;
+  const open = () => {
+    view.usageOpen = true;
+    btn.addClass("is-on"); btn.setAttr("aria-expanded", "true");
+    view.usagePop = wrap.createDiv({ cls: "cm-qusage cm-usagepop" });
+    drawUsageMeter(view.usagePop, view.plugin);
+  };
+  btn.addEventListener("click", () => {
+    if (view.usageOpen) { closeUsagePop(view); return; }
+    open();
+    view.plugin.refreshUsage({ force: true }); // a fresh figure; the open meter redraws when it arrives
+  });
+  if (view.usageOpen) open();
+  if (!view.usageDoc) {
+    view.usageDoc = true;
+    view.registerDomEvent(document, "mousedown", (e) => {
+      if (view.usageOpen && !(e.target && e.target.closest && e.target.closest(".cm-usagewrap"))) closeUsagePop(view);
+    });
+    view.registerDomEvent(document, "keydown", (e) => { if (e.key === "Escape" && view.usageOpen) closeUsagePop(view); });
+  }
+  return wrap;
+}
+
+function closeUsagePop(view) {
+  view.usageOpen = false;
+  if (view.usagePop) view.usagePop.remove();
+  view.usagePop = null;
+  if (view.usageBtn) { view.usageBtn.removeClass("is-on"); view.usageBtn.setAttr("aria-expanded", "false"); }
+}
+
+/** Has `redraw` run whenever the meter's figures change, until the view closes. A view that rebuilds its page keeps one redraw that looks up the current element. */
+function listenUsage(view, redraw) {
+  view.plugin.usageListeners = view.plugin.usageListeners || new Set();
+  view.plugin.usageListeners.add(redraw);
+  view.register(() => view.plugin.usageListeners.delete(redraw));
 }
 
 /** The arguments for `claude`: print mode, streamed JSON, the chosen model and effort, read-only tools. The question goes in on stdin. */

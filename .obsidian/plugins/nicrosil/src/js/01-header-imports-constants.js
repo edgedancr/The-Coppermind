@@ -61,7 +61,7 @@
 const {
   Plugin, Modal, Notice, MarkdownView, TFile, ItemView, FuzzySuggestModal,
   PluginSettingTab, Setting, MarkdownRenderChild, MarkdownRenderer, setIcon, addIcon, debounce, parseYaml, Menu, TFolder,
-  Platform, normalizePath,
+  Platform, normalizePath, requestUrl,
 } = require("obsidian");
 
 const INDEX_PATH = "_index.md";
@@ -110,7 +110,7 @@ const FLAG_KINDS = {
   warning: { label: "Warning", plural: "Warnings (unsourced)", short: "W" },
 };
 const STALE_DAYS = 14;
-const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, hidePanels: true, closeTabsOnStart: true, readMode: "verified", healthDays: 14, autoIndex: true };
+const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, hidePanels: true, closeTabsOnStart: true, readMode: "verified", healthDays: 14, autoIndex: true, liveUsage: true };
 const READ_MODES = { verified: "Verified pages only", all: "Every page", off: "Off" };
 // Admiralty Code, as SCHEMA - Writing Pages lays it out: reliability of the source, credibility of the information.
 const RATING_REL = [["A", "Completely reliable"], ["B", "Usually reliable"], ["C", "Fairly reliable"], ["D", "Not usually reliable"], ["E", "Unreliable"], ["F", "Cannot be judged"]];

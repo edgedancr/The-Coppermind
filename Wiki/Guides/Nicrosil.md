@@ -1,6 +1,6 @@
 ---
 type: guide
-status: verified
+status: draft
 aliases:
   - Nicrosil
   - Nicrosil Guide
@@ -15,6 +15,13 @@ related:
 drafted_by: Claude (claude-sonnet-5-5, claude-opus-5-5)
 drafted_on: 2026-11-11
 verified_on: 2026-11-25
+changes_since_verified:
+  - "2026-11-26: The usage meter is a Usage button in Query (right of Depth), Triage and each ingest tab, opened on a click (Nicrosil 4.6.3) [[#Query mode]]"
+  - "2026-11-26: The transcription queue's tray has a Usage button beside Transcribe that opens the usage meter, in the TGS (Nicrosil 4.6.2) [[#The Tinmind]]"
+  - "2026-11-26: The transcription queue can have Claude Code draft a note from ticked scans, recreate a drawing, re-read unsure words, and shrink new photos first (Nicrosil 4.6.0) [[#The Tinmind]]"
+  - "2026-11-26: Two new settings, the photos folder and Python for shrinking (Nicrosil 4.6.0) [[#Settings]]"
+  - "2026-11-25: The usage meter now updates live from Anthropic's usage service, and the guide says Nicrosil reads Claude Code's saved sign-in to do it (Nicrosil 4.5.0) [[#Query mode]]"
+  - "2026-11-25: The usage meter also shows in the Triage sidebar and on each ingest tab (Nicrosil 4.5.0) [[#Triage and ingest]]"
 ---
 > [!summary]
 > **Nicrosil** is the plugin that does the Coppermind's bookkeeping. It runs the review loop for draft pages, draws the [[_dashboard|Dashboard]], searches the wiki, keeps [[_index|index]] and log in step, tidies how pages look, records schema changes, and runs the Tinmind, my own class notes. ==It does the bookkeeping, but the checking is still mine==, because a page only becomes verified when I decide it has been checked against its sources.[^1]
@@ -57,6 +64,7 @@ My own class notes, in `The Tinmind/`, kept apart from the wiki.
 - **Course page.** Shows a panel of the course's notes and folders with **New note** and **New folder**. Display only; Nicrosil makes files only when I ask, and reads only folder names and headings. Not covered: renaming or deleting a semester, renaming a course, reordering notes (sorted by name).
 - **Notebook.** For notes that aren't for a class. `The Tinmind/Notebook` (`type: notebook`, no semester) is linked from the Tinmind Dashboard under every semester, has its own tree row, and works like a course (notes in `Notebook/`, topic folders allowed, same panel) but with no counts and not in **All Class Notes**. Its notes are named `Notebook` + date with only `type: notebook-note`. **Quick note** makes a note without asking for a name and opens it ready to type.
 - **Transcription queue.** `Alt+T`, the tab-bar scan button (Tinmind mode), or the **Transcriptions** link on the Tinmind Dashboard opens a locked split: the scan on the left, the note in an ordinary Obsidian editor on the right. **Close** (or opening another page in the main area) closes it. It works in either mode. It lists every note with `transcription: draft` ([[SCHEMA - Transcription]]) in photographed order, and how many scans in `Sources/Scans/` no note lists yet. If the right pane moves to a note that isn't waiting, the bar offers **Back to** the one I was checking.
+- **Transcribe scans with Claude.** The tray under the scan lists new phone photos in the photos folder (see Settings) that aren't shrunk yet, and the scans no note lists yet, each with a tick box (Shift+click ticks a range). **✦ Transcribe** (or the bar's **✦ Transcribe scans**) opens a panel over the note: I pick the course, optionally the class date, the model and the effort, and whether to shrink the ticked new photos first. Shrinking runs `Tools/shrink-scans/shrink_scans.py` on this computer, uses no tokens, and never touches my originals. Claude Code gets only the Read tool, for `Sources/Scans/`, [[SCHEMA - Transcription]] and `_AGENTS.md`: it can't write, delete or open the Tinmind. Nicrosil writes the draft in the course's folder with `transcription: draft` and `scan_pages`, adds the `transcribe` log entry, and opens it in the queue, where Verify is still mine. On a drawing's card, **✦ Recreate with Claude** redraws it as Mermaid, a table or a list and marks it for me to check. **✦ Look again** asks Claude for better guesses at the unsure words; they stay marked `[?…?]` until I accept them. A small **Usage** button beside **✦ Transcribe** in the tray opens the usage meter from Query mode above it, in the TGS, and a click elsewhere or Escape closes it; the meter isn't on screen otherwise. Desktop only; it needs Claude Code, and Python with Pillow for shrinking.
   - **Scan side:** a tab per scan page, zoom, and what still needs me.
   - **Drawing flags** (`> [!drawing]`): **Show on scan**; **Keep screenshot** (drag a box or take **Whole page**; saved as a JPEG in `_attachments/Tinmind/` and embedded in place of the flag); **Recreate** (becomes `> [!recreate]`; the scan stays until the recreated drawing, marked `%% recreated: ... %%`, is checked with **Looks right**); **Leave out**. These edit the note, so Obsidian's undo works.
   - **Unsure words** (`[?word?]`, `[??]`): counted in the bar, with **Next unsure word** and **Accept the guess**.
@@ -66,15 +74,15 @@ My own class notes, in `The Tinmind/`, kept apart from the wiki.
 The Dashboard search box shows suggestions as I type over wiki pages, source cards and perspectives (not class notes or readings), each with title, type, status, matched alias and a snippet, plus a match count. Click, or arrows and `Enter`, opens one; `Ctrl+Enter` opens it in a new tab; `Esc` closes the list, again clears the box. Read-only, and it stays current as pages change.
 
 ## Query mode
-The Dashboard's search bar has a **Search / Query** switch (on a computer only; the Tinmind's bar has none). In **Query**, the bar asks the wiki a question through Claude Code instead of matching keywords. Under it are **Model** (Haiku, Sonnet, Opus), **Effort** (Low to Max; Haiku has none), **Depth** (Quick, Standard, Deep, as in [[SCHEMA - Query#Depth]]), and a **Usage** meter with a link to the usage page. The switch and the three choices are remembered.
+The Dashboard's search bar has a **Search / Query** switch (on a computer only; the Tinmind's bar has none). In **Query**, the bar asks the wiki a question through Claude Code instead of matching keywords. Under it are **Model** (Haiku, Sonnet, Opus), **Effort** (Low to Max; Haiku has none), **Depth** (Quick, Standard, Deep, as in [[SCHEMA - Query#Depth]]), and a **Usage** button to the right of Depth that opens the usage meter, with a link to the usage page, when clicked. The switch and the three choices are remembered.
 
 - **Ask** (or Enter) opens a new tab. While Claude works, it lists each step (rules read, searches, pages read), the elapsed time and an estimated progress bar; **Cancel query** stops it, and nothing is logged.
 - **The answer** comes back in the Analysis template's sections, with links that open the pages. Claude has read-only tools and can't open `Ingestion/Raw/`, `The Tinmind/`, `.obsidian/` or `.git/`, so it can't file or log anything itself.
 - **Nicrosil logs every answer** as a `query` entry (model, effort, depth, pages used, "not filed back yet").
 - **Save to Analyses** writes the answer to `Wiki/Analyses/` as a draft, with its properties and summary callout filled in from what Claude returned, the file name and **Ask again if** line I can edit first, and a second `query` entry saying it was filed back. It refuses a name already taken. **Copy** copies the answer; **Discard** closes the tab.
 - **Follow-ups** continue the same Claude Code session on that computer; Save files the newest answer.
-- **Setup, once per computer:** install Claude Code and sign in by running `claude` in a terminal. Nicrosil only starts that program, and Claude Code keeps its own sign-in. If `ANTHROPIC_API_KEY` is set, Claude Code bills the API instead of my plan; the query tab says so when that happens.
-- **The usage meter** shows a percent only if Claude Code reports one during a query; otherwise it shows the last query's tokens.
+- **Setup, once per computer:** install Claude Code and sign in by running `claude` in a terminal. Nicrosil starts that program, and Claude Code keeps its own sign-in; the one thing Nicrosil reads from it is described under the usage meter below. If `ANTHROPIC_API_KEY` is set, Claude Code bills the API instead of my plan; the query tab says so when that happens.
+- **The usage meter** shows how much of your plan's limits you have used: the 5-hour and 7-day windows (and a Sonnet or Opus window when your plan has one), each with a bar and when it resets. It is live. When Obsidian starts, every 30 seconds, every 10 seconds while a Claude Code run is going, and once more after each run Nicrosil starts, Nicrosil asks Anthropic for the figures. It pauses while Obsidian is hidden. To ask, it reads Claude Code's saved sign-in (`.claude/.credentials.json` in your user folder), sends it only to Anthropic, and never keeps, shows or logs it. Anthropic doesn't document this service, so it may stop working. If the sign-in is missing or has expired (Claude Code renews it the next time it runs), the meter keeps its last reading and says why it is paused. The meter opens from a small **Usage** button: to the right of Depth in Query, above the Ingest buttons in Triage, after the chips on each ingest tab, and beside Transcribe in the Tinmind's tray. It shows only while open, and closes on a click elsewhere or Escape. Turn it off under Settings → Nicrosil → Live usage meter; the meter then shows a percent only if Claude Code reports one during a query, and otherwise the last query's tokens.
 
 ## Triage and ingest
 **Triage** (`Alt+I`, or the Triage card on the Dashboard; on a computer only) lists every source in `Ingestion/Raw/`, newest first, and updates itself when a file is added, removed or renamed there. Nicrosil reads only each file's name, type, size and date; it never opens a file, and Claude never sees the list.
@@ -165,9 +173,12 @@ In **Settings → Nicrosil**:
 - **Days between health checks** (14): when the Dashboard's health check card calls the check overdue.
 - **Queue order:** clean pages first (default), flagged first, by page type, or A to Z.
 - **Claude Code for query mode:** blank finds Claude Code by itself; or enter its path. **Test** shows the version it found.
+- **Photos folder (for transcribing):** where my phone photos land on this computer. The queue lists new ones there to shrink.
+- **Python for shrinking:** blank tries `python`, `py` and `python3`. **Test** checks that Python and Pillow work.
 
 ## What it will not do
 - **Verify on its own.** Every change starts with my click or keypress.
+- **Let Claude write to the Tinmind.** A transcription run gives Claude only Read, for the scans; Nicrosil writes the draft note and the log entry.
 - **Delete a scan on its own.** A scan is trashed only when I click **Verify** in the transcription queue and confirm; Obsidian's trash setting decides whether it can be recovered.
 - **Run git itself.** The git buttons only run Obsidian Git's commands when I click.
 - **Verify a source card with a blank `reliability` rating.**[^1]

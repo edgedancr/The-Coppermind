@@ -114,6 +114,7 @@ class TriageView extends ItemView {
     this.contentEl.empty();
     this.contentEl.addClass("cm-tri-view");
     this.wrap = this.contentEl.createDiv({ cls: "cm-tri" });
+    listenUsage(this, () => redrawUsage(this));
     this.render();
     this.registerInterval(window.setInterval(() => this.render(), 60000)); // keeps "added 5 min ago" and NEW true
   }
@@ -243,7 +244,8 @@ class TriageView extends ItemView {
     focus.addEventListener("input", () => { this.focus = focus.value; });
 
     side.createDiv({ cls: "cm-tri-note", text: "Claude sees only the sources you pick. Each one opens its own ingest tab; the drafts go to the review queue, and nothing is verified until you verify it." });
-    side.createDiv({ cls: "cm-tri-grow" });
+    const grow = side.createDiv({ cls: "cm-tri-grow" });
+    mountUsageButton(this, grow, { up: true }); // 4.6.3: a Usage button in the spare space above the Ingest buttons
     const go = side.createEl("button", { cls: "cm-tri-go", text: chosen.length ? `Ingest ${chosen.length} as a batch` : "Ingest as a batch" });
     const one = side.createEl("button", { cls: "cm-tri-one", text: "One at a time, review between" });
     if (!chosen.length) { go.setAttr("disabled", "true"); one.setAttr("disabled", "true"); }
@@ -272,6 +274,7 @@ class IngestView extends QueryView {
 
   async onOpen() {
     await super.onOpen();
+    listenUsage(this, () => redrawUsage(this));
     if (!this.q) { this.wrap.empty(); this.wrap.createDiv({ cls: "cm-query-note", text: "This ingest tab was left from an earlier session, so its run is gone. Start it again from Triage." }); }
   }
 
@@ -390,6 +393,7 @@ class IngestView extends QueryView {
     if (this.q.model !== "haiku") chips.createSpan({ cls: "cm-query-chip", text: `${name(QUERY_EFFORTS, this.q.effort)} effort` });
     chips.createSpan({ cls: "cm-query-chip", text: name(INGEST_MODES, this.q.mode) });
     if (this.q.batch) chips.createSpan({ cls: "cm-query-chip is-type", text: `${this.q.batch.n} of ${this.q.batch.of}` });
+    mountUsageButton(this, chips, { cls: "cm-ingest-usagewrap" }); // 4.6.3
     return head;
   }
 

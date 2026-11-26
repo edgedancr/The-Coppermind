@@ -1,9 +1,14 @@
 ---
 type: changelog
-updated: 2026-11-24
+updated: 2026-11-26
 ---
 The changelog of [[Nicrosil]], newest first. It lives here in `_changelogs/`, outside the guide, so an agent reading the guide doesn't also read all of this. Read it only to add a line for a new version or to look up when something changed. Past lines are never rewritten; a correction goes in a new line. How something looks belongs in these lines, in a few words, not in the guide's body. From 4.3.5 on, each line is at most two sentences and covers one session's changes; code details are in git ([[SCHEMA - Changes#Nicrosil and other tools]]).
 
+- **4.6.3:** The usage meter is now a small **Usage** button in the other places too, so none of them show it all the time: to the right of **Depth** in Query mode, above the Ingest buttons in Triage, and after the chips on each ingest tab. Click it and the meter opens; a click elsewhere or Escape closes it. It replaces the always-visible meter from 4.5.0.
+- **4.6.2:** The usage meter in the transcription queue is now a small **Usage** button next to **Transcribe**: the meter opens above it when I click, and closes on a click elsewhere or Escape. It replaces the always-visible meter from 4.6.1, which crowded the tray.
+- **4.6.1:** The transcription queue's tray now shows the live usage meter above the **Transcribe** button, in the Tinmind's grey-to-lilac TGS instead of the copper-to-teal CGS, so I can see my limits before sending scans to Claude.
+- **4.6.0:** The transcription queue now has a **Transcribe scans** button: I tick the scans from one class session, pick a course, model and effort, and Claude Code drafts the note, which then waits in the queue like any other draft. Claude can also recreate a drawing or re-read unsure words from their cards, and new phone photos can be shrunk into Sources/Scans first with the shrink tool.
+- **4.5.0:** The usage meter under the Dashboard's query bar is now live, and the same meter shows beside the Ingest button in Triage and under the title on each ingest tab: it shows the 5-hour and 7-day limits with when each resets, checks when Obsidian starts, every 30 seconds, and every 10 seconds while Claude Code runs, and can be turned off in Settings. To do this it reads Claude Code's saved sign-in, which goes only to Anthropic.
 - **4.4.1:** The usage meter under the Dashboard's query bar now shows your plan usage as a percent, using the limit window closest to full. Before, it only showed the last query's token count.
 - **4.4.0:** The Triage card now opens a Triage dashboard that lists every source in Ingestion/Raw as it arrives, marks which need a text copy, and ingests the ones I pick through Claude Code with a model, effort and mode I choose. Each source gets its own ingest tab, where a plan shows as a board of drafts to tick and questions to answer, and the right sidebar closes while Triage is in front and opens again when I leave.
 

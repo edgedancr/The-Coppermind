@@ -67,6 +67,7 @@
     }
     await this.app.fileManager.processFrontMatter(file, (fm) => { delete fm.transcription; delete fm.scan_pages; });
     await this.appendLog(transcribeVerifyLogEntry({ name: file.basename, date, pages: names, trashed, kept, missing, drawings: decisions, unsure }));
+    if (this.settings.trRuns && this.settings.trRuns[file.path]) { delete this.settings.trRuns[file.path]; this.persist(); }
     new Notice(`Verified “${file.basename}”. ${trashed.length} scan${trashed.length === 1 ? "" : "s"} moved to the trash.`, 5000);
     this.scheduleTinRefresh();
     this.dashboards.forEach((r) => r());
@@ -76,6 +77,7 @@
   async discardTranscription(file, reason) {
     await this.appendLog(rejectLogEntry({ name: `${file.basename} (transcription)`, date: today(), reason, dangling: [], resolved: [] }));
     const name = file.basename;
+    if (this.settings.trRuns && this.settings.trRuns[file.path]) { delete this.settings.trRuns[file.path]; this.persist(); }
     await this.app.fileManager.trashFile(file);
     new Notice(`Discarded “${name}”. Its scans are still in Sources/Scans.`, 5000);
     this.scheduleTinRefresh();

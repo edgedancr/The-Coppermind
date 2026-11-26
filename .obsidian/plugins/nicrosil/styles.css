@@ -1547,6 +1547,89 @@ body.cm-tin-mode .workspace-tabs:has(> .workspace-tab-header-container .workspac
 /* ---------- 3.27.0: the mode button also shows while the left sidebar is on its Search tab, so there is a way back to the file list ---------- */
 .workspace-tabs:has(> .workspace-tab-header-container .workspace-tab-header[data-type="search"].is-active) .cm-mode-btn { display: flex; }
 
+
+/* ---------- 4.6.0: transcribing with Claude ---------- */
+/* The tray under the scan (new photos, scans not in a note yet), the panel over the note (the form, the progress card) and the small AI marks. Same Tinmind greys and lilac as the queue; the accent buttons have a lilac outline and glow, Transcribe is gradient-outlined like Verify. */
+.cm-trw, .cm-trx { --cm-tr-line: rgba(176, 176, 189, 0.22); --cm-tr-panel: rgba(29, 29, 37, 0.78); --cm-tr-lilac: #b8a3f2; }
+.cm-trw { flex: 0 0 auto; display: flex; flex-direction: column; gap: 10px; padding: 10px 12px; border-top: 1px solid var(--cm-tr-line); background: var(--cm-tr-panel); }
+.cm-trw-sec { display: flex; flex-direction: column; gap: 6px; }
+.cm-trw-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.cm-trw-acts { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.cm-trw-acts button.cm-mini { min-height: 24px; font-size: 11px; }
+.cm-trw-list { max-height: 132px; overflow-y: auto; display: flex; flex-direction: column; gap: 3px; }
+.cm-trw-row { display: flex; align-items: center; gap: 10px; padding: 4px 10px; border: 1px solid var(--cm-tr-line); font-size: 12px; cursor: pointer; }
+.cm-trw-row:hover { border-color: var(--cm-tr-lilac); }
+.cm-trw-row:has(input:checked) { border-color: rgba(184, 163, 242, 0.7); background: rgba(184, 163, 242, 0.07); }
+.cm-trw-row.is-off { opacity: 0.5; cursor: default; }
+.cm-trw-name { flex: 1 1 auto; }
+.cm-trw-meta { color: var(--text-muted); font-size: 11px; }
+.cm-trw-dir { display: flex; gap: 6px; }
+.cm-trw-dir input { flex: 1 1 auto; min-width: 0; background: transparent; border: 0; border-bottom: 1px solid var(--cm-tr-line); border-radius: 0; box-shadow: none; font-size: 12px; }
+.cm-trw-dir input:focus { border-bottom-color: var(--cm-tr-lilac); box-shadow: none; }
+.cm-trw-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+
+/* the accent buttons: Recreate with Claude, Look again, Shrink now, and the bar's Transcribe scans */
+button.cm-trx-accent, button.cm-trx-barbtn { color: #d9ccff !important; border-color: rgba(184, 163, 242, 0.55) !important; box-shadow: 0 0 10px rgba(170, 135, 240, 0.25) !important; }
+button.cm-trx-accent:hover:not(:disabled), button.cm-trx-barbtn:hover:not(:disabled) { border-color: #b8a3f2 !important; background: rgba(184, 163, 242, 0.12) !important; }
+button.cm-trx-accent:disabled { box-shadow: none !important; }
+.cm-trx-spark { color: var(--cm-tr-lilac); text-shadow: 0 0 8px rgba(170, 135, 240, 0.7); }
+.cm-trb-ai { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-muted); }
+.cm-trb-ai-note { margin-left: auto; }
+
+/* the panel over the note */
+.cm-trx-open > .view-content { display: none !important; }
+.cm-trx { flex: 1 1 auto; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; padding: 28px 34px; background:
+    radial-gradient(480px 320px at 100% 0%, rgba(150, 115, 230, 0.16), transparent 60%),
+    radial-gradient(520px 300px at 0% 100%, rgba(165, 160, 185, 0.14), transparent 62%),
+    var(--background-primary); }
+.cm-trx button { border-radius: 0; background: transparent; border: 1px solid var(--cm-tr-line); box-shadow: none; min-height: 28px; }
+.cm-trx button:hover:not(:disabled) { border-color: var(--cm-tr-lilac); background: rgba(184, 163, 242, 0.08); }
+.cm-trx button:disabled { opacity: 0.5; }
+.cm-trx-head { display: flex; flex-direction: column; gap: 4px; }
+.cm-trx-title.cm-tin-gradient-style { font-size: 2em; line-height: 1.15; margin: 2px 0 4px; }
+.cm-trx-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-muted); }
+.cm-trx .cm-sub { color: var(--text-muted); font-size: 12px; }
+.cm-trx .cm-sub.is-bad { color: #f08a7e; }
+.cm-trx-grid { display: grid; grid-template-columns: 96px 1fr; gap: 12px 16px; align-items: center; padding-top: 16px; border-top: 1px solid var(--cm-tr-line); }
+.cm-trx-field { display: flex; align-items: center; gap: 8px 10px; flex-wrap: wrap; min-width: 0; }
+.cm-trx-field .cm-tr-select { min-width: 230px; }
+.cm-trx-date { background: transparent; border: 0; border-bottom: 1px solid var(--cm-tr-line); border-radius: 0; box-shadow: none; width: 190px; font-family: 'Alegreya', Georgia, serif; font-size: 1.1em; }
+.cm-trx-date:focus { border-bottom-color: var(--cm-tr-lilac); box-shadow: none; }
+.cm-trx button.cm-trx-chip { min-height: 26px; padding: 0 14px; font-size: 12px; color: var(--text-muted); }
+.cm-trx button.cm-trx-chip.is-on { color: #d9ccff; border-color: var(--cm-tr-lilac); background: rgba(184, 163, 242, 0.1); box-shadow: 0 0 10px rgba(170, 135, 240, 0.25); }
+.cm-trx-check { display: flex; align-items: center; gap: 8px; font-size: 12px; cursor: pointer; }
+.cm-trx-suggest { display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; border: 1px solid rgba(184, 163, 242, 0.35); font-size: 12px; color: var(--text-muted); }
+.cm-trx-suggest b { color: var(--text-normal); font-weight: 600; }
+.cm-trx-suggest button { margin-left: auto; flex: 0 0 auto; }
+.cm-trx-err { padding: 10px 14px; border: 1px solid rgba(240, 138, 126, 0.4); background: rgba(240, 138, 126, 0.07); color: #f08a7e; font-size: 12px; white-space: pre-wrap; }
+.cm-trx-foot { display: flex; align-items: center; gap: 12px; margin-top: auto; flex-wrap: wrap; }
+.cm-trx-fine { margin-left: auto; }
+.cm-trx button.cm-trx-go, .cm-trw button.cm-trx-go { min-height: 32px; padding: 0 20px; color: #f1f0f8; font-weight: 600; border: 1.5px solid transparent !important; background: linear-gradient(#1d1d25, #1d1d25) padding-box, var(--cm-tin-gradient) border-box !important; box-shadow: 0 0 14px rgba(170, 135, 240, 0.28); }
+.cm-trx button.cm-trx-go:hover:not(:disabled), .cm-trw button.cm-trx-go:hover:not(:disabled) { background: linear-gradient(#26242f, #26242f) padding-box, var(--cm-tin-gradient) border-box !important; }
+.cm-trx button.cm-trx-go:disabled, .cm-trw button.cm-trx-go:disabled { opacity: 0.55; box-shadow: none; }
+.cm-trx-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.cm-trx-pill { padding: 1px 10px; border: 1px solid rgba(184, 163, 242, 0.4); font-size: 11px; color: #d9ccff; }
+.cm-trx-steps { min-height: 150px; max-height: 240px; overflow-y: auto; display: flex; flex-direction: column; gap: 3px; padding: 8px 12px; border: 1px solid var(--cm-tr-line); background: var(--cm-tr-panel); font-size: 12px; }
+.cm-trx-step { color: var(--text-muted); }
+.cm-trx-step::before { content: "■"; margin-right: 8px; font-size: 8px; vertical-align: middle; color: rgba(176, 176, 189, 0.5); }
+.cm-trx-step.is-now { color: var(--text-normal); }
+.cm-trx-step.is-now::before { color: var(--cm-tr-lilac); text-shadow: 0 0 8px rgba(170, 135, 240, 0.8); }
+.cm-trx .cm-progress-fill { background: var(--cm-tin-gradient); }
+/* 4.6.2: a small Usage button beside Transcribe; the meter opens above it as a popover in the TGS (grey to lilac) instead of the CGS (copper to teal). The longer selectors win over the meter's copper rules in part 10. */
+.cm-trw-gowrap { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+.cm-trw-usagewrap { position: relative; }
+.cm-trw button.cm-trw-usagebtn { min-height: 32px; padding: 0 12px; font-size: 12px; color: #b0b0bd; background: transparent; box-shadow: none; border: 1px solid var(--cm-tr-line); }
+.cm-trw button.cm-trw-usagebtn:hover, .cm-trw button.cm-trw-usagebtn.is-on { color: #f1f0f8; border-color: var(--cm-tr-lilac); background: rgba(184, 163, 242, 0.07); }
+.cm-trw .cm-trw-usagepop { position: absolute; right: 0; bottom: calc(100% + 8px); z-index: 30; flex: none; width: 280px; min-width: 0; max-width: 80vw; padding: 12px 14px; background: #1d1d25; border: 1px solid var(--cm-tr-line); box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55); }
+.cm-trw .cm-trw-usagepop .cm-qlabel { color: #b0b0bd; }
+.cm-trw .cm-trw-usagepop .cm-qrule { background: var(--cm-tr-line); }
+.cm-trw .cm-trw-usagepop .cm-qusage-link:hover { color: var(--cm-tr-lilac); }
+.cm-trw .cm-trw-usagepop .cm-qusage-row { color: #b0b0bd; }
+.cm-trw .cm-trw-usagepop .cm-qusage-pct { color: #f1f0f8; }
+.cm-trw .cm-trw-usagepop .cm-progress { background: var(--cm-tr-line); }
+.cm-trw .cm-trw-usagepop .cm-progress-fill { background: var(--cm-tin-gradient); }
+.cm-trw .cm-trw-usagepop .cm-progress-fill::after { background: var(--cm-tr-lilac); }
+.cm-trw .cm-trw-usagepop .cm-qusage-note { color: var(--text-muted); }
 /* ---------- Atlas (3.29.0): the wiki map. Topic circles with bands between them, a dot per page, a side panel. Sharp 2px corners, the Coppermind's dark brown, copper and patina. ---------- */
 .cm-at { padding: 0 !important; display: flex; flex-direction: column; height: 100%; overflow: hidden; }
 .cm-at-bar { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid rgba(184, 115, 51, .25); flex: none; }
@@ -1992,3 +2075,19 @@ body.cm-quiet .cm-qstats .cm-qnext { height: 40px; padding: 0 20px; }
 .cm-query-view button.cm-plan-approve:hover:not([disabled]) { box-shadow: 0 0 22px rgba(217, 138, 74, 0.55), 0 0 38px rgba(95, 174, 158, 0.32) !important; }
 .cm-query-view button.cm-plan-approve[disabled] { opacity: 0.4; cursor: not-allowed; }
 .cm-query-view button.cm-plan-next { width: 100%; margin-top: 22px; height: 38px; }
+.cm-qusage .cm-qusage-reset { margin: 4px 0 14px; font-size: 11px; }
+/* 4.6.3: a small Usage button (Query options, Triage, ingest tabs); the meter opens as a popover only on a click, in the copper-to-teal CGS. */
+.cm-qline { display: flex; align-items: center; gap: 26px; }
+.cm-usagewrap { position: relative; flex: none; }
+.cm-usagewrap button.cm-usagebtn { height: auto; margin: 0; padding: 3px 12px; border: 1px solid rgba(184, 115, 51, 0.45); border-radius: 0; background: transparent; box-shadow: none; color: #b3a89d; font-size: 12px; font-weight: 400; letter-spacing: 0.04em; cursor: pointer; }
+.cm-usagewrap button.cm-usagebtn:hover, .cm-usagewrap button.cm-usagebtn.is-on { background: rgba(184, 115, 51, 0.08); border-color: #d99a62; color: var(--text-normal); box-shadow: none; }
+.cm-usagewrap button.cm-usagebtn:focus-visible { outline: 1px solid #d99a62; outline-offset: 2px; }
+.cm-usagewrap .cm-usagepop { position: absolute; top: calc(100% + 8px); left: 0; z-index: 30; flex: none; width: 280px; min-width: 0; max-width: 80vw; padding: 12px 14px; background: var(--background-primary, #1b1b1f); border: 1px solid rgba(184, 115, 51, 0.4); box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5); }
+.cm-usagewrap.cm-qusagewrap { margin-top: 0; }
+.cm-usagewrap.cm-qusagewrap .cm-usagepop { left: auto; right: 0; }
+.cm-usagewrap.is-up .cm-usagepop { top: auto; bottom: calc(100% + 8px); }
+.cm-tri-side .cm-tri-grow { display: flex; align-items: flex-end; min-height: 30px; }
+.cm-tri-side .cm-usagewrap.is-up { position: static; }
+.cm-tri-side .cm-tri-grow { position: relative; }
+.cm-tri-side .cm-usagewrap.is-up .cm-usagepop { left: 0; right: 0; width: auto; max-width: none; }
+.cm-query-chips .cm-ingest-usagewrap { margin-left: 6px; align-self: center; }

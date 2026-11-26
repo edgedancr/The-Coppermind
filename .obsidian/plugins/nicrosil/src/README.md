@@ -24,6 +24,7 @@ Obsidian loads only `main.js` and `styles.css` in the folder above. Both are **b
 | `js/03-dom-helpers-dialogs.js` | Count-up, progress bar, badges; Review, Resolve, flag and response pickers |
 | `js/04-review-queue-view.js` | The review queue sidebar (`QueueView`) |
 | `js/05-transcription-view.js` | The transcription queue view (`TranscribeView`) and its verify dialog |
+| `js/05b-transcribe-ai.js` | AI transcription in the queue (4.6.0): the Claude Code arguments, prompts, reply parsers and draft note for transcribing, recreating a drawing and re-reading unsure words, plus the queue's tray, panel and progress card (added to `TranscribeView`) |
 | `js/06-atlas-helpers-links.js` | Atlas layout helpers, typed-link types (`REL_TYPES`), link collection, SVG helpers |
 | `js/07-lens-view.js` | The Lens (relations panel) and its enlarged map |
 | `js/08-atlas-view.js` | The atlas (wiki map view) |
@@ -44,6 +45,7 @@ Obsidian loads only `main.js` and `styles.css` in the folder above. Both are **b
 | `js/22-plugin-flags-files.js` | Resolving flags; keeping `_index.md` up to date; the month's log file |
 | `js/23-plugin-transcription.js` | Opening and running the transcription queue |
 | `js/23b-plugin-triage-ingest.js` | Opening Triage, ingest runs and batches, staging the chosen file in `Ingestion/.selected/` |
+| `js/23c-plugin-transcribe-ai.js` | Running a Claude Code job (`claudeJob`), listing new photos and shrinking them with `shrink_scans.py` (`listPhotos`, `shrinkPhotos`, `runPython`) |
 | `js/24-plugin-query-mode-exports.js` | Query mode actions (running Claude Code, Save to Analyses, log); end of the class; test exports |
 | `css/01-base-gradient-styles-queue-dialogs.css` | Fonts, variables, the CGS and TGS classes, status bar, queue, dialogs |
 | `css/02-logo-dashboard-index-search-relations.css` | Logo, Dashboard page, index and log pages, properties strip, search box, schema dialog, relations |

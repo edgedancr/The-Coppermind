@@ -56,6 +56,7 @@ module.exports = class Nicrosil extends Plugin {
 
     this.scheduleRefresh = debounce(() => this.refresh(), 400, true);
     this.registerInterval(window.setInterval(() => this.scheduleRefresh(), 60 * 60 * 1000)); // keeps the health check card current overnight
+    this.startUsagePolling();
     this.registerEvent(this.app.workspace.on("file-open", (file) => {
       this.readOnOpen(file);
       this.syncSchemaButtons(); this.syncHomeButtons();
@@ -139,6 +140,7 @@ module.exports = class Nicrosil extends Plugin {
     this.restoreTriageSidebar();
     clearTimeout(this.dashIntroTimer);
     clearTimeout(this.indexTimer);
+    clearTimeout(this.usageTimer);
     document.querySelectorAll(".cm-schema-log-btn, .cm-respond-btn").forEach((e) => e.remove());
     this.app.workspace.getLeavesOfType("markdown").forEach((l) => { if (l.view) { l.view.__cmSchemaBtn = null; l.view.__cmRespondBtn = null; } });
     document.querySelectorAll(".cm-resolve-btn, .cm-home-btn, .cm-underscore-btn, .cm-mode-btn, .cm-git-btn, .cm-panel-btn").forEach((e) => e.remove());

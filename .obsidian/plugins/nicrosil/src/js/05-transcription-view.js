@@ -122,10 +122,16 @@ class TranscribeView extends ItemView {
     this.registerEvent(ws.on("layout-change", () => this.watchSoon()));
     this.registerEvent(ws.on("file-open", () => this.watchSoon()));
     this.registerEvent(ws.on("active-leaf-change", (leaf) => this.onLeafChange(leaf)));
+    listenUsage(this, () => { if (this.usageEl && this.usageEl.isConnected) drawUsageMeter(this.usageEl, this.plugin); });
+    this.registerDomEvent(document, "mousedown", (e) => { // the Usage popover closes on a click anywhere else, or Escape
+      if (this.trx && this.trx.usageOpen && !(e.target && e.target.closest && e.target.closest(".cm-trw-usagewrap"))) this.closeUsage();
+    });
+    this.registerDomEvent(document, "keydown", (e) => { if (e.key === "Escape" && this.trx && this.trx.usageOpen) this.closeUsage(); });
     await this.render();
   }
 
   async onClose() {
+    this.trxStop && this.trxStop();
     await this.closeLayout();
     this.contentEl.empty();
   }
@@ -231,6 +237,7 @@ class TranscribeView extends ItemView {
     if (this.closing) return;
     this.closing = true;
     try {
+      this.removeTrx && this.removeTrx();
       await this.dropNoteLeaf();
       this.removeBar();
       this.unlock();
@@ -311,7 +318,9 @@ class TranscribeView extends ItemView {
       empty.createDiv({ cls: "cm-card-label", text: "Nothing to review" });
       empty.createDiv({ text: "When Claude transcribes scans, each note it makes (with transcription: draft in its properties) shows up here, next to its scan." });
       empty.createDiv({ cls: "cm-sub", text: waiting.length ? `${waiting.length} scan${waiting.length === 1 ? "" : "s"} in Sources/Scans are not in any note yet.` : "There are no scans waiting in Sources/Scans." });
+      this.drawTray(root, waiting);
       this.syncLock();
+      this.drawTrx();
       return;
     }
 
@@ -323,10 +332,12 @@ class TranscribeView extends ItemView {
 
     this.scanPane = root.createDiv({ cls: "cm-tr-scan" });
     this.checksEl = root.createDiv({ cls: "cm-tr-checks" });
+    this.drawTray(root, waiting);
     this.syncLock();
     this.drawBar();
     this.renderChecks();
     await this.drawScan();
+    this.drawTrx();
   }
 
   /** The review bar across the top of the note: where you are in the queue, the buttons, and the unsure words. */
@@ -340,6 +351,7 @@ class TranscribeView extends ItemView {
       bar = createDiv({ cls: "cm-tr-bar" });
       v.containerEl.insertBefore(bar, v.containerEl.querySelector(":scope > .view-content"));
       this.bar = bar;
+      if (this.trxEl && this.trxEl.isConnected && this.trxEl.parentElement === v.containerEl) bar.after(this.trxEl); // the Transcribe panel stays right under the bar
     }
     bar.empty();
     this.verifyBtn = null;
@@ -388,6 +400,9 @@ class TranscribeView extends ItemView {
     if (waiting.length) sub.createSpan({ cls: "cm-tr-waiting", text: `${waiting.length} scan${waiting.length === 1 ? "" : "s"} not in a note yet` });
 
     const act = sub.createDiv({ cls: "cm-trb-actions" });
+    const ai = act.createEl("button", { text: "✦ Transcribe scans", cls: "cm-trx-barbtn" });
+    ai.setAttr("aria-label", "Have Claude transcribe scans into a new draft note");
+    ai.addEventListener("click", () => this.openTrx());
     const verify = act.createEl("button", { text: "Verify", cls: "mod-cta" });
     verify.setAttr("aria-label", "I checked this against the scan: remove the scan and clear the draft mark");
     verify.addEventListener("click", () => this.verify(item));
@@ -399,6 +414,7 @@ class TranscribeView extends ItemView {
     x.setAttr("aria-label", "Close the queue and get the other panes back");
     x.addEventListener("click", () => this.closeQueue());
     this.verifyBtn = verify;
+    this.drawAiStrip(bar, file);
   }
 
   async setMode(mode) {
@@ -597,11 +613,14 @@ class TranscribeView extends ItemView {
           }
           const keep = row.createEl("button", { cls: "cm-mini", text: d.kind === "recreate" ? "Keep screenshot instead" : "Keep screenshot" });
           keep.addEventListener("click", () => { this.cropFor = d; this.cropRect = null; if (d.scan) { const i = this.pages.findIndex((n) => scanKey(n) === scanKey(d.scan)); if (i >= 0) this.page = i; } this.drawScan(); });
+          const ai = row.createEl("button", { cls: "cm-mini cm-trx-accent", text: "✦ Recreate with Claude" });
+          ai.setAttr("aria-label", "Claude looks at the scan and redraws it as Mermaid, a table or a list");
+          ai.addEventListener("click", () => this.recreateWithClaude(d));
           if (d.kind === "drawing") {
             row.createEl("button", { cls: "cm-mini", text: "Recreate" }).addEventListener("click", () => this.change(recreateDrawing(this.text(), this.drawingNow(d)), d, "to be recreated in the note"));
           }
           row.createEl("button", { cls: "cm-mini", text: "Leave out" }).addEventListener("click", () => this.change(leaveOutDrawing(this.text(), this.drawingNow(d)), d, "left out of the note"));
-          if (d.kind === "recreate") card.createDiv({ cls: "cm-sub", text: "The scan stays until you check the recreated drawing. Ask Claude to recreate it." });
+          if (d.kind === "recreate") card.createDiv({ cls: "cm-sub", text: "The scan stays until you check the recreated drawing." });
         });
       }
       if (rechecks.length) {
@@ -633,6 +652,9 @@ class TranscribeView extends ItemView {
         u.createSpan({ cls: "cm-tr-checkhead", text: `Unsure words (${unsure.length})` });
         u.createEl("button", { cls: "cm-mini", text: "Next unsure word" }).addEventListener("click", () => this.nextUnsure());
         u.createEl("button", { cls: "cm-mini", text: "Accept the guess" }).addEventListener("click", () => this.acceptCurrent());
+        const again = u.createEl("button", { cls: "cm-mini cm-trx-accent", text: "✦ Look again" });
+        again.setAttr("aria-label", "Claude re-reads the scan for each unsure word and offers a better guess");
+        again.addEventListener("click", () => this.recheckUnsure());
       } else {
         u.createSpan({ cls: "cm-tr-count", text: "No unsure words" });
       }

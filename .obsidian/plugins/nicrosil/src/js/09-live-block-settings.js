@@ -68,7 +68,7 @@ class ReviewSettings extends PluginSettingTab {
         });
       });
     new Setting(el).setName("Claude Code for query mode")
-      .setDesc("Where Claude Code is on this computer, for the search bar's Query switch. Leave it blank to look in the usual places (~/.local/bin, then npm's folder, then the PATH). Claude Code uses its own sign-in; Nicrosil never sees it. Desktop only.")
+      .setDesc("Where Claude Code is on this computer, for the search bar's Query switch. Leave it blank to look in the usual places (~/.local/bin, then npm's folder, then the PATH). Claude Code uses its own sign-in; only the live usage meter below reads it. Desktop only.")
       .addText((t) => {
         t.inputEl.style.width = "260px";
         t.setPlaceholder("Found by itself").setValue(this.plugin.settings.claudePath || "").onChange(async (v) => { this.plugin.settings.claudePath = v.trim(); await this.plugin.persist(); });
@@ -80,6 +80,30 @@ class ReviewSettings extends PluginSettingTab {
         child.stdout.on("data", (c) => { out += c; });
         child.on("error", () => new Notice("Claude Code wasn't found. Install it, or set its path here.", 8000));
         child.on("close", (code) => { if (code === 0) new Notice(`Found Claude Code ${out.trim()} at ${this.plugin.claudeCommand()}.`, 6000); });
+      }));
+    new Setting(el).setName("Photos folder (for transcribing)")
+      .setDesc("Where your phone photos of handwritten notes land on this computer. The Transcription queue lists new ones there and shrinks the ones you tick into Sources/Scans with Tools/shrink-scans/shrink_scans.py. Your originals are never changed. Desktop only.")
+      .addText((t) => {
+        t.inputEl.style.width = "300px";
+        t.setPlaceholder("C:\\Users\\you\\Pictures\\Notes").setValue(this.plugin.settings.photosDir || "").onChange(async (v) => { this.plugin.settings.photosDir = v.trim(); await this.plugin.persist(); });
+      });
+    new Setting(el).setName("Python for shrinking")
+      .setDesc("Where Python is, for the shrink tool. Leave it blank to try python, py and python3. The tool needs Pillow (pip install pillow).")
+      .addText((t) => {
+        t.inputEl.style.width = "260px";
+        t.setPlaceholder("Found by itself").setValue(this.plugin.settings.pythonPath || "").onChange(async (v) => { this.plugin.settings.pythonPath = v.trim(); await this.plugin.persist(); });
+      })
+      .addButton((b) => b.setButtonText("Test").onClick(async () => {
+        const r = await this.plugin.runPython(["-c", "import PIL; print('Pillow ' + PIL.__version__)"]);
+        if (r.missing) new Notice("Python wasn't found. Install it, or set its path here.", 8000);
+        else if (r.ok) new Notice(`Python works (${r.cmd}, ${r.out.trim()}).`, 6000);
+        else new Notice(/PIL|Pillow/i.test(r.err) ? "Python was found, but Pillow isn't installed. Run: pip install pillow" : "Python stopped: " + (r.err || r.out).trim().split(/\r?\n/).pop(), 9000);
+      }));
+    new Setting(el).setName("Live usage meter")
+      .setDesc("When Obsidian starts, every 30 seconds (every 10 while Claude Code is running) and after each Claude Code run, ask Anthropic how much of your plan limit you've used and show it under the search bar. To do that Nicrosil reads Claude Code's saved sign-in (.claude/.credentials.json in your user folder) and sends it only to api.anthropic.com; it is never saved, shown or logged. Anthropic doesn't document this service, so it may stop working. Desktop only.")
+      .addToggle((t) => t.setValue(this.plugin.settings.liveUsage !== false).onChange(async (v) => {
+        this.plugin.settings.liveUsage = v; await this.plugin.persist();
+        if (v) this.plugin.refreshUsage({ force: true }); else this.plugin.setUsageState("off");
       }));
     el.createEl("p", {
       cls: "setting-item-description",
