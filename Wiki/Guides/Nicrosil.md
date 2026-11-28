@@ -16,6 +16,8 @@ drafted_by: Claude (claude-sonnet-5-5, claude-opus-5-5)
 drafted_on: 2026-11-11
 changes_since_verified:
   - "2026-11-28: replaced the Lens sections and mentions with Connections (Nicrosil 4.9.2)"
+  - "2026-11-28: added the Send to Raw button to The Tinmind section (Nicrosil 4.10.0)"
+  - "2026-11-28: the Connections map is now grouped by link type, with no zoom or pan (Nicrosil 4.11.0)"
 <<<<<<< HEAD
 verified_on: 2026-11-28
 =======
@@ -72,6 +74,7 @@ My class notes in `The Tinmind/`, kept apart from the wiki. **The Tinmind** butt
 - **Course tree** (file list in Tinmind mode): new note (named course + date), rename, delete (to trash), new course, delete course, new semester, and **All Class Notes**.
 - **Notebook:** for non-class notes; works like a course. **Quick note** makes one without asking for a name.
 - **Search:** searches every Tinmind note by title, text and heading.
+- **Send to Raw:** the inbox button in a note page's tab header copies that note, unchanged, into `Ingestion/Raw/`. The note stays; a file already in Raw is never overwritten (it asks before adding a copy under a new name). Course pages, the Notebook page, the Dashboard and All Class Notes don't have it.
 
 ### Transcription queue
 `Alt+T`. The scan on the left, the note on the right, for every note with `transcription: draft` ([[SCHEMA - Transcription]]).
@@ -86,7 +89,7 @@ My class notes in `The Tinmind/`, kept apart from the wiki. **The Tinmind** butt
 - **Log:** verify and reject entries go at the top of the month's file in `_logs/` (`_log MM-YY`), which Nicrosil creates the first time Obsidian opens in a new month.[^5] The log opens folded (needs Obsidian's **Fold heading** option).
 
 ## Connections
-`Alt+L` opens or folds it on every page. A folding section at the bottom of each wiki page, perspective and source card, just above its Footnotes heading, drawn by Nicrosil from the page's links; it changes no file. Folded, it shows the link counts and the page's two biggest typed-link groups. Open, it shows a map (pages linking in on the left, out on the right; typed links colored, plain links dashed; **Ctrl + scroll** zooms, a drag pans, double-click shows it all), then folded lists of pages two steps away that aren't linked yet (worth checking, not auto-adding), the pages it links to, and the pages linking to it, by type.[^3]
+`Alt+L` opens or folds it on every page. A folding section at the bottom of each wiki page, perspective and source card, just above its Footnotes heading, drawn by Nicrosil from the page's links; it changes no file. Folded, it shows the link counts and the page's two biggest typed-link groups. Open, it shows a map (pages linking in on the left, out on the right, grouped by link type, each group showing its busiest pages with a **+ more** toggle and joined to the open page by a band; plain links dashed), then folded lists of pages two steps away that aren't linked yet (worth checking, not auto-adding), the pages it links to, and the pages linking to it, by type.[^3]
 
 ## The atlas
 `Alt+M`. A map of the wiki by the topics in [[_topics]]; changes nothing. Each topic's anchors are pinned and other pages join the topic they link to most; unconnected pages sit in **No topic yet**. Click a topic or page to see its links; scroll zooms, drag pans, `Esc` goes up. **Edit topics** opens `_topics.md`. The topic list is mine; the agent checks it at each ingest ([[SCHEMA - Ingest#6. Check the topic list]]).
@@ -137,6 +140,7 @@ My own class notes, in `The Tinmind/`, kept apart from the wiki.
 - **Mode.** The **The Tinmind** button opens the Tinmind Dashboard and switches to the Tinmind's mode, with the right sidebar closed, so the review queue is unavailable. **The Coppermind** or `Alt+D` switches back. The mode isn't remembered: Obsidian opens in the Coppermind's.
 - **Dashboard.** `The Tinmind/Tinmind Dashboard` shows the picked semester's courses as cards with note count and newest date, counted from file names only. A class notes file has `type: class-notes`, `course`, `semester` (`Fall 26`), `current` and `order`; to add a course, make that file. The semester menu's pick is saved; until then the one marked `current: true` shows. Properties are hidden on every note in `The Tinmind/`.
 - **Search.** Read-only search of every note under `The Tinmind/` by title, alias, text and heading (a heading is its own result and jumps to it).
+- **Send to Raw.** The inbox button in a note page's tab header copies that note, unchanged, into `Ingestion/Raw/`, ready for Triage. The note stays; a file already in Raw is never overwritten (it asks before adding a copy under a new name). Course pages, the Notebook page, the Dashboard and All Class Notes don't have it.
 - **Course tree.** The file list shows the semester's courses (a course is its notes file plus a same-named folder: `Fall 26/SAIL.md`, `Fall 26/SAIL/`). It offers new note, **Rename**, **Delete** (to the trash, after asking), **New course**, **Delete course** (page and folder, after a file count; not the Notebook), **New semester** (suggests the next one, makes the folder, switches to it), and an **All Class Notes** table. A new note is named course + date (`SAIL 11-22-26`, editable first), gets `type: course-note` with hidden course and semester properties, opens in editing view, and links back to its course page. Not covered: renaming or deleting a semester, renaming a course, reordering notes (sorted by name).
 - **Course page.** Lists the course's notes and folders, with **New note** and **New folder**. Nicrosil makes files only when I ask, and reads only folder names and headings.
 - **Notebook.** For notes that aren't for a class. `The Tinmind/Notebook` (`type: notebook`, no semester) works like a course (notes in `Notebook/`, topic folders allowed) but has no counts and isn't in **All Class Notes**. Its notes are named `Notebook` + date with only `type: notebook-note`. **Quick note** makes one without asking for a name.
@@ -179,7 +183,7 @@ The Dashboard's **Search / Query** switch (computer only) makes the search bar a
 ## Connections
 `Alt+L` opens or folds it on every page; a setting turns it off. It sits just above the Footnotes heading of each wiki page, perspective and source card (at the end of a page with none), in Reading view and Live Preview, and is drawn from the links; it changes no file.
 - **Folded:** the link counts and the page's two biggest typed-link groups.
-- **Map:** the page, the pages linking to it, and the pages it links to, all of them, typed links first. Typed links are colored by relationship type; plain links (in text or in properties such as `sources`) are "see also". **Ctrl + scroll** (or a pinch) zooms, a drag pans, and the corner buttons or a double-click show the whole map. Click opens a page; `Ctrl+click` a new tab.
+- **Map:** the page, the pages linking to it, and the pages it links to, all of them, typed links first. Pages are grouped by link type, typed links colored by relationship type; plain links (in text or in properties such as `sources`) are "see also". A group shows its first four pages, or all if there are five or fewer, and **+ N more** opens the rest in place. Hovering a group lights its band. Click opens a page; `Ctrl+click` a new tab.
 - **Two steps away, not linked yet:** up to six pages that at least two of this page's neighbors link with but this page doesn't, best first (summaries, guides and prompts excluded). Links worth checking, not to add unread.
 - **Two lists:** outgoing ("This page links to") and incoming ("Pointing at this page", worked out from other pages since each relationship is stored once),[^3] grouped by type, with plain links last.
 

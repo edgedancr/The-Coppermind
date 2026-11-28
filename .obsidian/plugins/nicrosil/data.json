@@ -51,23 +51,23 @@
     "ingestMode": "plan",
     "ingestModel": "opus",
     "lastUsage": {
-      "pct": 80,
+      "pct": 100,
       "kind": "five_hour",
-      "resetsAt": "2026-11-28T10:00:00.848567+00:00",
+      "resetsAt": "2026-11-28T10:00:00.163153+00:00",
       "windows": [
         {
           "kind": "five_hour",
-          "pct": 80,
-          "resetsAt": "2026-11-28T10:00:00.848567+00:00"
+          "pct": 100,
+          "resetsAt": "2026-11-28T10:00:00.163153+00:00"
         },
         {
           "kind": "seven_day",
-          "pct": 62,
-          "resetsAt": "2026-12-01T01:00:00.848585+00:00"
+          "pct": 66,
+          "resetsAt": "2026-12-01T01:00:00.163172+00:00"
         }
       ],
       "source": "live",
-      "at": 1795853366589
+      "at": 1795856242849
     },
     "photosDir": "C:\\Users\\harri\\Downloads\\test",
     "shrunkPhotos": [

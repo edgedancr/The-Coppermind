@@ -1,6 +1,6 @@
 ---
 type: person
-status: draft
+status: verified
 aliases:
   - Heidegger
 courses:
@@ -9,7 +9,7 @@ sources:
   - "[[SRC - The Question Concerning Technology (Then and Now)]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > Martin Heidegger was a German philosopher who had long been interested in technology. In 1954, nine years after a world war in which, in the video's words, technology was used "to destroy half of Europe and all of Nagasaki and Hiroshima," he published the essay "The Question Concerning Technology".[^1] A Then & Now video explains it for SAIL's Module 2.

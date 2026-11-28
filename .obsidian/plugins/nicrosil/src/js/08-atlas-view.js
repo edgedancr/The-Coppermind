@@ -165,12 +165,17 @@ class WikiMapView extends ItemView {
     const svg = this.svg = svgEl(this.stage, "svg", { class: "cm-at-svg", role: "img", "aria-label": "Atlas of the wiki's topics" });
     this.rectCache = null; this.kSet = 0;
     const defs = svgEl(svg, "defs");
-    const fill = svgEl(defs, "radialGradient", { id: "cm-at-fill", cx: 0.5, cy: 0.42, r: 0.62 });
-    svgEl(fill, "stop", { offset: "0%", style: "stop-color: #b87333; stop-opacity: .17" });
-    svgEl(fill, "stop", { offset: "100%", style: "stop-color: #b87333; stop-opacity: .04" });
-    const fillNone = svgEl(defs, "radialGradient", { id: "cm-at-fill-none", cx: 0.5, cy: 0.45, r: 0.6 });
-    svgEl(fillNone, "stop", { offset: "0%", style: "stop-color: #8a8178; stop-opacity: .12" });
+    // the topic circles are nearly clear, so the page background shows through: a faint teal glow in the middle and a touch of copper at the edge
+    const fill = svgEl(defs, "radialGradient", { id: "cm-at-fill", cx: 0.5, cy: 0.5, r: 0.6 });
+    svgEl(fill, "stop", { offset: "0%", style: "stop-color: #86d2c1; stop-opacity: .06" });
+    svgEl(fill, "stop", { offset: "80%", style: "stop-color: #d99a62; stop-opacity: .02" });
+    svgEl(fill, "stop", { offset: "100%", style: "stop-color: #d99a62; stop-opacity: .07" });
+    const fillNone = svgEl(defs, "radialGradient", { id: "cm-at-fill-none", cx: 0.5, cy: 0.5, r: 0.6 });
+    svgEl(fillNone, "stop", { offset: "0%", style: "stop-color: #8a8178; stop-opacity: .05" });
     svgEl(fillNone, "stop", { offset: "100%", style: "stop-color: #8a8178; stop-opacity: .03" });
+    // the topic rings: the copper-to-teal of the Coppermind Gradient Style
+    const ring = svgEl(defs, "linearGradient", { id: "cm-at-ring", x1: 0, y1: 0, x2: 1, y2: 0.35 });
+    [["0", "#d99a62"], ["0.45", "#f6d3a8"], ["0.6", "#d99a62"], ["1", "#86d2c1"]].forEach(([o, c]) => svgEl(ring, "stop", { offset: o, "stop-color": c }));
     for (const [t, info] of Object.entries(LINK_TYPES)) {
       const m = svgEl(defs, "marker", { id: `cm-at-arrow-${t}`, viewBox: "0 0 8 8", refX: 7, refY: 4, markerWidth: 5, markerHeight: 5, orient: "auto-start-reverse" });
       svgEl(m, "path", { d: "M0,0 L8,4 L0,8 z", fill: info.color });
@@ -192,9 +197,18 @@ class WikiMapView extends ItemView {
       const dx = B.x - A.x, dy = B.y - A.y, dist = Math.hypot(dx, dy) || 1, ux = dx / dist, uy = dy / dist;
       const x1 = A.x + ux * A.r, y1 = A.y + uy * A.r, x2 = B.x - ux * B.r, y2 = B.y - uy * B.r;
       const mx = (x1 + x2) / 2 - uy * dist * 0.08, my = (y1 + y2) / 2 + ux * dist * 0.08;
-      const p = svgEl(this.gBands, "path", { d: `M${x1},${y1} Q${mx},${my} ${x2},${y2}`, class: "cm-at-band" });
-      p.style.strokeWidth = `calc(${Math.min(16, 1.2 + 1.5 * Math.sqrt(n))}px * var(--k, 1))`;
-      svgEl(p, "title", {}, `${this.topicName(a)} ↔ ${this.topicName(b)}: ${n} link${n === 1 ? "" : "s"}`);
+      const bandPath = `M${x1},${y1} Q${mx},${my} ${x2},${y2}`;
+      // a hairline that runs from copper at one rim to teal at the other, a little thicker the more links it carries
+      const gid = `cm-at-bg-${this.bandEls.length}`;
+      const bgrad = svgEl(defs, "linearGradient", { id: gid, gradientUnits: "userSpaceOnUse", x1, y1, x2, y2 });
+      [["0", "#d99a62"], ["0.5", "#f0c590"], ["1", "#86d2c1"]].forEach(([o, c]) => svgEl(bgrad, "stop", { offset: o, "stop-color": c }));
+      const p = svgEl(this.gBands, "path", { d: bandPath, class: "cm-at-band", stroke: `url(#${gid})` });
+      p.style.strokeWidth = `calc(${Math.min(5, 0.8 + 0.5 * Math.sqrt(n))}px * var(--k, 1))`;
+      // a wider invisible path on top, so a thin band is easy to point at: it carries the tooltip and lights the band
+      const hit = svgEl(this.gBands, "path", { d: bandPath, class: "cm-at-bandhit" });
+      svgEl(hit, "title", {}, `${this.topicName(a)} ↔ ${this.topicName(b)}: ${n} link${n === 1 ? "" : "s"}`);
+      hit.addEventListener("mouseenter", () => p.addClass("is-hover"));
+      hit.addEventListener("mouseleave", () => p.removeClass("is-hover"));
       this.bandEls.push({ a, b, el: p });
     }
 
@@ -203,21 +217,29 @@ class WikiMapView extends ItemView {
     this.nameEls = new Map();
     for (const g of d.groups) {
       const el = svgEl(this.gTopics, "g", { class: "cm-at-topic" + (g.key < 0 ? " is-none" : ""), tabindex: 0, role: "button", "aria-label": `${this.topicName(g.key)}, ${g.members.length} pages` });
-      svgEl(el, "circle", { cx: g.x, cy: g.y, r: g.r, class: "cm-at-disc", fill: g.key < 0 ? "url(#cm-at-fill-none)" : "url(#cm-at-fill)" });
-      // the name above the circle, on two lines when it is long
+      svgEl(el, "circle", { cx: g.x, cy: g.y, r: g.r, class: "cm-at-disc", fill: g.key < 0 ? "url(#cm-at-fill-none)" : "url(#cm-at-fill)", stroke: "url(#cm-at-ring)" });
+      // the name above the circle, on two lines when it is long, with a tick down to the ring. Everything inside is drawn in screen pixels
+      // (the group is scaled by --k in the styles) around an origin on the top of the ring
       const lines = wrapWords(this.topicName(g.key), 18);
-      const nm = svgEl(this.gNames, "g", { class: "cm-at-topicname" + (g.key < 0 ? " is-none" : "") });
+      const nm = svgEl(this.gNames, "g", { class: "cm-at-topicname" + (g.key < 0 ? " is-none" : ""), transform: `translate(${g.x} ${g.y - g.r})` });
       this.nameEls.set(g.key, nm);
-      const tx = svgEl(nm, "text", { x: g.x, y: g.y - g.r - 8, "text-anchor": "middle", class: "cm-at-tname" });
-      lines.forEach((ln, i) => svgEl(tx, "tspan", { x: g.x, dy: i ? "1.15em" : `${-(lines.length - 1) * 1.15}em` }, ln));
+      const sc = svgEl(nm, "g", { class: "cm-at-tscale" });
+      svgEl(sc, "line", { x1: 0, y1: -11, x2: 0, y2: 0, class: "cm-at-tick" });
+      svgEl(sc, "circle", { cx: 0, cy: 0, r: 1.8, class: "cm-at-tdot" });
+      const tx = svgEl(sc, "text", { x: 0, y: -17, "text-anchor": "middle", class: "cm-at-tname" });
+      lines.forEach((ln, i) => svgEl(tx, "tspan", { x: 0, dy: i ? "1.3em" : `${-(lines.length - 1) * 1.3}em` }, ln));
       svgEl(el, "title", {}, `${this.topicName(g.key)}: ${g.members.length} pages`);
       el.addEventListener("click", (e) => { if (this.dragged) return; e.stopPropagation(); this.st.topic = g.key; this.st.focus = null; this.apply(); });
       el.addEventListener("keydown", (e) => { if (e.key === "Enter") { this.st.topic = g.key; this.st.focus = null; this.apply(); } });
+      // pointing at a topic also lights the bands that leave it
+      el.addEventListener("mouseenter", () => { for (const b of this.bandEls) if (b.a === g.key || b.b === g.key) b.el.addClass("is-link"); this.nameEls.get(g.key)?.addClass("is-hover"); });
+      el.addEventListener("mouseleave", () => { for (const b of this.bandEls) b.el.removeClass("is-link"); this.nameEls.get(g.key)?.removeClass("is-hover"); });
       this.topicEls.set(g.key, el);
     }
 
     // one dot per page; anchors get a ring
     this.dotEls = new Map();
+    this.ringEls = new Map();
     this.labelEls = new Map();
     for (const n of d.nodes.values()) {
       const p = d.pos.get(n.path);
@@ -233,6 +255,8 @@ class WikiMapView extends ItemView {
       });
       c.addEventListener("dblclick", (e) => { e.stopPropagation(); this.go(n.path, false); });
       this.dotEls.set(n.path, c);
+      // an anchor gets a ring set a little off its dot; it sits right after the dot so the styles can follow the dot's hover and focus
+      if (d.anchorSet.has(n.path)) this.ringEls.set(n.path, svgEl(this.gDots, "circle", { cx: p.x, cy: p.y, r: dotRadius(n.inDeg) + 2.6, class: "cm-at-anchorring" }));
       const t = svgEl(this.gLabels, "text", { x: p.x, y: p.y - dotRadius(n.inDeg) - 3, "text-anchor": "middle", class: "cm-at-label" }, clip(n.name, 26));
       c.addEventListener("mouseenter", () => t.addClass("is-hover"));
       c.addEventListener("mouseleave", () => t.removeClass("is-hover"));
@@ -287,14 +311,14 @@ class WikiMapView extends ItemView {
   drawSvgBounds() {
     const d = this.data;
     let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
-    // a topic's name can be wider than its circle: allow about 9.5px a letter at the size the whole map is drawn
+    // a topic's name can be wider than its circle: allow about 10px a letter at the size the whole map is drawn
     let k0 = 1;
     for (let pass = 0; pass < 2; pass++) {
       x0 = Infinity; y0 = Infinity; x1 = -Infinity; y1 = -Infinity;
       for (const g of d.groups) {
         const lines = wrapWords(this.topicName(g.key), 18);
-        const half = Math.max(g.r, (Math.max(...lines.map((l) => l.length)) * 9.5 * k0) / 2);
-        x0 = Math.min(x0, g.x - half); x1 = Math.max(x1, g.x + half); y0 = Math.min(y0, g.y - g.r - (10 + 18 * lines.length) * k0); y1 = Math.max(y1, g.y + g.r);
+        const half = Math.max(g.r, (Math.max(...lines.map((l) => l.length)) * 10 * k0) / 2);
+        x0 = Math.min(x0, g.x - half); x1 = Math.max(x1, g.x + half); y0 = Math.min(y0, g.y - g.r - (18 + 14 * lines.length) * k0); y1 = Math.max(y1, g.y + g.r);
       }
       k0 = (x1 - x0) / Math.max(400, this.stage.clientWidth || 1000);
     }
@@ -352,7 +376,9 @@ class WikiMapView extends ItemView {
   paintDots() {
     for (const [path, el] of this.dotEls || []) {
       const n = this.data.nodes.get(path);
-      el.style.fill = this.st.color === "type" ? pageColor(n.type) : STATE_COLORS[n.state];
+      const col = this.st.color === "type" ? pageColor(n.type) : STATE_COLORS[n.state];
+      el.style.fill = col;
+      el.style.color = col; // the hover glow takes the dot's own color
     }
   }
 
@@ -403,6 +429,8 @@ class WikiMapView extends ItemView {
       el.toggleClass("is-focus", !!focus && p === focus.path);
       el.toggleClass("is-near", !!focus && near.has(p) && p !== focus.path);
       el.toggleClass("is-dim", focus ? !near.has(p) : tkey !== null && !inT);
+      const ring = this.ringEls.get(p);
+      if (ring) ring.toggleClass("is-dim", focus ? !near.has(p) : tkey !== null && !inT);
     }
     for (const [p, el] of this.labelEls) el.toggleClass("is-shown", labeled.has(p));
 

@@ -3055,7 +3055,7 @@ class PageLens extends MarkdownRenderChild {
 
     const body = root.createDiv({ cls: "cm-plens-body cm-rel" });
     if (!out.length && !inn.length) body.createDiv({ cls: "cm-sub cm-rel-empty", text: "No links to or from this page yet." });
-    else { this.drawLegend(body, out, inn); this.drawMap(body, file, out, inn); }
+    else { this.drawMap(body, file, out, inn); }
 
     if (inAtlasScope(file.path)) {
       const s = this.section(body, "Two steps away, not linked yet", null);
@@ -3105,99 +3105,96 @@ class PageLens extends MarkdownRenderChild {
     return [...map.values()].sort((a, b) => typed(b) - typed(a) || (this.inDeg.get(b.path) || 0) - (this.inDeg.get(a.path) || 0) || a.name.localeCompare(b.name));
   }
 
-  /** The map: the pages linking in on the left, the pages this one links to on the right, every one of them, wide enough to fill the page's column; zoomable. */
+  /**
+   * The map (4.11): the pages linking in on the left and the pages this one links to on the right, grouped by link type. Each
+   * group shows its busiest pages and folds the rest behind "+ N more", and a band as thick as the group runs to the open page.
+   */
   drawMap(root, file, out, inn) {
-    const L = this.neighbors(inn, (e) => e.from);
-    const R = this.neighbors(out, (e) => e.to);
-    const Ls = L, Rs = R;
-    const NW = 190, NH = 28, GAP = 12, CW = 210, GX = 150;
-    const X1 = 0, X2 = NW + GX, X3 = X2 + CW + GX, W = X3 + NW;
-    const rows = Math.max(Ls.length, Rs.length, 1);
-    const H = rows * (NH + GAP) + GAP;
-    const cy = H / 2;
-    const wrap = root.createDiv({ cls: "cm-rel-map cm-rel-map-page" });
-    wrap.style.aspectRatio = `${W} / ${H}`;
-    const svg = svgEl(wrap, "svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img", "aria-label": `Map of the links of ${file.basename}` });
-    svg.classList.add("cm-rel-svg");
-    const defs = svgEl(svg, "defs");
-    const cg = svgEl(defs, "linearGradient", { id: "cm-rel-cg", x1: 0, y1: 0, x2: 0, y2: 1 });
-    svgEl(cg, "stop", { offset: "0%", style: "stop-color: var(--cm-copper); stop-opacity: .42" });
-    svgEl(cg, "stop", { offset: "100%", style: "stop-color: var(--cm-copper); stop-opacity: .12" });
-    const ng = svgEl(defs, "linearGradient", { id: "cm-rel-ng", x1: 0, y1: 0, x2: 0, y2: 1 });
-    svgEl(ng, "stop", { offset: "0%", style: "stop-color: var(--background-secondary); stop-opacity: 1" });
-    svgEl(ng, "stop", { offset: "100%", style: "stop-color: var(--background-primary); stop-opacity: 1" });
-    // the open page's outline: the copper-to-teal gradient used on the file-list button
-    const og = svgEl(defs, "linearGradient", { id: "cm-rel-og", x1: 0, y1: 0, x2: 1, y2: 1 });
-    svgEl(og, "stop", { offset: "0%", style: "stop-color: #e89a5a" });
-    svgEl(og, "stop", { offset: "100%", style: "stop-color: #86d2c1" });
-    for (const [t, info] of Object.entries(LINK_TYPES)) {
-      const m = svgEl(defs, "marker", { id: `cm-arrow-${t}`, viewBox: "0 0 8 8", refX: 7, refY: 4, markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse" });
-      svgEl(m, "path", { d: "M0,0 L8,4 L0,8 z", fill: info.color });
-    }
-    const yFor = (i, n) => GAP + i * (NH + GAP) + ((rows - n) * (NH + GAP)) / 2;
-
-    const edgePath = (x1, y1, x2, y2) => `M${x1},${y1} C${(x1 + x2) / 2},${y1} ${(x1 + x2) / 2},${y2} ${x2},${y2}`;
-    const edgeEls = {};
-    const drawEdges = (side, nodes, n) => {
-      nodes.forEach((nd, i) => {
-        const y = yFor(i, n) + NH / 2;
-        nd.types.forEach((t, k) => {
-          const info = LINK_TYPES[t];
-          const off = (k - (nd.types.length - 1) / 2) * 4;
-          const attrs = { fill: "none", stroke: info.color, "stroke-width": 1.6, "stroke-opacity": t === "see" ? 0.6 : 0.9, "marker-end": `url(#cm-arrow-${t})` };
-          if (info.dash) attrs["stroke-dasharray"] = info.dash;
-          const d = side === "out" ? edgePath(X2 + CW, cy + off, X3 - 1, y + off) : edgePath(X1 + NW, y + off, X2 - 1, cy + off);
-          const p = svgEl(svg, "path", { ...attrs, d, class: "cm-rel-edge" + (t === "see" ? " is-see" : "") });
-          p.style.setProperty("--c", info.color);
-          (edgeEls[side + i] = edgeEls[side + i] || []).push(p);
+    const wrap = root.createDiv({ cls: "cm-rb" });
+    const svg = svgEl(wrap, "svg", { class: "cm-rb-svg", "aria-hidden": "true" });
+    const bands = svgEl(svg, "g");
+    const cols = wrap.createDiv({ cls: "cm-rb-cols" });
+    const bandData = [];
+    const column = (cls, list, dir, key) => {
+      const col = cols.createDiv({ cls: `cm-rb-col ${cls}` });
+      for (const t of Object.keys(LINK_TYPES)) {
+        const items = this.neighbors(list.filter((e) => e.type === t), key);
+        if (!items.length) continue;
+        const info = LINK_TYPES[t];
+        const grp = col.createDiv({ cls: "cm-rb-group" });
+        grp.style.setProperty("--c", info.color);
+        const h = grp.createDiv({ cls: "cm-rb-head" });
+        const sw = h.createSpan({ cls: "cm-rel-swatch" });
+        sw.style.background = info.color; sw.style.setProperty("--c", info.color);
+        if (info.dash) sw.addClass("is-dashed");
+        h.createSpan({ cls: "cm-rb-label", text: info[dir] });
+        h.createSpan({ cls: "cm-rel-count", text: String(items.length) });
+        const rows = grp.createDiv({ cls: "cm-rb-rows" });
+        const key2 = `bundle:${dir}:${t}`;
+        const lim = items.length <= 5 ? items.length : 4;
+        const rowEls = items.map((it, i) => {
+          const row = rows.createDiv({ cls: "cm-rb-row", attr: { role: "button", tabindex: "0", title: it.name } });
+          const st = this.stateOf(it.path);
+          row.createSpan({ cls: `cm-rel-dot ${st ? "cm-rel-dot-" + st : ""}` }).setAttr("aria-label", STATE_LABELS[st]);
+          row.createSpan({ cls: "cm-rel-name", text: it.name });
+          row.addEventListener("click", (e) => this.go(it.path, e.ctrlKey || e.metaKey));
+          row.addEventListener("keydown", (e) => { if (e.key === "Enter") this.go(it.path, e.ctrlKey || e.metaKey); });
+          return row;
         });
-      });
+        if (items.length > lim) {
+          const more = grp.createEl("button", { cls: "cm-rb-more" });
+          const sync = () => {
+            const open = this.plugin.pageLensLists.has(key2);
+            rowEls.forEach((r, i) => r.toggleClass("is-hidden", !open && i >= lim));
+            rows.toggleClass("is-open", open);
+            more.setText(open ? "Show fewer" : `+ ${items.length - lim} more`);
+          };
+          more.addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (this.plugin.pageLensLists.has(key2)) this.plugin.pageLensLists.delete(key2); else this.plugin.pageLensLists.add(key2);
+            sync(); layout();
+          });
+          sync();
+        }
+        const band = svgEl(bands, "path", { fill: "none", stroke: info.color, "stroke-linecap": "round", class: "cm-rb-band" });
+        band.setAttribute("stroke-width", String(Math.min(14, 2 + items.length * 0.45)));
+        if (info.dash) band.setAttribute("stroke-dasharray", "6 5");
+        grp.addEventListener("mouseenter", () => band.classList.add("is-hl"));
+        grp.addEventListener("mouseleave", () => band.classList.remove("is-hl"));
+        bandData.push({ grp, band, dir });
+      }
+      return col;
     };
-    drawEdges("inn", Ls, Ls.length);
-    drawEdges("out", Rs, Rs.length);
+    column("is-in", inn, "inn", (e) => e.from);
+    const mid = cols.createDiv({ cls: "cm-rb-mid" });
+    column("is-out", out, "out", (e) => e.to);
+    const centre = mid.createDiv({ cls: "cm-rb-centre", attr: { title: file.basename } });
+    centre.createDiv({ cls: "cm-rb-centre-name", text: file.basename });
+    centre.createDiv({ cls: "cm-rb-centre-sub", text: `${new Set(inn.map((e) => e.from)).size} in · ${new Set(out.map((e) => e.to)).size} out` });
 
-    const node = (x, y, w, nd, key) => {
-      const g = svgEl(svg, "g", { class: "cm-rel-node", tabindex: 0, role: "button" });
-      const hot = (on) => {
-        svg.classList.toggle("is-hovering", on); g.classList.toggle("is-hl", on);
-        (edgeEls[key] || []).forEach((el) => el.classList.toggle("is-hl", on));
-        // light up this page's link types in the legend under the map
-        root.querySelectorAll(".cm-rel-chip").forEach((c) => c.classList.toggle("is-hl", on && nd.types.includes(c.getAttribute("data-type"))));
-      };
-      g.addEventListener("mouseenter", () => hot(true)); g.addEventListener("mouseleave", () => hot(false));
-      g.addEventListener("focus", () => hot(true)); g.addEventListener("blur", () => hot(false));
-      const st = this.stateOf(nd.path);
-      svgEl(g, "rect", { x, y, width: w, height: NH, rx: 5, class: `cm-rel-box ${st ? "cm-rel-box-" + st : ""}` });
-      svgEl(g, "text", { x: x + w / 2, y: y + NH / 2 + 4, "text-anchor": "middle", class: "cm-rel-label" }, clip(nd.name, 30));
-      svgEl(g, "title", {}, `${nd.name} (${nd.types.map(linkLabel).join(", ")})`);
-      g.addEventListener("click", (e) => this.go(nd.path, e.ctrlKey || e.metaKey));
-      g.addEventListener("keydown", (e) => { if (e.key === "Enter") this.go(nd.path, e.ctrlKey || e.metaKey); });
+    const layout = () => {
+      const w = wrap.getBoundingClientRect();
+      if (!w.width) return;
+      svg.setAttribute("width", String(w.width)); svg.setAttribute("height", String(w.height));
+      svg.setAttribute("viewBox", `0 0 ${w.width} ${w.height}`);
+      const c = centre.getBoundingClientRect();
+      const cy = c.top - w.top + c.height / 2;
+      for (const b of bandData) {
+        const g = b.grp.getBoundingClientRect();
+        const y = g.top - w.top + g.height / 2;
+        const x1 = b.dir === "inn" ? g.right - w.left : g.left - w.left;
+        const x2 = b.dir === "inn" ? c.left - w.left : c.right - w.left;
+        const mx = (x1 + x2) / 2;
+        b.band.setAttribute("d", `M${x1},${y} C${mx},${y} ${mx},${cy} ${x2},${cy}`);
+      }
     };
-    Ls.forEach((nd, i) => node(X1, yFor(i, Ls.length), NW, nd, "inn" + i));
-    Rs.forEach((nd, i) => node(X3, yFor(i, Rs.length), NW, nd, "out" + i));
-    const ch = Math.min(H - 2 * GAP, 56);
-    const g = svgEl(svg, "g", { class: "cm-rel-node is-center" });
-    svgEl(g, "rect", { x: X2, y: cy - ch / 2, width: CW, height: ch, rx: 7, class: "cm-rel-box cm-rel-box-center" });
-    const words = file.basename.split(" "); const lines = []; let cur = "";
-    for (const w of words) { if ((cur + " " + w).trim().length > 24 && cur) { lines.push(cur); cur = w; } else cur = (cur + " " + w).trim(); }
-    if (cur) lines.push(cur);
-    const shown = lines.slice(0, 3);
-    shown.forEach((ln, i) => svgEl(g, "text", { x: X2 + CW / 2, y: cy - ((shown.length - 1) * 6.5) + i * 13 + 4, "text-anchor": "middle", class: "cm-rel-label cm-rel-center-label" }, clip(ln, 26)));
-    svgEl(g, "title", {}, file.basename);
-    this.enableMapZoom(wrap, svg, W, H);
-  }
-
-  drawLegend(root, out, inn) {
-    const present = Object.keys(LINK_TYPES).filter((t) => out.concat(inn).some((e) => e.type === t));
-    const lg = root.createDiv({ cls: "cm-rel-legend" });
-    present.forEach((t) => {
-      const chip = lg.createSpan({ cls: "cm-rel-chip" });
-      chip.setAttr("data-type", t); chip.style.setProperty("--c", LINK_TYPES[t].color);
-      const sw = chip.createSpan({ cls: "cm-rel-swatch" });
-      sw.style.background = LINK_TYPES[t].color; sw.style.setProperty("--c", LINK_TYPES[t].color);
-      if (LINK_TYPES[t].dash) sw.addClass("is-dashed");
-      chip.appendText(linkLabel(t));
-    });
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(() => layout());
+      ro.observe(wrap);
+      this.cleanups.push(() => ro.disconnect());
+    }
+    layout();
+    requestAnimationFrame(layout);
   }
 
   /** Pages two steps away that this page doesn't link with: each is linked with at least two of its neighbors. */
@@ -3246,95 +3243,6 @@ class PageLens extends MarkdownRenderChild {
         row.addEventListener("keydown", (e) => { if (e.key === "Enter") this.go(it.path, e.ctrlKey || e.metaKey); });
       });
     }
-  }
-
-  /**
-   * Zoom and pan for the map (4.9.1). Ctrl+scroll (or a trackpad pinch) zooms at the pointer, a drag pans, the + and - buttons
-   * zoom from the middle, and double-clicking the background or the fit button shows the whole map again. Zooming eases
-   * over 160 ms. Plain scrolling is left alone so the page still scrolls past the map. The view is the SVG's viewBox, kept
-   * at the box's own shape so the pointer maps straight onto it; while the map hasn't been zoomed it refits when the box resizes.
-   */
-  enableMapZoom(wrap, svg, W, H) {
-    const MIN = 0.6, MAX = 8; // zoom, relative to showing the whole map
-    let cur = null, tgt = null, anim = 0, fitted = true, drag = null, swallow = false;
-    const fitView = () => {
-      const r = svg.getBoundingClientRect();
-      if (!r.width || !r.height) return null;
-      const ar = r.width / r.height, w = Math.max(W, H * ar), h = w / ar;
-      return { x: (W - w) / 2, y: (H - h) / 2, w, h };
-    };
-    const apply = (v) => { cur = v; svg.setAttribute("viewBox", `${v.x} ${v.y} ${v.w} ${v.h}`); };
-    const jump = (v) => { cancelAnimationFrame(anim); apply(v); tgt = v; };
-    const go = (v) => {
-      if (!cur) return;
-      cancelAnimationFrame(anim);
-      const from = cur;
-      let t0 = null; // the first frame's own timestamp, so the easing never depends on which clock started it
-      tgt = v;
-      const step = (now) => {
-        if (t0 === null) t0 = now;
-        const k = Math.min(1, (now - t0) / 160), e = 1 - Math.pow(1 - k, 3);
-        apply({ x: from.x + (v.x - from.x) * e, y: from.y + (v.y - from.y) * e, w: from.w + (v.w - from.w) * e, h: from.h + (v.h - from.h) * e });
-        if (k < 1) anim = requestAnimationFrame(step);
-      };
-      anim = requestAnimationFrame(step);
-    };
-    const showAll = () => { fitted = true; const f = fitView(); if (f) go(f); };
-    const zoomAt = (factor, fx, fy) => {
-      const fit = fitView(), base = tgt || cur;
-      if (!fit || !base) return;
-      const z = Math.min(MAX, Math.max(MIN, (fit.w / base.w) * factor));
-      const w = fit.w / z, h = fit.h / z;
-      fitted = false;
-      go({ x: base.x + fx * (base.w - w), y: base.y + fy * (base.h - h), w, h });
-    };
-
-    const ro = new ResizeObserver(() => { if (fitted) { const f = fitView(); if (f) jump(f); } });
-    ro.observe(svg);
-    this.cleanups.push(() => { ro.disconnect(); cancelAnimationFrame(anim); });
-
-    svg.addEventListener("wheel", (e) => {
-      if (!(e.ctrlKey || e.metaKey)) return;
-      e.preventDefault(); e.stopPropagation();
-      const r = svg.getBoundingClientRect();
-      zoomAt(Math.exp(-e.deltaY * (e.deltaMode === 1 ? 0.05 : 0.0022)), (e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height);
-    }, { passive: false });
-    svg.addEventListener("pointerdown", (e) => {
-      if (e.button !== 0 || !(tgt || cur)) return;
-      drag = { id: e.pointerId, x: e.clientX, y: e.clientY, v: { ...(tgt || cur) }, on: false };
-    });
-    svg.addEventListener("pointermove", (e) => {
-      if (!drag || e.pointerId !== drag.id) return;
-      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
-      if (!drag.on) {
-        if (Math.hypot(dx, dy) < 4) return; // a click on a page, not a drag
-        drag.on = true; fitted = false;
-        svg.setPointerCapture(e.pointerId);
-        wrap.addClass("is-panning");
-      }
-      const r = svg.getBoundingClientRect(), v = drag.v;
-      jump({ x: v.x - (dx / r.width) * v.w, y: v.y - (dy / r.height) * v.h, w: v.w, h: v.h });
-    });
-    const end = () => {
-      if (!drag) return;
-      if (drag.on) { wrap.removeClass("is-panning"); swallow = true; window.setTimeout(() => { swallow = false; }, 0); }
-      drag = null;
-    };
-    svg.addEventListener("pointerup", end);
-    svg.addEventListener("pointercancel", end);
-    svg.addEventListener("click", (e) => { if (swallow) { e.preventDefault(); e.stopPropagation(); } }, true);
-    svg.addEventListener("dblclick", (e) => { if (!e.target.closest || !e.target.closest(".cm-rel-node")) showAll(); });
-
-    const ctl = wrap.createDiv({ cls: "cm-rel-zoom" });
-    const btn = (icon, label, fn) => {
-      const b = ctl.createEl("button", { attr: { "aria-label": label, title: label } });
-      setIcon(b, icon);
-      b.addEventListener("click", fn);
-    };
-    btn("plus", "Zoom in", () => zoomAt(1.5, 0.5, 0.5));
-    btn("minus", "Zoom out", () => zoomAt(1 / 1.5, 0.5, 0.5));
-    btn("maximize", "Show the whole map", showAll);
-    wrap.createDiv({ cls: "cm-rel-zoomhint", text: "Ctrl + scroll to zoom · drag to pan" });
   }
 
   /** A folded list under the map; which ones are open is kept for the session, so a redraw doesn't fold them again. */
@@ -3577,12 +3485,17 @@ class WikiMapView extends ItemView {
     const svg = this.svg = svgEl(this.stage, "svg", { class: "cm-at-svg", role: "img", "aria-label": "Atlas of the wiki's topics" });
     this.rectCache = null; this.kSet = 0;
     const defs = svgEl(svg, "defs");
-    const fill = svgEl(defs, "radialGradient", { id: "cm-at-fill", cx: 0.5, cy: 0.42, r: 0.62 });
-    svgEl(fill, "stop", { offset: "0%", style: "stop-color: #b87333; stop-opacity: .17" });
-    svgEl(fill, "stop", { offset: "100%", style: "stop-color: #b87333; stop-opacity: .04" });
-    const fillNone = svgEl(defs, "radialGradient", { id: "cm-at-fill-none", cx: 0.5, cy: 0.45, r: 0.6 });
-    svgEl(fillNone, "stop", { offset: "0%", style: "stop-color: #8a8178; stop-opacity: .12" });
+    // the topic circles are nearly clear, so the page background shows through: a faint teal glow in the middle and a touch of copper at the edge
+    const fill = svgEl(defs, "radialGradient", { id: "cm-at-fill", cx: 0.5, cy: 0.5, r: 0.6 });
+    svgEl(fill, "stop", { offset: "0%", style: "stop-color: #86d2c1; stop-opacity: .06" });
+    svgEl(fill, "stop", { offset: "80%", style: "stop-color: #d99a62; stop-opacity: .02" });
+    svgEl(fill, "stop", { offset: "100%", style: "stop-color: #d99a62; stop-opacity: .07" });
+    const fillNone = svgEl(defs, "radialGradient", { id: "cm-at-fill-none", cx: 0.5, cy: 0.5, r: 0.6 });
+    svgEl(fillNone, "stop", { offset: "0%", style: "stop-color: #8a8178; stop-opacity: .05" });
     svgEl(fillNone, "stop", { offset: "100%", style: "stop-color: #8a8178; stop-opacity: .03" });
+    // the topic rings: the copper-to-teal of the Coppermind Gradient Style
+    const ring = svgEl(defs, "linearGradient", { id: "cm-at-ring", x1: 0, y1: 0, x2: 1, y2: 0.35 });
+    [["0", "#d99a62"], ["0.45", "#f6d3a8"], ["0.6", "#d99a62"], ["1", "#86d2c1"]].forEach(([o, c]) => svgEl(ring, "stop", { offset: o, "stop-color": c }));
     for (const [t, info] of Object.entries(LINK_TYPES)) {
       const m = svgEl(defs, "marker", { id: `cm-at-arrow-${t}`, viewBox: "0 0 8 8", refX: 7, refY: 4, markerWidth: 5, markerHeight: 5, orient: "auto-start-reverse" });
       svgEl(m, "path", { d: "M0,0 L8,4 L0,8 z", fill: info.color });
@@ -3604,9 +3517,18 @@ class WikiMapView extends ItemView {
       const dx = B.x - A.x, dy = B.y - A.y, dist = Math.hypot(dx, dy) || 1, ux = dx / dist, uy = dy / dist;
       const x1 = A.x + ux * A.r, y1 = A.y + uy * A.r, x2 = B.x - ux * B.r, y2 = B.y - uy * B.r;
       const mx = (x1 + x2) / 2 - uy * dist * 0.08, my = (y1 + y2) / 2 + ux * dist * 0.08;
-      const p = svgEl(this.gBands, "path", { d: `M${x1},${y1} Q${mx},${my} ${x2},${y2}`, class: "cm-at-band" });
-      p.style.strokeWidth = `calc(${Math.min(16, 1.2 + 1.5 * Math.sqrt(n))}px * var(--k, 1))`;
-      svgEl(p, "title", {}, `${this.topicName(a)} ↔ ${this.topicName(b)}: ${n} link${n === 1 ? "" : "s"}`);
+      const bandPath = `M${x1},${y1} Q${mx},${my} ${x2},${y2}`;
+      // a hairline that runs from copper at one rim to teal at the other, a little thicker the more links it carries
+      const gid = `cm-at-bg-${this.bandEls.length}`;
+      const bgrad = svgEl(defs, "linearGradient", { id: gid, gradientUnits: "userSpaceOnUse", x1, y1, x2, y2 });
+      [["0", "#d99a62"], ["0.5", "#f0c590"], ["1", "#86d2c1"]].forEach(([o, c]) => svgEl(bgrad, "stop", { offset: o, "stop-color": c }));
+      const p = svgEl(this.gBands, "path", { d: bandPath, class: "cm-at-band", stroke: `url(#${gid})` });
+      p.style.strokeWidth = `calc(${Math.min(5, 0.8 + 0.5 * Math.sqrt(n))}px * var(--k, 1))`;
+      // a wider invisible path on top, so a thin band is easy to point at: it carries the tooltip and lights the band
+      const hit = svgEl(this.gBands, "path", { d: bandPath, class: "cm-at-bandhit" });
+      svgEl(hit, "title", {}, `${this.topicName(a)} ↔ ${this.topicName(b)}: ${n} link${n === 1 ? "" : "s"}`);
+      hit.addEventListener("mouseenter", () => p.addClass("is-hover"));
+      hit.addEventListener("mouseleave", () => p.removeClass("is-hover"));
       this.bandEls.push({ a, b, el: p });
     }
 
@@ -3615,21 +3537,29 @@ class WikiMapView extends ItemView {
     this.nameEls = new Map();
     for (const g of d.groups) {
       const el = svgEl(this.gTopics, "g", { class: "cm-at-topic" + (g.key < 0 ? " is-none" : ""), tabindex: 0, role: "button", "aria-label": `${this.topicName(g.key)}, ${g.members.length} pages` });
-      svgEl(el, "circle", { cx: g.x, cy: g.y, r: g.r, class: "cm-at-disc", fill: g.key < 0 ? "url(#cm-at-fill-none)" : "url(#cm-at-fill)" });
-      // the name above the circle, on two lines when it is long
+      svgEl(el, "circle", { cx: g.x, cy: g.y, r: g.r, class: "cm-at-disc", fill: g.key < 0 ? "url(#cm-at-fill-none)" : "url(#cm-at-fill)", stroke: "url(#cm-at-ring)" });
+      // the name above the circle, on two lines when it is long, with a tick down to the ring. Everything inside is drawn in screen pixels
+      // (the group is scaled by --k in the styles) around an origin on the top of the ring
       const lines = wrapWords(this.topicName(g.key), 18);
-      const nm = svgEl(this.gNames, "g", { class: "cm-at-topicname" + (g.key < 0 ? " is-none" : "") });
+      const nm = svgEl(this.gNames, "g", { class: "cm-at-topicname" + (g.key < 0 ? " is-none" : ""), transform: `translate(${g.x} ${g.y - g.r})` });
       this.nameEls.set(g.key, nm);
-      const tx = svgEl(nm, "text", { x: g.x, y: g.y - g.r - 8, "text-anchor": "middle", class: "cm-at-tname" });
-      lines.forEach((ln, i) => svgEl(tx, "tspan", { x: g.x, dy: i ? "1.15em" : `${-(lines.length - 1) * 1.15}em` }, ln));
+      const sc = svgEl(nm, "g", { class: "cm-at-tscale" });
+      svgEl(sc, "line", { x1: 0, y1: -11, x2: 0, y2: 0, class: "cm-at-tick" });
+      svgEl(sc, "circle", { cx: 0, cy: 0, r: 1.8, class: "cm-at-tdot" });
+      const tx = svgEl(sc, "text", { x: 0, y: -17, "text-anchor": "middle", class: "cm-at-tname" });
+      lines.forEach((ln, i) => svgEl(tx, "tspan", { x: 0, dy: i ? "1.3em" : `${-(lines.length - 1) * 1.3}em` }, ln));
       svgEl(el, "title", {}, `${this.topicName(g.key)}: ${g.members.length} pages`);
       el.addEventListener("click", (e) => { if (this.dragged) return; e.stopPropagation(); this.st.topic = g.key; this.st.focus = null; this.apply(); });
       el.addEventListener("keydown", (e) => { if (e.key === "Enter") { this.st.topic = g.key; this.st.focus = null; this.apply(); } });
+      // pointing at a topic also lights the bands that leave it
+      el.addEventListener("mouseenter", () => { for (const b of this.bandEls) if (b.a === g.key || b.b === g.key) b.el.addClass("is-link"); this.nameEls.get(g.key)?.addClass("is-hover"); });
+      el.addEventListener("mouseleave", () => { for (const b of this.bandEls) b.el.removeClass("is-link"); this.nameEls.get(g.key)?.removeClass("is-hover"); });
       this.topicEls.set(g.key, el);
     }
 
     // one dot per page; anchors get a ring
     this.dotEls = new Map();
+    this.ringEls = new Map();
     this.labelEls = new Map();
     for (const n of d.nodes.values()) {
       const p = d.pos.get(n.path);
@@ -3645,6 +3575,8 @@ class WikiMapView extends ItemView {
       });
       c.addEventListener("dblclick", (e) => { e.stopPropagation(); this.go(n.path, false); });
       this.dotEls.set(n.path, c);
+      // an anchor gets a ring set a little off its dot; it sits right after the dot so the styles can follow the dot's hover and focus
+      if (d.anchorSet.has(n.path)) this.ringEls.set(n.path, svgEl(this.gDots, "circle", { cx: p.x, cy: p.y, r: dotRadius(n.inDeg) + 2.6, class: "cm-at-anchorring" }));
       const t = svgEl(this.gLabels, "text", { x: p.x, y: p.y - dotRadius(n.inDeg) - 3, "text-anchor": "middle", class: "cm-at-label" }, clip(n.name, 26));
       c.addEventListener("mouseenter", () => t.addClass("is-hover"));
       c.addEventListener("mouseleave", () => t.removeClass("is-hover"));
@@ -3699,14 +3631,14 @@ class WikiMapView extends ItemView {
   drawSvgBounds() {
     const d = this.data;
     let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
-    // a topic's name can be wider than its circle: allow about 9.5px a letter at the size the whole map is drawn
+    // a topic's name can be wider than its circle: allow about 10px a letter at the size the whole map is drawn
     let k0 = 1;
     for (let pass = 0; pass < 2; pass++) {
       x0 = Infinity; y0 = Infinity; x1 = -Infinity; y1 = -Infinity;
       for (const g of d.groups) {
         const lines = wrapWords(this.topicName(g.key), 18);
-        const half = Math.max(g.r, (Math.max(...lines.map((l) => l.length)) * 9.5 * k0) / 2);
-        x0 = Math.min(x0, g.x - half); x1 = Math.max(x1, g.x + half); y0 = Math.min(y0, g.y - g.r - (10 + 18 * lines.length) * k0); y1 = Math.max(y1, g.y + g.r);
+        const half = Math.max(g.r, (Math.max(...lines.map((l) => l.length)) * 10 * k0) / 2);
+        x0 = Math.min(x0, g.x - half); x1 = Math.max(x1, g.x + half); y0 = Math.min(y0, g.y - g.r - (18 + 14 * lines.length) * k0); y1 = Math.max(y1, g.y + g.r);
       }
       k0 = (x1 - x0) / Math.max(400, this.stage.clientWidth || 1000);
     }
@@ -3764,7 +3696,9 @@ class WikiMapView extends ItemView {
   paintDots() {
     for (const [path, el] of this.dotEls || []) {
       const n = this.data.nodes.get(path);
-      el.style.fill = this.st.color === "type" ? pageColor(n.type) : STATE_COLORS[n.state];
+      const col = this.st.color === "type" ? pageColor(n.type) : STATE_COLORS[n.state];
+      el.style.fill = col;
+      el.style.color = col; // the hover glow takes the dot's own color
     }
   }
 
@@ -3815,6 +3749,8 @@ class WikiMapView extends ItemView {
       el.toggleClass("is-focus", !!focus && p === focus.path);
       el.toggleClass("is-near", !!focus && near.has(p) && p !== focus.path);
       el.toggleClass("is-dim", focus ? !near.has(p) : tkey !== null && !inT);
+      const ring = this.ringEls.get(p);
+      if (ring) ring.toggleClass("is-dim", focus ? !near.has(p) : tkey !== null && !inT);
     }
     for (const [p, el] of this.labelEls) el.toggleClass("is-shown", labeled.has(p));
 
@@ -6808,6 +6744,17 @@ module.exports = class Nicrosil extends Plugin {
         view.__cmRespondBtn.remove();
         view.__cmRespondBtn = null;
       }
+      // the Send to Raw button, on note pages in the Tinmind (4.10.0)
+      const canSend = !!view.file && this.isTinNote(view.file);
+      const hasS = view.__cmRawBtn && view.__cmRawBtn.isConnected;
+      if (canSend && !hasS) {
+        const btn = view.addAction("inbox", "Send a copy of this note to Raw (Ingestion/Raw)", () => { if (view.file) this.sendNoteToRaw(view.file, view); });
+        btn.addClass("cm-raw-btn");
+        view.__cmRawBtn = btn;
+      } else if (!canSend && view.__cmRawBtn) {
+        view.__cmRawBtn.remove();
+        view.__cmRawBtn = null;
+      }
     });
   }
 
@@ -8353,6 +8300,33 @@ module.exports = class Nicrosil extends Plugin {
       p = p.parent;
     }
     return null;
+  }
+
+  /** A note page in the Tinmind (4.10.0): any note there except a course page, the Notebook page, the Tinmind Dashboard and the All Class Notes page. */
+  isTinNote(file) {
+    if (!(file instanceof TFile) || file.extension !== "md" || !file.path.startsWith(NOTES_DIR)) return false;
+    if (this.isClassHub(file) || this.isTinDashboard(file) || file.path === ALL_NOTES_PAGE + ".md" || file.path === OLD_NOTES_DASHBOARD) return false;
+    return true;
+  }
+
+  /** Copies a note, unchanged, into Ingestion/Raw (4.10.0). The note stays where it is; an existing file in Raw is never overwritten, and a copy under a new name is made only if I say so. */
+  async sendNoteToRaw(file, view) {
+    if (!this.isTinNote(file)) { new Notice("Only note pages in the Tinmind can be sent to Raw."); return; }
+    try {
+      if (view && typeof view.save === "function") await view.save(); // so the copy has what is on screen
+      const dir = RAW_DIR.replace(/\/$/, "");
+      let path = `${dir}/${file.name}`;
+      if (this.app.vault.getAbstractFileByPath(path)) {
+        const ok = await this.tinConfirm({ title: "Already in Raw", message: `"${file.name}" is already in Ingestion/Raw. Add another copy under a new name?`, ok: "Add copy" });
+        if (!ok) return;
+        path = this.tinUniquePath(dir, file.basename, ".md");
+      }
+      await this.tinEnsureFolder(dir);
+      await this.app.vault.copy(file, path);
+      new Notice(`Copied "${file.basename}" to Ingestion/Raw.`);
+    } catch (e) {
+      new Notice(`Couldn't copy to Raw: ${e && e.message ? e.message : e}`, 8000);
+    }
   }
 
   drawBackPill(pill, hub) {

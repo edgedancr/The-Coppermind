@@ -460,6 +460,33 @@
     return null;
   }
 
+  /** A note page in the Tinmind (4.10.0): any note there except a course page, the Notebook page, the Tinmind Dashboard and the All Class Notes page. */
+  isTinNote(file) {
+    if (!(file instanceof TFile) || file.extension !== "md" || !file.path.startsWith(NOTES_DIR)) return false;
+    if (this.isClassHub(file) || this.isTinDashboard(file) || file.path === ALL_NOTES_PAGE + ".md" || file.path === OLD_NOTES_DASHBOARD) return false;
+    return true;
+  }
+
+  /** Copies a note, unchanged, into Ingestion/Raw (4.10.0). The note stays where it is; an existing file in Raw is never overwritten, and a copy under a new name is made only if I say so. */
+  async sendNoteToRaw(file, view) {
+    if (!this.isTinNote(file)) { new Notice("Only note pages in the Tinmind can be sent to Raw."); return; }
+    try {
+      if (view && typeof view.save === "function") await view.save(); // so the copy has what is on screen
+      const dir = RAW_DIR.replace(/\/$/, "");
+      let path = `${dir}/${file.name}`;
+      if (this.app.vault.getAbstractFileByPath(path)) {
+        const ok = await this.tinConfirm({ title: "Already in Raw", message: `"${file.name}" is already in Ingestion/Raw. Add another copy under a new name?`, ok: "Add copy" });
+        if (!ok) return;
+        path = this.tinUniquePath(dir, file.basename, ".md");
+      }
+      await this.tinEnsureFolder(dir);
+      await this.app.vault.copy(file, path);
+      new Notice(`Copied "${file.basename}" to Ingestion/Raw.`);
+    } catch (e) {
+      new Notice(`Couldn't copy to Raw: ${e && e.message ? e.message : e}`, 8000);
+    }
+  }
+
   drawBackPill(pill, hub) {
     pill.empty();
     pill.setAttribute("aria-label", this.isNotebook(hub) ? "Go to the Notebook page (Ctrl+click for a new tab)" : "Go to the course page (Ctrl+click for a new tab)");

@@ -1,6 +1,6 @@
 ---
 type: person
-status: draft
+status: verified
 aliases:
   - Lewis
   - CS Lewis
@@ -12,7 +12,7 @@ sources:
   - "[[SRC - AI and Biblical Thinking (Bible Study Fellowship)]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > C. S. Lewis (1898–1963) wrote the essay "On Living in an Atomic Age," first published in 1948 and later collected in *Present Concerns*, edited by Walter Hooper.[^1] He appears in the Coppermind for that essay, assigned in SAIL Module 5, which asks how people should live under a new threat of destruction.

@@ -1,9 +1,14 @@
 ---
 type: person
-status: draft
-aliases: ["Osama bin Laden", "Bin Ladin", "UBL"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+status: verified
+aliases:
+  - Osama bin Laden
+  - Bin Ladin
+  - UBL
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +21,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > Usama Bin Ladin founded [[Al-Qaeda]] with Abdullah Azzam in 1988 and was its leader (emir) by August of that year.[^1] The 9/11 Commission describes him approving and shaping the [[Planes Operation|planes operation]]: he gave [[Khalid Sheikh Mohammed]] the go-ahead in 1999, chose the first targets with him and Mohammed Atef, and selected the first suicide operatives.[^2]
@@ -27,9 +32,6 @@ verified_on:
 - **Exile:** after he denounced the basing of U.S. forces in Saudi Arabia, he left the kingdom in April 1991; by 1994 the Saudi government had frozen his assets and revoked his citizenship.[^4] He ran businesses in Sudan until flying to Jalalabad, Afghanistan, on May 19, 1996.[^5]
 - **Worldview:** the Commission calls his view of Islamic history extreme, aimed mainly at Arabs and [[Sunni|Sunnis]], and drawing on fundamentalists who blame the end of the [[Caliphate]] on leaders who strayed.[^6] He shares Sayyid Qutb's stark view, which lets him and his followers "rationalize even unprovoked mass murder as righteous defense of an embattled faith".[^7] For his declaration of war, see [[World Islamic Front Fatwa]] and [[Far Enemy]].
 - **The planes operation:** he approved KSM's proposal, perhaps at Atef's urging;[^8] of the first targets, he wanted to destroy the White House and the Pentagon.[^9]
-
-> [!warning] Unsourced background
-> Bin Ladin was killed by U.S. forces in Abbottabad, Pakistan, in May 2011, after the Report was published. No source in the Coppermind covers this yet.
 
 ## Appears In
 - [[SRC - The 9-11 Commission Report]], ch. 2, 4–7, 12

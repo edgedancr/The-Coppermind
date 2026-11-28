@@ -1,9 +1,13 @@
 ---
 type: person
-status: draft
-aliases: ["Johnston", "Dr. Rob Johnston"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"]
+status: verified
+aliases:
+  - Johnston
+  - Dr. Rob Johnston
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +20,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > Rob Johnston is an ethnographer who specializes in the cultural anthropology of work. He was a research staff member at the Institute for Defense Analyses and a Director of Central Intelligence postdoctoral research fellow at the CIA's Center for the Study of Intelligence, where he joined the staff.[^1] His 2005 study, *Analytic Culture in the US Intelligence Community*, is an ethnography of intelligence analysts; Gregory Treverton's foreword calls it both an indictment of how American intelligence does analysis and a guide for doing better.[^2]

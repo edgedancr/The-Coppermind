@@ -212,6 +212,17 @@
         view.__cmRespondBtn.remove();
         view.__cmRespondBtn = null;
       }
+      // the Send to Raw button, on note pages in the Tinmind (4.10.0)
+      const canSend = !!view.file && this.isTinNote(view.file);
+      const hasS = view.__cmRawBtn && view.__cmRawBtn.isConnected;
+      if (canSend && !hasS) {
+        const btn = view.addAction("inbox", "Send a copy of this note to Raw (Ingestion/Raw)", () => { if (view.file) this.sendNoteToRaw(view.file, view); });
+        btn.addClass("cm-raw-btn");
+        view.__cmRawBtn = btn;
+      } else if (!canSend && view.__cmRawBtn) {
+        view.__cmRawBtn.remove();
+        view.__cmRawBtn = null;
+      }
     });
   }
 

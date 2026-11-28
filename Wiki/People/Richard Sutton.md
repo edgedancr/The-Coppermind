@@ -1,6 +1,6 @@
 ---
 type: person
-status: draft
+status: verified
 aliases:
   - Sutton
 courses:
@@ -9,7 +9,7 @@ sources:
   - "[[SRC - Richard Sutton, Father of RL Thinks LLMs Are a Dead End]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > Richard Sutton is one of the founding fathers of [[Reinforcement Learning|reinforcement learning]] and inventor of many of its main techniques, including [[Temporal Difference Learning|temporal difference (TD) learning]] and policy gradient methods, for which he received the 2024 Turing Award,[^1].[^2] He wrote the 2019 essay "The Bitter Lesson".[^2] He appears in the Coppermind for his Dwarkesh Podcast interview arguing that [[Large Language Model|large language models]] are a dead end, assigned in SAIL Module 5.

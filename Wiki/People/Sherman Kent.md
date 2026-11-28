@@ -1,9 +1,15 @@
 ---
 type: person
-status: draft
-aliases: ["Kent"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The Future of Analysis]]", "[[SRC - Analytic Objectivity and Science]]", "[[SRC - The Limits of Prediction]]", "[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"]
+status: verified
+aliases:
+  - Kent
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The Future of Analysis]]"
+  - "[[SRC - Analytic Objectivity and Science]]"
+  - "[[SRC - The Limits of Prediction]]"
+  - "[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +22,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > Sherman Kent was a founding father of Allied [[Intelligence Analysis|intelligence analysis]], and CIA's Sherman Kent School for Intelligence Analysis is named for him.[^1] Joseph Gartin compares his writings on analysis to Machiavelli's *The Prince*: more talked about than read.[^1]
