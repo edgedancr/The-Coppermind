@@ -216,9 +216,7 @@ function suggestLinks(id, adj, opts = {}) {
   return [...cand.values()].filter((c) => c.via.length >= min).sort((a, b) => b.score - a.score || a.id.localeCompare(b.id)).slice(0, limit);
 }
 
-/* ---------- Links between pages, shared by the Lens and the atlas ---------- */
-
-const REL_VIEW_TYPE = "nicrosil-relations";
+/* ---------- Links between pages, shared by Connections and the atlas ---------- */
 
 /** The typed-link properties, in the order SCHEMA §5 lists them, with how each reads from each side. */
 const REL_TYPES = {
@@ -262,7 +260,7 @@ function collectRelations(app) {
   return edges;
 }
 
-/** Pages the Lens shows links between: wiki pages, perspectives and source cards (not the index, logs or rule files, which link to everything). */
+/** Pages Connections shows links between: wiki pages, perspectives and source cards (not the index, logs or rule files, which link to everything). */
 const inLinkScope = (path) => /\.md$/.test(path) && (/^(Wiki|Perspectives)\//.test(path) || path.startsWith("Sources/Source Cards/"));
 /** Pages on the atlas: wiki pages and perspectives (source cards would bury it). */
 const inAtlasScope = (path) => /\.md$/.test(path) && /^(Wiki|Perspectives)\//.test(path);

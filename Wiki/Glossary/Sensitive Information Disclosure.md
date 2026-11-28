@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - LLM02
 courses:
@@ -11,7 +11,7 @@ part_of:
   - "[[OWASP Top 10 for Large Language Model Applications]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > **Sensitive information disclosure:** when an [[Large Language Model|LLM]]-integrated system exposes confidential, regulated, privileged, or proprietary data through a channel the data's owner did not authorize.[^1] OWASP stresses that the final answer is only one channel: reasoning traces, tool-call arguments, retrieved chunks, logs, [[Embedding|embeddings]], and even response timing or length can leak.[^1] It ranks second on the 2026 list, the one place at the top where OWASP says belief and evidence agree.[^2]

@@ -37,6 +37,12 @@ class ReviewSettings extends PluginSettingTab {
         this.plugin.settings.autoIndex = v; await this.plugin.persist();
         if (v) this.plugin.scheduleIndexSync(500);
       }));
+    new Setting(el).setName("Show Connections on pages")
+      .setDesc("A folding section above each wiki page's Footnotes heading (or at the end of a page without one) with the page's link counts, a map of its links, and lists of its links and of pages two steps away. Alt+L opens or folds it on every page. Turning it off takes effect on the pages you open next.")
+      .addToggle((t) => t.setValue(this.plugin.settings.pageLens !== false).onChange(async (v) => {
+        this.plugin.settings.pageLens = v; await this.plugin.persist();
+        this.plugin.refreshPageLenses();
+      }));
     new Setting(el).setName("Close the extra sidebar panels on startup")
       .setDesc("Closes Backlinks, Outgoing links, Tags, All properties and Outline in the sidebar each time Obsidian starts. You can still open any of them from the command palette during a session.")
       .addToggle((t) => t.setValue(this.plugin.settings.hidePanels !== false).onChange(async (v) => { this.plugin.settings.hidePanels = v; await this.plugin.persist(); }));
@@ -107,7 +113,7 @@ class ReviewSettings extends PluginSettingTab {
       }));
     el.createEl("p", {
       cls: "setting-item-description",
-      text: "Hotkeys: Alt+V verify, Alt+R reject, Alt+S skip, Alt+N next draft, Alt+F resolve a flag, Alt+Q open the queue. Change them under Settings → Hotkeys (search “Coppermind”).",
+      text: "Hotkeys: Alt+V verify, Alt+R reject, Alt+S skip, Alt+N next draft, Alt+F resolve a flag, Alt+Q open the queue, Alt+L open or fold Connections. Change them under Settings → Hotkeys (search “Coppermind”).",
     });
   }
 }

@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 courses:
   - SAIL
 sources:
@@ -11,7 +11,7 @@ developed_by:
   - "[[Yoshua Bengio]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > **Scientist AI:** a non-agentic AI proposed by [[Yoshua Bengio]]'s team, modeled on "a selfless, ideal scientist who's only trying to understand the world," unlike current systems trained to imitate or please us.[^1] Bengio says it could serve as a guardrail against an untrusted AI agent's bad actions, because predicting that an action is dangerous takes good, trustworthy predictions, not agency; it could also speed up scientific research.[^1]

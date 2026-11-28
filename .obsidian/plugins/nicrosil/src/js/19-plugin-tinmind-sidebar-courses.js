@@ -648,7 +648,7 @@
   /**
    * The atlas's data (3.29.0): every page in Wiki/ and Perspectives/, the links between them, the topics in _topics.md,
    * which topic each page is in, and where everything sits. Worked out again only when the links, the pages or the topic
-   * list change; a status change only recolors. Shared by the atlas and the Lens.
+   * list change; a status change only recolors. Used by the atlas.
    */
   async atlas() {
     const mc = this.app.metadataCache;
@@ -713,7 +713,7 @@
    * While the atlas is the page in front, both sidebars are closed so it has the room (3.30.0); when another page in the main
    * area comes to the front, or the atlas is closed, each sidebar that was open opens again. What was open is kept in
    * `settings.atlasSidebars`, so it survives a restart with the atlas still open. A sidebar I open myself meanwhile is left as I
-   * set it, and working in a sidebar (the Lens, say) isn't leaving the atlas: the main area's front page is still the atlas.
+   * set it, and working in a sidebar (the review queue, say) isn't leaving the atlas: the main area's front page is still the atlas.
    */
   syncAtlasSidebars() {
     const ws = this.app.workspace;

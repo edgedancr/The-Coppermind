@@ -193,10 +193,8 @@ body.cm-on-dashboard .workspace-leaf-content[data-type="file-properties"] .view-
 .cm-chg-loc { margin-left: 6px; color: var(--cm-copper); white-space: nowrap; font-size: .92em; }
 .cm-chg-link:hover .cm-chg-loc, .cm-chg-link:focus-visible .cm-chg-loc { text-decoration: underline; }
 
-/* relations panel */
+/* Connections map and lists */
 .cm-rel { padding: 8px 10px 20px; }
-.cm-rel-head { margin-bottom: 8px; }
-.cm-rel-title { font-size: var(--font-ui-medium); font-weight: 400; line-height: 1.25; }
 .cm-rel-status { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 3px; margin: 3px 0; text-transform: uppercase; letter-spacing: .04em; }
 .cm-rel-draft { background: var(--cm-copper-soft); color: var(--cm-copper); }
 .cm-rel-verified { background: rgba(95,174,158,.15); color: var(--cm-patina); }

@@ -43,9 +43,10 @@
  *         screenshot (a box dragged over the scan, saved to _attachments/Tinmind/ and embedded), recreate (the scan stays until the recreated drawing is
  *         checked) or leave out. Verify clears the draft mark, moves the scans to the trash and logs it; Discard deletes the draft and keeps the scans.
  *
- * The Lens (Alt+L; the relations panel before 3.29.0): for the open page, a map and grouped lists of its links, outgoing
- *         and incoming, typed links colored by type and plain links after them; its topic; pages two steps away it
- *         doesn't link with yet; and a trail of the pages opened before it.
+ * Connections (Alt+L, 4.9.0): a folding section on each
+ *         page, above its Footnotes heading. Folded, the link counts; open, a map and grouped lists of the page's links,
+ *         outgoing and incoming, typed links colored by type and plain links after them, and pages two steps away it
+ *         doesn't link with yet. Drawn by Nicrosil, never written into the page.
  *
  * Atlas (Alt+M; the wiki map, 3.29.0): the topics in _topics.md as circles, every page as a dot in its topic's circle, and
  *         the links between topics as bands. Which topic a page is in is worked out from the links, spreading out from
@@ -62,7 +63,7 @@
 const {
   Plugin, Modal, Notice, MarkdownView, TFile, ItemView, FuzzySuggestModal,
   PluginSettingTab, Setting, MarkdownRenderChild, MarkdownRenderer, setIcon, addIcon, debounce, parseYaml, Menu, TFolder,
-  Platform, normalizePath, requestUrl,
+  Platform, normalizePath, requestUrl, editorInfoField, editorLivePreviewField,
 } = require("obsidian");
 
 const INDEX_PATH = "_index.md";
@@ -75,7 +76,6 @@ const GIT_BUTTONS = [ // the two git shortcuts in the left sidebar's tab bar (3.
 ];
 const PANEL_BUTTONS = [ // the review queue and relations panel buttons in the same tab bar, before the git ones (3.13.0); the far-left ribbon that held them is hidden
   { cls: "cm-queue-btn", icon: "badge-check", label: "Review queue (Alt+Q)", method: "activateView" },
-  { cls: "cm-rel-btn", icon: "git-fork", label: "Lens (Alt+L)", method: "activateRelations" },
   { cls: "cm-tr-btn", icon: "scan-text", label: "Transcription queue (Alt+T)", method: "activateTranscribe" }, // shows in the Tinmind's mode only (3.16.0)
 ];
 const NOTEBOOK_PAGE = "The Tinmind/Notebook";  // the pinned Notebook (type: notebook, no semester): its card is on the Tinmind Dashboard in every semester (3.10.0)
@@ -111,7 +111,7 @@ const FLAG_KINDS = {
   warning: { label: "Warning", plural: "Warnings (unsourced)", short: "W" },
 };
 const STALE_DAYS = 14;
-const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, hidePanels: true, closeTabsOnStart: true, readMode: "verified", healthDays: 14, autoIndex: true, liveUsage: true };
+const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, hidePanels: true, closeTabsOnStart: true, readMode: "verified", healthDays: 14, autoIndex: true, liveUsage: true, pageLens: true, pageLensOpen: false };
 const READ_MODES = { verified: "Verified pages only", all: "Every page", off: "Off" };
 // Admiralty Code, as SCHEMA - Writing Pages lays it out: reliability of the source, credibility of the information.
 const RATING_REL = [["A", "Completely reliable"], ["B", "Usually reliable"], ["C", "Fairly reliable"], ["D", "Not usually reliable"], ["E", "Unreliable"], ["F", "Cannot be judged"]];
@@ -2856,9 +2856,7 @@ function suggestLinks(id, adj, opts = {}) {
   return [...cand.values()].filter((c) => c.via.length >= min).sort((a, b) => b.score - a.score || a.id.localeCompare(b.id)).slice(0, limit);
 }
 
-/* ---------- Links between pages, shared by the Lens and the atlas ---------- */
-
-const REL_VIEW_TYPE = "nicrosil-relations";
+/* ---------- Links between pages, shared by Connections and the atlas ---------- */
 
 /** The typed-link properties, in the order SCHEMA §5 lists them, with how each reads from each side. */
 const REL_TYPES = {
@@ -2902,7 +2900,7 @@ function collectRelations(app) {
   return edges;
 }
 
-/** Pages the Lens shows links between: wiki pages, perspectives and source cards (not the index, logs or rule files, which link to everything). */
+/** Pages Connections shows links between: wiki pages, perspectives and source cards (not the index, logs or rule files, which link to everything). */
 const inLinkScope = (path) => /\.md$/.test(path) && (/^(Wiki|Perspectives)\//.test(path) || path.startsWith("Sources/Source Cards/"));
 /** Pages on the atlas: wiki pages and perspectives (source cards would bury it). */
 const inAtlasScope = (path) => /\.md$/.test(path) && /^(Wiki|Perspectives)\//.test(path);
@@ -2960,65 +2958,129 @@ function wrapWords(s, n) {
   return words.length ? [a, words.join(" ")] : [a];
 }
 
-/* ---------- The Lens (the relations panel) ---------- */
+/* ---------- Connections: a folding section on each page showing its links (4.9.0) ---------- */
 
-/** The Lens's map in a large window, with every page (opened by the Enlarge button). */
-class RelationsMapModal extends Modal {
-  constructor(app, view, file, out, inn) { super(app); this.view = view; this.file = file; this.out = out; this.inn = inn; }
-  onOpen() {
-    this.modalEl.addClass("cm-rel-modal");
-    this.titleEl.setText(`Lens: ${this.file.basename}`);
-    this.view.bigModal = this;
-    this.view.drawMap(this.contentEl, this.file, this.out, this.inn, true);
-    this.view.drawLegend(this.contentEl, this.out, this.inn);
-  }
-  onClose() { if (this.view.bigModal === this) this.view.bigModal = null; this.contentEl.empty(); }
-}
+/** The heading a page's footnotes sit under. Connections goes just above it, or at the end of a page without one. */
+const FOOTNOTES_HEADING = /^#{1,6}\s+Footnotes\s*$/i;
 
 /**
- * The Lens (Alt+L, 3.29.0; the relations panel before): the open page's neighborhood. A map with the pages that link to it
- * on the left and the pages it links to on the right, typed links first and then plain links; its topic on the atlas;
- * pages two steps away that it doesn't link with yet; and the trail of pages opened while it was open.
+ * Connections (4.9.0): the page's links drawn inside the page, above its Footnotes heading. Folded, it is
+ * one line with the link counts and the page's biggest typed-link groups. Open, it shows the legend, the map and Enlarge,
+ * then three folded lists: pages two steps away, the pages this one links to and the pages that link to it. Nicrosil
+ * draws it from the links and typed links, so nothing is written into the page. Reading view adds it with a
+ * post-processor (`addPageLens`), Live Preview with an editor widget (`pageLensEditorExtension`). Folding or opening it
+ * on one page does the same on every page, and the choice is kept (`settings.pageLensOpen`).
  */
-class RelationsView extends ItemView {
-  constructor(leaf, plugin) {
-    super(leaf);
+class PageLens extends MarkdownRenderChild {
+  constructor(el, plugin, path) {
+    super(el);
     this.plugin = plugin;
-    this.file = null;
-    this.trail = [];
+    this.app = plugin.app;
+    this.path = path;
     this.token = 0;
-    this.rerender = debounce(() => this.render(), 400, true);
+    this.sig = null;
+    this.cleanups = []; // stops the map's zoom watcher and animation when the section is redrawn or removed
+    this.rerender = debounce(() => this.render(), 600, true);
   }
-  getViewType() { return REL_VIEW_TYPE; }
-  getDisplayText() { return "Lens"; }
-  getIcon() { return "git-fork"; }
-  async onOpen() {
-    this.setFile(this.plugin.currentFile());
-    this.registerEvent(this.app.workspace.on("file-open", (f) => { if (f) this.setFile(f); }));
-    this.registerEvent(this.app.workspace.on("active-leaf-change", () => {
-      const f = this.plugin.currentFile();
-      if (f && (!this.file || f.path !== this.file.path)) this.setFile(f);
-    }));
-    this.registerEvent(this.app.metadataCache.on("changed", () => this.rerender()));
+  onload() {
+    this.containerEl.addClass("cm-plens");
+    this.plugin.pageLenses.add(this);
     this.registerEvent(this.app.metadataCache.on("resolved", () => this.rerender()));
-    this.registerEvent(this.app.vault.on("rename", (f, old) => { this.trail = this.trail.map((p) => (p === old ? f.path : p)); this.rerender(); }));
-    this.registerEvent(this.app.vault.on("delete", (f) => { this.trail = this.trail.filter((p) => p !== f.path); this.rerender(); }));
-  }
-  async onClose() { this.containerEl.children[1].empty(); }
-
-  setFile(f) {
-    this.file = f;
-    if (f && inLinkScope(f.path)) {
-      this.trail = this.trail.filter((p) => p !== f.path);
-      this.trail.push(f.path);
-      if (this.trail.length > 8) this.trail.shift();
-    }
+    this.registerEvent(this.app.vault.on("rename", (f, old) => { if (old === this.path) this.path = f.path; this.rerender(); }));
     this.render();
+    // a page shown inside another (an embed or a hover preview) doesn't get its own Connections
+    window.requestAnimationFrame(() => {
+      if (this.containerEl.closest(".hover-popover, .popover, .markdown-embed")) this.containerEl.addClass("is-hidden");
+    });
+  }
+  onunload() {
+    this.plugin.pageLenses.delete(this);
+    this.runCleanups();
+    this.containerEl.empty();
+  }
+  runCleanups() { this.cleanups.splice(0).forEach((fn) => { try { fn(); } catch (e) { /* already gone */ } }); }
+
+  setOpen(open) {
+    this.plugin.settings.pageLensOpen = open;
+    this.plugin.persist();
+    this.plugin.refreshPageLenses();
   }
 
+  render() {
+    const token = ++this.token;
+    const root = this.containerEl;
+    const f = this.app.vault.getAbstractFileByPath(this.path);
+    const file = f instanceof TFile && inLinkScope(f.path) && this.plugin.settings.pageLens !== false ? f : null;
+    if (!file) { this.runCleanups(); root.empty(); this.sig = null; return; }
+
+    const edges = collectLinks(this.app);
+    const out = edges.filter((e) => e.from === file.path);
+    const inn = edges.filter((e) => e.to === file.path);
+    const open = !!this.plugin.settings.pageLensOpen;
+    const near = [...new Set(out.map((e) => e.to).concat(inn.map((e) => e.from)))];
+    // redraw only when something it shows changed (the metadata cache settles after every keystroke)
+    const sig = JSON.stringify([file.path, open, out, inn, near.map((p) => this.stateOf(p))]);
+    if (sig === this.sig) return;
+    this.sig = sig;
+    this.inDeg = new Map();
+    for (const e of edges) this.inDeg.set(e.to, (this.inDeg.get(e.to) || 0) + 1);
+
+    this.runCleanups();
+    root.empty();
+    root.toggleClass("is-open", open);
+    const head = root.createDiv({ cls: "cm-plens-head", attr: { role: "button", tabindex: "0", "aria-expanded": String(open), "aria-label": open ? "Fold Connections" : "Show Connections" } });
+    setIcon(head.createSpan({ cls: "cm-plens-chev" }), open ? "chevron-down" : "chevron-right");
+    head.createSpan({ cls: "cm-plens-title", text: "Connections" });
+    const typedN = (l) => l.filter((e) => e.type !== "see").length;
+    head.createSpan({ cls: "cm-plens-count", text: `${out.length} out (${typedN(out)} typed) · ${inn.length} in (${typedN(inn)} typed)` });
+    if (!open) {
+      // the two biggest typed-link groups, so a folded section still says something about the page
+      const groups = [];
+      for (const [list, dir, key] of [[out, "out", (e) => e.to], [inn, "inn", (e) => e.from]]) {
+        for (const t of Object.keys(REL_TYPES)) {
+          const n = new Set(list.filter((e) => e.type === t).map(key)).size;
+          if (n) groups.push({ t, dir, n });
+        }
+      }
+      const chips = head.createSpan({ cls: "cm-plens-chips" });
+      groups.sort((a, b) => b.n - a.n).slice(0, 2).forEach((g) => {
+        const c = chips.createSpan({ cls: "cm-plens-chip", text: `${LINK_TYPES[g.t][g.dir]} ${g.n}` });
+        c.style.setProperty("--c", LINK_TYPES[g.t].color);
+      });
+    }
+    const toggle = (e) => { e.preventDefault(); e.stopPropagation(); this.setOpen(!open); };
+    head.addEventListener("click", toggle);
+    head.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") toggle(e); });
+    if (!open) return;
+
+    const body = root.createDiv({ cls: "cm-plens-body cm-rel" });
+    if (!out.length && !inn.length) body.createDiv({ cls: "cm-sub cm-rel-empty", text: "No links to or from this page yet." });
+    else { this.drawLegend(body, out, inn); this.drawMap(body, file, out, inn); }
+
+    if (inAtlasScope(file.path)) {
+      const s = this.section(body, "Two steps away, not linked yet", null);
+      this.plugin.atlas().then((atlas) => {
+        if (token !== this.token) return;
+        this.drawSuggestions(s.box, file, atlas);
+        this.dropHeadings(s.box);
+        s.count.setText(String(s.box.querySelectorAll(".cm-rel-item").length));
+      }).catch((e) => { console.error("Nicrosil: atlas", e); s.el.remove(); });
+    }
+    if (out.length) {
+      const s = this.section(body, "This page links to", new Set(out.map((e) => e.to)).size);
+      this.drawGroups(s.box, "", out, "out", (e) => e.to);
+      this.dropHeadings(s.box);
+    }
+    if (inn.length) {
+      const s = this.section(body, "Pointing at this page", new Set(inn.map((e) => e.from)).size);
+      this.drawGroups(s.box, "", inn, "inn", (e) => e.from);
+      this.dropHeadings(s.box);
+    }
+  }
+
+  /* the map, its legend and lists, and opening a page */
   go(path, newTab) {
     if (!path) return;
-    if (this.bigModal) this.bigModal.close();
     if (!newTab) { this.plugin.openFile(path); return; }
     const f = this.app.vault.getAbstractFileByPath(path);
     if (f instanceof TFile) this.app.workspace.getLeaf(true).openFile(f);
@@ -3029,71 +3091,6 @@ class RelationsView extends ItemView {
     return f instanceof TFile ? pageState((this.app.metadataCache.getFileCache(f) || {}).frontmatter) : "";
   }
   nameOf(path) { return this.app.vault.getAbstractFileByPath(path)?.basename || String(path).replace(/^.*\//, "").replace(/\.md$/, ""); }
-
-  async render() {
-    const token = ++this.token;
-    const file = this.file && this.app.vault.getAbstractFileByPath(this.file.path) instanceof TFile ? this.file : null;
-    let atlas = null;
-    if (file && inAtlasScope(file.path)) { try { atlas = await this.plugin.atlas(); } catch (e) { console.error("Nicrosil: atlas", e); } }
-    if (token !== this.token) return; // a newer render started while this one waited
-    const root = this.containerEl.children[1];
-    root.empty();
-    root.addClass("cm-rel");
-    if (!file) { root.createDiv({ cls: "cm-sub", text: "Open a page to see its neighborhood in the wiki." }); return; }
-    if (!inLinkScope(file.path)) {
-      root.createDiv({ cls: "cm-rel-title", text: file.basename });
-      root.createDiv({ cls: "cm-sub cm-rel-empty", text: "The Lens shows wiki pages, perspectives and source cards." });
-      return;
-    }
-
-    const edges = collectLinks(this.app);
-    this.inDeg = new Map();
-    for (const e of edges) this.inDeg.set(e.to, (this.inDeg.get(e.to) || 0) + 1);
-    const out = edges.filter((e) => e.from === file.path);
-    const inn = edges.filter((e) => e.to === file.path);
-
-    this.drawTrail(root, file);
-    const head = root.createDiv({ cls: "cm-rel-head" });
-    head.createDiv({ cls: "cm-rel-title", text: file.basename });
-    const meta = head.createDiv({ cls: "cm-rel-meta" });
-    const st = this.stateOf(file.path);
-    if (st) meta.createSpan({ cls: `cm-rel-status cm-rel-${st}`, text: STATE_LABELS[st] });
-    if (atlas) {
-      const ti = atlas.topic.get(file.path);
-      const name = ti === undefined ? null : ti < 0 ? "No topic yet" : atlas.topics[ti].name;
-      if (name) {
-        const chip = meta.createSpan({ cls: "cm-rel-topic", text: name, attr: { role: "button", tabindex: "0", "aria-label": `Show ${file.basename} in the atlas` } });
-        const show = () => this.plugin.activateWikiMap({ focus: file.path });
-        chip.addEventListener("click", show);
-        chip.addEventListener("keydown", (e) => { if (e.key === "Enter") show(); });
-      }
-    }
-    const typedN = (l) => l.filter((e) => e.type !== "see").length;
-    head.createDiv({ cls: "cm-sub", text: `${out.length} out (${typedN(out)} typed) · ${inn.length} in (${typedN(inn)} typed)` });
-
-    if (!out.length && !inn.length) {
-      root.createDiv({ cls: "cm-sub cm-rel-empty", text: "No links to or from this page yet." });
-    } else {
-      this.drawMap(root, file, out, inn);
-      this.drawLegend(root, out, inn);
-    }
-    if (atlas) this.drawSuggestions(root, file, atlas);
-    this.drawGroups(root, "This page…", out, "out", (e) => e.to);
-    this.drawGroups(root, "Pointing at this page…", inn, "inn", (e) => e.from);
-  }
-
-  /** The pages opened before this one while the Lens was open, oldest first; click one to go back to it. */
-  drawTrail(root, file) {
-    const prev = this.trail.filter((p) => p !== file.path && this.app.vault.getAbstractFileByPath(p)).slice(-5);
-    if (!prev.length) return;
-    const row = root.createDiv({ cls: "cm-rel-trail" });
-    row.createSpan({ cls: "cm-rel-trail-label", text: "Trail" });
-    prev.forEach((p) => {
-      const c = row.createSpan({ cls: "cm-rel-trail-step", text: clip(this.nameOf(p), 22), attr: { role: "button", tabindex: "0", title: this.nameOf(p) } });
-      c.addEventListener("click", (e) => this.go(p, e.ctrlKey || e.metaKey));
-      c.addEventListener("keydown", (e) => { if (e.key === "Enter") this.go(p, e.ctrlKey || e.metaKey); });
-    });
-  }
 
   /** Neighbors on one side, one per page, each keeping the types that link it: typed links first, then the most-linked pages. */
   neighbors(list, key) {
@@ -3108,19 +3105,19 @@ class RelationsView extends ItemView {
     return [...map.values()].sort((a, b) => typed(b) - typed(a) || (this.inDeg.get(b.path) || 0) - (this.inDeg.get(a.path) || 0) || a.name.localeCompare(b.name));
   }
 
-  drawMap(root, file, out, inn, big = false) {
-    const LIMIT = 6;
-    const MAX = big ? Infinity : LIMIT;
+  /** The map: the pages linking in on the left, the pages this one links to on the right, every one of them, wide enough to fill the page's column; zoomable. */
+  drawMap(root, file, out, inn) {
     const L = this.neighbors(inn, (e) => e.from);
     const R = this.neighbors(out, (e) => e.to);
-    const Ls = L.slice(0, MAX), Rs = R.slice(0, MAX);
-    const NW = 100, NH = 26, GAP = 10, CW = 100, X1 = 0, X2 = 136, X3 = 272, W = 372;
-    const extra = (L.length > MAX || R.length > MAX) ? 1 : 0;
-    const rows = Math.max(Ls.length, Rs.length, 1) + extra;
+    const Ls = L, Rs = R;
+    const NW = 190, NH = 28, GAP = 12, CW = 210, GX = 150;
+    const X1 = 0, X2 = NW + GX, X3 = X2 + CW + GX, W = X3 + NW;
+    const rows = Math.max(Ls.length, Rs.length, 1);
     const H = rows * (NH + GAP) + GAP;
     const cy = H / 2;
-    const wrap = root.createDiv({ cls: "cm-rel-map" });
-    const svg = svgEl(wrap, "svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img", "aria-label": `Lens map for ${file.basename}` });
+    const wrap = root.createDiv({ cls: "cm-rel-map cm-rel-map-page" });
+    wrap.style.aspectRatio = `${W} / ${H}`;
+    const svg = svgEl(wrap, "svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img", "aria-label": `Map of the links of ${file.basename}` });
     svg.classList.add("cm-rel-svg");
     const defs = svgEl(svg, "defs");
     const cg = svgEl(defs, "linearGradient", { id: "cm-rel-cg", x1: 0, y1: 0, x2: 0, y2: 1 });
@@ -3137,7 +3134,7 @@ class RelationsView extends ItemView {
       const m = svgEl(defs, "marker", { id: `cm-arrow-${t}`, viewBox: "0 0 8 8", refX: 7, refY: 4, markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse" });
       svgEl(m, "path", { d: "M0,0 L8,4 L0,8 z", fill: info.color });
     }
-    const yFor = (i, n) => GAP + i * (NH + GAP) + ((rows - n - extra) * (NH + GAP)) / 2;
+    const yFor = (i, n) => GAP + i * (NH + GAP) + ((rows - n) * (NH + GAP)) / 2;
 
     const edgePath = (x1, y1, x2, y2) => `M${x1},${y1} C${(x1 + x2) / 2},${y1} ${(x1 + x2) / 2},${y2} ${x2},${y2}`;
     const edgeEls = {};
@@ -3171,7 +3168,7 @@ class RelationsView extends ItemView {
       g.addEventListener("focus", () => hot(true)); g.addEventListener("blur", () => hot(false));
       const st = this.stateOf(nd.path);
       svgEl(g, "rect", { x, y, width: w, height: NH, rx: 5, class: `cm-rel-box ${st ? "cm-rel-box-" + st : ""}` });
-      svgEl(g, "text", { x: x + w / 2, y: y + NH / 2 + 4, "text-anchor": "middle", class: "cm-rel-label" }, clip(nd.name, 16));
+      svgEl(g, "text", { x: x + w / 2, y: y + NH / 2 + 4, "text-anchor": "middle", class: "cm-rel-label" }, clip(nd.name, 30));
       svgEl(g, "title", {}, `${nd.name} (${nd.types.map(linkLabel).join(", ")})`);
       g.addEventListener("click", (e) => this.go(nd.path, e.ctrlKey || e.metaKey));
       g.addEventListener("keydown", (e) => { if (e.key === "Enter") this.go(nd.path, e.ctrlKey || e.metaKey); });
@@ -3182,16 +3179,12 @@ class RelationsView extends ItemView {
     const g = svgEl(svg, "g", { class: "cm-rel-node is-center" });
     svgEl(g, "rect", { x: X2, y: cy - ch / 2, width: CW, height: ch, rx: 7, class: "cm-rel-box cm-rel-box-center" });
     const words = file.basename.split(" "); const lines = []; let cur = "";
-    for (const w of words) { if ((cur + " " + w).trim().length > 15 && cur) { lines.push(cur); cur = w; } else cur = (cur + " " + w).trim(); }
+    for (const w of words) { if ((cur + " " + w).trim().length > 24 && cur) { lines.push(cur); cur = w; } else cur = (cur + " " + w).trim(); }
     if (cur) lines.push(cur);
     const shown = lines.slice(0, 3);
-    shown.forEach((ln, i) => svgEl(g, "text", { x: X2 + CW / 2, y: cy - ((shown.length - 1) * 6.5) + i * 13 + 4, "text-anchor": "middle", class: "cm-rel-label cm-rel-center-label" }, clip(ln, 16)));
+    shown.forEach((ln, i) => svgEl(g, "text", { x: X2 + CW / 2, y: cy - ((shown.length - 1) * 6.5) + i * 13 + 4, "text-anchor": "middle", class: "cm-rel-label cm-rel-center-label" }, clip(ln, 26)));
     svgEl(g, "title", {}, file.basename);
-    if (extra) svgEl(svg, "text", { x: W / 2, y: H - 4, "text-anchor": "middle", class: "cm-rel-more" }, `${L.length > MAX ? L.length - MAX + " more in" : ""}${L.length > MAX && R.length > MAX ? " · " : ""}${R.length > MAX ? R.length - MAX + " more out" : ""} (Enlarge to see all)`);
-    if (!big) {
-      const btn = root.createEl("button", { cls: "mod-cta cm-gbtn cm-rel-expand", text: "Enlarge" });
-      btn.addEventListener("click", () => new RelationsMapModal(this.app, this, file, out, inn).open());
-    }
+    this.enableMapZoom(wrap, svg, W, H);
   }
 
   drawLegend(root, out, inn) {
@@ -3254,8 +3247,169 @@ class RelationsView extends ItemView {
       });
     }
   }
+
+  /**
+   * Zoom and pan for the map (4.9.1). Ctrl+scroll (or a trackpad pinch) zooms at the pointer, a drag pans, the + and - buttons
+   * zoom from the middle, and double-clicking the background or the fit button shows the whole map again. Zooming eases
+   * over 160 ms. Plain scrolling is left alone so the page still scrolls past the map. The view is the SVG's viewBox, kept
+   * at the box's own shape so the pointer maps straight onto it; while the map hasn't been zoomed it refits when the box resizes.
+   */
+  enableMapZoom(wrap, svg, W, H) {
+    const MIN = 0.6, MAX = 8; // zoom, relative to showing the whole map
+    let cur = null, tgt = null, anim = 0, fitted = true, drag = null, swallow = false;
+    const fitView = () => {
+      const r = svg.getBoundingClientRect();
+      if (!r.width || !r.height) return null;
+      const ar = r.width / r.height, w = Math.max(W, H * ar), h = w / ar;
+      return { x: (W - w) / 2, y: (H - h) / 2, w, h };
+    };
+    const apply = (v) => { cur = v; svg.setAttribute("viewBox", `${v.x} ${v.y} ${v.w} ${v.h}`); };
+    const jump = (v) => { cancelAnimationFrame(anim); apply(v); tgt = v; };
+    const go = (v) => {
+      if (!cur) return;
+      cancelAnimationFrame(anim);
+      const from = cur;
+      let t0 = null; // the first frame's own timestamp, so the easing never depends on which clock started it
+      tgt = v;
+      const step = (now) => {
+        if (t0 === null) t0 = now;
+        const k = Math.min(1, (now - t0) / 160), e = 1 - Math.pow(1 - k, 3);
+        apply({ x: from.x + (v.x - from.x) * e, y: from.y + (v.y - from.y) * e, w: from.w + (v.w - from.w) * e, h: from.h + (v.h - from.h) * e });
+        if (k < 1) anim = requestAnimationFrame(step);
+      };
+      anim = requestAnimationFrame(step);
+    };
+    const showAll = () => { fitted = true; const f = fitView(); if (f) go(f); };
+    const zoomAt = (factor, fx, fy) => {
+      const fit = fitView(), base = tgt || cur;
+      if (!fit || !base) return;
+      const z = Math.min(MAX, Math.max(MIN, (fit.w / base.w) * factor));
+      const w = fit.w / z, h = fit.h / z;
+      fitted = false;
+      go({ x: base.x + fx * (base.w - w), y: base.y + fy * (base.h - h), w, h });
+    };
+
+    const ro = new ResizeObserver(() => { if (fitted) { const f = fitView(); if (f) jump(f); } });
+    ro.observe(svg);
+    this.cleanups.push(() => { ro.disconnect(); cancelAnimationFrame(anim); });
+
+    svg.addEventListener("wheel", (e) => {
+      if (!(e.ctrlKey || e.metaKey)) return;
+      e.preventDefault(); e.stopPropagation();
+      const r = svg.getBoundingClientRect();
+      zoomAt(Math.exp(-e.deltaY * (e.deltaMode === 1 ? 0.05 : 0.0022)), (e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height);
+    }, { passive: false });
+    svg.addEventListener("pointerdown", (e) => {
+      if (e.button !== 0 || !(tgt || cur)) return;
+      drag = { id: e.pointerId, x: e.clientX, y: e.clientY, v: { ...(tgt || cur) }, on: false };
+    });
+    svg.addEventListener("pointermove", (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (!drag.on) {
+        if (Math.hypot(dx, dy) < 4) return; // a click on a page, not a drag
+        drag.on = true; fitted = false;
+        svg.setPointerCapture(e.pointerId);
+        wrap.addClass("is-panning");
+      }
+      const r = svg.getBoundingClientRect(), v = drag.v;
+      jump({ x: v.x - (dx / r.width) * v.w, y: v.y - (dy / r.height) * v.h, w: v.w, h: v.h });
+    });
+    const end = () => {
+      if (!drag) return;
+      if (drag.on) { wrap.removeClass("is-panning"); swallow = true; window.setTimeout(() => { swallow = false; }, 0); }
+      drag = null;
+    };
+    svg.addEventListener("pointerup", end);
+    svg.addEventListener("pointercancel", end);
+    svg.addEventListener("click", (e) => { if (swallow) { e.preventDefault(); e.stopPropagation(); } }, true);
+    svg.addEventListener("dblclick", (e) => { if (!e.target.closest || !e.target.closest(".cm-rel-node")) showAll(); });
+
+    const ctl = wrap.createDiv({ cls: "cm-rel-zoom" });
+    const btn = (icon, label, fn) => {
+      const b = ctl.createEl("button", { attr: { "aria-label": label, title: label } });
+      setIcon(b, icon);
+      b.addEventListener("click", fn);
+    };
+    btn("plus", "Zoom in", () => zoomAt(1.5, 0.5, 0.5));
+    btn("minus", "Zoom out", () => zoomAt(1 / 1.5, 0.5, 0.5));
+    btn("maximize", "Show the whole map", showAll);
+    wrap.createDiv({ cls: "cm-rel-zoomhint", text: "Ctrl + scroll to zoom · drag to pan" });
+  }
+
+  /** A folded list under the map; which ones are open is kept for the session, so a redraw doesn't fold them again. */
+  section(body, title, n) {
+    const el = body.createEl("details", { cls: "cm-plens-list" });
+    el.open = this.plugin.pageLensLists.has(title);
+    el.addEventListener("toggle", () => { if (el.open) this.plugin.pageLensLists.add(title); else this.plugin.pageLensLists.delete(title); });
+    const sum = el.createEl("summary", { cls: "cm-plens-listhead" });
+    sum.createSpan({ text: title });
+    const count = sum.createSpan({ cls: "cm-rel-count", text: n == null ? "" : String(n) });
+    const box = el.createDiv({ cls: "cm-plens-listbody" });
+    return { el, box, count };
+  }
+  /** The lists' own headings; the folded list's summary line says the same. */
+  dropHeadings(box) { box.querySelectorAll(":scope > h5.cm-rel-h").forEach((h) => h.remove()); }
 }
 
+/**
+ * Live Preview's half of Connections: a block widget above the Footnotes heading line, or after the last line. The
+ * widget keeps its section while you type (it is rebuilt only when the page or its place changes) and its clicks don't
+ * move the cursor. Source mode has none.
+ */
+function pageLensEditorExtension(plugin) {
+  let cmState, cmView;
+  try { cmState = require("@codemirror/state"); cmView = require("@codemirror/view"); } catch (e) { return []; }
+  const { StateField } = cmState;
+  const { Decoration, EditorView, WidgetType } = cmView;
+
+  class LensWidget extends WidgetType {
+    constructor(path) { super(); this.path = path; }
+    eq(other) { return other.path === this.path; }
+    toDOM() {
+      const el = document.createElement("div");
+      el.className = "cm-plens-widget";
+      const lens = new PageLens(el, plugin, this.path);
+      el.cmLens = lens;
+      lens.load();
+      return el;
+    }
+    destroy(el) { if (el.cmLens) el.cmLens.unload(); }
+    ignoreEvent() { return true; }
+    get estimatedHeight() { return 44; }
+  }
+
+  const place = (state) => {
+    if (plugin.settings.pageLens === false) return null;
+    let live = false, file = null;
+    try { live = state.field(editorLivePreviewField); } catch (e) { /* not a note editor */ }
+    try { file = state.field(editorInfoField)?.file; } catch (e) { /* not a note editor */ }
+    if (!live || !file || !inLinkScope(file.path)) return null;
+    const doc = state.doc;
+    for (let n = doc.lines; n >= 1; n--) {
+      const line = doc.line(n);
+      if (FOOTNOTES_HEADING.test(line.text)) return { path: file.path, pos: line.from, side: -1 };
+    }
+    return { path: file.path, pos: doc.length, side: 1 };
+  };
+  const build = (p) => ({
+    p,
+    deco: p ? Decoration.set([Decoration.widget({ widget: new LensWidget(p.path), block: true, side: p.side }).range(p.pos)]) : Decoration.none,
+  });
+  const field = StateField.define({
+    create: (state) => build(place(state)),
+    update(v, tr) {
+      const p = place(tr.state);
+      if (p && v.p && p.path === v.p.path && p.side === v.p.side && tr.changes.mapPos(v.p.pos, p.side) === p.pos) {
+        return { p, deco: v.deco.map(tr.changes) };
+      }
+      if (!p && !v.p) return v;
+      return build(p);
+    },
+    provide: (f) => EditorView.decorations.from(f, (v) => v.deco),
+  });
+  return [field];
+}
 /* ---------- The atlas (the wiki map, 3.29.0) ---------- */
 
 const MAP_VIEW_TYPE = "nicrosil-wikimap";
@@ -3310,7 +3464,7 @@ class WikiMapView extends ItemView {
     if (f instanceof TFile) this.app.workspace.getLeaf(true).openFile(f);
   }
 
-  /** Opens on a topic or a page (from the Lens, a command or the Dashboard). */
+  /** Opens on a topic or a page (from a command or the Dashboard). */
   show(opts = {}) {
     if (opts.focus) { this.st.focus = opts.focus; this.st.topic = null; }
     else if (opts.topic !== undefined) { this.st.topic = opts.topic; this.st.focus = null; }
@@ -3936,6 +4090,12 @@ class ReviewSettings extends PluginSettingTab {
         this.plugin.settings.autoIndex = v; await this.plugin.persist();
         if (v) this.plugin.scheduleIndexSync(500);
       }));
+    new Setting(el).setName("Show Connections on pages")
+      .setDesc("A folding section above each wiki page's Footnotes heading (or at the end of a page without one) with the page's link counts, a map of its links, and lists of its links and of pages two steps away. Alt+L opens or folds it on every page. Turning it off takes effect on the pages you open next.")
+      .addToggle((t) => t.setValue(this.plugin.settings.pageLens !== false).onChange(async (v) => {
+        this.plugin.settings.pageLens = v; await this.plugin.persist();
+        this.plugin.refreshPageLenses();
+      }));
     new Setting(el).setName("Close the extra sidebar panels on startup")
       .setDesc("Closes Backlinks, Outgoing links, Tags, All properties and Outline in the sidebar each time Obsidian starts. You can still open any of them from the command palette during a session.")
       .addToggle((t) => t.setValue(this.plugin.settings.hidePanels !== false).onChange(async (v) => { this.plugin.settings.hidePanels = v; await this.plugin.persist(); }));
@@ -4006,7 +4166,7 @@ class ReviewSettings extends PluginSettingTab {
       }));
     el.createEl("p", {
       cls: "setting-item-description",
-      text: "Hotkeys: Alt+V verify, Alt+R reject, Alt+S skip, Alt+N next draft, Alt+F resolve a flag, Alt+Q open the queue. Change them under Settings → Hotkeys (search “Coppermind”).",
+      text: "Hotkeys: Alt+V verify, Alt+R reject, Alt+S skip, Alt+N next draft, Alt+F resolve a flag, Alt+Q open the queue, Alt+L open or fold Connections. Change them under Settings → Hotkeys (search “Coppermind”).",
     });
   }
 }
@@ -6236,10 +6396,11 @@ module.exports = class Nicrosil extends Plugin {
     this.proposedCache = new Map(); // source card path -> { mtime, value } for its "Proposed B-2" line
     this.popObservers = new Set(); // watchers on hover previews, dropped when the preview closes
     this.lastHover = null;         // the page the pointer last hovered a link to, so a hover preview knows which page it shows
+    this.pageLenses = new Set();   // the Connections sections drawn now, in Reading view and Live Preview (4.9.0)
+    this.pageLensLists = new Set(); // which of Connections' lists are open, for this session
 
     this.registerView(VIEW_TYPE, (leaf) => new QueueView(leaf, this));
     this.registerView(TR_VIEW_TYPE, (leaf) => new TranscribeView(leaf, this));
-    this.registerView(REL_VIEW_TYPE, (leaf) => new RelationsView(leaf, this));
     this.registerView(MAP_VIEW_TYPE, (leaf) => new WikiMapView(leaf, this));
     this.registerView(QUERY_VIEW_TYPE, (leaf) => new QueryView(leaf, this));
     this.registerView(TRIAGE_VIEW_TYPE, (leaf) => new TriageView(leaf, this));
@@ -6261,6 +6422,8 @@ module.exports = class Nicrosil extends Plugin {
       this.registerMarkdownCodeBlockProcessor(name, (src, el, ctx) => ctx.addChild(new LiveBlock(el, this, method)));
     }
     this.registerMarkdownPostProcessor((el, ctx) => this.addResolveButtons(el, ctx));
+    this.registerMarkdownPostProcessor((el, ctx) => this.addPageLens(el, ctx));
+    this.registerEditorExtension(pageLensEditorExtension(this));
     this.searchIndex = new SearchIndex(this.app);
     this.registerMarkdownCodeBlockProcessor("coppermind-search", (src, el, ctx) => ctx.addChild(new SearchBlock(el, this)));
     this.registerEvent(this.app.vault.on("modify", (f) => this.searchIndex.touch(f)));
@@ -6326,6 +6489,7 @@ module.exports = class Nicrosil extends Plugin {
       if (this.settings.hidePanels !== false) {
         for (const t of ["backlink", "outgoing-link", "tag", "all-properties", "outline"]) this.app.workspace.detachLeavesOfType(t);
       }
+      this.app.workspace.iterateAllLeaves((l) => { if (l.getViewState().type === "nicrosil-relations") l.detach(); }); // a sidebar tab from before Connections (4.9.0) that a saved layout may still hold
       if (performance.now() < 20000) window.setTimeout(() => this.closeOtherTabsOnStart(), 1500); // only when Obsidian itself just started (3.21.0), not when the plugin is reloaded later
       this.exitTinMode(); // Obsidian always opens in the Coppermind's mode (3.2.1): colors back, the right sidebar as it was before the Tinmind
       this.paintTinMode();
@@ -6418,7 +6582,7 @@ module.exports = class Nicrosil extends Plugin {
       if (!checking) this.activateWikiMap({ focus: f.path });
       return true;
     } });
-    this.addCommand({ id: "open-relations", name: "Open the Lens", hotkeys: [{ modifiers: ["Alt"], key: "l" }], callback: () => this.activateRelations() });
+    this.addCommand({ id: "open-relations", name: "Open or fold Connections on pages", hotkeys: [{ modifiers: ["Alt"], key: "l" }], callback: () => this.togglePageLens() });
     this.addCommand({ id: "open-queue", name: "Open the review queue", hotkeys: [{ modifiers: ["Alt"], key: "q" }], callback: () => this.activateView() });
     this.addCommand({ id: "open-transcription-queue", name: "Open the transcription queue", hotkeys: [{ modifiers: ["Alt"], key: "t" }], callback: () => this.activateTranscribe() });
     this.addCommand({ id: "open-triage", name: "Open Triage (the sources waiting in Ingestion/Raw)", hotkeys: [{ modifiers: ["Alt"], key: "i" }], callback: () => this.activateTriage() });
@@ -8379,7 +8543,7 @@ module.exports = class Nicrosil extends Plugin {
   /**
    * The atlas's data (3.29.0): every page in Wiki/ and Perspectives/, the links between them, the topics in _topics.md,
    * which topic each page is in, and where everything sits. Worked out again only when the links, the pages or the topic
-   * list change; a status change only recolors. Shared by the atlas and the Lens.
+   * list change; a status change only recolors. Used by the atlas.
    */
   async atlas() {
     const mc = this.app.metadataCache;
@@ -8444,7 +8608,7 @@ module.exports = class Nicrosil extends Plugin {
    * While the atlas is the page in front, both sidebars are closed so it has the room (3.30.0); when another page in the main
    * area comes to the front, or the atlas is closed, each sidebar that was open opens again. What was open is kept in
    * `settings.atlasSidebars`, so it survives a restart with the atlas still open. A sidebar I open myself meanwhile is left as I
-   * set it, and working in a sidebar (the Lens, say) isn't leaving the atlas: the main area's front page is still the atlas.
+   * set it, and working in a sidebar (the review queue, say) isn't leaving the atlas: the main area's front page is still the atlas.
    */
   syncAtlasSidebars() {
     const ws = this.app.workspace;
@@ -8489,14 +8653,39 @@ module.exports = class Nicrosil extends Plugin {
     if (leaf.view instanceof WikiMapView && (opts.focus || opts.topic !== undefined)) leaf.view.show(opts);
   }
 
-  async activateRelations() {
-    if (this.settings.tinmindMode) { new Notice("The Tinmind has no Lens. Click The Coppermind to go back."); return; }
-    let leaf = this.app.workspace.getLeavesOfType(REL_VIEW_TYPE)[0];
-    if (!leaf) {
-      leaf = this.app.workspace.getRightLeaf(false);
-      await leaf.setViewState({ type: REL_VIEW_TYPE, active: true });
+  /**
+   * Reading view's half of Connections (4.9.0): adds the section to the block that starts with the Footnotes heading,
+   * above the heading, or to the page's last block on a page without one. Live Preview's half is pageLensEditorExtension.
+   */
+  addPageLens(el, ctx) {
+    if (this.settings.pageLens === false || !inLinkScope(ctx.sourcePath || "")) return;
+    const info = ctx.getSectionInfo(el);
+    if (!info) return; // an embed or an export: no section info, and no Connections
+    const lines = info.text.split("\n").map((l) => l.replace(/\r$/, ""));
+    let where = null;
+    if (FOOTNOTES_HEADING.test(lines[info.lineStart] || "")) where = "before";
+    else if (!lines.some((l) => FOOTNOTES_HEADING.test(l))) {
+      let last = lines.length - 1;
+      while (last > 0 && !lines[last].trim()) last--;
+      if (info.lineEnd >= last) where = "after";
     }
-    this.app.workspace.revealLeaf(leaf);
+    if (!where) return;
+    const box = createDiv();
+    if (where === "before") el.prepend(box); else el.append(box);
+    ctx.addChild(new PageLens(box, this, ctx.sourcePath));
+  }
+
+  /** Redraws every Connections section (after it is opened or folded, or turned on or off in the settings). */
+  refreshPageLenses() {
+    this.pageLenses.forEach((l) => { l.sig = null; l.render(); });
+  }
+
+  /** Alt+L: opens Connections on every page, or folds it. */
+  togglePageLens() {
+    if (this.settings.pageLens === false) { new Notice("Connections is turned off. Turn it on in Nicrosil's settings."); return; }
+    this.settings.pageLensOpen = !this.settings.pageLensOpen;
+    this.persist();
+    this.refreshPageLenses();
   }
 
   async openFile(path, newTab) {
@@ -9729,4 +9918,5 @@ module.exports.__test = {
   buildQueryPrompt, parseQueryReply, analysisPage, queryLogEntry, queryFiledLogEntry, describeToolUse, usageFromEvent, usageFromApi, parseClaudeLogin, resetText, usageLabel, claudeArgs, winQuote,
   triageEntries, fileSize, addedWhen, parseIngestPlan,
   trClaudeArgs, normDate, suggestTranscribe, buildTranscribePrompt, parseTranscribeReply, transcriptionNote, noteChecks, transcribeLogEntry, buildRecreatePrompt, parseRecreateReply, buildRecheckPrompt, parseRecheckReply, applyRecheck, unsureContext, trCourses, TranscribeView,
+  PageLens, pageLensEditorExtension, FOOTNOTES_HEADING,
 };

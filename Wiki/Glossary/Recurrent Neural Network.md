@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - RNN
   - RNNs
@@ -13,7 +13,7 @@ related:
   - "[[Neural Network]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > **Recurrent neural network (RNN):** a sequence model that processes input one position at a time, each step depending on the one before; with variants such as long short-term memory, RNNs were the state of the art for language modeling and translation before the transformer.[^1] Their step-by-step nature prevents parallel computation within a training example, the constraint the [[Transformer|transformer]] was designed to remove.[^1]

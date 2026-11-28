@@ -174,4 +174,5 @@ module.exports.__test = {
   buildQueryPrompt, parseQueryReply, analysisPage, queryLogEntry, queryFiledLogEntry, describeToolUse, usageFromEvent, usageFromApi, parseClaudeLogin, resetText, usageLabel, claudeArgs, winQuote,
   triageEntries, fileSize, addedWhen, parseIngestPlan,
   trClaudeArgs, normDate, suggestTranscribe, buildTranscribePrompt, parseTranscribeReply, transcriptionNote, noteChecks, transcribeLogEntry, buildRecreatePrompt, parseRecreateReply, buildRecheckPrompt, parseRecheckReply, applyRecheck, unsureContext, trCourses, TranscribeView,
+  PageLens, pageLensEditorExtension, FOOTNOTES_HEADING,
 };

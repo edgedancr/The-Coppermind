@@ -1,9 +1,15 @@
 ---
 type: glossary
-status: draft
-aliases: ["Stovepipes", "Stovepiping"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - Grammar Summaries, Weeks 2-7]]", "[[SRC - The 9-11 Commission Report]]", "[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"]
+status: verified
+aliases:
+  - Stovepipes
+  - Stovepiping
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - Grammar Summaries, Weeks 2-7]]"
+  - "[[SRC - The 9-11 Commission Report]]"
+  - "[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +22,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > **Stovepipes:** the organization of intelligence agencies according to their main information sources, with limited sharing across these lanes.[^1] The 9/11 Commission wrote that it is hard to "break down stovepipes" when so many agencies are "legally and politically entitled to have cast-iron pipes of their own".[^2] Gregory Treverton, introducing [[Rob Johnston]]'s study, writes that analysts should move much more often across the agency "stovepipes" they inhabit.[^3]

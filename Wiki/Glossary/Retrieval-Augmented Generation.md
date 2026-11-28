@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - RAG
 courses:
@@ -12,7 +12,7 @@ part_of:
   - "[[Retrieval-Augmented Generation vs. Fine-Tuning vs. Prompt Engineering]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > **Retrieval-augmented generation (RAG):** a way to improve a model's answers by retrieving relevant, up-to-date information from a corpus, adding it to the prompt, and generating a response from that enriched context.[^1] Retrieval works by meaning rather than keywords: the query and the documents are converted into vector [[Embedding|embeddings]] and matched by similarity.[^1] OWASP calls it the most familiar case of an [[Large Language Model|LLM]] application that converts content into numerical representations ([[Embedding|embeddings]]) and uses similarity search to decide what the model sees.[^2] OWASP treats a RAG corpus as an attack surface for [[Prompt Injection|prompt injection]],[^3] [[Data and Model Poisoning|poisoning]],[^4] and [[Vector and Embedding Weaknesses|embedding attacks]].[^2]

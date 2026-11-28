@@ -17,10 +17,11 @@ module.exports = class Nicrosil extends Plugin {
     this.proposedCache = new Map(); // source card path -> { mtime, value } for its "Proposed B-2" line
     this.popObservers = new Set(); // watchers on hover previews, dropped when the preview closes
     this.lastHover = null;         // the page the pointer last hovered a link to, so a hover preview knows which page it shows
+    this.pageLenses = new Set();   // the Connections sections drawn now, in Reading view and Live Preview (4.9.0)
+    this.pageLensLists = new Set(); // which of Connections' lists are open, for this session
 
     this.registerView(VIEW_TYPE, (leaf) => new QueueView(leaf, this));
     this.registerView(TR_VIEW_TYPE, (leaf) => new TranscribeView(leaf, this));
-    this.registerView(REL_VIEW_TYPE, (leaf) => new RelationsView(leaf, this));
     this.registerView(MAP_VIEW_TYPE, (leaf) => new WikiMapView(leaf, this));
     this.registerView(QUERY_VIEW_TYPE, (leaf) => new QueryView(leaf, this));
     this.registerView(TRIAGE_VIEW_TYPE, (leaf) => new TriageView(leaf, this));
@@ -42,6 +43,8 @@ module.exports = class Nicrosil extends Plugin {
       this.registerMarkdownCodeBlockProcessor(name, (src, el, ctx) => ctx.addChild(new LiveBlock(el, this, method)));
     }
     this.registerMarkdownPostProcessor((el, ctx) => this.addResolveButtons(el, ctx));
+    this.registerMarkdownPostProcessor((el, ctx) => this.addPageLens(el, ctx));
+    this.registerEditorExtension(pageLensEditorExtension(this));
     this.searchIndex = new SearchIndex(this.app);
     this.registerMarkdownCodeBlockProcessor("coppermind-search", (src, el, ctx) => ctx.addChild(new SearchBlock(el, this)));
     this.registerEvent(this.app.vault.on("modify", (f) => this.searchIndex.touch(f)));
@@ -107,6 +110,7 @@ module.exports = class Nicrosil extends Plugin {
       if (this.settings.hidePanels !== false) {
         for (const t of ["backlink", "outgoing-link", "tag", "all-properties", "outline"]) this.app.workspace.detachLeavesOfType(t);
       }
+      this.app.workspace.iterateAllLeaves((l) => { if (l.getViewState().type === "nicrosil-relations") l.detach(); }); // a sidebar tab from before Connections (4.9.0) that a saved layout may still hold
       if (performance.now() < 20000) window.setTimeout(() => this.closeOtherTabsOnStart(), 1500); // only when Obsidian itself just started (3.21.0), not when the plugin is reloaded later
       this.exitTinMode(); // Obsidian always opens in the Coppermind's mode (3.2.1): colors back, the right sidebar as it was before the Tinmind
       this.paintTinMode();
@@ -199,7 +203,7 @@ module.exports = class Nicrosil extends Plugin {
       if (!checking) this.activateWikiMap({ focus: f.path });
       return true;
     } });
-    this.addCommand({ id: "open-relations", name: "Open the Lens", hotkeys: [{ modifiers: ["Alt"], key: "l" }], callback: () => this.activateRelations() });
+    this.addCommand({ id: "open-relations", name: "Open or fold Connections on pages", hotkeys: [{ modifiers: ["Alt"], key: "l" }], callback: () => this.togglePageLens() });
     this.addCommand({ id: "open-queue", name: "Open the review queue", hotkeys: [{ modifiers: ["Alt"], key: "q" }], callback: () => this.activateView() });
     this.addCommand({ id: "open-transcription-queue", name: "Open the transcription queue", hotkeys: [{ modifiers: ["Alt"], key: "t" }], callback: () => this.activateTranscribe() });
     this.addCommand({ id: "open-triage", name: "Open Triage (the sources waiting in Ingestion/Raw)", hotkeys: [{ modifiers: ["Alt"], key: "i" }], callback: () => this.activateTriage() });

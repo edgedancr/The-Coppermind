@@ -18,14 +18,39 @@
     if (leaf.view instanceof WikiMapView && (opts.focus || opts.topic !== undefined)) leaf.view.show(opts);
   }
 
-  async activateRelations() {
-    if (this.settings.tinmindMode) { new Notice("The Tinmind has no Lens. Click The Coppermind to go back."); return; }
-    let leaf = this.app.workspace.getLeavesOfType(REL_VIEW_TYPE)[0];
-    if (!leaf) {
-      leaf = this.app.workspace.getRightLeaf(false);
-      await leaf.setViewState({ type: REL_VIEW_TYPE, active: true });
+  /**
+   * Reading view's half of Connections (4.9.0): adds the section to the block that starts with the Footnotes heading,
+   * above the heading, or to the page's last block on a page without one. Live Preview's half is pageLensEditorExtension.
+   */
+  addPageLens(el, ctx) {
+    if (this.settings.pageLens === false || !inLinkScope(ctx.sourcePath || "")) return;
+    const info = ctx.getSectionInfo(el);
+    if (!info) return; // an embed or an export: no section info, and no Connections
+    const lines = info.text.split("\n").map((l) => l.replace(/\r$/, ""));
+    let where = null;
+    if (FOOTNOTES_HEADING.test(lines[info.lineStart] || "")) where = "before";
+    else if (!lines.some((l) => FOOTNOTES_HEADING.test(l))) {
+      let last = lines.length - 1;
+      while (last > 0 && !lines[last].trim()) last--;
+      if (info.lineEnd >= last) where = "after";
     }
-    this.app.workspace.revealLeaf(leaf);
+    if (!where) return;
+    const box = createDiv();
+    if (where === "before") el.prepend(box); else el.append(box);
+    ctx.addChild(new PageLens(box, this, ctx.sourcePath));
+  }
+
+  /** Redraws every Connections section (after it is opened or folded, or turned on or off in the settings). */
+  refreshPageLenses() {
+    this.pageLenses.forEach((l) => { l.sig = null; l.render(); });
+  }
+
+  /** Alt+L: opens Connections on every page, or folds it. */
+  togglePageLens() {
+    if (this.settings.pageLens === false) { new Notice("Connections is turned off. Turn it on in Nicrosil's settings."); return; }
+    this.settings.pageLensOpen = !this.settings.pageLensOpen;
+    this.persist();
+    this.refreshPageLenses();
   }
 
   async openFile(path, newTab) {

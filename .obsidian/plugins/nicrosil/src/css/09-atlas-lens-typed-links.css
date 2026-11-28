@@ -102,17 +102,10 @@
 .cm-at-svg.is-panning .cm-at-dot, .cm-at-svg.is-panning .cm-at-topic { pointer-events: none; }
 @media (prefers-reduced-motion: reduce) { .cm-at-topic, .cm-at-disc, .cm-at-band { transition: none; } }
 
-/* ---------- The Lens (3.29.0): the relations panel with plain links, the page's topic, suggestions and a trail ---------- */
-.cm-rel-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+/* ---------- Connections map and lists: plain links, suggestions and stateful boxes ---------- */
 .cm-rel-rereview { background: rgba(224, 168, 70, .15); color: var(--cm-amber); }
 .cm-rel-box-rereview { stroke: var(--cm-amber); stroke-width: 1.2; stroke-dasharray: none; }
 .cm-rel-dot-rereview { background: var(--cm-amber); border-color: var(--cm-amber); }
-.cm-rel-topic { font-size: 10px; letter-spacing: .03em; padding: 2px 7px; margin: 3px 0; border-radius: 2px; border: 1px solid rgba(134, 210, 193, .45); color: #86d2c1; cursor: pointer; }
-.cm-rel-topic:hover, .cm-rel-topic:focus-visible { background: rgba(95, 174, 158, .14); outline: none; }
-.cm-rel-trail { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-bottom: 8px; font-size: var(--font-ui-smaller); }
-.cm-rel-trail-label { color: var(--text-faint); text-transform: uppercase; letter-spacing: .05em; margin-right: 2px; }
-.cm-rel-trail-step { color: var(--text-muted); cursor: pointer; padding: 1px 5px; border-radius: 2px; background: rgba(255, 255, 255, .04); }
-.cm-rel-trail-step:hover, .cm-rel-trail-step:focus-visible { color: var(--text-normal); background: var(--cm-copper-soft); outline: none; }
 .cm-rel-edge.is-see { stroke-width: 1; }
 .cm-rel-sugg .cm-rel-item { align-items: flex-start; padding-left: 8px; }
 .cm-rel-sugg .cm-rel-dot { margin-top: 5px; }

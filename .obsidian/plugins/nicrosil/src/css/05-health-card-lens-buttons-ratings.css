@@ -17,7 +17,6 @@
 
 /* ---- Relations panel: crisp and flat (2.7.3). Same look as the wiki map: sharp 2px corners, no glows, no flowing dots, no halo, no dotted backdrop. ---- */
 /* same serif as the Review queue header; the gradient and glow are shared with it, see the end of this file */
-.cm-rel-title { font-family: "Segoe UI", system-ui, sans-serif; font-size: 1.3em; line-height: 1.15; letter-spacing: 0.02em; }
 .cm-rel-status { border-radius: 2px; }
 .cm-rel-map { border: 1px solid rgba(184, 115, 51, .35); border-radius: 2px; background: #171310; box-shadow: none; }
 .cm-rel-box { fill: #1f1a16; rx: 2px; ry: 2px; filter: none; transition: fill .15s, stroke-width .15s; }
@@ -36,8 +35,8 @@
 .cm-rel-item { border-radius: 2px; }
 .cm-rel-dot { border-radius: 1px; }
 
-/* ---- Review queue and relations panel headers: still, glowing gradient like the Dashboard name (2.7.3). No shimmer. ---- */
-.cm-queue h4, .cm-rel-title {
+/* ---- Review queue header: still, glowing gradient like the Dashboard name (2.7.3). No shimmer. ---- */
+.cm-queue h4 {
   width: fit-content; max-width: 100%;
   font-family: var(--cm-gradient-font); font-weight: 400; letter-spacing: 0.02em;
   background: var(--cm-gradient); background-size: 100% 100%;
@@ -105,12 +104,7 @@ button.cm-gbtn.mod-cta:disabled {
   box-shadow: 0 0 5px rgba(217,138,74,.3), 0 0 8px rgba(95,174,158,.22);
 }
 
-/* Relations map expand button (2.12.0): reuses the gradient button style; centered under the map. */
-.cm-rel-expand { display: block; margin: 8px auto 4px; }
 
-/* Enlarged relations map (2.13.0): a wide window; the map scales up with it and the window scrolls when there are many pages. */
-.modal.cm-rel-modal { width: min(920px, 92vw); max-width: 92vw; }
-.cm-rel-modal .modal-content { max-height: 75vh; overflow-y: auto; }
 
 /* Legend chip lit while its page card is hovered (2.13.1): sharp 2px outline and glow in the relationship's own color. */
 .cm-rel-chip { padding: 1px 5px; border-radius: 2px; transition: color .15s, background .15s, box-shadow .15s; }

@@ -9,7 +9,9 @@
     "healthDays": 14,
     "autoIndex": true,
     "liveUsage": true,
-    "milestone": 25,
+    "pageLens": true,
+    "pageLensOpen": true,
+    "milestone": 50,
     "tinmindSemester": "Fall 26",
     "tinmindMode": false,
     "tinOpen": {
@@ -49,43 +51,23 @@
     "ingestMode": "plan",
     "ingestModel": "opus",
     "lastUsage": {
-<<<<<<< HEAD
-      "pct": 58,
-      "kind": "seven_day",
-      "resetsAt": "2026-12-01T01:00:00.458020+00:00",
-      "windows": [
-        {
-          "kind": "five_hour",
-          "pct": 55,
-          "resetsAt": "2026-11-28T10:00:00.458003+00:00"
-        },
-        {
-          "kind": "seven_day",
-          "pct": 58,
-          "resetsAt": "2026-12-01T01:00:00.458020+00:00"
-        }
-      ],
-      "source": "live",
-      "at": 1795851278217
-=======
-      "pct": 38,
+      "pct": 80,
       "kind": "five_hour",
-      "resetsAt": "2026-11-26T08:40:00.779332+00:00",
+      "resetsAt": "2026-11-28T10:00:00.848567+00:00",
       "windows": [
         {
           "kind": "five_hour",
-          "pct": 38,
-          "resetsAt": "2026-11-26T08:40:00.779332+00:00"
+          "pct": 80,
+          "resetsAt": "2026-11-28T10:00:00.848567+00:00"
         },
         {
           "kind": "seven_day",
-          "pct": 32,
-          "resetsAt": "2026-12-01T01:00:00.779351+00:00"
+          "pct": 62,
+          "resetsAt": "2026-12-01T01:00:00.848585+00:00"
         }
       ],
       "source": "live",
-      "at": 1795675779527
->>>>>>> origin/master
+      "at": 1795853366589
     },
     "photosDir": "C:\\Users\\harri\\Downloads\\test",
     "shrunkPhotos": [

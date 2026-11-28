@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - Standing-Reserve
 courses:
@@ -11,7 +11,7 @@ part_of:
   - "[[Enframing]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > **Standing reserve:** in [[Martin Heidegger|Heidegger]]'s account of modern technology, as the Then & Now video explains it, things revealed as resources stored and ready for use: coal stockpiled, an airliner waiting on the runway.[^1] The video says data, information, and connections on the internet are standing reserve in the same way.[^1]

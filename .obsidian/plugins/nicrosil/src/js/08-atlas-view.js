@@ -52,7 +52,7 @@ class WikiMapView extends ItemView {
     if (f instanceof TFile) this.app.workspace.getLeaf(true).openFile(f);
   }
 
-  /** Opens on a topic or a page (from the Lens, a command or the Dashboard). */
+  /** Opens on a topic or a page (from a command or the Dashboard). */
   show(opts = {}) {
     if (opts.focus) { this.st.focus = opts.focus; this.st.topic = null; }
     else if (opts.topic !== undefined) { this.st.topic = opts.topic; this.st.focus = null; }

@@ -26,7 +26,8 @@ Obsidian loads only `main.js` and `styles.css` in the folder above. Both are **b
 | `js/05-transcription-view.js` | The transcription queue view (`TranscribeView`) and its verify dialog |
 | `js/05b-transcribe-ai.js` | AI transcription in the queue (4.6.0): the Claude Code arguments, prompts, reply parsers and draft note for transcribing, recreating a drawing and re-reading unsure words, plus the queue's tray, panel and progress card (added to `TranscribeView`) |
 | `js/06-atlas-helpers-links.js` | Atlas layout helpers, typed-link types (`REL_TYPES`), link collection, SVG helpers |
-| `js/07-lens-view.js` | The Lens (relations panel) and its enlarged map |
+| `js/07-lens-view.js` | Empty: the sidebar Lens was removed in 4.9.2. Safe to delete the file |
+| `js/07b-page-lens.js` | Connections (4.9.0): the folding section on each page (`PageLens`: its map with zoom and pan, legend and lists), and its Live Preview widget (`pageLensEditorExtension`) |
 | `js/08-atlas-view.js` | The atlas (wiki map view) |
 | `js/09-live-block-settings.js` | The Dashboard's live block; the settings tab |
 | `js/10-search-helpers.js` | Search scoring and the Tinmind's search |
@@ -51,9 +52,9 @@ Obsidian loads only `main.js` and `styles.css` in the folder above. Both are **b
 | `css/02-logo-dashboard-index-search-relations.css` | Logo, Dashboard page, index and log pages, properties strip, search box, schema dialog, relations |
 | `css/03-dashboard-polish-verify-ambience.css` | Dashboard polish (1.3.0), the verify animation, ambience and motion |
 | `css/04-review-queue-sidebars-quiet-dashboard.css` | Review queue header and list, sidebars, file list, Quiet dashboard |
-| `css/05-health-card-lens-buttons-ratings.css` | Health check card, Lens look, gradient buttons, rating buttons, "My take" |
+| `css/05-health-card-lens-buttons-ratings.css` | Health check card, map look, gradient buttons, rating buttons, "My take" |
 | `css/06-tinmind-hero-mode-course-tree.css` | Tinmind hero, Tinmind mode, `_AGENTS` title, course tree, note titles, the course pill |
 | `css/07-dashboard-cards-ledger-notebook-sidebar.css` | Dashboard cards, the Ledger look, Notebook, semester title, git buttons, ribbon, hover previews |
 | `css/08-transcription-queue-shelf-tinmind-search.css` | Transcription queue, Tinmind shelf, course notes panel, Tinmind search |
-| `css/09-atlas-lens-typed-links.css` | Atlas, Lens (3.29.0), atlas buttons, Add typed link |
+| `css/09-atlas-lens-typed-links.css` | Atlas, the Connections map and lists, atlas buttons, Add typed link |
 | `css/10-query-mode-and-later.css` | Query mode (4.2.0 onward), Triage and ingest tabs (4.4.0), and every style added since |

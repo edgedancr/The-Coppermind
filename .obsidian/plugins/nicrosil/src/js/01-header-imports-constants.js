@@ -42,9 +42,10 @@
  *         screenshot (a box dragged over the scan, saved to _attachments/Tinmind/ and embedded), recreate (the scan stays until the recreated drawing is
  *         checked) or leave out. Verify clears the draft mark, moves the scans to the trash and logs it; Discard deletes the draft and keeps the scans.
  *
- * The Lens (Alt+L; the relations panel before 3.29.0): for the open page, a map and grouped lists of its links, outgoing
- *         and incoming, typed links colored by type and plain links after them; its topic; pages two steps away it
- *         doesn't link with yet; and a trail of the pages opened before it.
+ * Connections (Alt+L, 4.9.0): a folding section on each
+ *         page, above its Footnotes heading. Folded, the link counts; open, a map and grouped lists of the page's links,
+ *         outgoing and incoming, typed links colored by type and plain links after them, and pages two steps away it
+ *         doesn't link with yet. Drawn by Nicrosil, never written into the page.
  *
  * Atlas (Alt+M; the wiki map, 3.29.0): the topics in _topics.md as circles, every page as a dot in its topic's circle, and
  *         the links between topics as bands. Which topic a page is in is worked out from the links, spreading out from
@@ -61,7 +62,7 @@
 const {
   Plugin, Modal, Notice, MarkdownView, TFile, ItemView, FuzzySuggestModal,
   PluginSettingTab, Setting, MarkdownRenderChild, MarkdownRenderer, setIcon, addIcon, debounce, parseYaml, Menu, TFolder,
-  Platform, normalizePath, requestUrl,
+  Platform, normalizePath, requestUrl, editorInfoField, editorLivePreviewField,
 } = require("obsidian");
 
 const INDEX_PATH = "_index.md";
@@ -74,7 +75,6 @@ const GIT_BUTTONS = [ // the two git shortcuts in the left sidebar's tab bar (3.
 ];
 const PANEL_BUTTONS = [ // the review queue and relations panel buttons in the same tab bar, before the git ones (3.13.0); the far-left ribbon that held them is hidden
   { cls: "cm-queue-btn", icon: "badge-check", label: "Review queue (Alt+Q)", method: "activateView" },
-  { cls: "cm-rel-btn", icon: "git-fork", label: "Lens (Alt+L)", method: "activateRelations" },
   { cls: "cm-tr-btn", icon: "scan-text", label: "Transcription queue (Alt+T)", method: "activateTranscribe" }, // shows in the Tinmind's mode only (3.16.0)
 ];
 const NOTEBOOK_PAGE = "The Tinmind/Notebook";  // the pinned Notebook (type: notebook, no semester): its card is on the Tinmind Dashboard in every semester (3.10.0)
@@ -110,7 +110,7 @@ const FLAG_KINDS = {
   warning: { label: "Warning", plural: "Warnings (unsourced)", short: "W" },
 };
 const STALE_DAYS = 14;
-const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, hidePanels: true, closeTabsOnStart: true, readMode: "verified", healthDays: 14, autoIndex: true, liveUsage: true };
+const DEFAULT_SETTINGS = { autoAdvance: true, sort: "clean", celebrate: true, hidePanels: true, closeTabsOnStart: true, readMode: "verified", healthDays: 14, autoIndex: true, liveUsage: true, pageLens: true, pageLensOpen: false };
 const READ_MODES = { verified: "Verified pages only", all: "Every page", off: "Off" };
 // Admiralty Code, as SCHEMA - Writing Pages lays it out: reliability of the source, credibility of the information.
 const RATING_REL = [["A", "Completely reliable"], ["B", "Usually reliable"], ["C", "Fairly reliable"], ["D", "Not usually reliable"], ["E", "Unreliable"], ["F", "Cannot be judged"]];

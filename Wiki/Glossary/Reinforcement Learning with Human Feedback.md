@@ -1,6 +1,6 @@
 ---
 type: glossary
-status: draft
+status: verified
 aliases:
   - RLHF
   - Reinforcement Learning from Human Feedback
@@ -14,7 +14,7 @@ related:
   - "[[Reinforcement Learning]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > **Reinforcement learning with human feedback (RLHF):** training after [[Pre-Training|pre-training]] in which workers flag unhelpful or problematic predictions, and their corrections further change the model's [[Parameter|parameters]], making it more likely to give predictions users prefer.[^1] 3Blue1Brown calls it just as important as pre-training.[^1]
