@@ -49,6 +49,7 @@
     "ingestMode": "plan",
     "ingestModel": "opus",
     "lastUsage": {
+<<<<<<< HEAD
       "pct": 58,
       "kind": "seven_day",
       "resetsAt": "2026-12-01T01:00:00.458020+00:00",
@@ -66,6 +67,25 @@
       ],
       "source": "live",
       "at": 1795851278217
+=======
+      "pct": 38,
+      "kind": "five_hour",
+      "resetsAt": "2026-11-26T08:40:00.779332+00:00",
+      "windows": [
+        {
+          "kind": "five_hour",
+          "pct": 38,
+          "resetsAt": "2026-11-26T08:40:00.779332+00:00"
+        },
+        {
+          "kind": "seven_day",
+          "pct": 32,
+          "resetsAt": "2026-12-01T01:00:00.779351+00:00"
+        }
+      ],
+      "source": "live",
+      "at": 1795675779527
+>>>>>>> origin/master
     },
     "photosDir": "C:\\Users\\harri\\Downloads\\test",
     "shrunkPhotos": [
