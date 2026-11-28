@@ -5,7 +5,7 @@ courses:
   - SAIL
 sources:
   - "[[SRC - ACH GenAI Workflow]]"
-related:
+summarizes:
   - "[[ACH GenAI Workflow]]"
 drafted_by: Claude (claude-sonnet-5-5)
 drafted_on: 2026-11-12

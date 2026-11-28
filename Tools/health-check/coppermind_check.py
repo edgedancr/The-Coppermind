@@ -27,8 +27,8 @@ import subprocess
 import sys
 from collections import Counter, defaultdict
 
-TYPED = ["type_of", "part_of", "example_of", "causes", "counters", "applies_to",
-         "supports", "contradicts", "developed_by", "related"]
+TYPED = ["type_of", "part_of", "example_of", "causes", "counters", "threatens", "applies_to", "requires",
+         "supports", "contradicts", "developed_by", "summarizes", "related"]
 PAGE_TYPES = {"concept", "glossary", "framework", "case-study", "person", "summary", "prompt",
               "workflow", "guide", "analysis", "perspective", "source"}
 FLAG_KINDS = {"question": "Whose view?", "warning": "Unsourced background",

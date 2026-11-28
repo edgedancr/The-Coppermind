@@ -194,6 +194,21 @@ function typedLinkNote(date, type, name) {
   return `${date}: Added typed link ${type} → ${name} (Add typed link button)`;
 }
 
+/** The log entry for a typed link I removed from an ingest tab (4.8.0): it is recorded as a rejected link, with my reason. */
+function typedLinkRejectLogEntry({ date, ingest, from, type, to, reason }) {
+  return [`### [${date}] verify | Typed link from ${oneLine(ingest)}`, "", "- **Verify:**",
+    `  - Links rejected: [[${from}]] → ${type} → [[${to}]] — ${oneLine(reason)}`].join("\n");
+}
+
+/** The typed links an ingest reports in its nicrosil-meta block (4.8.0), cleaned up: { from, type, to, why, inferred, verified }. Unknown types are dropped. */
+function ingestTypedLinks(list) {
+  const str = (v) => (v == null ? "" : String(v).trim());
+  return (Array.isArray(list) ? list : []).map((l) => ({
+    from: bareLink(str(l && l.from)), type: str(l && l.type).toLowerCase(), to: bareLink(str(l && l.to)),
+    why: str(l && l.why), inferred: !!(l && l.inferred), verified: !!(l && l.verified),
+  })).filter((l) => l.from && l.to && REL_TYPES[l.type]);
+}
+
 /** The Wiki pages that match what was typed, best first, at most 8: exact name, name start, a word's start, anywhere in the name, then an alias. Nothing for an empty box. */
 function rankTargets(targets, query) {
   const s = String(query || "").trim().toLowerCase();

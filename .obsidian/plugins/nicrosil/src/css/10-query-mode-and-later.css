@@ -277,3 +277,22 @@ body.cm-quiet .cm-qstats .cm-qnext { height: 40px; padding: 0 20px; }
 .cm-tri-side .cm-tri-grow { position: relative; }
 .cm-tri-side .cm-usagewrap.is-up .cm-usagepop { left: 0; right: 0; width: auto; max-width: none; }
 .cm-query-chips .cm-ingest-usagewrap { margin-left: 6px; align-self: center; }
+/* 4.6.4: an ingest that left changes to verified pages unmade says so in the side panel */
+.cm-ing-unmade { margin: 10px 0 4px; padding: 10px 12px; border: 1px solid rgba(224, 168, 70, 0.6); border-radius: 8px; background: rgba(224, 168, 70, 0.08); }
+.cm-ing-unmade-title { color: var(--cm-amber); font-weight: 600; margin-bottom: 4px; }
+.cm-ing-unmade-note { margin: 6px 0 8px; font-size: var(--font-ui-small); color: var(--text-muted); }
+
+/* 4.8.0: the typed links an ingest added, in the ingest tab's side panel */
+.cm-ing-typed { display: flex; flex-direction: column; gap: 6px; margin: 4px 0 8px; }
+.cm-ing-typed-row { padding: 6px 8px; border: 1px solid var(--background-modifier-border); border-radius: 6px; font-size: var(--font-ui-small); }
+.cm-ing-typed-row.is-removed { opacity: 0.55; }
+.cm-ing-typed-row.is-removed .cm-ing-typed-line { text-decoration: line-through; }
+.cm-ing-typed-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 6px; }
+.cm-ing-typed-type { color: var(--text-muted); font-style: italic; }
+.cm-ing-typed-type::before { content: "→ "; }
+.cm-ing-typed-type::after { content: " →"; }
+.cm-ing-typed-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 4px; }
+.cm-ing-typed-tag { padding: 0 6px; border-radius: 8px; background: var(--background-modifier-hover); color: var(--text-muted); font-size: var(--font-ui-smaller); }
+.cm-ing-typed-tag.is-inferred { color: var(--cm-amber); }
+.cm-ing-typed-tag.is-verified { color: var(--text-accent); }
+.cm-ing-typed-rm { margin-left: auto; }

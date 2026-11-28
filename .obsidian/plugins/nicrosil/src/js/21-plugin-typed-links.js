@@ -41,6 +41,39 @@
   }
 
   /**
+   * Takes [[to]] out of the typed-link property `type` on the page `from` (4.8.0, for the ingest tab's Remove).
+   * Also drops the `changes_since_verified` line that named this link, if there is one; the page stays draft, since other changes may be waiting for review.
+   * Returns "removed", or "missing" when the page or the link isn't there.
+   */
+  async removeTypedLink(from, type, to) {
+    const mc = this.app.metadataCache;
+    const file = mc.getFirstLinkpathDest(from, "");
+    if (!file) return "missing";
+    const target = mc.getFirstLinkpathDest(to, file.path);
+    const same = (v) => {
+      const m = /\[\[([^\]|#]+)/.exec(String(v));
+      if (!m) return false;
+      const dest = mc.getFirstLinkpathDest(m[1].trim(), file.path);
+      return target ? !!dest && dest.path === target.path : m[1].trim().toLowerCase() === to.toLowerCase();
+    };
+    let outcome = "missing";
+    await this.app.fileManager.processFrontMatter(file, (f) => {
+      const list = f[type] === undefined || f[type] === null || f[type] === "" ? [] : [].concat(f[type]).flat(3);
+      const kept = list.filter((v) => !same(v));
+      if (kept.length === list.length) return;
+      outcome = "removed";
+      f[type] = kept;
+      const note = `${type} → ${to}`.toLowerCase();
+      const lines = changeLines(f.changes_since_verified);
+      if (lines.length) {
+        const left = lines.filter((x) => !x.toLowerCase().includes(note));
+        if (left.length) f.changes_since_verified = left; else delete f.changes_since_verified;
+      }
+    });
+    return outcome;
+  }
+
+  /**
    * The button under the properties, and the row it opens: "This page [type] [search for a page] Add". Enter adds and keeps the row open for the next link; Esc closes it.
    * Drawn once per page, not on every redraw of the note, so what is being typed isn't lost.
    */

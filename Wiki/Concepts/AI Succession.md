@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - Succession to AI
 courses:
@@ -15,7 +15,7 @@ related:
   - "[[AI Alignment]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-17
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > AI succession is [[Richard Sutton]]'s term for the future in which digital intelligence, or humans augmented by it, comes to hold the resources and power humans now hold. Sutton calls ==succession "inevitable,"== though it could turn out well or badly, and he encourages people to think positively about it.[^1]

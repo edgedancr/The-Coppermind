@@ -1,7 +1,7 @@
 {
   "id": "nicrosil",
   "name": "Nicrosil",
-  "version": "4.6.3",
+  "version": "4.8.0",
   "minAppVersion": "2.3.0",
   "description": "The Coppermind's toolkit: verify or reject drafts with one click, a review queue sidebar, flag resolving, hotkeys, a Dashboard with a live search box and a home button, a collapsible properties strip, a button that logs schema changes, a monthly log archive, an atlas of the wiki's topics, a Lens on each page's links, a transcription queue that checks scans of handwritten notes against their transcriptions, a query mode in the Dashboard's search bar that asks Claude Code and saves answers to Analyses, and a Triage dashboard that ingests sources from Ingestion/Raw through Claude Code, and Claude-drafted transcriptions in the transcription queue. Updates the page, index.md, and log.md.",
   "author": "Harrison Nickles",

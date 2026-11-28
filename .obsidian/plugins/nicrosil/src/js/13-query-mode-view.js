@@ -88,7 +88,7 @@ function analysisPage({ question, meta, answer, reAskIf, date, model }) {
     `re_ask_if: ${yamlStr(reAskIf || m.re_ask_if || "")}`,
     yamlPlain("courses", asList(m.courses)),
     yamlLinks("sources", asList(m.sources)),
-    "type_of: []", "part_of: []", "example_of: []", "causes: []", "counters: []", "applies_to: []", "supports: []", "contradicts: []", "developed_by: []",
+    "type_of: []", "part_of: []", "example_of: []", "causes: []", "counters: []", "threatens: []", "applies_to: []", "requires: []", "supports: []", "contradicts: []", "developed_by: []",
     yamlLinks("related", asList(m.related)),
     `drafted_by: ${yamlStr(`Claude (${model || "unknown model"}), filed by Nicrosil query mode`)}`,
     `drafted_on: ${yamlStr(date)}`,

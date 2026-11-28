@@ -1,9 +1,13 @@
 ---
 type: concept
-status: draft
-aliases: ["al Qaeda", "al-Qa'ida"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+status: verified
+aliases:
+  - al Qaeda
+  - al-Qa'ida
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
@@ -12,11 +16,12 @@ counters: []
 applies_to: []
 supports: []
 contradicts: []
-developed_by: ["[[Usama Bin Ladin]]"]
+developed_by:
+  - "[[Usama Bin Ladin]]"
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > The 9/11 Commission describes al-Qaeda ("the base") as the organization [[Usama Bin Ladin]] and Abdullah Azzam founded in 1988, as the Soviets left Afghanistan, to serve as a general headquarters for future jihad; by August 1988 Bin Ladin was its leader.[^1] While allied groups fought local battles, ==Bin Ladin "concentrated on attacking the 'far enemy'—the United States"==.[^2]

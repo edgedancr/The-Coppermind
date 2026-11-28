@@ -3,7 +3,7 @@ type: summary
 status: draft
 courses: ["Intro to Intelligence"]
 sources: ["[[SRC - Analytic Culture in the US Intelligence Community (Johnston)]]"]
-related: ["[[Analytic Culture]]", "[[Johnston's Analytic Culture Recommendations]]"]
+summarizes: ["[[Analytic Culture]]", "[[Johnston's Analytic Culture Recommendations]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
 verified_on:

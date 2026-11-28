@@ -2,13 +2,13 @@
 type: index
 cssclasses:
   - coppermind-index
-updated: 2026-11-22
+updated: 2026-11-28
 ---
 A map of every page in the Coppermind, grouped by type. The AI agent updates this after every operation; I check it during health checks. Within each type, pages are listed alphabetically, each with a one-line summary.
 
-**Total:** 436 pages
+**Total:** 440 pages
 
-**Jump to:** [[#Concepts (96)|Concepts]] [[#Glossary (185)|Glossary]] [[#Frameworks (38)|Frameworks]] [[#Case Studies (17)|Case Studies]] [[#People (10)|People]] [[#Summaries (36)|Summaries]] [[#Prompts (2)|Prompts]] [[#Workflows (2)|Workflows]] [[#Guides (3)|Guides]] [[#Analyses (0)|Analyses]] [[#Perspectives (1)|Perspectives]] [[#Source Cards (46)|Source Cards]]
+**Jump to:** [[#Concepts (96)|Concepts]] [[#Glossary (187)|Glossary]] [[#Frameworks (38)|Frameworks]] [[#Case Studies (17)|Case Studies]] [[#People (10)|People]] [[#Summaries (37)|Summaries]] [[#Prompts (2)|Prompts]] [[#Workflows (2)|Workflows]] [[#Guides (3)|Guides]] [[#Analyses (0)|Analyses]] [[#Perspectives (1)|Perspectives]] [[#Source Cards (47)|Source Cards]]
 
 ## Concepts (96)
 
@@ -162,7 +162,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 - [[United States Intelligence Community]] — The 18 IC organizations and how they're grouped
 
-## Glossary (185)
+## Glossary (187)
 
 ### A
 
@@ -304,6 +304,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Metaphors for Intelligence]] — Connecting the dots, mosaics, and strings of pearls
 - [[Military Intelligence Program]] — The budget program for DoD tactical intelligence
 - [[Mirror Imaging]] — Assuming the enemy thinks like you
+- [[Model Drift]] — Model drift: the ODNI AI Ethics Framework's concern that, ==as time passes and conditions change, the data an AI meets in operation drifts away from…
 - [[Moral Injury]] — Its two causes: an overwhelming event, and betrayal of trust
 - [[Muscle Hijackers]] — The 13 operatives who stormed the cockpits and controlled passengers
 
@@ -401,6 +402,7 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Unbounded Consumption]] — OWASP LLM06: uncontrolled inference; denial of wallet
 - [[Unconventional Warfare]] — Training locals to defend themselves
 - [[Under Secretary of Defense for Intelligence]] — The DoD official for day-to-day intelligence
+- [[Undesired Bias]] — Undesired bias: in the ODNI AI Ethics Framework, ==bias "that could undermine analytic validity and reliability, harm individuals, or impact civil…
 - [[Unified Command]] — One command for all agencies at a multi-agency incident
 
 ### V
@@ -495,12 +497,13 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 - [[Usama Bin Ladin]] — Founder and leader of al-Qaeda
 - [[Yoshua Bengio]] — Deep learning pioneer warning of AI agency and deception; Scientist AI
 
-## Summaries (36)
+## Summaries (37)
 
 - [[Summary - A Disneyland Without Children]] — Neutral summary of L Rudolf L's short story
 - [[Summary - About Us (Arena)]] — Neutral summary of Arena's About Us page
 - [[Summary - ACH GenAI Workflow]] — Neutral summary of the SAIL ACH-with-AI prompt sequence
 - [[Summary - AI and Biblical Thinking]] — Neutral summary of the Bible Study Fellowship interview with John Lennox
+- [[Summary - AI Ethics Framework for the Intelligence Community]] — ODNI's Artificial Intelligence Ethics Framework for the Intelligence Community (v1.0, June 2020) is an ethics guide for Intelligence Community…
 - [[Summary - AI, Machine Learning, Deep Learning, and Generative AI Explained]] — Neutral summary of IBM Technology's explainer video
 - [[Summary - Algorithmic Bias and Fairness (Crash Course AI 18)]] — Neutral summary of the Crash Course AI episode on algorithmic bias
 - [[Summary - Analytic Culture in the US Intelligence Community]] — Neutral summary of Johnston's front matter, ch. 1–4, and ch. 8–9
@@ -556,12 +559,13 @@ A map of every page in the Coppermind, grouped by type. The AI agent updates thi
 
 - [[My Worldview]] — The foundational convictions behind my perspectives, by layer of worldview
 
-## Source Cards (46)
+## Source Cards (47)
 
 - [[SRC - A Disneyland Without Children]] — L Rudolf L, LessWrong, 2023; fiction (rating proposed F-6)
 - [[SRC - About Us (Arena)]] — Arena's About Us page, saved 2026-11-17 (rating proposed B-2)
 - [[SRC - ACH GenAI Workflow]] — The SAIL ACH-with-AI course documents, eight files (rating proposed B-2)
 - [[SRC - AI and Biblical Thinking (Bible Study Fellowship)]] — Bible Study Fellowship interview with John Lennox, transcript (rating proposed C-3)
+- [[SRC - AI Ethics Framework for the Intelligence Community]] — Artificial Intelligence Ethics Framework for the Intelligence Community , version 1.0, as of June 2020: a six-page ODNI ethics guide for Intelligence…
 - [[SRC - AI, Machine Learning, Deep Learning, and Generative AI Explained]] — IBM Technology video transcript (rating proposed B-2)
 - [[SRC - Algorithmic Bias and Fairness (Crash Course AI 18)]] — Crash Course AI episode 18 transcript (rating proposed C-2)
 - [[SRC - Analytic Culture in the US Intelligence Community (Johnston)]] — Johnston's 2005 ethnography of analytic culture (rating proposed B-2)

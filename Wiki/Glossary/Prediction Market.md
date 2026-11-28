@@ -1,9 +1,12 @@
 ---
 type: glossary
-status: draft
-aliases: ["IC Prediction Market"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The Future of Analysis]]"]
+status: verified
+aliases:
+  - IC Prediction Market
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The Future of Analysis]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +19,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > **Prediction market:** one of the "structured forecasting tools," like the IC Prediction Market, that Gartin says Philip Tetlock's research showed were needed.[^1] In Gartin's 2030 scenario, a prediction market rates a prime minister's chance of dissolving parliament at 63 percent, and the analyst's assistant sets it beside a base rate of 67 percent.[^2]

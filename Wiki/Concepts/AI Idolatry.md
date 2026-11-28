@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - AI Worship
   - Technology as a God
@@ -12,7 +12,7 @@ developed_by:
   - "[[John Lennox]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-21
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > AI idolatry is treating AI as a god. [[John Lennox]] argues that people are "desperate to look up to something that is bigger than them and has certain god-like properties," and that AI, connected to the internet, seems omnipresent and omniscient; so in parts of the world there are "actual AI religions and people are worshipping AI."[^1] ==From a Christian perspective, he says, "that is sheer idolatry."==[^1]

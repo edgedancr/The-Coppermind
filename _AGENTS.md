@@ -39,7 +39,7 @@ More than one row can apply. Don't read anything in `_changelogs/` (the rules' c
 | `_logs/` | Maintain | Delete or rewrite past log entries |
 | `_index.md` | Read | Edit (Nicrosil keeps it up to date) |
 | `Ingestion/Triage.md` | Maintain and keep current | Reorder, drop, or skip batches, unless he asks |
-| `Ingestion/Raw/` (sources not yet ingested) | Read one file, only when he names it and asks for it to be ingested | Open, list, search, quote, or mention anything else in it; edit, rename, move, or delete anything in it |
+| `Ingestion/Raw/` (sources not yet ingested) | Read one file, only when he names it and asks for it to be ingested | Open, list, search, quote, or mention anything else in it; edit, rename, move, or delete anything in it (in an ingest run from Nicrosil, Nicrosil itself moves the ingested file out afterward; see `SCHEMA - Ingest`, Raw sources) |
 | `The Tinmind/` (his own class notes) | In a task he tells it is about the Tinmind (for example, "transcribe these scans" or "fix this class note"): read and create what that task needs, edit only what he asked for, and build the dashboard page and the empty course files when he asks. Outside such a task: read one file, only when he names it and asks | In any other task (queries, ingests, health checks, triage, index work): open, list, search, quote, count, or mention anything in it. In every task: rename, move, or delete a note, or edit a note he has already reviewed, unless he asks |
 | `Health Checks/` | Create a report for each health check; record his decisions in it | Change a saved report's findings, or delete a report |
 | `Tools/` | Read; build or revise a tool when he asks | Edit, rename, or delete otherwise |
@@ -48,7 +48,7 @@ More than one row can apply. Don't read anything in `_changelogs/` (the rules' c
 
 The agent never deletes anything except a draft it created that Harrison rejected.
 
-**Raw sources.** `Ingestion/Raw/` holds sources Harrison has collected but not yet put through ingestion. Treat it as if it isn't there: in every task (queries, health checks, triage, index work), don't open, list, search, quote, count, or mention what is in it, and keep searches out of it. The one exception is a file he names there and asks you to ingest: read that file only, and follow `SCHEMA - Ingest.md` (Raw sources).
+**Raw sources.** `Ingestion/Raw/` holds sources Harrison has collected but not yet put through ingestion. Treat it as if it isn't there: in every task (queries, health checks, triage, index work), don't open, list, search, quote, count, or mention what is in it, and keep searches out of it. The one exception is a file he names there and asks you to ingest: read that file only, and follow `SCHEMA - Ingest.md` (Raw sources). In an ingest run from Nicrosil, you name where the file goes in `Sources/`, and Nicrosil, not you, moves and renames it there once the drafts are written.
 
 **No repeated titles.** A file that isn't a wiki page doesn't start with a `# Title` that repeats its file name (the index, the log, Triage, a health check report): Obsidian already shows the name at the top.
 
@@ -96,7 +96,7 @@ These rules cover how you explain things and talk with him in chat, in every tas
 - **Never read a log file whole.** They are long. To add an entry, read only the first 15 or so lines of the current month's file and insert the entry under the header's closing `---` line, above the newest entry (don't append to the end). If there is no file for the current month yet, create it by copying the header of the latest one (Nicrosil normally does this when Obsidian opens). To look something up, search the `### [date] operation | Subject` headings across `_logs/`.
 - **Find existing pages by searching**, not by reading `_index.md`: search file names and `aliases:` lines in `Wiki/` and `Sources/Source Cards/`. Without a shell or search tool, list the folders, or read the index.
 - **In `Ingestion/Triage.md`, read only the batch you are working on.**
-- **Read the `Nicrosil` guide or the plugin's code only when working on Nicrosil**, and a page's template only when drafting that type of page. For the code, search `.obsidian/plugins/nicrosil/src/` and read only the lines you need; never read `main.js` or `styles.css` (built files, about 100k and 40k tokens).
+- **Work on Nicrosil from its code, not its guide.** Start at `.obsidian/plugins/nicrosil/src/README.md`, search `src/` and read only the lines you need. Read the `Nicrosil` guide only to update it after a change, or to answer how Nicrosil is used. Read a page's template only when drafting that type of page; never read `main.js` or `styles.css` (built files, about 100k and 40k tokens).
 - **Never list the vault recursively.** List one folder at a time, and never list `.git/` or `Sources/Scans/` recursively: one recursive listing of the vault is about 55k tokens.
 - **Read a source's text copy, not the original,** when it has one (`<name> (text).md` beside it), and only the part in scope: for class notes, the date heading being ingested; for a long text copy, the `## Page` headings in range. Look at the original only to check a quote or a figure.
 - **For a health check, run `Tools/health-check/coppermind_check.py` first**; it does the mechanical checks so you don't have to read every page for them.

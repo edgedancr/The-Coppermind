@@ -1,6 +1,6 @@
 ---
 type: concept
-status: draft
+status: verified
 aliases:
   - AI Bias
 courses:
@@ -8,11 +8,12 @@ courses:
 sources:
   - "[[SRC - Algorithmic Bias and Fairness (Crash Course AI 18)]]"
   - "[[SRC - SAIL Class Notes (Fall 2026)]]"
+  - "[[SRC - AI Ethics Framework for the Intelligence Community]]"
 related:
   - "[[Data and Model Poisoning]]"
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-14
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > Algorithmic bias is the idea that, because algorithms are created by people and use people's data, ==biases that exist in the real world are mimicked or even exaggerated by AI systems==.[^1] Crash Course AI separates bias, which everyone has because our brains take shortcuts by finding patterns, from discrimination against [[Protected Class|protected classes]], which society has laws to prevent.[^1]
@@ -36,6 +37,12 @@ verified_on:
 - More training data on protected classes, to check for discrimination. Crash Course calls this a double-edged sword, since members of those groups may worry about privacy or being targeted.
 - Some advocate testing algorithms for "side effects" the way medicines are tested; the episode says nothing like that was in the works.
 
+**In the Intelligence Community: ODNI's framework**
+- The [[ODNI AI Ethics Framework]] aims to minimize [[Undesired Bias|undesired bias]], not all bias: the IC deliberately designs models and chooses data to screen out irrelevant information, focus on foreign targets, and minimize U.S. person information.[^11]
+- Undesired bias can enter through data collection, feature extraction, curating and labeling data, model selection and development, and even user training.[^11]
+- ODNI asks what types of bias exist in the training data (statistical, contextual, historical, or other), what the trade-offs are between reducing undesired bias and accuracy, and whether the team is diverse enough to minimize human bias.[^12]
+- It also asks whether outcomes "cause an inappropriate feedback loop," and wants known biases documented and communicated to anyone who uses the AI or its outputs.[^11][^12]
+
 ## Why It Matters
 - SAIL lists bias at scale, where small model bias becomes systemic outcomes, as one path in the [[Cascade of Unintended Consequences]],[^9] and biased data as a program-level vulnerability in the [[Three-Ps Risk Framework]].[^10]
 
@@ -50,3 +57,5 @@ verified_on:
 [^8]: [[Crash Course AI 18 - Algorithmic Bias and Fairness (transcript)|Crash Course AI, ch. 8]]
 [^9]: [[SAIL Class Notes (Fall 2026)#9/1/26|SAIL notes, 9/1/26]]
 [^10]: [[SAIL Class Notes (Fall 2026)#8/27/26|SAIL notes, 8/27/26]]
+[^11]: [[ODNI - AI Ethics Framework for the Intelligence Community (2020).pdf#page=3|ODNI framework, p. 3]]
+[^12]: [[ODNI - AI Ethics Framework for the Intelligence Community (2020).pdf#page=4|ODNI framework, p. 4]]

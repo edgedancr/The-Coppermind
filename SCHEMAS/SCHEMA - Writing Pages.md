@@ -2,8 +2,8 @@
 type: schema
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-24
-verified_on: 2026-11-24
+updated: 2026-11-28
+verified_on: 2026-11-28
 ---
 How to write a page in `Wiki/`, a source card, or (for me) a perspective: what to name it, what goes in its properties, how it links, how it cites, whose voice it is in, and how it reads. Any agent drafting or editing a page reads the sections the edit touches.
 
@@ -33,7 +33,7 @@ Every page in `Wiki/`, `Perspectives/`, and `Sources/Source Cards/` starts with 
 | `aliases` | list | Acronyms and other names |
 | `courses` | SAIL, Intro to Intelligence, Freedom's Foundations | Which course(s) the content comes from |
 | `sources` | list of source-card links | Every source the page draws on |
-| `type_of`, `part_of`, `example_of`, `causes`, `counters`, `applies_to`, `supports`, `contradicts`, `developed_by`, `related` | lists of links | Typed links. See [[#Typed links]] |
+| `type_of`, `part_of`, `example_of`, `causes`, `counters`, `threatens`, `applies_to`, `requires`, `supports`, `contradicts`, `developed_by`, `summarizes`, `related` | lists of links | Typed links. See [[#Typed links]] |
 | `drafted_by` | e.g. `Claude (claude-opus-5-5)` | The agent and model that wrote the draft |
 | `drafted_on` | YYYY-MM-DD | |
 | `verified_on` | YYYY-MM-DD | Set only when I verify the page |
@@ -58,20 +58,25 @@ Read each one as a sentence: "this page ___ the target." The types are listed in
 | `example_of`   | is a specific case or instance of                        | Mata v. Avianca (2023) → example_of → Hallucination                         |
 | `causes`       | leads to, enables, or makes more likely                  | Deepfake → causes → Liar's Dividend                                         |
 | `counters`     | is a safeguard against, or mitigates                     | Analysis of Competing Hypotheses → counters → Confirmation Bias             |
+| `threatens`    | undermines, erodes, or makes the target harder to achieve | Automation Bias → threatens → Human Decision Point                         |
 | `applies_to`   | is a method, tool, or rule used on or governing          | Executive Order 12333 → applies_to → United States Intelligence Community   |
+| `requires`     | is a framework, rule, or method that calls for the target practice | ODNI AI Ethics Framework → requires → Explainable AI              |
 | `supports`     | gives evidence or argument for the target's main claim   | Mata v. Avianca (2023) → supports → Capability vs. Reliability              |
 | `contradicts`  | argues against, or is in tension with, the target's main claim | Any "Sources disagree" callout that sets this page's claim against another page's |
-| `developed_by` | was created, proposed, or argued by (the target is a person page) | Bitter Lesson → developed_by → Richard Sutton                        |
+| `developed_by` | was created, proposed, or argued by (the target is a person or organization page) | Bitter Lesson → developed_by → Richard Sutton        |
+| `summarizes`   | is the summary of the source behind the target (summary pages only) | Summary - ICD 203, Analytic Standards → summarizes → ICD 203 Analytic Standards |
 | `related`      | is connected, but none of the above fit                  | The last resort. Its reason must say why the closest type doesn't fit       |
 
 `part_of` is for components and stages; `type_of` is for kinds. A transformer has self-attention as a part; a large language model is a kind of generative AI.
+
+`counters` and `threatens` are opposites: a safeguard counters a risk; a risk threatens what it undermines. `applies_to` and `requires` differ in direction: a rule applies to who or what it governs, and requires the practices it calls for. A summary page uses `summarizes` for the one or two pages its source is centered on, never `related`. `developed_by` can point at an organization page (an agency or standards body, such as ODNI or OWASP) only when one exists; otherwise name the organization in the text.
 
 `supports`, `contradicts`, and `related` mirror the Supports / Contradicts / Neither marks in an ACH matrix. Concept pages can support or contradict each other: a page supports another when its content is evidence or argument for that page's main claim, and contradicts it when its content argues against it.
 
 ### Linking rules
 
 1. **Store a relationship once, on the page the sentence starts with.** "ACH counters Confirmation Bias" goes on the ACH page. Never also store the reverse, as `related` or as any other type; Obsidian's backlinks show it.
-2. **If that page is verified,** the agent proposes the link there as a before/after change ([[SCHEMA - Review]]). It never puts a `related` link on the other page instead.
+2. **If that page is verified,** the agent still adds the link there, in an ingest, by the standing edit in [[SCHEMA - Ingest#4. Reconcile with what's there]]; outside an ingest it proposes it as a before/after ([[SCHEMA - Review]]). It never puts a `related` link on the other page instead.
 3. **Typed links say how two ideas relate; plain links in the text say "see also."** A link that only means "see also" or "compare" stays in the page text ("Used in:", "See", "Compare") and does not also go in `related`.
 4. **Choose the type in table order.** Try each type from the top, and use `related` only when none fits. Every proposed `related` link names the closest type and says why it doesn't fit.
 5. **When a "Sources disagree" callout sets a claim on one page against a claim on another page,** the agent also proposes a `contradicts` link between the two pages.
@@ -84,6 +89,7 @@ Read each one as a sentence: "this page ___ the target." The types are listed in
    - Pages created before a link target existed get the link from the ingest that creates the target ([[SCHEMA - Ingest#5. Backfill links to the new pages]]).
 7. **Link to a page that doesn't exist yet only if the agent is proposing to create it** in the same operation. Otherwise use plain text.
 8. **Links inside original source files are left alone**, even if they point to notes outside this vault.
+9. **A typed link is stated or inferred.** *Stated:* the source says the relation in so many words ("X is a kind of Y", "X mitigates Y"). *Inferred:* the relation follows from what the pages say without the source saying it outright, such as a definition that names its kind ("Narrow AI: AI built for one task" → type_of → Artificial Intelligence) or a principle a framework lists. The agent adds both, under the same rules; the report marks each inferred link and gives the words it is inferred from. Infer only from what the two pages say, never from outside knowledge; if a relation needs outside knowledge, leave it out.
 
 ## Citations
 

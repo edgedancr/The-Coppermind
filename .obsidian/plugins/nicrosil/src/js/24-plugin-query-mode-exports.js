@@ -57,7 +57,7 @@
 
   /* ---------- live usage meter (4.5.0) ---------- */
 
-  /** While a Claude Code run is going the meter checks more often; one more check, just after it ends, picks up what it used. */
+  /** One check just after a Claude Code run ends picks up what it used. */
   watchRun(child) {
     this.usageRuns = (this.usageRuns || 0) + 1;
     let done = false;
@@ -71,16 +71,16 @@
     child.on("error", finish);
   }
 
-  /** Checks on a timer: every 30 seconds, every 10 seconds while a run is going, and once a few seconds after Obsidian starts (even if the window is hidden then).
-   *  Timer checks pause while Obsidian is hidden; a check also runs when it comes back. */
+  /** The meter asks Anthropic only when someone can see it (4.7.0; checking every 30 seconds got it rate-limited): once a few seconds after Obsidian starts,
+   *  once when the Usage popup opens, once after each run, and every minute while a popup stays open. */
   startUsagePolling() {
     if (Platform.isMobile) return;
     const tick = (first) => {
-      this.refreshUsage({ force: first === true });
-      this.usageTimer = window.setTimeout(tick, this.usageRuns > 0 ? 10000 : 30000);
+      if (first === true || document.querySelector(".cm-usagepop")) this.refreshUsage({ force: first === true });
+      this.usageTimer = window.setTimeout(tick, 60000);
     };
     this.usageTimer = window.setTimeout(() => tick(true), 4000);
-    this.registerDomEvent(document, "visibilitychange", () => { if (document.visibilityState === "visible") this.refreshUsage(); });
+    this.registerDomEvent(document, "visibilitychange", () => { if (document.visibilityState === "visible" && document.querySelector(".cm-usagepop")) this.refreshUsage(); });
   }
 
   /** Where Claude Code keeps its sign-in: the folder in CLAUDE_CONFIG_DIR, else .claude in the home folder. */
@@ -104,7 +104,7 @@
     const now = Date.now();
     if (this.usageBusy || now < (this.usageBackoffUntil || 0)) return;
     if (!force && document.visibilityState === "hidden") return;
-    if (now - (this.usageFetchedAt || 0) < (force ? 5000 : 8000)) return;
+    if (now - (this.usageFetchedAt || 0) < (force ? 15000 : 30000)) return;
     this.usageBusy = true;
     try {
       let text;

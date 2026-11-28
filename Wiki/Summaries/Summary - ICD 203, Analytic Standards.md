@@ -3,7 +3,7 @@ type: summary
 status: draft
 courses: ["Intro to Intelligence"]
 sources: ["[[SRC - ICD 203, Analytic Standards]]"]
-related: ["[[ICD 203 Analytic Standards]]"]
+summarizes: ["[[ICD 203 Analytic Standards]]"]
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-19
 verified_on:

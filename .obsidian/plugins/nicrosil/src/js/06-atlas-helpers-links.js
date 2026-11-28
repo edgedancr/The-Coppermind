@@ -227,10 +227,13 @@ const REL_TYPES = {
   example_of:   { out: "Is an example of", inn: "Examples of this",      color: "#e0c040", dash: "" },
   causes:       { out: "Causes",           inn: "Caused by",             color: "#e07a5f", dash: "" },
   counters:     { out: "Counters",         inn: "Countered by",          color: "#b97f93", dash: "" },
+  threatens:    { out: "Threatens",        inn: "Threatened by",         color: "#c0603a", dash: "6 2" }, // 4.8.0
   applies_to:   { out: "Applies to",       inn: "Applied by",            color: "#6a9fd8", dash: "" },
+  requires:     { out: "Requires",         inn: "Required by",           color: "#4fb3c8", dash: "" }, // 4.8.0
   supports:     { out: "Supports",         inn: "Supported by",          color: "#8bbf6a", dash: "" },
   contradicts:  { out: "Contradicts",      inn: "Contradicted by",       color: "#d9435e", dash: "2 3" },
   developed_by: { out: "Developed by",     inn: "Ideas developed here",  color: "#a58ad6", dash: "" },
+  summarizes:   { out: "Summarizes",       inn: "Summarized in",         color: "#c9a66b", dash: "1 3" }, // 4.8.0
   related:      { out: "Related to",       inn: "Related from",          color: "#8a8a8a", dash: "5 4" },
 };
 /** Plain links in the text (and in properties that aren't typed links): "see also" links, drawn after the typed ones (3.29.0). */

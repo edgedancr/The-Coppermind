@@ -98,6 +98,34 @@
     return dest;
   }
 
+  /**
+   * Moves an ingested original from Ingestion/Raw into Sources/ under the name Claude chose (4.7.0), and its text copy, if the run made one
+   * beside the staged copy, with it. Only Nicrosil does this, and only once the drafts are written, so a cancelled run leaves Raw alone.
+   * Nothing is overwritten. Returns { ok, to, textCopy } or { ok: false, note }.
+   */
+  async moveIngestSource(rawPath, stagedPath, to) {
+    const ad = this.app.vault.adapter;
+    const dest = sourceDestination(to, rawPath);
+    if (!dest) return { ok: false, note: "Claude didn't name a place in Sources/ for it (a subfolder and a file name), so nothing was moved." };
+    const file = this.app.vault.getAbstractFileByPath(rawPath);
+    if (!(file instanceof TFile)) return { ok: false, note: "It is no longer in Ingestion/Raw, so nothing was moved." };
+    try {
+      if (await ad.exists(dest.path)) return { ok: false, note: `${dest.path} already exists, so nothing was moved. Rename one of them and move the original yourself.` };
+      const dot = dest.name.lastIndexOf(".");
+      const newText = `Sources/${dest.folder}/${dot > 0 ? dest.name.slice(0, dot) : dest.name} (text).md`;
+      const sdot = stagedPath ? stagedPath.lastIndexOf(".") : -1;
+      const oldText = stagedPath ? `${sdot > stagedPath.lastIndexOf("/") ? stagedPath.slice(0, sdot) : stagedPath} (text).md` : "";
+      const hasText = !!oldText && oldText !== stagedPath && (await ad.exists(oldText)) && !(await ad.exists(newText));
+      if (!(await ad.exists(`Sources/${dest.folder}`))) await this.app.vault.createFolder(`Sources/${dest.folder}`);
+      await this.app.fileManager.renameFile(file, dest.path); // a real move and rename: links to it follow
+      if (hasText) await ad.rename(oldText, newText);
+      return { ok: true, to: dest.path, textCopy: hasText };
+    } catch (e) {
+      console.warn("Nicrosil: couldn't move the ingested source", e);
+      return { ok: false, note: `The move failed (${e && e.message ? e.message : e}), so check where the file is.` };
+    }
+  }
+
   /** Removes a staged copy, and the folder once it is empty. */
   async unstageIngest(p) {
     const ad = this.app.vault.adapter;

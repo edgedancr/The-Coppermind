@@ -1,11 +1,15 @@
 ---
 type: concept
-status: draft
-aliases: ["Terrorist Financing"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+status: verified
+aliases:
+  - Terrorist Financing
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
-part_of: ["[[Al-Qaeda]]"]
+part_of:
+  - "[[Al-Qaeda]]"
 example_of: []
 causes: []
 counters: []
@@ -16,7 +20,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > The 9/11 Commission found that the [[September 11 Attacks (2001)|9/11]] plotters spent between $400,000 and $500,000, nearly all supplied by al-Qaeda through [[Khalid Sheikh Mohammed]], and that their financial tradecraft "was not especially sophisticated, but it was good enough" to defeat the detection mechanisms of the time.[^1] The CIA estimated al-Qaeda's pre-9/11 costs at about ==$30 million a year, raised almost entirely through donations==.[^2]

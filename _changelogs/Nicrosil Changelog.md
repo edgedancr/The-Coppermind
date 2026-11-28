@@ -1,9 +1,11 @@
 ---
 type: changelog
-updated: 2026-11-26
+updated: 2026-11-28
 ---
 The changelog of [[Nicrosil]], newest first. It lives here in `_changelogs/`, outside the guide, so an agent reading the guide doesn't also read all of this. Read it only to add a line for a new version or to look up when something changed. Past lines are never rewritten; a correction goes in a new line. How something looks belongs in these lines, in a few words, not in the guide's body. From 4.3.5 on, each line is at most two sentences and covers one session's changes; code details are in git ([[SCHEMA - Changes#Nicrosil and other tools]]).
 
+- **4.8.0:** Each ingest tab now lists the typed links Claude added, marked stated or inferred and whether they reset a verified page; **Remove** takes one out and logs it as rejected with my reason. The Lens, atlas and **Add typed link** know the new `threatens`, `requires` and `summarizes` types.
+- **4.7.0:** Ingests now move the source from Ingestion/Raw into Sources/ under a new name, and approving a plan makes the verified-page changes I left ticked (an unmade one is flagged in the tab). The usage meter now checks Anthropic only at startup, after a run, and while its Usage popup is open, so it stops being rate-limited.
 - **4.6.3:** The usage meter is now a small **Usage** button in the other places too, so none of them show it all the time: to the right of **Depth** in Query mode, above the Ingest buttons in Triage, and after the chips on each ingest tab. Click it and the meter opens; a click elsewhere or Escape closes it. It replaces the always-visible meter from 4.5.0.
 - **4.6.2:** The usage meter in the transcription queue is now a small **Usage** button next to **Transcribe**: the meter opens above it when I click, and closes on a click elsewhere or Escape. It replaces the always-visible meter from 4.6.1, which crowded the tray.
 - **4.6.1:** The transcription queue's tray now shows the live usage meter above the **Transcribe** button, in the Tinmind's grey-to-lilac TGS instead of the copper-to-teal CGS, so I can see my limits before sending scans to Claude.

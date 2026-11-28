@@ -325,6 +325,21 @@ function typedLinkNote(date, type, name) {
   return `${date}: Added typed link ${type} → ${name} (Add typed link button)`;
 }
 
+/** The log entry for a typed link I removed from an ingest tab (4.8.0): it is recorded as a rejected link, with my reason. */
+function typedLinkRejectLogEntry({ date, ingest, from, type, to, reason }) {
+  return [`### [${date}] verify | Typed link from ${oneLine(ingest)}`, "", "- **Verify:**",
+    `  - Links rejected: [[${from}]] → ${type} → [[${to}]] — ${oneLine(reason)}`].join("\n");
+}
+
+/** The typed links an ingest reports in its nicrosil-meta block (4.8.0), cleaned up: { from, type, to, why, inferred, verified }. Unknown types are dropped. */
+function ingestTypedLinks(list) {
+  const str = (v) => (v == null ? "" : String(v).trim());
+  return (Array.isArray(list) ? list : []).map((l) => ({
+    from: bareLink(str(l && l.from)), type: str(l && l.type).toLowerCase(), to: bareLink(str(l && l.to)),
+    why: str(l && l.why), inferred: !!(l && l.inferred), verified: !!(l && l.verified),
+  })).filter((l) => l.from && l.to && REL_TYPES[l.type]);
+}
+
 /** The Wiki pages that match what was typed, best first, at most 8: exact name, name start, a word's start, anywhere in the name, then an alias. Nothing for an empty box. */
 function rankTargets(targets, query) {
   const s = String(query || "").trim().toLowerCase();
@@ -2852,10 +2867,13 @@ const REL_TYPES = {
   example_of:   { out: "Is an example of", inn: "Examples of this",      color: "#e0c040", dash: "" },
   causes:       { out: "Causes",           inn: "Caused by",             color: "#e07a5f", dash: "" },
   counters:     { out: "Counters",         inn: "Countered by",          color: "#b97f93", dash: "" },
+  threatens:    { out: "Threatens",        inn: "Threatened by",         color: "#c0603a", dash: "6 2" }, // 4.8.0
   applies_to:   { out: "Applies to",       inn: "Applied by",            color: "#6a9fd8", dash: "" },
+  requires:     { out: "Requires",         inn: "Required by",           color: "#4fb3c8", dash: "" }, // 4.8.0
   supports:     { out: "Supports",         inn: "Supported by",          color: "#8bbf6a", dash: "" },
   contradicts:  { out: "Contradicts",      inn: "Contradicted by",       color: "#d9435e", dash: "2 3" },
   developed_by: { out: "Developed by",     inn: "Ideas developed here",  color: "#a58ad6", dash: "" },
+  summarizes:   { out: "Summarizes",       inn: "Summarized in",         color: "#c9a66b", dash: "1 3" }, // 4.8.0
   related:      { out: "Related to",       inn: "Related from",          color: "#8a8a8a", dash: "5 4" },
 };
 /** Plain links in the text (and in properties that aren't typed links): "see also" links, drawn after the typed ones (3.29.0). */
@@ -4981,7 +4999,7 @@ function analysisPage({ question, meta, answer, reAskIf, date, model }) {
     `re_ask_if: ${yamlStr(reAskIf || m.re_ask_if || "")}`,
     yamlPlain("courses", asList(m.courses)),
     yamlLinks("sources", asList(m.sources)),
-    "type_of: []", "part_of: []", "example_of: []", "causes: []", "counters: []", "applies_to: []", "supports: []", "contradicts: []", "developed_by: []",
+    "type_of: []", "part_of: []", "example_of: []", "causes: []", "counters: []", "threatens: []", "applies_to: []", "requires: []", "supports: []", "contradicts: []", "developed_by: []",
     yamlLinks("related", asList(m.related)),
     `drafted_by: ${yamlStr(`Claude (${model || "unknown model"}), filed by Nicrosil query mode`)}`,
     `drafted_on: ${yamlStr(date)}`,
@@ -5521,8 +5539,9 @@ class QueryView extends ItemView {
  * whether each source already has a text copy, needs one, is an image or is empty. I tick the sources I want, pick the model,
  * effort and mode, and press Ingest. Each source then gets an ingest tab: Nicrosil copies that one file to Ingestion/.selected/
  * (a hidden folder), and Claude Code ingests it by SCHEMA - Ingest with Raw still closed to it. Claude may write only where an
- * ingest writes (Wiki, Sources, the log, the topic list), copy only from .selected, and run only the two tools the ingest uses.
- * The copy in .selected is removed when the drafts are written or the tab is closed. Desktop only.
+ * ingest writes (Wiki, Sources, the log, the topic list) and run only the two tools the ingest uses. Claude names where the source
+ * goes (`source_to`); once the drafts are written, Nicrosil itself moves the original from Raw to Sources/ under that name, with its
+ * text copy (4.7.0). The copy in .selected is removed when the drafts are written or the tab is closed. Desktop only.
  */
 const TRIAGE_VIEW_TYPE = "nicrosil-triage";
 const INGEST_VIEW_TYPE = "nicrosil-ingest";
@@ -5532,6 +5551,9 @@ const TEXT_COPY_SUFFIX = " (text).md";
 const CONVERTIBLE_EXT = ["pdf", "docx", "doc", "pptx", "ppt", "xlsx", "xls", "html", "htm"]; // what Tools/source-to-text reads
 const IMAGE_EXT = ["png", "jpg", "jpeg", "gif", "webp", "heic", "tif", "tiff", "bmp"];
 const INGEST_MODES = [["plan", "Plan first"], ["draft", "Draft directly"]];
+const SOURCE_FOLDERS = ["Readings", "Class Notes", "My Work"]; // where an ingested original may be moved to, under Sources/
+/** Sent with an approved plan (4.6.4): a verified page left ticked is approved for editing, so its change gets made, not just proposed. */
+const INGEST_VERIFIED_OK = "These verified pages are approved for the change you proposed. Make each change now, by SCHEMA - Review (Changing a verified page): set status: draft, keep verified_on, and add a changes_since_verified line. Don't leave them as before/afters:";
 const INGEST_DENY = [
   "Read(./Ingestion/Raw/**)", "Read(./The Tinmind/**)", "Read(./.obsidian/**)", "Read(./.git/**)",
   "Edit(./Ingestion/**)", "Edit(./The Tinmind/**)", "Edit(./SCHEMAS/**)", "Edit(./_AGENTS.md)", "Edit(./CLAUDE.md)", "Edit(./_index.md)",
@@ -5540,7 +5562,6 @@ const INGEST_DENY = [
 ];
 const INGEST_ALLOW = [
   "Read", "Glob", "Grep", "Write", "Edit",
-  `Bash(cp "${INGEST_STAGE_DIR}/:*)`, 'Bash(mkdir -p "Sources/:*)',
   "Bash(python Tools/source-to-text/source_to_text.py:*)", "Bash(python Tools/health-check/coppermind_check.py:*)",
 ];
 const NEW_HOURS = 24; // a file added within this many hours gets the NEW mark
@@ -5597,6 +5618,26 @@ function addedWhen(ms, now) {
   return `added ${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 
+/**
+ * Where Claude says an ingested source goes: "Readings/Some Name (2020).pdf" (or with a leading "Sources/"). Returns { folder, name, path },
+ * or null when it isn't one of the allowed subfolders of Sources/ plus a plain file name. The extension is always the original's.
+ */
+function sourceDestination(to, rawPath) {
+  const t = String(to || "").trim().replace(/\\/g, "/").replace(/^\.?\/+/, "").replace(/^Sources\//i, "");
+  const parts = t.split("/").filter(Boolean);
+  if (parts.length !== 2) return null;
+  const folder = SOURCE_FOLDERS.find((f) => f.toLowerCase() === parts[0].toLowerCase());
+  if (!folder) return null;
+  const orig = String(rawPath || "").split("/").pop();
+  const dot = orig.lastIndexOf(".");
+  const ext = dot > 0 ? orig.slice(dot) : "";
+  let name = parts[1].replace(/[\\/:*?"<>|]/g, "").replace(/\s+/g, " ").trim();
+  if (ext && name.toLowerCase().endsWith(ext.toLowerCase())) name = name.slice(0, -ext.length).trim();
+  if (!name || name.startsWith(".")) return null;
+  name += ext;
+  return { folder, name, path: `Sources/${folder}/${name}` };
+}
+
 /** Takes the ```nicrosil-plan block out of an ingest reply: { plan, rest }. plan is null when there is none or it isn't JSON. */
 function parseIngestPlan(text) {
   const src = String(text || "");
@@ -5611,7 +5652,7 @@ function parseIngestPlan(text) {
     id: str(i.id) || String(n + 1), kind: str(i.kind).toLowerCase(), title: bareLink(str(i.title)), summary: str(i.summary), from: str(i.from), add: str(i.add), verified: !!i.verified,
   }));
   const questions = (Array.isArray(p.questions) ? p.questions : []).map((q) => (typeof q === "string" ? { q, options: [] } : { q: str(q && q.q), options: asList(q && q.options) })).filter((q) => q.q);
-  return { plan: { items, questions, skipped: asList(p.skipped), notes: str(p.notes) }, rest };
+  return { plan: { items, questions, skipped: asList(p.skipped), notes: str(p.notes), sourceTo: str(p.source_to) }, rest };
 }
 
 /** The Triage tab: every source in Raw, the filter tabs, the queue, model, effort and mode, and the two Ingest buttons. */
@@ -5858,18 +5899,19 @@ class IngestView extends QueryView {
       "",
       "End your reply with this block and nothing after it (valid JSON):",
       "```nicrosil-meta",
-      '{"stage": "plan|drafted|stopped", "copied_to": "Sources/... (the copy you made, or empty)", "source_card": "Name of the source card, or empty", "created": ["Page"], "appended": ["Page"], "flags": 0, "summary": "One line on what this ingest did"}',
+      '{"stage": "plan|drafted|stopped", "copied_to": "Sources/... (the copy you made, or empty)", "source_card": "Name of the source card, or empty", "source_to": "Readings/Author - Title (Year).ext (where the original goes in Sources/)", "created": ["Page"], "appended": ["Page"], "edited_verified": ["Verified page you changed (now draft)"], "proposed": ["Verified page with a change you proposed but did NOT make"], "typed_links": [{"from": "Page the link is on", "type": "counters", "to": "Target page", "why": "One line: where the source says it, or the words it is inferred from", "inferred": false, "verified": false}], "flags": 0, "summary": "One line on what this ingest did"}',
       "```",
+      "`typed_links` lists every typed link you added in this ingest so far, the same ones as report section D: `inferred` is true for an inferred link, `verified` true when adding it set a verified page back to draft. Empty when none. Nicrosil shows them in the tab, where Harrison can remove any.", // 4.8.0
     ];
     const plan = [
       "",
       "Whenever this reply proposes a plan (or a changed plan), put it, before the nicrosil-meta block, in this block too (valid JSON), so Nicrosil can draw it as cards:",
       "```nicrosil-plan",
-      '{"items": [{"id": "1", "kind": "card|summary|new|update", "title": "Page title", "summary": "One line on what the draft holds", "from": "Where in the source (pages, chapter, date)", "add": "For an update: the gist of what is added, else empty", "verified": false}], "questions": [{"q": "A question only Harrison can settle", "options": ["Yes", "No"]}], "skipped": ["What you leave out, and why, in a few words"], "notes": "One line: topic list and anything else he should know"}',
+      '{"items": [{"id": "1", "kind": "card|summary|new|update", "title": "Page title", "summary": "One line on what the draft holds", "from": "Where in the source (pages, chapter, date)", "add": "For an update: the gist of what is added, else empty", "verified": false}], "questions": [{"q": "A question only Harrison can settle", "options": ["Yes", "No"]}], "skipped": ["What you leave out, and why, in a few words"], "notes": "One line: topic list and anything else he should know", "source_to": "Readings/Author - Title (Year).ext"}',
       "```",
       "Keep the prose plan short beside it: the cards are what he reads.",
     ];
-    if (followUp) return [`Harrison's reply, in the same ingest: ${question}`, "", "Carry on by SCHEMA - Ingest. Give the report sections that changed, and a new nicrosil-meta block.", ...plan, ...meta].join("\n");
+    if (followUp) return [`Harrison's reply, in the same ingest: ${question}`, "", "Carry on by SCHEMA - Ingest. Give the report sections that changed, and a new nicrosil-meta block.", "In nicrosil-meta, `edited_verified` lists every verified page changed in this ingest so far and `proposed` every verified-page change still not made (empty when none).", ...plan, ...meta].join("\n");
     const e = this.q.entry;
     const staged = this.staged;
     const s = TRIAGE_STATUS[e.status] || TRIAGE_STATUS.unknown;
@@ -5883,16 +5925,22 @@ class IngestView extends QueryView {
       "- SCOPE: the whole source.",
       `- WHAT MATTERS: ${this.q.focus || "not given; use the course it belongs to and your judgment, and say which reading you took."}`,
       `- MODE: ${this.q.mode === "plan" ? "plan first" : "draft directly"}.`,
-      "- VERIFIED PAGES: propose changes only.",
+      ...(this.q.mode === "plan" ? [
+        "- VERIFIED PAGES: propose changes only in the plan. Put each verified page you would change in the plan as an item with `\"verified\": true` and the gist of the change in `add`.",
+        "  When Harrison approves the plan, every verified page he leaves ticked is his request for that change (VERIFIED PAGES becomes \"edit\" for those pages only): make it while drafting, by SCHEMA - Review (Changing a verified page). Never leave an approved change as a before/after.",
+      ] : [
+        "- VERIFIED PAGES: propose changes only. Give each as a before/after in the report, and list each such page under `proposed` in the nicrosil-meta block so Nicrosil can show that it hasn't been made.",
+      ]),
+      "- Typed links are the exception (SCHEMA - Ingest, step 4): add them directly, on verified pages too, stated and inferred alike, and list them under `typed_links`.", // 4.8.0
       "",
       `Nicrosil's check of the file: it is ${s.note}.${e.inSources ? " A file with the same name is already in Sources/; check its source card's Ingest Progress before doing anything twice." : ""}`,
       "",
       "How this differs from a chat ingest (Harrison designed it this way):",
-      `- Orient: copy the source into the right subfolder of Sources/ with exactly \`cp "${staged}" "Sources/<subfolder>/<file name>"\` (first \`mkdir -p "Sources/<subfolder>"\` if the folder is new; a descriptive file name is fine). That is the only copy command you can run. Then make the text copy, if it needs one, with \`python Tools/source-to-text/source_to_text.py "Sources/<subfolder>/<file name>"\`.`,
+      `- Orient: don't copy or move the source yourself. Nicrosil moves the original from Ingestion/Raw into Sources/ once the drafts are written. Choose where it goes first: a subfolder of Sources/ (${SOURCE_FOLDERS.map((f) => "\`" + f + "\`").join(", ")}) and a file name in the vault's style, \`Author - Title (Year)\` plus the original's extension. Cite the source by that name and path everywhere (wiki citations, the source card's \`file:\` property) as if it were already there, and give the same \`<subfolder>/<file name>\` as \`source_to\` in the nicrosil-plan block and in the nicrosil-meta block. If it needs a text copy, make it from the staged copy with \`python Tools/source-to-text/source_to_text.py "${staged}"\`; it appears beside the staged copy, and Nicrosil moves it into Sources/ with the original, renamed to match.`,
       "- This source didn't come from Ingestion/Triage.md, so leave that file alone.",
       "- Harrison reads your reply in an ingest tab and answers in its reply box, which continues this session. In plan-first mode, stop after the plan (sections A–C of the report) and wait for him.",
-      "- When the drafts are written, add the `ingest` log entry yourself, by _AGENTS.md, with **Verify:** pending Harrison's review. Don't log the plan on its own.",
-      "- At the end, tell him the original is still in Ingestion/Raw and he can delete it.",
+      "- When the drafts are written, add the `ingest` log entry yourself, by _AGENTS.md, with **Verify:** pending Harrison's review. Don't log the plan on its own. List verified pages you changed as `Changed (verified → draft): [[Page]]`, and any change you proposed but did not make as `Proposed, NOT made: [[Page]]`.",
+      "- Don't tell him to delete or move the original: Nicrosil moves it and reports where it went. If it can't (the name is taken, say), Nicrosil tells him.",
       "- Write the report in Markdown with its sections as `##` headings. Don't start with a `# Title` line.",
       ...plan,
       ...meta,
@@ -5920,7 +5968,10 @@ class IngestView extends QueryView {
     this.turns.push({ question, answer: rest, meta, followUp, plan });
     this.planOff = new Set(); this.planAnswers = {};
     if (ev && ev.usage) this.plugin.noteRun(ev);
-    if (meta.stage === "drafted") { this.drafted = true; await this.unstage(); this.plugin.scheduleRefresh && this.plugin.scheduleRefresh(); }
+    if (meta.stage === "drafted") {
+      this.drafted = true;
+      if (!this.moved) this.moved = await this.plugin.moveIngestSource(this.q.entry.path, this.staged, meta.source_to); // 4.7.0
+      await this.unstage(); this.plugin.scheduleRefresh && this.plugin.scheduleRefresh(); }
     this.drawAnswer(metaOk);
     this.report();
   }
@@ -6007,6 +6058,8 @@ class IngestView extends QueryView {
       plan.skipped.forEach((x) => ul.createEl("li", { text: x }));
     }
     if (plan.notes) side.createDiv({ cls: "cm-plan-notes", text: plan.notes });
+    const dest = sourceDestination(plan.sourceTo, this.q.entry.path);
+    side.createDiv({ cls: "cm-plan-notes", text: dest ? `Once the drafts are written, Nicrosil moves the original from Ingestion/Raw to ${dest.path}.` : "Claude hasn't named a place in Sources/ for the original, so it will stay in Ingestion/Raw. Adjust the plan to ask for one." });
     if (items.some((i) => i.verified)) side.createDiv({ cls: "cm-plan-notes", text: "Saving an update to a verified page sets it back to draft, with a note of what changed." });
 
     const next = this.plugin.ingestNextFor(this);
@@ -6033,6 +6086,8 @@ class IngestView extends QueryView {
       const a = answers();
       const open = plan.questions.filter((q, qi) => !this.planAnswers[qi]);
       const msg = ["The plan is approved. Go ahead and draft it."];
+      const vok = items.filter((i) => i.verified && !this.planOff.has(i.id));
+      if (vok.length) msg.push("", INGEST_VERIFIED_OK, ...vok.map((i) => `- ${i.title}${i.add ? `: ${i.add}` : ""}`));
       if (left.length) msg.push("", "Leave these out (don't draft them):", ...left.map((i) => `- ${i.title} (${kindName[i.kind] || i.kind})`));
       if (a.length) msg.push("", "My answers to your questions:", ...a);
       if (open.length) msg.push("", "I didn't answer these; take the most reasonable reading and flag it in the report:", ...open.map((q) => `- ${q.q}`));
@@ -6045,7 +6100,7 @@ class IngestView extends QueryView {
     if (last && last.meta.stage === "plan") {
       const row = main.createDiv({ cls: "cm-query-row cm-ing-quick" });
       const ok = row.createEl("button", { text: "Approve the plan" });
-      ok.addEventListener("click", () => this.run("The plan is approved. Go ahead and draft it.", true));
+      ok.addEventListener("click", () => this.run(["The plan is approved. Go ahead and draft it.", "", INGEST_VERIFIED_OK, "- every verified page in your plan"].join("\n"), true));
     }
     const box = main.createDiv({ cls: "cm-query-follow" });
     const input = box.createEl("input", { cls: "cm-query-follow-input", attr: { type: "text", placeholder: last && last.meta.stage === "plan" ? "Or adjust the plan: tell Claude what to change" : "Reply to Claude in the same ingest", "aria-label": "Reply to Claude" } });
@@ -6060,11 +6115,66 @@ class IngestView extends QueryView {
     input.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); send(); } });
   }
 
+  /**
+   * The typed links this ingest added (4.8.0): "A → type → B", marked inferred or verified → draft, with the reason on hover.
+   * Remove asks for a one-line reason, takes the link out of the page's properties, and logs it as a rejected link.
+   */
+  drawTypedLinks(side, links) {
+    this.removedLinks = this.removedLinks || new Set();
+    side.createDiv({ cls: "cm-query-flabel", text: `Typed links added (${links.length})` });
+    if (!links.length) { side.createDiv({ cls: "cm-query-hint", text: "None reported." }); return; }
+    const box = side.createDiv({ cls: "cm-ing-typed" });
+    const go = (n) => { const a = createEl("a", { cls: "internal-link", text: n, attr: { "data-href": n, href: n } }); return a; };
+    for (const l of links) {
+      const key = `${l.from}|${l.type}|${l.to}`;
+      const row = box.createDiv({ cls: "cm-ing-typed-row" + (this.removedLinks.has(key) ? " is-removed" : "") });
+      if (l.why) row.title = l.why;
+      const line = row.createDiv({ cls: "cm-ing-typed-line" });
+      line.appendChild(go(l.from));
+      line.createSpan({ cls: "cm-ing-typed-type", text: linkLabel(l.type) });
+      line.appendChild(go(l.to));
+      const tags = row.createDiv({ cls: "cm-ing-typed-tags" });
+      tags.createSpan({ cls: "cm-ing-typed-tag" + (l.inferred ? " is-inferred" : ""), text: l.inferred ? "inferred" : "stated" });
+      if (l.verified) tags.createSpan({ cls: "cm-ing-typed-tag is-verified", text: "verified → draft" });
+      if (this.removedLinks.has(key)) { tags.createSpan({ cls: "cm-ing-typed-tag", text: "removed" }); continue; }
+      const rm = tags.createEl("button", { cls: "cm-mini cm-ing-typed-rm", text: "Remove", attr: { type: "button", title: "Remove this link and log it as rejected" } });
+      rm.addEventListener("click", () => {
+        new TinPromptModal(this.app, { title: "Remove typed link", label: `${l.from} → ${l.type} → ${l.to}. Why? (one line, for the log)`, ok: "Remove" }, async (reason) => {
+          if (reason === null) return;
+          if (!reason.trim()) { new Notice("Give a one-line reason; the log records why a link was rejected.", 6000); return; }
+          try {
+            const out = await this.plugin.removeTypedLink(l.from, l.type, l.to);
+            if (out === "missing") { new Notice(`Couldn't find ${l.type} → ${l.to} on “${l.from}”. Nothing changed.`, 8000); return; }
+            await this.plugin.appendLog(typedLinkRejectLogEntry({ date: today(), ingest: this.q.entry.name, from: l.from, type: l.type, to: l.to, reason }));
+            this.removedLinks.add(key);
+            row.addClass("is-removed");
+            rm.replaceWith(createSpan({ cls: "cm-ing-typed-tag", text: "removed" }));
+            new Notice(`Removed ${l.type} → ${l.to} from “${l.from}” and logged it.`, 5000);
+          } catch (e) {
+            console.error("Nicrosil: couldn't remove the typed link", e);
+            new Notice(`Couldn't remove the link: ${e.message}`, 10000);
+          }
+        }).open();
+      });
+    }
+  }
+
   drawKeep(side, last) {
     const m = last.meta || {};
-    const stage = m.stage === "drafted" ? "Drafts written" : m.stage === "plan" ? "Plan ready" : "Waiting on you";
+    const unmade = m.stage === "plan" ? [] : asList(m.proposed).map(bareLink).filter(Boolean);
+    const stage = m.stage === "drafted" ? (unmade.length ? "Drafts written · not finished" : "Drafts written") : m.stage === "plan" ? "Plan ready" : "Waiting on you";
     side.createDiv({ cls: "cm-query-keep-title cm-gradient-style", text: stage });
+    if (unmade.length) { // 4.6.4: a proposed change to a verified page lives only in this tab's report until it is made
+      const box = side.createDiv({ cls: "cm-ing-unmade" });
+      box.createDiv({ cls: "cm-ing-unmade-title", text: `${unmade.length} change${unmade.length === 1 ? "" : "s"} to verified pages not made` });
+      const links = box.createDiv({ cls: "cm-ing-pages" });
+      unmade.forEach((n) => links.createEl("a", { cls: "internal-link", text: n, attr: { "data-href": n, href: n } }));
+      box.createDiv({ cls: "cm-ing-unmade-note", text: "Claude only proposed these. The before/after is in this report and nowhere else, so make them now or copy the report before you close the tab." });
+      const mk = box.createEl("button", { cls: "cm-query-save mod-cta", text: `Make ${unmade.length === 1 ? "this change" : "these changes"}` });
+      mk.addEventListener("click", () => this.run([INGEST_VERIFIED_OK, ...unmade.map((n) => `- ${n}`), "", "Past log entries are never rewritten, so add a short new `ingest` log entry naming them as `Changed (verified → draft): [[Page]]`. Give the report's section C again and a new nicrosil-meta block."].join("\n"), true));
+    }
     if (m.summary) side.createDiv({ cls: "cm-query-sub", text: String(m.summary) });
+    if (m.stage !== "plan") this.drawTypedLinks(side, ingestTypedLinks(m.typed_links));
     const pages = (label, list) => {
       const items = asList(list);
       if (!items.length) return;
@@ -6074,6 +6184,7 @@ class IngestView extends QueryView {
     };
     pages("Created", m.created);
     pages("Appended", m.appended);
+    pages("Verified → draft", m.edited_verified);
     if (m.source_card) pages("Source card", [m.source_card]);
     if (m.copied_to) { side.createDiv({ cls: "cm-query-flabel", text: "Copied to" }); side.createDiv({ cls: "cm-query-hint", text: String(m.copied_to) }); }
     if (Number(m.flags)) side.createDiv({ cls: "cm-query-suggest", text: `${m.flags} flag${Number(m.flags) === 1 ? "" : "s"} for you to check.` });
@@ -6082,7 +6193,9 @@ class IngestView extends QueryView {
       setIcon(rq.createSpan(), "list-checks");
       rq.appendText("Open the review queue");
       rq.addEventListener("click", () => this.plugin.activateView());
-      side.createDiv({ cls: "cm-query-hint", text: "The original is still in Ingestion/Raw. Delete it yourself when you're happy." });
+      const mv = this.moved;
+      if (mv && mv.ok) side.createDiv({ cls: "cm-query-hint", text: `Moved the original from Ingestion/Raw to ${mv.to}` + (mv.textCopy ? ", with its text copy." : ".") });
+      else side.createDiv({ cls: "cm-ing-unmade" }).createDiv({ cls: "cm-ing-unmade-note", text: `The original is still in Ingestion/Raw. ${mv ? mv.note : ""}` });
     }
     const next = this.plugin.ingestNextFor(this);
     if (next) {
@@ -6095,8 +6208,12 @@ class IngestView extends QueryView {
     const copy = row.createEl("button", { text: "Copy report" });
     copy.addEventListener("click", async () => { await navigator.clipboard.writeText(last.answer); new Notice("Report copied."); });
     const close = row.createEl("button", { text: "Close" });
-    close.addEventListener("click", () => this.leaf.detach());
-    side.createDiv({ cls: "cm-query-hint", text: "Closing the tab ends the run. Drafts already written stay as drafts." });
+    let armed = false;
+    close.addEventListener("click", () => {
+      if (unmade.length && !armed) { armed = true; close.setText("Close anyway?"); close.addClass("mod-warning"); return; }
+      this.leaf.detach();
+    });
+    side.createDiv({ cls: "cm-query-hint", text: unmade.length ? "Closing the tab ends the run and loses the proposed changes above. Drafts already written stay as drafts." : "Closing the tab ends the run. Drafts already written stay as drafts." });
   }
 }
 
@@ -8538,6 +8655,39 @@ module.exports = class Nicrosil extends Plugin {
   }
 
   /**
+   * Takes [[to]] out of the typed-link property `type` on the page `from` (4.8.0, for the ingest tab's Remove).
+   * Also drops the `changes_since_verified` line that named this link, if there is one; the page stays draft, since other changes may be waiting for review.
+   * Returns "removed", or "missing" when the page or the link isn't there.
+   */
+  async removeTypedLink(from, type, to) {
+    const mc = this.app.metadataCache;
+    const file = mc.getFirstLinkpathDest(from, "");
+    if (!file) return "missing";
+    const target = mc.getFirstLinkpathDest(to, file.path);
+    const same = (v) => {
+      const m = /\[\[([^\]|#]+)/.exec(String(v));
+      if (!m) return false;
+      const dest = mc.getFirstLinkpathDest(m[1].trim(), file.path);
+      return target ? !!dest && dest.path === target.path : m[1].trim().toLowerCase() === to.toLowerCase();
+    };
+    let outcome = "missing";
+    await this.app.fileManager.processFrontMatter(file, (f) => {
+      const list = f[type] === undefined || f[type] === null || f[type] === "" ? [] : [].concat(f[type]).flat(3);
+      const kept = list.filter((v) => !same(v));
+      if (kept.length === list.length) return;
+      outcome = "removed";
+      f[type] = kept;
+      const note = `${type} → ${to}`.toLowerCase();
+      const lines = changeLines(f.changes_since_verified);
+      if (lines.length) {
+        const left = lines.filter((x) => !x.toLowerCase().includes(note));
+        if (left.length) f.changes_since_verified = left; else delete f.changes_since_verified;
+      }
+    });
+    return outcome;
+  }
+
+  /**
    * The button under the properties, and the row it opens: "This page [type] [search for a page] Add". Enter adds and keeps the row open for the next link; Esc closes it.
    * Drawn once per page, not on every redraw of the note, so what is being typed isn't lost.
    */
@@ -9188,6 +9338,34 @@ module.exports = class Nicrosil extends Plugin {
     return dest;
   }
 
+  /**
+   * Moves an ingested original from Ingestion/Raw into Sources/ under the name Claude chose (4.7.0), and its text copy, if the run made one
+   * beside the staged copy, with it. Only Nicrosil does this, and only once the drafts are written, so a cancelled run leaves Raw alone.
+   * Nothing is overwritten. Returns { ok, to, textCopy } or { ok: false, note }.
+   */
+  async moveIngestSource(rawPath, stagedPath, to) {
+    const ad = this.app.vault.adapter;
+    const dest = sourceDestination(to, rawPath);
+    if (!dest) return { ok: false, note: "Claude didn't name a place in Sources/ for it (a subfolder and a file name), so nothing was moved." };
+    const file = this.app.vault.getAbstractFileByPath(rawPath);
+    if (!(file instanceof TFile)) return { ok: false, note: "It is no longer in Ingestion/Raw, so nothing was moved." };
+    try {
+      if (await ad.exists(dest.path)) return { ok: false, note: `${dest.path} already exists, so nothing was moved. Rename one of them and move the original yourself.` };
+      const dot = dest.name.lastIndexOf(".");
+      const newText = `Sources/${dest.folder}/${dot > 0 ? dest.name.slice(0, dot) : dest.name} (text).md`;
+      const sdot = stagedPath ? stagedPath.lastIndexOf(".") : -1;
+      const oldText = stagedPath ? `${sdot > stagedPath.lastIndexOf("/") ? stagedPath.slice(0, sdot) : stagedPath} (text).md` : "";
+      const hasText = !!oldText && oldText !== stagedPath && (await ad.exists(oldText)) && !(await ad.exists(newText));
+      if (!(await ad.exists(`Sources/${dest.folder}`))) await this.app.vault.createFolder(`Sources/${dest.folder}`);
+      await this.app.fileManager.renameFile(file, dest.path); // a real move and rename: links to it follow
+      if (hasText) await ad.rename(oldText, newText);
+      return { ok: true, to: dest.path, textCopy: hasText };
+    } catch (e) {
+      console.warn("Nicrosil: couldn't move the ingested source", e);
+      return { ok: false, note: `The move failed (${e && e.message ? e.message : e}), so check where the file is.` };
+    }
+  }
+
   /** Removes a staged copy, and the folder once it is empty. */
   async unstageIngest(p) {
     const ad = this.app.vault.adapter;
@@ -9434,7 +9612,7 @@ module.exports = class Nicrosil extends Plugin {
 
   /* ---------- live usage meter (4.5.0) ---------- */
 
-  /** While a Claude Code run is going the meter checks more often; one more check, just after it ends, picks up what it used. */
+  /** One check just after a Claude Code run ends picks up what it used. */
   watchRun(child) {
     this.usageRuns = (this.usageRuns || 0) + 1;
     let done = false;
@@ -9448,16 +9626,16 @@ module.exports = class Nicrosil extends Plugin {
     child.on("error", finish);
   }
 
-  /** Checks on a timer: every 30 seconds, every 10 seconds while a run is going, and once a few seconds after Obsidian starts (even if the window is hidden then).
-   *  Timer checks pause while Obsidian is hidden; a check also runs when it comes back. */
+  /** The meter asks Anthropic only when someone can see it (4.7.0; checking every 30 seconds got it rate-limited): once a few seconds after Obsidian starts,
+   *  once when the Usage popup opens, once after each run, and every minute while a popup stays open. */
   startUsagePolling() {
     if (Platform.isMobile) return;
     const tick = (first) => {
-      this.refreshUsage({ force: first === true });
-      this.usageTimer = window.setTimeout(tick, this.usageRuns > 0 ? 10000 : 30000);
+      if (first === true || document.querySelector(".cm-usagepop")) this.refreshUsage({ force: first === true });
+      this.usageTimer = window.setTimeout(tick, 60000);
     };
     this.usageTimer = window.setTimeout(() => tick(true), 4000);
-    this.registerDomEvent(document, "visibilitychange", () => { if (document.visibilityState === "visible") this.refreshUsage(); });
+    this.registerDomEvent(document, "visibilitychange", () => { if (document.visibilityState === "visible" && document.querySelector(".cm-usagepop")) this.refreshUsage(); });
   }
 
   /** Where Claude Code keeps its sign-in: the folder in CLAUDE_CONFIG_DIR, else .claude in the home folder. */
@@ -9481,7 +9659,7 @@ module.exports = class Nicrosil extends Plugin {
     const now = Date.now();
     if (this.usageBusy || now < (this.usageBackoffUntil || 0)) return;
     if (!force && document.visibilityState === "hidden") return;
-    if (now - (this.usageFetchedAt || 0) < (force ? 5000 : 8000)) return;
+    if (now - (this.usageFetchedAt || 0) < (force ? 15000 : 30000)) return;
     this.usageBusy = true;
     try {
       let text;

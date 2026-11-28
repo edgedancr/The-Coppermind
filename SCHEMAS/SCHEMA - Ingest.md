@@ -2,8 +2,8 @@
 type: schema
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-24
-verified_on: 2026-11-24
+updated: 2026-11-28
+verified_on: 2026-11-28
 ---
 How a source becomes wiki pages. Read this with [[SCHEMA - Writing Pages]], which covers naming, properties, links, citations, attribution, and style.
 
@@ -14,13 +14,13 @@ Every operation follows the think-calculate-verify loop, then a commit. Revision
 1. **Think (me).** I name the source and the part of it to ingest, usually one class session (one date heading) or one topic, and say what matters in it. Usually I do this by pasting [[Dissect and Ingest a Source]], which gives the run's five inputs and their defaults: SOURCE, SCOPE, WHAT MATTERS, MODE, and VERIFIED PAGES.
 2. **Plan (agent).** Before drafting, the agent proposes a short plan: the pages it will create or update, and the source card if one is needed. I approve or adjust the plan. This keeps drafts focused and saves effort. If MODE is "plan first" (the default), the agent does steps 1–3 of [[#Dissect and draft]], gives me sections A–C of [[#The report]] as the plan, and stops until I approve it. If MODE is "draft directly," it skips this step.
 3. **Calculate (agent).** The agent works through [[#Dissect and draft]], drafting the pages with `status: draft`, then gives me [[#The report]].
-4. **Verify (me).** For each page, I approve it, ask for revisions (back to step 3), or reject it. I check the links the same way.
+4. **Verify (me).** For each page, I approve it, ask for revisions (back to step 3), or reject it. I check the typed links the same way: in an ingest run from Nicrosil, the tab lists every typed link added, and removing one there records it in the log as rejected with my reason ([[Nicrosil#Triage and ingest]]).
 5. **Commit.** The agent deletes the batch from `Ingestion/Triage.md` if it came from there and is now fully ingested ([[#Triage]]), and adds the log entry (operation: `ingest`). I commit.
 
 ## Dissect and draft
 
 ### 1. Orient
-- If I attached the source and it isn't in `Sources/` yet, copy it unchanged into the right subfolder and tell me where it went. A source I name in `Ingestion/Raw/` is handled the same way; leave the original in `Raw/` and tell me I can delete it ([[#Raw sources]]).
+- If I attached the source and it isn't in `Sources/` yet, copy it unchanged into the right subfolder and tell me where it went. A source I name in `Ingestion/Raw/` is handled the same way in a chat ingest: leave the original in `Raw/` and tell me I can delete it. In an ingest run from Nicrosil, don't copy it: choose its subfolder of `Sources/` and a file name (`Author - Title (Year)`), cite it by that path, and Nicrosil moves and renames the original there ([[#Raw sources]]).
 - **Read text, not page images.** If the source is a PDF, a Word, PowerPoint or Excel file, or a saved web page, and has no text copy beside it yet (`<name> (text).md`), make one with `python Tools/source-to-text/source_to_text.py "<path to the source in Sources/>"`. It reads the PDF's own text, uses OCR on scanned pages, and puts a `## Page N` heading before each PDF page. Read the copy instead of the original. Cite the original, never the copy ([[SCHEMA - Writing Pages#Citations]]), and check a quote or figure against the original, because OCR can garble words. Say in the report if a copy had to be made, or if OCR pages look garbled.
 - **Read only the part in scope.** For class notes, find the date heading being ingested and read from it to the next date heading, not the whole file. For a text copy, read the `## Page` or `## Slide` headings in range. Read the rest of a source only if SCOPE says so.
 - Read the source's card in `Sources/Source Cards/` if it has one (check Ingest Progress so nothing is ingested twice), and every existing page this source is likely to touch.
@@ -32,7 +32,7 @@ Before thinking about pages, break the in-scope part of the source into its idea
 - its location (date heading, page number, section, or timestamp)
 - its voice: the author, the course and date, a quoted person, or unclear (unclear becomes a "Whose view is this?" flag; never guess)
 - its kind: term, concept, framework, case, person, or procedure
-- its relations: any link the source itself states between this idea and another idea, in the source or already in the wiki ("X is a kind of Y", "X is part of Y", "X is an example of Y", "X causes Y", "X counters Y", "X is used on Y", "X is evidence for or against Y", "X was developed by Y"), with its location. These become the proposed typed links.
+- its relations: any link between this idea and another idea, in the source or already in the wiki ("X is a kind of Y", "X is part of Y", "X is an example of Y", "X causes Y", "X counters Y", "X threatens Y", "X is used on Y", "X requires Y", "X is evidence for or against Y", "X was developed by Y"), with its location. Note whether the source **states** it or the pages only **imply** it, for example a definition that names the idea's kind, or a principle a framework lists ([[SCHEMA - Writing Pages#Linking rules]], rule 9). These become the typed links.
 
 If the source is my own work (`Sources/My Work/`), its arguments are my voice. Don't turn them into wiki claims; list them in the report as material for Perspectives, which I write. Facts my paper takes from another source can be used only if that source is in the vault.
 
@@ -52,9 +52,10 @@ Check each idea against the wiki:
   > [!caution] Sources disagree
   > <claim A> (source A) vs. <claim B> (source B)
   ```
-- Typed links ([[SCHEMA - Writing Pages#Typed links]]): for each relation from step 2, pick the type in the order of the table and use `related` only when none fits. Put the link on the page the sentence starts with, which may be an existing page, not the page you are drafting. Never store the reverse as well. If that page is verified, propose the link as a before/after instead of putting `related` on the other page. Links that only mean "see also" stay in the page text, not in `related`. If a "Sources disagree" callout sets a claim on one page against another page, propose `contradicts` between them.
+- Typed links ([[SCHEMA - Writing Pages#Typed links]]): for each relation from step 2, stated or inferred, pick the type in the order of the table and use `related` only when none fits. **Add the link; don't just propose it.** Put it on the page the sentence starts with, which may be an existing page, not the page you are drafting. Never store the reverse as well. Links that only mean "see also" stay in the page text, not in `related`. If a "Sources disagree" callout sets a claim on one page against another page, add `contradicts` between them. A summary page gets `summarizes` for the page or pages its source is centered on.
+- **Typed links on verified pages: add them directly too, whatever VERIFIED PAGES says.** This is a standing edit, like the backfill in step 5, because a property line is quick to re-verify. In the same edit, set `status: draft`, keep `verified_on`, and add one `changes_since_verified` line per page per ingest naming each link, for example: `"2026-11-28: added typed link counters → Model Drift (ODNI ingest, inferred)"`. Only the property changes; any change to the page's text still follows VERIFIED PAGES.
 - Use only these four flag callouts, so the review queue sees them: `[!question] Whose view is this?`, `[!warning] Unsourced background — verify or remove`, `[!caution] Accuracy check` (or "Sources disagree"), `[!todo] Gap in my notes` (or "Gap in the source").
-- Verified pages: by default (VERIFIED PAGES: "propose changes only"), don't edit them. Put the exact proposed change in the report as a before/after. If VERIFIED PAGES is "edit", make the change and follow [[SCHEMA - Review#Changing a verified page]]. The one exception is the link backfill in step 5, which edits verified pages directly in every mode.
+- Verified pages: by default (VERIFIED PAGES: "propose changes only"), don't edit them. Put the exact proposed change in the report as a before/after. If VERIFIED PAGES is "edit", make the change and follow [[SCHEMA - Review#Changing a verified page]]. The two exceptions, which edit verified pages directly in every mode, are typed links (above) and the link backfill in step 5.
 
 ### 5. Backfill links to the new pages
 Pages written before a page existed name it without linking to it, and nothing else goes back for them. So once the new pages are drafted, link to them from the pages that already mention them.
@@ -62,7 +63,7 @@ Pages written before a page existed name it without linking to it, and nothing e
 - **Where:** every page in `Wiki/`, as whole words, plurals included. Skip pages that already link to the target, footnote definitions, source files, and, as always, `Ingestion/Raw/` and `The Tinmind/`.
 - **Let the script search.** Run `python Tools/health-check/coppermind_check.py --unlinked "New Page" "Other New Page" "Existing Page=new alias"`: it searches as above and lists, for each target, the first unlinked mention on each page with its line. Read only those lines, and check each one names the target before linking it. Without a shell, do the search by hand.
 - **What to change:** on each page found, link the first mention only, following [[SCHEMA - Writing Pages#Linking rules]] rule 6: wrap the words already there in a link, with display text if they differ from the title, and change no other wording. If the words name something else ("The Wall Street Journal" is not [[The Wall (FBI)]]), leave them.
-- **Links only.** A backfill adds plain links in the text and nothing else: no new content, no typed links, no new `sources`. A relation that deserves a typed link goes in report section D as a proposal, under the usual rules.
+- **Links only.** A backfill adds plain links in the text and nothing else: no new content, no new `sources`. A relation it turns up that deserves a typed link is added by the typed-link rules in step 4 and listed in section D, like any other.
 - **Drafts:** edit them directly. A draft under re-review (one with `verified_on`) gets a `changes_since_verified` line like a verified page.
 - **Verified pages: edit them directly too, whatever VERIFIED PAGES says.** I've asked for this standing edit because I can re-verify a backfilled page quickly when I know exactly what changed. In the same edit, set `status: draft`, keep `verified_on`, and add one `changes_since_verified` line per page per ingest naming each link added and the words linked, ending with a link to the section when it is in one place ([[SCHEMA - Review#Changing a verified page]]), for example: `"2026-11-24: linked first mention of 'LLMs' to [[Large Language Model]] (backfill, Module 6 ingest) [[#Key Points]]"`.
 - **In "plan first" mode,** the plan doesn't list the backfill; it runs during the calculate step and is reported in section C.
@@ -83,17 +84,19 @@ Create the card if it doesn't exist, or update it: propose an Admiralty rating w
 - **A.** Defaults used, and any reading of my request you had to choose
 - **B.** Created: `[[Page]] (type)` — one line each
 - **C.** Appended: `[[Page]]` — what was added; verified pages as a proposed before/after. Then the backfilled links from step 5, one line per page: `[[Page]]`: linked "words" → `[[New page]]`, with pages that were verified marked as now back to `draft`. Last, the topic list from step 6: what was added to `_topics.md` and any change proposed, or "topic list: no change"
-- **D.** Proposed typed links, grouped by type: `[[A]] → relation → [[B]]` — a one-line reason each, pointing to where the source says it. Each `related` link also says which type came closest and why it doesn't fit. If more than about a third of the links are `related`, re-check them before reporting.
+- **D.** Typed links added, grouped by type: `[[A]] → relation → [[B]]` — a one-line reason each, marked *stated* (pointing to where the source says it) or *inferred* (giving the words it is inferred from), and marked *verified → draft* when it reset a verified page. Each `related` link also says which type came closest and why it doesn't fit. If more than about a third of the links are `related`, re-check them before reporting. In an ingest run from Nicrosil, the same links also go in the `typed_links` list Nicrosil asks for, so the tab can show them.
 - **E.** Flags: whose view, unsourced background, accuracy checks, sources disagree, gaps, and flags this source may resolve
 - **F.** Skipped on purpose, and Perspectives material from my own work
 
 ## Raw sources
 
-`Ingestion/Raw/` is where I put sources I've collected but haven't put through ingestion. It is not one of the six parts and not a wiki page folder: nothing in it has a source card, a page, or an index entry, and a source isn't part of the wiki until it is ingested.
+`Ingestion/Raw/` is my inbox: sources I've collected but haven't put through ingestion. It is not one of the six parts and not a wiki page folder: nothing in it has a source card, a page, or an index entry, and a source isn't part of the wiki until it is ingested.
 
-- **The agent doesn't look at it.** No task reads, lists, searches, quotes, counts, or mentions what is in `Raw/`: not queries, health checks, triage, or index work. Searches over the vault leave it out.
-- **Only I open it up.** The one exception is a source I name in `Raw/` and ask the agent to ingest. The agent reads that file only and ingests it as usual: Orient copies it unchanged into `Sources/`, and every step after is the same. It leaves the original in `Raw/` (the agent never moves or deletes my files) and tells me I can delete it.
-- **Triage is mine too.** The agent adds sources to Triage only when I hand them over or name them in chat. It never finds them by looking in `Raw/`.
+- **I ingest from Nicrosil's Triage dashboard.** It lists what is in `Raw/`; I tick the sources, choose the model, effort and mode, and each source gets its own ingest tab ([[Nicrosil#Triage and ingest]]). Nicrosil, the plugin, reads only each file's name, type, size and date. It copies the one chosen file, unchanged, to a hidden `Ingestion/.selected/` folder, and the agent reads that copy.
+- **The agent never looks in `Raw/`.** In every task, and inside an ingest run, it doesn't open, list, search, quote, count, or mention what is in `Raw/`; it sees only the copy of the file I chose. Searches over the vault leave it out.
+- **The agent names where the source goes; Nicrosil moves it.** In its plan and report the agent names a subfolder of `Sources/` (`Readings`, `Class Notes` or `My Work`) and a file name in the vault's style, `Author - Title (Year)`, and cites the source by that path. Once the drafts are written, Nicrosil moves and renames the original there, with its text copy, if the run made one. Nicrosil never overwrites a file; if it can't move the file (the name is taken, say) it tells me and the original stays in `Raw/`; and a run I cancel leaves the original in `Raw/`. The agent never moves, renames or deletes a file in `Raw/` itself.
+- **A source I name in chat is the fallback.** When I name a file in `Raw/` in chat and ask the agent to ingest it, it reads that file only and ingests it as usual: Orient copies it unchanged into `Sources/`, and it leaves the original in `Raw/` and tells me I can delete it.
+- **`Ingestion/Triage.md` is mine too.** The agent adds sources to it only when I hand them over or name them in chat. It never finds them by looking in `Raw/`.
 - **The health check skips it.** The script leaves `Ingestion/Raw/` out, so nothing in it is checked or flagged.
 
 ## Triage

@@ -8,10 +8,13 @@ part_of: []
 example_of: []
 causes: []
 counters: []
+threatens: []
 applies_to: []
+requires: []
 supports: []
 contradicts: []
 developed_by: []
+summarizes: []
 related: []
 drafted_by: 
 drafted_on: "{{date:YYYY-MM-DD}}"

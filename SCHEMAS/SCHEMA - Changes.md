@@ -2,8 +2,8 @@
 type: schema
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-24
-verified_on: 2026-11-24
+updated: 2026-11-28
+verified_on: 2026-11-28
 ---
 How the rules, templates, and tools change, and how each change is recorded.
 
@@ -42,6 +42,6 @@ The rules are `_AGENTS.md` and the files in `SCHEMAS/`. Together they are one ru
 - **One version per session.** All the Nicrosil changes made in one session share one version: the agent bumps `manifest.json` once, at the first change (a patch number for fixes and looks, a minor number for a new feature), and keeps one line at the top of [[Nicrosil Changelog]] and one `tool` log entry for the session, updating that line and that entry as later changes land instead of adding new ones. Once a version is committed, its line is never rewritten.
 - **The guide changes only when what Nicrosil does changes.** The [[Nicrosil]] guide carries no version number (it is in `manifest.json` and the changelog), so a fix or a change in looks doesn't touch it. When a change adds, removes or changes something the guide describes, the agent updates those sections; the guide is a verified page, so that edit sets it to `draft` with a change note ([[SCHEMA - Review#Changing a verified page]]).
 - **A Nicrosil changelog line is at most two sentences:** what changed, as I would see it. No function names, CSS selectors, colors, sizes or other code details: git keeps the exact change.
-- Whenever Harrison references Coppermind Gradient Style (CGS) or Tinmind Gradient Style (TGS), descriptions of those styles can be found in [[Nicrosil#Gradient styles]].
+- Whenever Harrison references Coppermind Gradient Style (CGS) or Tinmind Gradient Style (TGS), they are defined at the top of the plugin's `src/css/01-base-gradient-styles-queue-dialogs.css` (the `--cm-gradient` and `--cm-tin-gradient` variables and the `cm-gradient-style` and `cm-tin-gradient-style` classes); read those lines, not the guide.
 - **Log it as `tool`**, briefly: the details are in [[Nicrosil Changelog]] and git ([[SCHEMA - Index and Log#The log]]). One entry per session, as above.
 - **Changelogs live in `_changelogs/`:** one for the rules ([[Schema Changelog]]) and one for Nicrosil ([[Nicrosil Changelog]]). They are kept out of the guide and the rule files so those stay short, and an agent reads a changelog only to add a line or when asked. Both are newest first: a new line goes at the top (in the Schema Changelog, directly under the `## Changelog` heading). Past lines are never rewritten. How something looks goes in the changelog, in a few words, not in the guide's body.

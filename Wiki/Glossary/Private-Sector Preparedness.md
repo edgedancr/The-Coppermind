@@ -1,9 +1,13 @@
 ---
 type: glossary
-status: draft
-aliases: ["National Preparedness Standard", "NFPA 1600"]
-courses: ["Intro to Intelligence"]
-sources: ["[[SRC - The 9-11 Commission Report]]"]
+status: verified
+aliases:
+  - National Preparedness Standard
+  - NFPA 1600
+courses:
+  - Intro to Intelligence
+sources:
+  - "[[SRC - The 9-11 Commission Report]]"
 type_of: []
 part_of: []
 example_of: []
@@ -16,7 +20,7 @@ developed_by: []
 related: []
 drafted_by: Claude (claude-opus-5-5)
 drafted_on: 2026-11-18
-verified_on:
+verified_on: 2026-11-28
 ---
 > [!summary]
 > **Private-sector preparedness:** because the private sector controls 85 percent of the nation's critical infrastructure, the 9/11 Commission expected private-sector civilians to be the "first" first responders in most future attacks.[^1] It endorsed a voluntary National Preparedness Standard, based on the existing NFPA 1600 standard and recommended by the American National Standards Institute, and urged insurers and credit-rating firms to weigh compliance.[^2]

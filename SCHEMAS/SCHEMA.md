@@ -1,10 +1,10 @@
 ---
 type: schema
-version: 12
+version: 13.0
 status: verified
 owner: Harrison Nickles
-updated: 2026-11-24
-verified_on: 2026-11-24
+updated: 2026-11-28
+verified_on: 2026-11-28
 ---
 This is the overview of the Coppermind's rules: what the wiki is for, how it is laid out, and which rule file covers what. It is the rulebook for my personal LLM wiki. The Coppermind follows the SAIL version of the LLM-wiki pattern, not Karpathy's original: **I design, the AI drafts, I verify.** Nothing becomes part of the wiki as final until I have reviewed and approved it.
 
